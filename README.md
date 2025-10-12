@@ -24,10 +24,10 @@ Kiosco es una aplicación web diseñada para pequeños negocios, como kioscos o 
 git clone https://github.com/usuario/kiosco.git
 
 # Instalar dependencias
-npm install
+yarn
 
 # Iniciar el entorno de desarrollo
-npm run dev
+yarn dev
 ```
 
 ## ✨ Características (Planeadas)
