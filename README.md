@@ -9,9 +9,36 @@ Kiosco es una aplicación web diseñada para pequeños negocios, como kioscos o 
 ## 🛠️ Tecnologías Utilizadas
 
 - **React** (base del frontend)
+- **Typescript** (tipado)
 - **Bootstrap** (estilos y componentes UI)
+- **Mui** (componentes UI)
 
 > _Se irán agregando nuevas tecnologías y herramientas a medida que el proyecto avance._
+
+🏛️ Arquitectura – Screaming Architecture
+
+Este proyecto sigue los principios de Screaming Architecture, donde la estructura está orientada al dominio y no a las tecnologías.
+
+📂 Estructura del Proyecto
+src/
+├── app/ # Configuración de rutas, layout principal y providers globales
+├── auth/ # Módulo de autenticación y autorización
+├── core/ # Configuración global, servicios base, helpers
+├── inventory/ # Lógica y pantallas de inventario (stock, almacenes)
+├── products/ # Gestión de productos (CRUD, categorías, precios)
+├── sales/ # Ventas, tickets y reportes
+├── shared/ # Componentes y utilidades reutilizables
+├── users/ # Gestión de usuarios y roles
+├── assets/ # Imágenes y recursos estáticos
+└── main.tsx # Punto de entrada
+
+🗂️ Estructura Interna por Módulo
+products/
+├── components/ # Componentes UI específicos del dominio
+├── pages/ # Pantallas o rutas del módulo
+├── hooks/ # Custom hooks del dominio
+├── services/ # Lógica de datos / API
+└── types/ # Modelos y tipados
 
 ## 🚧 Estado del Proyecto
 
@@ -54,16 +81,5 @@ Este proyecto está abierto a mejoras. En el futuro, se podrán proponer nuevas 
 ## 👤 Autor
 
 Desarrollado por **Lautaro Cantero**
-
-## 🗂️ To-Do / Roadmap
-
-- [ ] Diseño de interfaz inicial (layout y navegación)
-- [ ] Módulo de productos (CRUD)
-- [ ] Registro de ventas
-- [ ] Control de inventario básico
-- [ ] Sistema de alertas o notificaciones (opcional)
-- [ ] Implementación de base de datos
-
----
 
 _Este README se actualizará a medida que el proyecto avance._
