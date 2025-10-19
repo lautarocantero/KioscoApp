@@ -1,4 +1,4 @@
-import KioscoTitle from './KioscoTitle';
+import KioscoTitle from '../pages/LoginPage/components/LoginFormComponent/KioscoTitle';
 import { render, screen } from '@testing-library/react';
 import {it, describe, expect} from 'vitest';
 

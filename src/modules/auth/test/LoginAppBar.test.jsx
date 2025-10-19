@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { describe, it } from "vitest";
-import LoginAppBar from "./LoginAppBar";
+import LoginAppBar from "../pages/LoginPage/components/LoginAppBar/LoginAppBar";
 
 
 describe('LoginAppBar', () => {

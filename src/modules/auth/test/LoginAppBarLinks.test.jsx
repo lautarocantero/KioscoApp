@@ -1,5 +1,5 @@
 import { describe, it } from "vitest"
-import LoginAppBarLinks from "./LoginAppBarLinks"
+import LoginAppBarLinks from "../pages/LoginPage/components/LoginAppBar/LoginAppBarLinks"
 import { render, screen } from "@testing-library/react"
 import { createTheme, ThemeProvider } from "@mui/material"
 

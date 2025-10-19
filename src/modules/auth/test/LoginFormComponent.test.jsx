@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { describe, test } from "vitest";
-import LoginFormComponent from "./LoginFormComponent";
+import LoginFormComponent from "../pages/LoginPage/components/LoginFormComponent/LoginFormComponent";
 
 
 describe('LoginFormComponent', () => {
