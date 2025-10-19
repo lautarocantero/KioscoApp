@@ -13,7 +13,7 @@ const KioscoTitle = () => (
           Kiosco
         </span>
         <span>
-          <StoreMallDirectoryIcon sx={{ fontSize: "2em" }} />
+          <StoreMallDirectoryIcon sx={{ fontSize: "2em" }} titleAccess="kiosco icon"/>
         </span>
       </Typography>
 )

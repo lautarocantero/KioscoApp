@@ -9,14 +9,14 @@ const renderWithTheme = (ui) => {
 
 describe("LoginAppBarLinks", () => {
 
-//   it("should render correctly", () => {
-//     render(<LoginAppBarLinks/>)
-//   })
+   it("should render the LoginAppBarLinks correctly", () => {
+     renderWithTheme(<LoginAppBarLinks/>)
+   })
 
-  it("should render text correctly", () => {
+  it("should render texts correctly", () => {
     renderWithTheme(<LoginAppBarLinks />)
-    screen.getByText("Inicio de sesión")
-    screen.getByText("Registro")
+    screen.findAllByText(/Inicio de sesión/i)
+    screen.findAllByText("Registro")
   })
 
 })
