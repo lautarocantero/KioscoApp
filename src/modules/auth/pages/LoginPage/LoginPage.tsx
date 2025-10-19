@@ -1,24 +1,12 @@
-import { Grid } from "@mui/material";
-import LoginSideImage from "./LoginSideImage";
-import LoginSideForm from "./LoginSideForm";
+import AuthLayout from "../../layout/AuthLayout";
+import LoginContent from "../../components/LoginContent";
 
 const LoginPage = () => {
+  
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="center"
-      display={"flex"}
-      flexDirection={"column"}
-      margin={"auto"}
-      spacing={30}
-      marginTop={"40%"}
-      width={"80%"}
-      backgroundColor={"black"}
-    >
-      <LoginSideImage />
-      <LoginSideForm />
-    </Grid>
+    <AuthLayout>
+      <LoginContent />
+    </AuthLayout>
   );
 };
 
