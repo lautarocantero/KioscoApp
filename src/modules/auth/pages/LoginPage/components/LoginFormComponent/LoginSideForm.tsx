@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
-import PrimaryButton from "../../shared/components/PrimaryButton";
-import EmptyButton from "../../shared/components/EmptyButton";
+import PrimaryButton from "../../../../../shared/components/PrimaryButton";
+import EmptyButton from "../../../../../shared/components/EmptyButton";
 
 const LoginSideForm = () => {
   return (

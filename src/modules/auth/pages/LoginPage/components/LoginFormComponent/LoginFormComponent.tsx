@@ -1,13 +1,10 @@
-import Grid from '@mui/material/Grid';
-import LoginSideForm from "./LoginSideForm";
-import LoginSideTitle from "./LoginSideTitle";
-import LoginAppBar from './LoginAppBar';
+import { Grid } from '@mui/material'
+import LoginSideTitle from './LoginSideTitle'
+import LoginSideForm from './LoginSideForm'
 
-const LoginContent = () => {
+const LoginFormComponent = () => {
   return (
-    <>
-      <LoginAppBar />
-      <Grid
+    <Grid
       container
       rowSpacing={15}
       sx={(theme) => ({
@@ -28,8 +25,7 @@ const LoginContent = () => {
           <LoginSideTitle />
           <LoginSideForm />
       </Grid>
-      </>
-  );
-};
+  )
+}
 
-export default LoginContent;
+export default LoginFormComponent
