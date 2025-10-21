@@ -6,7 +6,7 @@ const KioscoTitle = () => (
         sx={{
           display: "flex",
           alignItems: "center",
-          color: theme => theme?.custom?.white,
+          color: theme => theme?.custom?.fontColor,
         }}
         variant="h1">
         <span>

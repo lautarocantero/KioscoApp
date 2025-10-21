@@ -8,6 +8,9 @@ const LoginAppBarLinks = () => {
         display={{ xs: 'none', md: 'flex' }} 
         flexDirection={'row'} 
         gap={2}
+        sx={{
+          color: theme => theme?.custom?.fontColor
+        }}
     >
         <Typography 
           sx={{ 

@@ -11,7 +11,7 @@ const EmptyButton = ({buttonText, buttonOnClick, buttonWidth = '280px'} : EmptyB
     <Button
       sx={{
         backgroundColor: 'none',
-        color: theme => theme?.custom?.whiteTranslucid,
+        color: theme => theme?.custom?.fontColorTransparent,
         width: buttonWidth,
         borderRadius: 35,
         padding: 1,

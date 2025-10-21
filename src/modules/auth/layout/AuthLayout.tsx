@@ -1,10 +1,14 @@
 import { Box, Typography } from "@mui/material"
 import { Grid } from "@mui/system";
 import type { PropsWithChildren } from "react"
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "../../theme/ThemeContext";
+
 
 const AuthLayout = ({children}: PropsWithChildren) => {
-    const backgroundUrl = 'url(/images/backgroundImages/blackBackgroundImage.jpg)';
+    const {appTheme} = useContext(ThemeContext);
+    const backgroundUrl = `url(/images/backgroundImages/${!appTheme ? 'black' : 'white'}BackgroundImage.jpg)`;
+    
     
     if (!children || React.Children.count(children) === 0)
         return <Typography>No children Loaded...</Typography>
@@ -42,10 +46,11 @@ const AuthLayout = ({children}: PropsWithChildren) => {
                     spacing={{ xs: 12, sm: 6}}
                     display={'flex'}
                     alignItems={'center'}
-                    sx={{
-                        backgroundColor: {md: '#333333'},
+                    sx={(theme) => ({
+                        // @ts-expect-error 'theme is not working with typescript
+                        backgroundColor: {md: theme.custom?.background},
                         minWidth: {xs: '100%', md: '50%'}
-                    }}>
+                    })}>
                     {children}
                 </Grid>
             </Grid>

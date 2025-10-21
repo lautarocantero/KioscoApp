@@ -18,7 +18,7 @@ const LoginFormComponent = () => {
         borderRadius: { xs: '0', md: '1em' },
         backgroundColor: {
           xs: 'transparent',
-          md: theme.custom?.blackTranslucid || 'rgba(0,0,0,0.6)', // Fallback opcional
+          md: theme.custom?.backgroundDark || 'rgba(0,0,0,0.6)', // Fallback opcional
         },
       })}
       >

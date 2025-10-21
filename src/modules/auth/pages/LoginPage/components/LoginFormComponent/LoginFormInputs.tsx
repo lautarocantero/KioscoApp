@@ -23,7 +23,7 @@ const LoginFormInputs = ({values,setFieldValue,errors}: LoginFormInputsProps) =>
     <Grid container display={'flex'} direction={'column'} spacing={3} alignItems={'center'}>
         <Typography 
           sx={{ 
-            color: theme => theme?.custom?.white,
+            color: theme => theme?.custom?.fontColor,
             fontSize: theme => theme?.typography?.h3.fontSize,
           }}
         >
@@ -51,13 +51,13 @@ const LoginFormInputs = ({values,setFieldValue,errors}: LoginFormInputsProps) =>
             }}     
             variant="standard"
             sx={(theme) => ({
-              input: { color: 'white' },               // texto input
-              label: { color: 'white' },               // label
+              input: { color: theme => theme?.custom?.fontColor },               // texto input
+              label: { color: theme => theme?.custom?.fontColor },               // label
               '& .MuiFormHelperText-root': {           // helperText
-                color: 'white',
+                color: theme => theme?.custom?.fontColor,
               },
               '& .MuiInput-underline:before': {         // underline sin foco
-                borderBottomColor: theme?.custom?.white,
+                borderBottomColor: theme?.custom?.fontColor,
               },
               '& .MuiInput-underline:hover:before': {   // underline hover
                 borderBottomColor: 'white',
@@ -83,10 +83,10 @@ const LoginFormInputs = ({values,setFieldValue,errors}: LoginFormInputsProps) =>
             helperText={(errors?.password)?.toString()}
             variant="standard"
             sx={(theme) => ({
-              input: { color: 'white' },
-              label: { color: 'white' },
-              '& .MuiFormHelperText-root': { color: 'white', textAlign: 'right' },
-              '& .MuiInput-underline:before': { borderBottomColor: theme?.custom?.white },
+              input: { color: theme => theme?.custom?.fontColor },
+              label: { color: theme => theme?.custom?.fontColor },
+              '& .MuiFormHelperText-root': { color: theme => theme?.custom?.fontColor, textAlign: 'right' },
+              '& .MuiInput-underline:before': { borderBottomColor: theme?.custom?.fontColor },
               '& .MuiInput-underline:hover:before': { borderBottomColor: 'white' },
               '& .MuiInput-underline:after': { borderBottomColor: 'white' },
             })}
@@ -99,8 +99,8 @@ const LoginFormInputs = ({values,setFieldValue,errors}: LoginFormInputsProps) =>
                     
                   >
                     {showPassword ? 
-                    <VisibilityOff sx={{ color: theme => errors.password ? theme?.palette?.error?.main : theme?.custom?.white }} /> : 
-                    <Visibility sx={{ color: theme => errors.password ? theme?.palette?.error?.main : theme?.custom?.white }}/>}
+                    <VisibilityOff sx={{ color: theme => errors.password ? theme?.palette?.error?.main : theme?.custom?.fontColor }} /> : 
+                    <Visibility sx={{ color: theme => errors.password ? theme?.palette?.error?.main : theme?.custom?.fontColor }}/>}
                   </IconButton>
                 </InputAdornment>
               ),
