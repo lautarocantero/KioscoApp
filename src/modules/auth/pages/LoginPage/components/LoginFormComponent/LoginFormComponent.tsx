@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material'
-import LoginSideTitle from './LoginSideTitle'
-import LoginSideForm from './LoginSideForm'
+import LoginFormHandler from './LoginFormHandler';
 
 const LoginFormComponent = () => {
+  
   return (
     <Grid
       container
@@ -22,8 +22,7 @@ const LoginFormComponent = () => {
         },
       })}
       >
-          <LoginSideTitle />
-          <LoginSideForm />
+        <LoginFormHandler />
       </Grid>
   )
 }

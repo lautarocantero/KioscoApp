@@ -4,6 +4,7 @@ declare module '@mui/material/styles' {
   interface Theme {
     custom: {
       white: string;
+      whiteTranslucid: string;
       black: string;
       blackTranslucid: string;
       lightMain: string;
@@ -13,6 +14,7 @@ declare module '@mui/material/styles' {
   interface ThemeOptions {
     custom?: {
       white?: string;
+      whiteTranslucid?: string;
       black?: string;
       blackTranslucid?: string;
       lightMain?: string;
@@ -43,6 +45,7 @@ export const mainTheme = createTheme({
   },
   custom: {
     white: '#eff0f8',
+    whiteTranslucid: '#eff0f826',
     black: '#333333',
     blackTranslucid: '#09090966',
     lightMain: '#66A3FB',

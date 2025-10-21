@@ -18,7 +18,8 @@ const AuthLayout = ({children}: PropsWithChildren) => {
                 backgroundImage: backgroundUrl,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-            }}>
+            }}
+        >
             <Grid 
                 container 
                 display={'flex'} 
@@ -43,7 +44,7 @@ const AuthLayout = ({children}: PropsWithChildren) => {
                     alignItems={'center'}
                     sx={{
                         backgroundColor: {md: '#333333'},
-                        minWidth: {md: '50%'}
+                        minWidth: {xs: '100%', md: '50%'}
                     }}>
                     {children}
                 </Grid>

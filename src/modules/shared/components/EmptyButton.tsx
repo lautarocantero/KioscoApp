@@ -3,15 +3,16 @@ import { Button } from "@mui/material";
 interface EmptyButtonProps {
   buttonText: string;
   buttonOnClick: () => void;
+  buttonWidth?: string;
 }
 
-const EmptyButton = ({buttonText, buttonOnClick} : EmptyButtonProps) => {
+const EmptyButton = ({buttonText, buttonOnClick, buttonWidth = '280px'} : EmptyButtonProps) => {
   return (
     <Button
       sx={{
         backgroundColor: 'none',
-        color: theme => theme?.custom?.white,
-        width: '280px',
+        color: theme => theme?.custom?.whiteTranslucid,
+        width: buttonWidth,
         borderRadius: 35,
         padding: 1,
         textTransform: 'none',

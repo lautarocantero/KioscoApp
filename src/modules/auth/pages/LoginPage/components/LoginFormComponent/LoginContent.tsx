@@ -6,7 +6,7 @@ const LoginContent = () => {
     <>
       <LoginAppBar />
       <LoginFormComponent />
-      </>
+    </>
   );
 };
 
