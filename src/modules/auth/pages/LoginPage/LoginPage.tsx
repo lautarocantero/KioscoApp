@@ -1,11 +1,16 @@
-import LoginContent from "./components/LoginFormComponent/LoginContent";
+import { lazy, Suspense } from "react";
 import AuthLayout from "../../layout/AuthLayout";
+import LoginLoader from "./components/LoginFormComponent/LoginLoader";
+
+const LoginContent = lazy(() => import('./components/LoginFormComponent/LoginContent'));
 
 const LoginPage = () => {
   
   return (
     <AuthLayout>
-      <LoginContent />
+      <Suspense fallback={<LoginLoader/>}>
+        <LoginContent />
+      </Suspense>
     </AuthLayout>
   );
 };

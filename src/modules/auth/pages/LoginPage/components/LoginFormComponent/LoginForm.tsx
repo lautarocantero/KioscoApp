@@ -52,7 +52,7 @@ const LoginForm = ({showForm}: LoginFormProps) => {
       component="form" 
       onSubmit={handleSubmit} 
       sx={{ 
-        width: '90%',
+        width: '100%',
         maxWidth: '12em',         
         height: '100%',        
         boxSizing: 'border-box',
@@ -60,14 +60,17 @@ const LoginForm = ({showForm}: LoginFormProps) => {
       className="animate__animated animate__bounceInRight"
     >
       <LoginFormInputs values={values} setFieldValue={setFieldValue} errors={errors}/>
-      <Typography sx={{
-        mt: '1em',
-        textAlign: 'end',
-        color: theme => theme?.palette?.error?.main,
-        fontSize: theme => theme?.typography?.body2.fontSize,
-      }}>
-        ¿Olvidaste tu contraseña?
-      </Typography>
+        <Typography sx={{
+          mt: '1em',
+          textAlign: 'center',
+          color: theme => theme?.custom?.fontColor,
+          fontSize: theme => theme?.typography?.body2.fontSize,
+          backgroundColor: theme => theme?.custom?.background,
+          borderRadius: '1em',
+          width: '100%',
+        }}>
+          ¿Olvidaste tu contraseña?
+        </Typography>
       <LoginFormButtons errors={errors}/>
     </Box>
   )

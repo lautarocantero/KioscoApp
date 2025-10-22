@@ -26,7 +26,7 @@ const LoginFormButtons = ({errors}: LoginFormButtonsProps ) => {
         <Grid component={'div'}>
           <Typography
             sx={{
-                color: theme => theme?.custom?.white,
+                color: theme => theme?.custom?.fontColor,
                 fontSize: theme => theme?.typography?.body2?.fontSize,
                 textAlign: 'center',
                 margin:  2,

@@ -16,6 +16,7 @@ const LoginFormComponent = () => {
         margin: 'auto',
         padding: '3em 0',
         borderRadius: { xs: '0', md: '1em' },
+        overflowX: 'hidden',
         backgroundColor: {
           xs: 'transparent',
           md: theme.custom?.backgroundDark || 'rgba(0,0,0,0.6)', // Fallback opcional
