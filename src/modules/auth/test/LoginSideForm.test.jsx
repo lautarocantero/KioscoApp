@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
 import { describe, it } from "vitest";
-import LoginSideForm from "../pages/LoginPage/components/LoginFormComponent/LoginSideForm";
+import LoginForm from "../pages/LoginPage/components/LoginFormComponent/LoginForm";
 
-describe('LoginSideForm', () => {
-  it('should render LoginSideForm correctly', () => {
-    render(<LoginSideForm />);
+describe('LoginForm', () => {
+  it('should render LoginForm correctly', () => {
+    render(<LoginForm />);
   });
 });

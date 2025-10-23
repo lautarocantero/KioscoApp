@@ -9,11 +9,12 @@ const LoginAppBar = () => {
       color='transparent' 
       elevation={0}
       sx={{ width: '50%'}}
+      data-testid="login-appbar"
     >
-        <Toolbar>
-          <LoginAppBarContent />
-        </Toolbar>
-      </AppBar>
+      <Toolbar>
+        <LoginAppBarContent />
+      </Toolbar>
+    </AppBar>
   )
 }
 

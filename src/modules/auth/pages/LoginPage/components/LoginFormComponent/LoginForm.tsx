@@ -68,9 +68,7 @@ const LoginForm = ({showForm}: LoginFormProps) => {
           backgroundColor: theme => theme?.custom?.background,
           borderRadius: '1em',
           width: '100%',
-        }}>
-          ¿Olvidaste tu contraseña?
-        </Typography>
+        }}>¿Olvidaste tu contraseña?</Typography>
       <LoginFormButtons errors={errors}/>
     </Box>
   )

@@ -1,5 +1,5 @@
-import { describe, it } from "vitest"
-import { render } from "@testing-library/react"
+import { afterEach, describe, it } from "vitest"
+import { cleanup, fireEvent, render, screen } from "@testing-library/react"
 import { createTheme, ThemeProvider } from "@mui/material"
 import LoginAppBarContent from "../pages/LoginPage/components/LoginAppBar/LoginAppBarContent"
 
@@ -9,8 +9,22 @@ const renderWithTheme = (ui) => {
 
 describe("LoginAppBarContent", () => {
 
+    afterEach(cleanup)
+
    it("should render the LoginAppBarContent correctly", () => {
-     renderWithTheme(<LoginAppBarContent />)
+      renderWithTheme(<LoginAppBarContent />)
+   })
+
+   it("should show the links to register and login", () => {
+      renderWithTheme(<LoginAppBarContent />)
+      screen.getByText('Inicio de sesión');
+      screen.getByText('Registro');
+   })
+
+   it('should render the lightMode',() => {
+      renderWithTheme(<LoginAppBarContent />)
+      screen.getByTestId('ModeNightIcon');
+      screen.getByTestId('Brightness4Icon');
    })
 
 })
