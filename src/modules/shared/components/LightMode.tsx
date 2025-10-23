@@ -5,7 +5,6 @@ import { ThemeContext } from "../../theme/ThemeContext";
 
 const LightMode = () => {
   const {appTheme, setAppTheme} = useContext(ThemeContext);
-  console.log('appTheme', appTheme);
 
   return (
     <Grid 
@@ -20,15 +19,14 @@ const LightMode = () => {
             gap: 1,
             cursor: 'pointer',
         })} 
+        onClick={() => setAppTheme((prev: boolean) => !prev)}
     >
         <Brightness4 
-          onClick={() => setAppTheme((prev: boolean) => !prev)}
           sx={{ 
             color: theme => appTheme ? theme?.custom?.white :  theme?.custom?.blackTranslucid
           }}
         />
         <ModeNight
-          onClick={() => setAppTheme((prev: boolean) => !prev)}
           sx={{ 
             color: theme => !appTheme ? theme?.custom?.white :  theme?.custom?.blackTranslucid
           }}
