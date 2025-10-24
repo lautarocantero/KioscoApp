@@ -1,32 +1,33 @@
-import { Typography } from '@mui/material'
-import { Grid } from '@mui/system'
+import { Grid } from "@mui/material";
+import LinksComponent from "../../../../../shared/components/LinksComponent";
+
+const availableLinks = [
+  {
+    label: "Inicio de sesión",
+    to: "/login",
+    underline: "underline",
+  },
+  {
+    label: "Registro",
+    to: "/register",
+    underline: "none",
+  },
+];
 
 const LoginAppBarLinks = () => {
   return (
-    <Grid 
-        component={'div'}
-        display={{ xs: 'none', md: 'flex' }} 
-        flexDirection={'row'} 
-        gap={2}
-        sx={{
-          color: theme => theme?.custom?.fontColor
-        }}
+    <Grid
+      component={"div"}
+      display={{ xs: "none", md: "flex" }}
+      flexDirection={"row"}
+      gap={2}
+      sx={{
+        color: (theme) => theme?.custom?.fontColor,
+      }}
     >
-        <Typography 
-          sx={{ 
-              fontSize: theme => theme?.typography?.caption?.fontSize,
-              textDecoration: 'underline',
-          }}>
-            Inicio de sesión
-        </Typography>
-        <Typography 
-          sx={{ 
-            fontSize: theme => theme?.typography?.caption?.fontSize
-          }}>
-            Registro
-        </Typography>
+      <LinksComponent linksToShow={availableLinks} />
     </Grid>
-  )
-}
+  );
+};
 
-export default LoginAppBarLinks
+export default LoginAppBarLinks;

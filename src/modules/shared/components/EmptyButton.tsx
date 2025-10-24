@@ -6,19 +6,24 @@ interface EmptyButtonProps {
   buttonWidth?: string;
 }
 
-const EmptyButton = ({buttonText, buttonOnClick, buttonWidth = '280px'} : EmptyButtonProps) => {
+const EmptyButton = ({
+  buttonText,
+  buttonOnClick,
+  buttonWidth = "280px",
+}: EmptyButtonProps) => {
   return (
     <Button
       sx={{
-        backgroundColor: 'none',
-        color: theme => theme?.custom?.fontColorTransparent,
+        backgroundColor: "transparent",
+        color: (theme) => theme?.custom?.fontColorTransparent,
         width: buttonWidth,
         borderRadius: 35,
         padding: 1,
-        textTransform: 'none',
-        fontSize: theme => theme?.typography?.body1?.fontSize,
+        textTransform: "none",
+        fontSize: (theme) => theme?.typography?.body1?.fontSize,
       }}
       onClick={buttonOnClick}
+      role="button"
     >
       {buttonText}
     </Button>
