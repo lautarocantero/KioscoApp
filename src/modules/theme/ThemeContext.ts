@@ -6,8 +6,6 @@ interface ThemeContextType {
 }
 
 export const ThemeContext = createContext<ThemeContextType>({
-  appTheme: false,
+  appTheme: JSON.parse(localStorage.getItem("appTheme") ?? "true"),
   setAppTheme: () => {},
 });
-
-

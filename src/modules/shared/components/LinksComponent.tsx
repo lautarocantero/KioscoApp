@@ -5,7 +5,7 @@ interface LinksComponentProps {
   linksToShow: {
     label: string;
     to: string;
-    underline: "underline" | "none" | string;
+    underline: { xs: "none" | "underline"; md: "none" | "underline" };
   }[];
 }
 
@@ -20,7 +20,7 @@ const LinksComponent = ({ linksToShow }: LinksComponentProps) => {
           to={link.to}
           sx={{
             fontSize: (theme) => theme?.typography?.caption?.fontSize,
-            textDecoration: link.underline,
+            textDecoration: { xs: link.underline.xs, md: link.underline.md },
             color: (theme) => theme?.custom?.fontColor,
           }}
         >

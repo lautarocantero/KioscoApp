@@ -1,12 +1,7 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  Grid,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Grid, IconButton, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
+import AuthTitle from "./AuthTitle";
 
 interface LoginFormInputsProps {
   values: {
@@ -35,14 +30,7 @@ const LoginFormInputs = ({
       spacing={3}
       alignItems={"center"}
     >
-      <Typography
-        sx={{
-          color: (theme) => theme?.custom?.fontColor,
-          fontSize: (theme) => theme?.typography?.h3.fontSize,
-        }}
-      >
-        Iniciar sesión
-      </Typography>
+      <AuthTitle />
       <Grid component={"div"} spacing={{ xs: 12, sm: 12 }}>
         <TextField
           fullWidth
@@ -50,7 +38,7 @@ const LoginFormInputs = ({
           onChange={({ target }) => {
             setFieldValue("email", target.value);
           }}
-          placeholder="E-mail"
+          placeholder="jhondoe@gmail.com"
           type="email"
           value={values?.email}
           label="E-mail"
@@ -86,7 +74,7 @@ const LoginFormInputs = ({
         <TextField
           label="Contraseña"
           type={showPassword ? "text" : "password"}
-          placeholder="Password"
+          placeholder="Contraseña"
           fullWidth
           name="password"
           value={values?.password}
@@ -95,13 +83,19 @@ const LoginFormInputs = ({
           }}
           error={!!errors.password}
           helperText={errors?.password?.toString()}
+          slotProps={{
+            formHelperText: {
+              sx: {
+                textAlign: "right",
+              },
+            },
+          }}
           variant="standard"
           sx={(theme) => ({
             input: { color: theme?.custom?.fontColor },
             label: { color: theme?.custom?.fontColor },
             "& .MuiFormHelperText-root": {
               color: theme?.custom?.fontColor,
-              textAlign: "right",
             },
             "& .MuiInput-underline:before": {
               borderBottomColor: theme?.custom?.fontColor,
@@ -109,7 +103,9 @@ const LoginFormInputs = ({
             "& .MuiInput-underline:hover:before": {
               borderBottomColor: "white",
             },
-            "& .MuiInput-underline:after": { borderBottomColor: "white" },
+            "& .MuiInput-underline:after": {
+              borderBottomColor: "white",
+            },
           })}
           InputProps={{
             endAdornment: (

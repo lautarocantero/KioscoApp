@@ -1,33 +1,32 @@
 import { Box, Link } from "@mui/material";
+import RegisterFormInputs from "./RegisterFormInputs";
+import RegisterFormButtons from "./RegisterFormButtons";
 import { Link as LinkReactRouter } from "react-router-dom";
-import * as Yup from "yup";
 import { useFormik } from "formik";
-import LoginFormInputs from "./LoginFormInputs";
-import LoginFormButtons from "./LoginFormButtons";
-import "animate.css";
-
-interface LoginFormProps {
-  showForm: boolean;
-}
+import * as Yup from "yup";
 
 const getInitialValues = () => ({
+  user: "",
   email: "",
   password: "",
+  repeatPassword: "",
 });
 
 const getValidationSchema = () =>
   Yup.lazy(() =>
     Yup.object().shape({
+      user: Yup.string().required("Campo requerido").trim(),
       email: Yup.string()
         .email("Ingresa un E-mail")
         .required("Campo requerido")
         .trim(),
       password: Yup.string().required("Campo requerido"),
+      repeatPassword: Yup.string().required("Campo requerido"),
     })
   );
 
-const LoginForm = ({ showForm }: LoginFormProps) => {
-  const { handleSubmit, values, setFieldValue, errors } = useFormik({
+const RegisterForm = () => {
+  const { errors, values, handleSubmit, setFieldValue } = useFormik({
     initialValues: getInitialValues(),
     onSubmit: (data) => {
       console.log(data);
@@ -37,25 +36,14 @@ const LoginForm = ({ showForm }: LoginFormProps) => {
     validationSchema: getValidationSchema(),
   });
 
-  if (!showForm) return null;
-
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{
-        width: "100%",
-        maxWidth: "12em",
-        height: "100%",
-        boxSizing: "border-box",
-      }}
-      className="animate__animated animate__bounceInRight"
-    >
-      <LoginFormInputs
+    <Box component={"form"} role="form" onSubmit={handleSubmit}>
+      <RegisterFormInputs
         values={values}
         setFieldValue={setFieldValue}
         errors={errors}
       />
+      <RegisterFormButtons errors={errors} />
       <Link
         component={LinkReactRouter}
         to={"/login"}
@@ -64,18 +52,16 @@ const LoginForm = ({ showForm }: LoginFormProps) => {
           textDecoration: "none",
           textAlign: "center",
           display: "block",
-          color: (theme) => theme?.custom?.fontColor,
+          color: (theme) => theme?.custom?.fontColorTransparent,
           fontSize: (theme) => theme?.typography?.body2.fontSize,
-          backgroundColor: (theme) => theme?.custom?.background,
           borderRadius: "1em",
           width: "100%",
         }}
       >
-        ¿Olvidaste tu contraseña?
+        ¿Ya tienes cuenta? Inicia Sesión
       </Link>
-      <LoginFormButtons errors={errors} />
     </Box>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

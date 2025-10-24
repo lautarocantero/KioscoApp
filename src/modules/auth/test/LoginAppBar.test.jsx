@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, it } from "vitest";
-import LoginAppBar from "../pages/LoginPage/components/LoginAppBar/LoginAppBar";
+import LoginAppBar from "../layout/LoginAppBar/LoginAppBar";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 const renderWithTheme = (ui) => {

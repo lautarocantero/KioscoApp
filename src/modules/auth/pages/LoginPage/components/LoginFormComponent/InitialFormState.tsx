@@ -1,5 +1,5 @@
 import InitialFormButtons from "./InitialFormButtons";
-import InitialFormTitle from "./InitialFormTitle";
+import AuthTitle from "./AuthTitle";
 
 interface InitialFormStateProps {
   showForm: boolean;
@@ -13,7 +13,7 @@ const InitialFormState = ({ showForm, setShowForm }: InitialFormStateProps) => {
 
   return (
     <>
-      <InitialFormTitle />
+      <AuthTitle />
       <InitialFormButtons setShowForm={setShowForm} />
     </>
   );

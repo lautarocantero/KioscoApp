@@ -1,11 +1,13 @@
-import { afterEach, describe, it } from "vitest"
+import { afterEach, beforeEach, describe, it } from "vitest"
 import { cleanup, fireEvent, render, screen } from "@testing-library/react"
 import { createTheme, ThemeProvider } from "@mui/material"
-import LoginAppBarContent from "../pages/LoginPage/components/LoginAppBar/LoginAppBarContent"
+import LoginAppBarContent from "../layout/LoginAppBar/LoginAppBarContent"
 
 const renderWithTheme = (ui) => {
   return render(<ThemeProvider theme={createTheme()}>{ui}</ThemeProvider>)
 }
+
+beforeEach(cleanup)
 
 describe("LoginAppBarContent", () => {
 

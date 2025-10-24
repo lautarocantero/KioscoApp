@@ -19,7 +19,10 @@ const LightMode = () => {
         gap: 1,
         cursor: "pointer",
       })}
-      onClick={() => setAppTheme((prev: boolean) => !prev)}
+      onClick={() => {
+        setAppTheme((prev: boolean) => !prev);
+        localStorage.setItem("appTheme", JSON.stringify(!appTheme));
+      }}
     >
       <Brightness4
         sx={{

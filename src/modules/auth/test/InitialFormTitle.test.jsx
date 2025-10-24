@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import {describe, expect, it} from 'vitest';
-import InitialFormTitle from '../pages/LoginPage/components/LoginFormComponent/InitialFormTitle'
+import AuthTitle from '../pages/LoginPage/components/LoginFormComponent/AuthTitle'
 
 
-describe('InitialFormTitle', () => {
+describe('AuthTitle', () => {
   it('should render correctly', () => {
-    render(<InitialFormTitle />);
+    render(<AuthTitle />);
   });
 
   it(`should show 'Kiosco'`, () => {
-        render(<InitialFormTitle />);
+        render(<AuthTitle />);
         expect(document.querySelector('h1').textContent).toContain('Kiosco');
         expect(screen.findAllByAltText("kiosco icon")).toBeTruthy()
   });

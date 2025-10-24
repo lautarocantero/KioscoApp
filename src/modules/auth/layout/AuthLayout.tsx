@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import type { PropsWithChildren } from "react";
 import React, { useContext } from "react";
 import { ThemeContext } from "../../theme/ThemeContext";
+import LoginAppBar from "./LoginAppBar/LoginAppBar";
 
 const AuthLayout = ({ children }: PropsWithChildren) => {
   const { appTheme } = useContext(ThemeContext);
@@ -50,7 +51,29 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
             minWidth: { xs: "100%", md: "50%" },
           })}
         >
-          {children}
+          <LoginAppBar />
+          <Grid
+            container
+            component="main"
+            rowSpacing={15}
+            sx={(theme) => ({
+              display: { xs: "flex", md: "flex" },
+              flexDirection: { md: "column" },
+              alignItems: { xs: "center", md: "center" },
+              width: { xs: "100%", sm: "90%", md: "80%" },
+              justifyContent: "center",
+              margin: "auto",
+              padding: "3em 0",
+              borderRadius: { xs: "0", md: "1em" },
+              overflowX: "hidden",
+              backgroundColor: {
+                xs: "transparent",
+                md: theme.custom?.backgroundDark || "rgba(0,0,0,0.6)",
+              },
+            })}
+          >
+            {children}
+          </Grid>
         </Grid>
       </Grid>
     </Box>
