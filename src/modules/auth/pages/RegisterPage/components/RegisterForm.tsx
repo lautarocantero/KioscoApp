@@ -28,16 +28,22 @@ const getValidationSchema = () =>
 const RegisterForm = () => {
   const { errors, values, handleSubmit, setFieldValue } = useFormik({
     initialValues: getInitialValues(),
-    onSubmit: (data) => {
-      console.log(data);
-    },
+    onSubmit: (data) => {},
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema: getValidationSchema(),
   });
 
   return (
-    <Box component={"form"} role="form" onSubmit={handleSubmit}>
+    <Box
+      component={"form"}
+      role="form"
+      onSubmit={handleSubmit}
+      sx={{
+        maxWidth: { xs: "12em", sm: "100%" },
+        height: "100%",
+      }}
+    >
       <RegisterFormInputs
         values={values}
         setFieldValue={setFieldValue}

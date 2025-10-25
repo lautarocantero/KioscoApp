@@ -2,6 +2,7 @@ import PrimaryButton from "../../../../../shared/components/PrimaryButton";
 import EmptyButton from "../../../../../shared/components/EmptyButton";
 import { Button, Grid, Typography } from "@mui/material";
 import { Google } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormButtonsProps {
   errors: {
@@ -11,6 +12,8 @@ interface LoginFormButtonsProps {
 }
 
 const LoginFormButtons = ({ errors }: LoginFormButtonsProps) => {
+  const navigate = useNavigate();
+
   return (
     <Grid
       container
@@ -71,7 +74,9 @@ const LoginFormButtons = ({ errors }: LoginFormButtonsProps) => {
       <Grid component={"div"} width={"100%"}>
         <EmptyButton
           buttonText="Crear cuenta"
-          buttonOnClick={() => {}}
+          buttonOnClick={() => {
+            navigate("/register");
+          }}
           buttonWidth="100%"
         />
       </Grid>

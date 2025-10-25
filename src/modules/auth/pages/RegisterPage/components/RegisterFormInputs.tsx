@@ -30,7 +30,7 @@ const RegisterFormInputs = ({
   return (
     <Grid container display="flex" flexDirection={"column"} gap={2}>
       <Grid container display={"flex"} flexDirection={"row"} gap={2}>
-        <Grid spacing={{ xs: 12, md: 6 }}>
+        <Grid spacing={{ xs: 12, sm: 6 }}>
           <TextField
             fullWidth
             name="user"
@@ -68,7 +68,7 @@ const RegisterFormInputs = ({
           />
         </Grid>
 
-        <Grid spacing={{ xs: 12, md: 6 }}>
+        <Grid spacing={{ xs: 12, sm: 6 }}>
           <TextField
             label="E-mail"
             value={values?.email}

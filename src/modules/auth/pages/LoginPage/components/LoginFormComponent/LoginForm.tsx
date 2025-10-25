@@ -29,9 +29,7 @@ const getValidationSchema = () =>
 const LoginForm = ({ showForm }: LoginFormProps) => {
   const { handleSubmit, values, setFieldValue, errors } = useFormik({
     initialValues: getInitialValues(),
-    onSubmit: (data) => {
-      console.log(data);
-    },
+    onSubmit: (data) => {},
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema: getValidationSchema(),
@@ -42,6 +40,7 @@ const LoginForm = ({ showForm }: LoginFormProps) => {
   return (
     <Box
       component="form"
+      role="form"
       onSubmit={handleSubmit}
       sx={{
         width: "100%",
