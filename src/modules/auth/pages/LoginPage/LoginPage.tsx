@@ -1,24 +1,18 @@
-import { Grid } from "@mui/material";
-import LoginSideImage from "./LoginSideImage";
-import LoginSideForm from "./LoginSideForm";
+import { lazy, Suspense } from "react";
+import AuthLayout from "../../layout/AuthLayout";
+import LoginLoader from "./components/LoginFormComponent/LoginLoader";
+
+const LoginFormHandler = lazy(
+  () => import("./components/LoginFormComponent/LoginFormHandler")
+);
 
 const LoginPage = () => {
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="center"
-      display={"flex"}
-      flexDirection={"column"}
-      margin={"auto"}
-      spacing={30}
-      marginTop={"40%"}
-      width={"80%"}
-      backgroundColor={"black"}
-    >
-      <LoginSideImage />
-      <LoginSideForm />
-    </Grid>
+    <AuthLayout>
+      <Suspense fallback={<LoginLoader />}>
+        <LoginFormHandler />
+      </Suspense>
+    </AuthLayout>
   );
 };
 
