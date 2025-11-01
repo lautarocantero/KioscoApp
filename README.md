@@ -56,6 +56,16 @@ yarn
 # Iniciar el entorno de desarrollo
 yarn dev
 ```
+## 📦 Instalacion en ubuntu
+
+# Instalar yarn
+sudo npm install -g yarn
+# Instalacion NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+cerrar terminal
+# Instalacion Node 20 o superior
+nvm install 20
+nvm use 20
 
 ## ✨ Características (Planeadas)
 
@@ -68,9 +78,6 @@ yarn dev
 
 _Se agregarán imágenes cuando haya pantallas desarrolladas._
 
-## 🤝 Contribuciones
-
-Este proyecto está abierto a mejoras. En el futuro, se podrán proponer nuevas funcionalidades mediante _issues_ y _pull requests_.
 
 ## 📅 Roadmap Futuro
 
