@@ -20,26 +20,26 @@ Kiosco es una aplicación web diseñada para pequeños negocios, como kioscos o 
 Este proyecto sigue los principios de Screaming Architecture, donde la estructura está orientada al dominio y no a las tecnologías.
 
 📂 Estructura del Proyecto
-src/
-├── app/ # Configuración de rutas, layout principal y providers globales
-├── auth/ # Módulo de autenticación y autorización
-├── core/ # Configuración global, servicios base, helpers
-├── inventory/ # Lógica y pantallas de inventario (stock, almacenes)
-├── products/ # Gestión de productos (CRUD, categorías, precios)
-├── sales/ # Ventas, tickets y reportes
-├── shared/ # Componentes y utilidades reutilizables
-├── users/ # Gestión de usuarios y roles
-├── assets/ # Imágenes y recursos estáticos
-└── main.tsx # Punto de entrada
-
-🗂️ Estructura Interna por Módulo
-products/
-├── components/ # Componentes UI específicos del dominio
-├── pages/ # Pantallas o rutas del módulo
-├── hooks/ # Custom hooks del dominio
-├── services/ # Lógica de datos / API
-└── types/ # Modelos y tipados
-
+src/<br>
+├── app/     # Configuración de rutas, layout principal y providers globales<br>
+├── auth/     # Módulo de autenticación y autorización<br>
+├── core/     # Configuración global, servicios base, helpers<br>
+├── inventory/ # Lógica y pantallas de inventario (stock, almacenes)<br>
+├── products/ # Gestión de productos (CRUD, categorías, precios)<br>
+├── sales/ # Ventas, tickets y reportes<br>
+├── shared/ # Componentes y utilidades reutilizables<br>
+├── users/ # Gestión de usuarios y roles<br>
+├── assets/ # Imágenes y recursos estáticos<br>
+└── main.tsx # Punto de entrada<br>
+<br>
+🗂️ Estructura Interna por Módulo<br>
+products/<br>
+├── components/ # Componentes UI específicos del dominio<br>
+├── pages/ # Pantallas o rutas del módulo<br>
+├── hooks/ # Custom hooks del dominio<br>
+├── services/ # Lógica de datos / API<br>
+└── types/ # Modelos y tipados<br>
+<br>
 ## 🚧 Estado del Proyecto
 
 **En desarrollo** – Actualmente se están construyendo las primeras funcionalidades y estructura inicial.
