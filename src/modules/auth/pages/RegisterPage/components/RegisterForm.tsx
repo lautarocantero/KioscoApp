@@ -27,14 +27,11 @@ const getValidationSchema = () =>
   );
 
     const onSubmit = async (data: any) => {
-      console.log('Datos recibidos:', data);
       try {
         const respuesta = await registrarUsuario(data);
-        console.log('Registro exitoso:', respuesta);
-        // redirigir, mostrar mensaje, etc.
+        console.log(respuesta);
       } catch (error) {
         console.error('Error al registrar:', error);
-        // mostrar feedback sarcástico estilo GLaDOS 😏
       }
     };
   
