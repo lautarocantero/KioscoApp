@@ -2,7 +2,7 @@ import PrimaryButton from "../../../../shared/components/PrimaryButton";
 
 interface RegisterFormButtonsProps {
   errors: {
-    user?: string;
+    username?: string;
     email?: string;
     password?: string;
     confirmPassword?: string;

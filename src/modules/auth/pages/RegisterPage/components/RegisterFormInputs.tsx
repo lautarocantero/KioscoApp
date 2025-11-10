@@ -5,14 +5,14 @@ import { useState } from "react";
 
 interface RegisterFormInputsProps {
   values: {
-    user: string;
+    username: string;
     email: string;
     password: string;
     repeatPassword: string;
   };
   setFieldValue: (field: string, value: string) => void;
   errors: {
-    user?: string;
+    username?: string;
     email?: string;
     password?: string;
     repeatPassword?: string;
@@ -33,14 +33,14 @@ const RegisterFormInputs = ({
         <Grid spacing={{ xs: 12, sm: 6 }}>
           <TextField
             fullWidth
-            name="user"
-            onChange={({ target }) => setFieldValue("user", target?.value)}
+            name="username"
+            onChange={({ target }) => setFieldValue("username", target?.value)}
             placeholder="Jhon"
             type="text"
-            value={values?.user}
+            value={values?.username}
             label="Usuario"
-            error={!!errors.user}
-            helperText={errors?.user?.toString()}
+            error={!!errors.username}
+            helperText={errors?.username?.toString()}
             slotProps={{
               formHelperText: {
                 sx: {

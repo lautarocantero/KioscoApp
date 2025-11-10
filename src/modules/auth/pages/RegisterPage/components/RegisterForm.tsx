@@ -4,9 +4,10 @@ import RegisterFormButtons from "./RegisterFormButtons";
 import { Link as LinkReactRouter } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { registrarUsuario } from '/home/lau/Documentos/github/KioscoApp/FrontEnd/src/modules/auth/api/authApi.ts'
 
 const getInitialValues = () => ({
-  user: "",
+  username: "",
   email: "",
   password: "",
   repeatPassword: "",
@@ -15,7 +16,7 @@ const getInitialValues = () => ({
 const getValidationSchema = () =>
   Yup.lazy(() =>
     Yup.object().shape({
-      user: Yup.string().required("Campo requerido").trim(),
+      username: Yup.string().required("Campo requerido").trim(),
       email: Yup.string()
         .email("Ingresa un E-mail")
         .required("Campo requerido")
@@ -25,10 +26,23 @@ const getValidationSchema = () =>
     })
   );
 
+    const onSubmit = async (data: any) => {
+      console.log('Datos recibidos:', data);
+      try {
+        const respuesta = await registrarUsuario(data);
+        console.log('Registro exitoso:', respuesta);
+        // redirigir, mostrar mensaje, etc.
+      } catch (error) {
+        console.error('Error al registrar:', error);
+        // mostrar feedback sarcástico estilo GLaDOS 😏
+      }
+    };
+  
+
 const RegisterForm = () => {
   const { errors, values, handleSubmit, setFieldValue } = useFormik({
     initialValues: getInitialValues(),
-    onSubmit: (data) => {},
+    onSubmit,
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema: getValidationSchema(),
