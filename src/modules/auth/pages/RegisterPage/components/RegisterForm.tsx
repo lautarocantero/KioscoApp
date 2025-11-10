@@ -4,7 +4,25 @@ import RegisterFormButtons from "./RegisterFormButtons";
 import { Link as LinkReactRouter } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { registrarUsuario } from '/home/lau/Documentos/github/KioscoApp/FrontEnd/src/modules/auth/api/authApi.ts'
+import { registrarUsuario } from '/home/lau/Documentos/github/KioscoApp/FrontEnd/src/modules/auth/api/authApi.ts';
+
+// 🎭 Sanitizador expresivo
+const sanitizeInput = (input: string, label: string): string => {
+  if (typeof input !== 'string') {
+    console.warn(`🤖 [${label}] no es texto. Se forzó a string.`);
+    input = String(input);
+  }
+
+  const sanitized = input.replace(/[^a-zA-Z0-9 @._\-]/g, '?');
+
+  if (sanitized !== input) {
+    console.warn(`⚠️ [${label}] contenía caracteres sospechosos. Se reemplazaron con "?"`);
+    console.warn(`🎭 Original: "${input}"`);
+    console.warn(`🧼 Sanitizado: "${sanitized}"`);
+  }
+
+  return sanitized;
+};
 
 const getInitialValues = () => ({
   username: "",
@@ -26,15 +44,22 @@ const getValidationSchema = () =>
     })
   );
 
-    const onSubmit = async (data: any) => {
-      try {
-        const respuesta = await registrarUsuario(data);
-        console.log(respuesta);
-      } catch (error) {
-        console.error('Error al registrar:', error);
-      }
+// 🧼 Sanitización antes de enviar
+const onSubmit = async (data: any) => {
+  try {
+    const sanitizedData = {
+      username: sanitizeInput(data.username, 'Username'),
+      email: sanitizeInput(data.email, 'Email'),
+      password: sanitizeInput(data.password, 'Password'),
+      repeatPassword: sanitizeInput(data.repeatPassword, 'RepeatPassword'),
     };
-  
+
+    const respuesta = await registrarUsuario(sanitizedData as any);
+    console.log(respuesta);
+  } catch (error) {
+    console.error('Error al registrar:', error);
+  }
+};
 
 const RegisterForm = () => {
   const { errors, values, handleSubmit, setFieldValue } = useFormik({

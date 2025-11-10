@@ -74,6 +74,7 @@ const RegisterFormInputs = ({
             value={values?.email}
             onChange={({ target }) => setFieldValue("email", target?.value)}
             type="email"
+            name="email"
             placeholder="JhonDoe@gmail.com"
             variant="standard"
             slotProps={{
@@ -118,6 +119,7 @@ const RegisterFormInputs = ({
           value={values?.password}
           onChange={({ target }) => setFieldValue("password", target?.value)}
           placeholder="Contraseña"
+          name="password"
           type={!showPassword ? "text" : "password"}
           variant="standard"
           slotProps={{
@@ -190,6 +192,7 @@ const RegisterFormInputs = ({
           label="Repite la Contraseña"
           value={values?.repeatPassword}
           placeholder="Repite la Contraseña"
+          name="repeatPassword"
           onChange={({ target }) =>
             setFieldValue("repeatPassword", target?.value)
           }
