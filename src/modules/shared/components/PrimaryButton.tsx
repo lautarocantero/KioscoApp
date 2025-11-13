@@ -6,6 +6,7 @@ interface PrimaryButtonProps {
   buttonWidth?: string;
   buttonType?: "button" | "reset" | "submit";
   buttonColor?: "default" | "error";
+  dataTestId?: "default" | string;
 }
 
 const PrimaryButton = ({
@@ -14,6 +15,7 @@ const PrimaryButton = ({
   buttonWidth = "280px",
   buttonType = "button",
   buttonColor = "default",
+  dataTestId = 'default',
 }: PrimaryButtonProps) => {
   return (
     <Button
@@ -33,6 +35,7 @@ const PrimaryButton = ({
       onClick={buttonOnClick}
       type={buttonType}
       role="button"
+      data-testid={dataTestId}
     >
       {buttonText}
     </Button>

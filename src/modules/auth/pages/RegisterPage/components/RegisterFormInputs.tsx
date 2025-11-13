@@ -1,29 +1,15 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { IconButton, InputAdornment, TextField, type Theme } from "@mui/material";
 import { Grid } from "@mui/system";
 import { useState } from "react";
+import type { RegisterFormInputsInterface } from "../../../../../typings/auth/authTypes";
 
-interface RegisterFormInputsProps {
-  values: {
-    username: string;
-    email: string;
-    password: string;
-    repeatPassword: string;
-  };
-  setFieldValue: (field: string, value: string) => void;
-  errors: {
-    username?: string;
-    email?: string;
-    password?: string;
-    repeatPassword?: string;
-  };
-}
-
-const RegisterFormInputs = ({
-  values,
-  errors,
-  setFieldValue,
-}: RegisterFormInputsProps) => {
+const RegisterFormInputs = (
+  {
+    values,
+    errors,
+    setFieldValue,
+  }: RegisterFormInputsInterface): React.ReactNode  => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
@@ -49,7 +35,7 @@ const RegisterFormInputs = ({
               },
             }}
             variant="standard"
-            sx={(theme) => ({
+            sx={(theme: Theme ) => ({
               input: { color: theme?.custom?.fontColor },
               label: { color: theme?.custom?.fontColor },
               "& .MuiFormHelperText-root": {
@@ -84,7 +70,7 @@ const RegisterFormInputs = ({
                 },
               },
             }}
-            sx={(theme) => ({
+            sx={(theme: Theme ) => ({
               input: { color: theme?.custom?.fontColor },
               label: { color: theme?.custom?.fontColor },
               "& .MuiFormHelperText-root": {
@@ -129,7 +115,7 @@ const RegisterFormInputs = ({
               },
             },
           }}
-          sx={(theme) => ({
+          sx={(theme: Theme ) => ({
             input: { color: theme?.custom?.fontColor },
             label: { color: theme?.custom?.fontColor },
             "& .MuiFormHelperText-root": {
@@ -155,7 +141,7 @@ const RegisterFormInputs = ({
                   {showPassword ? (
                     <VisibilityOff
                       sx={{
-                        color: (theme) =>
+                        color: (theme: Theme ) =>
                           errors.password
                             ? theme?.palette?.error?.main
                             : theme?.custom?.fontColor,
@@ -164,7 +150,7 @@ const RegisterFormInputs = ({
                   ) : (
                     <Visibility
                       sx={{
-                        color: (theme) =>
+                        color: (theme: Theme ) =>
                           errors.password
                             ? theme?.palette?.error?.main
                             : theme?.custom?.fontColor,
@@ -205,7 +191,7 @@ const RegisterFormInputs = ({
               },
             },
           }}
-          sx={(theme) => ({
+          sx={(theme: Theme ) => ({
             input: { color: theme?.custom?.fontColor },
             label: { color: theme?.custom?.fontColor },
             "& .MuiFormHelperText-root": {
@@ -231,7 +217,7 @@ const RegisterFormInputs = ({
                   {showRepeatPassword ? (
                     <VisibilityOff
                       sx={{
-                        color: (theme) =>
+                        color: (theme: Theme ) =>
                           errors.password
                             ? theme?.palette?.error?.main
                             : theme?.custom?.fontColor,
@@ -240,7 +226,7 @@ const RegisterFormInputs = ({
                   ) : (
                     <Visibility
                       sx={{
-                        color: (theme) =>
+                        color: (theme: Theme ) =>
                           errors.password
                             ? theme?.palette?.error?.main
                             : theme?.custom?.fontColor,

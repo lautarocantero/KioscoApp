@@ -1,15 +1,7 @@
+import type { RegisterFormButtonsInterface } from "../../../../../typings/auth/authTypes";
 import PrimaryButton from "../../../../shared/components/PrimaryButton";
 
-interface RegisterFormButtonsProps {
-  errors: {
-    username?: string;
-    email?: string;
-    password?: string;
-    confirmPassword?: string;
-  };
-}
-
-const RegisterFormButtons = ({ errors }: RegisterFormButtonsProps) => {
+const RegisterFormButtons = ({ errors }: RegisterFormButtonsInterface): React.ReactNode => {
   return (
     <>
       <PrimaryButton

@@ -1,27 +1,33 @@
-import { Grid } from "@mui/material";
+import { Grid, type Theme } from "@mui/material";
 import LinksComponent from "../../../shared/components/LinksComponent";
 import { useLocation } from "react-router-dom";
+import type { LinkInterface } from "../../../../typings/ui/uiModules";
+import { Breakpoint, UnderlineVariant } from "../../../../typings/ui/ui";
 
-const getAvailableLinks = (pathname: string) => [
+const getAvailableLinks = (pathname: string) : LinkInterface[] => [
   {
     label: "Inicio de sesión",
     to: "/login",
     underline: {
-      xs: "none" as const,
-      md: pathname === "/login" ? ("underline" as const) : ("none" as const),
+      [Breakpoint.Xs]: UnderlineVariant.None,
+      [Breakpoint.Md]: pathname === "/login"
+        ? UnderlineVariant.Underline
+        : UnderlineVariant.None,
     },
   },
   {
     label: "Registro",
     to: "/register",
     underline: {
-      xs: "none" as const,
-      md: pathname === "/register" ? ("underline" as const) : ("none" as const),
+      [Breakpoint.Xs]: UnderlineVariant.None,
+      [Breakpoint.Md]: pathname === "/register"
+        ? UnderlineVariant.Underline
+        : UnderlineVariant.None,
     },
   },
 ];
 
-const LoginAppBarLinks = () => {
+const LoginAppBarLinks = (): React.ReactNode => {
   const location = useLocation();
 
   return (
@@ -31,7 +37,7 @@ const LoginAppBarLinks = () => {
       flexDirection="row"
       gap={2}
       sx={{
-        color: (theme) => theme?.custom?.fontColor,
+        color: (theme: Theme) => theme?.custom?.fontColor,
       }}
     >
       <LinksComponent linksToShow={getAvailableLinks(location.pathname)} />

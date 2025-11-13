@@ -1,10 +1,11 @@
-import { Box, Link } from "@mui/material";
+import { Box, Link, type Theme } from "@mui/material";
 import RegisterFormInputs from "./RegisterFormInputs";
 import RegisterFormButtons from "./RegisterFormButtons";
 import { Link as LinkReactRouter } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { registrarUsuario } from '/home/lau/Documentos/github/KioscoApp/FrontEnd/src/modules/auth/api/authApi.ts';
+import { registerUserRequest } from '/home/lau/Documentos/github/KioscoApp/FrontEnd/src/modules/auth/api/authApi.ts';
+import type { AuthRegisterData } from "../../../../../typings/auth/authTypes";
 
 // 🎭 Sanitizador expresivo
 const sanitizeInput = (input: string, label: string): string => {
@@ -13,7 +14,7 @@ const sanitizeInput = (input: string, label: string): string => {
     input = String(input);
   }
 
-  const sanitized = input.replace(/[^a-zA-Z0-9 @._\-]/g, '?');
+  const sanitized = input.replace(/[^a-zA-Z0-9 @._-]/g, '?');
 
   if (sanitized !== input) {
     console.warn(`⚠️ [${label}] contenía caracteres sospechosos. Se reemplazaron con "?"`);
@@ -45,7 +46,7 @@ const getValidationSchema = () =>
   );
 
 // 🧼 Sanitización antes de enviar
-const onSubmit = async (data: any) => {
+const onSubmit = async (data: AuthRegisterData) => {
   try {
     const sanitizedData = {
       username: sanitizeInput(data.username, 'Username'),
@@ -54,14 +55,14 @@ const onSubmit = async (data: any) => {
       repeatPassword: sanitizeInput(data.repeatPassword, 'RepeatPassword'),
     };
 
-    const respuesta = await registrarUsuario(sanitizedData as any);
+    const respuesta = await registerUserRequest(sanitizedData as AuthRegisterData);
     console.log(respuesta);
   } catch (error) {
     console.error('Error al registrar:', error);
   }
 };
 
-const RegisterForm = () => {
+const RegisterForm = (): React.ReactNode => {
   const { errors, values, handleSubmit, setFieldValue } = useFormik({
     initialValues: getInitialValues(),
     onSubmit,
@@ -94,8 +95,8 @@ const RegisterForm = () => {
           textDecoration: "none",
           textAlign: "center",
           display: "block",
-          color: (theme) => theme?.custom?.fontColorTransparent,
-          fontSize: (theme) => theme?.typography?.body2.fontSize,
+          color: (theme: Theme ) => theme?.custom?.fontColorTransparent,
+          fontSize: (theme: Theme ) => theme?.typography?.body2.fontSize,
           borderRadius: "1em",
           width: "100%",
         }}

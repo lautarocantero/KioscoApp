@@ -1,19 +1,25 @@
 import axios from 'axios';
+import type { AuthLoginPayload, AuthRegisterPayload } from '../../../typings/auth/authTypes';
 
-interface RegistroPayload {
-  nombre: string;
-  email: string;
-  password: string;
-  repeatPassword?: string; // opcional
-}
 
-const api = axios.create({
+const baseUrl = axios.create({
   baseURL: 'http://localhost:3000/auth',
   timeout: 5000,
   headers: { 'Content-Type': 'application/json' }
 })
 
-export const registrarUsuario = async (data: RegistroPayload) => {
-  const response = await api.post('/register', data);
+export const registerUserRequest = async (data: AuthRegisterPayload) => {
+  const response = await baseUrl.post('/register', data);
   return response.data;
 };
+
+
+export const authLoginRequest = async (data: AuthLoginPayload) => {
+  const response = await baseUrl.post('/login', data);
+  return response.data;
+};
+
+export const authLogoutRequest = async () => {
+  const response = await baseUrl.post('/logout');
+  return response;
+}

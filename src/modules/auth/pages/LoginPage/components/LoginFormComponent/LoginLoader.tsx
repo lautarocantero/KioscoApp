@@ -1,11 +1,11 @@
-import { CircularProgress, Typography, Grid } from "@mui/material";
+import { CircularProgress, Typography, Grid, type Theme } from "@mui/material";
 
-const LoginLoader = () => {
+const LoginLoader = (): React.ReactNode => {
   return (
     <Grid
       container
       rowSpacing={15}
-      sx={(theme) => ({
+      sx={(theme: Theme) => ({
         display: { xs: "flex", md: "flex" },
         flexDirection: { md: "column" },
         alignItems: { xs: "center" },
@@ -23,7 +23,7 @@ const LoginLoader = () => {
     >
       <Typography
         variant="h2"
-        sx={(theme) => ({
+        sx={(theme: Theme) => ({
           fontSize: theme?.typography?.h2?.fontSize,
         })}
       >

@@ -6,7 +6,7 @@ const LoginFormHandler = lazy(
   () => import("./components/LoginFormComponent/LoginFormHandler")
 );
 
-const LoginPage = () => {
+const LoginPage = (): React.ReactNode => {
   return (
     <AuthLayout>
       <Suspense fallback={<LoginLoader />}>

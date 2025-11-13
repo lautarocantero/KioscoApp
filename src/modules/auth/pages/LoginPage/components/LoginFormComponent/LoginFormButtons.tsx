@@ -1,17 +1,11 @@
 import PrimaryButton from "../../../../../shared/components/PrimaryButton";
 import EmptyButton from "../../../../../shared/components/EmptyButton";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, type Theme } from "@mui/material";
 import { Google } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import type { LoginFormButtonsInterface } from "../../../../../../typings/auth/authTypes";
 
-interface LoginFormButtonsProps {
-  errors: {
-    email?: string;
-    password?: string;
-  };
-}
-
-const LoginFormButtons = ({ errors }: LoginFormButtonsProps) => {
+const LoginFormButtons = ({ errors }: LoginFormButtonsInterface) => {
   const navigate = useNavigate();
 
   return (
@@ -34,8 +28,8 @@ const LoginFormButtons = ({ errors }: LoginFormButtonsProps) => {
       <Grid component={"div"}>
         <Typography
           sx={{
-            color: (theme) => theme?.custom?.fontColor,
-            fontSize: (theme) => theme?.typography?.body2?.fontSize,
+            color: (theme: Theme) => theme?.custom?.fontColor,
+            fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
             textAlign: "center",
             margin: 2,
           }}
@@ -52,10 +46,10 @@ const LoginFormButtons = ({ errors }: LoginFormButtonsProps) => {
         <Grid component={"div"}>
           <Button
             sx={{
-              backgroundColor: (theme) => theme?.palette?.error?.main,
+              backgroundColor: (theme: Theme) => theme?.palette?.error?.main,
               borderRadius: "35px",
-              color: (theme) => theme?.custom?.white,
-              fontSize: (theme) => theme?.typography?.body2?.fontSize,
+              color: (theme: Theme) => theme?.custom?.white,
+              fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
               textTransform: "none",
               fontWeight: "bold",
             }}
@@ -63,7 +57,7 @@ const LoginFormButtons = ({ errors }: LoginFormButtonsProps) => {
           >
             <Google
               sx={{
-                fontSize: (theme) => theme?.typography?.body1?.fontSize,
+                fontSize: (theme: Theme) => theme?.typography?.body1?.fontSize,
                 mr: 1,
               }}
             />

@@ -2,7 +2,7 @@ import { AppBar, Toolbar } from "@mui/material";
 import React from "react";
 import LoginAppBarContent from "./LoginAppBarContent";
 
-const LoginAppBar = () => {
+const LoginAppBar = (): React.ReactNode => {
   return (
     <AppBar
       position="fixed"

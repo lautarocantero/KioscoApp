@@ -1,14 +1,15 @@
-import { Box, Link } from "@mui/material";
+import { Box, Link, type Theme } from "@mui/material";
 import { Link as LinkReactRouter } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import LoginFormInputs from "./LoginFormInputs";
 import LoginFormButtons from "./LoginFormButtons";
 import "animate.css";
+import { startLoginWithEmailPassword } from "../../../../../../store/auth/thunks";
+import { useDispatch } from "react-redux";
+import type { AuthLoginData, LoginFormInterface } from "../../../../../../typings/auth/authTypes";
+import type { AppDispatch } from "../../../../../../store/auth/authSlice";
 
-interface LoginFormProps {
-  showForm: boolean;
-}
 
 const getInitialValues = () => ({
   email: "",
@@ -26,10 +27,18 @@ const getValidationSchema = () =>
     })
   );
 
-const LoginForm = ({ showForm }: LoginFormProps) => {
+  
+const LoginForm = ({ showForm }: LoginFormInterface): React.ReactNode | null => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const onSubmit = async (data: AuthLoginData) => {
+    const {email, password} = data;
+    dispatch(startLoginWithEmailPassword({email,password}));
+  }
+
   const { handleSubmit, values, setFieldValue, errors } = useFormik({
     initialValues: getInitialValues(),
-    onSubmit: (data) => {},
+    onSubmit,
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema: getValidationSchema(),
@@ -63,9 +72,9 @@ const LoginForm = ({ showForm }: LoginFormProps) => {
           textDecoration: "none",
           textAlign: "center",
           display: "block",
-          color: (theme) => theme?.custom?.fontColor,
-          fontSize: (theme) => theme?.typography?.body2.fontSize,
-          backgroundColor: (theme) => theme?.custom?.background,
+          color: (theme: Theme) => theme?.custom?.fontColor,
+          fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
+          backgroundColor: (theme: Theme) => theme?.custom?.background,
           borderRadius: "1em",
           width: "100%",
         }}

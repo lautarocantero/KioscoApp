@@ -2,12 +2,10 @@ import { Grid } from "@mui/material";
 import PrimaryButton from "../../../../../shared/components/PrimaryButton";
 import EmptyButton from "../../../../../shared/components/EmptyButton";
 import { useNavigate } from "react-router-dom";
+import type { FormToggleButtonInterface } from "../../../../../../typings/auth/authTypes";
 
-interface InitialFormButtonsProps {
-  setShowForm?: (value: boolean) => void;
-}
 
-const InitialFormButtons = ({ setShowForm }: InitialFormButtonsProps) => {
+const InitialFormButtons = ({ setShowForm }: FormToggleButtonInterface): React.ReactNode => {
   const handleNavigate = useNavigate();
   return (
     <Grid component={"div"} display={"flex"} flexDirection={"column"} gap={3}>
@@ -16,6 +14,7 @@ const InitialFormButtons = ({ setShowForm }: InitialFormButtonsProps) => {
         buttonOnClick={() => {
           setShowForm?.(true);
         }}
+        dataTestId='introduction-login-button'
       />
       <EmptyButton
         buttonText={"Registrarse"}

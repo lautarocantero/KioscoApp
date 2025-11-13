@@ -1,22 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { store } from '../store';
+import type { AuthErrorPayload, AuthLoginPayload, AuthSliceState } from '../../typings/auth/authTypes';
+import { AuthStatus } from '../../typings/auth/enums';
 
-type AuthStatus = "authenticated" | "checking" | "not-authenticated";
 
-export interface authState {
-    status: AuthStatus,
-    id: string | null,    
-    email: string,
-    name: string,
-    profilePhoto: string | null,
-    errorMessage: string | null | undefined,
-}
-
-const initialState: authState = {
-    status: 'checking',
-    id: null,    
+const initialState: AuthSliceState = {
+    status: AuthStatus.Checking,
+    _id: null,    
     email: '',
-    name: '',
+    username: '',
     profilePhoto: null,
     errorMessage: null,
 }
@@ -25,26 +17,26 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state: authState, {payload} ) => {
-            state.status = 'authenticated';
+        login: (state: AuthSliceState, payload: AuthLoginPayload) => {
+            state.status = AuthStatus.Authenticated;
             state.email = payload?.email;
-            state.name = payload?.displayName;
+            state.username = payload?.displayName;
             state.profilePhoto = payload?.photoUrl;
-            state.id = payload?.uid;
+            state._id = payload?.uid;
             state.errorMessage = null;
         },
-        logout: (state: authState, action: PayloadAction<{ errorMessage?: string} | undefined>) => {
-            state.status = 'not-authenticated';
+        logout: (state: AuthSliceState, action: PayloadAction<AuthErrorPayload | undefined>) => {
+            state.status = AuthStatus.NotAuthenticated;
             state.email = '';
-            state.name = '';
+            state.username = '';
             state.profilePhoto = null;
-            state.id = null;
+            state._id = null;
             state.errorMessage = action?.payload?.errorMessage;
         },
-        checkingCredentials: (state: authState ) => {
-            state.status = 'checking';
+        checkingCredentials: (state: AuthSliceState ) => {
+            state.status = AuthStatus.Checking;
         },
-        clearAuthError: (state: authState) => {
+        clearAuthError: (state: AuthSliceState) => {
             state.errorMessage = null;
         }
     }

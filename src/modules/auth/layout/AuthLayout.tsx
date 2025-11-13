@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, type Theme } from "@mui/material";
 import { Grid } from "@mui/material";
 import type { PropsWithChildren } from "react";
 import React, { useContext } from "react";
@@ -46,7 +46,7 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
           spacing={{ xs: 12, sm: 6 }}
           display={"flex"}
           alignItems={"center"}
-          sx={(theme) => ({
+          sx={(theme: Theme) => ({
             backgroundColor: { md: theme.custom?.background },
             minWidth: { xs: "100%", md: "50%" },
           })}
@@ -56,7 +56,7 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
             container
             component="main"
             rowSpacing={15}
-            sx={(theme) => ({
+            sx={(theme: Theme) => ({
               display: { xs: "flex", md: "flex" },
               flexDirection: { md: "column" },
               alignItems: { xs: "center", md: "center" },

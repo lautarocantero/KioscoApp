@@ -1,6 +1,6 @@
 import LoginPage from "./LoginPage";
 
-const LoginPageContainer = () => {
+const LoginPageContainer = (): React.ReactNode => {
   return <LoginPage />;
 };
 

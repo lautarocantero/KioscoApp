@@ -1,25 +1,14 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Grid, IconButton, InputAdornment, TextField } from "@mui/material";
+import { Grid, IconButton, InputAdornment, TextField, type Theme } from "@mui/material";
 import { useState } from "react";
 import AuthTitle from "./AuthTitle";
-
-interface LoginFormInputsProps {
-  values: {
-    email: string;
-    password: string;
-  };
-  setFieldValue: (field: string, value: string) => void;
-  errors: {
-    email?: string;
-    password?: string;
-  };
-}
+import type { LoginFormInputsInterface } from "../../../../../../typings/auth/authTypes";
 
 const LoginFormInputs = ({
   values,
   setFieldValue,
   errors,
-}: LoginFormInputsProps) => {
+}: LoginFormInputsInterface) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -52,7 +41,7 @@ const LoginFormInputs = ({
             },
           }}
           variant="standard"
-          sx={(theme) => ({
+          sx={(theme: Theme ) =>  ({
             input: { color: theme?.custom?.fontColor },
             label: { color: theme?.custom?.fontColor },
             "& .MuiFormHelperText-root": {
@@ -91,7 +80,7 @@ const LoginFormInputs = ({
             },
           }}
           variant="standard"
-          sx={(theme) => ({
+          sx={(theme: Theme ) => ({
             input: { color: theme?.custom?.fontColor },
             label: { color: theme?.custom?.fontColor },
             "& .MuiFormHelperText-root": {
@@ -117,7 +106,7 @@ const LoginFormInputs = ({
                   {showPassword ? (
                     <VisibilityOff
                       sx={{
-                        color: (theme) =>
+                        color: (theme: Theme ) =>
                           errors.password
                             ? theme?.palette?.error?.main
                             : theme?.custom?.fontColor,
@@ -126,7 +115,7 @@ const LoginFormInputs = ({
                   ) : (
                     <Visibility
                       sx={{
-                        color: (theme) =>
+                        color: (theme: Theme ) =>
                           errors.password
                             ? theme?.palette?.error?.main
                             : theme?.custom?.fontColor,

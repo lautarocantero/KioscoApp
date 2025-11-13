@@ -1,32 +1,28 @@
-import { Link } from "@mui/material";
+import { Link, type Theme } from "@mui/material";
 import { Link as LinkReactRouter } from "react-router-dom";
+import type { LinkInterface, LinksComponentInterface } from "../../../typings/ui/uiModules";
+import { Breakpoint } from "../../../typings/ui/ui";
 
-interface LinksComponentProps {
-  linksToShow: {
-    label: string;
-    to: string;
-    underline: { xs: "none" | "underline"; md: "none" | "underline" };
-  }[];
-}
-
-const LinksComponent = ({ linksToShow }: LinksComponentProps) => {
+const LinksComponent = ({ linksToShow }: LinksComponentInterface) => {
   return (
     <>
-      {linksToShow.map((link) => (
-        <Link
-          key={link.to}
-          aria-label={link.label}
-          component={LinkReactRouter}
-          to={link.to}
-          sx={{
-            fontSize: (theme) => theme?.typography?.caption?.fontSize,
-            textDecoration: { xs: link.underline.xs, md: link.underline.md },
-            color: (theme) => theme?.custom?.fontColor,
-          }}
-        >
-          {link.label}
-        </Link>
-      ))}
+      {linksToShow.map((link: LinkInterface) => {
+        const {label, to, underline} = link;
+        (
+          <Link
+            key={to}
+            aria-label={label}
+            component={LinkReactRouter}
+            to={to}
+            sx={{
+              fontSize: (theme: Theme) => theme?.typography?.caption?.fontSize,
+              textDecoration: { [Breakpoint.Xs]: underline.xs, [Breakpoint.Md]: underline.md },
+              color: (theme: Theme) => theme?.custom?.fontColor,
+            }}
+          >
+            {label}
+          </Link>
+      )})}
     </>
   );
 };
