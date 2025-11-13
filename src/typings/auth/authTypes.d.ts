@@ -50,9 +50,9 @@ export type AuthRegisterData = Pick<AuthDataBase, 'username', 'email','password'
 // payload del slice
 export type AuthLoginPayload = Pick<AuthDataBase, 
     'email',
-    'displayName',
+    'username',
     'photoUrl',
-    'uid'>;
+    '_id'>;
 
 export type AuthErrorPayload = Pick<AuthDataBase, 'errorMessage'>;
 

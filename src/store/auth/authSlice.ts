@@ -17,13 +17,18 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state: AuthSliceState, payload: AuthLoginPayload) => {
+        login: (state: AuthSliceState, action: PayloadAction<AuthLoginPayload>) => {
+            const {payload} = action;
+            const {email, username, profilePhoto, _id} = payload;
             state.status = AuthStatus.Authenticated;
-            state.email = payload?.email;
-            state.username = payload?.displayName;
-            state.profilePhoto = payload?.photoUrl;
-            state._id = payload?.uid;
+            state.email = email ?? '';
+            state.username = username ?? '';
+            state.profilePhoto = profilePhoto ?? null;
+            state._id = _id;
             state.errorMessage = null;
+
+            console.log('Auth slice updated:', state);
+
         },
         logout: (state: AuthSliceState, action: PayloadAction<AuthErrorPayload | undefined>) => {
             state.status = AuthStatus.NotAuthenticated;

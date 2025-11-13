@@ -4,11 +4,12 @@ import { authLoginRequest, authLogoutRequest } from "../../modules/auth/api/auth
 import type { AuthLoginData, AuthPublic } from "../../typings/auth/authTypes";
 
 export const startLoginWithEmailPassword = (
-  { email, password }: AuthLoginData
-): ThunkAction<Promise<AuthPublic | null>, RootState, unknown, ReturnType<typeof login>> => {
-  return async (dispatch) => {
+  { email, password }: AuthLoginData): ThunkAction<Promise<AuthPublic | null>, RootState, unknown, ReturnType<typeof login>> => {
+  
+    return async (dispatch) => {
     dispatch(checkingCredentials());
     try {
+      // TO DO agregar token _token, _refreshToken, 
       const { user } = await authLoginRequest({ email, password });
 
       if (!user) {
@@ -17,11 +18,13 @@ export const startLoginWithEmailPassword = (
       }
 
       dispatch(login({
-        email,
+        email: user.email,
         username: user.username,
-        profilePhoto: null,
-        id: user._id,
+        profilePhoto: user.photoUrl,
+        _id: user._id,
       }));
+
+      //agregar cookies
 
       return user;
     } catch (error: unknown) {
@@ -34,6 +37,8 @@ export const startLoginWithEmailPassword = (
     }
   };
 };
+
+//nunca agregue persistencia de datos xd, hacerlo
 
 export const startLogout = (): ThunkAction<void, RootState, unknown, ReturnType<typeof logout>> => {
     return async(dispatch: Dispatch) => {

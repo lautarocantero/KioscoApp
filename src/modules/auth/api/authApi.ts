@@ -5,7 +5,8 @@ import type { AuthLoginPayload, AuthRegisterPayload } from '../../../typings/aut
 const baseUrl = axios.create({
   baseURL: 'http://localhost:3000/auth',
   timeout: 5000,
-  headers: { 'Content-Type': 'application/json' }
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: true,
 })
 
 export const registerUserRequest = async (data: AuthRegisterPayload) => {

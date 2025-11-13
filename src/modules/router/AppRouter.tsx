@@ -6,23 +6,30 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../store/auth/authSlice";
 
 const AppRouter = () => {
-  const {status} = useSelector((state: RootState) => state?.auth);
- 
+  const {auth} = useSelector((state: RootState) => state);
+  const {status} = auth;
 
   return (
     <Routes>
-      <Route path="*" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-
       {
-        status === 'authenticated' && (
-          <Route path="/home" element={<HomePage />} />
-        )
+        status === 'authenticated'
+          ? (
+            <>
+              <Route path="/home" element={<HomePage />} />
+              <Route path="*" element={<Navigate to="/home" />} />
+            </>
+          )
+          : (
+            <>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </>
+          )
       }
-
-      
-      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
+
+
   );
 };
 
