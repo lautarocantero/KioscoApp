@@ -24,6 +24,18 @@ import ShopStadisticsPage from "../shop/ShopStadisticsPage";
 import AccountPage from "../account/AccountPage";
 import AccountEditPage from "../account/AccountEditPage";
 import AccountSubscriptionPage from "../account/AccountSubscriptionPage";
+import ProvidersPage from "../providers/ProvidersPage";
+import ProvidersListPage from "../providers/ProvidersListPage";
+import ProvidersCreatePage from "../providers/ProvidersCreatePage";
+import ProvidersEditPage from "../providers/ProvidersEditPage";
+import ProductsPage from "../products/ProductsPage";
+import ProductsListPage from "../products/ProductsListPage";
+import ProductsCreatePage from "../products/ProductsCreatePage";
+import ProductsEditPage from "../products/ProductsEditPage";
+import CategoriesPage from "../products/CategoriesPage";
+import CategoriesListPage from "../products/CategoriesListPage";
+import CategoriesCreatePage from "../products/CategoriesCreatePage";
+import CategoriesEditPage from "../products/CategoriesEditPage";
 
 const AppRouter = () => {
   const {auth} = useSelector((state: RootState) => state);
@@ -71,6 +83,22 @@ const AppRouter = () => {
               <Route path="/account" element={<AccountPage />} />
               <Route path="/account-edit" element={<AccountEditPage />} />
               <Route path="/account-subscription" element={<AccountSubscriptionPage />} />
+              {/* providers */}
+              <Route path="/providers" element={<ProvidersPage />} />
+              <Route path="/providers-list" element={<ProvidersListPage />} />
+              <Route path="/providers-create" element={<ProvidersCreatePage />} />
+              <Route path="/providers-edit" element={<ProvidersEditPage />} />
+              {/* products */}
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/products-list" element={<ProductsListPage />} />
+              <Route path="/products-create" element={<ProductsCreatePage />} />
+              <Route path="/products-edit" element={<ProductsEditPage />} />
+              <Route path="/categories" element={<CategoriesPage />} />
+              <Route path="/categories-list" element={<CategoriesListPage />} />
+              <Route path="/categories-create" element={<CategoriesCreatePage />} />
+              <Route path="/categories-edit" element={<CategoriesEditPage />} />
+              
+              
               {/*  */}
               <Route path="*" element={<Navigate to="/home" />} />
             </>

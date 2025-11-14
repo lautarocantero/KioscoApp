@@ -1,44 +1,48 @@
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../store/auth/authSlice";
-import { startLogout } from "../../store/auth/thunks";
 import { Link, type Theme } from '@mui/material';
 import { Link as LinkReactRouter} from 'react-router-dom';
 
-// ventas
-// tienda
-// cuenta
-// proovedores
-// productos
-// cerrar session
-
-
-const HomePage = (): React.ReactNode => {
-    const dispatch = useDispatch<AppDispatch>();
-
+const ProductsPage = () => {
     return (
         <>
-            <h1>Que deseas hacer?</h1>
             <Link
-              component={LinkReactRouter}
-              to={"/sells"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
+                component={LinkReactRouter}
+                to={"/products-list"}
+                sx={{
+                  mt: "1em",
+                  textDecoration: "none",
+                  textAlign: "center",
+                  display: "block",
+                  color: (theme: Theme) => theme?.custom?.fontColor,
+                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
+                  backgroundColor: (theme: Theme) => theme?.custom?.background,
+                  borderRadius: "1em",
+                  width: "100%",
+                }}
             >
-              ventas
+                Ver listado de Productos
+            </Link> 
+            
+            <Link
+                component={LinkReactRouter}
+                to={"/products-create"}
+                sx={{
+                  mt: "1em",
+                  textDecoration: "none",
+                  textAlign: "center",
+                  display: "block",
+                  color: (theme: Theme) => theme?.custom?.fontColor,
+                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
+                  backgroundColor: (theme: Theme) => theme?.custom?.background,
+                  borderRadius: "1em",
+                  width: "100%",
+                }}
+            >
+                Crear Producto
             </Link>
-
+            
             <Link
                 component={LinkReactRouter}
-                to={"/shop"}
+                to={"/products-edit"}
                 sx={{
                   mt: "1em",
                   textDecoration: "none",
@@ -51,12 +55,12 @@ const HomePage = (): React.ReactNode => {
                   width: "100%",
                 }}
             >
-            tienda
-            </Link>
+                Editar Productos
+            </Link>     
 
             <Link
                 component={LinkReactRouter}
-                to={"/account"}
+                to={"/categories"}
                 sx={{
                   mt: "1em",
                   textDecoration: "none",
@@ -69,51 +73,10 @@ const HomePage = (): React.ReactNode => {
                   width: "100%",
                 }}
             >
-            cuenta
-            </Link>            
-
-            <Link
-                component={LinkReactRouter}
-                to={"/providers"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-            proovedores
-            </Link>        
-
-            <Link
-                component={LinkReactRouter}
-                to={"/products"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-            productos
-            </Link>                
-
-            <button onClick={() => dispatch(startLogout())}>
-              Desloguear
-            </button>
-
+            categorias
+            </Link>                                                
         </>
     )
 }
 
-export default HomePage;
+export default ProductsPage;
