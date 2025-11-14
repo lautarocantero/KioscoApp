@@ -55,8 +55,8 @@ const onSubmit = async (data: AuthRegisterData) => {
       repeatPassword: sanitizeInput(data.repeatPassword, 'RepeatPassword'),
     };
 
-    const respuesta = await registerUserRequest(sanitizedData as AuthRegisterData);
-    console.log(respuesta);
+    await registerUserRequest(sanitizedData as AuthRegisterData);
+    return;
   } catch (error) {
     console.error('Error al registrar:', error);
   }

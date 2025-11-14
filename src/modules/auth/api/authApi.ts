@@ -24,3 +24,8 @@ export const authLogoutRequest = async () => {
   const response = await baseUrl.post('/logout');
   return response;
 }
+
+export const authCheckStatusRequest = async () => {
+  const response = await baseUrl.post('/checkAuth');
+  return response;
+}

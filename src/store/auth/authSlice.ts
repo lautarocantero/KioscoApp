@@ -25,10 +25,7 @@ export const authSlice = createSlice({
             state.username = username ?? '';
             state.profilePhoto = profilePhoto ?? null;
             state._id = _id;
-            state.errorMessage = null;
-
-            console.log('Auth slice updated:', state);
-
+            state.errorMessage = null
         },
         logout: (state: AuthSliceState, action: PayloadAction<AuthErrorPayload | undefined>) => {
             state.status = AuthStatus.NotAuthenticated;

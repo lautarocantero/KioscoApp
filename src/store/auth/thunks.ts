@@ -1,6 +1,6 @@
-import type { Dispatch, ThunkAction } from "@reduxjs/toolkit"
+import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { checkingCredentials, login, logout, type RootState } from "./authSlice";
-import { authLoginRequest, authLogoutRequest } from "../../modules/auth/api/authApi";
+import { authCheckStatusRequest, authLoginRequest, authLogoutRequest } from "../../modules/auth/api/authApi";
 import type { AuthLoginData, AuthPublic } from "../../typings/auth/authTypes";
 
 export const startLoginWithEmailPassword = (
@@ -53,4 +53,19 @@ export const startLogout = (): ThunkAction<void, RootState, unknown, ReturnType<
             }
         }
     }
+}
+
+export const startCheckAuth = (): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async () => {
+    try {
+      const response = await authCheckStatusRequest();
+      return response;
+    } catch(error: unknown) {
+        if (error instanceof Error) {
+          throw new Error(error.message);
+        } else {
+          throw new Error('Something went wrong while logout, retry please.');
+        }
+    } 
+  }
 }
