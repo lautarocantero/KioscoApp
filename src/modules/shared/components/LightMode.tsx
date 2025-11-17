@@ -1,6 +1,6 @@
 import { Brightness4, ModeNight } from "@mui/icons-material";
 import { useContext } from "react";
-import { ThemeContext } from "../../theme/ThemeContext";
+import { ThemeContext } from "../../../theme/ThemeContext";
 import { Grid } from "@mui/material";
 
 const LightMode = () => {

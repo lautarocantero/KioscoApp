@@ -3,13 +3,12 @@ import { Grid } from "@mui/material";
 import type { PropsWithChildren } from "react";
 import React, { useContext } from "react";
 import { ThemeContext } from "../../../theme/ThemeContext";
-import LoginAppBar from "./LoginAppBar/LoginAppBar";
+import SharedAppBar from "./SharedAppBar/SharedAppBar";
 
-const AuthLayout = ({ children }: PropsWithChildren) => {
+const AppLayout = ({ children }: PropsWithChildren) => {
   const { appTheme } = useContext(ThemeContext);
-  const backgroundUrl = `url(/images/backgroundImages/${
-    !appTheme ? "black" : "white"
-  }BackgroundImage.jpg)`;
+  const backgroundColor = `${!appTheme ? "#333333" : "#eff0f8"}`;
+  const titleBackgroundColor = `${appTheme ? "#eff0f826" : "#eff0f8"}`;
 
   if (!children || React.Children.count(children) === 0)
     return <Typography>No children Loaded...</Typography>;
@@ -20,7 +19,7 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
       sx={{
         height: "100vh",
         width: "100vw",
-        backgroundImage: backgroundUrl,
+        backgroundColor: backgroundColor,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -51,7 +50,7 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
             minWidth: { xs: "100%", md: "50%" },
           })}
         >
-          <LoginAppBar />
+          <SharedAppBar />
           <Grid
             container
             component="main"
@@ -72,6 +71,15 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
               },
             })}
           >
+            <Grid
+              sx={() => ({
+                backgroundColor: titleBackgroundColor,
+                width: '90%',
+                textAlign: 'center'
+              })}
+            >
+              <Typography>hola</Typography>
+            </Grid>
             {children}
           </Grid>
         </Grid>
@@ -80,4 +88,4 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default AuthLayout;
+export default AppLayout;

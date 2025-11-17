@@ -1,6 +1,6 @@
-import AppRouther from "./modules/router/AppRouter"
-import { AppTheme } from "./modules/theme/AppTheme"
-import { LightDarkThemeProvider } from "./modules/theme/LightDarkThemeProvider"
+import AppRouther from "./router/AppRouter"
+import { AppTheme } from "./theme/AppTheme"
+import { LightDarkThemeProvider } from "./theme/LightDarkThemeProvider"
 
 const KioscoApp = () => {
   return (
