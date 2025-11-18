@@ -12,6 +12,25 @@ export interface LinksComponentInterface {
   linksToShow: LinkInterface[];
 }
 
+export interface AppLayoutProps {
+  title: string;
+}
+
+export type OptionLink = {
+    icon: React.ReactNode,
+    description: string,
+    url: string,
+    function?: () => void | null,
+}
+
+export interface OptionsListInterface {
+    links: OptionLink[],
+}
+
+export interface LogoutButtonProps {
+  appTheme: boolean,
+  dispatch: AppDispatch;
+}
 
 
 

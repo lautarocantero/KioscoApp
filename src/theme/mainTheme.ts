@@ -64,7 +64,7 @@ export const darkTheme = createTheme({
     fontColorTransparent: '#eff0f88c',
     backgroundLigth: '#eff0f826',
     background: '#333333',
-    backgroundDark: '#09090966',
+    backgroundDark: '#131316d2',
   },
   typography: {
     fontFamily: `'Montserrat', sans-serif`,

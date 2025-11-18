@@ -1,111 +1,36 @@
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../../store/auth/authSlice";
-import { startLogout } from "../../../store/auth/thunks";
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter} from 'react-router-dom';
-import AppLayout from "../../shared/layout/AppLayout";
 
+import AppLayout from "../../shared/layout/AppLayout";
+import OptionsList from "../../shared/components/OptionsList";
+import { Grid } from "@mui/material";
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import StoreIcon from '@mui/icons-material/Store';
+import PersonIcon from '@mui/icons-material/Person';
+import TrolleyIcon from '@mui/icons-material/Trolley';
+import CategoryIcon from '@mui/icons-material/Category';
+
+const homeLinks = [
+  { icon: <LocalOfferIcon />, description: 'Ventas', url: '/sells'},
+  { icon: <StoreIcon />, description: 'Tienda', url: '/shop'},
+  { icon: <PersonIcon />, description: 'Cuenta', url: '/account'},
+  { icon: <TrolleyIcon />, description: 'Proveedores', url: '/providers'},
+  { icon: <CategoryIcon />, description: 'Productos', url: '/products'},
+]
 
 const HomePage = (): React.ReactNode => {
-    const dispatch = useDispatch<AppDispatch>();
 
     return (
-        <AppLayout>
-          <h1>Que deseas hacer?</h1>
-          <Link
-            component={LinkReactRouter}
-            to={"/sells"}
-            sx={{
-              mt: "1em",
-              textDecoration: "none",
-              textAlign: "center",
-              display: "block",
-              color: (theme: Theme) => theme?.custom?.fontColor,
-              fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-              backgroundColor: (theme: Theme) => theme?.custom?.background,
-              borderRadius: "1em",
-              width: "100%",
-            }}
-          >
-            ventas
-          </Link>
-
-          <Link
-              component={LinkReactRouter}
-              to={"/shop"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-          >
-          tienda
-          </Link>
-
-          <Link
-              component={LinkReactRouter}
-              to={"/account"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-          >
-          cuenta
-          </Link>            
-
-          <Link
-              component={LinkReactRouter}
-              to={"/providers"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-          >
-          proovedores
-          </Link>        
-
-          <Link
-              component={LinkReactRouter}
-              to={"/products"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-          >
-          productos
-          </Link>                
-
-          <button onClick={() => dispatch(startLogout())}>
-            Desloguear
-          </button>
-
+        <AppLayout title='¿Qué deseas hacer?'>
+          <Grid 
+            container 
+            display={'flex'} 
+            flexDirection={'column'} 
+            spacing={'1em'}
+            sx={{ 
+              width: '70%',
+              mb: '1em',
+            }}>
+            <OptionsList links={homeLinks}/>
+          </Grid>
         </AppLayout>
     )
 }

@@ -4,11 +4,10 @@ import type { PropsWithChildren } from "react";
 import React, { useContext } from "react";
 import { ThemeContext } from "../../../theme/ThemeContext";
 import SharedAppBar from "./SharedAppBar/SharedAppBar";
+import type { AppLayoutProps } from "../../../typings/ui/uiModules";
 
-const AppLayout = ({ children }: PropsWithChildren) => {
+const AppLayout = ({ children, title }: PropsWithChildren<AppLayoutProps>):React.ReactNode => {
   const { appTheme } = useContext(ThemeContext);
-  const backgroundColor = `${!appTheme ? "#333333" : "#eff0f8"}`;
-  const titleBackgroundColor = `${appTheme ? "#eff0f826" : "#eff0f8"}`;
 
   if (!children || React.Children.count(children) === 0)
     return <Typography>No children Loaded...</Typography>;
@@ -16,13 +15,13 @@ const AppLayout = ({ children }: PropsWithChildren) => {
   return (
     <Box
       component={"div"}
-      sx={{
-        height: "100vh",
-        width: "100vw",
-        backgroundColor: backgroundColor,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+      sx={(theme: Theme) => ({
+      height: "100vh",
+      width: "100vw",
+      backgroundColor: !appTheme ? theme.custom.black : theme.custom.white,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    })}
     >
       <Grid
         container
@@ -54,31 +53,39 @@ const AppLayout = ({ children }: PropsWithChildren) => {
           <Grid
             container
             component="main"
-            rowSpacing={15}
+            rowSpacing={5}
             sx={(theme: Theme) => ({
-              display: { xs: "flex", md: "flex" },
+              display: { xs: "flex"},
               flexDirection: { md: "column" },
-              alignItems: { xs: "center", md: "center" },
+              alignItems: { xs: "center"},
               width: { xs: "100%", sm: "90%", md: "80%" },
               justifyContent: "center",
               margin: "auto",
-              padding: "3em 0",
+              padding: "3em 0 0em",
               borderRadius: { xs: "0", md: "1em" },
               overflowX: "hidden",
-              backgroundColor: {
-                xs: "transparent",
-                md: theme.custom?.backgroundDark || "rgba(0,0,0,0.6)",
-              },
+              backgroundColor: theme.custom?.backgroundDark,
+              height: "100vh",
             })}
           >
             <Grid
-              sx={() => ({
-                backgroundColor: titleBackgroundColor,
+              sx={(theme: Theme) => ({
+                backgroundColor: !appTheme ? theme.custom.black : theme.custom.white,
+                borderRadius: '1em',
+                color: theme?.custom?.fontColor,
                 width: '90%',
+                marginTop: '2.5em',
                 textAlign: 'center'
               })}
             >
-              <Typography>hola</Typography>
+              <Typography 
+                variant="h1"
+                sx={(theme: Theme) => ({
+                  fontSize: theme?.typography?.h2?.fontSize,
+                })}
+              >
+                {title}
+              </Typography>
             </Grid>
             {children}
           </Grid>
