@@ -7,7 +7,7 @@ import type { DisplayOptionsInterface } from "../../../typings/ui/uiModules";
 const DisplayOptions = ({title, icon,links, disconnect} : DisplayOptionsInterface) => {
 
     return (
-        <AppLayout title={title} icon={ icon ?? null}>
+        <AppLayout isOptions={true} title={title} icon={ icon ?? null}>
           <Grid
             container 
             display={'flex'} 

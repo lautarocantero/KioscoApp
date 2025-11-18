@@ -7,7 +7,7 @@ const SharedAppBar = (): React.ReactNode => {
     <AppBar
       position="fixed"
       component={"nav"}
-      color="transparent"
+      color="info"
       elevation={0}
       sx={{ width: "100%" }}
       data-testid="login-appbar"

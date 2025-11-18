@@ -1,12 +1,20 @@
-import { useState } from "react";
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter, useNavigate} from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate} from 'react-router-dom';
+import { getProducts } from "../api/sellsApi";
+import AppLayout from "../../shared/layout/AppLayout";
 
 
 const NewSellPage = ():React.ReactNode => {
 
-    const [showProducts, setShowProducts] = useState<boolean>(false);
+    const [showProducts, setShowProducts] = useState<boolean>(true);
     const navigate = useNavigate();
+
+    useEffect(() => {
+      const fetchProducts = async () => {
+        await getProducts();
+      };
+      fetchProducts();
+    }, []);
 
     if(!showProducts) return (
         <>
@@ -16,44 +24,10 @@ const NewSellPage = ():React.ReactNode => {
     )
 
     return (
-        <>
-            <div>
-                <Link
-                  component={LinkReactRouter}
-                  to={"/cart"}
-                  sx={{
-                    mt: "1em",
-                    textDecoration: "none",
-                    textAlign: "center",
-                    display: "block",
-                    color: (theme: Theme) => theme?.custom?.fontColor,
-                    fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                    backgroundColor: (theme: Theme) => theme?.custom?.background,
-                    borderRadius: "1em",
-                    width: "100%",
-                  }}
-                >
-                  ver carrito
-                </Link>
-            </div>
-            
-            <div>
-                <p>coca cola</p>
-                <button>agregar</button>
-            </div>
+        <AppLayout>
+            <p>hola</p>
+        </AppLayout>
 
-            <div>
-                <p>cigarrillos</p>
-                <button>agregar</button>
-            </div>
-
-            <div>
-                <p>alfajores</p>
-                <button>agregar</button>
-            </div>
-            
-            
-        </>
     )
 
 }

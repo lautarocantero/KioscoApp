@@ -13,7 +13,8 @@ export interface LinksComponentInterface {
 }
 
 export interface AppLayoutProps {
-  title: string;
+  isOptions?: boolean;
+  title?: string;
   icon?: React.ReactNode,
 }
 

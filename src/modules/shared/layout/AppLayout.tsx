@@ -6,7 +6,44 @@ import { ThemeContext } from "../../../theme/ThemeContext";
 import SharedAppBar from "./SharedAppBar/SharedAppBar";
 import type { AppLayoutProps } from "../../../typings/ui/uiModules";
 
-const AppLayout = ({ children, title, icon }: PropsWithChildren<AppLayoutProps>):React.ReactNode => {
+interface OptionsHeader {
+  isOptions?: boolean;
+  title?: string,
+  icon?: React.ReactNode,
+  appTheme: boolean,
+}
+
+const OptionsHeader = ({isOptions,title,icon, appTheme}: OptionsHeader) => {
+
+  if(!isOptions) return (<></>);
+
+  return (
+      <Grid
+        sx={(theme: Theme) => ({
+          alignContent: 'center',
+          backgroundColor: !appTheme ? theme.custom.backgroundDark : theme.custom.backgroundLigth,
+          borderRadius: '1em',
+          color: !appTheme ? theme?.custom?.fontColor : theme.custom.fontColorDark,
+          width: '90%',
+          margin: { xs: "2em 0", sm: '0'},
+          padding: {xs: '1em' },
+          textAlign: 'center'
+        })}
+      >
+        <Typography 
+          variant="h1"
+          sx={(theme: Theme) => ({
+            fontSize: {xs: theme?.typography?.h4.fontSize, sm: theme?.typography?.h2.fontSize, md: theme?.typography?.h1.fontSize },
+          })}
+        >
+          {icon && icon}
+          {title}
+        </Typography>
+      </Grid>
+  )
+}
+
+const AppLayout = ({ children, isOptions, title, icon }: PropsWithChildren<AppLayoutProps>):React.ReactNode => {
   const { appTheme } = useContext(ThemeContext);
 
   if (!children || React.Children.count(children) === 0)
@@ -57,28 +94,7 @@ const AppLayout = ({ children, title, icon }: PropsWithChildren<AppLayoutProps>)
               height: { xs: "auto", md: "100vh" }
             })}
           >
-            <Grid
-              sx={(theme: Theme) => ({
-                alignContent: 'center',
-                backgroundColor: !appTheme ? theme.custom.backgroundDark : theme.custom.backgroundLigth,
-                borderRadius: '1em',
-                color: !appTheme ? theme?.custom?.fontColor : theme.custom.fontColorDark,
-                width: '90%',
-                margin: { xs: "2em 0", sm: '0'},
-                padding: {xs: '1em' },
-                textAlign: 'center'
-              })}
-            >
-              <Typography 
-                variant="h1"
-                sx={(theme: Theme) => ({
-                  fontSize: {xs: theme?.typography?.h4.fontSize, sm: theme?.typography?.h2.fontSize, md: theme?.typography?.h1.fontSize },
-                })}
-              >
-                {icon && icon}
-                {title}
-              </Typography>
-            </Grid>
+            <OptionsHeader isOptions={isOptions} title={title} icon={icon} appTheme={appTheme} />
             {children}
           </Grid>
         </Grid>
