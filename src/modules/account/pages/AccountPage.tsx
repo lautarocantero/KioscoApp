@@ -1,46 +1,16 @@
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter} from 'react-router-dom';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import PersonIcon from '@mui/icons-material/Person';
+import DisplayOptions from '../../shared/components/DisplayOptions';
+
+const accountLinks = [
+  { icon: <ManageAccountsIcon />, description: 'Editar cuenta', url: '/account-edit'},
+  { icon: <WorkspacePremiumIcon />, description: 'Plan de subscripcion', url: '/account-subscription'},
+]
 
 const AccountPage = ():React.ReactNode => {
     return (
-        <>
-            <p>AccountPage</p>
-            <Link
-                component={LinkReactRouter}
-                to={"/account-edit"}
-                sx={{
-                    mt: "1em",
-                    textDecoration: "none",
-                    textAlign: "center",
-                    display: "block",
-                    color: (theme: Theme) => theme?.custom?.fontColor,
-                    fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                    backgroundColor: (theme: Theme) => theme?.custom?.background,
-                    borderRadius: "1em",
-                    width: "100%",
-                }}
-            >
-            Editar cuenta
-            </Link>   
-            <Link
-                component={LinkReactRouter}
-                to={"/account-subscription"}
-                sx={{
-                    mt: "1em",
-                    textDecoration: "none",
-                    textAlign: "center",
-                    display: "block",
-                    color: (theme: Theme) => theme?.custom?.fontColor,
-                    fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                    backgroundColor: (theme: Theme) => theme?.custom?.background,
-                    borderRadius: "1em",
-                    width: "100%",
-                }}
-            >
-            Plan de subscripcion
-            </Link>                     
-
-        </>
+      <DisplayOptions title='Cuenta' icon={<PersonIcon />}  links={accountLinks}/>
     )
 }
 

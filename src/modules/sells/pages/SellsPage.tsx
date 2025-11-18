@@ -1,45 +1,17 @@
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter} from 'react-router-dom';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import DisplayOptions from '../../shared/components/DisplayOptions';
+
+const sellsLinks = [
+  { icon: <AddShoppingCartIcon />, description: 'Nueva venta', url: '/new-sell'},
+  { icon: <StickyNote2Icon />, description: 'Ver ventas', url: '/sells-history'},
+]
 
 const SellsPage = ():React.ReactNode => {
 
     return (
-        <>
-            <Link
-              component={LinkReactRouter}
-              to={"/new-sell"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-            >
-              nueva venta
-            </Link>
-            <Link
-              component={LinkReactRouter}
-              to={"/sells-history"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-            >
-              ver venta
-            </Link>
-        </>
+        <DisplayOptions title='Ventas' icon = {<LocalOfferIcon />}  links={sellsLinks}/>
     )
 }
 

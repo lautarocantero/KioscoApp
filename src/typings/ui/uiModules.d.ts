@@ -14,7 +14,9 @@ export interface LinksComponentInterface {
 
 export interface AppLayoutProps {
   title: string;
+  icon?: React.ReactNode,
 }
+
 
 export type OptionLink = {
     icon: React.ReactNode,
@@ -25,10 +27,19 @@ export type OptionLink = {
 
 export interface OptionsListInterface {
     links: OptionLink[],
+    disconnect?: boolean,
 }
 
-export interface LogoutButtonProps {
+export interface DisplayOptionsInterface extends AppLayoutProps {
+  links: OptionLink[],
+  disconnect?: boolean | undefined,
+}
+
+export interface BackButtonProps {
   appTheme: boolean,
+}
+
+export interface LogoutButtonProps extends BackButtonProps {
   dispatch: AppDispatch;
 }
 

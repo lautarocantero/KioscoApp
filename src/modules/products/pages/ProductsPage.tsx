@@ -1,81 +1,21 @@
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter} from 'react-router-dom';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
+import AddIcon from '@mui/icons-material/Add';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import CategoryIcon from '@mui/icons-material/Category';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import DisplayOptions from '../../shared/components/DisplayOptions';
+
+const productsLinks = [
+  { icon: <ClearAllIcon />, description: 'Ver Productos', url: '/products-list'},
+  { icon: <AddIcon />, description: 'Crear Producto', url: '/products-create'},
+  { icon: <DriveFileRenameOutlineIcon />, description: 'Editar Producto', url: '/products-edit'},
+  { icon: <BookmarksIcon />, description: 'Categorias', url: '/categories'},
+]
+
 
 const ProductsPage = ():React.ReactNode => {
     return (
-        <>
-            <Link
-                component={LinkReactRouter}
-                to={"/products-list"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Ver listado de Productos
-            </Link> 
-            
-            <Link
-                component={LinkReactRouter}
-                to={"/products-create"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Crear Producto
-            </Link>
-            
-            <Link
-                component={LinkReactRouter}
-                to={"/products-edit"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Editar Productos
-            </Link>     
-
-            <Link
-                component={LinkReactRouter}
-                to={"/categories"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-            categorias
-            </Link>                                                
-        </>
+      <DisplayOptions title='Productos' icon={<CategoryIcon />}  links={productsLinks}/>
     )
 }
 

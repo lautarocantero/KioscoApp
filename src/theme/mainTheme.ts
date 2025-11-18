@@ -11,6 +11,8 @@ declare module '@mui/material/styles' {
       darkSecondary: string;
       fontColor: string;
       fontColorTransparent: string;
+      fontColorDark: string,
+      fontColorDarkTransparent: string,
       backgroundLigth: string;
       background: string;
       backgroundDark: string;
@@ -26,6 +28,8 @@ declare module '@mui/material/styles' {
       darkSecondary?: string;
       fontColor?: string;
       fontColorTransparent?: string;
+      fontColorDark?: string,
+      fontColorDarkTransparent?: string,
       backgroundLigth?: string;
       background?: string;
       backgroundDark?: string;
@@ -62,7 +66,9 @@ export const darkTheme = createTheme({
     darkSecondary: '#00357E',
     fontColor: '#eff0f8',
     fontColorTransparent: '#eff0f88c',
-    backgroundLigth: '#eff0f826',
+    fontColorDark: '#333333',
+    fontColorDarkTransparent: '#09090966',
+    backgroundLigth: '#525253ff',
     background: '#333333',
     backgroundDark: '#131316d2',
   },
@@ -127,7 +133,8 @@ export const lightTheme = createTheme({
     fontColor: '#333333',
     fontColorTransparent: '#3333333d',
     darkSecondary: '#C0676B',
-    backgroundLigth: '#FCA4A7',
+    // backgroundLigth: '#FCA4A7',
+    backgroundLigth: '#bbbbbbff',
     background: '#FFFFFF',
     backgroundDark: '#e3e3e399',
   },

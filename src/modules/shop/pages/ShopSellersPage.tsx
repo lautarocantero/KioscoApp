@@ -1,63 +1,18 @@
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter} from 'react-router-dom';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import GroupsIcon from '@mui/icons-material/Groups';
+import DisplayOptions from '../../shared/components/DisplayOptions';
+
+const shopSellersLinks = [
+  { icon: <RecentActorsIcon />, description: 'Ver vendedores', url: '/shop-sellers-list'},
+  { icon: <PersonAddAlt1Icon />, description: 'Crear vendedor', url: '/shop-sellers-create'},
+  { icon: <ManageAccountsIcon />, description: 'Editar vendedor', url: '/shop-sellers-edit'},
+]
 
 const ShopSellersPage = ():React.ReactNode => {
     return (
-        <>
-            <Link
-                component={LinkReactRouter}
-                to={"/shop-sellers-list"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Ver listado de Vendedores
-            </Link> 
-            
-            <Link
-                component={LinkReactRouter}
-                to={"/shop-sellers-create"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Crear Vendedor
-            </Link>
-            
-            <Link
-                component={LinkReactRouter}
-                to={"/shop-sellers-edit"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Editar Vendedor
-            </Link>                      
-        </>
+        <DisplayOptions title='Vendedores' icon={<GroupsIcon />}  links={shopSellersLinks}/>
     )
 }
 

@@ -1,82 +1,20 @@
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter} from 'react-router-dom';
+import DownloadIcon from '@mui/icons-material/Download';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import DisplayOptions from '../../shared/components/DisplayOptions';
+
+
+const sellsHistoryLinks = [
+  { icon: <DownloadIcon />, description: 'Ultimo dia', url: ''},
+  { icon: <DownloadIcon />, description: 'Ultima semana', url: ''},
+  { icon: <DownloadIcon />, description: 'Ultimo mes', url: ''},
+  { icon: <CalendarMonthIcon />, description: 'Fecha Especifica', url: ''},
+]
 
 const SellsHistoryPage = ():React.ReactNode => {
 
-    return (
-        <>
-            <Link
-              component={LinkReactRouter}
-              to={"/new-sell"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-            >
-              ultimo dia
-            </Link>
-
-            <Link
-              component={LinkReactRouter}
-              to={"/login"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-            >
-              ultima semana
-            </Link>
-
-            <Link
-              component={LinkReactRouter}
-              to={"/login"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-            >
-              ultimo mes
-            </Link>
-          
-            <Link
-              component={LinkReactRouter}
-              to={"/sells-history-filters"}
-              sx={{
-                mt: "1em",
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-                color: (theme: Theme) => theme?.custom?.fontColor,
-                fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                backgroundColor: (theme: Theme) => theme?.custom?.background,
-                borderRadius: "1em",
-                width: "100%",
-              }}
-            >
-                filtros
-            </Link>
-        </>
+     return (
+      <DisplayOptions title='Ventas' icon={<LocalOfferIcon />}  links={sellsHistoryLinks}/>
     )
 }
 

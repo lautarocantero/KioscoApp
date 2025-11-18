@@ -1,64 +1,20 @@
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter} from 'react-router-dom';
+import StarPurple500Icon from '@mui/icons-material/StarPurple500';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import DisplayOptions from '../../shared/components/DisplayOptions';
+
+const shopAdminLinks = [
+  { icon: <RecentActorsIcon />, description: 'Ver Administradores', url: '/shop-administrators-list'},
+  { icon: <PersonAddAlt1Icon />, description: 'Crear Administrador', url: '/shop-administrators-create'},
+  { icon: <ManageAccountsIcon />, description: 'Editar Administrador', url: '/shop-administrators-edit'},
+]
 
 const ShopAdminPage = ():React.ReactNode => {
-    return (
-        <>
-            <Link
-                component={LinkReactRouter}
-                to={"/shop-administrators-list"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Ver listado de Administradores
-            </Link> 
-            
-            <Link
-                component={LinkReactRouter}
-                to={"/shop-administrators-create"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Crear Administrador
-            </Link>
-            
-            <Link
-                component={LinkReactRouter}
-                to={"/shop-administrators-edit"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Editar Administrador
-            </Link>                      
-        </>
-    )
+
+        return (
+          <DisplayOptions title='Administradores' icon={<StarPurple500Icon />}  links={shopAdminLinks}/>
+        )       
 }
 
 export default ShopAdminPage;

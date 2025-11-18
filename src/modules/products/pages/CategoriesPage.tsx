@@ -1,63 +1,19 @@
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter} from 'react-router-dom';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import NewLabelIcon from '@mui/icons-material/NewLabel';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import DisplayOptions from '../../shared/components/DisplayOptions';
+
+const categoriesLinks = [
+  { icon: <CollectionsBookmarkIcon />, description: 'Ver Categorias', url: '/categories-list'},
+  { icon: <NewLabelIcon />, description: 'Crear Categoria', url: '/categories-create'},
+  { icon: <DriveFileRenameOutlineIcon />, description: 'Editar Categoria', url: '/categories-edit'},
+]
+
 
 const CategoriesPage = ():React.ReactNode => {
     return (
-        <>
-            <Link
-                component={LinkReactRouter}
-                to={"/categories-list"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Ver listado de Categorias
-            </Link> 
-            
-            <Link
-                component={LinkReactRouter}
-                to={"/categories-create"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Crear Categoria
-            </Link>
-            
-            <Link
-                component={LinkReactRouter}
-                to={"/categories-edit"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-                Editar Categoria
-            </Link>                      
-        </>
+      <DisplayOptions title='Categorias' icon={<BookmarksIcon />}  links={categoriesLinks}/>
     )
 }
 

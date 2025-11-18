@@ -6,7 +6,7 @@ import { ThemeContext } from "../../../theme/ThemeContext";
 import SharedAppBar from "./SharedAppBar/SharedAppBar";
 import type { AppLayoutProps } from "../../../typings/ui/uiModules";
 
-const AppLayout = ({ children, title }: PropsWithChildren<AppLayoutProps>):React.ReactNode => {
+const AppLayout = ({ children, title, icon }: PropsWithChildren<AppLayoutProps>):React.ReactNode => {
   const { appTheme } = useContext(ThemeContext);
 
   if (!children || React.Children.count(children) === 0)
@@ -18,7 +18,7 @@ const AppLayout = ({ children, title }: PropsWithChildren<AppLayoutProps>):React
       sx={(theme: Theme) => ({
       height: "100vh",
       width: "100vw",
-      backgroundColor: !appTheme ? theme.custom.black : theme.custom.white,
+      backgroundColor: !appTheme ? theme.custom?.backgroundDark : theme.custom.white,
       backgroundSize: "cover",
       backgroundPosition: "center",
     })}
@@ -34,56 +34,48 @@ const AppLayout = ({ children, title }: PropsWithChildren<AppLayoutProps>):React
         <Grid
           component={"div"}
           spacing={{ xs: 12, sm: 6 }}
-          sx={{
-            display: { xs: "none", md: "block" },
-            minWidth: { md: "50%" },
-          }}
-        ></Grid>
-        <Grid
-          component={"div"}
-          spacing={{ xs: 12, sm: 6 }}
           display={"flex"}
+          flexDirection={'column'}
           alignItems={"center"}
-          sx={(theme: Theme) => ({
-            backgroundColor: { md: theme.custom?.background },
-            minWidth: { xs: "100%", md: "50%" },
-          })}
+          sx={{
+            minWidth: { xs: "100%" },
+          }}
         >
           <SharedAppBar />
           <Grid
             container
             component="main"
-            rowSpacing={5}
-            sx={(theme: Theme) => ({
+            rowSpacing={{xs: 1, sm: 5}}
+            sx={() => ({
               display: { xs: "flex"},
               flexDirection: { md: "column" },
               alignItems: { xs: "center"},
-              width: { xs: "100%", sm: "90%", md: "80%" },
+              width: { xs: "100%", sm: "70%", md: "50%" },
               justifyContent: "center",
-              margin: "auto",
-              padding: "3em 0 0em",
-              borderRadius: { xs: "0", md: "1em" },
+              padding: { xs: "1em 0 0", md: "3em 0 0" },
               overflowX: "hidden",
-              backgroundColor: theme.custom?.backgroundDark,
-              height: "100vh",
+              height: { xs: "auto", md: "100vh" }
             })}
           >
             <Grid
               sx={(theme: Theme) => ({
-                backgroundColor: !appTheme ? theme.custom.black : theme.custom.white,
+                alignContent: 'center',
+                backgroundColor: !appTheme ? theme.custom.backgroundDark : theme.custom.backgroundLigth,
                 borderRadius: '1em',
-                color: theme?.custom?.fontColor,
+                color: !appTheme ? theme?.custom?.fontColor : theme.custom.fontColorDark,
                 width: '90%',
-                marginTop: '2.5em',
+                margin: { xs: "2em 0", sm: '0'},
+                padding: {xs: '1em' },
                 textAlign: 'center'
               })}
             >
               <Typography 
                 variant="h1"
                 sx={(theme: Theme) => ({
-                  fontSize: theme?.typography?.h2?.fontSize,
+                  fontSize: {xs: theme?.typography?.h4.fontSize, sm: theme?.typography?.h2.fontSize, md: theme?.typography?.h1.fontSize },
                 })}
               >
+                {icon && icon}
                 {title}
               </Typography>
             </Grid>

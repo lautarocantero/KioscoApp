@@ -1,66 +1,21 @@
-import { Link, type Theme } from '@mui/material';
-import { Link as LinkReactRouter} from 'react-router-dom';
+import StarPurple500Icon from '@mui/icons-material/StarPurple500';
+import GroupsIcon from '@mui/icons-material/Groups';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import StoreIcon from '@mui/icons-material/Store';
+import DisplayOptions from '../../shared/components/DisplayOptions';
+
+const shopLinks = [
+  { icon: <StarPurple500Icon />, description: 'Administradores', url: '/shop-administrators'},
+  { icon: <GroupsIcon />, description: 'Vendedores', url: '/shop-sellers'},
+  { icon: <QueryStatsIcon />, description: 'Estadisticas', url: '/shop-stadistics'},
+]
+
 
 const ShopPage = ():React.ReactNode => {
 
     return (
-        <>
-            <Link
-                component={LinkReactRouter}
-                to={"/shop-administrators"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-            Administradores
-            </Link> 
-             
-            <Link
-                component={LinkReactRouter}
-                to={"/shop-sellers"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-            Vendedores
-            </Link>
-
-            <Link
-                component={LinkReactRouter}
-                to={"/shop-stadistics"}
-                sx={{
-                  mt: "1em",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  color: (theme: Theme) => theme?.custom?.fontColor,
-                  fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-                  backgroundColor: (theme: Theme) => theme?.custom?.background,
-                  borderRadius: "1em",
-                  width: "100%",
-                }}
-            >
-            Estadisticas
-            </Link>                      
-        </>
+      <DisplayOptions title='Tienda' icon={<StoreIcon />}  links={shopLinks}/>
     )
-
 }
 
 export default ShopPage;
