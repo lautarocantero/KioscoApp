@@ -16,6 +16,7 @@ const DisplayOptions = ({title, icon,links, disconnect} : DisplayOptionsInterfac
             sx={{ 
               width: '70%',
               mb: '1em',
+              flexWrap: 'wrap',
             }}>
             <OptionsList links={links} disconnect={disconnect ?? undefined}/>
           </Grid>
