@@ -1,10 +1,6 @@
 import { Button, Grid, Typography, type Theme } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-
-interface QuantityChipInterface {
-    color: string,
-    label: string,
-}
+import type { QuantityChipInterface } from "../../../../typings/ui/uiModules";
 
 const QuantityChip = ({ color = "red", label }: QuantityChipInterface): React.ReactNode => {
     const fontSize = label.length > 3 ? "0.6em" : "0.7em";

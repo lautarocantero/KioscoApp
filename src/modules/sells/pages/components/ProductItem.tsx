@@ -1,6 +1,4 @@
 import { Grid, type Theme } from "@mui/material";
-
-
 import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
 import ProductItemImage from "./ProductItemImage";
 import ProductItemEspecifications from "./ProductItemEspecifications";

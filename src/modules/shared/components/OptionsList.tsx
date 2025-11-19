@@ -1,68 +1,12 @@
-import { Button, Grid, Link, type Theme} from '@mui/material';
-import { Link as LinkReactRouter, useNavigate} from 'react-router-dom';
-import type { BackButtonProps, LogoutButtonProps, OptionLink, OptionsListInterface } from '../../../typings/ui/uiModules';
+import { Grid, Link, type Theme} from '@mui/material';
+import { Link as LinkReactRouter } from 'react-router-dom';
+import type { OptionLink, OptionsListInterface } from '../../../typings/ui/uiModules';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../store/auth/authSlice';
-import { startLogout } from '../../../store/auth/thunks';
-import LogoutIcon from '@mui/icons-material/Logout';
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useContext } from 'react';
 import { ThemeContext } from '../../../theme/ThemeContext';
-
-const LogoutButton = ({dispatch, appTheme}: LogoutButtonProps): React.ReactNode => {
-    return (
-        <Grid 
-            sx={() => ({
-                borderRadius: "1em",
-                width: "100%",
-                height: '3.5em',
-                textAlign: 'center',
-                alignContent: 'center',
-            })}>
-            <Button 
-                onClick={()=> dispatch(startLogout())}
-                sx={(theme: Theme) => ({
-                    color: appTheme ? theme?.custom?.blackTranslucid : theme?.custom?.whiteTranslucid,
-                    fontSize: theme?.typography?.body2?.fontSize,
-                })}
-            >
-                <LogoutIcon sx={(theme) => ({ 
-                    fontSize: theme?.typography?.body2?.fontSize,
-                    marginRight: '10px'
-                })}/>
-                Cerrar sesión
-            </Button>
-        </Grid>
-    )
-}
-
-const BackButton = ({appTheme}: BackButtonProps): React.ReactNode => {
-    const navigate = useNavigate();
-    return (
-        <Grid 
-            sx={() => ({
-                borderRadius: "1em",
-                width: "100%",
-                height: '3.5em',
-                textAlign: 'center',
-                alignContent: 'center',
-            })}>
-            <Button 
-                onClick={()=> navigate(-1)}
-                sx={(theme: Theme) => ({
-                    color: appTheme ? theme?.custom?.blackTranslucid : theme?.custom?.whiteTranslucid,
-                    fontSize: theme?.typography?.body2?.fontSize,
-                })}
-            >
-                <KeyboardReturnIcon sx={(theme) => ({ 
-                    fontSize: theme?.typography?.body2?.fontSize,
-                    marginRight: '10px'
-                })}/>
-                Volver
-            </Button>
-        </Grid>
-    )
-}
+import BackButton from './BackButton';
+import LogoutButton from './LogoutButton';
 
 const OptionsList = ({links, disconnect}: OptionsListInterface): React.ReactNode => {
     const { appTheme } = useContext(ThemeContext);

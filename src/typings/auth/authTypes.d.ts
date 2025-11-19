@@ -47,7 +47,9 @@ export type AuthLoginData = Pick<AuthDataBase, 'email', 'password'>;
 export type AuthRegisterData = Pick<AuthDataBase, 'username', 'email','password', 'repeatPassword'>;
 
 
-// payload del slice
+/*══════════════════════════════════════════════════════════════════════╗
+║ ██ PAYLOAD   📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 ║
+╚══════════════════════════════════════════════════════════════════════╝*/
 export type AuthLoginPayload = Pick<AuthDataBase, 
     'email',
     'username',
@@ -56,11 +58,15 @@ export type AuthLoginPayload = Pick<AuthDataBase,
 
 export type AuthErrorPayload = Pick<AuthDataBase, 'errorMessage'>;
 
-// endpoint 
+/*══════════════════════════════════════════════════════════════════════╗
+║ ██ ENDPOINTS   🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐  ║
+╚══════════════════════════════════════════════════════════════════════╝*/
 
 export type AuthLoginPayload = AuthLoginData;
 
-// buttons
+/*══════════════════════════════════════════════════════════════════════╗
+║ ██ BUTTONS   🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨   ║
+╚══════════════════════════════════════════════════════════════════════╝*/
 
 export type ErrorsInterface = Pick<AuthDataBase, 'email', 'password'>;
 
@@ -71,7 +77,13 @@ export interface LoginFormButtonsInterface {
   errors: ErrorsInterface;
 }
 
-// pages
+export interface RegisterFormButtonsInterface {
+  errors: AuthRegisterData;
+}
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ ██ PAGES   📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃  ║
+╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface LoginFormInputsInterface {    
   values: AuthLoginData;
@@ -92,12 +104,10 @@ export type FormToggleButtonInterface = Pick<FormVisibilityState, 'setShowForm'>
 
 
 /*══════════════════════════════════════════════════════════════════════╗
-║ 📝 REGISTER  📝 📝 📝 📝 📝 📝 📝 📝 📝 📝 📝 📝                      ║
+║ ██ FORMS   📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export type AuthRegisterPayload = AuthRegisterData;
-
-//form 
 
 export interface RegisterFormInputsInterface {
   values: AuthRegisterPayload;
@@ -105,8 +115,5 @@ export interface RegisterFormInputsInterface {
   errors: ErrorsFullInterface;
 }
 
-// buttons 
 
-export interface RegisterFormButtonsInterface {
-  errors: AuthRegisterData;
-}
+

@@ -1,9 +1,10 @@
 import { Grid, Typography, type Theme } from "@mui/material";
 import { Box } from "@mui/system";
 import InventoryIcon from '@mui/icons-material/Inventory';
+import type { ProductImage } from "../../../../typings/sells/sellsTypes";
 
 
-const ProductItemImage = ({name, stock} : {name: string, stock: number}): React.ReactNode => {
+const ProductItemImage = ({name, stock} : ProductImage): React.ReactNode => {
 
 
     return (
@@ -23,9 +24,9 @@ const ProductItemImage = ({name, stock} : {name: string, stock: number}): React.
 
                 <Typography
                     sx={(theme: Theme) => ({
-                    fontSize: theme?.typography?.caption?.fontSize,
-                    fontWeight: 600,
-                    marginLeft: '0.2em',
+                        fontSize: theme?.typography?.caption?.fontSize,
+                        fontWeight: 600,
+                        marginLeft: '0.2em',
                     })}
                 >
                     {name.length > 12 ? `${name.substring(0, 12)}...` : name}
@@ -33,9 +34,9 @@ const ProductItemImage = ({name, stock} : {name: string, stock: number}): React.
 
                 <Typography
                     sx={(theme: Theme) => ({
-                    fontSize: theme?.typography?.caption?.fontSize,
-                    lineHeight: 1.5,
-                    verticalAlign: "middle",
+                        fontSize: theme?.typography?.caption?.fontSize,
+                        lineHeight: 1.5,
+                        verticalAlign: "middle",
                     })}
                 >
                     <InventoryIcon

@@ -4,10 +4,10 @@ import OptionsList from "./OptionsList";
 import type { DisplayOptionsInterface } from "../../../typings/ui/uiModules";
 
 
-const DisplayOptions = ({title, icon,links, disconnect} : DisplayOptionsInterface) => {
+const DisplayOptions = ({title, icon,links, disconnect} : DisplayOptionsInterface): React.ReactNode => {
 
     return (
-        <AppLayout isOptions={true} title={title} icon={ icon ?? null}>
+        <AppLayout isOptions title={title} icon={ icon ?? null}>
           <Grid
             container 
             display={'flex'} 
