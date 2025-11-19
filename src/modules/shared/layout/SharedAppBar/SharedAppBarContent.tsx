@@ -16,7 +16,6 @@ const SharedAppBarContent = ({showFilters}: {showFilters: boolean}): React.React
         flexDirection={'column'}
         sx={{
           width: '100%',
-          mt: '0.5em',
         }}
     >
       <Grid
@@ -35,6 +34,7 @@ const SharedAppBarContent = ({showFilters}: {showFilters: boolean}): React.React
           sx={(theme: Theme) => ({ 
             fontSize: theme?.typography?.h4,
             color: `${appTheme ? "#333333" : "#eff0f8"}`,
+            lineHeight: 'none'
           })}>
             Kiosco
         </Typography>

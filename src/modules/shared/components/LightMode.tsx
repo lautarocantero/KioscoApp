@@ -14,10 +14,11 @@ const LightMode = () => {
       aria-label="cambiar modo de tema"
       sx={(theme) => ({
         backgroundColor: theme?.custom?.blackTranslucid || "rgba(0,0,0,0.6)",
-        padding: "0.2em 0.5em",
         borderRadius: "1em",
-        gap: 1,
         cursor: "pointer",
+        gap: 1,
+        height: 'auto',
+        padding: "0.2em 0.5em",
       })}
       onClick={() => {
         setAppTheme((prev: boolean) => !prev);
@@ -25,16 +26,16 @@ const LightMode = () => {
       }}
     >
       <Brightness4
-        sx={{
-          color: (theme) =>
-            appTheme ? theme?.custom?.white : theme?.custom?.blackTranslucid,
-        }}
+        sx={(theme) =>({
+          color: appTheme ? theme?.custom?.white : theme?.custom?.blackTranslucid,
+          height: '0.8em',
+        })}
       />
       <ModeNight
-        sx={{
-          color: (theme) =>
-            !appTheme ? theme?.custom?.white : theme?.custom?.blackTranslucid,
-        }}
+        sx={(theme) =>({
+          color: !appTheme ? theme?.custom?.white : theme?.custom?.blackTranslucid,
+          height: '0.8em',
+        })}
       />
     </Grid>
   );
