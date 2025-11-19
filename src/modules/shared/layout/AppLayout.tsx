@@ -18,12 +18,12 @@ const AppLayout = ({ children, isOptions, title, icon }: PropsWithChildren<AppLa
     <Box
       component={"div"}
       sx={(theme: Theme) => ({
-      height: "100vh",
-      width: "100vw",
-      backgroundColor: !appTheme ? theme.custom?.backgroundDark : theme.custom.white,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    })}
+        minHeight: "100vh",
+        width: "100vw",
+        backgroundColor: !appTheme ? theme.custom?.backgroundDark : theme.custom.white,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      })}
     >
       <Grid
         container
@@ -52,11 +52,10 @@ const AppLayout = ({ children, isOptions, title, icon }: PropsWithChildren<AppLa
               display: { xs: "flex"},
               flexDirection: { md: "column" },
               alignItems: { xs: "center"},
-              width: { xs: "100%", sm: "70%", md: "50%" },
               justifyContent: "center",
-              padding: { xs: "1em 0 0", md: "3em 0 0" },
-              overflowX: "hidden",
-              height: { xs: "auto", md: "100vh" }
+              // minHeight: "100vh", 
+              height: 'auto',
+              width: "100vw"
             })}
           >
             <OptionsHeader isOptions={isOptions} title={title} icon={icon} appTheme={appTheme} />

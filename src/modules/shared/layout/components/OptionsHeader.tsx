@@ -14,7 +14,7 @@ const OptionsHeader = ({isOptions,title,icon, appTheme}: OptionsHeaderInterface)
           borderRadius: '1em',
           color: !appTheme ? theme?.custom?.fontColor : theme.custom.fontColorDark,
           width: '90%',
-          margin: { xs: "4em 0", sm: '0'},
+          margin: { xs: "4em 0", sm: '4em 0'},
           padding: {xs: '1em' },
           textAlign: 'center'
         })}
