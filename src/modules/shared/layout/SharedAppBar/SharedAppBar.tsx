@@ -1,19 +1,21 @@
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, Toolbar, type Theme } from "@mui/material";
 import React from "react";
 import SharedAppBarContent from "./SharedAppBarContent";
 
-const SharedAppBar = (): React.ReactNode => {
+const SharedAppBar = ({showFilters}: {showFilters: boolean}): React.ReactNode => {
   return (
     <AppBar
       position="fixed"
       component={"nav"}
-      color="info"
       elevation={0}
-      sx={{ width: "100%" }}
+      sx={(theme: Theme) => ({ 
+        width: "100%",
+        backgroundColor: theme?.custom?.background,
+      })}
       data-testid="login-appbar"
     >
       <Toolbar>
-        <SharedAppBarContent />
+        <SharedAppBarContent showFilters={showFilters}/>
       </Toolbar>
     </AppBar>
   );

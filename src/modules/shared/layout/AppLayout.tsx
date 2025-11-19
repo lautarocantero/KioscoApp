@@ -78,7 +78,7 @@ const AppLayout = ({ children, isOptions, title, icon }: PropsWithChildren<AppLa
             minWidth: { xs: "100%" },
           }}
         >
-          <SharedAppBar />
+          <SharedAppBar showFilters={isOptions ? false : true} />
           <Grid
             container
             component="main"
