@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import { useNavigate} from 'react-router-dom';
 import { getProducts } from "../api/sellsApi";
 import AppLayout from "../../shared/layout/AppLayout";
+import ProductsExhibitor from "./components/ProductsExhibitor";
+import type { ProductInterface } from "../../../typings/sells/sellsTypes";
 
 
 const NewSellPage = ():React.ReactNode => {
 
     const [showProducts, setShowProducts] = useState<boolean>(true);
+    const [products, setProducts] = useState<ProductInterface[]>([]);
     const navigate = useNavigate();
-
+ 
     useEffect(() => {
       const fetchProducts = async () => {
-        await getProducts();
+        const resp = await getProducts();
+        if(resp) setProducts(resp);
       };
       fetchProducts();
     }, []);
@@ -25,7 +29,7 @@ const NewSellPage = ():React.ReactNode => {
 
     return (
         <AppLayout>
-            <p>hola</p>
+            <ProductsExhibitor products={products}/>
         </AppLayout>
 
     )

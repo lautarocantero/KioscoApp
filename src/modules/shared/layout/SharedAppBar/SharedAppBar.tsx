@@ -10,7 +10,7 @@ const SharedAppBar = ({showFilters}: {showFilters: boolean}): React.ReactNode =>
       elevation={0}
       sx={(theme: Theme) => ({ 
         width: "100%",
-        backgroundColor: theme?.custom?.background,
+        backgroundColor: theme?.custom?.blackTranslucid,
       })}
       data-testid="login-appbar"
     >
