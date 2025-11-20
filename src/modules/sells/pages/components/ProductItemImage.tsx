@@ -8,7 +8,7 @@ const ProductItemImage = ():React.ReactNode => {
             src="/images/backgroundImages/blackBackgroundImage.jpg"
             alt={`${name} Image`}
             sx={{
-                width: { xs: 50, sm: 200 },
+                width: { xs: 90, sm: 200 },
                 height: { xs: 80, sm: 180 },
                 objectFit: "cover",
                 borderRadius: "0.3em",
