@@ -4,7 +4,7 @@ import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
 
 const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode => {
-    const { name, stock } = product;
+    const { name, stock, price } = product;
 
     return (
         <Grid
@@ -23,7 +23,7 @@ const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode =>
             })}
         >
         {/* Izquierda: imagen + nombre */}
-            <ProductItemEspecificationsLeft name={name} stock={stock} />
+            <ProductItemEspecificationsLeft name={name} stock={stock} price={price} />
         {/* Derecha: especificaciones + botón */}
             <ProductItemEspecificationsRight />
         </Grid>

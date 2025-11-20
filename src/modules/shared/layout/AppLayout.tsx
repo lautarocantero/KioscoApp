@@ -30,7 +30,7 @@ const AppLayout = ({ children, isOptions, title, icon }: PropsWithChildren<AppLa
         display={"flex"}
         flexDirection={"row"}
         justifyContent={"space-between"}
-        sx={{ height: "100vh", width: "100vw" }}
+        sx={{ height: "100%", width: "100vw" }}
         spacing={0}
       >
         <Grid

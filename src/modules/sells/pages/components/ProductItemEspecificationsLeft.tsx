@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
-import type { ProductImage } from "../../../../typings/sells/sellsTypes";
+import type { ProductEspecifications } from "../../../../typings/sells/sellsTypes";
 import ProductItemData from "./ProductItemData";
 import ProductItemImage from "./ProductItemImage";
 
-const ProductItemEspecificationsLeft = ({name, stock} : ProductImage): React.ReactNode => {
+const ProductItemEspecificationsLeft = ({name = 'product', stock = 0, price = 0} : ProductEspecifications): React.ReactNode => {
 
     return (
         <Grid 
@@ -13,7 +13,7 @@ const ProductItemEspecificationsLeft = ({name, stock} : ProductImage): React.Rea
             width={'50%'}
         >
             <ProductItemImage />
-            <ProductItemData title={name} stock={stock}/>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+            <ProductItemData title={name} stock={stock} price={price} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         </Grid>
     )
 }

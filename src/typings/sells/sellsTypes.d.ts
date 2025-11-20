@@ -27,4 +27,4 @@ export interface ProductInterface { // Este es el Product con TODOS sus campos
 ║ 🛍️ PRODUCT   🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️🛍️                      ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type ProductImage = Pick<ProductInterface, 'name' | 'stock'>;
+export type ProductEspecifications = Pick<ProductInterface, 'name' | 'stock' | 'price'>;
