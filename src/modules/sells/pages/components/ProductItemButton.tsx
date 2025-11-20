@@ -4,7 +4,9 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 const ProductItemButton = ():React.ReactNode => {
 
     return (
-        <Grid sx={{ width: '100%'}}>
+        <Grid 
+            sx={{ width: {xs: '100%', sm: '50%' }}}
+        >
             <Button
                 variant="contained"
                 size="small"
@@ -16,7 +18,7 @@ const ProductItemButton = ():React.ReactNode => {
                     textTransform: "none",
                     fontSize: theme?.typography?.caption?.fontSize,
                     padding: "0.3em 1em",
-                    width: '100%'
+                    width: { xs: '100%'}
                 })}
             >
                 Añadir

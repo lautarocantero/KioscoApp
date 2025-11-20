@@ -10,8 +10,7 @@ const ProductsExhibitor = ({ products }: { products: ProductInterface[] }): Reac
       container
       sx={{
         margin: { xs: "5em 0.4em 1em", sm: "5em 1em 1em" },
-        width: "100%",
-        overflow: 'scroll'
+        width: { xs: '100%', md: '80%'},
       }}
     >
         {products.map((prod: ProductInterface) => 

@@ -33,15 +33,17 @@ const ProductItemData = ({title, stock}: {title: string, stock: number}): React.
                 sx={(theme: Theme) => ({
                     fontSize: { xs: theme?.typography?.caption?.fontSize, sm: theme?.typography?.h4?.fontSize},
                     lineHeight: 1.5,
-                    // verticalAlign: "middle",
+                    
                 })}
             >
                 <InventoryIcon
                     sx={(theme: Theme) => ({
                         fontSize: { xs: theme?.typography?.caption?.fontSize, sm: theme?.typography?.h4?.fontSize},
                         verticalAlign: "middle",
+                        position: 'relative',
                         marginLeft: {xs: '0.2em', sm: '1em'},
                         marginRight: "0.3em",
+                        bottom: '0.10em',
                     })}
                 />
                 {`${stock}`}
