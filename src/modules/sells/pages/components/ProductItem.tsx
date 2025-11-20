@@ -1,7 +1,7 @@
 import { Grid, type Theme } from "@mui/material";
 import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
-import ProductItemImage from "./ProductItemImage";
-import ProductItemEspecifications from "./ProductItemEspecifications";
+import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
+import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
 
 const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode => {
     const { name, stock } = product;
@@ -10,21 +10,22 @@ const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode =>
         <Grid
             container
             sx={(theme: Theme) => ({
-                backgroundColor: theme?.custom?.backgroundDark,
-                color: theme?.custom?.fontColor,
-                padding: "0.3em",
-                borderRadius: "8px",
-                marginBottom: "0.7em",
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
                 alignItems: "center",
+                backgroundColor: theme?.custom?.backgroundDark,
+                borderRadius: "8px",
+                color: theme?.custom?.fontColor,
+                display: "flex",
+                height: {xs: 'auto', sm: '200px'},
+                justifyContent: "space-between",
+                marginBottom: "0.7em",
+                padding: "0.3em",
+                width: "100%",
             })}
         >
         {/* Izquierda: imagen + nombre */}
-            <ProductItemImage name={name} stock={stock} />
+            <ProductItemEspecificationsLeft name={name} stock={stock} />
         {/* Derecha: especificaciones + botón */}
-            <ProductItemEspecifications />
+            <ProductItemEspecificationsRight />
         </Grid>
     );
 };
