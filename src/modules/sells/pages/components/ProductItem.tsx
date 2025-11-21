@@ -26,7 +26,7 @@ const ProductItem = ({product }: {product: ProductInterface}): React.ReactNode =
         {/* Izquierda: imagen + nombre */}
             <ProductItemEspecificationsLeft name={name} stock={stock} price={price} />
         {/* Derecha: especificaciones + botón */}
-            <ProductItemEspecificationsRight />
+            <ProductItemEspecificationsRight product={product} />
         </Grid>
     );
 };

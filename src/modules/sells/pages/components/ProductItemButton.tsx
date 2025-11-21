@@ -2,9 +2,10 @@ import { Button, Grid, type Theme } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useContext } from "react";
 import { DialogContext } from "../context/DialogContext";
+import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
 
-const ProductItemButton = ():React.ReactNode => {
-    const { setShowModal } = useContext(DialogContext)!;
+const ProductItemButton = ({product} : {product: ProductInterface}):React.ReactNode => {
+    const { setShowModal, setProductData } = useContext(DialogContext)!;
 
     return (
         <Grid 
@@ -24,8 +25,8 @@ const ProductItemButton = ():React.ReactNode => {
                     width: { xs: '100%'}
                 })}
                 onClick={ () => { 
-                    console.log("abriendo");
                     setShowModal(true);
+                    setProductData(product);
                 }}
             >
                 Añadir

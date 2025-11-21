@@ -2,9 +2,10 @@ import { Grid } from "@mui/material";
 
 import ProductItemAmountData from "./ProductItemAmountData";
 import ProductItemButton from "./ProductItemButton";
+import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
 
 
-const ProductItemEspecificationsRight = (): React.ReactNode => {
+const ProductItemEspecificationsRight = ({product} : {product: ProductInterface}): React.ReactNode => {
 
     return (
         <Grid 
@@ -20,7 +21,7 @@ const ProductItemEspecificationsRight = (): React.ReactNode => {
             }}
         >
             <ProductItemAmountData />
-            <ProductItemButton />
+            <ProductItemButton product={product} />
         </Grid>
     )
 }
