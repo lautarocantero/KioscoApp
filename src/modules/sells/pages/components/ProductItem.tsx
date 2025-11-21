@@ -18,9 +18,9 @@ const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode =>
                 flexDirection: {md: 'column'},
                 height: {xs: 'auto', sm: '200px', md: '400px'},
                 justifyContent: "space-between",
-                marginBottom: "0.7em",
+                margin: '0em auto 0em',
                 padding: "0.3em",
-                width: "100%",
+                width: {xs: "100%", md:'40%'},
             })}
         >
         {/* Izquierda: imagen + nombre */}
