@@ -20,7 +20,7 @@ const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode =>
                 justifyContent: "space-between",
                 margin: '0em auto 0em',
                 padding: "0.3em",
-                width: {xs: "100%", md:'40%'},
+                width: {xs: "100%", md:'auto'},
             })}
         >
         {/* Izquierda: imagen + nombre */}

@@ -8,7 +8,7 @@ const ProductsExhibitor = ({ products }: { products: ProductInterface[] }): Reac
   return (
     <Grid
       container
-      spacing={3}
+      spacing={{ xs: 1, md: 2 }}
       sx={{
         margin: { xs: "5em 0.4em 1em", md: "5em auto"},
         width: { xs: '100%', md: '90%'},
