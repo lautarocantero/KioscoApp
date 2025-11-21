@@ -7,7 +7,7 @@ const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode =>
     const { name, stock, price } = product;
 
     return (
-        <Grid
+        <Grid 
             container
             sx={(theme: Theme) => ({
                 alignItems: "center",
@@ -15,7 +15,8 @@ const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode =>
                 borderRadius: "8px",
                 color: theme?.custom?.fontColor,
                 display: "flex",
-                height: {xs: 'auto', sm: '200px'},
+                flexDirection: {md: 'column'},
+                height: {xs: 'auto', sm: '200px', md: '400px'},
                 justifyContent: "space-between",
                 marginBottom: "0.7em",
                 padding: "0.3em",

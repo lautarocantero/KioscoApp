@@ -10,6 +10,7 @@ const ProductItemAmountData = ():React.ReactNode => {
             borderRadius: '1em',
             marginBottom: '0.3em',
             padding: '0.2em 0.5em',
+            width: {xs: 'auto', md: '100%'}
         })}
     >
         <Typography

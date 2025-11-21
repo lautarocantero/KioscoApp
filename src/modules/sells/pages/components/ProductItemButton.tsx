@@ -5,7 +5,7 @@ const ProductItemButton = ():React.ReactNode => {
 
     return (
         <Grid 
-            sx={{ width: {xs: '100%', sm: '50%' }}}
+            sx={{ width: {xs: 'auto', sm: '50%', md: '100%' }}}
         >
             <Button
                 variant="contained"

@@ -11,10 +11,13 @@ const ProductItemEspecificationsRight = (): React.ReactNode => {
             container 
             display={'flex'} 
             flexDirection={'column'} 
-            alignItems="end"
+            alignItems={{xs: "end", md: 'center'}}
             justifyContent={'space-between'}
             height={'100%'}
-            width={'50%'}
+            width={{ xs: '50%', md: '100%'}}
+            sx={{
+                flex: 1,
+            }}
         >
             <ProductItemAmountData />
             <ProductItemButton />

@@ -11,14 +11,18 @@ const ProductItemData = ({title, stock, price}: {title: string, stock: number, p
             sx={{
                 alignSelf: 'flex-start',
                 flexWrap: 'wrap',
-                width: {xs: 50, sm: 200 }
+                width: {xs: 50, sm: 200, md: '100%' }
             }}
         >   
         <Tooltip title={title}>
             <Typography
                 sx={(theme: Theme) => ({
                     display: '-webkit-box',
-                    fontSize: { xs: theme?.typography?.caption?.fontSize, sm: theme?.typography?.h4?.fontSize},
+                    fontSize: { 
+                        xs: theme?.typography?.caption?.fontSize, 
+                        sm: theme?.typography?.h4?.fontSize,
+                        md: theme?.typography?.h5?.fontSize,
+                    },
                     fontWeight: 600,
                     marginLeft: {xs: '0.2em', sm: '1em'},
                     WebkitLineClamp: 2,
@@ -32,14 +36,22 @@ const ProductItemData = ({title, stock, price}: {title: string, stock: number, p
         </Tooltip>
             <Typography
                 sx={(theme: Theme) => ({
-                    fontSize: { xs: theme?.typography?.caption?.fontSize, sm: theme?.typography?.h4?.fontSize},
+                    fontSize: { 
+                        xs: theme?.typography?.caption?.fontSize, 
+                        sm: theme?.typography?.h4?.fontSize,
+                        md: theme?.typography?.body1?.fontSize,
+                    },
                     lineHeight: 1.5,
                     
                 })}
             >
                 <InventoryIcon
                     sx={(theme: Theme) => ({
-                        fontSize: { xs: theme?.typography?.caption?.fontSize, sm: theme?.typography?.h4?.fontSize},
+                        fontSize: { 
+                            xs: theme?.typography?.caption?.fontSize, 
+                            sm: theme?.typography?.h4?.fontSize,
+                            md: theme?.typography?.body1?.fontSize,
+                        },
                         verticalAlign: "middle",
                         position: 'relative',
                         marginLeft: {xs: '0.2em', sm: '1em'},
@@ -51,14 +63,22 @@ const ProductItemData = ({title, stock, price}: {title: string, stock: number, p
             </Typography>
             <Typography
                 sx={(theme: Theme) => ({
-                    fontSize: { xs: theme?.typography?.caption?.fontSize, sm: theme?.typography?.h4?.fontSize},
+                    fontSize: { 
+                        xs: theme?.typography?.caption?.fontSize, 
+                        sm: theme?.typography?.h4?.fontSize,
+                        md: theme?.typography?.body1?.fontSize,
+                    },
                     lineHeight: 1.5,
 
                 })}
             >
                 <AttachMoneyIcon
                     sx={(theme: Theme) => ({
-                        fontSize: { xs: theme?.typography?.caption?.fontSize, sm: theme?.typography?.h4?.fontSize},
+                        fontSize: { 
+                            xs: theme?.typography?.caption?.fontSize, 
+                            sm: theme?.typography?.h4?.fontSize,
+                            md: theme?.typography?.body1?.fontSize,
+                        },
                         color: theme?.palette?.primary?.main,
                         verticalAlign: "middle",
                         position: 'relative',
