@@ -3,13 +3,15 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, 
 import { DialogContext } from "../../../sells/pages/context/DialogContext";
 import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
 import SimpleDialogIlustration from "./SimpleDialogIlustration";
-import SimpleDialogContent from "./SimpleDialogContent";
+import SimpleDialogData from "./SimpleDialogData";
 
 const SimpleDialog = (): React.ReactNode => {
   const { showModal, setShowModal, productData } = useContext(DialogContext)!;
-  const { name, size, stock, price } = productData as ProductInterface;
 
   if(!productData) return (<Typography>No product loaded</Typography>)
+
+  const { name, size, stock, price } = productData as ProductInterface;
+
 
   return (
     <Dialog 
@@ -35,19 +37,36 @@ const SimpleDialog = (): React.ReactNode => {
           backgroundColor: theme?.custom?.backgroundLigth, 
           color: theme?.custom?.fontColor,
           width: '100%',
+          padding: { xs: '0.1em', sm: '2em', }
         })}
       >
         <SimpleDialogIlustration name={name}/>
-        <SimpleDialogContent size={size} stock={stock} price={price} />
-        
-        
+        <SimpleDialogData size={size} stock={stock} price={price} />
       </DialogContent>
       <DialogActions
         sx={(theme: Theme) => ({
           backgroundColor: theme?.custom?.backgroundLigth, 
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         })}
       >
-        <Button onClick={() => setShowModal(false)}>Cerrar</Button>
+        <Button 
+          onClick={() => setShowModal(false)}
+          sx={(theme: Theme) => ({
+            color: theme?.custom?.whiteTranslucid,
+          })}
+        >
+          Cerrar
+        </Button>
+        <Button 
+          onClick={() => setShowModal(false)}
+          sx={(theme: Theme) => ({
+            color: theme?.custom?.fontColor,
+          })}
+        >
+          Agregar
+        </Button>
       </DialogActions>
     </Dialog>
   );
