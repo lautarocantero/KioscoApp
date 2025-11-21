@@ -4,7 +4,7 @@ import { getProducts } from "../api/sellsApi";
 import AppLayout from "../../shared/layout/AppLayout";
 import ProductsExhibitor from "./components/ProductsExhibitor";
 import type { ProductInterface } from "../../../typings/sells/sellsTypes";
-import SimpleDialog from "./components/SimpleDialog";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog";
 
 
 const NewSellPage = ():React.ReactNode => {
