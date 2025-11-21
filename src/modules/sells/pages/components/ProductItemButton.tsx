@@ -1,7 +1,10 @@
 import { Button, Grid, type Theme } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useContext } from "react";
+import { DialogContext } from "../context/DialogContext";
 
 const ProductItemButton = ():React.ReactNode => {
+    const { setShowModal } = useContext(DialogContext)!;
 
     return (
         <Grid 
@@ -11,7 +14,7 @@ const ProductItemButton = ():React.ReactNode => {
                 variant="contained"
                 size="small"
                 sx={(theme: Theme) => ({
-                    backgroundColor: theme?.custom?.blackTranslucid,
+                    backgroundColor: {xs: theme?.custom?.blackTranslucid, md: theme?.palette?.primary?.main },
                     border: `0.1em solid ${theme?.palette?.primary?.main}`,
                     borderRadius: '0.7em',
                     color: theme?.custom?.fontColor,
@@ -20,6 +23,10 @@ const ProductItemButton = ():React.ReactNode => {
                     padding: "0.3em 1em",
                     width: { xs: '100%'}
                 })}
+                onClick={ () => { 
+                    console.log("abriendo");
+                    setShowModal(true);
+                }}
             >
                 Añadir
                 <AddShoppingCartIcon 

@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate} from 'react-router-dom';
 import { getProducts } from "../api/sellsApi";
 import AppLayout from "../../shared/layout/AppLayout";
 import ProductsExhibitor from "./components/ProductsExhibitor";
 import type { ProductInterface } from "../../../typings/sells/sellsTypes";
+import { DialogContext } from "./context/DialogContext";
+import SimpleDialog from "./components/SimpleDialog";
 
 
 const NewSellPage = ():React.ReactNode => {
 
     const [showProducts, setShowProducts] = useState<boolean>(true);
     const [products, setProducts] = useState<ProductInterface[]>([]);
+    const { showModal } = useContext(DialogContext)!;
     const navigate = useNavigate();
+
+    console.log('showModal', showModal);
  
     useEffect(() => {
       const fetchProducts = async () => {
@@ -29,7 +34,9 @@ const NewSellPage = ():React.ReactNode => {
 
     return (
         <AppLayout>
-            <ProductsExhibitor products={products}/>
+            <ProductsExhibitor products={products} title={'Más vendido'} />
+            <ProductsExhibitor products={products} title={'Más vendido'} />
+            <SimpleDialog />
         </AppLayout>
 
     )

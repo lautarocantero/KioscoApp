@@ -3,7 +3,7 @@ import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
 import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
 
-const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode => {
+const ProductItem = ({product }: {product: ProductInterface}): React.ReactNode => {
     const { name, stock, price } = product;
 
     return (
@@ -11,14 +11,14 @@ const ProductItem = ({product}: {product: ProductInterface}): React.ReactNode =>
             container
             sx={(theme: Theme) => ({
                 alignItems: "center",
-                backgroundColor: theme?.custom?.backgroundDark,
+                backgroundColor: theme?.custom?.background, 
                 borderRadius: "8px",
                 color: theme?.custom?.fontColor,
                 display: "flex",
                 flexDirection: {md: 'column'},
                 height: {xs: 'auto', sm: '200px', md: '400px'},
                 justifyContent: "space-between",
-                margin: '0em auto 0em',
+                margin: '2em auto 0em',
                 padding: "0.3em",
                 width: {xs: "100%", md:'auto'},
             })}
