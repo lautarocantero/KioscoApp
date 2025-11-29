@@ -1,9 +1,7 @@
-// import { useDispatch, useSelector } from "react-redux";
-import { useSelector } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
-// import type { AppDispatch, RootState } from "../store/auth/authSlice";
-import type { RootState } from "../store/auth/authSlice";
-// import { startCheckAuth } from "../store/auth/thunks";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import type { AppDispatch, RootState } from "../store/auth/authSlice";
+import { startCheckAuth } from "../store/auth/thunks";
 import HomePage from "../modules/app/Home/HomePage";
 import SellsRoutes from "../modules/sells/SellsRoutes";
 import ShopRoutes from "../modules/shop/ShopRoutes";
@@ -12,55 +10,61 @@ import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
 import ProductsRoutes from "../modules/products/ProductsRoutes";
 import CartRoutes from "../modules/cart/CartRoutes";
 import AuthRoutes from "../modules/auth/AuthRoutes";
+import { useEffect } from "react";
+import RouteTracker from "./RouteTracker";
 
 const AppRouter = ():React.ReactNode => {
   const {auth} = useSelector((state: RootState) => state);
   const {status} = auth;
+  const location = useLocation();
+  const lastRoute = localStorage.getItem("lastRoute") || "/home";
+  const safeRoute = lastRoute === "/" ? "/home" : lastRoute;
 
-  // const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
-  // const checkAuthentication = async () => {
-    // await dispatch(startCheckAuth());
-    // // const response = await dispatch(startCheckAuth());
-    // // console.log('response', response);
-  // }
- 
-  // if(status === 'authenticated'){
-    // checkAuthentication();
-  // }
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try{
+        await dispatch(startCheckAuth());
+      } catch (error: unknown) {
+        if(!(error instanceof Error)) throw new Error("NO se ha encontrado un refreshToken, deslogueando");
+        throw new Error(error.message);
+      }
+    }
+
+  checkAuthentication();
+  },[dispatch])
   
   return (
-    <Routes>
-      {
-        status === 'authenticated'
-          ? (
-            <>
-              <Route path="/home" element={<HomePage />} />
-              {/* sells */}
-              {SellsRoutes()}
-              {/* shopping cart */}
-              {CartRoutes()}
-              {/* shop */}
-              {ShopRoutes()}
-              {/* Account */}
-              {AccountRoutes()}
-              {/* providers */}
-              {ProvidersRoutes()}
-              {/* products */}
-              {ProductsRoutes()}
-              {/*  */}
-              <Route path="*" element={<Navigate to="/home" />} />
-            </>
-          )
-          : (
-            <>
-              {AuthRoutes()}
-            </>
-          )
-      }
-    </Routes>
+    <>
+      <RouteTracker />
+      <Routes>
+        {
+          status === 'authenticated'
+            ? (
+              <>
+                <Route path="/home" element={<HomePage />} />
+                {SellsRoutes()}
+                {CartRoutes()}
+                {ShopRoutes()}
+                {AccountRoutes()}
+                {ProvidersRoutes()}
+                {ProductsRoutes()}
+                <Route path="*" element={<Navigate to={'/home'} />} />
+              </>
+            )
+            : (
+              <>
+                {AuthRoutes()}
+              </>
+            )
+        }
+      </Routes>
 
-
+      {status === "authenticated" && location.pathname === "/" && (
+        <Navigate to={safeRoute} replace />
+      )}
+    </>
   );
 };
 

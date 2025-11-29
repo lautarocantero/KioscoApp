@@ -26,6 +26,6 @@ export const authLogoutRequest = async () => {
 }
 
 export const authCheckStatusRequest = async () => {
-  const response = await baseUrl.post('/checkAuth');
+  const response = await baseUrl.post('/check-auth');
   return response;
 }

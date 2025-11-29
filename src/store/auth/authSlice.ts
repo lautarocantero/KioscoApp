@@ -5,7 +5,7 @@ import { AuthStatus } from '../../typings/auth/enums';
 
 
 const initialState: AuthSliceState = {
-    status: AuthStatus.Authenticated,
+    status: AuthStatus.Checking,
     _id: null,    
     email: '',
     username: '',

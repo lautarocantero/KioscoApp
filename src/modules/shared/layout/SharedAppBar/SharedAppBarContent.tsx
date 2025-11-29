@@ -30,7 +30,7 @@ const SharedAppBarContent = ({showFilters}: {showFilters: boolean}): React.React
         })}
       >
         <Typography 
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/home')}
           sx={(theme: Theme) => ({ 
             fontSize: theme?.typography?.h4,
             color: `${appTheme ? "#333333" : "#eff0f8"}`,

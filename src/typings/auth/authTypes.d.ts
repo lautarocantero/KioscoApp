@@ -40,12 +40,16 @@ export type AuthSliceState = Pick<AuthDataBase,
 ║ 🔐 LOGIN  🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐                       ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-
 // auth con los datos minimos del login
 export type AuthLoginData = Pick<AuthDataBase, 'email', 'password'>;
 
 export type AuthRegisterData = Pick<AuthDataBase, 'username', 'email','password', 'repeatPassword'>;
 
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🔐 Auth Check  🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐                  ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+
+export type AuthCheckAuthData = Pick<AuthDataBase, '_id' | 'email' | 'password' | 'refreshToken' | 'username' >;
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ ██ PAYLOAD   📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 ║
