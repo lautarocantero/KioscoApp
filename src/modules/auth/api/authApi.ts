@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { AuthLoginPayload, AuthRegisterPayload } from '../../../typings/auth/authTypes';
+import type { AuthLoginApiPayload, AuthRegisterApiPayload } from '../../../typings/auth/authTypes';
 
 
 const baseUrl = axios.create({
@@ -9,13 +9,13 @@ const baseUrl = axios.create({
   withCredentials: true,
 })
 
-export const registerUserRequest = async (data: AuthRegisterPayload) => {
+export const registerUserRequest = async (data: AuthRegisterApiPayload) => {
   const response = await baseUrl.post('/register', data);
   return response.data;
 };
 
 
-export const authLoginRequest = async (data: AuthLoginPayload) => {
+export const authLoginRequest = async (data: AuthLoginApiPayload) => {
   const response = await baseUrl.post('/login', data);
   return response.data;
 };

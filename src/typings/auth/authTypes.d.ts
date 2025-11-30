@@ -1,123 +1,65 @@
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🧱 BASES 🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱                     ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
-interface AuthDataBase { // Este es el auth con TODOS sus campos
+interface AuthEntity {
     _id: string | null,
     username: string,
     email: string,
     password: string,
     repeatPassword: string,
-    token: string,
+    authToken: string,
     refreshToken: string,
     status: AuthStatus,
     profilePhoto: string | null,
-    errorMessage: string | null | undefined,
 };
 
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🧩 DERIVADOS 🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩                ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🌍 PUBLIC 🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍                      ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-export type AuthPublic = Omit<AuthDataBase,'password', 'repeatPassword'>;
+// // derivado para no utilizar directamente el AuthEntity
+export type Auth = AuthEntity;
 
+// // derivado para los datos publicos
+export type AuthPublic = Omit<AuthEntity, 'password' | 'repeatPassword' | 'authToken' |'refreshToken' | 'status'>;
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
-╚══════════════════════════════════════════════════════════════════════╝*/
+// // derivado para el slice
+export type AuthSliceState = Omit<Auth,  "password" | "repeatPassword" | "authToken" | "refreshToken" > & {
+    errorMessage: string | null,
+};
 
-// state del slice
-export type AuthSliceState = Pick<AuthDataBase, 
-    '_id',
-    'username',
-    'email',
-    'profilePhoto',
-    'status',
-    'errorMessage'>;
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🔐 LOGIN  🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐                       ║
-╚══════════════════════════════════════════════════════════════════════╝*/
+export type AuthLoginSlicePayload = Pick<Auth, '_id' | 'username' |  'email' | 'profilePhoto' >
 
-// auth con los datos minimos del login
-export type AuthLoginData = Pick<AuthDataBase, 'email', 'password'>;
+export type AuthSliceErrorPayload = Pick<AuthSliceState, 'errorMessage'>;
 
-export type AuthRegisterData = Pick<AuthDataBase, 'username', 'email','password', 'repeatPassword'>;
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🕐 THUNKS 🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐                     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🔐 Auth Check  🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐🔐                  ║
-╚══════════════════════════════════════════════════════════════════════╝*/
+export type AuthLoginRequestPayload = Pick<Auth, 'email' | 'password' >;
 
-export type AuthCheckAuthData = Pick<AuthDataBase, '_id' | 'email' | 'password' | 'refreshToken' | 'username' >;
+export type AuthRegisterRequestPayload = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' >
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ ██ PAYLOAD   📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 📥📥 ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-export type AuthLoginPayload = Pick<AuthDataBase, 
-    'email',
-    'username',
-    'photoUrl',
-    '_id'>;
+export type AuthCheckAutResponse = Pick<Auth, '_id' | 'email' | 'password' | 'refreshToken' | 'username' >
 
-export type AuthErrorPayload = Pick<AuthDataBase, 'errorMessage'>;
+export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' | 'refreshToken' | 'profilePhoto'>
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ ██ ENDPOINTS   🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐  ║
-╚══════════════════════════════════════════════════════════════════════╝*/
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🔗 API 🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗                          ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type AuthLoginPayload = AuthLoginData;
+export type AuthRegisterApiPayload  = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' >
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ ██ BUTTONS   🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨   ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
-export type ErrorsInterface = Pick<AuthDataBase, 'email', 'password'>;
+export type AuthLoginApiPayload  = Pick<Auth, 'email' | 'password' >;
 
 
-export type ErrorsFullInterface = Pick<AuthDataBase, 'username', 'repeatPassword'>;
-
-export interface LoginFormButtonsInterface {
-  errors: ErrorsInterface;
-}
-
-export interface RegisterFormButtonsInterface {
-  errors: AuthRegisterData;
-}
-
-/*══════════════════════════════════════════════════════════════════════╗
-║ ██ PAGES   📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃📃  ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
-export interface LoginFormInputsInterface {    
-  values: AuthLoginData;
-  setFieldValue: (field: string, value: string) => void;
-  errors: ErrorsInterface;
-}
-
-export type ToggleFormCallback = (value: boolean) => void;
-
-export interface FormVisibilityState {
-  showForm: boolean;
-  setShowForm: ToggleFormCallback;
-}
-
-export type LoginFormInterface = Pick<FormVisibilityState, 'showForm'>;
-
-export type FormToggleButtonInterface = Pick<FormVisibilityState, 'setShowForm'>;
 
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ ██ FORMS   📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     
-╚══════════════════════════════════════════════════════════════════════╝*/
-
-export type AuthRegisterPayload = AuthRegisterData;
-
-export interface RegisterFormInputsInterface {
-  values: AuthRegisterPayload;
-  setFieldValue: (field: string, value: string) => void;
-  errors: ErrorsFullInterface;
-}
 
 
 

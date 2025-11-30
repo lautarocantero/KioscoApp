@@ -1,14 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { store } from '../store';
-import type { AuthErrorPayload, AuthLoginPayload, AuthSliceState } from '../../typings/auth/authTypes';
 import { AuthStatus } from '../../typings/auth/enums';
+import type { AuthLoginSlicePayload, AuthSliceErrorPayload, AuthSliceState } from '../../typings/auth/authTypes';
 
 
 const initialState: AuthSliceState = {
-    status: AuthStatus.Checking,
-    _id: null,    
+    _id: null,  
+    username: '',  
     email: '',
-    username: '',
+    status: AuthStatus.Checking,
     profilePhoto: null,
     errorMessage: null,
 }
@@ -17,23 +17,25 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state: AuthSliceState, action: PayloadAction<AuthLoginPayload>) => {
-            const {payload} = action;
-            const {email, username, profilePhoto, _id} = payload;
-            state.status = AuthStatus.Authenticated;
-            state.email = email ?? '';
-            state.username = username ?? '';
-            state.profilePhoto = profilePhoto ?? null;
+        login: (state: AuthSliceState, action: PayloadAction<AuthLoginSlicePayload>) => {
+            const { payload } = action;
+            const {_id , username, email,  profilePhoto } = payload;
             state._id = _id;
+            state.username = username ?? '';
+            state.email = email ?? '';
+            state.status = AuthStatus.Authenticated;
+            state.profilePhoto = profilePhoto ?? null;
             state.errorMessage = null
         },
-        logout: (state: AuthSliceState, action: PayloadAction<AuthErrorPayload | undefined>) => {
+        logout: (state: AuthSliceState, action: PayloadAction<AuthSliceErrorPayload>) => {
+            const { payload } = action;
+            const { errorMessage } = payload;
             state.status = AuthStatus.NotAuthenticated;
             state.email = '';
             state.username = '';
             state.profilePhoto = null;
             state._id = null;
-            state.errorMessage = action?.payload?.errorMessage;
+            state.errorMessage = errorMessage ?? null;
         },
         checkingCredentials: (state: AuthSliceState ) => {
             state.status = AuthStatus.Checking;

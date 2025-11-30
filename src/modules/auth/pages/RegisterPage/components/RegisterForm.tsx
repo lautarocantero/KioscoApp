@@ -5,9 +5,9 @@ import { Link as LinkReactRouter } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { registerUserRequest } from '/home/lau/Documentos/github/KioscoApp/FrontEnd/src/modules/auth/api/authApi.ts';
-import type { AuthRegisterData } from "../../../../../typings/auth/authTypes";
+import type { AuthRegisterRequestPayload } from "../../../../../typings/auth/authTypes";
 
-// 🎭 Sanitizador expresivo
+
 const sanitizeInput = (input: string, label: string): string => {
   if (typeof input !== 'string') {
     console.warn(`🤖 [${label}] no es texto. Se forzó a string.`);
@@ -45,8 +45,7 @@ const getValidationSchema = () =>
     })
   );
 
-// 🧼 Sanitización antes de enviar
-const onSubmit = async (data: AuthRegisterData) => {
+const onSubmit = async (data: AuthRegisterRequestPayload) => {
   try {
     const sanitizedData = {
       username: sanitizeInput(data.username, 'Username'),
@@ -55,7 +54,7 @@ const onSubmit = async (data: AuthRegisterData) => {
       repeatPassword: sanitizeInput(data.repeatPassword, 'RepeatPassword'),
     };
 
-    await registerUserRequest(sanitizedData as AuthRegisterData);
+    await registerUserRequest(sanitizedData as AuthRegisterRequestPayload);
     return;
   } catch (error) {
     console.error('Error al registrar:', error);

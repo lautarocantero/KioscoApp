@@ -1,17 +1,19 @@
-import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
+import type { Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { checkingCredentials, login, logout, type RootState } from "./authSlice";
 import { authCheckStatusRequest, authLoginRequest, authLogoutRequest } from "../../modules/auth/api/authApi";
-import type { AuthCheckAuthData, AuthLoginData, AuthPublic } from "../../typings/auth/authTypes";
 import type { AxiosResponse } from "axios";
+import type { AuthCheckAuthDataResponse, AuthCheckAutResponse, AuthLoginRequestPayload, AuthPublic } from "../../typings/auth/authTypes";
+import handlerStoreError from "../shared/handlerStoreError";
+
+type AuthActionsType = | ReturnType<typeof checkingCredentials> | ReturnType<typeof login> | ReturnType<typeof logout>;
 
 export const startLoginWithEmailPassword = (
-  { email, password }: AuthLoginData): ThunkAction<Promise<AuthPublic | null>, RootState, unknown, ReturnType<typeof login>> => {
+  { email, password }: AuthLoginRequestPayload): ThunkAction<Promise<AuthPublic | undefined>, RootState, unknown, AuthActionsType> => {
   
-    return async (dispatch) => {
+    return async (dispatch: Dispatch) => {
       dispatch(checkingCredentials());
       try {
-        // TO DO agregar token _token, _refreshToken, 
-        const { user } = await authLoginRequest({ email, password });
+        const { user } : { user: AuthPublic} = await authLoginRequest({ email, password });
 
         if (!user) {
           dispatch(logout({ errorMessage: 'No se recibió usuario válido' }));
@@ -21,60 +23,47 @@ export const startLoginWithEmailPassword = (
         dispatch(login({
           email: user.email,
           username: user.username,
-          profilePhoto: user.photoUrl,
+          profilePhoto: user.profilePhoto,
           _id: user._id,
         }));
 
-        return user;
+        return user as AuthPublic;
       } catch (error: unknown) {
-        dispatch(logout());
-        if (error instanceof Error) {
-          throw new Error(error.message);
-        } else {
-          throw new Error('Something went wrong while login, retry please.');
-        }
+        dispatch(logout({ errorMessage: null}));
+        handlerStoreError(error);
       }
     };
 };
 
-//nunca agregue persistencia de datos xd, hacerlo
-
-export const startLogout = (): ThunkAction<void, RootState, unknown, ReturnType<typeof logout>> => {
+export const startLogout = (): ThunkAction<void, RootState, unknown, AuthActionsType> => {
     return async(dispatch: Dispatch) => {
         try{
             await authLogoutRequest();
-            dispatch(logout())
+            dispatch(logout({errorMessage: null}))
         } catch(error: unknown) {
-            if (error instanceof Error) {
-              throw new Error(error.message);
-            } else {
-              throw new Error('Something went wrong while logout, retry please.');
-            }
+            handlerStoreError(error);
         }
     }
 }
 
-export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<AuthCheckAuthData>>, RootState, unknown, AnyAction> => {
-  return async (dispatch) => {
+export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<AuthCheckAutResponse> | undefined>, RootState, unknown, AuthActionsType> => {
+  return async (dispatch: Dispatch) => {
     try {
       const response = await authCheckStatusRequest();
+      const { status, data } : { status: number, data: AuthCheckAuthDataResponse} = response;
+
+      if(status !== 200) return;
       
-      if(response.status === 200) {
-        dispatch(login({
-          email: response.data.email,
-          username: response.data.username,
-          profilePhoto: undefined,
-          _id: response.data._id,
+      dispatch(login({
+          email: data.email,
+          username: data.username,
+          profilePhoto: data.profilePhoto,
+          _id: data._id,
         }));
-      }
 
       return response;
     } catch(error: unknown) {
-        if (error instanceof Error) {
-          throw new Error(error.message);
-        } else {
-          throw new Error('Something went wrong while logout, retry please.');
-        }
+        handlerStoreError(error);
     } 
   }
 }
