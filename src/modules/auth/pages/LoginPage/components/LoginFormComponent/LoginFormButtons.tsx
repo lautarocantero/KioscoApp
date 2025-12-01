@@ -3,9 +3,9 @@ import EmptyButton from "../../../../../shared/components/EmptyButton";
 import { Button, Grid, Typography, type Theme } from "@mui/material";
 import { Google } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import type { LoginFormButtonsInterface } from "../../../../../../typings/auth/authTypes";
+import type { LoginFormButtonsInterface } from "../../../../../../typings/auth/authComponentTypes";
 
-const LoginFormButtons = ({ errors }: LoginFormButtonsInterface) => {
+const LoginFormButtons = ({ errors }: LoginFormButtonsInterface): React.ReactNode => {
   const navigate = useNavigate();
 
   return (

@@ -2,14 +2,14 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Grid, IconButton, InputAdornment, TextField, type Theme } from "@mui/material";
 import { useState } from "react";
 import AuthTitle from "./AuthTitle";
-import type { LoginFormInputsInterface } from "../../../../../../typings/auth/authTypes";
+import type { LoginFormInputsInterface } from "../../../../../../typings/auth/authComponentTypes";
 
 const LoginFormInputs = ({
   values,
   setFieldValue,
   errors,
-}: LoginFormInputsInterface) => {
-  const [showPassword, setShowPassword] = useState(false);
+}: LoginFormInputsInterface): React.ReactNode => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
     <Grid

@@ -1,6 +1,6 @@
 import InitialFormButtons from "./InitialFormButtons";
 import AuthTitle from "./AuthTitle";
-import type { FormVisibilityState } from "../../../../../../typings/auth/authTypes";
+import type { FormVisibilityState } from "../../../../../../typings/auth/authComponentTypes";
 
 const InitialFormState = ({ showForm, setShowForm }: FormVisibilityState): React.ReactNode | null => {
   if (showForm) {

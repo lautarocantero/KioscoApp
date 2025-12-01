@@ -1,26 +1,22 @@
-import { Button } from "@mui/material";
+import { Button, type Theme } from "@mui/material";
+import type { EmptyButtonProps } from "../../../typings/ui/uiModules";
 
-interface EmptyButtonProps {
-  buttonText: string;
-  buttonOnClick: () => void;
-  buttonWidth?: string;
-}
 
 const EmptyButton = ({
   buttonText,
   buttonOnClick,
   buttonWidth = "280px",
-}: EmptyButtonProps) => {
+}: EmptyButtonProps): React.ReactNode => {
   return (
     <Button
       sx={{
         backgroundColor: "transparent",
-        color: (theme) => theme?.custom?.fontColorTransparent,
+        color: (theme: Theme) => theme?.custom?.fontColorTransparent,
         width: buttonWidth,
         borderRadius: 35,
         padding: 1,
         textTransform: "none",
-        fontSize: (theme) => theme?.typography?.body1?.fontSize,
+        fontSize: (theme: Theme) => theme?.typography?.body1?.fontSize,
       }}
       onClick={buttonOnClick}
       role="button"

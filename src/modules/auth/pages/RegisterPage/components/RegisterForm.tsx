@@ -63,6 +63,7 @@ const onSubmit = async (data: AuthRegisterRequestPayload): Promise<void> => {
 };
 
 const RegisterForm = (): React.ReactNode => {
+
   const { errors, values, handleSubmit, setFieldValue } = useFormik({
     initialValues: getInitialValues(),
     onSubmit,

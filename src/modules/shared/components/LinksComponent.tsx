@@ -3,7 +3,7 @@ import { Link as LinkReactRouter } from "react-router-dom";
 import type { LinkInterface, LinksComponentInterface } from "../../../typings/ui/uiModules";
 import { Breakpoint } from "../../../typings/ui/ui";
 
-const LinksComponent = ({ linksToShow }: LinksComponentInterface) => {
+const LinksComponent = ({ linksToShow }: LinksComponentInterface): React.ReactNode => {
   return (
     <>
       {linksToShow.map((link: LinkInterface) => {

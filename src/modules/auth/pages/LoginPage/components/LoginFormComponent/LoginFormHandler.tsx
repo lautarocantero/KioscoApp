@@ -2,7 +2,7 @@ import { useState } from "react";
 import InitialFormState from "./InitialFormState";
 import LoginForm from "./LoginForm";
 
-const LoginFormHandler = () => {
+const LoginFormHandler = (): React.ReactNode => {
   const [showForm, setShowForm] = useState<boolean>(false);
 
   return (

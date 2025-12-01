@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, type Theme } from "@mui/material";
 import StoreMallDirectoryIcon from "@mui/icons-material/StoreMallDirectory";
 
 const KioscoTitle = (): React.ReactNode => (
@@ -6,7 +6,7 @@ const KioscoTitle = (): React.ReactNode => (
     sx={{
       display: "flex",
       alignItems: "center",
-      color: theme => theme?.custom?.fontColor,
+      color: (theme: Theme) => theme?.custom?.fontColor,
     }}
     variant="h1">
     <span>

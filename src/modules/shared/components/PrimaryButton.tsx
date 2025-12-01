@@ -1,13 +1,5 @@
-import { Button } from "@mui/material";
-
-interface PrimaryButtonProps {
-  buttonText: string;
-  buttonOnClick: () => void;
-  buttonWidth?: string;
-  buttonType?: "button" | "reset" | "submit";
-  buttonColor?: "default" | "error";
-  dataTestId?: "default" | string;
-}
+import { Button, type Theme } from "@mui/material";
+import type { PrimaryButtonProps } from "../../../typings/ui/uiModules";
 
 const PrimaryButton = ({
   buttonText,
@@ -16,21 +8,21 @@ const PrimaryButton = ({
   buttonType = "button",
   buttonColor = "default",
   dataTestId = 'default',
-}: PrimaryButtonProps) => {
+}: PrimaryButtonProps): React.ReactNode => {
   return (
     <Button
       sx={{
-        backgroundColor: (theme) =>
+        backgroundColor: (theme: Theme) =>
           buttonColor === "default"
             ? theme?.palette?.primary?.main
             : theme?.palette?.error?.main,
-        color: (theme) => theme?.custom?.white,
+        color: (theme: Theme) => theme?.custom?.white,
         mt: "1.5em",
         width: buttonWidth,
         borderRadius: 35,
         padding: 1,
         textTransform: "none",
-        fontSize: (theme) => theme?.typography?.body1?.fontSize,
+        fontSize: (theme: Theme) => theme?.typography?.body1?.fontSize,
       }}
       onClick={buttonOnClick}
       type={buttonType}

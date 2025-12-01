@@ -1,7 +1,7 @@
 import { Brightness4, ModeNight } from "@mui/icons-material";
 import { useContext } from "react";
 import { ThemeContext } from "../../../theme/ThemeContext";
-import { Grid } from "@mui/material";
+import { Grid, type Theme } from "@mui/material";
 
 const LightMode = () => {
   const { appTheme, setAppTheme } = useContext(ThemeContext);
@@ -12,7 +12,7 @@ const LightMode = () => {
       display={"flex"}
       alignItems={"center"}
       aria-label="cambiar modo de tema"
-      sx={(theme) => ({
+      sx={(theme: Theme) => ({
         backgroundColor: theme?.custom?.blackTranslucid || "rgba(0,0,0,0.6)",
         borderRadius: "1em",
         cursor: "pointer",
@@ -26,13 +26,13 @@ const LightMode = () => {
       }}
     >
       <Brightness4
-        sx={(theme) =>({
+        sx={(theme: Theme) =>({
           color: appTheme ? theme?.custom?.white : theme?.custom?.blackTranslucid,
           height: '0.8em',
         })}
       />
       <ModeNight
-        sx={(theme) =>({
+        sx={(theme: Theme) =>({
           color: !appTheme ? theme?.custom?.white : theme?.custom?.blackTranslucid,
           height: '0.8em',
         })}

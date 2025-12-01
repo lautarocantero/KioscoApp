@@ -2,7 +2,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton, InputAdornment, TextField, type Theme } from "@mui/material";
 import { Grid } from "@mui/system";
 import { useState } from "react";
-import type { RegisterFormInputsInterface } from "../../../../../typings/auth/authTypes";
+import type { RegisterFormInputsInterface } from "../../../../../typings/auth/authComponentTypes";
 
 const RegisterFormInputs = (
   {
@@ -10,8 +10,9 @@ const RegisterFormInputs = (
     errors,
     setFieldValue,
   }: RegisterFormInputsInterface): React.ReactNode  => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+    
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState<boolean>(false);
 
   return (
     <Grid container display="flex" flexDirection={"column"} gap={2}>

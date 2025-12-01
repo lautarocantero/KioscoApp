@@ -5,9 +5,10 @@ import React, { useContext } from "react";
 import { ThemeContext } from "../../../theme/ThemeContext";
 import LoginAppBar from "./LoginAppBar/LoginAppBar";
 
-const AuthLayout = ({ children }: PropsWithChildren) => {
-  const { appTheme } = useContext(ThemeContext);
-  const backgroundUrl = `url(/images/backgroundImages/${
+const AuthLayout = ({ children }: PropsWithChildren): React.ReactNode => {
+  const { appTheme }: {appTheme: boolean} = useContext(ThemeContext);
+
+  const backgroundUrl: string = `url(/images/backgroundImages/${
     !appTheme ? "black" : "white"
   }BackgroundImage.jpg)`;
 
@@ -33,6 +34,7 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
         sx={{ height: "100vh", width: "100vw" }}
         spacing={0}
       >
+        {/* este grid se utiliza para centrar a la derecha el main */}
         <Grid
           component={"div"}
           spacing={{ xs: 12, sm: 6 }}

@@ -50,6 +50,22 @@ export interface OptionsHeaderInterface {
 ║ ██ BUTTONS   🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨   ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
+
+export interface PrimaryButtonProps {
+  buttonText: string;
+  buttonOnClick: () => void;
+  buttonWidth?: string;
+  buttonType?: "button" | "reset" | "submit";
+  buttonColor?: "default" | "error";
+  dataTestId?: "default" | string;
+}
+
+export interface EmptyButtonProps {
+  buttonText: string;
+  buttonOnClick: () => void;
+  buttonWidth?: string;
+}
+
 export interface BackButtonProps {
   appTheme: boolean,
 }

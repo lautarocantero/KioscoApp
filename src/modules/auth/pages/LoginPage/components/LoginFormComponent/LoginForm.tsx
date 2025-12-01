@@ -7,8 +7,9 @@ import LoginFormButtons from "./LoginFormButtons";
 import "animate.css";
 import { startLoginWithEmailPassword } from "../../../../../../store/auth/thunks";
 import { useDispatch } from "react-redux";
-import type { AuthLoginData, LoginFormInterface } from "../../../../../../typings/auth/authTypes";
 import type { AppDispatch } from "../../../../../../store/auth/authSlice";
+import type { LoginFormType } from "../../../../../../typings/auth/authComponentTypes";
+import type { AuthLoginRequestPayload } from "../../../../../../typings/auth/authTypes";
 
 
 const getInitialValues = () => ({
@@ -28,10 +29,10 @@ const getValidationSchema = () =>
   );
 
   
-const LoginForm = ({ showForm }: LoginFormInterface): React.ReactNode | null => {
+const LoginForm = ({ showForm }: LoginFormType): React.ReactNode | null => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const onSubmit = async (data: AuthLoginData) => {
+  const onSubmit = async (data: AuthLoginRequestPayload) => {
     const {email, password} = data;
     dispatch(startLoginWithEmailPassword({email,password}));
   }
