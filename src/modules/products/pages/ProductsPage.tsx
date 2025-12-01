@@ -3,7 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import CategoryIcon from '@mui/icons-material/Category';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
-import DisplayOptions from '../../shared/components/DisplayOptions';
+import DisplayOptions from '../../shared/components/Options/DisplayOptions';
 
 const productsLinks = [
   { icon: <ClearAllIcon />, description: 'Ver Productos', url: '/products-list'},

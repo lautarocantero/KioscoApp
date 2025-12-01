@@ -1,5 +1,5 @@
 import { Button, type Theme } from "@mui/material";
-import type { PrimaryButtonProps } from "../../../typings/ui/uiModules";
+import type { PrimaryButtonProps } from "../../../../typings/ui/uiModules";
 
 const PrimaryButton = ({
   buttonText,
@@ -8,6 +8,7 @@ const PrimaryButton = ({
   buttonType = "button",
   buttonColor = "default",
   dataTestId = 'default',
+  padding = 1,
 }: PrimaryButtonProps): React.ReactNode => {
   return (
     <Button
@@ -17,12 +18,12 @@ const PrimaryButton = ({
             ? theme?.palette?.primary?.main
             : theme?.palette?.error?.main,
         color: (theme: Theme) => theme?.custom?.white,
-        mt: "1.5em",
+        mt: {xs:"1.5em", md: '0'},
         width: buttonWidth,
         borderRadius: 35,
-        padding: 1,
+        padding: padding,
         textTransform: "none",
-        fontSize: (theme: Theme) => theme?.typography?.body1?.fontSize,
+        fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
       }}
       onClick={buttonOnClick}
       type={buttonType}

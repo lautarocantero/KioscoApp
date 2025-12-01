@@ -16,7 +16,7 @@ const EmptyButton = ({
         borderRadius: 35,
         padding: 1,
         textTransform: "none",
-        fontSize: (theme: Theme) => theme?.typography?.body1?.fontSize,
+        fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
       }}
       onClick={buttonOnClick}
       role="button"

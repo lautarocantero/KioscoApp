@@ -1,6 +1,6 @@
 import InitialFormButtons from "./InitialFormButtons";
-import AuthTitle from "./AuthTitle";
 import type { FormVisibilityState } from "../../../../../../typings/auth/authComponentTypes";
+import { Grid } from "@mui/material";
 
 const InitialFormState = ({ showForm, setShowForm }: FormVisibilityState): React.ReactNode | null => {
   if (showForm) {
@@ -8,10 +8,13 @@ const InitialFormState = ({ showForm, setShowForm }: FormVisibilityState): React
   }
 
   return (
-    <>
-      <AuthTitle />
+    <Grid
+      container
+      display={'flex'}
+      flexDirection={'column'}
+    >
       <InitialFormButtons setShowForm={setShowForm} />
-    </>
+    </Grid>
   );
 };
 

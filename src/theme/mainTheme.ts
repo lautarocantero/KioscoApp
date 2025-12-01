@@ -65,7 +65,7 @@ export const darkTheme = createTheme({
     lightMain: '#66A3FB',
     darkSecondary: '#00357E',
     fontColor: '#eff0f8',
-    fontColorTransparent: '#eff0f88c',
+    fontColorTransparent: '#eff0f842',
     fontColorDark: '#333333',
     fontColorDarkTransparent: '#09090966',
     backgroundLigth: '#525253ff',

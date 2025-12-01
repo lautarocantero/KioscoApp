@@ -1,7 +1,7 @@
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import PersonIcon from '@mui/icons-material/Person';
-import DisplayOptions from '../../shared/components/DisplayOptions';
+import DisplayOptions from '../../shared/components/Options/DisplayOptions';
 
 const accountLinks = [
   { icon: <ManageAccountsIcon />, description: 'Editar cuenta', url: '/account-edit'},

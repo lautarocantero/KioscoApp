@@ -78,7 +78,7 @@ const RegisterForm = (): React.ReactNode => {
       role="form"
       onSubmit={handleSubmit}
       sx={{
-        maxWidth: { xs: "12em", sm: "100%" },
+        maxWidth: { xs: "12em", sm: "90%" },
         height: "100%",
       }}
     >

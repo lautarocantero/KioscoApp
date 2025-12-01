@@ -54,10 +54,11 @@ export interface OptionsHeaderInterface {
 export interface PrimaryButtonProps {
   buttonText: string;
   buttonOnClick: () => void;
-  buttonWidth?: string;
+  buttonWidth?: string | { xs?: string; sm?: string; md?: string; lg?: string };
   buttonType?: "button" | "reset" | "submit";
   buttonColor?: "default" | "error";
   dataTestId?: "default" | string;
+  padding?: number;
 }
 
 export interface EmptyButtonProps {

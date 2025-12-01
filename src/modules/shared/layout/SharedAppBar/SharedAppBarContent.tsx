@@ -1,5 +1,5 @@
 import { Grid, Typography, type Theme } from "@mui/material";
-import LightMode from "../../components/LightMode";
+import LightMode from "../../components/LightMode/LightMode";
 import { useContext } from "react";
 import { ThemeContext } from "../../../../theme/ThemeContext";
 import { useNavigate } from "react-router-dom";

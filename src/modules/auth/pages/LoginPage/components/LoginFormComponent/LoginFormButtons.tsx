@@ -1,9 +1,9 @@
-import PrimaryButton from "../../../../../shared/components/PrimaryButton";
-import EmptyButton from "../../../../../shared/components/EmptyButton";
+import PrimaryButton from "../../../../../shared/components/Buttons/PrimaryButton";
 import { Button, Grid, Typography, type Theme } from "@mui/material";
 import { Google } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import type { LoginFormButtonsInterface } from "../../../../../../typings/auth/authComponentTypes";
+import EmptyButton from "../../../../../shared/components/Buttons/EmptyButton";
 
 const LoginFormButtons = ({ errors }: LoginFormButtonsInterface): React.ReactNode => {
   const navigate = useNavigate();
@@ -11,18 +11,27 @@ const LoginFormButtons = ({ errors }: LoginFormButtonsInterface): React.ReactNod
   return (
     <Grid
       container
-      direction="column"
+      display={"flex"}
+      flexDirection={"column"}
       spacing={2}
-      sx={{ mt: 2 }}
       alignItems={"center"}
+      sx={{
+        margin: "2em 0em 0em"
+      }}
     >
-      <Grid component={"div"} width={"100%"}>
+      <Grid 
+        component={"div"} 
+        display={"flex"}
+        justifyContent={'center'}
+        width={"100%"}
+      >
         <PrimaryButton
           buttonText="Continuar"
           buttonOnClick={() => {}}
-          buttonWidth="100%"
+          buttonWidth={{ xs: "15em", md: '100%'}}
           buttonType="submit"
           buttonColor={Object.keys(errors).length === 0 ? "default" : "error"}
+          padding={0.3}
         />
       </Grid>
       <Grid component={"div"}>
@@ -31,7 +40,6 @@ const LoginFormButtons = ({ errors }: LoginFormButtonsInterface): React.ReactNod
             color: (theme: Theme) => theme?.custom?.fontColor,
             fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
             textAlign: "center",
-            margin: 2,
           }}
         >
           Conectar con
@@ -52,12 +60,13 @@ const LoginFormButtons = ({ errors }: LoginFormButtonsInterface): React.ReactNod
               fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
               textTransform: "none",
               fontWeight: "bold",
+              padding: 0.4 ,
             }}
             role="button"
           >
             <Google
               sx={{
-                fontSize: (theme: Theme) => theme?.typography?.body1?.fontSize,
+                fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
                 mr: 1,
               }}
             />

@@ -1,8 +1,8 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Grid, IconButton, InputAdornment, TextField, type Theme } from "@mui/material";
 import { useState } from "react";
-import AuthTitle from "./AuthTitle";
 import type { LoginFormInputsInterface } from "../../../../../../typings/auth/authComponentTypes";
+import FormErrorsHandler from "../../../../../shared/components/ErrorHandler/ErrorFormHandler";
 
 const LoginFormInputs = ({
   values,
@@ -10,17 +10,21 @@ const LoginFormInputs = ({
   errors,
 }: LoginFormInputsInterface): React.ReactNode => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
+  console.log('errors', errors);
   return (
     <Grid
       container
       display={"flex"}
       direction={"column"}
-      spacing={3}
+      spacing={{ xs: 3, md: 1}}
       alignItems={"center"}
     >
-      <AuthTitle />
-      <Grid component={"div"} spacing={{ xs: 12, sm: 12 }}>
+      
+      <Grid 
+        component={"div"} 
+        spacing={{ xs: 12}}
+        width={"100%"}
+      >
         <TextField
           fullWidth
           name="email"
@@ -42,7 +46,9 @@ const LoginFormInputs = ({
           }}
           variant="standard"
           sx={(theme: Theme ) =>  ({
-            input: { color: theme?.custom?.fontColor },
+            input: { 
+              color: theme?.custom?.fontColor
+            },
             label: { color: theme?.custom?.fontColor },
             "& .MuiFormHelperText-root": {
               color: theme?.custom?.fontColor,
@@ -59,12 +65,12 @@ const LoginFormInputs = ({
           })}
         />
       </Grid>
-      <Grid component={"div"} spacing={{ xs: 12, sm: 12 }}>
+      <Grid component={"div"} spacing={{ xs: 12 }}>
         <TextField
+          fullWidth
           label="Contraseña"
           type={showPassword ? "text" : "password"}
           placeholder="Contraseña"
-          fullWidth
           name="password"
           value={values?.password}
           onChange={({ target }) => {
@@ -128,6 +134,7 @@ const LoginFormInputs = ({
           }}
         />
       </Grid>
+      <FormErrorsHandler errors={errors} />
     </Grid>
   );
 };

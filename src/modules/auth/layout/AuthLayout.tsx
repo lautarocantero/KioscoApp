@@ -51,26 +51,25 @@ const AuthLayout = ({ children }: PropsWithChildren): React.ReactNode => {
           sx={(theme: Theme) => ({
             backgroundColor: { md: theme.custom?.background },
             minWidth: { xs: "100%", md: "50%" },
+            height: '100%',
           })}
         >
           <LoginAppBar />
           <Grid
             container
             component="main"
-            rowSpacing={15}
             sx={(theme: Theme) => ({
-              display: { xs: "flex", md: "flex" },
-              flexDirection: { md: "column" },
+              display: { xs: "flex"},
+              flexDirection: { xs: "column" },
               alignItems: { xs: "center", md: "center" },
-              width: { xs: "100%", sm: "90%", md: "80%" },
+              width: { xs: "90%", sm: "90%", md: "80%" },
               justifyContent: "center",
               margin: "auto",
               padding: "3em 0",
-              borderRadius: { xs: "0", md: "1em" },
+              borderRadius: { xs: "1em" },
               overflowX: "hidden",
               backgroundColor: {
-                xs: "transparent",
-                md: theme.custom?.backgroundDark || "rgba(0,0,0,0.6)",
+                xs: theme.custom?.backgroundDark || "rgba(0,0,0,0.6)",
               },
             })}
           >

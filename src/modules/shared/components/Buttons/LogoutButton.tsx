@@ -1,6 +1,6 @@
 import { Button, Grid, type Theme } from "@mui/material";
-import type { LogoutButtonProps } from "../../../typings/ui/uiModules";
-import { startLogout } from "../../../store/auth/thunks";
+import type { LogoutButtonProps } from "../../../../typings/ui/uiModules";
+import { startLogout } from "../../../../store/auth/thunks";
 import LogoutIcon from '@mui/icons-material/Logout';
 
 

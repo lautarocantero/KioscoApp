@@ -1,5 +1,5 @@
 import { Grid, type Theme } from "@mui/material";
-import LinksComponent from "../../../shared/components/LinksComponent";
+import LinksComponent from "../../../shared/components/Links/LinksComponent";
 import { useLocation } from "react-router-dom";
 import type { LinkInterface } from "../../../../typings/ui/uiModules";
 import { Breakpoint, UnderlineVariant } from "../../../../typings/ui/ui";

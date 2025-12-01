@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
-import AppLayout from "../layout/AppLayout";
+import type { DisplayOptionsInterface } from "../../../../typings/ui/uiModules";
+import AppLayout from "../../layout/AppLayout";
 import OptionsList from "./OptionsList";
-import type { DisplayOptionsInterface } from "../../../typings/ui/uiModules";
 
 
 const DisplayOptions = ({title, icon,links, disconnect} : DisplayOptionsInterface): React.ReactNode => {

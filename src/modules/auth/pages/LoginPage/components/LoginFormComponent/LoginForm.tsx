@@ -53,10 +53,14 @@ const LoginForm = ({ showForm }: LoginFormType): React.ReactNode | null => {
       role="form"
       onSubmit={handleSubmit}
       sx={{
-        width: "100%",
-        maxWidth: "12em",
+        width: {xs: "90%"},
         height: "100%",
         boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "auto"
       }}
       className="animate__animated animate__bounceInRight"
     >
@@ -69,6 +73,7 @@ const LoginForm = ({ showForm }: LoginFormType): React.ReactNode | null => {
         component={LinkReactRouter}
         to={"/login"}
         sx={{
+          alignSelf: "center",
           mt: "1em",
           textDecoration: "none",
           textAlign: "center",
@@ -77,7 +82,8 @@ const LoginForm = ({ showForm }: LoginFormType): React.ReactNode | null => {
           fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
           backgroundColor: (theme: Theme) => theme?.custom?.background,
           borderRadius: "1em",
-          width: "100%",
+          width: "90%",
+          justifySelf: 'center',
         }}
       >
         ¿Olvidaste tu contraseña?

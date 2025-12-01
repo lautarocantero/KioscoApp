@@ -7,6 +7,8 @@ const KioscoTitle = (): React.ReactNode => (
       display: "flex",
       alignItems: "center",
       color: (theme: Theme) => theme?.custom?.fontColor,
+      fontSize: { xs: '2em', md: '1em'},
+      width: '100%',
     }}
     variant="h1">
     <span>

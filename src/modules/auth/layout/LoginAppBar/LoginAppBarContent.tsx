@@ -1,6 +1,6 @@
 import { Grid, type Theme } from "@mui/material";
 import LoginAppBarLinks from "./LoginAppBarLinks";
-import LightMode from "../../../shared/components/LightMode";
+import LightMode from "../../../shared/components/LightMode/LightMode";
 
 const LoginAppBarContent = (): React.ReactNode => {
   return (

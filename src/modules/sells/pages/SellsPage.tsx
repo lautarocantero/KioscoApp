@@ -1,7 +1,7 @@
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import DisplayOptions from '../../shared/components/DisplayOptions';
+import DisplayOptions from '../../shared/components/Options/DisplayOptions';
 
 const sellsLinks = [
   { icon: <AddShoppingCartIcon />, description: 'Nueva venta', url: '/new-sell'},

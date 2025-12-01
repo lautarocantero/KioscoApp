@@ -1,7 +1,7 @@
 import DownloadIcon from '@mui/icons-material/Download';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import DisplayOptions from '../../shared/components/DisplayOptions';
+import DisplayOptions from '../../shared/components/Options/DisplayOptions';
 
 
 const sellsHistoryLinks = [

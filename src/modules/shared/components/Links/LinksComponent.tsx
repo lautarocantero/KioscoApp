@@ -1,7 +1,7 @@
 import { Link, type Theme } from "@mui/material";
 import { Link as LinkReactRouter } from "react-router-dom";
-import type { LinkInterface, LinksComponentInterface } from "../../../typings/ui/uiModules";
-import { Breakpoint } from "../../../typings/ui/ui";
+import type { LinkInterface, LinksComponentInterface } from "../../../../typings/ui/uiModules";
+import { Breakpoint } from "../../../../typings/ui/ui";
 
 const LinksComponent = ({ linksToShow }: LinksComponentInterface): React.ReactNode => {
   return (

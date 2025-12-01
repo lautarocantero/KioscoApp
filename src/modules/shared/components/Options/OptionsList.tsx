@@ -1,12 +1,12 @@
 import { Grid, Link, type Theme} from '@mui/material';
 import { Link as LinkReactRouter } from 'react-router-dom';
-import type { OptionLink, OptionsListInterface } from '../../../typings/ui/uiModules';
+import type { OptionLink, OptionsListInterface } from '../../../../typings/ui/uiModules';
 import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../../../store/auth/authSlice';
+import type { AppDispatch } from '../../../../store/auth/authSlice';
 import { useContext } from 'react';
-import { ThemeContext } from '../../../theme/ThemeContext';
-import BackButton from './BackButton';
-import LogoutButton from './LogoutButton';
+import { ThemeContext } from '../../../../theme/ThemeContext';
+import LogoutButton from '../Buttons/LogoutButton';
+import BackButton from '../Buttons/BackButton';
 
 const OptionsList = ({ links, disconnect }: OptionsListInterface): React.ReactNode => {
   const { appTheme } = useContext(ThemeContext);
