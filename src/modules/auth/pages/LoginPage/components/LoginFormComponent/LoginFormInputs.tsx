@@ -2,7 +2,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Grid, IconButton, InputAdornment, TextField, type Theme } from "@mui/material";
 import { useState } from "react";
 import type { LoginFormInputsInterface } from "../../../../../../typings/auth/authComponentTypes";
-import FormErrorsHandler from "../../../../../shared/components/ErrorHandler/ErrorFormHandler";
 
 const LoginFormInputs = ({
   values,
@@ -10,7 +9,7 @@ const LoginFormInputs = ({
   errors,
 }: LoginFormInputsInterface): React.ReactNode => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  console.log('errors', errors);
+
   return (
     <Grid
       container
@@ -134,7 +133,6 @@ const LoginFormInputs = ({
           }}
         />
       </Grid>
-      <FormErrorsHandler errors={errors} />
     </Grid>
   );
 };

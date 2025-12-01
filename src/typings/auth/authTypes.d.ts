@@ -11,7 +11,7 @@ interface AuthEntity {
     authToken: string,
     refreshToken: string,
     status: AuthStatus,
-    profilePhoto: string | null,
+    profilePhoto?: string | null,
 };
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -43,7 +43,11 @@ export type AuthSliceErrorPayload = Pick<AuthSliceState, 'errorMessage'>;
 
 export type AuthLoginRequestPayload = Pick<Auth, 'email' | 'password' >;
 
-export type AuthRegisterRequestPayload = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' >
+export type AuthRegisterRequestPayload = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' | 'profilePhoto' >
+
+export interface AuthRegisterSanitizedPayload {
+    sanitizedData: AuthRegisterRequestPayload;
+}
 
 export type AuthCheckAutResponse = Pick<Auth, '_id' | 'email' | 'password' | 'refreshToken' | 'username' >
 
@@ -53,7 +57,7 @@ export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' |
 // ║ 🔗 API 🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗                          ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type AuthRegisterApiPayload  = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' >
+export type AuthRegisterApiPayload  = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword', | 'profilePhoto' >
 
 export type AuthLoginApiPayload  = Pick<Auth, 'email' | 'password' >;
 

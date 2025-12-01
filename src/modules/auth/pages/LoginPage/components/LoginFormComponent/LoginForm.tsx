@@ -6,10 +6,11 @@ import LoginFormInputs from "./LoginFormInputs";
 import LoginFormButtons from "./LoginFormButtons";
 import "animate.css";
 import { startLoginWithEmailPassword } from "../../../../../../store/auth/thunks";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../../../../../store/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../../../../../store/auth/authSlice";
 import type { LoginFormType } from "../../../../../../typings/auth/authComponentTypes";
 import type { AuthLoginRequestPayload } from "../../../../../../typings/auth/authTypes";
+import ApiErrorsHandler from "../../../../../shared/components/ErrorHandler/ErrorFormHandler";
 
 
 const getInitialValues = () => ({
@@ -31,6 +32,8 @@ const getValidationSchema = () =>
   
 const LoginForm = ({ showForm }: LoginFormType): React.ReactNode | null => {
   const dispatch = useDispatch<AppDispatch>();
+  const { auth } = useSelector((state: RootState) => state);
+  const { errorMessage } = auth;
 
   const onSubmit = async (data: AuthLoginRequestPayload) => {
     const {email, password} = data;
@@ -69,6 +72,7 @@ const LoginForm = ({ showForm }: LoginFormType): React.ReactNode | null => {
         setFieldValue={setFieldValue}
         errors={errors}
       />
+      <ApiErrorsHandler error={errorMessage}/>
       <Link
         component={LinkReactRouter}
         to={"/login"}

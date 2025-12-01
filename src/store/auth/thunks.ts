@@ -1,11 +1,15 @@
-import type { Dispatch, ThunkAction } from "@reduxjs/toolkit"
-import { checkingCredentials, login, logout, type RootState } from "./authSlice";
-import { authCheckStatusRequest, authLoginRequest, authLogoutRequest } from "../../modules/auth/api/authApi";
+import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
+import { checkingCredentials, clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
+import { authCheckStatusRequest, authLoginRequest, authLogoutRequest, authRegisterRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
-import type { AuthCheckAuthDataResponse, AuthCheckAutResponse, AuthLoginRequestPayload, AuthPublic } from "../../typings/auth/authTypes";
-import handleError from "../shared/handlerStoreError";
+import type { AuthCheckAuthDataResponse, AuthCheckAutResponse, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload } from "../../typings/auth/authTypes";
+import { handleErrorWithAction, handleError } from "../shared/handlerStoreError";
 
-type AuthActionsType = | ReturnType<typeof checkingCredentials> | ReturnType<typeof login> | ReturnType<typeof logout>;
+type AuthActionsType = 
+  | ReturnType<typeof checkingCredentials> 
+  | ReturnType<typeof login> 
+  | ReturnType<typeof logout>
+  ;
 
 export const startLoginWithEmailPassword = (
   { email, password }: AuthLoginRequestPayload): ThunkAction<Promise<AuthPublic | undefined>, RootState, unknown, AuthActionsType> => {
@@ -29,11 +33,32 @@ export const startLoginWithEmailPassword = (
 
         return user as AuthPublic;
       } catch (error: unknown) {
-        dispatch(logout({ errorMessage: null}));
-        handleError(error);
+        handleErrorWithAction({error, dispatch, action: logout}); 
       }
     };
 };
+
+export const startRegister = (
+  { sanitizedData } : AuthRegisterSanitizedPayload): ThunkAction<Promise<string | undefined>, RootState, undefined, AnyAction> => {
+    const {username, email, password, repeatPassword, profilePhoto } = sanitizedData;
+
+    return async (dispatch: AppDispatch): Promise<string | undefined> => {
+      try{
+        const _id : string = await authRegisterRequest({username, email, password, repeatPassword, profilePhoto});
+
+        if(!_id) {
+          dispatch(logout({ errorMessage: 'No se pudo registrar al usuario, intente de nuevo' }));
+          throw new Error('Error durante el  registro');
+        }
+
+        dispatch(clearAuthError());
+        return _id as string;
+      } catch (error: unknown) {
+        handleErrorWithAction({error, dispatch, action: logout});  
+      }
+    }
+
+}
 
 export const startLogout = (): ThunkAction<void, RootState, unknown, AuthActionsType> => {
     return async(dispatch: Dispatch) => {

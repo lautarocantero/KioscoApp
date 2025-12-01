@@ -1,16 +1,30 @@
-import { Typography } from "@mui/material";
+import { Grid, Typography, type Theme } from "@mui/material";
 import type { FormErrorsHandlerInterface } from "../../../../typings/ui/uiErrors";
 
 
-const FormErrorsHandler = ({errors} : {errors: FormErrorsHandlerInterface} ): React.ReactNode => {
-    console.log('errors', errors);
+const ApiErrorsHandler = ({error} : FormErrorsHandlerInterface ): React.ReactNode => {
+
+    if(!error) return (<></>);
 
     return (
-        <>
-            <Typography>FormErrorsHandler</Typography>
-        </>
+        <Grid
+            container
+            sx={{
+                width: "100%"
+            }}
+        >
+            <Typography
+                sx={(theme: Theme) => ({ 
+                    color: theme?.palette.error.main,
+                    fontSize: theme?.typography?.caption?.fontSize,
+                    marginTop: '1em'
+                })}
+            >
+                {error}
+            </Typography>
+        </Grid>
     )
 
 }
 
-export default FormErrorsHandler;
+export default ApiErrorsHandler;

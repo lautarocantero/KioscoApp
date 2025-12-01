@@ -4,9 +4,12 @@ import RegisterFormButtons from "./RegisterFormButtons";
 import { Link as LinkReactRouter } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { registerUserRequest } from '/home/lau/Documentos/github/KioscoApp/FrontEnd/src/modules/auth/api/authApi.ts';
 import type { AuthRegisterRequestPayload } from "../../../../../typings/auth/authTypes";
-import handleError from "../../../../../store/shared/handlerStoreError";
+import { handleError } from "../../../../../store/shared/handlerStoreError";
+import ApiErrorsHandler from "../../../../shared/components/ErrorHandler/ErrorFormHandler";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../../../../store/auth/authSlice";
+import { startRegister } from "../../../../../store/auth/thunks";
 
 
 const sanitizeInput = (input: string, label: string): string => {
@@ -42,11 +45,14 @@ const getValidationSchema = () =>
         .required("Campo requerido")
         .trim(),
       password: Yup.string().required("Campo requerido"),
-      repeatPassword: Yup.string().required("Campo requerido"),
+      repeatPassword: 
+        Yup.string()
+          .required("Campo requerido")
+          .oneOf([Yup.ref("password")], "No coinciden las contraseñas")
     })
   );
 
-const onSubmit = async (data: AuthRegisterRequestPayload): Promise<void> => {
+const onSubmit = async (data: AuthRegisterRequestPayload, dispatch: AppDispatch): Promise<void> => {
   try {
     const sanitizedData = {
       username: sanitizeInput(data.username, 'Username'),
@@ -55,18 +61,20 @@ const onSubmit = async (data: AuthRegisterRequestPayload): Promise<void> => {
       repeatPassword: sanitizeInput(data.repeatPassword, 'RepeatPassword'),
     };
 
-    await registerUserRequest(sanitizedData as AuthRegisterRequestPayload);
-    return;
-  } catch (error: unknown) {
+    dispatch(startRegister({sanitizedData}));
+  } catch (error: unknown) { 
     handleError(error);
   }
 };
 
 const RegisterForm = (): React.ReactNode => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { auth } = useSelector((state: RootState) => state);
+  const { errorMessage } = auth;
 
   const { errors, values, handleSubmit, setFieldValue } = useFormik({
     initialValues: getInitialValues(),
-    onSubmit,
+    onSubmit: (values) => onSubmit(values, dispatch),
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema: getValidationSchema(),
@@ -87,6 +95,7 @@ const RegisterForm = (): React.ReactNode => {
         setFieldValue={setFieldValue}
         errors={errors}
       />
+      <ApiErrorsHandler error={errorMessage}/>
       <RegisterFormButtons errors={errors} />
       <Link
         component={LinkReactRouter}

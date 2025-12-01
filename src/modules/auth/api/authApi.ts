@@ -9,7 +9,7 @@ const baseUrl = axios.create({
   withCredentials: true,
 })
 
-export const registerUserRequest = async (data: AuthRegisterApiPayload) => {
+export const authRegisterRequest = async (data: AuthRegisterApiPayload) => {
   const response = await baseUrl.post('/register', data);
   return response.data;
 };
