@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { registerUserRequest } from '/home/lau/Documentos/github/KioscoApp/FrontEnd/src/modules/auth/api/authApi.ts';
 import type { AuthRegisterRequestPayload } from "../../../../../typings/auth/authTypes";
+import handleError from "../../../../../store/shared/handlerStoreError";
 
 
 const sanitizeInput = (input: string, label: string): string => {
@@ -45,7 +46,7 @@ const getValidationSchema = () =>
     })
   );
 
-const onSubmit = async (data: AuthRegisterRequestPayload) => {
+const onSubmit = async (data: AuthRegisterRequestPayload): Promise<void> => {
   try {
     const sanitizedData = {
       username: sanitizeInput(data.username, 'Username'),
@@ -56,8 +57,8 @@ const onSubmit = async (data: AuthRegisterRequestPayload) => {
 
     await registerUserRequest(sanitizedData as AuthRegisterRequestPayload);
     return;
-  } catch (error) {
-    console.error('Error al registrar:', error);
+  } catch (error: unknown) {
+    handleError(error);
   }
 };
 

@@ -1,5 +1,5 @@
 
-const handlerStoreError = (error: unknown) => {
+const handleError = (error: unknown) => {
 
     if(!(error instanceof Error)) throw new Error('Something went wrong while login, retry please.');
 
@@ -7,7 +7,7 @@ const handlerStoreError = (error: unknown) => {
       
 }
 
-export default handlerStoreError;
+export default handleError;
 
 
 

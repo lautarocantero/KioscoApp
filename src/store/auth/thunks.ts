@@ -3,7 +3,7 @@ import { checkingCredentials, login, logout, type RootState } from "./authSlice"
 import { authCheckStatusRequest, authLoginRequest, authLogoutRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
 import type { AuthCheckAuthDataResponse, AuthCheckAutResponse, AuthLoginRequestPayload, AuthPublic } from "../../typings/auth/authTypes";
-import handlerStoreError from "../shared/handlerStoreError";
+import handleError from "../shared/handlerStoreError";
 
 type AuthActionsType = | ReturnType<typeof checkingCredentials> | ReturnType<typeof login> | ReturnType<typeof logout>;
 
@@ -30,7 +30,7 @@ export const startLoginWithEmailPassword = (
         return user as AuthPublic;
       } catch (error: unknown) {
         dispatch(logout({ errorMessage: null}));
-        handlerStoreError(error);
+        handleError(error);
       }
     };
 };
@@ -41,7 +41,7 @@ export const startLogout = (): ThunkAction<void, RootState, unknown, AuthActions
             await authLogoutRequest();
             dispatch(logout({errorMessage: null}))
         } catch(error: unknown) {
-            handlerStoreError(error);
+            handleError(error);
         }
     }
 }
@@ -63,7 +63,7 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<AuthCheckAut
 
       return response;
     } catch(error: unknown) {
-        handlerStoreError(error);
+        handleError(error);
     } 
   }
 }

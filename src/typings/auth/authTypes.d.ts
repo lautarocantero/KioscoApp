@@ -47,7 +47,7 @@ export type AuthRegisterRequestPayload = Pick<Auth, 'username' | 'email' | 'pass
 
 export type AuthCheckAutResponse = Pick<Auth, '_id' | 'email' | 'password' | 'refreshToken' | 'username' >
 
-export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' | 'refreshToken' | 'profilePhoto'>
+export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' | 'profilePhoto'>
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔗 API 🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗                          ║
