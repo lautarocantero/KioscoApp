@@ -52,5 +52,4 @@ export const { login, logout, checkingCredentials,clearAuthError } = authSlice.a
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;
 
-
 export default authSlice.reducer;

@@ -8,6 +8,6 @@ const baseUrl = axios.create({
 })
 
 export const getProducts = async () => {
-    const response = await baseUrl.get("/");
+    const response = await baseUrl.get("/get-products");
     return response.data;
 }
