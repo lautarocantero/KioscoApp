@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate} from 'react-router-dom';
-import { getProducts } from "../api/sellsApi";
 import AppLayout from "../../shared/layout/AppLayout";
 import ProductsExhibitor from "./components/ProductsExhibitor";
-import type { ProductInterface } from "../../../typings/sells/sellsTypes";
 import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog";
-
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../../store/product/productSlice";
+import { getProducts } from "../../../store/product/thunks";
 
 const NewSellPage = ():React.ReactNode => {
-
-    const [showProducts, setShowProducts] = useState<boolean>(true);
-    const [products, setProducts] = useState<ProductInterface[]>([]);
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const { product } = useSelector((state: RootState) => state);
+    const { products } = product;
+    const [showProducts, setShowProducts] = useState<boolean>(true);
+
 
     useEffect(() => {
       const fetchProducts = async () => {
-        const resp = await getProducts();
-        if(resp) setProducts(resp);
+        dispatch(getProducts());
       };
       fetchProducts();
     }, []);
@@ -30,7 +31,6 @@ const NewSellPage = ():React.ReactNode => {
 
     return (
         <AppLayout>
-            <ProductsExhibitor products={products} title={'Más vendido'} />
             <ProductsExhibitor products={products} title={'Más vendido'} />
             <SimpleDialog />
         </AppLayout>

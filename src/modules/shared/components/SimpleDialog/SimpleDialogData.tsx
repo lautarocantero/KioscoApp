@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import SimpleDialogDataDisplay from "./SimpleDialogDataDisplay";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import SimpleDialogSelector from "./SimpleDialogSelector";
 
 const SimpleDialogData = ({size, stock, price}: {size: string, stock: number, price: number} ):React.ReactNode => {
 
@@ -14,7 +15,7 @@ const SimpleDialogData = ({size, stock, price}: {size: string, stock: number, pr
                 mt: '2em',
             }}
         >
-            <SimpleDialogDataDisplay data={size} label={'Tamaño: '}/>
+            <SimpleDialogSelector />
             <SimpleDialogDataDisplay data={`${stock}`} label={'Unidades: '}/>
             <SimpleDialogDataDisplay data={`${price}`} label={'Total: '} icon={<AttachMoneyIcon />}/>
         </Grid>

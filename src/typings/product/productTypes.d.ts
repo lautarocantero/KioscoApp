@@ -35,3 +35,5 @@ interface ProductState {
     errorMessage: string | null,
 }
 
+export type ProductStateError = Pick <ProductState, 'errorMessage'>
+
