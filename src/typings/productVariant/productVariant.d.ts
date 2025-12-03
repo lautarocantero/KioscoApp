@@ -37,9 +37,10 @@ export type ProductVariantPublic = Omit<ProductVariantEntity, '_id'>
 
 // tipo del slice
 interface ProductVariantState {
-    items: ProductVariant[],
+    productVariants: ProductVariant[],
     isLoading: boolean,
     errorMessage: string | null,
 }
 
+export type ProductVariantStateError = Pick<ProductVariantState, 'errorMessage'>;
 

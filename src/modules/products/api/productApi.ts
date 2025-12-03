@@ -10,6 +10,5 @@ const baseUrl = axios.create({
 
 export const getProductsRequest = async () => {
     const response = await baseUrl.get('/get-products');
-    console.log(response);
     return response.data;
 }

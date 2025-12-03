@@ -1,9 +1,10 @@
 import { Grid } from "@mui/material";
-import SimpleDialogDataDisplay from "./SimpleDialogDataDisplay";
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+// import SimpleDialogDataDisplay from "./SimpleDialogDataDisplay";
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import SimpleDialogSelector from "./SimpleDialogSelector";
+import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
 
-const SimpleDialogData = ({size, stock, price}: {size: string, stock: number, price: number} ):React.ReactNode => {
+const SimpleDialogData = ( {products} : {products: ProductVariant[]} ):React.ReactNode => {
 
     return (
         <Grid
@@ -15,9 +16,9 @@ const SimpleDialogData = ({size, stock, price}: {size: string, stock: number, pr
                 mt: '2em',
             }}
         >
-            <SimpleDialogSelector />
-            <SimpleDialogDataDisplay data={`${stock}`} label={'Unidades: '}/>
-            <SimpleDialogDataDisplay data={`${price}`} label={'Total: '} icon={<AttachMoneyIcon />}/>
+            <SimpleDialogSelector products={products} />
+            {/* <SimpleDialogDataDisplay data={`${stock}`} label={'Unidades: '}/> */}
+            {/* <SimpleDialogDataDisplay data={`${price}`} label={'Total: '} icon={<AttachMoneyIcon />}/> */}
         </Grid>
     )
 };

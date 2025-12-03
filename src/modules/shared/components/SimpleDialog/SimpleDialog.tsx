@@ -1,17 +1,35 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, type Theme } from "@mui/material";
 import { DialogContext } from "../../../sells/pages/context/DialogContext";
-import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
 import SimpleDialogIlustration from "./SimpleDialogIlustration";
 import SimpleDialogData from "./SimpleDialogData";
+import type { Product } from "../../../../typings/product/productTypes";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../../../store/productVariant/productVariantSlice";
+import { getProductVariantsById } from "../../../../store/productVariant/productVariantThunks";
 
 const SimpleDialog = (): React.ReactNode => {
   const { showModal, setShowModal, productData } = useContext(DialogContext)!;
+  const dispatch = useDispatch<AppDispatch>();
+  const { productVariant } = useSelector((state: RootState) => state);
+  const { productVariants } = productVariant;
+ 
+
+    useEffect(() => {
+
+      const getProductVariants = async() => {
+        const _idResult = productData?._id;
+
+        if(!_idResult) return;
+        await dispatch(getProductVariantsById(_idResult));
+      }
+
+      getProductVariants();
+  }, [dispatch, productData])
 
   if(!productData) return (<Typography>No product loaded</Typography>)
 
-  const { name, size, stock, price } = productData as ProductInterface;
-
+  const { name } = productData as Product;
 
   return (
     <Dialog 
@@ -41,7 +59,7 @@ const SimpleDialog = (): React.ReactNode => {
         })}
       >
         <SimpleDialogIlustration name={name}/>
-        <SimpleDialogData size={size} stock={stock} price={price} />
+        <SimpleDialogData products={productVariants} />
       </DialogContent>
       <DialogActions
         sx={(theme: Theme) => ({

@@ -17,7 +17,7 @@ const NewSellPage = ():React.ReactNode => {
 
     useEffect(() => {
       const fetchProducts = async () => {
-        dispatch(getProducts());
+        await dispatch(getProducts());
       };
       fetchProducts();
     }, []);

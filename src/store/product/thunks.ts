@@ -11,7 +11,7 @@ export const getProducts = () => {
         dispatch(checkingProducts());
         try{
             const products : Product[] = await getProductsRequest();
-            console.log('products', products);
+
             if(!products) {
                 dispatch(setError({ errorMessage: "No se ha encontrado ningun producto"}))
                 throw new Error('No se encontraron productos');
