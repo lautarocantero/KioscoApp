@@ -1,7 +1,7 @@
 import { Grid, Typography, type Theme } from "@mui/material";
-import SimpleDialogImage from "./SimpleDialogImage";
+import ProductDialogImage from "./ProductDialogImage";
 
-const SimpleDialogIlustration = ({name}: {name: string}):React.ReactNode => {
+const ProductDialogIlustration = ({name}: {name: string}):React.ReactNode => {
 
     return (
         <Grid
@@ -12,7 +12,7 @@ const SimpleDialogIlustration = ({name}: {name: string}):React.ReactNode => {
             padding: 1,
           })}
         >
-            <SimpleDialogImage />
+            <ProductDialogImage />
             <Typography
                 sx={(theme: Theme) => ({
                     fontSize: theme?.typography?.body1?.fontSize,
@@ -26,4 +26,4 @@ const SimpleDialogIlustration = ({name}: {name: string}):React.ReactNode => {
     )
 }
 
-export default SimpleDialogIlustration;
+export default ProductDialogIlustration;

@@ -1,31 +1,30 @@
-import { Grid, Typography, type Theme } from "@mui/material"
-import QuantityChip from "./ProductItemQuantityChip";
+import { Grid, Typography, type Theme } from "@mui/material";
+import ProductItemQuantityHandler from "./ProductItemQuantityHandler";
+import type { AmountDataType } from "../../../../typings/sells/sellsComponentTypes";
 
-const ProductItemAmountData = ():React.ReactNode => {
+const ProductItemAmountData = ({ variants }: AmountDataType): React.ReactNode => {
 
-    return (
+  if (!variants) return null;
+
+  return (
     <Grid
-        sx={(theme: Theme) => ({
-            backgroundColor: theme?.custom?.blackTranslucid,
-            borderRadius: '1em',
-            marginBottom: '0.3em',
-            padding: '0.2em 0.5em',
-            width: {xs: 'auto', md: '100%'}
-        })}
+      sx={(theme: Theme) => ({
+        backgroundColor: theme?.custom?.blackTranslucid,
+        borderRadius: "1em",
+        marginBottom: "0.3em",
+        padding: "0.2em 0.5em",
+        width: { xs: "auto", md: "100%" },
+      })}
     >
-        <Typography
-            sx={(theme: Theme) => ({
-                fontSize: theme?.typography?.caption?.fontSize,
-                marginBottom: "0.5em",
-            })}
-        >
-            <strong>ml</strong> 
-            <QuantityChip  color="red" label="2L"/>
-            <QuantityChip  color="green" label="1.5L"/>
-            <QuantityChip  color="green" label="500ml"/>
-        </Typography>
+      <Typography
+        sx={(theme: Theme) => ({
+          fontSize: theme?.typography?.caption?.fontSize,
+        })}
+      >
+        <ProductItemQuantityHandler variants={variants}/>
+      </Typography>
     </Grid>
-    )
-}
+  );
+};
 
 export default ProductItemAmountData;

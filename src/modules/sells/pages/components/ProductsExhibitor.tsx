@@ -1,9 +1,9 @@
 import { Grid, Typography, type Theme } from "@mui/material";
-import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
 import ProductsList from "./ProductsList";
 import ProductsNotFound from "./ProductNotFound";
+import type { ProductsExhibitorInterface } from "../../../../typings/sells/sellsComponentTypes";
 
-const ProductsExhibitor = ({ products, title }: { products: ProductInterface[], title: string }): React.ReactNode => {
+const ProductsExhibitor = ({ products, title }: ProductsExhibitorInterface): React.ReactNode => {
   if (!products || !Array.isArray(products)) return <ProductsNotFound />;
 
   return (

@@ -1,8 +1,11 @@
 import { Box, Tooltip, Typography, type Theme } from "@mui/material";
 import InventoryIcon from '@mui/icons-material/Inventory';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
+import type { ItemDataType } from "../../../../typings/sells/sellsComponentTypes";
 
-const ProductItemData = ({title, stock, price}: {title: string, stock: number, price: number}): React.ReactNode => {
+const ProductItemData = ({name, variants }: ItemDataType): React.ReactNode => {
+
+    const totalStock: number = variants.reduce((sum: number,v: ProductVariant) => sum + v.stock, 0);
 
     return (
         <Box 
@@ -14,7 +17,7 @@ const ProductItemData = ({title, stock, price}: {title: string, stock: number, p
                 width: {xs: 50, sm: 200, md: '100%' }
             }}
         >   
-        <Tooltip title={title}>
+        <Tooltip title={name}>
             <Typography
                 sx={(theme: Theme) => ({
                     display: '-webkit-box',
@@ -31,7 +34,7 @@ const ProductItemData = ({title, stock, price}: {title: string, stock: number, p
                     textOverflow: 'ellipsis',
                 })}
             >
-                { title}
+                { name }
             </Typography>
         </Tooltip>
             <Typography
@@ -59,35 +62,7 @@ const ProductItemData = ({title, stock, price}: {title: string, stock: number, p
                         bottom: '0.10em',
                     })}
                 />
-                {`${stock}`}
-            </Typography>
-            <Typography
-                sx={(theme: Theme) => ({
-                    fontSize: { 
-                        xs: theme?.typography?.caption?.fontSize, 
-                        sm: theme?.typography?.h4?.fontSize,
-                        md: theme?.typography?.body1?.fontSize,
-                    },
-                    lineHeight: 1.5,
-
-                })}
-            >
-                <AttachMoneyIcon
-                    sx={(theme: Theme) => ({
-                        fontSize: { 
-                            xs: theme?.typography?.caption?.fontSize, 
-                            sm: theme?.typography?.h4?.fontSize,
-                            md: theme?.typography?.body1?.fontSize,
-                        },
-                        color: theme?.palette?.primary?.main,
-                        verticalAlign: "middle",
-                        position: 'relative',
-                        marginLeft: {xs: '0.2em', sm: '1em'},
-                        marginRight: "0.3em",
-                        bottom: '0.10em',
-                    })}
-                />
-                {`${price}`}
+                {`${totalStock}`}
             </Typography>
         </Box>
     )

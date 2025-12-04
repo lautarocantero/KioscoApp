@@ -1,14 +1,14 @@
 import { useContext, useEffect } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, type Theme } from "@mui/material";
 import { DialogContext } from "../../../sells/pages/context/DialogContext";
-import SimpleDialogIlustration from "./SimpleDialogIlustration";
-import SimpleDialogData from "./SimpleDialogData";
+import ProductDialogIlustration from "./ProductDialogIlustration";
+import ProductDialogData from "./ProductDialogData";
 import type { Product } from "../../../../typings/product/productTypes";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../../store/productVariant/productVariantSlice";
 import { getProductVariantsById } from "../../../../store/productVariant/productVariantThunks";
 
-const SimpleDialog = (): React.ReactNode => {
+const ProductDialog = (): React.ReactNode => {
   const { showModal, setShowModal, productData } = useContext(DialogContext)!;
   const dispatch = useDispatch<AppDispatch>();
   const { productVariant } = useSelector((state: RootState) => state);
@@ -58,8 +58,8 @@ const SimpleDialog = (): React.ReactNode => {
           padding: { xs: '0.1em', sm: '2em', }
         })}
       >
-        <SimpleDialogIlustration name={name}/>
-        <SimpleDialogData products={productVariants} />
+        <ProductDialogIlustration name={name}/>
+        <ProductDialogData products={productVariants} />
       </DialogContent>
       <DialogActions
         sx={(theme: Theme) => ({
@@ -90,4 +90,4 @@ const SimpleDialog = (): React.ReactNode => {
   );
 };
 
-export default SimpleDialog;
+export default ProductDialog;

@@ -1,11 +1,13 @@
 import { Grid } from "@mui/material";
-
-import ProductItemAmountData from "./ProductItemAmountData";
 import ProductItemButton from "./ProductItemButton";
-import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
+import ProductItemAmountData from "./ProductItemAmountData";
+import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
+import type { EspecificationsRightType } from "../../../../typings/sells/sellsComponentTypes";
 
 
-const ProductItemEspecificationsRight = ({product} : {product: ProductInterface}): React.ReactNode => {
+const ProductItemEspecificationsRight = ({product} : EspecificationsRightType): React.ReactNode => {
+
+    const {variants} : {variants: ProductVariant[]} = product;
 
     return (
         <Grid 
@@ -20,7 +22,7 @@ const ProductItemEspecificationsRight = ({product} : {product: ProductInterface}
                 flex: 1,
             }}
         >
-            <ProductItemAmountData />
+            <ProductItemAmountData variants={variants}/>
             <ProductItemButton product={product} />
         </Grid>
     )

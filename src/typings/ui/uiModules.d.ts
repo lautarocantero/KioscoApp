@@ -79,7 +79,5 @@ export interface LogoutButtonProps extends BackButtonProps {
 ║ ██ SHOP   🛒 📦 🎁 🛍️🛒 📦 🎁 🛍️🛒 📦 🎁 🛍️🛒 📦 🎁 🛍️🛒 📦 🎁 🛍️      ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface QuantityChipInterface {
-  color: string,
-  label: string,
-}
+
+

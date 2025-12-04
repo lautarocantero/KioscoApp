@@ -1,10 +1,11 @@
 import { Grid, type Theme } from "@mui/material";
-import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
 import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
+import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
+import type { ProductItemInterface } from "../../../../typings/sells/sellsComponentTypes";
 
-const ProductItem = ({product }: {product: ProductInterface}): React.ReactNode => {
-    const { name, stock, price } = product;
+const ProductItem = ({ product }: ProductItemInterface): React.ReactNode => {
+    const { name, variants } : {name: string, variants: ProductVariant[]} = product;
 
     return (
         <Grid 
@@ -24,7 +25,7 @@ const ProductItem = ({product }: {product: ProductInterface}): React.ReactNode =
             })}
         >
         {/* Izquierda: imagen + nombre */}
-            <ProductItemEspecificationsLeft name={name} stock={stock} price={price} />
+            <ProductItemEspecificationsLeft name={name} variants={variants} />
         {/* Derecha: especificaciones + botón */}
             <ProductItemEspecificationsRight product={product} />
         </Grid>

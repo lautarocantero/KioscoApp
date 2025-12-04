@@ -14,8 +14,8 @@ interface ProductVariantEntity {
     productId: string;
     sku: string;
     modelType: string;
-    modelSize: string;
-    minStock: number;
+    model_size: string;
+    min_stock: number;
     stock: number;
     price: number;
     expirationDate: string;

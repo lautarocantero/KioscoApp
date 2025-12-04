@@ -1,8 +1,8 @@
-import type { QuantityChipInterface } from "../../../../typings/ui/uiModules";
+import type { QuantityChipInterface } from "../../../../typings/sells/sellsComponentTypes";
 
 
 const QuantityChip = ({ color = "red", label }: QuantityChipInterface): React.ReactNode => {
-    const fontSize = label.length > 3 ? "0.6em" : "0.7em";
+    const fontSize: string = label?.length > 3 ? "0.6em" : "0.7em";
 
     return (
         <span

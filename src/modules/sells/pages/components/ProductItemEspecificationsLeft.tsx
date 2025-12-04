@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
-import type { ProductEspecifications } from "../../../../typings/sells/sellsTypes";
 import ProductItemData from "./ProductItemData";
 import ProductItemImage from "./ProductItemImage";
+import type { EspecificationsLeftInterface } from "../../../../typings/sells/sellsComponentTypes";
 
-const ProductItemEspecificationsLeft = ({name = 'product', stock = 0, price = 0} : ProductEspecifications): React.ReactNode => {
+const ProductItemEspecificationsLeft = ({name = 'product', variants = []} : EspecificationsLeftInterface ): React.ReactNode => {
 
     return (
         <Grid 
@@ -17,7 +17,7 @@ const ProductItemEspecificationsLeft = ({name = 'product', stock = 0, price = 0}
             }}
         >
             <ProductItemImage />
-            <ProductItemData title={name} stock={stock} price={price} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+            <ProductItemData name={name} variants={variants} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         </Grid>
     )
 }

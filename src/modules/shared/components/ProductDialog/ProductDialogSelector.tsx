@@ -2,7 +2,7 @@ import { Box, FormControl, InputLabel, MenuItem, Select, Typography, type Select
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
 import { useEffect, useState } from "react";
 
-const SimpleDialogSelector = ({ products }: { products: ProductVariant[] }): React.ReactNode => {
+const ProductDialogSelector = ({ products }: { products: ProductVariant[] }): React.ReactNode => {
     const isEmpty: boolean = products?.length <= 0;
     const isLoading: boolean = typeof products[0]?._id !== 'string';
     const [selectedId, setSelectedId] = useState<string>( products?.length > 0  ? String(products[0]?._id) : "");
@@ -62,4 +62,4 @@ const SimpleDialogSelector = ({ products }: { products: ProductVariant[] }): Rea
 };
 
 
-export default SimpleDialogSelector;
+export default ProductDialogSelector;

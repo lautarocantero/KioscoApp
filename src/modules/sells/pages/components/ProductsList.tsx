@@ -1,12 +1,13 @@
-import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
+import type { Product } from "../../../../typings/product/productTypes";
+import type { ProductListType } from "../../../../typings/sells/sellsComponentTypes";
 import ProductItem from "./ProductItem";
 
 
-const ProductsList = ({products}: {products: ProductInterface[]}):React.ReactNode => {
+const ProductsList = ({products}: ProductListType):React.ReactNode => {
     return (
         <>
-            {products.map((prod: ProductInterface) => 
-                (<ProductItem product={prod} key={prod._id}/>)
+            {products.map((prod: Product) => 
+                (<ProductItem key={prod._id} product={prod as Product} />)
             )}
         </>
     )

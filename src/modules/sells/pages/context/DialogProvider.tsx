@@ -1,10 +1,10 @@
 import { useState, type PropsWithChildren } from "react";
 import { DialogContext } from "./DialogContext";
-import type { ProductInterface } from "../../../../typings/sells/sellsTypes";
+import type { Product } from "../../../../typings/product/productTypes";
 
-export const DialogProvider = ({ children }: PropsWithChildren) => {
+export const DialogProvider = ({ children }: PropsWithChildren): React.ReactNode => {
   const [showModal, setShowModal] = useState(false);
-  const [productData, setProductData] = useState<ProductInterface | null>(null);
+  const [productData, setProductData] = useState<Product | null>(null);
 
   return (
     <DialogContext.Provider value={{ showModal, setShowModal,productData, setProductData }}>

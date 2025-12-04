@@ -5,3 +5,9 @@ export enum AuthStatus {
     NotAuthenticated = "not-authenticated",
 };
 
+export enum StockStatusEnum {
+    green = "green",
+    yellow = "yellow",
+    red = "red",
+}
+

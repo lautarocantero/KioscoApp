@@ -1,7 +1,6 @@
 import { Grid, Typography, type Theme } from "@mui/material";
 
-
-const SimpleDialogDataDisplay = ({data, label, icon}: {data: string, label: string, icon?: React.ReactNode}) => {
+const ProductDialogDataDisplay = ({data, label, icon}: {data: string, label: string, icon?: React.ReactNode}) => {
     return (
         <Grid
             container
@@ -37,4 +36,4 @@ const SimpleDialogDataDisplay = ({data, label, icon}: {data: string, label: stri
     )
 }
 
-export default SimpleDialogDataDisplay;
+export default ProductDialogDataDisplay;

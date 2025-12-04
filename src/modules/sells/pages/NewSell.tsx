@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate} from 'react-router-dom';
 import AppLayout from "../../shared/layout/AppLayout";
 import ProductsExhibitor from "./components/ProductsExhibitor";
-import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog";
+import ProductDialog from "../../shared/components/ProductDialog/ProductDialog";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../store/product/productSlice";
 import { getProducts } from "../../../store/product/thunks";
@@ -32,7 +32,7 @@ const NewSellPage = ():React.ReactNode => {
     return (
         <AppLayout>
             <ProductsExhibitor products={products} title={'Más vendido'} />
-            <SimpleDialog />
+            <ProductDialog />
         </AppLayout>
 
     )

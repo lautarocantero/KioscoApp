@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 
 
-const SimpleDialogImage = ():React.ReactNode => {
+const ProductDialogImage = ():React.ReactNode => {
 
     // To Do, cambiar esto por una imagen real, del producto.
     return (
@@ -20,4 +20,4 @@ const SimpleDialogImage = ():React.ReactNode => {
     )
 };
 
-export default SimpleDialogImage;
+export default ProductDialogImage;

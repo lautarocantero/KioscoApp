@@ -6,8 +6,6 @@ import SellsHistoryPage from "./pages/SellsHistory"
 import SellsHistoryFiltersPage from "./pages/SellsHistoryFilter"
 import { DialogProvider } from "./pages/context/DialogProvider"
 
-
-
 const SellsRoutes = ():React.ReactNode => {
 
     return (
