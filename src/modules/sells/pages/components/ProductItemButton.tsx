@@ -1,11 +1,11 @@
 import { Button, Grid, type Theme } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useContext } from "react";
-import { DialogContext } from "../context/DialogContext";
 import type { ProductItemButtonType } from "../../../../typings/sells/sellsComponentTypes";
+import { ProductDialogContext } from "../context/ProductDialogContext";
 
 const ProductItemButton = ({product} : ProductItemButtonType):React.ReactNode => {
-    const { setShowModal, setProductData } = useContext(DialogContext)!;
+    const { setShowModal, setProductData } = useContext(ProductDialogContext)!;
 
     return (
         <Grid 

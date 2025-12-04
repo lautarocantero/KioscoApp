@@ -1,36 +1,10 @@
-import { useContext, useEffect } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, type Theme } from "@mui/material";
-import { DialogContext } from "../../../sells/pages/context/ProductDialogContext";
-import ProductDialogIlustration from "./ProductDialogIlustration";
-import ProductDialogData from "./ProductDialogData";
-import type { Product } from "../../../../typings/product/productTypes";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../../../store/productVariant/productVariantSlice";
-import { getProductVariantsById } from "../../../../store/productVariant/productVariantThunks";
+import { useContext } from "react";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, type Theme } from "@mui/material";
+import { DialogContext } from "./DialogContext";
 
 const ProductDialog = (): React.ReactNode => {
-  const { showModal, setShowModal, productData } = useContext(DialogContext)!;
-  const dispatch = useDispatch<AppDispatch>();
-  const { productVariant } = useSelector((state: RootState) => state);
-  const { productVariants } = productVariant;
+  const { showModal, setShowModal } = useContext(DialogContext)!;
  
-
-    useEffect(() => {
-
-      const getProductVariants = async() => {
-        const _idResult = productData?._id;
-
-        if(!_idResult) return;
-        await dispatch(getProductVariantsById(_idResult));
-      }
-
-      getProductVariants();
-  }, [dispatch, productData])
-
-  if(!productData) return (<Typography>No product loaded</Typography>)
-
-  const { name } = productData as Product;
-
   return (
     <Dialog 
       open={showModal} 
@@ -48,7 +22,7 @@ const ProductDialog = (): React.ReactNode => {
           width: '100%',
         })}
       >
-        Agregar producto
+        Dialog
       </DialogTitle>
       <DialogContent
         sx={(theme: Theme) => ({
@@ -58,8 +32,6 @@ const ProductDialog = (): React.ReactNode => {
           padding: { xs: '0.1em', sm: '2em', }
         })}
       >
-        <ProductDialogIlustration name={name}/>
-        <ProductDialogData products={productVariants} />
       </DialogContent>
       <DialogActions
         sx={(theme: Theme) => ({
@@ -83,7 +55,7 @@ const ProductDialog = (): React.ReactNode => {
             color: theme?.custom?.fontColor,
           })}
         >
-          Agregar
+          Aceptar
         </Button>
       </DialogActions>
     </Dialog>

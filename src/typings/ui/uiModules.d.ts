@@ -79,5 +79,15 @@ export interface LogoutButtonProps extends BackButtonProps {
 ║ ██ SHOP   🛒 📦 🎁 🛍️🛒 📦 🎁 🛍️🛒 📦 🎁 🛍️🛒 📦 🎁 🛍️🛒 📦 🎁 🛍️      ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🪧 Dialog 🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧║
+// ╚═══════════════════════════════════════════════════════════════════════╝*/
+
+export interface DialogContextType {
+    showModal: boolean;
+    setShowModal: Dispatch<SetStateAction<boolean>>;
+}
+
+
 
 

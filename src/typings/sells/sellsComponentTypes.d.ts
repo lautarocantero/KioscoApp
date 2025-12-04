@@ -44,10 +44,10 @@ export interface QuantityChipInterface {
 export type ProductItemButtonType = Pick<ProductItemInterface, 'product'>;
 
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🪧 Dialog 🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧  ║
+// ║ 🪧 Dialog 🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface DialogContextType {
+export interface ProductDialogContextType {
     showModal: boolean;
     setShowModal: Dispatch<SetStateAction<boolean>>;
     productData: Product | null,

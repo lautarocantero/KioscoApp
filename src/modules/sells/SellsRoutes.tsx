@@ -4,7 +4,7 @@ import NewSellPage from "./pages/NewSell"
 import QrEscaner from "./pages/QrEscaner"
 import SellsHistoryPage from "./pages/SellsHistory"
 import SellsHistoryFiltersPage from "./pages/SellsHistoryFilter"
-import { DialogProvider } from "./pages/context/DialogProvider"
+import { DialogProvider } from "./pages/context/ProductDialogProvider"
 
 const SellsRoutes = ():React.ReactNode => {
 
