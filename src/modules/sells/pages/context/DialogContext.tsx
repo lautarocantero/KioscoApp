@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { DialogContextType } from "../../../../typings/sells/sellsComponentTypes";
+import type { ProductDialogContextType } from "../../../../typings/sells/sellsComponentTypes";
 
 
-export const DialogContext = createContext<DialogContextType | null>(null); 
+export const DialogContext = createContext<ProductDialogContextType | null>(null); 

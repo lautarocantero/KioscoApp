@@ -5,7 +5,7 @@ const ProductItemImage = ():React.ReactNode => {
     return (
         <Box
             component="img"
-            src="/images/backgroundImages/blackBackgroundImage.jpg"
+            src="/images/productExample/cocaCola.png"
             alt={`${name} Image`}
             sx={{
                 width: { xs: 90, sm: 200, md: '100%' },

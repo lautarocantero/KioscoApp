@@ -10,14 +10,14 @@ const ProductDialogIlustration = ({name}: {name: string}):React.ReactNode => {
             backgroundColor: theme?.custom?.backgroundDark,
             borderRadius: '1em',
             padding: 1,
+            justifyContent: 'center'
           })}
         >
             <ProductDialogImage />
             <Typography
                 sx={(theme: Theme) => ({
                     fontSize: theme?.typography?.body1?.fontSize,
-                    margin: '2em 0 1em',
-                    textAlign: 'center',
+                    // margin: '2em 0 1em',
                 })}
             >
                 {name}

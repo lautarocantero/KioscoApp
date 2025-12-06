@@ -1,6 +1,5 @@
 import type { Product } from "../product/productTypes";
 import type { ProductVariant } from "../productVariant/productVariant";
-import { type Dispatch, type SetStateAction } from "react";
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📋 Product Exhibitor 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -47,9 +46,27 @@ export type ProductItemButtonType = Pick<ProductItemInterface, 'product'>;
 // ║ 🪧 Dialog 🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧  ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface DialogContextType {
-    showModal: boolean;
-    setShowModal: Dispatch<SetStateAction<boolean>>;
-    productData: Product | null,
-    setProductData: Dispatch<SetStateAction<Product | null>>;
+export interface DialogDataInterface {
+    productId: string,
+    productAvailableStock: number,
+    productStock: number,
+    productPrice: number,
 }
+
+export interface DialogDataType {
+    products: ProductVariant[],
+    values: DialogData,
+    setFieldValue: (field: string, value: string) => void,
+};
+
+export type DialogSelectorType = Pick<DialogDataType, 'products' | 'values' | 'setFieldValue'>;
+
+export type DialogDataDisplayType = Pick <DialogDataType, 'values' | 'setFieldValue'> & {
+    label: string;
+}
+
+export type DialogDataPriceType = Pick <DialogDataType, 'values'>
+
+
+
+

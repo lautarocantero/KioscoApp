@@ -7,11 +7,13 @@ const ProductDialogImage = ():React.ReactNode => {
     return (
         <Box
             component={'img'}
-            src="/images/backgroundImages/blackBackgroundImage.jpg"
+            src="/images/productExample/cocaCola.png"
             alt={`${name} Image`}
             sx={{
                 width: { xs: '100%' },
-                height: { xs: 220 },
+                minHeight: { xs: '15em'},
+                height: { xs: '100%' },
+                maxHeight: {xs: '20em'},
                 objectFit: "cover",
                 borderRadius: "0.3em",
             }}
