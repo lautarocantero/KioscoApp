@@ -43,7 +43,7 @@ export interface QuantityChipInterface {
 export type ProductItemButtonType = Pick<ProductItemInterface, 'product'>;
 
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🪧 Dialog 🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧  ║
+// ║ 🪧 Dialog 🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface DialogDataInterface {
