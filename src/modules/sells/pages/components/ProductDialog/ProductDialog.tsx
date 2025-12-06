@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, type Theme, Box } from "@mui/material";
-import { DialogContext } from "../../context/DialogContext";
 import ProductDialogIlustration from "./ProductDialogIlustration";
 import type { Product } from "../../../../../typings/product/productTypes";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import { useFormik } from "formik";
 import ProductDialogData from "./ProductDialogData";
 import type { DialogDataInterface } from "../../../../../typings/sells/sellsComponentTypes";
 import type { ProductVariant } from "../../../../../typings/productVariant/productVariant";
+import { ProductDialogContext } from "../../context/ProductDialogContext";
 
   const getInitialValues = (productVariants: ProductVariant[]) => ({
     productId: productVariants?.length > 0  ? String(productVariants[0]?._id) : "",
@@ -31,7 +31,7 @@ import type { ProductVariant } from "../../../../../typings/productVariant/produ
   );
 
 const ProductDialog = (): React.ReactNode => {
-  const { showModal, setShowModal, productData } = useContext(DialogContext)!;
+  const { showModal, setShowModal, productData } = useContext(ProductDialogContext)!;
   const dispatch = useDispatch<AppDispatch>();
   const { productVariant } = useSelector((state: RootState) => state);
   const { productVariants } = productVariant;
