@@ -17,8 +17,11 @@ const AppRouter = ():React.ReactNode => {
   const {auth} = useSelector((state: RootState) => state);
   const {status} = auth;
   const location = useLocation();
-  const lastRoute = localStorage.getItem("lastRoute") || "/home";
-  const safeRoute = lastRoute === "/" ? "/home" : lastRoute;
+  // To do, remover esto para que funcione normalmente, forzado a mostrar la nueva venta
+  // const lastRoute = localStorage.getItem("lastRoute") || "/new-sell";
+  // const safeRoute = lastRoute === "/" ? "/home" : lastRoute;
+  const lastRoute = "/new-sell";
+  const safeRoute =  lastRoute;
 
   const dispatch = useDispatch<AppDispatch>();
 

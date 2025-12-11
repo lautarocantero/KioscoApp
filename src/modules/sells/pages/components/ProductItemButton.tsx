@@ -3,9 +3,19 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useContext } from "react";
 import type { ProductItemButtonType } from "../../../../typings/sells/sellsComponentTypes";
 import { ProductDialogContext } from "../context/ProductDialogContext";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../../../store/seller/sellerSlice";
+import { selectProductThunk } from "../../../../store/seller/sellerThunks";
+import type { getProductSelectedPayload } from "../../../../typings/seller/sellerTypes";
 
 const ProductItemButton = ({product} : ProductItemButtonType):React.ReactNode => {
-    const { setShowModal, setProductData } = useContext(ProductDialogContext)!;
+    const { setShowModal } = useContext(ProductDialogContext)!;
+    const dispatch = useDispatch<AppDispatch>();
+
+    const selectProduct = async({product}: Partial<getProductSelectedPayload>): Promise<void> => {
+        if(!product) throw new Error('No se ha seleccionado un producto');
+        await dispatch(selectProductThunk({productData: product }));
+    }
 
     return (
         <Grid 
@@ -27,7 +37,8 @@ const ProductItemButton = ({product} : ProductItemButtonType):React.ReactNode =>
                 })}
                 onClick={ () => { 
                     setShowModal(true);
-                    setProductData(product);
+                    // setProductData(product);
+                    selectProduct({product});
                 }}
             >
                 Añadir

@@ -29,7 +29,10 @@ interface ProductVariantEntity {
 export type ProductVariant = ProductVariantEntity;
 
 // // derivado para los datos publicos
-export type ProductVariantPublic = Omit<ProductVariantEntity, '_id'>
+export type ProductVariantPublic = Pick<ProductVariantEntity, 
+    '_id' |'name'| 'description'|'imageUrl'|
+    'brand'| 'sku'|'modelType'|'model_size'|
+    'stock'|'price'|'expirationDate'>
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
@@ -44,3 +47,9 @@ interface ProductVariantState {
 
 export type ProductVariantStateError = Pick<ProductVariantState, 'errorMessage'>;
 
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🎟️ TICKET  🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export type ProductVariantTicketType = ProductVariantPublic;

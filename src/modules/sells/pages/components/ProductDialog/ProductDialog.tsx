@@ -13,6 +13,7 @@ import type { ProductVariant } from "../../../../../typings/productVariant/produ
 import { ProductDialogContext } from "../../context/ProductDialogContext";
 
   const getInitialValues = (productVariants: ProductVariant[]) => ({
+    // cambiar por el producto entero
     productId: productVariants?.length > 0  ? String(productVariants[0]?._id) : "",
     productAvailableStock: 0,
     productStock: 0,
@@ -23,6 +24,7 @@ import { ProductDialogContext } from "../../context/ProductDialogContext";
   const getValidationSchema = () =>
     Yup.lazy(() =>
       Yup.object().shape({
+        // cambiar por el producto entero
         productId: Yup.string().required("Campo requerido"),
         productAvailableStock: Yup.number().required("Campo requerido"),
         productStock: Yup.number().required("Campo requerido"),
@@ -48,7 +50,31 @@ const ProductDialog = (): React.ReactNode => {
   }, [dispatch, productData])
 
   const onSubmit = async (data: DialogDataInterface) => {
-    console.log('enviando', data);
+    console.log('productData', productData); // productData trae un array d evariantes, es decir mucha informacion en una peticion
+    // comprobar si es posible desacoplar esta prop para mejorar rendimiento.
+
+    //eliminar el contexto del product data, usar slices para esto
+    //selecciono producto, seteo variable productVariants de product, pero no todo el bojeto, solo ese. O algo ismilar
+    //con esa informacion mostrear el dialog
+    //ya no necesito un contexto especifico para esto.
+    //no necesidad de states
+    // al enviar el dialog, setear una prop variantSelected= productVariant
+    // ir agregando variants selected a user.cart
+
+    console.log('data', data);
+    // product-ticket = interfaz
+    //  _id: string | null; = crypto random
+    //  name: string; = data.productId = b2e4c5d6-7f89-4a01-9b23-2d3e4f5a6b78 >> deberia traer el productVariantData
+    //  description: string;  >> deberia traer el productVariantData
+    //  imageUrl: string; >> deberia traer el productVariantData
+    //  brand: string; >> deberia traer el productVariantData
+    //  sku: string; >> deberia traer el productVariantData
+    //  modelType: string; >> deberia traer el productVariantData
+    //  model_size: string; >> deberia traer el productVariantData
+    //  price: number; data.productPrice
+    //  stock: number data.productStock
+    //  expirationDate: string; >> deberia traer el productVariantData
+    // dispatch(addToCartThunk({productData: data}));   
     setShowModal(false)
   }  
 

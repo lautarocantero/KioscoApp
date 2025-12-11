@@ -5,7 +5,7 @@ import type { ProductVariant } from "../../../../typings/productVariant/productV
 import type { ProductItemInterface } from "../../../../typings/sells/sellsComponentTypes";
 
 const ProductItem = ({ product }: ProductItemInterface): React.ReactNode => {
-    const { name, variants } : {name: string, variants: ProductVariant[]} = product;
+    const { name, variants } : { name: string, variants: ProductVariant[]} = product;
 
     return (
         <Grid 
