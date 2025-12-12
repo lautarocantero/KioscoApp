@@ -1,3 +1,12 @@
+
+// # Componente: LogoutButton  
+
+// ## Descripción 📦  
+// Botón reutilizable que permite al usuario cerrar sesión en la aplicación.  
+// Ejecuta la acción `startLogout` mediante `dispatch` para limpiar el estado de autenticación y finalizar la sesión activa.  
+// Se integra en menús o layouts donde se requiere una opción clara y accesible para salir de la cuenta.  
+
+
 import { Button, Grid, type Theme } from "@mui/material";
 import type { LogoutButtonProps } from "../../../../typings/ui/uiModules";
 import { startLogout } from "../../../../store/auth/thunks";

@@ -1,3 +1,25 @@
+
+// # Componente: LoginForm  
+
+// ## Descripción 📦
+// Formulario de inicio de sesión con validación y animación.  
+// Renderiza inputs, botones y manejo de errores dentro de un `Box` con animación de entrada.  
+
+// ## Funciones 🔧
+// - `LoginForm`: componente principal que controla el flujo de login.  
+//   - Recibe `showForm` desde `LoginFormType`; si es `false`, retorna `null`.  
+//   - Usa `useFormik` para manejar estado, valores y validación del formulario.  
+//   - `onSubmit`: despacha `startLoginWithEmailPassword` con email y contraseña.  
+//   - Renderiza `LoginFormInputs` para campos, `ApiErrorsHandler` para errores y `LoginFormButtons` para acciones.  
+//   - Incluye un `Link` a la ruta `/login` con texto "¿Olvidaste tu contraseña?".  
+
+// ## Notas técnicas 💽
+// - Validación con `Yup`: email requerido y válido, contraseña requerida.  
+// - Animación: `animate__bounceInRight` de `animate.css`.  
+// - Usa `useDispatch` y `useSelector` de Redux para manejar estado de autenticación.  
+//-----------------------------------------------------------------------------//
+
+
 import { Box, Link, type Theme } from "@mui/material";
 import { Link as LinkReactRouter } from "react-router-dom";
 import * as Yup from "yup";

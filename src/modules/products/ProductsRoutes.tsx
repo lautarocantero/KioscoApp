@@ -1,3 +1,33 @@
+
+// # Componente: ProductsRoutes  
+
+// ## Descripción 📦
+// Definición de rutas para la gestión de productos y categorías.  
+// Renderiza las páginas principales de listado, creación y edición dentro del sistema de enrutamiento.  
+
+// ## Rutas 🛣️
+// ┌───────────────────────────────┐
+// │ "/products"        → ProductsPage        │
+// │ "/products-list"   → ProductsListPage    │
+// │ "/products-create" → ProductsCreatePage  │
+// │ "/products-edit"   → ProductsEditPage    │
+// │ "/categories"      → CategoriesPage      │
+// │ "/categories-list" → CategoriesListPage  │
+// │ "/categories-create" → CategoriesCreatePage │
+// │ "/categories-edit" → CategoriesEditPage  │
+// └───────────────────────────────┘  
+
+// ## Funciones 🔧
+// - `ProductsRoutes`: componente principal que devuelve las rutas de productos y categorías.  
+//   - Cada `Route` está asociado a una página específica del módulo de inventario.  
+
+// ## Notas técnicas 💽
+// - Usa `react-router-dom` para la gestión de rutas.  
+// - Mantiene modularidad separando vistas de productos y categorías.  
+// - Facilita la navegación entre listado, creación y edición de entidades.  
+//-----------------------------------------------------------------------------//
+
+
 import { Route } from "react-router-dom"
 import ProductsPage from "./pages/ProductsPage"
 import ProductsListPage from "./pages/ProductsListPage"

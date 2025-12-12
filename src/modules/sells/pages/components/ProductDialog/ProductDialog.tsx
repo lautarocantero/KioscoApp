@@ -1,3 +1,27 @@
+
+// # Componente: ProductDialog  
+
+// ## Descripción 📦
+// Diálogo modal para agregar productos al carrito.  
+// Utiliza contexto, Redux y Formik para manejar datos de producto y variantes.  
+
+// ## Funciones 🔧
+// - `getInitialValues`: genera valores iniciales para el formulario a partir de `productVariants`.  
+// - `getValidationSchema`: esquema de validación con Yup para los campos del formulario.  
+// - `ProductDialog`: componente principal que:  
+//   - Usa `ProductDialogContext` para controlar visibilidad y datos del producto.  
+//   - Despacha `getProductVariantsById` para obtener variantes desde Redux.  
+//   - Configura Formik para manejar el formulario.  
+//   - Renderiza ilustración (`ProductDialogIlustration`) y datos (`ProductDialogData`).  
+//   - Contiene botones de acción: **Cerrar** y **Agregar**.  
+
+// ## Notas técnicas 💽
+// - `productData` se obtiene del contexto, pero se sugiere migrar a slices para mejorar rendimiento.  
+// - `onSubmit` actualmente imprime datos y cierra el modal; en producción debería despachar `addToCartThunk`.  
+// - El formulario se re-inicializa cuando cambian las variantes (`enableReinitialize: true`).  
+// - Se aplican estilos dinámicos con `Theme` de MUI para personalización visual.  
+//-----------------------------------------------------------------------------//
+
 import { useContext, useEffect } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, type Theme, Box } from "@mui/material";
 import ProductDialogIlustration from "./ProductDialogIlustration";

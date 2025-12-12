@@ -1,3 +1,25 @@
+
+// # Componente: RegisterFormInputs  
+
+// ## Descripción 📦
+// Campos de entrada para el formulario de registro.  
+// Renderiza inputs de usuario, email, contraseña y repetición de contraseña con validación y estilos personalizados.  
+
+// ## Funciones 🔧
+// - `RegisterFormInputs`: componente principal que muestra los campos del registro.  
+//   - Recibe `values`, `errors` y `setFieldValue` desde `RegisterFormInputsInterface`.  
+//   - `TextField username`: campo de texto para el nombre de usuario.  
+//   - `TextField email`: campo de texto para el correo electrónico.  
+//   - `TextField password`: campo de contraseña con ícono para alternar visibilidad (`Visibility` / `VisibilityOff`).  
+//   - `TextField repeatPassword`: campo para repetir contraseña con ícono de alternancia.  
+//   - Aplica estilos dinámicos con `Theme` para colores y subrayados.  
+
+// ## Notas técnicas 💽
+// - Usa `useState` para manejar visibilidad de contraseñas.  
+// - Los errores se muestran con `helperText` y color de error en los íconos.  
+// - Diseño responsivo con `Grid` y disposición en columnas/filas.  
+//-----------------------------------------------------------------------------// 
+
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton, InputAdornment, TextField, type Theme } from "@mui/material";
 import { Grid } from "@mui/system";

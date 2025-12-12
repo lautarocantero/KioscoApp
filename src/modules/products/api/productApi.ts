@@ -1,5 +1,27 @@
-import axios from "axios";
 
+// # Módulo: Product Requests  
+
+// ## Descripción 📦
+// Configuración de cliente Axios para interactuar con el backend de productos.  
+// Incluye una función para obtener la lista de productos desde la API.  
+
+// ## Funciones 🔧
+// - `baseUrl`: instancia de Axios configurada con:  
+//   - `baseURL`: `http://localhost:3000/product`  
+//   - `timeout`: 5000 ms  
+//   - `headers`: `Content-Type: application/json`  
+//   - `withCredentials`: true (envía cookies/credenciales en las requests).  
+// - `getProductsRequest`: función asíncrona que:  
+//   - Realiza un `GET` a `/get-products`.  
+//   - Devuelve `response.data` con la lista de productos.  
+
+// ## Notas técnicas 💽
+// - Centraliza la configuración de Axios para reutilización en otros requests.  
+// - Ideal para mantener consistencia en headers, timeout y credenciales.  
+//-----------------------------------------------------------------------------//
+
+
+import axios from "axios";
 
 const baseUrl = axios.create({
   baseURL: 'http://localhost:3000/product',

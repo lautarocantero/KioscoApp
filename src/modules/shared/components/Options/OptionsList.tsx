@@ -1,3 +1,40 @@
+
+// # Componente: OptionsList  
+
+// ## Descripción 📦  
+// Lista de opciones interactiva que organiza enlaces en dos columnas y añade botones extra según el contexto.  
+// Se utiliza en combinación con `DisplayOptions` para mostrar menús de navegación o acciones dentro de la aplicación.  
+
+// ## Lógica 🔧  
+// - Props (`OptionsListInterface`):  
+//   - `links`: array de opciones con ícono, descripción y URL.  
+//   - `disconnect`: booleano que determina si se muestra el botón de cerrar sesión (`LogoutButton`) o el botón de volver (`BackButton`).  
+// - Contexto:  
+//   - Usa `ThemeContext` para obtener `appTheme` y aplicar estilos dinámicos.  
+//   - Usa `useDispatch<AppDispatch>` para disparar acciones de Redux (ej. logout).  
+// - Organización:  
+//   - Divide la lista de enlaces en dos mitades (`leftLinks` y `rightLinks`).  
+//   - Renderiza cada mitad en una columna (`Grid` con `xs:12, sm:6`).  
+// - Estilos:  
+//   - Bordes, colores y tipografía adaptados al tema (`Theme`).  
+//   - Hover: cambia color de fondo o texto para mejorar la interacción.  
+
+// ## Renderizado 🎨  
+// - Dos columnas (`Grid`) con enlaces (`Link` de MUI integrado con `react-router-dom`).  
+// - Cada enlace muestra ícono + descripción con estilos responsivos (`body1` en xs, `h6` en sm).  
+// - Botones extra:  
+//   - Si `disconnect` es `true` → `LogoutButton`.  
+//   - Si `disconnect` es `false` → `BackButton`.  
+
+// ## Notas técnicas 💽  
+// - Modularidad: separa la lógica de opciones en columnas y botones adicionales.  
+// - Flexibilidad: puede adaptarse a distintos menús cambiando el array `links`.  
+// - Accesibilidad: enlaces con `textDecoration: "none"` y roles claros.  
+// - Pendientes (TODO):  
+//   - Ajustar espaciado en pantallas `xs`.  
+//   - Componetizar bloques repetidos para mayor mantenibilidad.  
+
+
 import { Grid, Link, type Theme} from '@mui/material';
 import { Link as LinkReactRouter } from 'react-router-dom';
 import type { OptionLink, OptionsListInterface } from '../../../../typings/ui/uiModules';
@@ -133,53 +170,5 @@ const OptionsList = ({ links, disconnect }: OptionsListInterface): React.ReactNo
     </Grid>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export default OptionsList;

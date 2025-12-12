@@ -1,3 +1,28 @@
+
+// # Componente: ProductItem  
+
+// ## Descripción 📦
+// Representa un producto dentro de la vista de ventas.  
+// Divide la presentación en dos secciones:  
+// - Izquierda: imagen y nombre del producto.  
+// - Derecha: especificaciones y botón de acción.  
+
+// ## Funciones 🔧
+// - `ProductItem`: componente principal que recibe `product` tipado con `ProductItemInterface`.  
+//   - Extrae `name` y `variants` del objeto `product`.  
+//   - Renderiza:  
+//     - `ProductItemEspecificationsLeft`: muestra nombre e imagen/variantes.  
+//     - `ProductItemEspecificationsRight`: muestra especificaciones y acciones (ej. agregar al carrito).  
+
+// ## Notas técnicas 💽
+// - Usa `Grid` de MUI como contenedor principal con estilos dinámicos basados en `Theme`.  
+// - Diseño responsivo:  
+//   - Altura variable según tamaño de pantalla (`xs`, `sm`, `md`).  
+//   - Flexbox para disposición en columna en pantallas medianas (`md`).  
+// - Bordes redondeados, colores y márgenes adaptados al tema visual.  
+// - Se integra en listados o vistas de productos como unidad visual reutilizable.  
+//-----------------------------------------------------------------------------//
+
 import { Grid, type Theme } from "@mui/material";
 import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";

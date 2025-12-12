@@ -1,3 +1,27 @@
+
+// # Componente: AuthLayout  
+
+// ## Descripción 📦
+// Layout principal para las vistas de autenticación.  
+// Se encarga de definir el fondo, la estructura de columnas y el área principal donde se renderizan los children.  
+
+// ## Funciones 🔧
+// - `AuthLayout`: componente que recibe `children` y los renderiza dentro de un layout dividido en dos columnas.  
+//   - Usa `ThemeContext` para determinar el tema actual (`appTheme`) y aplicar un fondo dinámico (imagen blanca o negra).  
+//   - Si no hay children, muestra un mensaje con `Typography`: "No children Loaded...".  
+//   - Renderiza un `Box` que ocupa toda la pantalla con imagen de fondo.  
+//   - Dentro del `Box`, organiza un `Grid` con dos columnas:  
+//     - Columna izquierda: vacía, usada para centrar el contenido principal a la derecha en pantallas grandes.  
+//     - Columna derecha: contiene la barra superior (`LoginAppBar`) y el área principal (`main`) donde se renderizan los children.  
+//   - El `main` aplica estilos responsivos: ancho variable, centrado, padding, bordes redondeados y fondo oscuro en pantallas pequeñas.  
+
+// ## Notas técnicas 💽
+// - Fondo dinámico: `/images/backgroundImages/blackBackgroundImage.jpg` o `/images/backgroundImages/whiteBackgroundImage.jpg` según el tema.  
+// - Usa `Grid` de MUI para estructura responsiva.  
+// - Integra `LoginAppBar` en la parte superior de la columna derecha.  
+// - Children se renderizan dentro de un `Grid` con estilos adaptados al tema y al tamaño de pantalla.  
+//-----------------------------------------------------------------------------//
+
 import { Box, Typography, type Theme } from "@mui/material";
 import { Grid } from "@mui/material";
 import type { PropsWithChildren } from "react";

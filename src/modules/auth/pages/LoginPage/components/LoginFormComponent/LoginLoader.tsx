@@ -1,3 +1,22 @@
+
+// # Componente: LoginLoader  
+
+// ## Descripción 📦
+// Pantalla de carga para la vista de login.  
+// Renderiza un mensaje de bienvenida, descripción y un indicador de progreso (`CircularProgress`).  
+
+// ## Funciones 🔧
+// - `LoginLoader`: componente principal que devuelve el loader de autenticación.  
+//   - Usa `Grid` de MUI como contenedor con estilos responsivos.  
+//   - Muestra un título (`Typography h2`) con el texto "Bienvenido a Kiosco!".  
+//   - Incluye un subtítulo descriptivo y un `CircularProgress` como indicador visual de carga.  
+
+// ## Notas técnicas 💽
+// - Estilos dinámicos con `Theme`: color de fuente y fondo (`custom.fontColor`, `custom.backgroundDark`).  
+// - Fondo transparente en móviles y oscuro en pantallas medianas/grandes (con fallback RGBA).  
+//-----------------------------------------------------------------------------//
+
+
 import { CircularProgress, Typography, Grid, type Theme } from "@mui/material";
 
 const LoginLoader = (): React.ReactNode => {

@@ -1,3 +1,26 @@
+
+// # Componente: ProductDialogData  
+
+// ## Descripción 📦
+// Contenedor de datos dentro del diálogo de producto.  
+// Renderiza los subcomponentes encargados de seleccionar variante, unidades y precio.  
+
+// ## Funciones 🔧
+// - `ProductDialogData`: componente principal que recibe props tipadas con `DialogDataType`.  
+//   - `products`: listado de variantes de producto disponibles.  
+//   - `values`: valores actuales del formulario (Formik).  
+//   - `setFieldValue`: función de Formik para actualizar campos.  
+// - Renderiza:  
+//   - `ProductDialogSelector`: selector de variantes de producto.  
+//   - `ProductDialogUnits`: campo para definir cantidad de unidades.  
+//   - `ProductDialogPrice`: muestra el precio del producto seleccionado.  
+
+// ## Notas técnicas 💽
+// - Usa `Box` de MUI como contenedor con disposición en columna.  
+// - Espaciado controlado con `gap` y `margin` para mantener consistencia visual.  
+// - Se integra directamente en `ProductDialog` como parte del formulario.  
+//-----------------------------------------------------------------------------//
+
 import { Box } from "@mui/material";
 import ProductDialogSelector from "./ProductDialogSelector";
 import type { DialogDataType } from "../../../../../typings/sells/sellsComponentTypes";
