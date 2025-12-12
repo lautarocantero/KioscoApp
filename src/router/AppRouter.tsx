@@ -1,3 +1,19 @@
+
+// AppRouter: Router principal, controla acceso según autenticación. 
+// Si autenticado: rutas privadas (Home, Ventas, Carrito, Tienda, Cuenta, Proveedores, Productos). 
+// Si no: rutas de Auth.
+
+// ShopRoutes: Maneja rutas de Tienda. 
+// Incluye administradores (lista, crear, editar), vendedores (lista, crear, editar) y estadísticas.
+
+// Otros módulos: 
+// - SellsRoutes (ventas) 
+// - CartRoutes (carrito) 
+// - AccountRoutes (cuenta) 
+// - ProvidersRoutes (proveedores) 
+// - ProductsRoutes (productos) 
+// - AuthRoutes (autenticación)
+
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import type { AppDispatch, RootState } from "../store/auth/authSlice";
