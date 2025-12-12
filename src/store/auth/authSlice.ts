@@ -1,3 +1,48 @@
+
+// # Slice: authSlice  
+
+// ## Descripción 📦  
+// Slice de Redux encargado de manejar el estado de autenticación del usuario.  
+// Define el estado inicial, reducers y acciones relacionadas con login, logout, verificación de credenciales y limpieza de errores.  
+
+// ## Estado inicial 🔧  
+// - `_id`: identificador del usuario (null por defecto).  
+// - `username`: nombre de usuario (string vacío).  
+// - `email`: correo electrónico (string vacío).  
+// - `status`: estado de autenticación (`AuthStatus.Checking` por defecto).  
+// - `profilePhoto`: foto de perfil (null).  
+// - `errorMessage`: mensaje de error (null).  
+
+// ## Reducers 🎭  
+// - **login**:  
+//   - Actualiza `_id`, `username`, `email`, `profilePhoto`.  
+//   - Cambia `status` a `AuthStatus.Authenticated`.  
+//   - Limpia `errorMessage`.  
+// - **logout**:  
+//   - Resetea `_id`, `username`, `email`, `profilePhoto`.  
+//   - Cambia `status` a `AuthStatus.NotAuthenticated`.  
+//   - Guarda `errorMessage` si existe en el payload.  
+// - **checkingCredentials**:  
+//   - Cambia `status` a `AuthStatus.Checking`.  
+// - **clearAuthError**:  
+//   - Limpia `errorMessage`.  
+
+// ## Acciones exportadas 🚀  
+// - `login`  
+// - `logout`  
+// - `checkingCredentials`  
+// - `clearAuthError`  
+
+// ## Tipos 📑  
+// - `RootState`: tipo derivado de `store.getState`.  
+// - `AppDispatch`: tipo derivado de `store.dispatch`.  
+
+// ## Notas técnicas 💽  
+// - El slice se exporta como `authSlice.reducer` para integrarse en el store global.  
+// - Modularidad: centraliza toda la lógica de autenticación en un único slice.  
+// - Escalabilidad: se pueden añadir más reducers para manejar casos como refresh de token o actualización de perfil.  
+
+
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { store } from '../store';
 import { AuthStatus } from '../../typings/auth/enums';

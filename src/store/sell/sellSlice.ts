@@ -1,3 +1,36 @@
+
+// # Slice: sellSlice  
+
+// ## Descripción 📦  
+// Slice de Redux encargado de manejar el estado de **ventas** en la aplicación.  
+// Actualmente funciona como **stub** (estructura inicial) sin reducers definidos, preparado para futuras implementaciones.  
+
+// ## Estado inicial 🔧  
+// - `_id`: identificador único de la venta (null por defecto).  
+// - `name`: nombre de la venta (string vacío).  
+// - `description`: descripción de la venta (string vacío).  
+// - `createdAt`: fecha de creación (string vacío).  
+// - `updatedAt`: fecha de última actualización (string vacío).  
+// - `errorMessage`: mensaje de error (null).  
+
+// ## Reducers 🎭  
+// - Actualmente no hay reducers implementados.  
+// - En futuras iteraciones se pueden añadir acciones como:  
+//   - Crear nueva venta.  
+//   - Editar venta existente.  
+//   - Eliminar venta.  
+//   - Manejar errores específicos.  
+
+// ## Tipos 📑  
+// - `RootState`: tipo derivado de `store.getState`.  
+// - `AppDispatch`: tipo derivado de `store.dispatch`.  
+
+// ## Notas técnicas 💽  
+// - El slice se exporta como `sellSlice.reducer` para integrarse en el store global.  
+// - Modularidad: centraliza la lógica de ventas en un único slice.  
+// - Escalabilidad: preparado para añadir reducers y acciones según crezca la funcionalidad de ventas.  
+
+
 import { createSlice } from '@reduxjs/toolkit';
 import type { store } from '../store';
 

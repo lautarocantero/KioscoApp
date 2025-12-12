@@ -1,3 +1,44 @@
+
+// # Thunks: selectProductThunk & addToCartThunk  
+
+// ## Descripción 📦  
+// Conjunto de **thunks** relacionados con la selección y agregado de productos al carrito.  
+// Utilizan Redux para despachar acciones y `zod` para validar la estructura de los datos de producto.  
+
+// ## Esquema de validación 🔧  
+// - `ProductVariantEntitySchema`: define la forma esperada de un producto variante.  
+//   - Campos: `_id`, `name`, `description`, `createdAt`, `updatedAt`, `imageUrl`, `galleryUrls`, `brand`, `productId`, `sku`, `modelType`, `model_size`, `min_stock`, `stock`, `price`, `expirationDate`.  
+// - `ProductVariantEntity`: tipo inferido a partir del esquema.  
+
+// ## Thunks 🎭  
+
+// ### selectProductThunk  
+// - **Entrada**: `productData` (producto seleccionado).  
+// - **Flujo**:  
+//   1. Si no se proporciona `productData`, despacha `setError`.  
+//   2. (Validación con `zod` comentada, pendiente de uso futuro).  
+//   3. Si todo es correcto, despacha `setProductSelected` con el producto.  
+//   4. Maneja errores con `handleError`.  
+
+// ### addToCartThunk  
+// - **Entrada**: `productData` (producto a agregar al carrito).  
+// - **Flujo**:  
+//   1. Si no se proporciona `productData`, despacha `setError`.  
+//   2. Valida `productData` contra `ProductVariantEntitySchema`.  
+//      - Si falla, despacha `setError`.  
+//   3. Si es válido, despacha `addToCartAction` con el producto.  
+//   4. Maneja errores con `handleError`.  
+
+// ## Notas técnicas 💽  
+// - **Validación**: `zod` asegura que los datos cumplen con la estructura esperada antes de ser procesados.  
+// - **Errores**: `handleError` centraliza el manejo de excepciones.  
+// - **Acciones usadas**:  
+//   - `setError`: guarda mensajes de error en el estado.  
+//   - `setProductSelected`: marca un producto como seleccionado.  
+//   - `addToCartAction`: agrega un producto válido al carrito.  
+// - **Escalabilidad**: se pueden añadir más thunks para manejar operaciones como eliminar del carrito, actualizar cantidades o validar stock.  
+
+
 import type { Dispatch } from "@reduxjs/toolkit"
 import { handleError } from "../shared/handlerStoreError"
 import type { AddToCartThunkInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
