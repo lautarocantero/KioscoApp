@@ -9,8 +9,8 @@
 // - `_id`: identificador único del usuario (null por defecto).  
 // - `name`: nombre del usuario (string vacío).  
 // - `description`: descripción o información adicional (string vacío).  
-// - `createdAt`: fecha de creación (string vacío).  
-// - `updatedAt`: fecha de última actualización (string vacío).  
+// - `created_at`: fecha de creación (string vacío).  
+// - `updated_at`: fecha de última actualización (string vacío).  
 // - `errorMessage`: mensaje de error (null).  
 
 // ## Reducers 🎭  
@@ -38,8 +38,8 @@ const initialState: UserState = {
     _id: null,
     name: '',
     description: '',
-    createdAt: '',
-    updatedAt: '',
+    created_at: '',
+    updated_at: '',
     errorMessage: null,
 }
 

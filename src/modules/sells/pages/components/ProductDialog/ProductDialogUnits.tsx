@@ -11,7 +11,7 @@
 //   - `setFieldValue`: función de Formik para actualizar campos.  
 //   - `label`: etiqueta para el campo numérico.  
 // - Lógica interna:  
-//   - Si `productId` está vacío → no renderiza nada.  
+//   - Si `product_id` está vacío → no renderiza nada.  
 //   - Renderiza un `NumberField` con:  
 //     - `min`: 1 (mínimo de unidades).  
 //     - `max`: `productAvailableStock` (stock disponible).  
@@ -30,7 +30,7 @@ import type { DialogDataDisplayType } from "../../../../../typings/sells/sellsCo
 
 const ProductDialogUnits = ({values,setFieldValue, label }: DialogDataDisplayType ): React.ReactNode => {
 
-    if(values?.productId === "") return;
+    if(values?.product_id === "") return;
 
     return (
         <Grid

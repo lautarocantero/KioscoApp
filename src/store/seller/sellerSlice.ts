@@ -11,8 +11,8 @@
 // - `cart`: lista de productos agregados al carrito (array vacío).  
 // - `productSelected`: producto actualmente seleccionado (null).  
 // - `description`: descripción del vendedor (string vacío).  
-// - `createdAt`: fecha de creación (string vacío).  
-// - `updatedAt`: fecha de última actualización (string vacío).  
+// - `created_at`: fecha de creación (string vacío).  
+// - `updated_at`: fecha de última actualización (string vacío).  
 // - `errorMessage`: mensaje de error (null).  
 
 // ## Reducers 🎭  
@@ -50,8 +50,8 @@ const initialState: SellerStateInterface = {
     cart: [],
     productSelected: null,
     description: '',
-    createdAt: '',
-    updatedAt: '',
+    created_at: '',
+    updated_at: '',
     errorMessage: null,
 }
 

@@ -35,7 +35,7 @@ import { selectProductThunk } from "../../../../store/seller/sellerThunks";
 import type { getProductSelectedPayload } from "../../../../typings/seller/sellerTypes";
 
 const ProductItemButton = ({product} : ProductItemButtonType):React.ReactNode => {
-    const { setShowModal } = useContext(ProductDialogContext)!;
+    const { setShowModal, setProductData } = useContext(ProductDialogContext)!;
     const dispatch = useDispatch<AppDispatch>();
 
     const selectProduct = async({product}: Partial<getProductSelectedPayload>): Promise<void> => {
@@ -63,8 +63,8 @@ const ProductItemButton = ({product} : ProductItemButtonType):React.ReactNode =>
                 })}
                 onClick={ () => { 
                     setShowModal(true);
-                    // setProductData(product);
-                    selectProduct({product});
+                    // selectProduct({product});
+                    setProductData({product})
                 }}
             >
                 Añadir

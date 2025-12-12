@@ -9,8 +9,8 @@
 // - `_id`: identificador único de la venta (null por defecto).  
 // - `name`: nombre de la venta (string vacío).  
 // - `description`: descripción de la venta (string vacío).  
-// - `createdAt`: fecha de creación (string vacío).  
-// - `updatedAt`: fecha de última actualización (string vacío).  
+// - `created_at`: fecha de creación (string vacío).  
+// - `updated_at`: fecha de última actualización (string vacío).  
 // - `errorMessage`: mensaje de error (null).  
 
 // ## Reducers 🎭  
@@ -39,8 +39,8 @@ const initialState: SellState = {
     _id: null,
     name: '',
     description: '',
-    createdAt: '',
-    updatedAt: '',
+    created_at: '',
+    updated_at: '',
     errorMessage: null,
 }
 

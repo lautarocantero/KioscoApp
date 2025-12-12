@@ -47,7 +47,7 @@ export type ProductItemButtonType = Pick<ProductItemInterface, 'product'>;
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface DialogDataInterface {
-    productId: string,
+    product_id: string,
     productAvailableStock: number,
     productStock: number,
     productPrice: number,

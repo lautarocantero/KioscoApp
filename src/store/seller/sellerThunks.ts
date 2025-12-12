@@ -7,7 +7,7 @@
 
 // ## Esquema de validación 🔧  
 // - `ProductVariantEntitySchema`: define la forma esperada de un producto variante.  
-//   - Campos: `_id`, `name`, `description`, `createdAt`, `updatedAt`, `imageUrl`, `galleryUrls`, `brand`, `productId`, `sku`, `modelType`, `model_size`, `min_stock`, `stock`, `price`, `expirationDate`.  
+//   - Campos: `_id`, `name`, `description`, `created_at`, `updated_at`, `image_url`, `gallery_urls`, `brand`, `product_id`, `sku`, `model_type`, `model_size`, `min_stock`, `stock`, `price`, `expiration_date`.  
 // - `ProductVariantEntity`: tipo inferido a partir del esquema.  
 
 // ## Thunks 🎭  
@@ -49,19 +49,19 @@ export const ProductVariantEntitySchema = z.object({
   _id: z.string().nullable(),
   name: z.string(),
   description: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  imageUrl: z.string(),
-  galleryUrls: z.array(z.string()),
+  created_at: z.string(),
+  updated_at: z.string(),
+  image_url: z.string(),
+  gallery_urls: z.array(z.string()),
   brand: z.string(),
-  productId: z.string(),
+  product_id: z.string(),
   sku: z.string(),
-  modelType: z.string(),
+  model_type: z.string(),
   model_size: z.string(),
   min_stock: z.number(),
   stock: z.number(),
   price: z.number(),
-  expirationDate: z.string(),
+  expiration_date: z.string(),
 });
 
 export type ProductVariantEntity = z.infer<typeof ProductVariantEntitySchema>;
@@ -73,9 +73,7 @@ export const selectProductThunk = ({ productData }: SelectProductThunkInterface)
             dispatch(setError({ errorMessage: "No se ha proporcionado un producto."}));
             return;
         }
-
-        // console.log('productData', productData);
-
+        
         // if( ! ProductVariantEntitySchema.safeParse(productData).success ) {
             // dispatch(setError({ errorMessage: "El producto no es valido."}));
             // return;

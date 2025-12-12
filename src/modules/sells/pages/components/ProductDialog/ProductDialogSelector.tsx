@@ -14,7 +14,7 @@
 //   - `isEmpty`: si no hay productos, muestra mensaje "No se han encontrado Productos".  
 //   - `isLoading`: si el primer producto no tiene `_id` válido, muestra mensaje "Cargando Productos...".  
 //   - `handleChange`: al seleccionar un producto, actualiza en Formik:  
-//     - `productId` con el `_id`.  
+//     - `product_id` con el `_id`.  
 //     - `productAvailableStock` con el stock.  
 //     - `productPrice` con el precio.  
 
@@ -49,7 +49,7 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
         const valueObject: Partial<ProductVariant> = event.target.value as unknown as Partial<ProductVariant>;
 
         if(!valueObject._id) return; 
-            setFieldValue('productId', valueObject._id );
+            setFieldValue('product_id', valueObject._id );
         if(!valueObject.stock) return; 
             setFieldValue('productAvailableStock', String(valueObject.stock) );
         if(!valueObject.price) return; 
@@ -70,7 +70,7 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
             <Select
                 labelId="product-select-label"
                 id="product-select"
-                value={String(values?.productId)}
+                value={String(values?.product_id)}
                 label="Product"
                 onChange={handleChange}
                 sx={(theme: Theme) => ({

@@ -6,19 +6,19 @@ interface ProductVariantEntity {
     _id: string | null;
     name: string;
     description: string;
-    createdAt: string;
-    updatedAt: string;
-    imageUrl: string;
-    galleryUrls: string[];
+    created_at: string;
+    updated_at: string;
+    image_url: string;
+    gallery_urls: string[];
     brand: string;
-    productId: string;
+    product_id: string;
     sku: string;
-    modelType: string;
+    model_type: string;
     model_size: string;
     min_stock: number;
     stock: number;
     price: number;
-    expirationDate: string;
+    expiration_date: string;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -30,9 +30,9 @@ export type ProductVariant = ProductVariantEntity;
 
 // // derivado para los datos publicos
 export type ProductVariantPublic = Pick<ProductVariantEntity, 
-    '_id' |'name'| 'description'|'imageUrl'|
-    'brand'| 'sku'|'modelType'|'model_size'|
-    'stock'|'price'|'expirationDate'>
+    '_id' |'name'| 'description'|'image_url'|
+    'brand'| 'sku'|'model_type'|'model_size'|
+    'stock'|'price'|'expiration_date'>
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║

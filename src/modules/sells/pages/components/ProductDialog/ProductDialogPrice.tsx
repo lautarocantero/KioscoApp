@@ -7,7 +7,7 @@
 
 // ## Funciones 🔧
 // - `ProductDialogPrice`: componente principal que recibe `values` tipados con `DialogDataPriceType`.  
-//   - Si `productId` está vacío → no renderiza nada.  
+//   - Si `product_id` está vacío → no renderiza nada.  
 //   - Si `productStock` es 0 → no renderiza nada.  
 //   - En caso contrario, renderiza un `Typography` con el cálculo:  
 //     **Total = productPrice × productStock**.  
@@ -23,7 +23,7 @@ import type { DialogDataPriceType } from "../../../../../typings/sells/sellsComp
 
 const ProductDialogPrice = ({values}: DialogDataPriceType): React.ReactNode => {
 
-    if(values?.productId === "") return;
+    if(values?.product_id === "") return;
 
     if(values?.productStock === 0) return;
 

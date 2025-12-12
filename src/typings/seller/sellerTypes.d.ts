@@ -11,13 +11,13 @@ export interface SellerStateInterface {
     cart: ProductVariant[],
     productSelected: ProductVariant | null,
     description: string,
-    createdAt: string,
-    updatedAt: string,
+    created_at: string,
+    updated_at: string,
     errorMessage: string | null,
 };
 
 export interface getProductSelectedPayload {
-    product: ProductVariant,
+    product: Product,
 };
 
 export interface SellerAddToCartSlicePayload {
