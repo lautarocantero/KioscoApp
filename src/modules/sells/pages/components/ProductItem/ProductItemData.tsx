@@ -1,36 +1,30 @@
+//─────────────────── Componente 🧩: ProductItemData ───────────────────//
 
-// # Componente: ProductItemData  
+//─────────────────── Descripción 📝 ───────────────────//
+// Muestra la información básica de un producto dentro de la vista de ítem.
+// Incluye el nombre y el stock total calculado a partir de sus variantes.  
 
-// ## Descripción 📦
-// Muestra la información básica de un producto dentro de la vista de ítem.  
-// Incluye el nombre del producto y el stock total calculado a partir de sus variantes.  
+//──────────────────── Funciones 🔧 ─────────────────────//
+// - ProductItemData: componente principal.
+//   - Recibe name y variants.
+//   - Calcula totalStock sumando el stock de todas las variantes.
+//   - Renderiza:
+//     - Tooltip con el nombre completo.
+//     - Typography con el nombre truncado.
+//     - Typography con InventoryIcon y el stock total.
 
-// ## Funciones 🔧
-// - `ProductItemData`: componente principal que recibe props tipadas con `ItemDataType`.  
-//   - `name`: nombre del producto.  
-//   - `variants`: listado de variantes del producto, cada una con su stock.  
-// - Lógica interna:  
-//   - `totalStock`: suma de los valores `stock` de todas las variantes.  
-// - Renderiza:  
-//   - `Tooltip` con el nombre del producto (para mostrar completo en hover).  
-//   - `Typography` con el nombre truncado y estilizado.  
-//   - `Typography` con ícono `InventoryIcon` y el stock total.  
-
-// ## Notas técnicas 💽
-// - Usa `Box` de MUI como contenedor con disposición en columna.  
-// - Estilos dinámicos aplicados con `Theme` de MUI para coherencia visual y responsividad.  
-// - El nombre se limita a dos líneas con `WebkitLineClamp` y `textOverflow: ellipsis`.  
-// - Se integra en `ProductItemEspecificationsLeft` como parte de la presentación del producto.  
+//─────────────────── Notas técnicas 💽 ───────────────────//
+// - El nombre se limita a dos líneas con WebkitLineClamp y textOverflow.
 //-----------------------------------------------------------------------------//
 
-import { Box, Tooltip, Typography, type Theme } from "@mui/material";
 import InventoryIcon from '@mui/icons-material/Inventory';
-import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
-import type { ItemDataType } from "../../../../typings/sells/sellsComponentTypes";
+import { Box, Tooltip, Typography, type Theme } from "@mui/material";
+import type { ProductVariant } from "../../../../../typings/productVariant/productVariant";
+import type { ItemDataType } from "../../../../../typings/sells/sellsComponentTypes";
 
-const ProductItemData = ({name, variants }: ItemDataType): React.ReactNode => {
+const ProductItemData = ({name = "product", variants = []}: ItemDataType): React.ReactNode => {
 
-    const totalStock: number = variants.reduce((sum: number,v: ProductVariant) => sum + v.stock, 0);
+    const totalStock: number = variants?.reduce((count: number, product: ProductVariant) => count + product.stock, 0);
 
     return (
         <Box 
@@ -70,7 +64,6 @@ const ProductItemData = ({name, variants }: ItemDataType): React.ReactNode => {
                         md: theme?.typography?.body1?.fontSize,
                     },
                     lineHeight: 1.5,
-                    
                 })}
             >
                 <InventoryIcon

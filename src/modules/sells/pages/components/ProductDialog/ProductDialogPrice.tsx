@@ -1,31 +1,32 @@
+//─────────────────── Componente 🧩: ProductDialogPrice ───────────────────//
 
-// # Componente: ProductDialogPrice  
+//─────────────────── Descripción 📝 ───────────────────//
+// Muestra el precio total calculado en el diálogo de producto.
+// Se basa en la cantidad seleccionada y el precio unitario.  
 
-// ## Descripción 📦
-// Muestra el precio total calculado en el diálogo de producto.  
-// Se basa en la cantidad de unidades seleccionadas y el precio unitario.  
+//──────────────────── Funciones 🔧 ─────────────────────//
+// - ProductDialogPrice: componente principal.
+//   - Recibe values.
+//   - Si product_id está vacío → no renderiza.
+//   - Si productStock es 0 → no renderiza.
+//   - En caso contrario, renderiza Typography con el cálculo Total = productPrice × productStock.
 
-// ## Funciones 🔧
-// - `ProductDialogPrice`: componente principal que recibe `values` tipados con `DialogDataPriceType`.  
-//   - Si `product_id` está vacío → no renderiza nada.  
-//   - Si `productStock` es 0 → no renderiza nada.  
-//   - En caso contrario, renderiza un `Typography` con el cálculo:  
-//     **Total = productPrice × productStock**.  
-
-// ## Notas técnicas 💽
-// - Usa `Grid` de MUI como contenedor con disposición en fila.  
-// - El cálculo se realiza directamente en JSX para mantener simplicidad.  
-// - Se integra en `ProductDialogData` como parte del flujo del formulario.  
+//─────────────────── Notas técnicas 💽 ───────────────────//
+// - El cálculo se realiza directamente en JSX para mantener simplicidad.
 //-----------------------------------------------------------------------------//
 
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, type Theme } from "@mui/material";
 import type { DialogDataPriceType } from "../../../../../typings/sells/sellsComponentTypes";
 
 const ProductDialogPrice = ({values}: DialogDataPriceType): React.ReactNode => {
 
-    if(values?.product_id === "") return;
+    if(!values?.productVariant) return null;
 
-    if(values?.productStock === 0) return;
+    if(values?.productVariantId === "") return null;
+
+    if(values?.requiredStock === 0) return null;
+
+    const totalPrice: number = (values?.productVariant?.price ?? 0) * values?.requiredStock;
 
     return (
         <Grid
@@ -36,7 +37,18 @@ const ProductDialogPrice = ({values}: DialogDataPriceType): React.ReactNode => {
                 ml: { xs: '0.1em'}
             })}
         >
-            <Typography>Total : {values?.productPrice * values?.productStock} $</Typography>
+            <Typography
+                sx={(theme: Theme) => ({
+                  color: totalPrice === 0 ? theme?.custom?.fontColorTransparent : theme?.custom?.fontColor,
+                })}
+            >
+              /*─────────────────── 🔎 el formato numerico es para el dinero, comas decimales 🔎 ───────────────────*/
+              Total: {new Intl.NumberFormat("es-AR", {
+                style: "currency",
+                currency: "ARS",
+                minimumFractionDigits: 2,
+              }).format(totalPrice)}
+            </Typography>
         </Grid>
     )
 }

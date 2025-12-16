@@ -11,7 +11,6 @@ export interface ProductsExhibitorInterface {
 
 export type ProductListType  = Pick<ProductsExhibitorInterface, 'products'>;
 
-
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍞 Product Item 🍞 🧀 🍫 🍷 ☕ 🔋 🍞 🧀 🍫 🍷 ☕ 🔋 🍞 🧀 🍫 🍷 ☕ 🔋  ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -19,6 +18,11 @@ export type ProductListType  = Pick<ProductsExhibitorInterface, 'products'>;
 export interface ProductItemInterface {
     product: Product;
 };
+
+export interface ProductItemImageInterface {
+    source: string | undefined,
+    name: string | undefined,
+}
 
 export interface EspecificationsLeftInterface {
     name: string,
@@ -47,16 +51,16 @@ export type ProductItemButtonType = Pick<ProductItemInterface, 'product'>;
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface DialogDataInterface {
-    product_id: string,
-    productAvailableStock: number,
-    productStock: number,
-    productPrice: number,
+    productVariantId: string,
+    productVariant: ProductVariant | null,
+    requiredStock: number,
+    totalPrice: number,
 }
 
 export interface DialogDataType {
     products: ProductVariant[],
-    values: DialogData,
-    setFieldValue: (field: string, value: string) => void,
+    values: DialogDataInterface,
+    setFieldValue: (field: string, value: string | object) => void,
 };
 
 export type DialogSelectorType = Pick<DialogDataType, 'products' | 'values' | 'setFieldValue'>;

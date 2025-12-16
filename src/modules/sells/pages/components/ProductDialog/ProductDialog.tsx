@@ -1,104 +1,140 @@
+//─────────────────── Componente 🧩: ProductDialog  ───────────────────//
 
-// # Componente: ProductDialog  
-
-// ## Descripción 📦
+//─────────────────── Descripción 📝 ───────────────────//
 // Diálogo modal para agregar productos al carrito.  
-// Utiliza contexto, Redux y Formik para manejar datos de producto y variantes.  
 
-// ## Funciones 🔧
-// - `getInitialValues`: genera valores iniciales para el formulario a partir de `productVariants`.  
+//──────────────────── Funciones 🔧 ─────────────────────//
+// - `getInitialValues`: genera valores iniciales para el formulario a partir de `productVariants` obtenidos
+// del slice de productVariants.  
 // - `getValidationSchema`: esquema de validación con Yup para los campos del formulario.  
 // - `ProductDialog`: componente principal que:  
-//   - Usa `ProductDialogContext` para controlar visibilidad y datos del producto.  
-//   - Despacha `getProductVariantsById` para obtener variantes desde Redux.  
-//   - Configura Formik para manejar el formulario.  
-//   - Renderiza ilustración (`ProductDialogIlustration`) y datos (`ProductDialogData`).  
-//   - Contiene botones de acción: **Cerrar** y **Agregar**.  
+// - - Usa `ProductDialogContext` para controlar visibilidad del dialog.  
+// -  - Despacha `getProductVariantsById` para obtener variantes desde Redux.  
+// -  - Configura Formik para manejar el formulario.  
+// -  - Renderiza ilustración (`ProductDialogIlustration`) y datos (`ProductDialogData`).  
+// -  - Contiene botones de acción: **Cerrar** y **Agregar**.  
 
-// ## Notas técnicas 💽
-// - `productData` se obtiene del contexto, pero se sugiere migrar a slices para mejorar rendimiento.  
-// - `onSubmit` actualmente imprime datos y cierra el modal; en producción debería despachar `addToCartThunk`.  
-// - El formulario se re-inicializa cuando cambian las variantes (`enableReinitialize: true`).  
-// - Se aplican estilos dinámicos con `Theme` de MUI para personalización visual.  
+//─────────────────── Notas técnicas 💽  ───────────────────//
+// Utiliza contexto para mostrar condicionalmente el modal
+// Utiliza Redux para actualizar el estado del slice de productos, variante de productos y vendedor
+// Utiliza Formik para el manejo del formulario
+// Se aplican estilos dinámicos con `Theme` de MUI para personalización visual.
+
+//─────────────────── 📝 To do: considerar si eligo agregar del mismo producto, OTRO sub producto ───────────────────//
+//─────────────────── 📝 To do: Agregar Snackbars ───────────────────//
 //-----------------------------------------------------------------------------//
 
-import { useContext, useEffect } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, type Theme, Box } from "@mui/material";
-import ProductDialogIlustration from "./ProductDialogIlustration";
-import type { Product } from "../../../../../typings/product/productTypes";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../../../../store/productVariant/productVariantSlice";
-import { getProductVariantsById } from "../../../../../store/productVariant/productVariantThunks";
-import * as Yup from 'yup';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, type Theme } from "@mui/material";
 import { useFormik } from "formik";
-import ProductDialogData from "./ProductDialogData";
-import type { DialogDataInterface } from "../../../../../typings/sells/sellsComponentTypes";
+import { useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from 'yup';
+import type { AppDispatch, RootState as ProductVariantState } from "../../../../../store/productVariant/productVariantSlice";
+import { getProductVariantsById } from "../../../../../store/productVariant/productVariantThunks";
+import type { RootState as SellerRootState } from "../../../../../store/seller/sellerSlice";
+import { addToCartThunk } from "../../../../../store/seller/sellerThunks";
 import type { ProductVariant } from "../../../../../typings/productVariant/productVariant";
+import type { ProductTicketType } from "../../../../../typings/seller/sellerTypes";
+import type { DialogDataInterface } from "../../../../../typings/sells/sellsComponentTypes";
 import { ProductDialogContext } from "../../context/ProductDialogContext";
+import ProductDialogData from "./ProductDialogData";
+import ProductDialogIlustration from "./ProductDialogIlustration";
 
-  const getInitialValues = (productVariants: ProductVariant[]) => ({
-    // cambiar por el producto entero
-    product_id: productVariants?.length > 0  ? String(productVariants[0]?._id) : "",
-    productAvailableStock: 0,
-    productStock: 0,
-    productPrice: 0,
-  });
+  const getInitialValues = (productVariants: ProductVariant[]): DialogDataInterface => {
+    const product: ProductVariant | null = productVariants?.length > 0 ? productVariants[0] : null;
+    const productId: string = product?._id ?? ''
 
+    return {
+        productVariantId: productId,
+        productVariant: product,
+        requiredStock: 0, 
+        totalPrice: 0,
+    };
+  };
 
   const getValidationSchema = () =>
     Yup.lazy(() =>
       Yup.object().shape({
-        // cambiar por el producto entero
-        product_id: Yup.string().required("Campo requerido"),
-        productAvailableStock: Yup.number().required("Campo requerido"),
-        productStock: Yup.number().required("Campo requerido"),
-        productPrice: Yup.number().required("Campo requerido"),
+        productVariantId: Yup.string().required("Campo requerido"), 
+        productVariant: Yup.object().shape({
+          _id: Yup.string().nullable().required("Campo requerido"),
+          name: Yup.string().required("Campo requerido"),
+          description: Yup.string().required("Campo requerido"),
+          created_at: Yup.string().required("Campo requerido"),
+          updated_at: Yup.string().required("Campo requerido"),
+          image_url: Yup.string().url("Debe ser una URL válida").required("Campo requerido"),
+          gallery_urls: Yup.array().of(Yup.string().url("Debe ser una URL válida")).required("Campo requerido"),
+          brand: Yup.string().required("Campo requerido"),
+          product_id: Yup.string().required("Campo requerido"),
+          sku: Yup.string().required("Campo requerido"),
+          model_type: Yup.string().required("Campo requerido"),
+          model_size: Yup.string().required("Campo requerido"),
+          min_stock: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
+          stock: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
+          price: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
+          expiration_date: Yup.string().required("Campo requerido"),
+        }).required("Campo requerido"), 
+        requiredStock: Yup.number().required("Campo requerido"),
+        totalPrice: Yup.number().required("Campo requerido"),
       })
   );
 
 const ProductDialog = (): React.ReactNode => {
-  const { showModal, setShowModal, productData } = useContext(ProductDialogContext)!;
+  {/*─────────────────── 🔎 non‑null assertion operator 🔎 ───────────────────*/}
+  {/*─────────────────── por si el contexto es undefined en algun momento ───────────────────*/}
+  const { showModal, setShowModal } = useContext(ProductDialogContext)!;
+
   const dispatch = useDispatch<AppDispatch>();
-  const { productVariant } = useSelector((state: RootState) => state);
-  const { productVariants } = productVariant;
+
+  const { productVariant } = useSelector((state: ProductVariantState) => state);
+  const { productVariants }: {productVariants: ProductVariant[]} = productVariant;
+
+  const { seller } = useSelector((state: SellerRootState ) => state);
+  const { productSelected }: {productSelected: ProductVariant | null} = seller;
 
   useEffect(() => {
-      const getProductVariants = async() => {
-        const _idResult = productData?._id;
+      const getProductVariants = async(): Promise<void> => {
+        const _idResult: string | null | undefined = productSelected?._id;
 
         if(!_idResult) return;
+        if(_idResult === undefined) return;
+
         await dispatch(getProductVariantsById(_idResult));
       }
 
       getProductVariants();
-  }, [dispatch, productData])
+  }, [dispatch, productSelected])
 
-  const onSubmit = async (data: DialogDataInterface) => {
-    console.log('productData', productData); // productData trae un array d evariantes, es decir mucha informacion en una peticion
-    // comprobar si es posible desacoplar esta prop para mejorar rendimiento.
+  const onSubmit = async (data: DialogDataInterface): Promise<void> => {
 
-    //eliminar el contexto del product data, usar slices para esto
-    //selecciono producto, seteo variable productVariants de product, pero no todo el bojeto, solo ese. O algo ismilar
-    //con esa informacion mostrear el dialog
-    //ya no necesito un contexto especifico para esto.
-    //no necesidad de states
-    // al enviar el dialog, setear una prop variantSelected= productVariant
-    // ir agregando variants selected a user.cart
+    const { productVariant, requiredStock } : {productVariant: ProductVariant | null, requiredStock: number} = data;
 
-    console.log('data', data);
-    // product-ticket = interfaz
-    //  _id: string | null; = crypto random
-    //  name: string; = data.product_id = b2e4c5d6-7f89-4a01-9b23-2d3e4f5a6b78 >> deberia traer el productVariantData
-    //  description: string;  >> deberia traer el productVariantData
-    //  image_url: string; >> deberia traer el productVariantData
-    //  brand: string; >> deberia traer el productVariantData
-    //  sku: string; >> deberia traer el productVariantData
-    //  model_type: string; >> deberia traer el productVariantData
-    //  model_size: string; >> deberia traer el productVariantData
-    //  price: number; data.productPrice
-    //  stock: number data.productStock
-    //  expiration_date: string; >> deberia traer el productVariantData
-    // dispatch(addToCartThunk({productData: data}));   
+    if(!productVariant) return;
+    if(requiredStock === 0) return;
+
+    const 
+    { 
+      _id, name, description,image_url,
+      brand,product_id,sku,model_type,
+      model_size,price,expiration_date 
+    } = productVariant;
+
+    const productTicket: ProductTicketType = {
+      _id,
+      name,
+      description,
+      image_url,
+      brand,
+      product_id,
+      sku,
+      model_type,
+      model_size,
+      price,
+      expiration_date,
+      stock_required: requiredStock,
+    }
+    
+    dispatch(addToCartThunk({productData: productTicket}));   
     setShowModal(false)
   }  
 
@@ -108,16 +144,17 @@ const ProductDialog = (): React.ReactNode => {
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema: getValidationSchema(),
+    /*─────────────────── 🔎 reinicia si abro modal con otro producto 🔎 ───────────────────*/
     enableReinitialize: true,
   })
 
-  //aca esta el error, no hay productData
-  if(!productData) return (<Typography>No product loaded</Typography>)
+  if(!productSelected) return null;
 
-  const { name } = productData as Product;
+  const { name }: {name: string} = productSelected as ProductVariant;
 
   return (
     <Dialog 
+      key={String(productSelected?._id)}
       open={showModal} 
       onClose={() => setShowModal(false)}
       sx={(theme: Theme) => ({

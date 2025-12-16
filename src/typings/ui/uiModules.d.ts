@@ -5,6 +5,12 @@ import type { UnderlineVariant } from "./ui";
 ║ ██ APPBAR   ██████████████████ █████████ █████████ █████████          ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
+export interface SharedAppBarInterface {
+  showFilters: boolean,
+}
+
+export type SharedAppBarContentType = Pick<SharedAppBarInterface, 'showFilters'>
+
 export interface LinkInterface {
   label: string;
   to: string;

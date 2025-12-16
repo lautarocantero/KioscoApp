@@ -1,13 +1,7 @@
 
+//──────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
 
-// /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🪧 Dialog 🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧  ║
-// ╚══════════════════════════════════════════════════════════════════════╝*/
-
-export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'> & {
-    productData: Product | null,
-    setProductData: Dispatch<SetStateAction<Product | null>>;
-}
+export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
 
 export interface ProductDialogDataInterface {
     productAvailableStock: number,

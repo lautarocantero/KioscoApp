@@ -6,6 +6,8 @@ Sistema de gestión para ventas minoristas y tiendas de abarrotes. Actualmente e
 
 Kiosco es una aplicación web diseñada para pequeños negocios, como kioscos o tiendas de abarrotes. Permitirá administrar productos, registrar ventas y llevar un control básico del inventario.
 
+![Kiosco ilustration](public/images/kiosco_images/kiosco-ilustration.jpg) 
+
 ## 🛠️ Tecnologías Utilizadas
 
 - **React** (base del frontend)
@@ -74,9 +76,17 @@ nvm use 20
 - Gestión básica de inventario
 - Interfaz simple y responsive
 
-## 📸 Capturas (Próximamente)
+## ✔️🏗️🚧 Gestión de tareas y progreso 🗞️
 
-_Se agregarán imágenes cuando haya pantallas desarrolladas._
+Este proyecto utiliza un sistema de checklist y categorización para organizar el avance técnico.  
+Cada tarea se registra con:
+
+![Task List](public/images/task_and_progress/task-list.png) 
+
+![Progress](public/images/task_and_progress/progres-list.png) 
+
+🧭 Las tareas se actualizan al finalizar cada bloque funcional o sprint.  
+🎬 El objetivo es mantener trazabilidad clara, expresiva y útil para onboarding técnico.
 
 
 ## 📅 Roadmap Futuro
