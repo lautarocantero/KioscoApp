@@ -15,15 +15,13 @@
 // - Usa animate.css para animación de entrada.
 // - Se integra en vistas de ventas como acceso rápido al carrito.
 
-//─────────────────── 📝 To do: Agregar redireccion a carrito ───────────────────//
-
 //-----------------------------------------------------------------------------//
-
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Grid, Tooltip, Typography, type Theme } from "@mui/material";
 import "animate.css";
 import { useSelector } from "react-redux";
+import { useLocation, useNavigate, type NavigateFunction } from 'react-router-dom';
 import type { RootState as SellerState } from "../../../../store/seller/sellerSlice";
 import type { ProductTicketType } from "../../../../typings/seller/sellerTypes";
 
@@ -32,12 +30,17 @@ export const CartButtonComponent = (): React.ReactNode => {
     const { seller } = useSelector((state: SellerState) => state);
     const { cart } : {cart: ProductTicketType[]} = seller;
 
+    const navigate: NavigateFunction = useNavigate();
+    const location = useLocation();
+
     if(!cart) return null;
     if(cart?.length === 0) return null;
+    if(location.pathname !== "/new-sell") return null;
 
     return (
         <Grid
           container
+          onClick={ () => navigate('/cart')}
           sx={{
             margin: '0.8em 0',
             display: 'flex',
@@ -82,7 +85,7 @@ export const CartButtonComponent = (): React.ReactNode => {
                         color: theme?.palette?.success?.main,
                     })}
                 >
-                    1
+                    {cart?.length}
                 </Typography>
               </span>
               {/*─────────────────── 🔎 Ícono de carrito 🔎 ───────────────────*/}

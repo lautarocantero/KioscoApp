@@ -30,7 +30,7 @@ export type ProductPublic = Omit<ProductEntity, '_id'>
 
 // tipo del slice
 interface ProductState { 
-    products: Productp[],
+    products: Product[],
     isLoading: boolean,
     errorMessage: string | null,
 }

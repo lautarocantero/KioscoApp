@@ -19,7 +19,7 @@
 
 import { Grid } from "@mui/material";
 import type { RegisterFormButtonsInterface } from "../../../../../typings/auth/authComponentTypes";
-import PrimaryButton from "../../../../shared/components/Buttons/PrimaryButton";
+import PrimaryButton from "../../../../shared/components/Buttons/PrimaryButtonComponent";
 
 const RegisterFormButtons = ({ errors }: RegisterFormButtonsInterface): React.ReactNode => {
   return (

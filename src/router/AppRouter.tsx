@@ -1,11 +1,13 @@
 
-// AppRouter: Router principal, controla acceso según autenticación. 
+//─────────────────── Componente 🧩: AppRouter ───────────────────//
+
+//─────────────────── Descripción 📝 ───────────────────//
+// Definición de rutas para el flujo de la aplicacion.  
+// Renderiza la página principal dentro del sistema de enrutamiento. 
 // Si autenticado: rutas privadas (Home, Ventas, Carrito, Tienda, Cuenta, Proveedores, Productos). 
 // Si no: rutas de Auth.
-
 // ShopRoutes: Maneja rutas de Tienda. 
 // Incluye administradores (lista, crear, editar), vendedores (lista, crear, editar) y estadísticas.
-
 // Otros módulos: 
 // - SellsRoutes (ventas) 
 // - CartRoutes (carrito) 
@@ -14,30 +16,32 @@
 // - ProductsRoutes (productos) 
 // - AuthRoutes (autenticación)
 
+//─────────────────── Notas técnicas 💽 ───────────────────//
+// - Usa `react-router-dom` para la gestión de rutas.  
+
+//-----------------------------------------------------------------------------//
+
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import type { AppDispatch, RootState } from "../store/auth/authSlice";
-import { startCheckAuth } from "../store/auth/thunks";
+import AccountRoutes from "../modules/account/AccountRoutes";
 import HomePage from "../modules/app/Home/HomePage";
+import AuthRoutes from "../modules/auth/AuthRoutes";
+import CartRoutes from "../modules/cart/CartRoutes";
+import ProductsRoutes from "../modules/products/ProductsRoutes";
+import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
 import SellsRoutes from "../modules/sells/SellsRoutes";
 import ShopRoutes from "../modules/shop/ShopRoutes";
-import AccountRoutes from "../modules/account/AccountRoutes";
-import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
-import ProductsRoutes from "../modules/products/ProductsRoutes";
-import CartRoutes from "../modules/cart/CartRoutes";
-import AuthRoutes from "../modules/auth/AuthRoutes";
-import { useEffect } from "react";
+import type { AppDispatch, RootState } from "../store/auth/authSlice";
+import { startCheckAuth } from "../store/auth/thunks";
 import RouteTracker from "./RouteTracker";
 
 const AppRouter = ():React.ReactNode => {
   const {auth} = useSelector((state: RootState) => state);
   const {status} = auth;
   const location = useLocation();
-  // To do, remover esto para que funcione normalmente, forzado a mostrar la nueva venta
-  // const lastRoute = localStorage.getItem("lastRoute") || "/new-sell";
-  // const safeRoute = lastRoute === "/" ? "/home" : lastRoute;
-  const lastRoute = "/new-sell";
-  const safeRoute =  lastRoute;
+  const lastRoute: string = localStorage.getItem("lastRoute") || "/new-sell";
+  const safeRoute: string = lastRoute === "/" ? "/home" : lastRoute;
 
   const dispatch = useDispatch<AppDispatch>();
 

@@ -1,33 +1,22 @@
 
-// # Página: SellsHistoryPage  
+//─────────────────── Componente 🧩: sellsHistoryLinks ───────────────────//
 
-// ## Descripción 📦  
-// Página que muestra opciones de historial de ventas.  
-// Renderiza un componente `DisplayOptions` con título, ícono y enlaces predefinidos para filtrar ventas por rango de tiempo.  
+//─────────────────── Descripción 📝 ───────────────────//
+// Contiene los enlaces principales de navegación para la página de historial de ventas.
 
-// ## Lógica 🔧  
-// - `sellsHistoryLinks`: array de enlaces tipados con `LinksInterface`.  
-//   - Cada enlace incluye:  
-//     - `icon`: ícono representativo (descarga o calendario).  
-//     - `description`: texto descriptivo del rango de tiempo (último día, semana, mes, fecha específica).  
-//     - `url`: actualmente vacío, preparado para futuras rutas o acciones.  
-// - `SellsHistoryPage`: componente principal que renderiza `DisplayOptions`.  
-//   - Props:  
-//     - `title`: "Ventas".  
-//     - `icon`: `LocalOfferIcon`.  
-//     - `links`: `sellsHistoryLinks`.  
+//──────────────────── Links 🌐 ─────────────────────//
+// - Ultimo dia
+// - Ultima semana
+// - Ultimo mes
+// - Fecha Especifica
 
-// ## Notas técnicas 💽  
-// - Modularidad: delega la presentación de opciones a `DisplayOptions`.  
-// - Escenarios de uso: permite al usuario consultar ventas en distintos rangos de tiempo.  
-// - Preparado para integrar navegación o acciones en los `url` de cada enlace.  
+//-----------------------------------------------------------------------------//
 
-
-import DownloadIcon from '@mui/icons-material/Download';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import DisplayOptions from '../../shared/components/Options/DisplayOptions';
+import DownloadIcon from '@mui/icons-material/Download';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import type { LinksInterface } from '../../../typings/account/accountComponentTypes';
+import DisplayOptions from '../../shared/components/Options/DisplayOptions';
 
 
 const sellsHistoryLinks: LinksInterface[] = [
@@ -40,7 +29,7 @@ const sellsHistoryLinks: LinksInterface[] = [
 const SellsHistoryPage = ():React.ReactNode => {
 
      return (
-      <DisplayOptions title='Ventas' icon={<LocalOfferIcon />}  links={sellsHistoryLinks}/>
+      <DisplayOptions title='Ventas' icon={<PointOfSaleIcon />}  links={sellsHistoryLinks}/>
     )
 }
 

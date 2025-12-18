@@ -4,12 +4,12 @@ import type { ProductVariant } from "../productVariant/productVariant";
 // ║ 📋 Product Exhibitor 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface ProductsExhibitorInterface {
+export interface ProductsExhibitorComponentInterface {
     title: string;
     products: Product[];
 };
 
-export type ProductListType  = Pick<ProductsExhibitorInterface, 'products'>;
+export type ProductListType  = Pick<ProductsExhibitorComponentInterface, 'products'>;
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍞 Product Item 🍞 🧀 🍫 🍷 ☕ 🔋 🍞 🧀 🍫 🍷 ☕ 🔋 🍞 🧀 🍫 🍷 ☕ 🔋  ║

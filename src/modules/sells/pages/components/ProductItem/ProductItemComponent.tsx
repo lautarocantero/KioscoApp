@@ -1,3 +1,4 @@
+
 //─────────────────── Componente 🧩: ProductItem ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
@@ -5,9 +6,7 @@
 // Divide la presentación en dos secciones: izquierda (imagen y nombre) y derecha (especificaciones y acción).  
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// - ProductItem: componente principal.
-//   - Recibe product.
-//   - Renderiza:
+// - ProductItem: componente principal. Recibe product.
 //     - ProductItemEspecificationsLeft: muestra nombre e imagen/variantes.
 //     - ProductItemEspecificationsRight: muestra especificaciones y botón para agregar al carrito.
 
@@ -28,7 +27,7 @@ const ProductItem = ({ product }: ProductItemInterface): React.ReactNode => {
             sx={(theme: Theme) => ({
                 alignItems: "center",
                 backgroundColor: theme?.custom?.background, 
-                borderRadius: "8px",
+                borderRadius: "1em",
                 color: theme?.custom?.fontColor,
                 display: "flex",
                 flexDirection: {md: 'column'},

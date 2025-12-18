@@ -4,9 +4,6 @@
 // Diálogo modal para agregar productos al carrito.  
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// - `getInitialValues`: genera valores iniciales para el formulario a partir de `productVariants` obtenidos
-// del slice de productVariants.  
-// - `getValidationSchema`: esquema de validación con Yup para los campos del formulario.  
 // - `ProductDialog`: componente principal que:  
 // - - Usa `ProductDialogContext` para controlar visibilidad del dialog.  
 // -  - Despacha `getProductVariantsById` para obtener variantes desde Redux.  
@@ -18,7 +15,6 @@
 // Utiliza contexto para mostrar condicionalmente el modal
 // Utiliza Redux para actualizar el estado del slice de productos, variante de productos y vendedor
 // Utiliza Formik para el manejo del formulario
-// Se aplican estilos dinámicos con `Theme` de MUI para personalización visual.
 
 //─────────────────── 📝 To do: considerar si eligo agregar del mismo producto, OTRO sub producto ───────────────────//
 //─────────────────── 📝 To do: Agregar Snackbars ───────────────────//
@@ -37,8 +33,8 @@ import type { ProductVariant } from "../../../../../typings/productVariant/produ
 import type { ProductTicketType } from "../../../../../typings/seller/sellerTypes";
 import type { DialogDataInterface } from "../../../../../typings/sells/sellsComponentTypes";
 import { ProductDialogContext } from "../../context/ProductDialogContext";
-import ProductDialogData from "./ProductDialogData";
-import ProductDialogIlustration from "./ProductDialogIlustration";
+import ProductDialogData from "./ProductDialogDataComponent";
+import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
 
   const getInitialValues = (productVariants: ProductVariant[]): DialogDataInterface => {
     const product: ProductVariant | null = productVariants?.length > 0 ? productVariants[0] : null;

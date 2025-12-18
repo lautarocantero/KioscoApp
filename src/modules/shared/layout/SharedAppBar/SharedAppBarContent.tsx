@@ -10,7 +10,6 @@
 //   - Recibe showFilters.
 //   - Usa ThemeContext para obtener appTheme.
 //   - Usa useNavigate para redirigir a /home al hacer clic en el título.
-//   - Renderiza:
 //     - LightMode: control de cambio de tema.
 //     - Filters: renderizado condicional según showFilters.
 //     - CartButtonComponent: acceso rápido al carrito.
@@ -26,7 +25,7 @@ import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { ThemeContext } from "../../../../theme/ThemeContext";
 import type { SharedAppBarContentType } from "../../../../typings/ui/uiModules";
 import LightMode from "../../components/LightMode/LightMode";
-import CartButtonComponent from "./CartButton";
+import CartButtonComponent from "./CartButtonComponent";
 import Filters from "./Filters";
 
 const SharedAppBarContent = ({showFilters}: SharedAppBarContentType): React.ReactNode => {

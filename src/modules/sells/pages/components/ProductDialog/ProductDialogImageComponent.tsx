@@ -1,0 +1,34 @@
+
+//─────────────────── Componente 🧩: ProductDialogImageComponent ───────────────────//
+
+//─────────────────── Descripción 📝 ───────────────────//
+// Renderiza la imagen del producto en el Modal
+
+//─────────────────── 📝 To do: cambiar por una imagen real. ───────────────────//
+
+//-----------------------------------------------------------------------------//
+
+import { Box } from "@mui/material";
+
+const ProductDialogImageComponent = ():React.ReactNode => {
+
+
+    return (
+        <Box
+            component={'img'}
+            src="/images/productExample/cocaCola.png"
+            alt={`${name} Image`}
+            sx={{
+                width: { xs: '100%' },
+                minHeight: { xs: '15em'},
+                height: { xs: '100%' },
+                maxHeight: {xs: '20em'},
+                objectFit: "contain",
+                borderRadius: "0.3em",
+            }}
+        >
+        </Box>
+    )
+};
+
+export default ProductDialogImageComponent;

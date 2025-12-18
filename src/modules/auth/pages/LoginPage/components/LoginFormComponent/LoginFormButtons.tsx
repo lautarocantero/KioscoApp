@@ -1,4 +1,4 @@
-import PrimaryButton from "../../../../../shared/components/Buttons/PrimaryButton";
+import PrimaryButton from "../../../../../shared/components/Buttons/PrimaryButtonComponent";
 import { Button, Grid, Typography, type Theme } from "@mui/material";
 import { Google } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";

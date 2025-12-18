@@ -18,7 +18,7 @@
 
 
 import { Grid } from "@mui/material";
-import PrimaryButton from "../../../../../shared/components/Buttons/PrimaryButton";
+import PrimaryButton from "../../../../../shared/components/Buttons/PrimaryButtonComponent";
 import { useNavigate } from "react-router-dom";
 import type { FormToggleButtonInterface } from "../../../../../../typings/auth/authComponentTypes";
 import EmptyButton from "../../../../../shared/components/Buttons/EmptyButton";

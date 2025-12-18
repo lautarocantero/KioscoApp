@@ -1,11 +1,11 @@
-//─────────────────── Componente 🧩: ProductDialogPrice ───────────────────//
+//─────────────────── Componente 🧩: ProductDialogPriceComponent ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
 // Muestra el precio total calculado en el diálogo de producto.
 // Se basa en la cantidad seleccionada y el precio unitario.  
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// - ProductDialogPrice: componente principal.
+// - ProductDialogPriceComponent: componente principal.
 //   - Recibe values.
 //   - Si product_id está vacío → no renderiza.
 //   - Si productStock es 0 → no renderiza.
@@ -18,7 +18,7 @@
 import { Grid, Typography, type Theme } from "@mui/material";
 import type { DialogDataPriceType } from "../../../../../typings/sells/sellsComponentTypes";
 
-const ProductDialogPrice = ({values}: DialogDataPriceType): React.ReactNode => {
+const ProductDialogPriceComponent = ({values}: DialogDataPriceType): React.ReactNode => {
 
     if(!values?.productVariant) return null;
 
@@ -42,7 +42,7 @@ const ProductDialogPrice = ({values}: DialogDataPriceType): React.ReactNode => {
                   color: totalPrice === 0 ? theme?.custom?.fontColorTransparent : theme?.custom?.fontColor,
                 })}
             >
-              /*─────────────────── 🔎 el formato numerico es para el dinero, comas decimales 🔎 ───────────────────*/
+              {/* ─────────────────── 🔎 el formato numerico es para el dinero, comas decimales 🔎 ─────────────────── */}
               Total: {new Intl.NumberFormat("es-AR", {
                 style: "currency",
                 currency: "ARS",
@@ -53,4 +53,4 @@ const ProductDialogPrice = ({values}: DialogDataPriceType): React.ReactNode => {
     )
 }
 
-export default ProductDialogPrice;
+export default ProductDialogPriceComponent;

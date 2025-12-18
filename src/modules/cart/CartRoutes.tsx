@@ -1,27 +1,25 @@
-// # Componente: CartRoutes  
 
-// ## Descripción 📦
+//─────────────────── Componente 🧩: CartRoutes ───────────────────//
+
+//─────────────────── Descripción 📝 ───────────────────//
 // Definición de rutas para el flujo del carrito de compras.  
-// Renderiza la página principal del carrito dentro del sistema de enrutamiento.  
+// Renderiza la página principal del carrito dentro del sistema de enrutamiento. 
 
-// ## Funciones 🔧
-// - `CartRoutes`: componente principal que devuelve las rutas del carrito.  
-//   - `Route "/cart"`: renderiza `CartPage`.  
-
-// ## Notas técnicas 💽
+//─────────────────── Notas técnicas 💽 ───────────────────//
 // - Usa `react-router-dom` para la gestión de rutas.  
-// - Mantiene la modularidad separando la lógica de rutas del componente `CartPage`.  
+
 //-----------------------------------------------------------------------------//
 
-
-import { Route } from "react-router-dom"
+import { Route } from "react-router-dom";
 import CartPage from "./pages/CartPage";
+import OrderConfirmedPage from "./pages/OrderConfirmedPage";
 
 const CartRoutes = ():React.ReactNode => {
 
     return (
         <>
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/cart-order-confirmed" element={<OrderConfirmedPage />} />
         </>
     )
 }
