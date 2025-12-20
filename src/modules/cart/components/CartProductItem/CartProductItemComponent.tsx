@@ -35,7 +35,7 @@ const CartProductItemComponent = ({product}: CartProductItemComponentInterface )
                 width: '100%'
             })}
         >
-            <CartProductItemImage image={undefined} name={name} />
+            <CartProductItemImage image={image_url} name={name} />
             <CartProductItemData name={name} size ={model_size} units={stock_required} price={`${price}$`}/>
         </Grid>
     )

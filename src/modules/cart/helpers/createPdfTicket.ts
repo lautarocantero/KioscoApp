@@ -38,16 +38,16 @@ export const createPdfTicket = (ticket: SaleTicketInterface): void => {
     val?.length > 25 ? val.slice(0, 22) + "..." : val;
 
   const productRows = ticket.products.map((p) => [
-    truncate(p.name),
-     truncate(p.sku),
-     truncate(p.model_type),
-     truncate(p.model_size),
-     truncate(String(p.stock_required)),
-     truncate(formatCurrency(p.price)),
+      truncate(p.name),
+      truncate(p.sku),
+      truncate(p.model_type + ' ' + p.model_size),
+      truncate(String(p.stock_required)),
+      truncate(formatCurrency(p.price)),
+      truncate(formatCurrency(p.price * p.stock_required)),
   ]);
 
   autoTable(doc, {
-    head: [["Producto", "SKU", "Tipo", "Tamaño", "Cant.", "Precio"]],
+    head: [["Producto", "SKU", "Tipo", "Cant.", "P. Unitario", "P. Total"]],
     body: productRows,
     startY: 55,
   });
@@ -62,7 +62,7 @@ export const createPdfTicket = (ticket: SaleTicketInterface): void => {
     //──────────── IVA más pequeño ──────────────//
 
     doc.setFontSize(10);
-    doc.text(`IVA (21%): ${formatCurrency(ticket.iva)}`, 14, finalY + 6);
+    doc.text(`IVA (${ticket.iva}%): ${formatCurrency(ticket.subtotal * ticket.iva / 100)}`, 14, finalY + 6);
     //──────────── Total más grande y destacado ────────────────//
 
     doc.setFontSize(14);

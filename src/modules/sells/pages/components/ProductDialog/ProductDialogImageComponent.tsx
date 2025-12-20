@@ -10,13 +10,13 @@
 
 import { Box } from "@mui/material";
 
-const ProductDialogImageComponent = ():React.ReactNode => {
+const ProductDialogImageComponent = ({image_url}: {image_url: string}):React.ReactNode => {
 
 
     return (
         <Box
             component={'img'}
-            src="/images/productExample/cocaCola.png"
+            src={image_url}
             alt={`${name} Image`}
             sx={{
                 width: { xs: '100%' },

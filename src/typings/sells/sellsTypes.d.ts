@@ -1,9 +1,12 @@
 
 //──────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
 
+import type { DialogContextType } from "../ui/uiModules";
 import type { PaymentMethods } from "./sells";
 
 export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
+
+export type ProductVariantDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
 
 export interface ProductDialogDataInterface {
     productAvailableStock: number,

@@ -35,3 +35,8 @@ export const getProductVariantsByIdRequest = async ({product_id} : {product_id: 
     const response = await baseUrl.get(`/get-product-variant-by-product-id/${product_id}`);
     return response.data;
 }
+
+export const getProductVariantByIdRequest = async ({product_variant_id}: {product_variant_id : string}) => {
+    const response = await baseUrl.get(`/get-product-variant-by-id/${product_variant_id}`);
+    return response.data;
+}

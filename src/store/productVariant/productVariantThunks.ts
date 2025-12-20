@@ -39,7 +39,7 @@ import type { Dispatch } from "@reduxjs/toolkit"
 import type { ProductVariant } from "../../typings/productVariant/productVariant"
 import { checkingProductVariants, setError, setProductsVariants } from "./productVariantSlice"
 import { handleError } from "../shared/handlerStoreError"
-import { getProductVariantsByIdRequest } from "../../modules/productVariants/api/productVariantsApi"
+import { getProductVariantByIdRequest, getProductVariantsByIdRequest } from "../../modules/productVariants/api/productVariantsApi"
 
 
 export const getProductVariantsById = (product_id: string) => {
@@ -51,12 +51,33 @@ export const getProductVariantsById = (product_id: string) => {
 
             if(!productVariants) {
                 dispatch(setError({errorMessage: "No se ha encontrado ninguna variante del producto" }));
-                throw new Error('No se encontraron variantes del producto');
+                throw new Error('No se encontraron productos que coincidan con el id ' + product_id);
             }
 
             dispatch(setProductsVariants(productVariants));
             return productVariants as ProductVariant[];
         } catch(error: unknown) {
+            handleError(error);
+        }
+    }
+}
+
+export const getProductVariantById = (product_variant_id: string) => {
+    return async (dispatch: Dispatch): Promise<ProductVariant[] | undefined> => {
+        dispatch(checkingProductVariants());
+
+        try{
+            {/*─────────────────── 🔎 Se usa un array, pero solo se tendra un elemento en el mismo 🔎 ───────────────────*/}
+            const productVariant: ProductVariant[] = await getProductVariantByIdRequest({product_variant_id});
+
+            if(!productVariant) {
+                dispatch(setError({errorMessage: "No se ha encontrado el producto en la base de datos" }));
+                throw new Error('No se encontraron variantes del producto');
+            }
+
+            dispatch(setProductsVariants(productVariant));
+            return productVariant as ProductVariant[];
+        } catch (error: unknown) {
             handleError(error);
         }
     }

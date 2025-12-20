@@ -58,7 +58,7 @@ import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
           description: Yup.string().required("Campo requerido"),
           created_at: Yup.string().required("Campo requerido"),
           updated_at: Yup.string().required("Campo requerido"),
-          image_url: Yup.string().url("Debe ser una URL válida").required("Campo requerido"),
+          image_url: Yup.string().required("Campo requerido"),
           gallery_urls: Yup.array().of(Yup.string().url("Debe ser una URL válida")).required("Campo requerido"),
           brand: Yup.string().required("Campo requerido"),
           product_id: Yup.string().required("Campo requerido"),
