@@ -43,7 +43,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import { z } from "zod";
 import type { AddToCartThunkInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
 import { handleError } from "../shared/handlerStoreError";
-import { addToCartAction, setError, setProductSelected } from "./sellerSlice";
+import { addToCartAction, cleanCart, setError, setProductSelected } from "./sellerSlice";
 
 export const ProductVariantEntitySchema = z.object({
   _id: z.string().nullable(),
@@ -76,7 +76,7 @@ export const ProductTicketSchema = z.object({
   model_size: z.string(),
   price: z.number(),
   expiration_date: z.string(),
-  stock_required: z.string(),
+  stock_required: z.number(),
 });
 
 export type ProductVariantEntity = z.infer<typeof ProductVariantEntitySchema>;
@@ -121,4 +121,16 @@ export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
             handleError(error);
         }
     }
+}
+
+export const cleanCartThunk = () => {
+
+    return async (dispatch: Dispatch): Promise<void> => {
+        try{
+            dispatch(cleanCart());
+        } catch(error: unknown) {
+            handleError(error);
+        }
+    }
+
 }

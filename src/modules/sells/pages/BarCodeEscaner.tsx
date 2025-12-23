@@ -1,35 +1,33 @@
 
-// # Componente: QrEscaner  
+//─────────────────── Componente 🧩: BarCodeEscaner ───────────────────//
 
-// ## Descripción 📦  
-// Renderiza la vista del escáner QR dentro del flujo de ventas.  
-// Incluye un enlace para acceder al carrito y un marcador visual donde se mostrará la imagen del QR.  
+//─────────────────── Descripción 📝 ───────────────────//
+// Renderiza un campo de texto centrado y un ícono de lector.
+// Permite ingresar manualmente o escanear un código de barras.
+// Al presionar Enter se abre un modal con información del producto.
 
-// ## Lógica 🔧  
-// - `Link` de MUI con integración a `react-router-dom`:  
-//   - Redirige a la ruta `/cart`.  
-//   - Estilizado con `sx` para mantener coherencia visual con el tema (`Theme`).  
-// - Texto "imagen qr": marcador que representa el área donde se mostrará o integrará el escáner QR.  
+//──────────────────── Funciones 🔧 ─────────────────────//
+// - handleKeyDown: detecta Enter y dispara la apertura del modal.
+// - setBarcode: limpia/actualiza el valor del input.
+// - setShowModal: controla la visibilidad del diálogo de variantes.
 
-// ## Notas técnicas 💽  
-// - El enlace ocupa todo el ancho disponible y se centra visualmente.  
-// - Estilos dinámicos basados en `Theme`:  
-//   - Color de fuente (`fontColor`).  
-//   - Fondo (`background`).  
-//   - Tipografía (`body2`).  
-// - Se integra en el flujo de venta como alternativa al ingreso manual de productos.  
+//─────────────────── Notas técnicas 💽 ───────────────────//
+// - Contexto ProductVariantDialogContext para manejar el modal.
+// - Compatible tanto con ingreso manual como con escaneo automático.
+//-----------------------------------------------------------------------------//
+
 
 import { Grid, TextField, type Theme } from '@mui/material';
 import SimpleGridComponent from '../../shared/components/SimpleGrid/SimpleGridComponent';
 import AppLayout from '../../shared/layout/AppLayout';
 import BarcodeReaderIcon from '@mui/icons-material/BarcodeReader';
 import { useContext, useEffect, useRef, useState } from 'react';
-import ProductVariantDialog from './components/ProductVariantDialog/ProductVariantDialog';
+import ProductVariantDialog from './components/ProductVariantDialog/ProductVariantDialogComponent';
 import { ProductVariantDialogContext } from './context/ProductVariant/ProductVariantDialogContext';
 
 const BarCodeEscaner = (): React.ReactNode => {
   const { showModal, setShowModal } = useContext(ProductVariantDialogContext)!;
-  const [barcode, setBarcode] = useState("");
+  const [barcode, setBarcode] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -63,7 +61,11 @@ const BarCodeEscaner = (): React.ReactNode => {
                   placeholder="Escanee el código aquí"
                   sx={{ 
                     width: "80%",
-                    color: 'white',
+                    input: { color: 'white' },
+                    '& .MuiInputBase-input::placeholder': { 
+                      color: 'white',
+                      opacity: 1,
+                      },
                    }}
                 />
                 <BarcodeReaderIcon 
@@ -75,7 +77,11 @@ const BarCodeEscaner = (): React.ReactNode => {
               </Grid>
           </SimpleGridComponent>
           {
-            showModal && <ProductVariantDialog id={barcode} />
+            showModal && 
+            <ProductVariantDialog 
+              id={barcode} 
+              setBarcode={setBarcode}
+            />
           }
       </AppLayout>
   )

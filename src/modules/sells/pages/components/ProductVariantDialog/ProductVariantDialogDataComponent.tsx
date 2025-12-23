@@ -1,4 +1,6 @@
 
+
+
 //─────────────────── Componente 🧩: ProductDialogDataComponent ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
@@ -15,12 +17,11 @@
 //-----------------------------------------------------------------------------//
 
 import { Box } from "@mui/material";
-import type { DialogDataType } from "../../../../../typings/sells/sellsComponentTypes";
-import ProductDialogSelector from "./ProductDialogSelector";
-import ProductDialogUnitsComponent from "./ProductDialogUnitsComponent";
+import type { VariantDialogDataType } from "../../../../../typings/sells/sellsComponentTypes";
+import ProductDialogUnitsComponent from "../ProductDialog/ProductDialogUnitsComponent";
 import ProductDialogPriceComponent from "./ProductDialogPriceComponent";
 
-const ProductDialogDataComponent = ( {products, values, setFieldValue } : DialogDataType ):React.ReactNode => {
+const ProductDialogDataComponent = ( {values, setFieldValue } : VariantDialogDataType ):React.ReactNode => {
 
     return (
         <Box
@@ -31,19 +32,12 @@ const ProductDialogDataComponent = ( {products, values, setFieldValue } : Dialog
             }}
             gap={2}
         >
-            <ProductDialogSelector 
-                products={products} 
-                values={values}
-                setFieldValue={setFieldValue}
-            />
              <ProductDialogUnitsComponent
                 values={values}
                 setFieldValue={setFieldValue}
                 label={'Unidades'}
              />
-              <ProductDialogPriceComponent
-                values={values}
-             />
+              <ProductDialogPriceComponent values={values} />
         </Box>
     )
 };

@@ -9,12 +9,9 @@
 // ## Funciones 🔧
 // - `ProductDialogSelector`: componente principal que recibe props tipadas con `DialogSelectorType`.  
 //   - `products`: listado de variantes de producto disponibles.  
-//   - `values`: valores actuales del formulario (Formik).  
-//   - `setFieldValue`: función de Formik para actualizar campos.  
 // - Lógica interna:  
 //   - `isEmpty`: si no hay productos, muestra mensaje "No se han encontrado Productos".  
 //   - `isLoading`: si el primer producto no tiene `_id` válido, muestra mensaje "Cargando Productos...".  
-//   - `handleChange`: actualiza en Formik:  
 
 //-----------------------------------------------------------------------------//
 

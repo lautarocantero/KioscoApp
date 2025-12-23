@@ -1,8 +1,16 @@
-
-//──────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
-
 import type { DialogContextType } from "../ui/uiModules";
 import type { PaymentMethods } from "./sells";
+
+
+//──────────────────────────────────────────── ⬜ Mode Button ⬛ ───────────────────────────────────────────//
+
+export interface ModeButtonComponentInterface {
+    functionAction: () => void,
+    text: string,
+    icon: React.ReactNode,
+}
+
+//──────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
 
 export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
 
@@ -11,6 +19,18 @@ export type ProductVariantDialogContextType = Pick<DialogContextType, 'showModal
 export interface ProductDialogDataInterface {
     productAvailableStock: number,
     productPrice: number,
+}
+
+export interface ProductDialogIlustrationInterface {
+    name?: string;
+    image_url?: string;
+}
+
+export type ProductDialogImageComponentType = Pick<ProductDialogIlustrationInterface, 'name' | 'image_url'>
+
+export interface ProductVariantDialogComponentInterface {
+    id: string,
+    setBarcode: SetStateAction<string>,
 }
 
 //──────────────────────────────────────────── 🛒 Cart 🛒───────────────────────────────────────────//

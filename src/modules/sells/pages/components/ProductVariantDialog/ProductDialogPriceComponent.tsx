@@ -18,7 +18,7 @@
 import { Grid, Typography, type Theme } from "@mui/material";
 import type { VariantDialogDataPriceType } from "../../../../../typings/sells/sellsComponentTypes";
 
-const ProductDialogPriceComponent = ({values}: VariantDialogDataPriceType): React.ReactNode => {
+const ProductVariantDialogPriceComponent = ({values}: VariantDialogDataPriceType): React.ReactNode => {
 
     if(!values?.productVariant) return null;
 
@@ -51,4 +51,4 @@ const ProductDialogPriceComponent = ({values}: VariantDialogDataPriceType): Reac
     )
 }
 
-export default ProductDialogPriceComponent;
+export default ProductVariantDialogPriceComponent;

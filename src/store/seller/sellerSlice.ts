@@ -54,6 +54,9 @@ export const sellerSlice = createSlice({
             
             state.cart = [...state.cart, product];
         },
+        cleanCart: (state: SellerStateInterface) => {
+            state.cart = []
+        },
         setError: (state: SellerStateInterface, action: PayloadAction<SellerError>) => {
             const { payload } = action;
             const { errorMessage } = payload;
@@ -63,7 +66,7 @@ export const sellerSlice = createSlice({
     }
 });
 
-export const { setProductSelected, addToCartAction, setError } = sellerSlice.actions;
+export const { setProductSelected, addToCartAction, cleanCart, setError } = sellerSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;

@@ -57,34 +57,29 @@ export interface DialogDataInterface {
     totalPrice: number,
 }
 
+export type DialogVariantDataInterface = Omit<DialogDataInterface, 'productVariantId'>
+
 export type VariantDialogDataInterface = Pick<DialogDataInterface, 'productVariant' | 'requiredStock' | 'totalPrice'>;
 
 export interface DialogDataType {
     products: ProductVariant[],
     values: DialogDataInterface,
-    setFieldValue: (field: string, value: string | object) => void,
+    setFieldValue: SetFieldValue<DialogDataInterface>,
 };
 
 export interface VariantDialogDataType {
-    values: VariantDialogDataInterface,
-    setFieldValue: (field: string, value: string | object) => void,
+    values: DialogVariantDataInterface,
+    setFieldValue: SetFieldValue<DialogVariantDataInterface>,
 }
 
 export type DialogSelectorType = Pick<DialogDataType, 'products' | 'values' | 'setFieldValue'>;
 
-export type DialogDataDisplayType = Pick <DialogDataType, 'values' | 'setFieldValue'> & {
-    label: string;
-}
-
-export type VariantDialogDataDisplayType = Pick <VariantDialogDataType, 'values' | 'setFieldValue'> & {
-    label: string;
+export type DialogDataDisplayType = Pick<DialogDataType, 'setFieldValue'> & {
+    values: DialogVariantDataInterface,
+    label: string,
 }
 
 export type DialogDataPriceType = Pick <DialogDataType, 'values'>
 
 export type VariantDialogDataPriceType = Pick <VariantDialogDataType, 'values'>
-
-
-
-
 

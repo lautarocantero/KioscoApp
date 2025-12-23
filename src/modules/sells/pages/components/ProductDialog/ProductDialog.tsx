@@ -76,7 +76,7 @@ import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
   );
 
 const ProductDialog = (): React.ReactNode => {
-  {/*─────────────────── 🔎 non‑null assertion operator 🔎 ───────────────────*/}
+  {/*─────────────────── 🔎 non‑null assertion operator '!' 🔎 ───────────────────*/}
   {/*─────────────────── por si el contexto es undefined en algun momento ───────────────────*/}
   const { showModal, setShowModal } = useContext(ProductDialogContext)!;
 

@@ -18,11 +18,9 @@ import { Grid } from "@mui/material";
 import type { DialogDataDisplayType } from "../../../../../typings/sells/sellsComponentTypes";
 import NumberField from "../../../../shared/components/NumberField/NumberField";
 
-const ProductDialogUnits = ({values,setFieldValue, label }: DialogDataDisplayType ): React.ReactNode => {
+const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: DialogDataDisplayType ): React.ReactNode => {
 
     if(!values?.productVariant) return null;
-
-    if(values?.productVariantId === "") return null;
 
     return (
         <Grid
@@ -38,11 +36,11 @@ const ProductDialogUnits = ({values,setFieldValue, label }: DialogDataDisplayTyp
                 defaultValue={0}
                 onValueChange={(val: number | null) => {
                     if(!val) return;
-                        setFieldValue('requiredStock', String(val))
+                        setFieldValue('requiredStock', val)
                 }}
             />
         </Grid>
     )
 }
 
-export default ProductDialogUnits;
+export default ProductVariantDialogUnitsComponent;

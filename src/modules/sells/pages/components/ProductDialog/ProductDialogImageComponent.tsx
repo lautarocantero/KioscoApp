@@ -9,9 +9,9 @@
 //-----------------------------------------------------------------------------//
 
 import { Box } from "@mui/material";
+import type { ProductDialogImageComponentType } from "../../../../../typings/sells/sellsTypes";
 
-const ProductDialogImageComponent = ({image_url}: {image_url: string}):React.ReactNode => {
-
+const ProductDialogImageComponent = ({image_url, name }: ProductDialogImageComponentType):React.ReactNode => {
 
     return (
         <Box

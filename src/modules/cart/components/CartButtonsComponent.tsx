@@ -27,18 +27,22 @@ const CartButtonsComponent = ({generateTicket}: CartButtonsComponentInterface ):
                 width: '100%'
             }}
         >
-            <EmptyButton 
-                buttonText='Volver' 
-                buttonOnClick={() => { navigate('/new-sell')}} 
-                buttonWidth={{xs: "50%", sm: '20%', md: '10%' }}
-            />
-            <PrimaryButton 
-                buttonText='Hacer Ticket' 
-                buttonOnClick={() => {generateTicket()}} 
-                buttonWidth={{xs: "50%", sm: '20%', md: '10%' }} 
-                marginTop={'0'} 
-                icon={<ReceiptLongIcon/>}
-            />
+            <Grid>
+                <EmptyButton 
+                    buttonText='Volver' 
+                    buttonOnClick={() => { navigate('/new-sell')}} 
+                    buttonWidth={{xs: "100%" }}
+                />
+            </Grid>
+            <Grid>
+                <PrimaryButton 
+                    buttonText='Hacer Ticket' 
+                    buttonOnClick={() => {generateTicket()}} 
+                    buttonWidth={{xs: "100%" }}
+                    marginTop={'0'} 
+                    icon={<ReceiptLongIcon/>}
+                />
+            </Grid>
         </Grid>
     );
 }

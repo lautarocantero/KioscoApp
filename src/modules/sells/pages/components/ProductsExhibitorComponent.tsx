@@ -3,6 +3,7 @@
 
 //─────────────────── Descripción 📝 ───────────────────//
 // -Renderiza el listado de productos con stock disponible
+// -Si no existen productos mostrara un cartel con el texto 'No se encontraron productos'
 
 //──────────────────── Funciones 🔧 ─────────────────────//
 // -ProductsExhibitorComponent Vista del listado
@@ -15,7 +16,7 @@ import SimpleGrid from "../../../shared/components/SimpleGrid/SimpleGridComponen
 import ProductsNotFound from "./ProductNotFound";
 import ProductsList from "./ProductsList";
 
-const ProductsExhibitorComponent = ({ products, title }: ProductsExhibitorComponentInterface): React.ReactNode => {
+const ProductsExhibitorComponent = ({ products, title='Productos' }: ProductsExhibitorComponentInterface): React.ReactNode => {
   if (!products || !Array.isArray(products)) return <ProductsNotFound />;
 
   return (

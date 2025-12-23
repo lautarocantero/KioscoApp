@@ -12,8 +12,10 @@
 
 import { Grid, Typography, type Theme } from "@mui/material";
 import ProductDialogImage from "./ProductDialogImageComponent";
+import type { ProductDialogIlustrationInterface } from "../../../../../typings/sells/sellsTypes";
 
-const ProductDialogIlustrationComponent = ({name = 'Product', image_url = '/images/productExample/cocaCola.png'}: {name?: string, image_url?: string}):React.ReactNode => {
+const ProductDialogIlustrationComponent = (
+    {name = 'Product', image_url = '/images/productExample/cocaCola.png'}: ProductDialogIlustrationInterface ):React.ReactNode => {
 
     return (
         <Grid
@@ -25,7 +27,7 @@ const ProductDialogIlustrationComponent = ({name = 'Product', image_url = '/imag
             justifyContent: 'center'
           })}
         >
-            <ProductDialogImage image_url={image_url}/>
+            <ProductDialogImage image_url={image_url} name={name}/>
             <Typography
                 sx={(theme: Theme) => ({
                     fontSize: theme?.typography?.body1?.fontSize,

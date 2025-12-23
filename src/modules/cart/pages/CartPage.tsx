@@ -11,9 +11,9 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
-import type { RootState as SellerState } from "../../../store/seller/sellerSlice";
+import type { AppDispatch, RootState as SellerState } from "../../../store/seller/sellerSlice";
 import type { ProductTicketType } from "../../../typings/seller/sellerTypes";
 import { PaymentMethods } from "../../../typings/sells/sells";
 import type { SaleTicketInterface } from "../../../typings/sells/sellsTypes";
@@ -23,11 +23,14 @@ import CartButtonsComponent from "../components/CartButtonsComponent";
 import CartPrice from "../components/CartPriceComponent";
 import CartProductsList from "../components/CartProductsListComponent";
 import { createPdfTicket } from "../helpers/createPdfTicket";
+import { cleanCartThunk } from "../../../store/seller/sellerThunks";
 
 
 const CartPage = ():React.ReactNode => {
     const { seller } = useSelector((state: SellerState) => state);
     const { cart } : {cart: ProductTicketType[]} = seller;
+
+    const dispatch = useDispatch<AppDispatch>();
 
     const productsTotalPrice: number = cart?.reduce((count: number, product: ProductTicketType) => count + product.price * product.stock_required, 0);
     const ivaPercentage: number = 21;
@@ -51,6 +54,7 @@ const CartPage = ():React.ReactNode => {
         }
         localStorage.setItem('last_ticket',JSON.stringify(ticket));
         createPdfTicket(ticket);
+        dispatch(cleanCartThunk());   
         navigate('/cart-order-confirmed')
     }
 

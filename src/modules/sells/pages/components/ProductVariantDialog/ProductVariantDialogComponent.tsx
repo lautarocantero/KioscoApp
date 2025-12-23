@@ -1,3 +1,11 @@
+
+//─────────────────── Componente 🧩: ProductVariantDialogComponent ───────────────────//
+
+//─────────────────── Descripción 📝 ───────────────────//
+// Este dialog es exclusivo para cuando escaneas el codigo de barra de un producto.
+
+//-----------------------------------------------------------------------------//
+
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, type Theme } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,8 +19,9 @@ import ProductDialogIlustrationComponent from "../ProductDialog/ProductDialogIlu
 import type { VariantDialogDataInterface } from "../../../../../typings/sells/sellsComponentTypes";
 import * as Yup from 'yup';
 import { useFormik } from "formik";
-import ProductDialogDataComponent from "./ProductVariantDialogData";
+import ProductDialogDataComponent from "./ProductVariantDialogDataComponent";
 import type { ProductTicketType } from "../../../../../typings/seller/sellerTypes";
+import type { ProductVariantDialogComponentInterface } from "../../../../../typings/sells/sellsTypes";
 
 const getInitialValues = (productSelected: ProductVariant | null): VariantDialogDataInterface => {
 
@@ -51,7 +60,7 @@ const getValidationSchema = () =>
     })
   )
 
-const ProductVariantDialog = ({id}: { id: string}) : React.ReactNode => {
+const ProductVariantDialogComponent = ({id, setBarcode}: ProductVariantDialogComponentInterface) : React.ReactNode => {
     const { showModal, setShowModal } = useContext(ProductVariantDialogContext)!;
     const { seller } = useSelector((state: SellerRootState ) => state);
     const { productSelected }: {productSelected: ProductVariant | null} = seller;
@@ -60,11 +69,14 @@ const ProductVariantDialog = ({id}: { id: string}) : React.ReactNode => {
 
     useEffect(() => {
       if(id === '') return; 
+
       const getProductVariant = async (): Promise<void> => {
         const prod = await dispatch(getProductVariantById(id));
+
         if(!prod) throw new Error('No se ha seleccionado un producto');
         await dispatch(selectProductThunk({productData: prod[0] }));
       }
+
       getProductVariant();
     }, [id, dispatch])
 
@@ -95,10 +107,11 @@ const ProductVariantDialog = ({id}: { id: string}) : React.ReactNode => {
       stock_required: requiredStock,
     }
     dispatch(addToCartThunk({productData: productTicket}));
+    setBarcode('');
     setShowModal(false)
     }
 
-    const { handleSubmit, values, setFieldValue, errors } = useFormik({
+    const { handleSubmit, values, setFieldValue } = useFormik({
       initialValues: getInitialValues(productSelected),
       onSubmit,
       validateOnBlur: false,
@@ -176,4 +189,4 @@ const ProductVariantDialog = ({id}: { id: string}) : React.ReactNode => {
     )
 }
 
-export default ProductVariantDialog;
+export default ProductVariantDialogComponent;
