@@ -42,7 +42,7 @@ export const CartButtonComponent = (): React.ReactNode => {
           container
           onClick={ () => navigate('/cart')}
           sx={{
-            margin: '0.8em 0',
+            margin: '0.2em 0',
             display: 'flex',
             justifyContent: 'end',
             width: '100%',
@@ -53,7 +53,7 @@ export const CartButtonComponent = (): React.ReactNode => {
               className="animate__animated animate__backInRight"
               sx={(theme: Theme) => ({
                 backgroundColor: theme?.custom?.backgroundDark,
-                width: 'auto',
+                width: { xs: '4em', md: '5em'},
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.5em',

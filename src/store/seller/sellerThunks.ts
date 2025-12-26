@@ -102,6 +102,8 @@ export const selectProductThunk = ({ productData }: SelectProductThunkInterface)
     }
 }
 
+//──────────────────────────────────────────── 🦾 new 🔧 ───────────────────────────────────────────//
+
 export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
 
     return async (dispatch:Dispatch): Promise<void> => {
@@ -122,6 +124,29 @@ export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
         }
     }
 }
+
+//──────────────────────────────────────────── 🧹 old 🧹 ───────────────────────────────────────────//
+
+// export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
+
+    // return async (dispatch:Dispatch): Promise<void> => {
+        // if (!productData) {
+            // dispatch(setError({ errorMessage: "No se ha proporcionado un producto."}));
+            // return;
+        // }
+        // {/*─────────────────── 🔎 si no es del mismo tipo que el squema 🔎 ───────────────────*/}
+        // if( ! ProductTicketSchema.safeParse(productData).success ) {
+            // dispatch(setError({ errorMessage: "El producto no es valido."}));
+            // return;
+        // }
+
+        // try{
+            // dispatch(addToCartAction({ product: productData}));
+        // } catch(error: unknown) {
+            // handleError(error);
+        // }
+    // }
+// }
 
 export const cleanCartThunk = () => {
 

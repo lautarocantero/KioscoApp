@@ -23,6 +23,7 @@ import type { SharedAppBarContentType } from "../../../../typings/ui/uiModules";
 import LightMode from "../../components/LightMode/LightMode";
 import CartButtonComponent from "./CartButtonComponent";
 import Filters from "./Filters";
+import BarcodeButtonComponent from "./BarcodeButtonComponent";
 
 const SharedAppBarContent = ({showFilters}: SharedAppBarContentType): React.ReactNode => {
   const navigate: NavigateFunction = useNavigate();
@@ -59,7 +60,8 @@ const SharedAppBarContent = ({showFilters}: SharedAppBarContentType): React.Reac
         <LightMode />
       </Grid> 
       <Filters showFilters={showFilters}/> 
-      <CartButtonComponent />                      
+      <BarcodeButtonComponent />      
+      <CartButtonComponent />                    
     </Grid>
   );
 };

@@ -106,7 +106,7 @@ const ProductVariantDialogComponent = ({id, setBarcode}: ProductVariantDialogCom
       expiration_date,
       stock_required: requiredStock,
     }
-    dispatch(addToCartThunk({productData: productTicket}));
+    await dispatch(addToCartThunk({productData: productTicket}));
     setBarcode('');
     setShowModal(false)
     }
