@@ -47,6 +47,14 @@ export interface CartPriceComponentType {
     total: number,
 }
 
+export interface CartPriceLabelInterface {
+  label: string
+  nestedLabel?: string
+  nestedValue?: string
+  labelStyles?: (theme: Theme) => object
+  nestedStyles?: (theme: Theme) => object
+}
+
 export interface CartProductItemComponentInterface {
     product: ProductTicketType,
 }
@@ -61,6 +69,13 @@ export interface CartProductItemDataComponentInterface {
 export interface CartProductItemImageComponentInterface {
     image: string | undefined,
     name: string | undefined,
+}
+
+interface DisplayDataComponentInterface {
+    nameEdited: string,
+    size: string,
+    units: string,
+    price: string,
 }
 
 //────────────────────────────────────────── 🔖Ticket 🔖 ─────────────────────────────────────────//

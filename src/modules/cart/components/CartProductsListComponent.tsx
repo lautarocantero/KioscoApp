@@ -17,10 +17,9 @@ import CartProductItem from "./CartProductItem/CartProductItemComponent";
 
 const CartProductListComponent = ({cart}: CartProductListComponentInterface): React.ReactNode => {
     
-    //─────────────────── 📝 To do: sacar estos comentarios para comprobar flujo ───────────────────//
-    //─────────────────── 📝 To do: Agregar pantalla por si no hay productos en carrito ───────────────────//
-    // if(!cart) return null;
-    // if(cart?.length === 0) return null;
+    if(!cart) return null;
+    
+    if(cart?.length === 0) return null;
 
     return (
         <Grid

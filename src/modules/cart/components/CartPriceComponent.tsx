@@ -6,16 +6,12 @@
 //──────────────────── Funciones 🔧 ─────────────────────//
 // CartPrice Componente principal que se encarga de renderizar boxes que muestran la informacion
 
-//─────────────────── 📝 To do: Cambiar colores por colores del theme ───────────────────//
-//─────────────────── 📝 To do: Cambiar datos fijos por datos reales ───────────────────//
-//─────────────────── 📝 To do: agregar iva en una constante ───────────────────//
-//─────────────────── 📝 To do: componetizar las capsulas ───────────────────//
-
 //-----------------------------------------------------------------------------//
 
-import { Box, Grid, Typography, type Theme } from "@mui/material";
+import { Grid} from "@mui/material";
 import type { CartPriceComponentType } from "../../../typings/sells/sellsTypes";
 import { formatCurrency } from "../helpers/formatCurrency";
+import { CartPriceLabel } from "./CartPriceLabelComponent";
 
 const CartPriceComponent = (
     {productsTotalPrice,ivaPercentage,ivaAmount,total}
@@ -28,95 +24,45 @@ const CartPriceComponent = (
             flexDirection="column" 
             gap={1}
         >
-            <Grid>
-                <Typography display="flex" justifyContent="flex-end" gap={1}>
-                  <Box
-                  sx={(theme: Theme) => ({
-                      padding: "0.3em 0.6em",
-                      borderRadius: "1em",
-                      color: "white",
-                      fontWeight: 500,
-                      fontSize: theme?.typography?.body2.fontSize
-                  })}
-                  >
-                  Productos:
-                  </Box>
-                  <Box
-                  sx={(theme: Theme) => ({
-                      backgroundColor: theme?.custom?.whiteTranslucid,
-                      padding: "0.3em 0.6em",
-                      borderRadius: "1em",
-                      color: theme?.custom?.white,
-                      fontWeight: 600,
-                      fontSize: theme?.typography?.body2.fontSize
-                  })}
-                  >
-                    {formatCurrency(productsTotalPrice)}
-                  </Box>
-                </Typography>
-            </Grid>
+            <CartPriceLabel 
+              label="Productos:" 
+              nestedValue={formatCurrency(productsTotalPrice)} 
+              labelStyles={(theme) => ({
+                    alignItems: "center",
+                    color: theme?.custom?.white,
+                    display: "flex"
+                })}
+              nestedStyles={(theme) => ({
+                    backgroundColor: theme?.custom?.whiteTranslucid,
+                    color: theme?.custom?.white,
+                })}
+            />
+          <CartPriceLabel 
+            label="IVA +" 
+            nestedLabel={`${ivaPercentage}%`} 
+            nestedValue={formatCurrency(ivaAmount)} 
+            labelStyles={(theme) => ({
+              alignItems: "center",
+              backgroundColor: theme?.custom?.errorLight,
+              color: theme?.palette?.error?.main,
+              display: "flex"
+            })}
+            nestedStyles={(theme) => ({
+              backgroundColor: theme?.custom?.errorDark,
+              color: theme?.palette?.error?.main
+            })}
+          />
 
-            <Grid>
-                <Typography display="flex" justifyContent="flex-end" gap={1}>
-                    <Box
-                    sx={(theme: Theme) => ({
-                        alignItems: 'center',
-                        backgroundColor: "#6b100a6c",
-                        padding: "0.3em 0.6em",
-                        borderRadius: "1em",
-                        color: theme?.palette?.error?.main,
-                        display: 'flex',
-                        fontWeight: 600,
-                        fontSize: theme?.typography?.body2.fontSize
-                        })}
-                    >
-                    IVA + {ivaPercentage}%
-                    <Box
-                        sx={(theme: Theme) => ({
-                            backgroundColor: "#310704ff",
-                            padding: "0.3em 0.6em",
-                            borderRadius: "1em",
-                            color: theme?.palette?.error?.main,
-                            fontWeight: 600,
-                            marginLeft: '1em'
-                        })}
-                    >
-                        {formatCurrency(ivaAmount)}
-                    </Box>
-                    </Box>
-                </Typography>
-            </Grid>
-
-            <Grid>
-                <Typography display="flex" justifyContent="flex-end" gap={1}>
-                    <Box
-                        sx={(theme: Theme) => ({
-                            alignItems: 'center',
-                            backgroundColor: theme?.palette?.primary?.main,
-                            padding: "0.3em 0.6em",
-                            borderRadius: "1em",
-                            color: theme?.custom?.white,
-                            display: 'flex',
-                            fontWeight: 600,
-                            fontSize: theme?.typography?.body2.fontSize
-                        })}
-                    >
-                        Total de venta 
-                        <Box
-                            sx={(theme: Theme) => ({
-                                backgroundColor: theme?.palette?.primary?.dark,
-                                padding: "0.3em 0.6em",
-                                borderRadius: "1em",
-                                color: theme?.custom?.white,
-                                fontWeight: 600,
-                                marginLeft: '1em'
-                            })}
-                        >
-                            {formatCurrency(total)}
-                        </Box>
-                    </Box>
-                </Typography>
-            </Grid>
+          <CartPriceLabel 
+            label="Total de venta" 
+            nestedValue={formatCurrency(total)} 
+            labelStyles={(theme) => ({
+              alignItems: "center",
+              backgroundColor: theme?.palette?.primary?.main,
+              color: theme?.custom?.white,
+              display: "flex"
+            })}
+          />
         </Grid>
     )
 

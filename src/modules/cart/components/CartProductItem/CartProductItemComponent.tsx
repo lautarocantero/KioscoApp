@@ -9,8 +9,6 @@
 //      -CartProductItemImage Muestra la imagen del producto
 //      -CartProductItemData  Muestra la informacion del producto (nombre, tamaño, stock, precio)
 
-//─────────────────── 📝 To do: cambiar la imagen fija por el flujo ───────────────────//
-
 //-----------------------------------------------------------------------------//
 
 

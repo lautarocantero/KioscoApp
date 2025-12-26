@@ -41,6 +41,11 @@ export interface DisplayOptionsInterface extends AppLayoutProps {
 
 export type OptionsListInterface = Pick<DisplayOptionsInterface, 'links' | 'disconnect'>
 
+export interface LinksColumnProps {
+  links: OptionLink[];
+  appTheme: boolean;
+}
+
 export interface OptionsHeaderInterface {
   isOptions?: boolean;
   title?: string,

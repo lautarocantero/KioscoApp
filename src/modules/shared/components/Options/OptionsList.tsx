@@ -1,42 +1,25 @@
 
-// # Componente: OptionsList  
+//─────────────────── Componente 🧩: OptionsList ───────────────────//
 
-// ## Descripción 📦  
+//─────────────────── Descripción 📝 ───────────────────//
 // Lista de opciones interactiva que organiza enlaces en dos columnas y añade botones extra según el contexto.  
-// Se utiliza en combinación con `DisplayOptions` para mostrar menús de navegación o acciones dentro de la aplicación.  
+// Se utiliza en combinación con `DisplayOptions` para mostrar menús de navegación o acciones dentro de la aplicación.
 
-// ## Lógica 🔧  
-// - Props (`OptionsListInterface`):  
-//   - `links`: array de opciones con ícono, descripción y URL.  
-//   - `disconnect`: booleano que determina si se muestra el botón de cerrar sesión (`LogoutButton`) o el botón de volver (`BackButton`).  
-// - Contexto:  
-//   - Usa `ThemeContext` para obtener `appTheme` y aplicar estilos dinámicos.  
-//   - Usa `useDispatch<AppDispatch>` para disparar acciones de Redux (ej. logout).  
-// - Organización:  
-//   - Divide la lista de enlaces en dos mitades (`leftLinks` y `rightLinks`).  
-//   - Renderiza cada mitad en una columna (`Grid` con `xs:12, sm:6`).  
-// - Estilos:  
-//   - Bordes, colores y tipografía adaptados al tema (`Theme`).  
-//   - Hover: cambia color de fondo o texto para mejorar la interacción.  
+//──────────────────── Funciones 🔧 ─────────────────────//
+// -OptionsList Renderiza el listado de opciones disponibles
+// -splitLinks se asegura de dividir en 2 partes simetricas la cantidad de opciones que haya disponibles
 
-// ## Renderizado 🎨  
-// - Dos columnas (`Grid`) con enlaces (`Link` de MUI integrado con `react-router-dom`).  
-// - Cada enlace muestra ícono + descripción con estilos responsivos (`body1` en xs, `h6` en sm).  
-// - Botones extra:  
-//   - Si `disconnect` es `true` → `LogoutButton`.  
-//   - Si `disconnect` es `false` → `BackButton`.  
+//─────────────────── Notas técnicas 💽 ───────────────────//
+// - Se define un estilo dinámico con `sx` que depende del objeto `Theme` y del `appTheme`.
+// - Los enlaces (`Link`) se renderizan con `LinkReactRouter` para navegación interna.
+// - La altura de cada opción está fijada en `3.5em` para xs, lo que asegura consistencia visual.
+// - El cálculo de `mid` asegura que la lista se divida en dos mitades lo más equilibradas posible.
 
-// ## Notas técnicas 💽  
-// - Modularidad: separa la lógica de opciones en columnas y botones adicionales.  
-// - Flexibilidad: puede adaptarse a distintos menús cambiando el array `links`.  
-// - Accesibilidad: enlaces con `textDecoration: "none"` y roles claros.  
-// - Pendientes (TODO):  
-//   - Ajustar espaciado en pantallas `xs`.  
-//   - Componetizar bloques repetidos para mayor mantenibilidad.  
+//─────────────────── 📝 To do: en xs no deberia espaciarse tanto entre columnas ───────────────────//
 
+//-----------------------------------------------------------------------------//
 
-import { Grid, Link, type Theme} from '@mui/material';
-import { Link as LinkReactRouter } from 'react-router-dom';
+import { Grid } from '@mui/material';
 import type { OptionLink, OptionsListInterface } from '../../../../typings/ui/uiModules';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../store/auth/authSlice';
@@ -44,129 +27,37 @@ import { useContext } from 'react';
 import { ThemeContext } from '../../../../theme/ThemeContext';
 import LogoutButton from '../Buttons/LogoutButton';
 import BackButton from '../Buttons/BackButton';
+import LinksColumnComponent from './LinksColumnComponent';
+
+const splitLinks = (links: OptionLink[]) => { 
+
+  const mid = Math.ceil(links.length / 2); 
+  const leftLinks = links.slice(0, mid); 
+  const rightLinks = links.slice(mid); 
+
+  return { leftLinks, rightLinks }; 
+};
 
 const OptionsList = ({ links, disconnect }: OptionsListInterface): React.ReactNode => {
   const { appTheme } = useContext(ThemeContext);
   const dispatch = useDispatch<AppDispatch>();
 
-  // To do, en xs no deberia espaciarse tanto entre columnas
-  // To do, componetizar esto
-
-  // dividir en dos mitades
-  const mid = Math.ceil(links.length / 2);
-  const leftLinks = links.slice(0, mid);
-  const rightLinks = links.slice(mid);
+  {/*─────────────────── 🔎 dividir en dos mitades 🔎 ───────────────────*/}
+  const { leftLinks ,rightLinks }: { leftLinks: OptionLink[],rightLinks: OptionLink[] }  = splitLinks(links);
 
   return (
     <Grid container spacing={2}>
-      {/* Columna izquierda */}
-      <Grid size={{ xs: 12, sm: 6 }}>
-        {leftLinks.map((link: OptionLink) => (
-          <Grid
-            component={'div'}
-            key={link.url}
-            sx={(theme: Theme) => ({
-              alignItems: "center",
-              border: `0.1em solid ${
-                appTheme ? theme.custom?.blackTranslucid : theme.custom?.whiteTranslucid
-              }`,
-              borderRadius: "0.5em",
-              color: theme.custom?.fontColor,
-              display: "flex",
-              height: { xs: "3.5em" },
-              justifyContent: "center",
-              textAlign: "center",
-              width: "100%",
-              mb: 1,
-              "&:hover": {
-                backgroundColor: theme?.custom?.fontColor,
-              }
-            })}
-          >
-            <Link
-              component={LinkReactRouter}
-              to={link.url}
-              sx={(theme: Theme) => ({
-                alignItems: "center",
-                color: theme.custom?.fontColor,
-                display: "flex",
-                fontSize: {
-                  xs: theme.typography?.body1.fontSize,
-                  sm: theme.typography?.h6.fontSize,
-                },
-                gap: "0.5em",
-                height: "100%",
-                justifyContent: "center",
-                textAlign: "center",
-                textDecoration: "none",
-                width: "100%",
-                "&:hover": {
-                  color: theme?.custom?.backgroundDark,
-                }
-              })}
-            >
-              {link.icon}
-              {link.description}
-            </Link>
-          </Grid>
-        ))}
-      </Grid>
 
-      {/* Columna derecha */}
-      <Grid size={{ xs: 12, sm: 6 }}>
-        {rightLinks.map((link: OptionLink) => (
-          <Grid
-            key={link.url}
-            sx={(theme: Theme) => ({
-              alignItems: "center",
-              border: `0.1em solid ${
-                appTheme ? theme.custom?.blackTranslucid : theme.custom?.whiteTranslucid
-              }`,
-              borderRadius: "0.5em",
-              color: theme.custom?.fontColor,
-              display: "flex",
-              height: { xs: "3.5em" },
-              justifyContent: "center",
-              textAlign: "center",
-              width: "100%",
-              mb: 1,
-              "&:hover": {
-                backgroundColor: theme.custom?.fontColor,
-              }
-            })}
-          >
-            <Link
-              component={LinkReactRouter}
-              to={link.url}
-              sx={(theme: Theme) => ({
-                alignItems: "center",
-                color: theme.custom?.fontColor,
-                display: "flex",
-                fontSize: {
-                  xs: theme.typography?.body1.fontSize,
-                  sm: theme.typography?.h6.fontSize,
-                },
-                gap: "0.5em",
-                height: "100%",
-                justifyContent: "center",
-                textAlign: "center",
-                textDecoration: "none",
-                width: "100%",
-                "&:hover": {
-                  color: theme?.custom?.backgroundDark,
-                }
-              })}
-            >
-              {link.icon}
-              {link.description}
-            </Link>
-          </Grid>
-        ))}
-      </Grid>
+      {/*─────────────────── 🔎 Columna izquierda 🔎 ───────────────────*/}
+      <LinksColumnComponent links={leftLinks} appTheme={appTheme} />
 
-      {/* Botones extra */}
+      {/*─────────────────── 🔎 Columna derecha 🔎 ───────────────────*/}
+      <LinksColumnComponent links={rightLinks} appTheme={appTheme} />
+
+      {/*─────────────────── 🔎 Botones extra 🔎 ───────────────────*/}
       {disconnect && <LogoutButton dispatch={dispatch} appTheme={appTheme} />}
       {!disconnect && <BackButton appTheme={appTheme} />}
+      
     </Grid>
   );
 };

@@ -14,22 +14,17 @@
 //     - Filters: renderizado condicional según showFilters.
 //     - CartButtonComponent: acceso rápido al carrito.
 
-//─────────────────── 📝 To do: Cambiar color fijo por colores de theme ───────────────────//
-
 //-----------------------------------------------------------------------------//
 
 
 import { Grid, Typography, type Theme } from "@mui/material";
-import { useContext } from "react";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
-import { ThemeContext } from "../../../../theme/ThemeContext";
 import type { SharedAppBarContentType } from "../../../../typings/ui/uiModules";
 import LightMode from "../../components/LightMode/LightMode";
 import CartButtonComponent from "./CartButtonComponent";
 import Filters from "./Filters";
 
 const SharedAppBarContent = ({showFilters}: SharedAppBarContentType): React.ReactNode => {
-  const { appTheme } = useContext(ThemeContext);
   const navigate: NavigateFunction = useNavigate();
 
   return (
@@ -56,7 +51,7 @@ const SharedAppBarContent = ({showFilters}: SharedAppBarContentType): React.Reac
           onClick={() => navigate('/home')}
           sx={(theme: Theme) => ({ 
             fontSize: theme?.typography?.h4,
-            color: `${appTheme ? "#333333" : "#eff0f8"}`,
+            color: theme?.custom?.fontColor,
             lineHeight: 'none'
           })}>
             Kiosco

@@ -65,6 +65,8 @@ declare module '@mui/material/styles' {
       backgroundLigth: string;
       background: string;
       backgroundDark: string;
+      errorLight: string;
+      errorDark: string;
     };
   }
   interface ThemeOptions {
@@ -82,6 +84,8 @@ declare module '@mui/material/styles' {
       backgroundLigth?: string;
       background?: string;
       backgroundDark?: string;
+      errorLight: string;
+      errorDark: string;
     };
     unstable_grid?: {
       cssGrid?: boolean;
@@ -107,19 +111,34 @@ export const darkTheme = createTheme({
   },
   },
   custom: {
+    //────────────── white ──────────────────//
     white: '#eff0f8',
     whiteTranslucid: '#eff0f826',
+
+    //────────────── black ──────────────────//
     black: '#333333',
     blackTranslucid: '#09090966',
+
+    //────────────── main ──────────────────//
     lightMain: '#66A3FB',
+
+    //────────────── secondary ──────────────────//
     darkSecondary: '#00357E',
+
+    //────────────── font ──────────────────//
     fontColor: '#eff0f8',
     fontColorTransparent: '#eff0f842',
     fontColorDark: '#333333',
     fontColorDarkTransparent: '#09090966',
+
+    //────────────── background ──────────────────//
     backgroundLigth: '#525253ff',
     background: '#333333',
     backgroundDark: '#131316d2',
+
+    //────────────── error ──────────────────//
+    errorLight: "#6b100a6c",
+    errorDark: "#310704ff",
   },
   typography: {
     fontFamily: `'Montserrat', sans-serif`,
@@ -174,18 +193,33 @@ export const lightTheme = createTheme({
   },
   },
   custom: {
+    //────────────── white ──────────────────//
     white: '#eff0f8',
     whiteTranslucid: '#eff0f826',
+
+    //────────────── black ──────────────────//
     black: '#333333',
     blackTranslucid: '#09090966',
+
+    //────────────── main ──────────────────//
     lightMain: '#FCA4A7',
+
+    //────────────── font ──────────────────//
     fontColor: '#333333',
     fontColorTransparent: '#3333333d',
+
+    //────────────── secondary ──────────────────//
     darkSecondary: '#C0676B',
+
+    //────────────── background ──────────────────//
     // backgroundLigth: '#FCA4A7',
     backgroundLigth: '#bbbbbbff',
     background: '#FFFFFF',
     backgroundDark: '#e3e3e399',
+
+    //────────────── error ──────────────────//
+    errorLight:"#6b100a6c",
+    errorDark:"#310704ff",
   },
   typography: {
     fontFamily: `'Montserat', sans-serif`,

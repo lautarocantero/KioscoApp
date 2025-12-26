@@ -34,6 +34,7 @@ const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: Dial
                 max={values?.productVariant?.stock}
                 size="small"
                 defaultValue={0}
+                value={values?.requiredStock}
                 onValueChange={(val: number | null) => {
                     if(!val) return;
                         setFieldValue('requiredStock', val)

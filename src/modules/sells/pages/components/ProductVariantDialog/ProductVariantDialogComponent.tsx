@@ -29,7 +29,7 @@ const getInitialValues = (productSelected: ProductVariant | null): VariantDialog
 
   return {
     productVariant: product,
-    requiredStock: 0,
+    requiredStock: product && product.stock > 0 ? 1 : 0,
     totalPrice: 0,
   }
 }

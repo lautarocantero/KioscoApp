@@ -146,7 +146,7 @@ const ProductDialog = (): React.ReactNode => {
 
   if(!productSelected) return null;
 
-  const { name }: {name: string} = productSelected as ProductVariant;
+  const { name, image_url }: {name: string, image_url: string} = productSelected as ProductVariant;
 
   return (
     <Dialog 
@@ -181,7 +181,7 @@ const ProductDialog = (): React.ReactNode => {
             padding: { xs: '0.1em', sm: '2em', }
           })}
         >
-          <ProductDialogIlustration name={name}/>
+          <ProductDialogIlustration name={name} image_url={image_url}/>
           <ProductDialogData 
             products={productVariants} 
             values={values}
