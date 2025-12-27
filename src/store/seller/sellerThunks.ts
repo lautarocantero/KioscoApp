@@ -41,9 +41,9 @@
 
 import type { Dispatch } from "@reduxjs/toolkit";
 import { z } from "zod";
-import type { AddToCartThunkInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
+import type { addOneUnitThunkInterface, AddToCartThunkInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
 import { handleError } from "../shared/handlerStoreError";
-import { addToCartAction, cleanCart, setError, setProductSelected } from "./sellerSlice";
+import { addToCartAction, addUnitAction, cleanCart, setError, setProductSelected } from "./sellerSlice";
 
 export const ProductVariantEntitySchema = z.object({
   _id: z.string().nullable(),
@@ -147,6 +147,22 @@ export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
         // }
     // }
 // }
+
+export const addOneUnitThunk = ({_id}: addOneUnitThunkInterface ) => {
+
+    return async (dispatch:Dispatch): Promise<void> => {
+        if(!_id) {
+            dispatch(setError({ errorMessage: "No se ha proporcionado un producto."}));
+            return;
+        }
+
+        try{
+            dispatch(addUnitAction({ _id: _id}));
+        } catch (error: unknown) {
+            handleError(error);
+        }
+    }
+}
 
 export const cleanCartThunk = () => {
 

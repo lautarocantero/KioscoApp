@@ -11,11 +11,13 @@
 //-----------------------------------------------------------------------------//
 
 import ReceiptIcon from '@mui/icons-material/Receipt';
-import { Grid, Typography, type Theme } from "@mui/material";
+import { Grid, Typography, type Theme, Link } from "@mui/material";
 import type { SaleTicketInterface } from '../../../typings/sells/sellsTypes';
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import AppLayout from "../../shared/layout/AppLayout";
 import { createPdfTicket } from "../helpers/createPdfTicket";
+import { Link as LinkReactRouter } from "react-router-dom";
+import ReplyAllIcon from '@mui/icons-material/ReplyAll';
 
 const OrderConfirmedPage = ():React.ReactNode => {
 
@@ -37,6 +39,34 @@ const OrderConfirmedPage = ():React.ReactNode => {
                         width: '100%'
                     }}
                 >
+                    {/*─────────────────── 🔎 Link volver a compras 🔎 ───────────────────*/}
+                    <Grid>
+                      <Link
+                        component={LinkReactRouter}
+                        to={"/new-sell"}
+                        sx={(theme: Theme) => ({
+                          textDecoration: "none",
+                          display: "flex",           
+                          alignItems: "center",      
+                          gap: "0.5em",                 
+                          ml: { xs: "1em", sm: "0.5em" },
+                          color: theme?.custom?.fontColorTransparent,
+                          fontSize: {
+                            xs: theme?.typography?.body2.fontSize,
+                            sm: theme?.typography?.h6.fontSize,
+                          },
+                          borderRadius: "1em",
+                          width: "100%",
+                          "&:hover": {
+                            cursor: "pointer",
+                          },
+                        })}
+                      >
+                        <ReplyAllIcon sx={{ fontSize: "1em" }} />
+                        Nueva compra
+                      </Link>
+                    </Grid>
+
                     {/*─────────────────── 🔎 Ticket y mensaje 🔎 ───────────────────*/}
                     <Grid
                         sx={{
@@ -69,32 +99,39 @@ const OrderConfirmedPage = ():React.ReactNode => {
                             })}
                         />
                     </Grid>
-                    {/*─────────────────── 🔎 texto de descargar manualmente 🔎 ───────────────────*/}
-                    <Grid>
-                        <Typography
-                            sx={(theme: Theme) => ({
-                                textAlign: 'end',
-                                color: theme?.custom?.fontColor,
-                                fontSize: theme?.typography?.h6?.fontSize,
-                            })}
-                        >
-                            si no se ha descargado, presiona 
+                        {/*─────────────────── 🔎 texto de descargar manualmente 🔎 ───────────────────*/}
+                        <Grid>
                             <Typography
-                                component={'span'}
                                 sx={(theme: Theme) => ({
-                                  color: theme.palette.primary.main,
-                                  fontSize: theme?.typography?.h6?.fontSize,
-                                  ml: '0.3em',
-                                  '&:hover': {
-                                    cursor: 'pointer',
-                                  }
+                                    textAlign: 'end',
+                                    color: theme?.custom?.fontColor,
+                                    mr: { xs: '1em', sm: '0.5em'},
+                                    fontSize: {
+                                        xs: theme?.typography?.body2.fontSize,
+                                        sm: theme?.typography?.h6.fontSize
+                                    },
                                 })}
-                                onClick={() => {printTicket()}}
                             >
-                                aquí
+                                si no se ha descargado, presiona 
+                                <Typography
+                                    component={'span'}
+                                    sx={(theme: Theme) => ({
+                                        color: theme.palette.primary.main,
+                                        fontSize: {
+                                            xs: theme?.typography?.body2.fontSize,
+                                            sm: theme?.typography?.h6.fontSize
+                                        },
+                                        ml: '0.3em',
+                                        '&:hover': {
+                                        cursor: 'pointer',
+                                        }
+                                    })}
+                                    onClick={() => {printTicket()}}
+                                >
+                                    aquí
+                                </Typography>
                             </Typography>
-                        </Typography>
-                    </Grid>
+                        </Grid>
                 </Grid>
             </SimpleGrid>
         </AppLayout>

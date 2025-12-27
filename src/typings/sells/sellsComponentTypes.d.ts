@@ -27,6 +27,7 @@ export interface ProductItemImageInterface {
 export interface EspecificationsLeftInterface {
     name: string,
     variants: ProductVariant[];
+    image: string | undefined;
 }
 
 export type ItemDataType = Pick<EspecificationsLeftInterface, 'name' | 'variants'>;

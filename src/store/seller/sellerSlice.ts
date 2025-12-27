@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------//
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { SellerAddToCartSlicePayload, SellerError, SellerSetProductSlicePayload, SellerStateInterface } from '../../typings/seller/sellerTypes';
+import type { SellerAddToCartSlicePayload, SellerAddUnitActionPayload, SellerError, SellerSetProductSlicePayload, SellerStateInterface } from '../../typings/seller/sellerTypes';
 import type { store } from '../store';
 
 const initialState: SellerStateInterface = {
@@ -54,6 +54,15 @@ export const sellerSlice = createSlice({
             
             state.cart = [...state.cart, product];
         },
+        addUnitAction: (state: SellerStateInterface, action: PayloadAction<SellerAddUnitActionPayload>) => {
+            const { payload } = action;
+            const { _id } = payload;
+
+            const productIndex = state.cart.findIndex(item => item._id === String(_id)); 
+            if (productIndex !== -1) { 
+                state.cart[productIndex].stock_required += 1; 
+            }
+        },
         cleanCart: (state: SellerStateInterface) => {
             state.cart = []
         },
@@ -66,7 +75,7 @@ export const sellerSlice = createSlice({
     }
 });
 
-export const { setProductSelected, addToCartAction, cleanCart, setError } = sellerSlice.actions;
+export const { setProductSelected, addToCartAction, addUnitAction, cleanCart, setError } = sellerSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;

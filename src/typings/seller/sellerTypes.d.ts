@@ -14,7 +14,7 @@ export type ProductTicketType = Pick<ProductVariant,
 export interface SellerStateInterface {
     _id: string | null,
     name: string,
-    cart: ProductTicket[],
+    cart: ProductTicketType[],
     productSelected: ProductVariant | null,
     description: string,
     created_at: string,
@@ -27,8 +27,10 @@ export interface getProductSelectedPayload {
 };
 
 export interface SellerAddToCartSlicePayload {
-    product: ProductTicket,
+    product: ProductTicketType,
 };
+
+export type SellerAddUnitActionPayload = Pick<SellerStateInterface, '_id'>
 
 export interface SellerSetProductSlicePayload {
     product: ProductVariant,
@@ -41,7 +43,9 @@ export interface SelectProductThunkInterface {
 }
 
 export interface AddToCartThunkInterface {
-    productData: ProductTicket,
+    productData: ProductTicketType,
 }
+
+export type addOneUnitThunkInterface = Pick<SellerStateInterface, '_id'>
 
 export type SellerError = Pick<SellerStateInterface, 'errorMessage'>;

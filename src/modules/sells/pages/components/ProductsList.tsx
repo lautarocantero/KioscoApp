@@ -19,7 +19,7 @@
 import { CircularProgress } from "@mui/material";
 import type { Product } from "../../../../typings/product/productTypes";
 import type { ProductListType } from "../../../../typings/sells/sellsComponentTypes";
-import ProductItem from "./ProductItem/ProductItemComponent";
+import ProductItemComponent from "./ProductItem/ProductItemComponent";
 
 const ProductsList = ({products}: ProductListType):React.ReactNode => {
 
@@ -28,7 +28,7 @@ const ProductsList = ({products}: ProductListType):React.ReactNode => {
     return (
         <>
             {products.map((prod: Product) => 
-                (<ProductItem key={prod._id} product={prod as Product} />)
+                (<ProductItemComponent key={prod._id} product={prod as Product} />)
             )}
         </>
     )

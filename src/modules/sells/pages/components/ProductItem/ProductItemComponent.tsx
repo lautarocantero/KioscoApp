@@ -18,7 +18,7 @@ import type { ProductItemInterface } from "../../../../../typings/sells/sellsCom
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
 import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
 
-const ProductItem = ({ product }: ProductItemInterface): React.ReactNode => {
+const ProductItemComponent = ({ product }: ProductItemInterface): React.ReactNode => {
     const { name, variants } : { name: string, variants: ProductVariant[]} = product;
 
     return (
@@ -33,17 +33,18 @@ const ProductItem = ({ product }: ProductItemInterface): React.ReactNode => {
                 flexDirection: {md: 'column'},
                 height: {xs: 'auto', sm: '200px', md: '400px'},
                 justifyContent: "space-between",
-                margin: '2em auto 0em',
+                "&:first-of-type": { margin: { xs: "2em auto 0em", md: "1.5em auto 0em"}},
+                margin: { xs: "0em auto", md: "1.5em auto 0em"},
                 padding: "0.3em",
-                width: {xs: "100%", md:'auto'},
+                width: {xs: "95%", md:'15em'},
             })}
         >
         {/* --------- 🔎 Izquierda: imagen + nombre 🔎 --------- */}
-            <ProductItemEspecificationsLeft name={name} variants={variants} />
+            <ProductItemEspecificationsLeft name={name} variants={variants} image={product?.image_url}/>
         {/* --------- 🔎 Derecha: especificaciones + botón 🔎 --------- */}
             <ProductItemEspecificationsRight product={product} />
         </Grid>
     );
 };
 
-export default ProductItem;
+export default ProductItemComponent;

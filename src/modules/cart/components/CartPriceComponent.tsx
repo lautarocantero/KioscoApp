@@ -58,7 +58,7 @@ const CartPriceComponent = (
             nestedValue={formatCurrency(total)} 
             labelStyles={(theme) => ({
               alignItems: "center",
-              backgroundColor: theme?.palette?.primary?.main,
+              backgroundColor: theme?.custom?.darkSecondary,
               color: theme?.custom?.white,
               display: "flex"
             })}

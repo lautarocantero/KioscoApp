@@ -21,7 +21,7 @@ import type { EspecificationsLeftInterface } from "../../../../../typings/sells/
 import ProductItemData from "./ProductItemData";
 import ProductItemImage from "./ProductItemImage";
 
-const ProductItemEspecificationsLeft = ({name = 'product', variants = []} : EspecificationsLeftInterface ): React.ReactNode => {
+const ProductItemEspecificationsLeft = ({name = 'product', variants = [], image = '/images/productExample/cocaCola.png'} : EspecificationsLeftInterface ): React.ReactNode => {
 
     return (
         <Grid 
@@ -34,7 +34,7 @@ const ProductItemEspecificationsLeft = ({name = 'product', variants = []} : Espe
                 flex: 1,
             }}
         >
-            <ProductItemImage source={undefined} name={name} />
+            <ProductItemImage source={image} name={name} />
             <ProductItemData name={name} variants={variants} />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         </Grid>
     )

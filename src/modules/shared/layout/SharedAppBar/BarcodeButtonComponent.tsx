@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../../../../store/auth/authSlice';
 import { getProductVariantById } from '../../../../store/productVariant/productVariantThunks';
-import { addToCartThunk, selectProductThunk } from '../../../../store/seller/sellerThunks';
+import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../store/seller/sellerThunks';
 import type { ProductVariant } from '../../../../typings/productVariant/productVariant';
 import type { ProductTicketType } from '../../../../typings/seller/sellerTypes';
 import type { RootState as SellerRootState } from "../../../../store/seller/sellerSlice";
@@ -41,7 +41,7 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
     inputRef.current?.focus();
   }, [showInput]);
 
-  if (location.pathname !== "/new-sell" && location.pathname !== "/qr-scan") return null;
+  if (location.pathname !== "/new-sell" && location.pathname !== "/cart") return null;
 
   const getProductVariant = async ({id}:{id: string}): Promise<ProductVariant> => {
     const prod: ProductVariant[] | undefined = await dispatch(getProductVariantById(id));
@@ -54,10 +54,16 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
 
   const handleAddToCart = async () => {
     if(barcode === '') return;
-    const product = await getProductVariant({id: barcode});
 
-    //─────────────────── 📝 To do: fix ───────────────────//
-    // fijarme si ya esta en el carrito, de estar sumar 1, de no, agregar
+    const product: ProductVariant = await getProductVariant({id: barcode});
+
+    const productObject: ProductTicketType | undefined = cart?.find((prod) => prod._id === barcode);
+
+    if(productObject) {
+      await dispatch(addOneUnitThunk({_id: productObject?._id}));
+      setBarcode('');
+      return;
+    }
 
     const 
     { 
@@ -82,8 +88,6 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
     }
     await dispatch(addToCartThunk({productData: productTicket}));
     setBarcode('');
-
-    console.log('cart', cart);
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

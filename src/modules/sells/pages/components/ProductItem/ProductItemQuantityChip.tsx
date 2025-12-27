@@ -13,6 +13,7 @@ import type { QuantityChipInterface } from "../../../../../typings/sells/sellsCo
 
 const QuantityChip = ({ color = "red", label }: QuantityChipInterface): React.ReactNode => {
     const fontSize: string = label?.length > 3 ? "0.6em" : "0.7em";
+    const labelText: string = label.includes("unidades") ? label.replace("unidades", "u.") : label;
 
     return (
         <span
@@ -31,7 +32,7 @@ const QuantityChip = ({ color = "red", label }: QuantityChipInterface): React.Re
               whiteSpace: "nowrap",
             }}
         >
-            <span style={{ fontSize }}>{label}</span>
+            <span style={{ fontSize }}>{labelText}</span>
         </span>
     );
 };

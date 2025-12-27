@@ -17,8 +17,7 @@
 import { Box } from "@mui/material";
 import type { ProductItemImageInterface } from "../../../../../typings/sells/sellsComponentTypes";
 
-const ProductItemImage = (
-    {source = "/images/productExample/cocaCola.png", name = "Image"}: ProductItemImageInterface):React.ReactNode => {
+const ProductItemImage = ({source, name}: ProductItemImageInterface):React.ReactNode => {
 
     return (
         <Box
@@ -26,9 +25,9 @@ const ProductItemImage = (
             src={source}
             alt={name}
             sx={{
-                width: { xs: 90, sm: 200, md: '100%' },
+                width: { xs: 90, sm: 200, md: '300' },
                 height: { xs: 80, sm: 180 },
-                objectFit: "cover",
+                objectFit: "contain",
                 borderRadius: "0.3em",
             }}
         />    
