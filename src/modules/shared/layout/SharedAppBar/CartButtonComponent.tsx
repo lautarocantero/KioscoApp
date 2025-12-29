@@ -35,7 +35,7 @@ export const CartButtonComponent = (): React.ReactNode => {
 
     if(!cart) return null;
     if(cart?.length === 0) return null;
-    if (location.pathname !== "/new-sell" && location.pathname !== "/qr-scan") return null;
+    if (location.pathname !== "/new-sell") return null;
 
     return (
         <Grid
