@@ -15,8 +15,6 @@
 // - La altura de cada opción está fijada en `3.5em` para xs, lo que asegura consistencia visual.
 // - El cálculo de `mid` asegura que la lista se divida en dos mitades lo más equilibradas posible.
 
-//─────────────────── 📝 To do: en xs no deberia espaciarse tanto entre columnas ───────────────────//
-
 //-----------------------------------------------------------------------------//
 
 import { Grid } from '@mui/material';
