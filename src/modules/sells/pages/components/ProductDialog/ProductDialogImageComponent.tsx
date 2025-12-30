@@ -17,10 +17,11 @@ const ProductDialogImageComponent = ({image_url, name }: ProductDialogImageCompo
             src={image_url}
             alt={`${name} Image`}
             sx={{
+                minWidth: { xs: '10em', sm: '20em' },
                 width: { xs: '100%' },
-                minHeight: { xs: '15em'},
+                minHeight: { xs: '15em' },
                 height: { xs: '100%' },
-                maxHeight: {xs: '20em'},
+                maxHeight: { xs: '20em' },
                 objectFit: "contain",
                 borderRadius: "0.3em",
             }}
