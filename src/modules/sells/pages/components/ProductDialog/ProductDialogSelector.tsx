@@ -4,34 +4,34 @@
 // Selector de variantes de producto dentro del diálogo. 
 // Permite al usuario elegir un producto específico y actualiza los valores del formulario con sus datos. 
 
-
 //──────────────────── Funciones 🔧 ─────────────────────//
 // ## Funciones 🔧
 // - `ProductDialogSelector`: componente principal que recibe props tipadas con `DialogSelectorType`.  
 //   - `products`: listado de variantes de producto disponibles.  
 // - Lógica interna:  
+//   - `isLoading`: si esta cargando los productos mostrara un loader.  
 //   - `isEmpty`: si no hay productos, muestra mensaje "No se han encontrado Productos".  
-//   - `isLoading`: si el primer producto no tiene `_id` válido, muestra mensaje "Cargando Productos...".  
 
 //-----------------------------------------------------------------------------//
 
-import { Box, FormControl, InputLabel, MenuItem, Select, Typography, type SelectChangeEvent, type Theme } from "@mui/material";
+import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography, type SelectChangeEvent, type Theme } from "@mui/material";
 import type { ProductVariant } from "../../../../../typings/productVariant/productVariant";
 import type { DialogSelectorType } from "../../../../../typings/sells/sellsComponentTypes";
+import { useSelector } from "react-redux";
+import type { RootState as ProductVariantState  } from "../../../../../store/productVariant/productVariantSlice";
 
 const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelectorType): React.ReactNode => {
     const isEmpty: boolean = products?.length <= 0;
-    const isLoading: boolean = typeof products[0]?._id !== 'string';
+    const { productVariant } = useSelector((state: ProductVariantState) => state);
+    const { isLoading } : { isLoading: boolean } = productVariant;
+
+    if(isLoading) return (
+        <CircularProgress />
+    );
 
     if(isEmpty) return (
         <Box>
             <Typography>No se han encontrado Productos</Typography>
-        </Box>
-    );
-
-    if(isLoading) return (
-        <Box>
-            <Typography>Cargando Productos...</Typography>
         </Box>
     );
 

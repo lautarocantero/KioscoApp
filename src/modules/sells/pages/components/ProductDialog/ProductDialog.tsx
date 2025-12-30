@@ -40,12 +40,13 @@ import { AlertColor } from "../../../../../typings/ui/ui";
 
   const getInitialValues = (productVariants: ProductVariant[]): DialogDataInterface => {
     const product: ProductVariant | null = productVariants?.length > 0 ? productVariants[0] : null;
-    const productId: string = product?._id ?? ''
+    const productId: string = product?._id ?? '';
+
 
     return {
         productVariantId: productId,
         productVariant: product,
-        requiredStock: 0, 
+        requiredStock: product && product?.stock > 0 ? 1 : 0, 
         totalPrice: 0,
     };
   };
@@ -72,7 +73,7 @@ import { AlertColor } from "../../../../../typings/ui/ui";
           price: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
           expiration_date: Yup.string().required("Campo requerido"),
         }).required("Campo requerido"), 
-        requiredStock: Yup.number().required("Campo requerido"),
+        requiredStock: Yup.number().moreThan(0).required("Campo requerido"),
         totalPrice: Yup.number().required("Campo requerido"),
       })
   );

@@ -37,7 +37,7 @@
 
 import type { Dispatch } from "@reduxjs/toolkit"
 import type { ProductVariant } from "../../typings/productVariant/productVariant"
-import { checkingProductVariants, setError, setProductsVariants } from "./productVariantSlice"
+import { checkingProductVariants, setError, setProductsVariants, startLoadingProductVariants } from "./productVariantSlice"
 import { handleError } from "../shared/handlerStoreError"
 import { getProductVariantByIdRequest, getProductVariantsByIdRequest } from "../../modules/productVariants/api/productVariantsApi"
 
@@ -45,7 +45,7 @@ import { getProductVariantByIdRequest, getProductVariantsByIdRequest } from "../
 export const getProductVariantsById = (product_id: string) => {
 
     return async (dispatch: Dispatch): Promise<ProductVariant[] | undefined> => {
-        dispatch(checkingProductVariants());
+        dispatch(startLoadingProductVariants());
         try{
             const productVariants: ProductVariant[] = await getProductVariantsByIdRequest({product_id});
 

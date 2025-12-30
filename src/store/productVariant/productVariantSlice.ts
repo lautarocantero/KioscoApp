@@ -11,12 +11,20 @@
 // - `errorMessage`: mensaje de error (null).  
 
 // ## Reducers 🎭  
+
 // - **setProductsVariants**:  
 //   - Actualiza `productVariants` con el payload recibido.  
 //   - Cambia `isLoading` a `false`.  
-//   - Limpia `errorMessage`.  
+//   - Limpia `errorMessage`.
+
+// - **startLoadingProductVariants**:
+//   - Actualiza `productVariants` a un array vacio.
+//   - Cambia `isLoading` a `true`.  
+//   - Limpia `errorMessage`.
+
 // - **setError**:  
 //   - Recibe un objeto con `errorMessage` y lo guarda en el estado.  
+
 // - **checkingProductVariants**:  
 //   - Limpia `productVariants` (array vacío).  
 //   - Cambia `isLoading` a `false`.  
@@ -24,6 +32,7 @@
 
 // ## Acciones exportadas 🚀  
 // - `setProductsVariants`  
+// - `startLoadingProductVariants`
 // - `setError`  
 // - `checkingProductVariants`  
 
@@ -58,21 +67,25 @@ export const productVariantSlice = createSlice({
             state.isLoading = false;
             state.errorMessage = null;
         },
-        setError: (state: ProductVariantState, action: PayloadAction<ProductVariantStateError> ) => {
-            const { payload } = action;
-            const { errorMessage } = payload;
-
-            state.errorMessage = errorMessage;
+        startLoadingProductVariants: (state: ProductVariantState) => {
+            state.productVariants = [];
+            state.isLoading = true;
+            state.errorMessage = null;
         },
         checkingProductVariants: (state: ProductVariantState) => {
             state.productVariants = [];
             state.isLoading = false;
             state.errorMessage = null;
-        }
+        },
+        setError: (state: ProductVariantState, action: PayloadAction<ProductVariantStateError> ) => {
+            const { payload } = action;
+            const { errorMessage } = payload;
+            state.errorMessage = errorMessage;
+        },
     }
 });
 
-export const { setProductsVariants, setError, checkingProductVariants } = productVariantSlice.actions;
+export const { setProductsVariants, startLoadingProductVariants, checkingProductVariants, setError } = productVariantSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;
