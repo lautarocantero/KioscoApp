@@ -1,3 +1,4 @@
+import type { ProductTicketType } from "../seller/sellerTypes";
 import type { DialogContextType } from "../ui/uiModules";
 import type { PaymentMethods } from "./sells";
 
@@ -69,6 +70,16 @@ export interface CartProductItemDataComponentInterface {
 export interface CartProductItemImageComponentInterface {
     image: string | undefined,
     name: string | undefined,
+}
+
+export interface CartProductButtonsInterface {
+    _id: string,
+}
+
+export interface CartProductButtonInterface {
+    icon : React.ReactNode, 
+    side: CartSide, 
+    action: () => void
 }
 
 interface DisplayDataComponentInterface {

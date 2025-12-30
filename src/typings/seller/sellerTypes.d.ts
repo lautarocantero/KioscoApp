@@ -1,4 +1,5 @@
 import type { ProductVariant } from "../productVariant/productVariant";
+import type { CartAmount } from "./seller";
 
 //────────────────────────────────────────────♦️ PRODUCTS ♦️───────────────────────────────────────────//
 
@@ -32,6 +33,10 @@ export interface SellerAddToCartSlicePayload {
 
 export type SellerAddUnitActionPayload = Pick<SellerStateInterface, '_id'>
 
+export type SellerRemoveFromCartActionPayload = Pick<SellerStateInterface, '_id'> & {
+    amount: CartAmount,
+}
+
 export interface SellerSetProductSlicePayload {
     product: ProductVariant,
 };
@@ -47,5 +52,9 @@ export interface AddToCartThunkInterface {
 }
 
 export type addOneUnitThunkInterface = Pick<SellerStateInterface, '_id'>
+
+export type removeFromCartInterface = Pick<SellerStateInterface, '_id'> & {
+    amount: CartAmount,
+}
 
 export type SellerError = Pick<SellerStateInterface, 'errorMessage'>;

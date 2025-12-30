@@ -41,9 +41,9 @@
 
 import type { Dispatch } from "@reduxjs/toolkit";
 import { z } from "zod";
-import type { addOneUnitThunkInterface, AddToCartThunkInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
+import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
 import { handleError } from "../shared/handlerStoreError";
-import { addToCartAction, addUnitAction, cleanCart, setError, setProductSelected } from "./sellerSlice";
+import { addToCartAction, addUnitAction, cleanCart, removeFromCart, setError, setProductSelected } from "./sellerSlice";
 
 export const ProductVariantEntitySchema = z.object({
   _id: z.string().nullable(),
@@ -126,29 +126,6 @@ export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
     }
 }
 
-//──────────────────────────────────────────── 🧹 old 🧹 ───────────────────────────────────────────//
-
-// export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
-
-    // return async (dispatch:Dispatch): Promise<void> => {
-        // if (!productData) {
-            // dispatch(setError({ errorMessage: "No se ha proporcionado un producto."}));
-            // return;
-        // }
-        // {/*─────────────────── 🔎 si no es del mismo tipo que el squema 🔎 ───────────────────*/}
-        // if( ! ProductTicketSchema.safeParse(productData).success ) {
-            // dispatch(setError({ errorMessage: "El producto no es valido."}));
-            // return;
-        // }
-
-        // try{
-            // dispatch(addToCartAction({ product: productData}));
-        // } catch(error: unknown) {
-            // handleError(error);
-        // }
-    // }
-// }
-
 export const addOneUnitThunk = ({_id}: addOneUnitThunkInterface ) => {
 
     return async (dispatch:Dispatch): Promise<void> => {
@@ -160,6 +137,16 @@ export const addOneUnitThunk = ({_id}: addOneUnitThunkInterface ) => {
         try{
             dispatch(addUnitAction({ _id: _id}));
         } catch (error: unknown) {
+            handleError(error);
+        }
+    }
+}
+
+export const removeFromCartThunk = ({_id, amount}: removeFromCartInterface) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        try{
+            dispatch(removeFromCart({_id, amount}));
+        } catch(error: unknown) {
             handleError(error);
         }
     }

@@ -7,8 +7,6 @@
 // Incluye ícono de pistola lectora y animaciones de entrada.
 //
 //──────────────────── Funciones 🔧 ─────────────────────//
-// • `useState`: controla visibilidad del input (`showInput`) y valor del código (`barcode`).
-// • `useRef`: referencia al TextField para auto‑focus.
 // • `useEffect`: enfoca el input al mostrarse.
 // • `getProductVariant({id})`: obtiene variante de producto desde el store.
 // • `handleAddToCart()`: agrega producto al carrito, incrementa unidades si ya existe.
@@ -86,6 +84,8 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
 
     const productObject: ProductTicketType | undefined = cart?.find((prod) => prod._id === barcode);
 
+    {/*─────────────────── 🔎 Si el producto ya se encuentra en el carrito 🔎 ───────────────────*/}
+
     if(productObject) {
       await dispatch(addOneUnitThunk({_id: productObject?._id}));
       setBarcode('');
@@ -93,6 +93,8 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
       showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
       return;
     }
+
+    {/*─────────────────── 🔎 Si el producto no se escaneo o agrego antes 🔎 ───────────────────*/}
 
     const 
     { 

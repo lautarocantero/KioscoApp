@@ -24,8 +24,9 @@
 //-----------------------------------------------------------------------------//
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { SellerAddToCartSlicePayload, SellerAddUnitActionPayload, SellerError, SellerSetProductSlicePayload, SellerStateInterface } from '../../typings/seller/sellerTypes';
+import type { SellerAddToCartSlicePayload, SellerAddUnitActionPayload, SellerError, SellerRemoveFromCartActionPayload, SellerSetProductSlicePayload, SellerStateInterface } from '../../typings/seller/sellerTypes';
 import type { store } from '../store';
+import { CartAmount } from '../../typings/seller/seller';
 
 const initialState: SellerStateInterface = {
     _id: null,
@@ -63,6 +64,18 @@ export const sellerSlice = createSlice({
                 state.cart[productIndex].stock_required += 1; 
             }
         },
+        removeFromCart: (state: SellerStateInterface, action: PayloadAction<SellerRemoveFromCartActionPayload>) => {
+            const { payload } = action;
+            const { _id, amount} = payload;
+
+            const productIndex = state.cart.findIndex(item => item._id === String(_id)); 
+            if (productIndex === -1) return;
+
+            if(amount === CartAmount.One) state.cart[productIndex].stock_required -= 1; 
+            if(amount === CartAmount.All) state.cart[productIndex].stock_required = 0; 
+
+            if (state.cart[productIndex].stock_required <= 0) { state.cart = state.cart.filter((item) => item._id !== String(_id)); }
+        },
         cleanCart: (state: SellerStateInterface) => {
             state.cart = []
         },
@@ -75,7 +88,7 @@ export const sellerSlice = createSlice({
     }
 });
 
-export const { setProductSelected, addToCartAction, addUnitAction, cleanCart, setError } = sellerSlice.actions;
+export const { setProductSelected, addToCartAction, addUnitAction, removeFromCart, cleanCart, setError } = sellerSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;
