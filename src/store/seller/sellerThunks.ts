@@ -119,6 +119,7 @@ export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
 
         try{
             dispatch(addToCartAction({ product: productData}));
+            
         } catch(error: unknown) {
             handleError(error);
         }

@@ -13,6 +13,7 @@
 //      -ProductsExhibitor Muestra todos los productos existentes
 //      -ProductDialog Modal que se abre al seleccionar un producto, da la posibilidad de agregar al carrito
 //      -ModeButtonComponent Muestra las 2 opciones para escanear, con codigo de barras y de forma manual
+//      -SimpleSnackbar Muestra un snackbar para dar feedback al usuario.
 
 //-----------------------------------------------------------------------------//
 
@@ -24,6 +25,7 @@ import AppLayout from "../../shared/layout/AppLayout";
 import ProductDialog from "./components/ProductDialog/ProductDialog";
 import ProductsExhibitor from "./components/ProductsExhibitorComponent";
 import type { Product } from '../../../typings/product/productTypes';
+import SimpleSnackbar from "../../shared/components/SnackBar/SnackBarComponent";
 
 const NewSellPage = ():React.ReactNode => {
 
@@ -44,6 +46,7 @@ const NewSellPage = ():React.ReactNode => {
         <AppLayout>
             <ProductsExhibitor products={products} title={'Más vendido'} />
             <ProductDialog />
+            <SimpleSnackbar  />
         </AppLayout>
 
     )

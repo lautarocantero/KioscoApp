@@ -1,33 +1,52 @@
+
 //─────────────────── Componente 🧩: BarcodeButtonComponent ───────────────────//
-
+//
 //─────────────────── Descripción 📝 ───────────────────//
-// Botón flotante que muestra el lector de código de barras.
-// Incluye un ícono de pistola lectora y un TextField opcional.  
-
+// Botón flotante que activa un campo de entrada para escanear códigos de barras.
+// Permite agregar productos al carrito mediante el ID escaneado.
+// Incluye ícono de pistola lectora y animaciones de entrada.
+//
 //──────────────────── Funciones 🔧 ─────────────────────//
-
+// • `useState`: controla visibilidad del input (`showInput`) y valor del código (`barcode`).
+// • `useRef`: referencia al TextField para auto‑focus.
+// • `useEffect`: enfoca el input al mostrarse.
+// • `getProductVariant({id})`: obtiene variante de producto desde el store.
+// • `handleAddToCart()`: agrega producto al carrito, incrementa unidades si ya existe.
+// • `handleKeyDown(e)`: ejecuta `handleAddToCart` al presionar Enter.
+// • `showSnackBar()`: muestra notificación de éxito al agregar producto.
+//
 //─────────────────── Notas técnicas 💽 ───────────────────//
-
+// - Solo se renderiza en rutas `/new-sell` y `/cart`.
+// - Usa Redux Thunks: `getProductVariantById`, `selectProductThunk`, `addOneUnitThunk`, `addToCartThunk`.
+// - El nombre del producto se recorta a 25 caracteres para mensajes de SnackBar.
+// - Animación con `animate.css` (`animate__backInRight`).
+// - Contexto: `SnackBarContext` para notificaciones globales.
+//
 //-----------------------------------------------------------------------------//
 
+
 import BarcodeReaderIcon from '@mui/icons-material/BarcodeReader';
-import { Grid, Tooltip, TextField, type Theme } from "@mui/material";
+import { Grid, TextField, Tooltip, type Theme } from "@mui/material";
 import "animate.css";
-import { useLocation } from 'react-router-dom';
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import type { AppDispatch } from '../../../../store/auth/authSlice';
 import { getProductVariantById } from '../../../../store/productVariant/productVariantThunks';
+import type { RootState as SellerRootState } from "../../../../store/seller/sellerSlice";
 import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../store/seller/sellerThunks';
 import type { ProductVariant } from '../../../../typings/productVariant/productVariant';
 import type { ProductTicketType } from '../../../../typings/seller/sellerTypes';
-import type { RootState as SellerRootState } from "../../../../store/seller/sellerSlice";
+import { AlertColor } from '../../../../typings/ui/ui';
+import { SnackBarContext } from '../../components/SnackBar/SnackBarContext';
 
 export const BarcodeButtonComponent = (): React.ReactNode => {
   const location = useLocation();
 
+  const { showSnackBar } = useContext(SnackBarContext)!;
+
   const { seller } = useSelector((state: SellerRootState ) => state);
-  const { cart } = seller;
+  const { cart } : { cart: ProductTicketType[]} = seller;
 
   const [showInput, setShowInput] = useState(false);
   const [barcode, setBarcode] = useState<string>("");
@@ -62,6 +81,7 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
     if(productObject) {
       await dispatch(addOneUnitThunk({_id: productObject?._id}));
       setBarcode('');
+      showSnackBar('Agregado producto al carrito', AlertColor.Success);
       return;
     }
 
@@ -86,8 +106,13 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
       expiration_date,
       stock_required: 1,
     }
+
     await dispatch(addToCartThunk({productData: productTicket}));
+
+    const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
+
     setBarcode('');
+    showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

@@ -10,6 +10,7 @@
 // -  - Configura Formik para manejar el formulario.  
 // -  - Renderiza ilustración (`ProductDialogIlustration`) y datos (`ProductDialogData`).  
 // -  - Contiene botones de acción: **Cerrar** y **Agregar**.  
+// - -showSnackBar: Permite mostrar un snackbar con informacion para dar feedback
 
 //─────────────────── Notas técnicas 💽  ───────────────────//
 // Utiliza contexto para mostrar condicionalmente el modal
@@ -17,7 +18,6 @@
 // Utiliza Formik para el manejo del formulario
 
 //─────────────────── 📝 To do: considerar si eligo agregar del mismo producto, OTRO sub producto ───────────────────//
-//─────────────────── 📝 To do: Agregar Snackbars ───────────────────//
 //-----------------------------------------------------------------------------//
 
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, type Theme } from "@mui/material";
@@ -35,6 +35,8 @@ import type { DialogDataInterface } from "../../../../../typings/sells/sellsComp
 import { ProductDialogContext } from "../../context/ProductDialogContext";
 import ProductDialogData from "./ProductDialogDataComponent";
 import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
+import { SnackBarContext } from "../../../../shared/components/SnackBar/SnackBarContext";
+import { AlertColor } from "../../../../../typings/ui/ui";
 
   const getInitialValues = (productVariants: ProductVariant[]): DialogDataInterface => {
     const product: ProductVariant | null = productVariants?.length > 0 ? productVariants[0] : null;
@@ -79,6 +81,7 @@ const ProductDialog = (): React.ReactNode => {
   {/*─────────────────── 🔎 non‑null assertion operator '!' 🔎 ───────────────────*/}
   {/*─────────────────── por si el contexto es undefined en algun momento ───────────────────*/}
   const { showModal, setShowModal } = useContext(ProductDialogContext)!;
+  const { showSnackBar } = useContext(SnackBarContext)!;
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -130,8 +133,11 @@ const ProductDialog = (): React.ReactNode => {
       stock_required: requiredStock,
     }
     
-    dispatch(addToCartThunk({productData: productTicket}));   
+    await dispatch(addToCartThunk({productData: productTicket}));   
     setShowModal(false)
+
+    const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
+    showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
   }  
 
   const { handleSubmit, values, setFieldValue } = useFormik({

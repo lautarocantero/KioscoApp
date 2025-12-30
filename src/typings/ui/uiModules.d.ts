@@ -1,5 +1,5 @@
 import type { Breakpoint } from "@mui/system";
-import type { UnderlineVariant } from "./ui";
+import type { AlertColor, UnderlineVariant } from "./ui";
 
 //─────────────────────────────── APPBAR 🧱 ───────────────────────────────//
 
@@ -96,6 +96,17 @@ export interface SimpleGridInterface {
   children: PropsWithChildren,
 }
 
+//─────────────────────────────── 🍫 Snack Bar 🍫 ───────────────────────────────//
 
+export interface SnackBarState {
+  open: boolean;
+  message: string;
+  autoHideDuration?: number;
+  color: AlertColor;
+}
 
-
+export interface SnackBarContextInterface { 
+  snackBar: SnackBarState;
+  showSnackBar: (message: string, color: AlertColor) => void;
+  closeSnackBar: () => void;
+}
