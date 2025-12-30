@@ -33,6 +33,7 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import type { store } from '../store';
+import type { SellState } from '../../typings/sells/sellsTypes';
 
 
 const initialState: SellState = {

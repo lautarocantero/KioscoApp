@@ -33,6 +33,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import type { store } from "../store";
+import type { UserState } from "../../typings/account/accountTypes";
 
 const initialState: UserState = {
     _id: null,

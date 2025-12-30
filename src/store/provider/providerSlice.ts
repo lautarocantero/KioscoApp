@@ -33,6 +33,7 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import type { store } from '../store';
+import type { ProviderState } from '../../typings/provider/providerTypes';
 
 
 const initialState: ProviderState = {
@@ -52,7 +53,7 @@ export const providerSlice = createSlice({
     }
 });
 
-export const {} = providerSlice.actions;
+// export const {} = providerSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;

@@ -107,3 +107,17 @@ export interface SaleTicketInterface {
 export interface CartButtonsComponentInterface {
     generateTicket: () => void,
 }
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// tipo del slice
+export interface SellState { 
+    _id: string | null,
+    name: string,
+    description: string,
+    created_at: string,
+    updated_at: string,
+    errorMessage: string | null,
+}
