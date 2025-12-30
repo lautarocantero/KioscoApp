@@ -65,7 +65,10 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
   const getProductVariant = async ({id}:{id: string}): Promise<ProductVariant> => {
     const prod: ProductVariant[] | undefined = await dispatch(getProductVariantById(id));
 
-    if(!prod) throw new Error('No se ha seleccionado un producto');
+    if(!prod) {
+      showSnackBar(`Código de barras inexistente`, AlertColor.Error);
+      throw new Error('No se ha seleccionado un producto');
+    }
 
     await dispatch(selectProductThunk({productData: prod[0] }));
     return prod[0];
@@ -75,13 +78,19 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
     if(barcode === '') return;
 
     const product: ProductVariant = await getProductVariant({id: barcode});
+    
+    if(!product) {
+      showSnackBar(`Código de barras inexistente`, AlertColor.Error);
+      return;
+    }
 
     const productObject: ProductTicketType | undefined = cart?.find((prod) => prod._id === barcode);
 
     if(productObject) {
       await dispatch(addOneUnitThunk({_id: productObject?._id}));
       setBarcode('');
-      showSnackBar('Agregado producto al carrito', AlertColor.Success);
+      const nameEdited: string = productObject?.name.length > 25 ? `${productObject?.name.slice(0, 25)}...` : productObject?.name;
+      showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
       return;
     }
 

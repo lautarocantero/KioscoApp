@@ -108,8 +108,14 @@ const ProductDialog = (): React.ReactNode => {
 
     const { productVariant, requiredStock } : {productVariant: ProductVariant | null, requiredStock: number} = data;
 
-    if(!productVariant) return;
-    if(requiredStock === 0) return;
+    if(!productVariant) {
+      showSnackBar(`Ocurrio un error al agregar el producto.`, AlertColor.Error);
+      return;
+    };
+    if(requiredStock === 0) {
+      showSnackBar(`No hay stock del producto.`, AlertColor.Error);
+      return;
+    };
 
     const 
     { 
