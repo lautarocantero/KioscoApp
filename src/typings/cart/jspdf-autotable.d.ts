@@ -27,15 +27,3 @@ declare module "jspdf" {
     };
   }
 }
-
-
-import "jspdf";
-
-declare module "jspdf" {
-  interface jsPDF {
-    autoTable: (options) => jsPDF;
-    lastAutoTable: {
-      finalY: number;
-    };
-  }
-}

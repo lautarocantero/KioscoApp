@@ -15,9 +15,10 @@
 
 import axios from 'axios';
 import type { AuthLoginApiPayload, AuthRegisterApiPayload } from '../../../typings/auth/authTypes';
+import { API_URL } from '../../../config/api';
 
 const baseUrl = axios.create({
-  baseURL: 'http://localhost:3000/auth',
+  baseURL: `${API_URL}/auth`,
   timeout: 5000,
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
