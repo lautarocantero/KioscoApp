@@ -17,6 +17,8 @@ import axios from 'axios';
 import type { AuthLoginApiPayload, AuthRegisterApiPayload } from '../../../typings/auth/authTypes';
 import { API_URL } from '../../../config/api';
 
+console.log('API_URL', API_URL);
+
 const baseUrl = axios.create({
   baseURL: `${API_URL}/auth`,
   timeout: 5000,
