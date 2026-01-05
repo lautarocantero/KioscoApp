@@ -1,39 +1,16 @@
 //─────────────────── Componente 🧩: ProductItemButton ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
-// Botón de acción para añadir un producto al carrito desde la vista de ítem.
-// Controla la apertura del diálogo y despacha la selección al store de Redux.  
-
-//──────────────────── Funciones 🔧 ─────────────────────//
-// - ProductItemButton: componente principal.
-//   - Recibe product.
-//   - Usa ProductDialogContext para abrir el modal.
-//   - Usa useDispatch para enviar la acción selectProductThunk.
-//   - Renderiza Button con ícono AddShoppingCartIcon.
-//     - Al hacer click: abre el modal y ejecuta selectProduct con el producto.
+// Botón de acción para indicar que es interactuable el item.
+// Anteriormente este boton mostraba el modal, se movio tras comprobar que los usuarios clickean la imagen en si y no el boton
+// esperando que se abra el modal. 
 
 //-----------------------------------------------------------------------------//
 
 import { Button, Grid, type Theme } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useContext } from "react";
-import { useDispatch } from "react-redux";
-import type { ProductItemButtonType } from "../../../../../typings/sells/sellsComponentTypes";
-import { ProductDialogContext } from "../../context/ProductDialogContext";
-import type { AppDispatch } from "../../../../../store/seller/sellerSlice";
-import { selectProductThunk } from "../../../../../store/seller/sellerThunks";
-import type { getProductSelectedPayload } from "../../../../../typings/seller/sellerTypes";
 
-const ProductItemButton = ({product} : ProductItemButtonType):React.ReactNode => {
-    const { setShowModal } = useContext(ProductDialogContext)!;
-    const dispatch = useDispatch<AppDispatch>();
-
-    const selectProduct = async({product}: Partial<getProductSelectedPayload>): Promise<void> => {
-        if(!product) throw new Error('No se ha seleccionado un producto');
-
-        await dispatch(selectProductThunk({productData: product }));
-        setShowModal(true);
-    }
+const ProductItemButton = ():React.ReactNode => {
 
     return (
         <Grid 
@@ -53,9 +30,6 @@ const ProductItemButton = ({product} : ProductItemButtonType):React.ReactNode =>
                     padding: "0.3em 1em",
                     width: { xs: '100%'}
                 })}
-                onClick={ () => { 
-                    selectProduct({product});
-                }}
             >
                 Añadir
                 <AddShoppingCartIcon 

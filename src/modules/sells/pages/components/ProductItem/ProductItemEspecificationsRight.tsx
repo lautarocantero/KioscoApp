@@ -9,7 +9,7 @@
 //   - Recibe product.
 //   - Renderiza:
 //     - ProductItemAmountData: muestra existencias de las variantes.
-//     - ProductItemButton: botón para agregar el producto al carrito.
+//     - ProductItemButton: botón para enfatizar la opcion de agregar el producto al carrito.
 
 //-----------------------------------------------------------------------------//
 
@@ -38,7 +38,7 @@ const ProductItemEspecificationsRight = ({product} : EspecificationsRightType): 
             }}
         >
             <ProductItemAmountData variants={variants}/>
-            <ProductItemButton product={product} />
+            <ProductItemButton />
         </Grid>
     )
 }

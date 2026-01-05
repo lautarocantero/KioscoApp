@@ -3,10 +3,12 @@
 
 //─────────────────── Descripción 📝 ───────────────────//
 // Representa un producto dentro de la vista de ventas.
-// Divide la presentación en dos secciones: izquierda (imagen y nombre) y derecha (especificaciones y acción).  
+// Al hacer click en el se abre un modal mostrando los detalles del producto para agregarlo al carrito.
+// Divide la presentación en dos secciones: izquierda (imagen y nombre) y derecha (especificaciones y boton ilustrativo).  
 
 //──────────────────── Funciones 🔧 ─────────────────────//
 // - ProductItem: componente principal. Recibe product.
+// - ⌚ Antes: el modal se abría con un botón; ahora se abre al clickear la imagen (feedback de usuarios).
 //     - ProductItemEspecificationsLeft: muestra nombre e imagen/variantes.
 //     - ProductItemEspecificationsRight: muestra especificaciones y botón para agregar al carrito.
 
@@ -17,9 +19,23 @@ import type { ProductVariant } from "../../../../../typings/productVariant/produ
 import type { ProductItemInterface } from "../../../../../typings/sells/sellsComponentTypes";
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
 import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
+import { useContext } from "react";
+import { ProductDialogContext } from "../../context/ProductDialogContext";
+import type { AppDispatch } from "../../../../../store/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { selectProductThunk } from "../../../../../store/seller/sellerThunks";
+import type { getProductSelectedPayload } from "../../../../../typings/seller/sellerTypes";
 
 const ProductItemComponent = ({ product }: ProductItemInterface): React.ReactNode => {
     const { name, variants } : { name: string, variants: ProductVariant[]} = product;
+    const { setShowModal } = useContext(ProductDialogContext)!;
+    const dispatch = useDispatch<AppDispatch>();
+
+    const selectProduct = async({product}: Partial<getProductSelectedPayload>): Promise<void> => {
+        if(!product) throw new Error('No se ha seleccionado un producto');
+        await dispatch(selectProductThunk({productData: product }));
+        setShowModal(true);
+    }
 
     return (
         <Grid 
@@ -38,6 +54,9 @@ const ProductItemComponent = ({ product }: ProductItemInterface): React.ReactNod
                 padding: "0.3em",
                 width: {xs: "95%", md:'15em'},
             })}
+            onClick={ () => { 
+                selectProduct({product});
+            }}
         >
         {/* --------- 🔎 Izquierda: imagen + nombre 🔎 --------- */}
             <ProductItemEspecificationsLeft name={name} variants={variants} image={product?.image_url}/>

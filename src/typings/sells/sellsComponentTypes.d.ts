@@ -45,8 +45,6 @@ export interface QuantityChipInterface {
   label: string,
 }
 
-export type ProductItemButtonType = Pick<ProductItemInterface, 'product'>;
-
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🪧 Dialog 🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
