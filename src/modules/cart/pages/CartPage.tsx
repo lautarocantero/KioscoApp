@@ -7,6 +7,11 @@
 
 //──────────────────── Funciones 🔧 ─────────────────────//
 // -`CartPage`: componente principal que controla la vista del carrito.
+// - generateTicket: Genera un ticket con la informacion de la venta
+// - CartProductsList: Muestra un listado con los productos
+// - CartPrice: Muestra el precio final de la suma de los productos e impuestos
+// - CartPaymentMethod: Muestra un listado para seleccionar el metodo de pago elegido
+// - CartButtonsComponent: Muestra los botones de volver e imprimir ticket
 
 //─────────────────── 📝 To do: Cambiar el nombre fijo del vendedor ───────────────────//
 
@@ -17,7 +22,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import type { AppDispatch, RootState as SellerState } from "../../../store/seller/sellerSlice";
 import type { ProductTicketType } from "../../../typings/seller/sellerTypes";
-import { PaymentMethods } from "../../../typings/sells/sells";
 import type { SaleTicketInterface } from "../../../typings/sells/sellsTypes";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import AppLayout from "../../shared/layout/AppLayout";
@@ -28,6 +32,10 @@ import { createPdfTicket } from "../helpers/createPdfTicket";
 import { cleanCartThunk } from "../../../store/seller/sellerThunks";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { iva } from "../../../config/constants";
+import CartPaymentMethod from "../components/CartPaymentMethod";
+import { useRef } from "react";
+import { Currency, PaymentMethod } from "../../../typings/sells/sells";
+import type { PaymentMethod as PaymentMethodType } from "../../../typings/sells/sells";
 
 const EmptyCartComponent = ():React.ReactNode => {
     return (
@@ -79,6 +87,7 @@ const CartPage = ():React.ReactNode => {
     const productsTotalPrice: number = cart?.reduce((count: number, product: ProductTicketType) => count + product.price * product.stock_required, 0);
     const ivaPercentage: number = iva;
     const ivaAmount: number = (productsTotalPrice * ivaPercentage) / 100;
+    const paymentMethodRef: React.RefObject<PaymentMethod> = useRef<PaymentMethodType>(PaymentMethod?.Transfer);
     const total: number = productsTotalPrice + ivaAmount; 
 
     const navigate: NavigateFunction = useNavigate();
@@ -89,12 +98,12 @@ const CartPage = ():React.ReactNode => {
             date: new Date().getDate(), 
             cashier_name: 'Claudia',
             cashier_id: 'Claudia',
-            payment_method: PaymentMethods.transfer,
+            payment_method: paymentMethodRef?.current,
             products: cart,
             subtotal: productsTotalPrice,
             iva: ivaPercentage,
             total: total,
-            currency: 'Ars',
+            currency: Currency?.Ars,
         }
         localStorage.setItem('last_ticket',JSON.stringify(ticket));
         createPdfTicket(ticket);
@@ -112,6 +121,7 @@ const CartPage = ():React.ReactNode => {
                     sx={{
                         width: '90%',
                         display: 'flex',
+                        flexDirection: 'column',
                         justifyContent: 'end',
                         mt: '2em'
                     }}
@@ -123,6 +133,8 @@ const CartPage = ():React.ReactNode => {
                         ivaAmount={ivaAmount} 
                         total={total}
                     />
+                    <CartPaymentMethod paymentMethodRef={paymentMethodRef}/>
+                    {/* //─────────────────── 📝 To do: Agregar mora ───────────────────// */}
                     <CartButtonsComponent generateTicket={generateTicket}/>
                 </Grid>
             </SimpleGrid>
