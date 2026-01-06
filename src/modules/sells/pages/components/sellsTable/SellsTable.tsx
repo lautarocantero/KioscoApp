@@ -71,7 +71,7 @@ const SellsTable = ({isLoading, sells }: { isLoading: boolean; sells: SellTicket
       minWidth: 250,
       flex: 2,
       /*─────────────────── 🔎 Concatenar nombres y truncar si supera 20 caracteres 🔎 ───────────────────*/
-      valueGetter: (value, row) => {
+      valueGetter: (_value, row) => {
         const productsText = row.products.map((p: ProductTicketType) => p.name).join(', ');
         return productsText.length > 20
           ? productsText.slice(0, 20) + '...'
