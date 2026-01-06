@@ -11,7 +11,8 @@
 // - `errorMessage`: mensaje de error en caso de fallos en la carga o actualización de ventas.  
 
 //──────────────────── Reducers 🧰 ─────────────────────//
-// - `setSells`: actualiza el estado con la lista de ventas recibida, desactiva el loading y limpia errores.  
+// - `setSells`: actualiza el estado con la lista de ventas recibida, desactiva el loading y limpia errores. 
+// - `setSellSelected`: establece una venta específica como seleccionada en el estado. 
 // - `setError`: establece un mensaje de error en el estado cuando ocurre un fallo.  
 // - `checkingSells`: reinicia el estado de ventas, activa el loading y limpia errores previos.  
 
@@ -30,6 +31,7 @@ import type { Sell, SellState, SellStateError } from '../../typings/sells/sellsT
 
 const initialState: SellState = {
     sells: [],
+    sellSelected: null,
     isLoading: false,
     errorMessage: null,
 }
@@ -42,6 +44,9 @@ export const sellSlice = createSlice({
             state.sells = action.payload;
             state.isLoading = false;
             state.errorMessage = null;
+        },
+        setSellSelected: (state: SellState, action: PayloadAction<Sell>) => {
+            state.sellSelected = action.payload;
         },
         setError: (state: SellState, action: PayloadAction<SellStateError>) => {
             const { payload } = action;
@@ -56,7 +61,7 @@ export const sellSlice = createSlice({
     }
 });
 
-export const {setSells,setError,checkingSells} = sellSlice.actions;
+export const {setSells,setSellSelected, setError,checkingSells} = sellSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;

@@ -24,6 +24,7 @@ import AppLayout from '../../shared/layout/AppLayout';
 import SellsTable from './components/sellsTable/SellsTable';
 import type { RootState as SellState} from '../../../store/sell/sellSlice'
 import type { SellTicketType } from '../../../typings/sells/sellsTypes';
+import SellDialog from './components/SellDialog/SellDialog';
 
 const SellsHistoryPage = ():React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,6 +41,7 @@ const SellsHistoryPage = ():React.ReactNode => {
      return (
       <AppLayout isOptions title='Ventas'>
         <SellsTable isLoading={isLoading} sells={sells}/>
+        <SellDialog />
       </AppLayout>
     )
 }

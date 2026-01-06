@@ -18,12 +18,14 @@
 //─────────────────── Notas técnicas 💽 ───────────────────//
 // - `LightDarkThemeProvider`: controla el modo claro/oscuro.
 // - `DialogProvider`: provee diálogos simples reutilizables.
+// - `SellDialogProvider`: maneja diálogos específicos de ventas.
 // - `SnackBarProvider`: muestra alertas y mensajes flotantes.
 // - `AppTheme`: aplica estilos globales.
 // - `AppRouter`: define las rutas principales.
 //
 //-----------------------------------------------------------------------------//
 
+import { SellDialogProvider } from "./modules/sells/pages/context/SellDialogProvider"
 import { DialogProvider } from "./modules/shared/components/SimpleDialog/DialogProvider"
 import SnackBarProvider from "./modules/shared/components/SnackBar/SnackBarProvider"
 import AppRouther from "./router/AppRouter"
@@ -34,11 +36,13 @@ const KioscoApp = () => {
   return (
     <LightDarkThemeProvider>
       <DialogProvider>
+        <SellDialogProvider>
           <SnackBarProvider>
             <AppTheme>  
               <AppRouther />  
             </AppTheme>
           </SnackBarProvider>
+        </SellDialogProvider>
       </DialogProvider>
     </LightDarkThemeProvider>
   )

@@ -99,7 +99,11 @@ const CartPage = ():React.ReactNode => {
     const generateTicket = async(): Promise<void> => {
         const ticket: SellTicketType = {
             ticket_id: crypto.randomUUID(),
-            purchase_date: new Date().toLocaleDateString('es-AR'),
+            purchase_date: new Date().toLocaleDateString('es-AR',
+              { day: '2-digit',
+                month: '2-digit', 
+                year: 'numeric', 
+              }),
             modification_date: null, 
             seller_id: '0123',
             seller_name: 'Claudia',

@@ -29,67 +29,91 @@
 //-----------------------------------------------------------------------------
 
 
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { esES } from '@mui/x-data-grid/locales'; 
-import type { GridColDef } from '@mui/x-data-grid';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import { CircularProgress } from '@mui/material';
-import type { SellTicketType } from '../../../../../typings/sells/sellsTypes';
+import type { GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { esES } from '@mui/x-data-grid/locales';
+import { useDispatch } from 'react-redux';
+import { setSellSelected, type AppDispatch } from '../../../../../store/sell/sellSlice';
 import type { ProductTicketType } from '../../../../../typings/seller/sellerTypes';
+import type { SellTicketType } from '../../../../../typings/sells/sellsTypes';
+import { useContext } from 'react';
+import { SellDialogContext } from '../../context/SellDialogContext';
 
-const columns: GridColDef[] = [
-  { field: 'purchase_date', headerName: 'Fecha', flex: 1, minWidth: 150, },
-  { field: 'seller_name', headerName: 'Vendedor', flex: 1, minWidth: 150, },
-  {
-    field: 'products',
-    headerName: 'Productos',
-    minWidth: 250,
-    flex: 2,
-    /*─────────────────── 🔎 Concatenar nombres y truncar si supera 20 caracteres 🔎 ───────────────────*/
-    valueGetter: (value, row) => {
-      const productsText = row.products.map((p: ProductTicketType) => p.name).join(', ');
-      return productsText.length > 20
-        ? productsText.slice(0, 20) + '...'
-        : productsText;
-    },
-  },
-  { field: 'payment_method', headerName: 'Método de pago', flex: 1, minWidth: 150, },
-  {
-    field: 'total_amount',
-    headerName: 'Total',
-    flex: 1,
-    minWidth: 150,
-    type: 'number',
-    valueFormatter: (params: number) => `${params}$`,
-  },
-];
+const handleModal = (row: SellTicketType, dispatch: AppDispatch, setShowModal: React.Dispatch<React.SetStateAction<boolean>>) => { 
+  dispatch(setSellSelected(row));
+  setShowModal(true);
+};
 
 const paginationModel = { page: 0, pageSize: 5 };
 
 const SellsTable = ({isLoading, sells }: { isLoading: boolean; sells: SellTicketType[];}): React.ReactNode => {
-      if (isLoading || !sells) {
-        return <CircularProgress />;
-      }
+  const dispatch = useDispatch<AppDispatch>();  
+  const { setShowModal } = useContext(SellDialogContext)!;
 
-      const rows = sells.map((sell, index) => ({
-        id: index,
-        ...sell,
-      }));
+  if (isLoading || !sells) {
+    return <CircularProgress />;
+  }
 
-      return (
-        <Paper sx={{ height: 500, width: '90%', margin: '0em auto 0em' }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10]}
-            disableRowSelectionOnClick
-            slots={{ toolbar: GridToolbar }}  /*─────────────────── 🔎 Toolbar con filtros, exportación y búsqueda 🔎 ───────────────────*/
-            localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-            sx={{ border: 0 }}
-          />
-        </Paper>
-      );
+  const rows = sells.map((sell, index) => ({
+    id: index,
+    ...sell,
+  }));
+
+  const columns: GridColDef[] = [
+    { field: 'purchase_date', headerName: 'Fecha', flex: 1, minWidth: 150, },
+    { field: 'seller_name', headerName: 'Vendedor', flex: 1, minWidth: 150, },
+    {
+      field: 'products',
+      headerName: 'Productos',
+      minWidth: 250,
+      flex: 2,
+      /*─────────────────── 🔎 Concatenar nombres y truncar si supera 20 caracteres 🔎 ───────────────────*/
+      valueGetter: (value, row) => {
+        const productsText = row.products.map((p: ProductTicketType) => p.name).join(', ');
+        return productsText.length > 20
+          ? productsText.slice(0, 20) + '...'
+          : productsText;
+      },
+    },
+    { field: 'payment_method', headerName: 'Método de pago', flex: 1, minWidth: 150, },
+    {
+      field: 'total_amount',
+      headerName: 'Total',
+      flex: 1,
+      minWidth: 150,
+      type: 'number',
+      valueFormatter: (params: number) => `${params}$`,
+    },
+    { field: 'actions', headerName: 'Acciones', sortable: false, filterable: false, width: 80, renderCell: (params) => ( 
+      <Tooltip title="Ver detalles">
+        <IconButton
+          onClick={() => handleModal(params.row, dispatch, setShowModal)}  
+          aria-label="ver"
+        > 
+          <RemoveRedEyeIcon /> 
+        </IconButton> 
+      </Tooltip>
+      ), 
+    },
+  ];
+
+  return (
+    <Paper sx={{ height: 500, width: '90%', margin: '0em auto 0em' }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{ pagination: { paginationModel } }}
+        pageSizeOptions={[5, 10]}
+        disableRowSelectionOnClick
+        slots={{ toolbar: GridToolbar }}  /*─────────────────── 🔎 Toolbar con filtros, exportación y búsqueda 🔎 ───────────────────*/
+        localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+        sx={{ border: 0 }}
+      />
+    </Paper>
+  );
 }
 
 export default SellsTable;

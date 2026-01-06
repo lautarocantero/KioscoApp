@@ -15,6 +15,8 @@ export interface ModeButtonComponentInterface {
 
 export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
 
+export type SellDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
+
 export type ProductVariantDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
 
 export interface ProductDialogDataInterface {
@@ -105,7 +107,19 @@ interface SellEntity {
     currency: string;   
 }
 
-export type SellTicketType = Pick<SellEntity, 'ticket_id' | 'purchase_date' | 'modification_date' | 'seller_id' | 'seller_name' | 'payment_method' | 'products' | 'sub_total' | 'iva' | 'total_amount' | 'currency'>;
+export type SellTicketType = Pick<SellEntity, 
+    'ticket_id' | 
+    'purchase_date' | 
+    'modification_date' | 
+    'seller_id' | 
+    'seller_name' | 
+    'payment_method' | 
+    'products' | 
+    'sub_total' | 
+    'iva' | 
+    'total_amount' | 
+    'currency'
+    >;
 
 export type Sell = SellEntity;
 
@@ -120,6 +134,7 @@ export interface CartButtonsComponentInterface {
 // tipo del slice
 export interface SellState { 
     sells: SellTicketType[],
+    sellSelected: SellTicketType | null,
     isLoading: boolean,
     errorMessage: string | null,
 }
