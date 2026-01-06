@@ -1,0 +1,52 @@
+
+// # Módulo: Sell Requests  
+
+// ## Descripción 📦
+// Configuración de cliente Axios para interactuar con el backend de ventas.  
+// Incluye funciones para obtener y crear ventas en la API.  
+
+// ## Funciones 🔧
+// - `baseUrl`: instancia de Axios configurada con:  
+//   - `baseURL`: `${API_URL}/SELL`  
+//   - `timeout`: 5000 ms  
+//   - `headers`: `Content-Type: application/json`  
+//   - `withCredentials`: true (envía cookies/credenciales en las requests).  
+// - `getSellsRequest`: función asíncrona que:  
+//   - Realiza un `GET` a `/get-sells`.  
+//   - Devuelve `response.data` con la lista de ventas.  
+// - `postSellRequest`: función asíncrona que:  
+//   - Realiza un `POST` a `/create-sell` con el payload `CreateSellApiPayload`.  
+//   - Devuelve `response.data` con la venta creada.  
+
+// ## Notas técnicas 💽
+// - Centraliza la configuración de Axios para reutilización en otros requests.  
+// - Ideal para mantener consistencia en headers, timeout y credenciales.  
+// - Facilita la extensión futura para otros endpoints relacionados con ventas.  
+//-----------------------------------------------------------------------------
+
+
+import axios from "axios";
+import { API_URL } from "../../../config/api";
+import type { CreateSellApiPayload } from "../../../typings/sells/sellsTypes";
+
+
+const baseUrl = axios.create({
+    baseURL: `${API_URL}/SELL`,
+    timeout: 5000,
+    headers: { 'Content-Type': 'application/json'},
+    withCredentials: true,
+});
+
+//──────────────────────────────────────────── Get ───────────────────────────────────────────//
+
+export const getSellsRequest = async () => {
+    const response = await baseUrl.get('/get-sells');
+    return response.data;
+}
+
+//──────────────────────────────────────────── Post ───────────────────────────────────────────//
+
+export const postSellRequest = async (data: CreateSellApiPayload) => {
+    const response = await baseUrl.post('/create-sell', data);
+    return response.data;
+}

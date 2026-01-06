@@ -1,35 +1,46 @@
 
-//─────────────────── Componente 🧩: sellsHistoryLinks ───────────────────//
+//─────────────────── Componente 🧩: SellsHistoryPage ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
-// Contiene los enlaces principales de navegación para la página de historial de ventas.
+// Página principal para visualizar el historial de ventas.  
+// Se encarga de obtener las ventas desde el store y renderizarlas en una tabla dentro del layout de la aplicación.  
 
-//──────────────────── Links 🌐 ─────────────────────//
-// - Ultimo dia
-// - Ultima semana
-// - Ultimo mes
-// - Fecha Especifica
+//──────────────────── Funcionalidad ⚙️ ─────────────────────//
+// - Ejecuta el thunk `getSells` al montar el componente para traer las ventas desde la API.  
+// - Renderiza el componente `SellsTable` con las props `isLoading` y `sells`.  
 
-//-----------------------------------------------------------------------------//
+//──────────────────── Datos 📊 ─────────────────────//
+// - `sell`: estado proveniente del slice de ventas (`sellSlice`).  
+// - `isLoading`: booleano que indica si las ventas están cargando.  
+// - `sells`: arreglo de tipo `SellTicketType[]` con las ventas obtenidas.  
 
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import DownloadIcon from '@mui/icons-material/Download';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import type { LinksInterface } from '../../../typings/account/accountComponentTypes';
-import DisplayOptions from '../../shared/components/Options/DisplayOptions';
+//-----------------------------------------------------------------------------
 
-
-const sellsHistoryLinks: LinksInterface[] = [
-  { icon: <DownloadIcon />, description: 'Ultimo dia', url: ''},
-  { icon: <DownloadIcon />, description: 'Ultima semana', url: ''},
-  { icon: <DownloadIcon />, description: 'Ultimo mes', url: ''},
-  { icon: <CalendarMonthIcon />, description: 'Fecha Especifica', url: ''},
-]
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch } from '../../../store/sell/sellSlice';
+import { getSells } from '../../../store/sell/sellsThunks';
+import AppLayout from '../../shared/layout/AppLayout';
+import SellsTable from './components/sellsTable/SellsTable';
+import type { RootState as SellState} from '../../../store/sell/sellSlice'
+import type { SellTicketType } from '../../../typings/sells/sellsTypes';
 
 const SellsHistoryPage = ():React.ReactNode => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { sell } = useSelector((state: SellState) => state);
+  const { isLoading, sells} : { isLoading: boolean, sells: SellTicketType[]} = sell;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      await dispatch(getSells());
+    };
+    fetchProducts();
+  }, []);
 
      return (
-      <DisplayOptions title='Ventas' icon={<PointOfSaleIcon />}  links={sellsHistoryLinks}/>
+      <AppLayout isOptions title='Ventas'>
+        <SellsTable isLoading={isLoading} sells={sells}/>
+      </AppLayout>
     )
 }
 

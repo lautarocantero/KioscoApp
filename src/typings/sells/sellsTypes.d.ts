@@ -1,6 +1,6 @@
 import type { ProductTicketType } from "../seller/sellerTypes";
 import type { DialogContextType } from "../ui/uiModules";
-import type { PaymentMethods } from "./sells";
+import type { PaymentMethod } from "./sells";
 
 
 //──────────────────────────────────────────── ⬜ Mode Button ⬛ ───────────────────────────────────────────//
@@ -91,18 +91,23 @@ interface DisplayDataComponentInterface {
 
 //────────────────────────────────────────── 🔖Ticket 🔖 ─────────────────────────────────────────//
 
-export interface SaleTicketInterface {
-  ticket_id: string;
-  date: number;
-  cashier_name: string;
-  cashier_id: string;
-  payment_method: PaymentMethods,
-  products: ProductTicketType[];
-  subtotal: number;
-  iva: number;
-  total: number;
-  currency: string;
+interface SellEntity {
+    ticket_id: string;
+    purchase_date: string;
+    modification_date: string | null;
+    seller_id: string;
+    seller_name: string;
+    payment_method: PaymentMethod;
+    products: ProductVariant[];
+    sub_total: number;
+    iva: number;
+    total_amount: number;
+    currency: string;   
 }
+
+export type SellTicketType = Pick<SellEntity, 'ticket_id' | 'purchase_date' | 'modification_date' | 'seller_id' | 'seller_name' | 'payment_method' | 'products' | 'sub_total' | 'iva' | 'total_amount' | 'currency'>;
+
+export type Sell = SellEntity;
 
 export interface CartButtonsComponentInterface {
     generateTicket: () => void,
@@ -114,10 +119,25 @@ export interface CartButtonsComponentInterface {
 
 // tipo del slice
 export interface SellState { 
-    _id: string | null,
-    name: string,
-    description: string,
-    created_at: string,
-    updated_at: string,
+    sells: SellTicketType[],
+    isLoading: boolean,
     errorMessage: string | null,
 }
+
+export type SellStateError = Pick <SellState, 'errorMessage'>
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🕐 THUNKS 🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐                     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export type CreateSellRequestPayload = Pick<SellTicketType, 'purchase_date' | 'seller_id' | 'seller_name' | 'payment_method' | 'products' | 'sub_total' | 'iva' | 'total_amount' | 'currency'>
+
+export interface CreateSellSanitizedPayload {
+    data: CreateSellRequestPayload;
+}
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🔗 API 🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗                          ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export type CreateSellApiPayload = Omit<Sell, 'ticket_id' | 'modification_date'>;

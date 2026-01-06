@@ -31,7 +31,11 @@ const baseUrl = axios.create({
   withCredentials: true,
 });
 
+//──────────────────────────────────────────── Get ───────────────────────────────────────────//
+
 export const getProductsRequest = async () => {
     const response = await baseUrl.get('/get-products');
     return response.data;
 }
+
+//──────────────────────────────────────────── Post ───────────────────────────────────────────//

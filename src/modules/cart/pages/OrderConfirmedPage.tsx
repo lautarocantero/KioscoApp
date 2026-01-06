@@ -12,7 +12,7 @@
 
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import { Grid, Typography, type Theme, Link } from "@mui/material";
-import type { SaleTicketInterface } from '../../../typings/sells/sellsTypes';
+import type { SellTicketType } from '../../../typings/sells/sellsTypes';
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import AppLayout from "../../shared/layout/AppLayout";
 import { createPdfTicket } from "../helpers/createPdfTicket";
@@ -24,7 +24,7 @@ const OrderConfirmedPage = ():React.ReactNode => {
     const printTicket = (): void => {
         const ticketString: string | null = localStorage.getItem('last_ticket');
         if(!ticketString) return;
-        const ticket: SaleTicketInterface = JSON.parse(ticketString);
+        const ticket: SellTicketType = JSON.parse(ticketString);
         createPdfTicket(ticket);
     }
 

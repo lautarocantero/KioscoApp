@@ -18,10 +18,10 @@
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import type { SaleTicketInterface } from "../../../typings/sells/sellsTypes";
 import { formatCurrency } from "./formatCurrency";
+import type { SellTicketType } from "../../../typings/sells/sellsTypes";
 
-export const createPdfTicket = (ticket: SaleTicketInterface): void => {
+export const createPdfTicket = (ticket: SellTicketType): void => {
   const doc = new jsPDF();
 
   //──────────────────────────────────────────── Encabezado ───────────────────────────────────────────//
@@ -30,7 +30,7 @@ export const createPdfTicket = (ticket: SaleTicketInterface): void => {
   doc.setFontSize(10);
   doc.text(`Ticket Nº: ${ticket.ticket_id}`, 14, 28);
   doc.text(`Fecha: ${new Date().toLocaleString("es-AR")}hs`, 14, 34);
-  doc.text(`Cajero: ${ticket.cashier_name}`, 14, 40);
+  doc.text(`Cajero: ${ticket.seller_name}`, 14, 40);
   doc.text(`Método de pago: ${ticket.payment_method}`, 14, 46);
 
   //──────────────────────────────────────────── Tabla de productos───────────────────────────────────────────//
@@ -58,15 +58,15 @@ export const createPdfTicket = (ticket: SaleTicketInterface): void => {
     //──────────── Subtotal más pequeño ────────────────//
 
     doc.setFontSize(10);
-    doc.text(`Subtotal: ${formatCurrency(ticket.subtotal)}`, 14, finalY);
+    doc.text(`Subtotal: ${formatCurrency(ticket.sub_total)}`, 14, finalY);
     //──────────── IVA más pequeño ──────────────//
 
     doc.setFontSize(10);
-    doc.text(`IVA (${ticket.iva}%): ${formatCurrency(ticket.subtotal * ticket.iva / 100)}`, 14, finalY + 6);
+    doc.text(`IVA (${ticket.iva}%): ${formatCurrency(ticket.sub_total * ticket.iva / 100)}`, 14, finalY + 6);
     //──────────── Total más grande y destacado ────────────────//
 
     doc.setFontSize(14);
-    doc.text(`Total: ${formatCurrency(ticket.total)}`, 14, finalY + 12);
+    doc.text(`Total: ${formatCurrency(ticket.total_amount)}`, 14, finalY + 12);
 
   //──────────────────────────────────────────── Descargar PDF ───────────────────────────────────────────//
   doc.save(`ticket_${ticket.ticket_id}.pdf`);

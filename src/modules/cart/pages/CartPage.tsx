@@ -17,25 +17,28 @@
 
 //-----------------------------------------------------------------------------//
 
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { Grid, Typography, type Theme } from "@mui/material";
+import { useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
+import { iva } from "../../../config/constants";
+import { createSell } from "../../../store/sell/sellsThunks";
 import type { AppDispatch, RootState as SellerState } from "../../../store/seller/sellerSlice";
+import { cleanCartThunk } from "../../../store/seller/sellerThunks";
 import type { ProductTicketType } from "../../../typings/seller/sellerTypes";
-import type { SaleTicketInterface } from "../../../typings/sells/sellsTypes";
+import type { PaymentMethod as PaymentMethodType } from "../../../typings/sells/sells";
+import { Currency, PaymentMethod } from "../../../typings/sells/sells";
+import type { SellTicketType } from "../../../typings/sells/sellsTypes";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import AppLayout from "../../shared/layout/AppLayout";
 import CartButtonsComponent from "../components/CartButtonsComponent";
+import CartPaymentMethod from "../components/CartPaymentMethod";
 import CartPrice from "../components/CartPriceComponent";
 import CartProductsList from "../components/CartProductsListComponent";
 import { createPdfTicket } from "../helpers/createPdfTicket";
-import { cleanCartThunk } from "../../../store/seller/sellerThunks";
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import { iva } from "../../../config/constants";
-import CartPaymentMethod from "../components/CartPaymentMethod";
-import { useRef } from "react";
-import { Currency, PaymentMethod } from "../../../typings/sells/sells";
-import type { PaymentMethod as PaymentMethodType } from "../../../typings/sells/sells";
+import { SnackBarContext } from '../../shared/components/SnackBar/SnackBarContext';
+import { AlertColor } from '../../../typings/ui/ui';
 
 const EmptyCartComponent = ():React.ReactNode => {
     return (
@@ -81,6 +84,7 @@ const EmptyCartComponent = ():React.ReactNode => {
 const CartPage = ():React.ReactNode => {
     const { seller } = useSelector((state: SellerState) => state);
     const { cart } : {cart: ProductTicketType[]} = seller;
+    const { showSnackBar } = useContext(SnackBarContext)!;
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -92,22 +96,31 @@ const CartPage = ():React.ReactNode => {
 
     const navigate: NavigateFunction = useNavigate();
 
-    const generateTicket = (): void => {
-        const ticket: SaleTicketInterface = {
+    const generateTicket = async(): Promise<void> => {
+        const ticket: SellTicketType = {
             ticket_id: crypto.randomUUID(),
-            date: new Date().getDate(), 
-            cashier_name: 'Claudia',
-            cashier_id: 'Claudia',
+            purchase_date: new Date().toLocaleDateString('es-AR'),
+            modification_date: null, 
+            seller_id: '0123',
+            seller_name: 'Claudia',
             payment_method: paymentMethodRef?.current,
             products: cart,
-            subtotal: productsTotalPrice,
+            sub_total: productsTotalPrice,
             iva: ivaPercentage,
-            total: total,
+            total_amount: total,
             currency: Currency?.Ars,
         }
+
         localStorage.setItem('last_ticket',JSON.stringify(ticket));
+        const response: string | undefined = await dispatch(createSell({ data: ticket}));
+
+        if(!response) {
+            showSnackBar(`Ocurrio un error al agregar el producto.`, AlertColor.Error);
+            throw new Error('Ocurrio un error registrando la compra, intentalo de nuevo');
+        }
+
         createPdfTicket(ticket);
-        dispatch(cleanCartThunk());   
+        await dispatch(cleanCartThunk());   
         navigate('/cart-order-confirmed')
     }
 
