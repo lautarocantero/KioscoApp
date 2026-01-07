@@ -30,9 +30,9 @@
 
 import type { Dispatch } from "@reduxjs/toolkit"
 import type { CreateSellSanitizedPayload, Sell } from "../../typings/sells/sellsTypes"
-import { checkingSells, setError, setSells } from "./sellSlice";
+import { checkingSells, setError, setSells, setSellSelected } from "./sellSlice";
 import { handleError } from "../shared/handlerStoreError";
-import { getSellsRequest, postSellRequest } from "../../modules/sells/api/sellApi";
+import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest } from "../../modules/sells/api/sellApi";
 
 //──────────────────────────────────────────── Get ───────────────────────────────────────────//
 
@@ -52,6 +52,25 @@ export const getSells = () => {
             dispatch(setSells(sells));
             return sells as Sell[];
         } catch(error: unknown) {
+            handleError(error);
+        }
+    }
+}
+
+export const getSellById = (ticket_id: string) => {
+    return async (dispatch: Dispatch) : Promise<Sell | undefined> => {
+        dispatch(checkingSells());
+        try {
+            const sell: Sell[] = await getSellByIdRequest(ticket_id);
+
+            if(!sell) {
+                dispatch(setError({ errorMessage: "No se ha encontrado la venta"}))
+                throw new Error('No se encontraron ventas que concuerden con este ticket');
+            }
+
+            dispatch(setSellSelected(sell[0]));
+            return sell[0] as Sell;
+        } catch (error: unknown) {
             handleError(error);
         }
     }
@@ -88,5 +107,23 @@ export const createSell = ({data}: CreateSellSanitizedPayload) => {
     }
 }
     
+//──────────────────────────────────────────── Delete ───────────────────────────────────────────//
 
+export const deleteSellThunk = (ticket_id: string) => {
+
+    return async (dispatch: Dispatch) : Promise<void | string> => {
+        try{
+            const response = await deleteSellRequest(ticket_id);
+
+            if(!response) {
+                throw new Error('Error durante la eliminacion de la venta');
+            }
+            dispatch(setError({errorMessage: null}));
+            return response;
+        } catch (error: unknown) {
+            handleError(error);
+        }
+    }
+   
+}
     

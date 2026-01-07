@@ -30,7 +30,7 @@ import AuthRoutes from "../modules/auth/AuthRoutes";
 import CartRoutes from "../modules/cart/CartRoutes";
 import ProductsRoutes from "../modules/products/ProductsRoutes";
 import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
-import SellsRoutes from "../modules/sells/SellsRoutes";
+import SellsRoutes from "../modules/sells/routes/SellsRoutes";
 import ShopRoutes from "../modules/shop/ShopRoutes";
 import type { AppDispatch, RootState } from "../store/auth/authSlice";
 import { startCheckAuth } from "../store/auth/thunks";

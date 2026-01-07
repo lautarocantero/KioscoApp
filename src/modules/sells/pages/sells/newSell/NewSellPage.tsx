@@ -19,13 +19,13 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../../store/product/productSlice";
-import { getProducts } from "../../../store/product/thunks";
-import AppLayout from "../../shared/layout/AppLayout";
-import ProductDialog from "./components/ProductDialog/ProductDialog";
-import ProductsExhibitor from "./components/ProductsExhibitorComponent";
-import type { Product } from '../../../typings/product/productTypes';
-import SimpleSnackbar from "../../shared/components/SnackBar/SnackBarComponent";
+import type { AppDispatch, RootState } from "../../../../../store/product/productSlice";
+import { getProducts } from "../../../../../store/product/thunks";
+import AppLayout from "../../../../shared/layout/AppLayout";
+import ProductDialog from "../../components/ProductDialog/ProductDialog";
+import ProductsExhibitor from "../../components/ProductsExhibitorComponent";
+import type { Product } from '../../../../../typings/product/productTypes';
+import SimpleSnackbar from "../../../../shared/components/SnackBar/SnackBarComponent";
 
 const NewSellPage = ():React.ReactNode => {
 

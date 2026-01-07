@@ -31,7 +31,7 @@ import type { CreateSellApiPayload } from "../../../typings/sells/sellsTypes";
 
 
 const baseUrl = axios.create({
-    baseURL: `${API_URL}/SELL`,
+    baseURL: `${API_URL}/sell`,
     timeout: 5000,
     headers: { 'Content-Type': 'application/json'},
     withCredentials: true,
@@ -44,9 +44,21 @@ export const getSellsRequest = async () => {
     return response.data;
 }
 
+export const getSellByIdRequest = async (ticket_id: string) => {
+    const response = await baseUrl.get(`/get-sell-by-id/${ticket_id}`);
+    return response.data;
+}
+
 //──────────────────────────────────────────── Post ───────────────────────────────────────────//
 
 export const postSellRequest = async (data: CreateSellApiPayload) => {
     const response = await baseUrl.post('/create-sell', data);
+    return response.data;
+}
+
+//──────────────────────────────────────────── Delete ───────────────────────────────────────────//
+
+export const deleteSellRequest = async (ticket_id: string) => {
+    const response = await baseUrl.delete(`/delete-sell/${ticket_id}`);
     return response.data;
 }

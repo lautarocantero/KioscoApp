@@ -102,8 +102,6 @@ export const selectProductThunk = ({ productData }: SelectProductThunkInterface)
     }
 }
 
-//──────────────────────────────────────────── 🦾 new 🔧 ───────────────────────────────────────────//
-
 export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
 
     return async (dispatch:Dispatch): Promise<void> => {

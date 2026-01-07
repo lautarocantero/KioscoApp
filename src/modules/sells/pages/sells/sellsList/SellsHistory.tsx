@@ -18,13 +18,12 @@
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch } from '../../../store/sell/sellSlice';
-import { getSells } from '../../../store/sell/sellsThunks';
-import AppLayout from '../../shared/layout/AppLayout';
-import SellsTable from './components/sellsTable/SellsTable';
-import type { RootState as SellState} from '../../../store/sell/sellSlice'
-import type { SellTicketType } from '../../../typings/sells/sellsTypes';
-import SellDialog from './components/SellDialog/SellDialog';
+import type { RootState as SellState} from '../../../../../store/sell/sellSlice';
+import type { SellTicketType } from '../../../../../typings/sells/sellsTypes';
+import type { AppDispatch } from '../../../../../store/sell/sellSlice';
+import { getSells } from '../../../../../store/sell/sellsThunks';
+import AppLayout from '../../../../shared/layout/AppLayout';
+import SellsTable from '../../components/sellsTable/SellsTable';
 
 const SellsHistoryPage = ():React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,7 +40,6 @@ const SellsHistoryPage = ():React.ReactNode => {
      return (
       <AppLayout isOptions title='Ventas'>
         <SellsTable isLoading={isLoading} sells={sells}/>
-        <SellDialog />
       </AppLayout>
     )
 }

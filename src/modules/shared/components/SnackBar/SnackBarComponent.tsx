@@ -25,6 +25,7 @@
 //       {/* El contexto SnackBarProvider debe envolver la app */}
 //        const { showSnackBar } = useContext(SnackBarContext)!;
 //        showSnackBar('Agregado producto al carrito', AlertColor.Success);
+//        showSnackBar(`Ocurrio un error al agregar el producto.`, AlertColor.Error);
 //     </div>
 //   );
 // }

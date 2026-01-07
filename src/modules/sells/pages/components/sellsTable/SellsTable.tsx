@@ -29,29 +29,46 @@
 //-----------------------------------------------------------------------------
 
 
+import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import type { GridColDef } from '@mui/x-data-grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { esES } from '@mui/x-data-grid/locales';
+import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSellSelected, type AppDispatch } from '../../../../../store/sell/sellSlice';
+import { useNavigate, type NavigateFunction } from 'react-router';
+import { type AppDispatch } from '../../../../../store/sell/sellSlice';
+import { deleteSellThunk, getSells } from '../../../../../store/sell/sellsThunks';
 import type { ProductTicketType } from '../../../../../typings/seller/sellerTypes';
 import type { SellTicketType } from '../../../../../typings/sells/sellsTypes';
-import { useContext } from 'react';
-import { SellDialogContext } from '../../context/SellDialogContext';
+import { AlertColor } from '../../../../../typings/ui/ui';
+import { SnackBarContext } from '../../../../shared/components/SnackBar/SnackBarContext';
 
-const handleModal = (row: SellTicketType, dispatch: AppDispatch, setShowModal: React.Dispatch<React.SetStateAction<boolean>>) => { 
-  dispatch(setSellSelected(row));
-  setShowModal(true);
+const handleDetail = (ticket_id: string, navigate: NavigateFunction) => { 
+  navigate(`/sells-history/${ticket_id}`);
 };
+
+const handleDeleteSell = async(ticket_id: string, dispatch: AppDispatch, showSnackBar: (message: string, color: AlertColor) => void) => {
+  const response: string | void = await dispatch(deleteSellThunk(ticket_id));
+
+  if(!response) {
+    showSnackBar(`Ocurrio un error al eliminar el producto. Intenta de nuevo.`, AlertColor.Error);
+    return;
+  }
+
+  showSnackBar(`Producto eliminado correctamente.`, AlertColor.Success);
+  setTimeout(() => dispatch(getSells()), 200);
+}
 
 const paginationModel = { page: 0, pageSize: 5 };
 
 const SellsTable = ({isLoading, sells }: { isLoading: boolean; sells: SellTicketType[];}): React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();  
-  const { setShowModal } = useContext(SellDialogContext)!;
+
+  const navigate = useNavigate();
+  const { showSnackBar } = useContext(SnackBarContext)!;
 
   if (isLoading || !sells) {
     return <CircularProgress />;
@@ -87,15 +104,25 @@ const SellsTable = ({isLoading, sells }: { isLoading: boolean; sells: SellTicket
       type: 'number',
       valueFormatter: (params: number) => `${params}$`,
     },
-    { field: 'actions', headerName: 'Acciones', sortable: false, filterable: false, width: 80, renderCell: (params) => ( 
-      <Tooltip title="Ver detalles">
-        <IconButton
-          onClick={() => handleModal(params.row, dispatch, setShowModal)}  
-          aria-label="ver"
-        > 
-          <RemoveRedEyeIcon /> 
-        </IconButton> 
-      </Tooltip>
+    { field: 'actions', headerName: 'Acciones', sortable: false, filterable: false, minWidth: 160, renderCell: (params) => ( 
+      <>
+        <Tooltip title="Ver detalles">
+          <IconButton
+            onClick={() => handleDetail(params.row.ticket_id, navigate)}  
+            aria-label="ver"
+          > 
+            <RemoveRedEyeIcon /> 
+          </IconButton> 
+        </Tooltip>
+        <Tooltip title="Borrar">
+          <IconButton
+            onClick={() => handleDeleteSell(params.row.ticket_id, dispatch, showSnackBar)}  
+            aria-label="ver"
+          > 
+            <DeleteIcon /> 
+          </IconButton> 
+        </Tooltip>  
+      </>
       ), 
     },
   ];
