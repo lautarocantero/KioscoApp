@@ -11,11 +11,11 @@
 //-----------------------------------------------------------------------------//
 
 import { Route } from "react-router-dom"
-import NewSellPage from "../pages/sells/newSell/NewSellPage"
-import SellsPage from "../pages/sells/newSell/SellsPage"
-import { DialogProvider } from "../pages/context/ProductDialogProvider"
-import SellsHistoryPage from "../pages/sells/sellsList/SellsHistory"
-import SellDetailPage from "../pages/sells/sellDetail/SellDetail"
+import SellsPage from "../pages/newSell/SellsPage";
+import { DialogProvider } from "../context/Product/ProductDialogProvider";
+import NewSellPage from "../pages/newSell/NewSellPage";
+import SellsHistoryPage from "../pages/sellsList/SellsHistory";
+import SellDetailPage from "../pages/sellDetail/SellDetail";
 
 const SellsRoutes = ():React.ReactNode => {
 

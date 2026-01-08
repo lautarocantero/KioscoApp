@@ -1,0 +1,42 @@
+
+//─────────────────── Componente 🧩: ProductDialogIlustrationComponent ───────────────────//
+
+//─────────────────── Descripción 📝 ───────────────────//
+// Renderiza una imagen representativa del producto junto con su nombre.  
+
+//──────────────────── Funciones 🔧 ─────────────────────//
+// -ProductDialogIlustrationComponent
+//      -ProductDialogImage Renderiza la imagen del producto
+
+//-----------------------------------------------------------------------------//
+
+import { Grid, Typography, type Theme } from "@mui/material";
+import ProductDialogImage from "./ProductDialogImageComponent";
+import type { ProductDialogIlustrationInterface } from "../../../../typings/sells/sellsTypes";
+
+const ProductDialogIlustrationComponent = (
+    {name = 'Product', image_url = '/images/productExample/cocaCola.png'}: ProductDialogIlustrationInterface ):React.ReactNode => {
+
+    return (
+        <Grid
+          container
+          sx={(theme: Theme) => ({
+            backgroundColor: theme?.custom?.backgroundDark,
+            borderRadius: '1em',
+            padding: 1,
+            justifyContent: 'center'
+          })}
+        >
+            <ProductDialogImage image_url={image_url} name={name}/>
+            <Typography
+                sx={(theme: Theme) => ({
+                    fontSize: theme?.typography?.body1?.fontSize,
+                })}
+            >
+                {name}
+            </Typography>
+        </Grid>
+    )
+}
+
+export default ProductDialogIlustrationComponent;
