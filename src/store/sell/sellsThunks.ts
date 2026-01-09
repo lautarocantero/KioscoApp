@@ -29,7 +29,7 @@
 
 
 import type { Dispatch } from "@reduxjs/toolkit"
-import type { CreateSellSanitizedPayload, Sell } from "../../typings/sells/sellsTypes"
+import type { CreateSellSanitizedPayload, Sell } from "../../typings/sells/types/sellsTypes"
 import { checkingSells, setError, setSells, setSellSelected } from "./sellSlice";
 import { handleError } from "../shared/handlerStoreError";
 import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest } from "../../modules/sells/api/sellApi";
@@ -43,14 +43,15 @@ export const getSells = () => {
 
         try{
             const sells: Sell[] = await getSellsRequest();
+            console.log(sells)
 
             if(!sells) {
                 dispatch(setError({ errorMessage: "No se ha encontrado ninguna venta"}))
                 throw new Error('No se encontraron ventas');
             }
 
-            dispatch(setSells(sells));
-            return sells as Sell[];
+            dispatch(setSells(sells.data));
+            return sells.data as Sell[];
         } catch(error: unknown) {
             handleError(error);
         }

@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Box } from "@mui/material";
-import type { DialogDataType } from "../../../../typings/sells/sellsComponentTypes";
+import type { DialogDataType } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 import ProductDialogSelector from "./ProductDialogSelector";
 import ProductDialogUnitsComponent from "./ProductDialogUnitsComponent";
 import ProductDialogPriceComponent from "./ProductDialogPriceComponent";

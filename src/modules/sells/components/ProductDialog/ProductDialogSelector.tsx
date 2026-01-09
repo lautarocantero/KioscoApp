@@ -16,7 +16,7 @@
 
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography, type SelectChangeEvent, type Theme } from "@mui/material";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
-import type { DialogSelectorType } from "../../../../typings/sells/sellsComponentTypes";
+import type { DialogSelectorType } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 import { useSelector } from "react-redux";
 import type { RootState as ProductVariantState  } from "../../../../store/productVariant/productVariantSlice";
 

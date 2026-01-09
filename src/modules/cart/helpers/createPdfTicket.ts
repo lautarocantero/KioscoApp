@@ -19,7 +19,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { formatCurrency } from "./formatCurrency";
-import type { SellTicketType } from "../../../typings/sells/sellsTypes";
+import type { SellTicketType } from "../../../typings/sells/types/sellsTypes";
 
 export const createPdfTicket = (ticket: SellTicketType): void => {
   const doc = new jsPDF();

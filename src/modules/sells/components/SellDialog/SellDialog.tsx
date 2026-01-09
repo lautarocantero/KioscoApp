@@ -35,7 +35,7 @@ import { useContext } from "react";
 import { useSelector } from "react-redux";
 import type { RootState as SellState } from '../../../../store/sell/sellSlice';
 import type { ProductTicketType } from "../../../../typings/seller/sellerTypes";
-import type { SellTicketType } from "../../../../typings/sells/sellsTypes";
+import type { SellTicketType } from "../../../../typings/sells/types/sellsTypes";
 import { SellDialogContext } from "../../context/Sell/SellDialogContext";
 
 const SellDialogContent = ({ sellSelected }: { sellSelected: SellTicketType | null }): React.ReactNode => {

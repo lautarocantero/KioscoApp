@@ -1,6 +1,6 @@
-import type { ProductTicketType } from "../seller/sellerTypes";
-import type { DialogContextType } from "../ui/uiModules";
-import type { PaymentMethod } from "./sells";
+import type { ProductTicketType } from "../../seller/sellerTypes";
+import type { DialogContextType } from "../../ui/uiModules";
+import type { PaymentMethod } from "../enums/sells";
 
 
 //──────────────────────────────────────────── ⬜ Mode Button ⬛ ───────────────────────────────────────────//

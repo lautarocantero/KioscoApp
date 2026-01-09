@@ -7,7 +7,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Box, Grid } from "@mui/material";
-import type { CartProductItemImageComponentInterface } from "../../../../typings/sells/sellsTypes";
+import type { CartProductItemImageComponentInterface } from "../../../../typings/sells/types/sellsTypes";
 
 const CartProductItemImageComponent = ({image = "/images/productExample/cocaCola.png", name = 'product'} 
     : CartProductItemImageComponentInterface):React.ReactNode => {

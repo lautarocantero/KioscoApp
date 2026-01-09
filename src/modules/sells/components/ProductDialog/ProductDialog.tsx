@@ -31,14 +31,15 @@ import type { RootState as SellerRootState } from "../../../../store/seller/sell
 import { addToCartThunk } from "../../../../store/seller/sellerThunks";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
 import type { ProductTicketType } from "../../../../typings/seller/sellerTypes";
-import type { DialogDataInterface } from "../../../../typings/sells/sellsComponentTypes";
 import ProductDialogData from "./ProductDialogDataComponent";
 import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
 import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "../../../../typings/ui/ui";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
+import type { DialogDataInterface } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
+import type { ProductDialogDataInterface } from "../../../../typings/sells/types/sellsTypes";
 
-  const getInitialValues = (productVariants: ProductVariant[]): DialogDataInterface => {
+  const getInitialValues = (productVariants: ProductVariant[]): ProductDialogDataInterface => {
     const product: ProductVariant | null = productVariants?.length > 0 ? productVariants[0] : null;
     const productId: string = product?._id ?? '';
 

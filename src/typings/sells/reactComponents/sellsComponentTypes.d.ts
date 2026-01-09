@@ -1,5 +1,6 @@
-import type { Product } from "../product/productTypes";
-import type { ProductVariant } from "../productVariant/productVariant";
+import type { Product } from "../../product/productTypes";
+import type { ProductVariant } from "../../productVariant/productVariant";
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📋 Product Exhibitor 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋║
 // ╚══════════════════════════════════════════════════════════════════════╝*/

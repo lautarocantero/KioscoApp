@@ -23,7 +23,7 @@
 //-----------------------------------------------------------------------------//
 
 import { StockStatusEnum } from "../../../typings/auth/enums";
-import type { EvaluateStockType } from "../../../typings/sells/sellsComponentTypes";
+import type { EvaluateStockType } from "../../../typings/sells/reactComponents/sellsComponentTypes";
 
     const evaluateStockBySize = ({variants}: EvaluateStockType): Record<string, StockStatusEnum> => {
 

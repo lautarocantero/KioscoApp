@@ -21,7 +21,7 @@
 
 import React from "react";
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, type Theme } from "@mui/material";
-import { PaymentMethod } from "../../../typings/sells/sells";
+import { PaymentMethod } from "../../../typings/sells/enums/sells";
 
 const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObject<string>}): React.ReactNode => {
 

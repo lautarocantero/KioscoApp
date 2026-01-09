@@ -11,7 +11,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, Typography, type Theme } from "@mui/material";
-import type { AmountDataType } from "../../../../typings/sells/sellsComponentTypes";
+import type { AmountDataType } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 import ProductItemQuantityHandler from "./ProductItemQuantityHandler";
 
 const ProductItemAmountData = ({ variants }: AmountDataType): React.ReactNode => {

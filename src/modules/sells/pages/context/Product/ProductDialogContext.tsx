@@ -5,7 +5,7 @@
 // Permite compartir funciones y valores relacionados con la apertura/cierre del modal
 
 import { createContext } from "react";
-import type { ProductDialogContextType } from "../../../../typings/sells/types/sellsTypes";
+import type { ProductDialogContextType } from "../../../../../typings/sells/types/sellsTypes";
 
 
 export const ProductDialogContext = createContext<ProductDialogContextType | null>(null); 

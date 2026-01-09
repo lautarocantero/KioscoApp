@@ -12,7 +12,7 @@
 
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import { Grid, Typography, type Theme, Link } from "@mui/material";
-import type { SellTicketType } from '../../../typings/sells/sellsTypes';
+import type { SellTicketType } from '../../../typings/sells/types/sellsTypes';
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import AppLayout from "../../shared/layout/AppLayout";
 import { createPdfTicket } from "../helpers/createPdfTicket";

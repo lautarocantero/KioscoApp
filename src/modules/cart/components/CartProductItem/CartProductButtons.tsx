@@ -20,7 +20,7 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch as SellerDispatch } from "../../../../store/seller/sellerSlice";
 import { removeFromCartThunk } from "../../../../store/seller/sellerThunks";
 import { CartAmount, CartSide } from "../../../../typings/seller/seller";
-import type { CartProductButtonInterface, CartProductButtonsInterface } from "../../../../typings/sells/sellsTypes";
+import type { CartProductButtonInterface, CartProductButtonsInterface } from "../../../../typings/sells/types/sellsTypes";
 
 const CartButton = ({icon, side, action}: CartProductButtonInterface ):React.ReactNode => {
 

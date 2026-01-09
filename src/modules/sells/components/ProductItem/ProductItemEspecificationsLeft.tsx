@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid } from "@mui/material";
-import type { EspecificationsLeftInterface } from "../../../../typings/sells/sellsComponentTypes";
+import type { EspecificationsLeftInterface } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 import ProductItemData from "./ProductItemData";
 import ProductItemImage from "./ProductItemImage";
 

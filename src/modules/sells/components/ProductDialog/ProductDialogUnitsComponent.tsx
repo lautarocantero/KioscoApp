@@ -15,7 +15,7 @@
 
 
 import { Grid } from "@mui/material";
-import type { DialogDataDisplayType } from "../../../../typings/sells/sellsComponentTypes";
+import type { DialogDataDisplayType } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 import NumberField from "../../../shared/components/NumberField/NumberField";
 
 const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: DialogDataDisplayType ): React.ReactNode => {

@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, Typography, type Theme } from "@mui/material";
-import type { DialogDataPriceType } from "../../../../typings/sells/sellsComponentTypes";
+import type { DialogDataPriceType } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 
 const ProductDialogPriceComponent = ({values}: DialogDataPriceType): React.ReactNode => {
 

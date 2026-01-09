@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, Typography, Box, type Theme } from "@mui/material"
-import type { CartPriceLabelInterface } from "../../../typings/sells/sellsTypes"
+import type { CartPriceLabelInterface } from "../../../typings/sells/types/sellsTypes"
 
 export const CartPriceLabel = ({
   label,

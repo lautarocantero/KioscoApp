@@ -42,7 +42,7 @@ import { useNavigate, type NavigateFunction } from 'react-router';
 import { type AppDispatch } from '../../../../store/sell/sellSlice';
 import { deleteSellThunk, getSells } from '../../../../store/sell/sellsThunks';
 import type { ProductTicketType } from '../../../../typings/seller/sellerTypes';
-import type { SellTicketType } from '../../../../typings/sells/sellsTypes';
+import type { SellTicketType } from '../../../../typings/sells/types/sellsTypes';
 import { AlertColor } from '../../../../typings/ui/ui';
 import { SnackBarContext } from '../../../shared/components/SnackBar/SnackBarContext';
 

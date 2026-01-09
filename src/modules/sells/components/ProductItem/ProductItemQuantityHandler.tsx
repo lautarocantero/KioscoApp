@@ -24,7 +24,7 @@ import type { Breakpoint } from "@mui/system";
 import { useMemo } from "react";
 import { useBreakpoint } from "../../../../hooks/useBreakpoint";
 import { StockStatusEnum } from "../../../../typings/auth/enums";
-import type { ItemQuantityHandler } from "../../../../typings/sells/sellsComponentTypes";
+import type { ItemQuantityHandler } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 import evaluateStockBySize from "../../helpers/StockStatusHandler";
 import QuantityChip from "./ProductItemQuantityChip";
 

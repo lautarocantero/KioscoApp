@@ -9,7 +9,7 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { QuantityChipInterface } from "../../../../typings/sells/sellsComponentTypes";
+import type { QuantityChipInterface } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 
 const QuantityChip = ({ color = "red", label }: QuantityChipInterface): React.ReactNode => {
     const fontSize: string = label?.length > 3 ? "0.6em" : "0.7em";

@@ -14,7 +14,7 @@
 
 
 import { Grid, type Theme } from "@mui/material";
-import type { CartProductItemComponentInterface } from "../../../../typings/sells/sellsTypes";
+import type { CartProductItemComponentInterface } from "../../../../typings/sells/types/sellsTypes";
 import CartProductButtons from "./CartProductButtons";
 import CartProductItemData from "./CartProductItemDataComponent";
 import CartProductItemImage from "./CartProductItemImageComponent";

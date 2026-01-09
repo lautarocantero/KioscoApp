@@ -27,7 +27,7 @@
 
 import axios from "axios";
 import { API_URL } from "../../../config/api";
-import type { CreateSellApiPayload } from "../../../typings/sells/sellsTypes";
+import type { CreateSellApiPayload } from "../../../typings/sells/types/sellsTypes";
 
 
 const baseUrl = axios.create({
