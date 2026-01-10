@@ -21,6 +21,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, type Theme } from "@mui/material";
+import type { DialogDataInterface, ProductDialogInitialValues } from "@typings/sells/types";
 import { useFormik } from "formik";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,17 +32,15 @@ import type { RootState as SellerRootState } from "../../../../store/seller/sell
 import { addToCartThunk } from "../../../../store/seller/sellerThunks";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
 import type { ProductTicketType } from "../../../../typings/seller/sellerTypes";
+import { AlertColor } from "../../../../typings/ui/ui";
+import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
+import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
 import ProductDialogData from "./ProductDialogDataComponent";
 import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
-import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
-import { AlertColor } from "../../../../typings/ui/ui";
-import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
-import type { DialogDataInterface } from "@typings/sells/types";
 
-  const getInitialValues = (productVariants: ProductVariant[]): DialogDataInterface => {
+  const getInitialValues = ({productVariants}: ProductDialogInitialValues): DialogDataInterface => {
     const product: ProductVariant | null = productVariants?.length > 0 ? productVariants[0] : null;
     const productId: string = product?._id ?? '';
-
 
     return {
         productVariantId: productId,
@@ -148,7 +147,7 @@ const ProductDialog = (): React.ReactNode => {
   }  
 
   const { handleSubmit, values, setFieldValue } = useFormik({
-    initialValues: getInitialValues(productVariants),
+    initialValues: getInitialValues({productVariants}),
     onSubmit,
     validateOnBlur: false,
     validateOnChange: false,

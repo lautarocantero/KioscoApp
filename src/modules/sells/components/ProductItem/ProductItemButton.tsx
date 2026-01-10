@@ -7,8 +7,8 @@
 
 //-----------------------------------------------------------------------------//
 
-import { Button, Grid, type Theme } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Button, Grid, type Theme } from "@mui/material";
 
 const ProductItemButton = ():React.ReactNode => {
 

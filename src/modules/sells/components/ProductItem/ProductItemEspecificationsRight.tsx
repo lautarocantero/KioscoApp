@@ -14,10 +14,10 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid } from "@mui/material";
+import type { EspecificationsRightType } from "@typings/sells/reactComponents";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
 import ProductItemAmountData from "./ProductItemAmountData";
 import ProductItemButton from "./ProductItemButton";
-import type { EspecificationsRightType } from "@typings/sells/reactComponents";
 
 
 const ProductItemEspecificationsRight = ({product} : EspecificationsRightType): React.ReactNode => {

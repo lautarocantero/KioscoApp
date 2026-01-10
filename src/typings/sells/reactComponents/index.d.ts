@@ -1,7 +1,7 @@
 import type { Product } from "../../product/productTypes";
 import type { ProductVariant } from "../../productVariant/productVariant";
 
-{/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES 🔎 ───────────────────*/}
+{/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}
 
     //──────────────────────────────────────────── 📋 Product Exhibitor 📋───────────────────────────────────────────//
 
@@ -121,3 +121,10 @@ import type { ProductVariant } from "../../productVariant/productVariant";
     }
 
     export type DialogDataPriceType = Pick <DialogDataInterface, 'values'>
+
+   //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
+
+    export interface SellsTablePropsInterface {
+       isLoading: boolean;
+       sells: SellTicketType[];
+    }

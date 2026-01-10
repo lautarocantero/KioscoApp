@@ -10,12 +10,12 @@
 
 //-----------------------------------------------------------------------------//
 
-import { Route } from "react-router-dom"
-import SellsPage from "../pages/newSell/SellsPage";
+import { Route } from "react-router-dom";
 import { DialogProvider } from "../context/Product/ProductDialogProvider";
 import NewSellPage from "../pages/newSell/NewSellPage";
-import SellsHistoryPage from "../pages/sellsList/SellsHistory";
+import SellsPage from "../pages/newSell/SellsPage";
 import SellDetailPage from "../pages/sellDetail/SellDetail";
+import SellsHistoryPage from "../pages/sellsList/SellsHistory";
 
 const SellsRoutes = ():React.ReactNode => {
 

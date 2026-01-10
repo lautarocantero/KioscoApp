@@ -15,10 +15,10 @@
 //-----------------------------------------------------------------------------//
 
 import { Box } from "@mui/material";
+import type { DialogDataInterface } from "@typings/sells/reactComponents";
+import ProductDialogPriceComponent from "./ProductDialogPriceComponent";
 import ProductDialogSelector from "./ProductDialogSelector";
 import ProductDialogUnitsComponent from "./ProductDialogUnitsComponent";
-import ProductDialogPriceComponent from "./ProductDialogPriceComponent";
-import type { DialogDataInterface } from "@typings/sells/reactComponents";
 
 const ProductDialogDataComponent = ( {products, values, setFieldValue } : DialogDataInterface ):React.ReactNode => {
 

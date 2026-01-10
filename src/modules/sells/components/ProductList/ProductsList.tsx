@@ -17,9 +17,9 @@
 //-----------------------------------------------------------------------------//
 
 import { CircularProgress } from "@mui/material";
+import type { ProductListType } from "@typings/sells/reactComponents";
 import type { Product } from "../../../../typings/product/productTypes";
 import ProductItemComponent from "../ProductItem/ProductItemComponent";
-import type { ProductListType } from "@typings/sells/reactComponents";
 
 const ProductsList = ({products}: ProductListType):React.ReactNode => {
 

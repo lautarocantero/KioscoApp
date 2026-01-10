@@ -21,12 +21,12 @@
 
 
 import type { Breakpoint } from "@mui/system";
+import type { ItemQuantityHandler } from "@typings/sells/reactComponents";
 import { useMemo } from "react";
 import { useBreakpoint } from "../../../../hooks/useBreakpoint";
 import { StockStatusEnum } from "../../../../typings/auth/enums";
 import evaluateStockBySize from "../../helpers/StockStatusHandler";
 import QuantityChip from "./ProductItemQuantityChip";
-import type { ItemQuantityHandler } from "@typings/sells/reactComponents";
 
 const ProductItemQuantityHandler = ({variants} : ItemQuantityHandler): React.ReactNode => {
 

@@ -36,21 +36,22 @@ import Paper from '@mui/material/Paper';
 import type { GridColDef } from '@mui/x-data-grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { esES } from '@mui/x-data-grid/locales';
+import type { HandleDeleteSellInterface, SellsHandleDetailInterface } from '@typings/sells/types';
 import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, type NavigateFunction } from 'react-router';
+import { useNavigate } from 'react-router';
 import { type AppDispatch } from '../../../../store/sell/sellSlice';
 import { deleteSellThunk, getSells } from '../../../../store/sell/sellsThunks';
 import type { ProductTicketType } from '../../../../typings/seller/sellerTypes';
 import { AlertColor } from '../../../../typings/ui/ui';
 import { SnackBarContext } from '../../../shared/components/SnackBar/SnackBarContext';
-import type { SellTicketType } from '@typings/sells/types';
+import type { SellsTablePropsInterface } from '@typings/sells/reactComponents';
 
-const handleDetail = (ticket_id: string, navigate: NavigateFunction) => { 
+const handleDetail = ({ ticket_id, navigate} : SellsHandleDetailInterface) => { 
   navigate(`/sells-history/${ticket_id}`);
 };
 
-const handleDeleteSell = async(ticket_id: string, dispatch: AppDispatch, showSnackBar: (message: string, color: AlertColor) => void) => {
+const handleDeleteSell = async({ticket_id, dispatch, showSnackBar }: HandleDeleteSellInterface ) => {
   const response: string | void = await dispatch(deleteSellThunk(ticket_id));
 
   if(!response) {
@@ -64,7 +65,7 @@ const handleDeleteSell = async(ticket_id: string, dispatch: AppDispatch, showSna
 
 const paginationModel = { page: 0, pageSize: 5 };
 
-const SellsTable = ({isLoading, sells }: { isLoading: boolean; sells: SellTicketType[];}): React.ReactNode => {
+const SellsTable = ({isLoading, sells }: SellsTablePropsInterface ): React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();  
 
   const navigate = useNavigate();
@@ -108,7 +109,7 @@ const SellsTable = ({isLoading, sells }: { isLoading: boolean; sells: SellTicket
       <>
         <Tooltip title="Ver detalles">
           <IconButton
-            onClick={() => handleDetail(params.row.ticket_id, navigate)}  
+            onClick={() => handleDetail({ ticket_id: params.row.ticket_id, navigate })}  
             aria-label="ver"
           > 
             <RemoveRedEyeIcon /> 
@@ -116,7 +117,7 @@ const SellsTable = ({isLoading, sells }: { isLoading: boolean; sells: SellTicket
         </Tooltip>
         <Tooltip title="Borrar">
           <IconButton
-            onClick={() => handleDeleteSell(params.row.ticket_id, dispatch, showSnackBar)}  
+            onClick={() => handleDeleteSell({ticket_id: params.row.ticket_id, dispatch, showSnackBar})}  
             aria-label="ver"
           > 
             <DeleteIcon /> 
