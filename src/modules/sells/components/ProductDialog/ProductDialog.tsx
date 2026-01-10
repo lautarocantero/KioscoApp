@@ -21,24 +21,46 @@
 //-----------------------------------------------------------------------------//
 
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, type Theme } from "@mui/material";
-import type { DialogDataInterface, DialogOnSubmitType, ProductDialogInitialValues } from "@typings/sells/types";
+import type { DialogDataInterface } from "@typings/sells/types";
 import { useFormik } from "formik";
-import { useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useContext, useEffect, useMemo } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as Yup from 'yup';
 import type { AppDispatch, RootState as ProductVariantState } from "../../../../store/productVariant/productVariantSlice";
 import { getProductVariantsById } from "../../../../store/productVariant/productVariantThunks";
 import type { RootState as SellerRootState } from "../../../../store/seller/sellerSlice";
-import { addToCartThunk } from "../../../../store/seller/sellerThunks";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
-import type { ProductTicketType } from "../../../../typings/seller/sellerTypes";
-import { AlertColor } from "../../../../typings/ui/ui";
 import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
 import ProductDialogData from "./ProductDialogDataComponent";
 import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
+import onSubmit from "../../helpers/ProductDialog/ProductDialogSubmit";
 
-  const getInitialValues = ({productVariants}: ProductDialogInitialValues): DialogDataInterface => {
+const ProductDialog = (): React.ReactNode => {
+  const { showModal, setShowModal } = useContext(ProductDialogContext)!;
+  const { showSnackBar } = useContext(SnackBarContext)!;
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  {/*─────────────────── 🔎 shallowEqual para que solo se cargue si el valor es diferente 🔎 ───────────────────*/}
+  {/*─────────────────── 🔎 compara arrays 🔎 ───────────────────*/}
+  const productVariants = useSelector((state: ProductVariantState) => state.productVariant.productVariants, shallowEqual);
+
+  const productSelected = useSelector((state: SellerRootState) => state.seller.productSelected);
+
+  useEffect(() => {
+      const getProductVariants = async(): Promise<void> => {
+        const _idResult: string | null | undefined = productSelected?._id;
+
+        if(!_idResult) return;
+
+        await dispatch(getProductVariantsById(_idResult));
+      }
+
+      getProductVariants();
+  }, [dispatch, productSelected]);
+
+  const initialValues: DialogDataInterface = useMemo(() => {
     const product: ProductVariant | null = productVariants?.length > 0 ? productVariants[0] : null;
     const productId: string = product?._id ?? '';
 
@@ -48,111 +70,51 @@ import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
         requiredStock: product && product?.stock > 0 ? 1 : 0, 
         totalPrice: 0,
     };
-  };
+  }, [productVariants]);
 
-  const getValidationSchema = () =>
-    Yup.lazy(() =>
-      Yup.object().shape({
-        productVariantId: Yup.string().required("Campo requerido"), 
-        productVariant: Yup.object().shape({
-          _id: Yup.string().nullable().required("Campo requerido"),
-          name: Yup.string().required("Campo requerido"),
-          description: Yup.string().required("Campo requerido"),
-          created_at: Yup.string().required("Campo requerido"),
-          updated_at: Yup.string().required("Campo requerido"),
-          image_url: Yup.string().required("Campo requerido"),
-          gallery_urls: Yup.array().of(Yup.string().url("Debe ser una URL válida")).required("Campo requerido"),
-          brand: Yup.string().required("Campo requerido"),
-          product_id: Yup.string().required("Campo requerido"),
-          sku: Yup.string().required("Campo requerido"),
-          model_type: Yup.string().required("Campo requerido"),
-          model_size: Yup.string().required("Campo requerido"),
-          min_stock: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
-          stock: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
-          price: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
-          expiration_date: Yup.string().required("Campo requerido"),
-        }).required("Campo requerido"), 
-        requiredStock: Yup.number().moreThan(0).required("Campo requerido"),
-        totalPrice: Yup.number().required("Campo requerido"),
-      })
-  );
+  const validationSchema = useMemo(() =>
+  Yup.lazy(() =>
+    Yup.object().shape({
+      productVariantId: Yup.string().required("Campo requerido"), 
+      productVariant: Yup.object().shape({
+        _id: Yup.string().nullable().required("Campo requerido"),
+        name: Yup.string().required("Campo requerido"),
+        description: Yup.string().required("Campo requerido"),
+        created_at: Yup.string().required("Campo requerido"),
+        updated_at: Yup.string().required("Campo requerido"),
+        image_url: Yup.string().required("Campo requerido"),
+        gallery_urls: Yup.array().of(Yup.string().url("Debe ser una URL válida")).required("Campo requerido"),
+        brand: Yup.string().required("Campo requerido"),
+        product_id: Yup.string().required("Campo requerido"),
+        sku: Yup.string().required("Campo requerido"),
+        model_type: Yup.string().required("Campo requerido"),
+        model_size: Yup.string().required("Campo requerido"),
+        min_stock: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
+        stock: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
+        price: Yup.number().min(0, "Debe ser mayor o igual a 0").required("Campo requerido"),
+        expiration_date: Yup.string().required("Campo requerido"),
+      }).required("Campo requerido"), 
+      requiredStock: Yup.number().moreThan(0).required("Campo requerido"),
+      totalPrice: Yup.number().required("Campo requerido"),
+    })
+  ), []);
 
-    const onSubmit = async ({ data, showSnackBar, dispatch, setShowModal }: DialogOnSubmitType): Promise<void> => {
-
-      const { productVariant, requiredStock }: { productVariant: ProductVariant | null, requiredStock: number } = data;
-
-      if(!productVariant) {
-        showSnackBar(`Ocurrio un error al agregar el producto.`, AlertColor.Error);
-        return;
-      };
-
-      if(requiredStock === 0) {
-        showSnackBar(`No hay stock del producto.`, AlertColor.Error);
-        return;
-      };
-
-      const 
+  const handleOnSubmit = useCallback(
+    (formValues: DialogDataInterface) => onSubmit(
       { 
-        _id, name, description,image_url,
-        brand,product_id,sku,model_type,
-        model_size,price,expiration_date 
-      } = productVariant;
-
-      const productTicket: ProductTicketType = {
-        _id,
-        name,
-        description,
-        image_url,
-        brand,
-        product_id,
-        sku,
-        model_type,
-        model_size,
-        price,
-        expiration_date,
-        stock_required: requiredStock,
-      }
-
-      await dispatch(addToCartThunk({productData: productTicket}));   
-      setShowModal(false)
-
-      const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
-      showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
-    }  
-
-const ProductDialog = (): React.ReactNode => {
-  {/*─────────────────── 🔎 non‑null assertion operator '!' 🔎 ───────────────────*/}
-  {/*─────────────────── por si el contexto es undefined en algun momento ───────────────────*/}
-  const { showModal, setShowModal } = useContext(ProductDialogContext)!;
-  const { showSnackBar } = useContext(SnackBarContext)!;
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  const { productVariant } = useSelector((state: ProductVariantState) => state);
-  const { productVariants }: {productVariants: ProductVariant[]} = productVariant;
-
-  const { seller } = useSelector((state: SellerRootState ) => state);
-  const { productSelected }: {productSelected: ProductVariant | null} = seller;
-
-  useEffect(() => {
-      const getProductVariants = async(): Promise<void> => {
-        const _idResult: string | null | undefined = productSelected?._id;
-
-        if(!_idResult) return;
-        if(_idResult === undefined) return;
-
-        await dispatch(getProductVariantsById(_idResult));
-      }
-
-      getProductVariants();
-  }, [dispatch, productSelected])
+        data: formValues, 
+        showSnackBar, 
+        dispatch, 
+        setShowModal 
+      }),
+  [showSnackBar, dispatch, setShowModal]);
 
   const { handleSubmit, values, setFieldValue } = useFormik({
-    initialValues: getInitialValues({productVariants}),
-    onSubmit: (formValues) =>  onSubmit({data: formValues,showSnackBar, dispatch, setShowModal }),
+    initialValues: initialValues,
+    onSubmit: handleOnSubmit,
     validateOnBlur: false,
     validateOnChange: false,
-    validationSchema: getValidationSchema(),
+    validationSchema,
     /*─────────────────── 🔎 reinicia si abro modal con otro producto 🔎 ───────────────────*/
     enableReinitialize: true,
   })
@@ -163,7 +125,6 @@ const ProductDialog = (): React.ReactNode => {
 
   return (
     <Dialog 
-      key={String(productSelected?._id)}
       open={showModal} 
       onClose={() => setShowModal(false)}
       sx={(theme: Theme) => ({
@@ -211,6 +172,7 @@ const ProductDialog = (): React.ReactNode => {
         >
           <Button 
             onClick={() => setShowModal(false)}
+            aria-label="Cerrar"
             sx={(theme: Theme) => ({
               color: theme?.custom?.whiteTranslucid,
             })}
@@ -219,6 +181,7 @@ const ProductDialog = (): React.ReactNode => {
           </Button>
           <Button 
             type="submit"
+            aria-label="Agregar"
             sx={(theme: Theme) => ({
               color: theme?.custom?.fontColor,
             })}

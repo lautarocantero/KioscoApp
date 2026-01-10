@@ -53,8 +53,6 @@ import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from 
 
     export type ItemQuantityHandlerProps = Pick<EspecificationsLeftProps, 'variants'>;
 
-    export type EvaluateStockProps = Pick<EspecificationsLeftProps, 'variants'>
-
     export interface QuantityChipProps {
       color: string,
       label: string,

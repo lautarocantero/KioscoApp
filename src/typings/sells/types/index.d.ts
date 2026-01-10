@@ -3,6 +3,7 @@ import type { AlertColor } from "@typings/ui/ui";
 import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";
 import type { PaymentMethod } from "../enums/sells";
+import type { EspecificationsLeftProps } from "../reactComponents";
 
 {/*─────────────────── 🔎 tipos usados en sell 🔎 ───────────────────*/}
 
@@ -101,11 +102,21 @@ import type { PaymentMethod } from "../enums/sells";
         setShowModal: (value: boolean) => void;
     };
 
-    export interface ProductDialogInitialValues {
-        productVariants: ProductVariant[],
+    export type DialogVariantDataType = Omit<DialogDataInterface, 'productVariantId'>
+
+    export interface FormatProductTicketInterface {
+        productVariant: ProductVariant;
+        requiredStock: number;
     }
 
-    export type DialogVariantDataType = Omit<DialogDataInterface, 'productVariantId'>
+    export type EvaluateStockType = Pick<EspecificationsLeftProps, 'variants'>
+
+    export interface validateProductSubmissionInterface {
+        productVariant: ProductVariant | null;
+        requiredStock: number;
+    }
+
+    export type ValidationResultType = { valid: true } | { valid: false; message: string };
 
    //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
 

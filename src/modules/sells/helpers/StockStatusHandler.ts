@@ -22,10 +22,10 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { EvaluateStockProps } from "@typings/sells/reactComponents";
+import type { EvaluateStockType } from "@typings/sells/types";
 import { StockStatusEnum } from "../../../typings/auth/enums";
 
-    const evaluateStockBySize = ({variants}: EvaluateStockProps): Record<string, StockStatusEnum> => {
+    const evaluateStockBySize = ({variants}: EvaluateStockType): Record<string, StockStatusEnum> => {
 
       const grouped: Record<string, { totalStock: number; totalMinStock: number }> = {};
       const result: Record<string, StockStatusEnum> = {};
