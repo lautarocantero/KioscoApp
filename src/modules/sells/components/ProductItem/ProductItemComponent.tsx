@@ -16,7 +16,6 @@
 
 import { Grid, type Theme } from "@mui/material";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
-import type { ProductItemInterface } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
 import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
 import { useContext } from "react";
@@ -25,6 +24,7 @@ import { useDispatch } from "react-redux";
 import { selectProductThunk } from "../../../../store/seller/sellerThunks";
 import type { getProductSelectedPayload } from "../../../../typings/seller/sellerTypes";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
+import type { ProductItemInterface } from "@typings/sells/reactComponents";
 
 const ProductItemComponent = ({ product }: ProductItemInterface): React.ReactNode => {
     const { name, variants } : { name: string, variants: ProductVariant[]} = product;

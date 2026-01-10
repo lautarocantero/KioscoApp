@@ -33,10 +33,10 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, type Theme } from "@mui/material";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
-import type { RootState as SellState } from '../../../../store/sell/sellSlice';
+import type { RootState as SellStateInterface } from '../../../../store/sell/sellSlice';
 import type { ProductTicketType } from "../../../../typings/seller/sellerTypes";
-import type { SellTicketType } from "../../../../typings/sells/types/sellsTypes";
-import { SellDialogContext } from "../../context/Sell/SellDialogContext";
+import { SellDialogContext } from "../../context/SellType/SellDialogContext";
+import type { SellTicketType } from "@typings/sells/types";
 
 const SellDialogContent = ({ sellSelected }: { sellSelected: SellTicketType | null }): React.ReactNode => {
   if (!sellSelected) {
@@ -119,7 +119,7 @@ const SellDialogContent = ({ sellSelected }: { sellSelected: SellTicketType | nu
 const SellDialog = (): React.ReactNode => { 
 
     const { showModal, setShowModal } = useContext(SellDialogContext)!;
-    const { sell } = useSelector((state: SellState) => state);
+    const { sell } = useSelector((state: SellStateInterface) => state);
     const { sellSelected } : { sellSelected: SellTicketType | null } = sell;
 
     return (

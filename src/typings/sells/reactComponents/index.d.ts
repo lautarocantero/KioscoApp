@@ -3,8 +3,6 @@ import type { ProductVariant } from "../../productVariant/productVariant";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES 🔎 ───────────────────*/}
 
-declare module '@typings/sell-components' {
-
     //──────────────────────────────────────────── 📋 Product Exhibitor 📋───────────────────────────────────────────//
 
     export interface ProductsExhibitorComponentInterface {
@@ -49,7 +47,7 @@ declare module '@typings/sell-components' {
     export interface CartProductListComponentInterface {
         cart: ProductTicketType[],
     }
-    export interface CartPriceComponentType {
+    export interface CartPriceComponentInterface {
         productsTotalPrice: number,
         ivaPercentage: number,
         ivaAmount: number,
@@ -83,7 +81,7 @@ declare module '@typings/sell-components' {
         side: CartSide, 
         action: () => void
     }
-    interface DisplayDataComponentInterface {
+    export interface DisplayDataComponentInterface {
         nameEdited: string,
         size: string,
         units: string,
@@ -109,19 +107,17 @@ declare module '@typings/sell-components' {
 
     export type ProductDialogImageComponentType = Pick<ProductDialogIlustrationInterface, 'name' | 'image_url'>
 
-    export interface DialogDataType {
+    export interface DialogDataInterface {
         products: ProductVariant[],
         values: DialogDataInterface,
         setFieldValue: SetFieldValue<DialogDataInterface>,
     };
 
-    export type DialogSelectorType = Pick<DialogDataType, 'products' | 'values' | 'setFieldValue'>;
+    export type DialogSelectorType = Pick<DialogDataInterface, 'products' | 'values' | 'setFieldValue'>;
 
-    export type DialogDataDisplayType = Pick<DialogDataType, 'setFieldValue'> & {
-        values: DialogVariantDataInterface,
+    export type DialogDataDisplayType = Pick<DialogDataInterface, 'setFieldValue'> & {
+        values: DialogVariantDataType,
         label: string,
     }
 
-    export type DialogDataPriceType = Pick <DialogDataType, 'values'>
-
-}
+    export type DialogDataPriceType = Pick <DialogDataInterface, 'values'>

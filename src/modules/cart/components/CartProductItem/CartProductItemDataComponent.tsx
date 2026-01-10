@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, Tooltip, Typography, type Theme } from "@mui/material";
-import type { CartProductItemDataComponentInterface, DisplayDataComponentInterface } from "../../../../typings/sells/types/sellsTypes";
+import type { CartProductItemDataComponentInterface, DisplayDataComponentInterface } from "@typings/sells/reactComponents";
 
 const ColumnData = ({label = '', value =''}: {label?: string, value: string}): React.ReactNode => {
     return (

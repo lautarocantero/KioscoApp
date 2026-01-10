@@ -1,5 +1,5 @@
 
-// # Módulo: Sell Requests  
+// # Módulo: SellType Requests  
 
 // ## Descripción 📦
 // Configuración de cliente Axios para interactuar con el backend de ventas.  
@@ -15,7 +15,7 @@
 //   - Realiza un `GET` a `/get-sells`.  
 //   - Devuelve `response.data` con la lista de ventas.  
 // - `postSellRequest`: función asíncrona que:  
-//   - Realiza un `POST` a `/create-sell` con el payload `CreateSellApiPayload`.  
+//   - Realiza un `POST` a `/create-sell` con el payload `CreateSellApiPayloadType`.  
 //   - Devuelve `response.data` con la venta creada.  
 
 // ## Notas técnicas 💽
@@ -27,8 +27,7 @@
 
 import axios from "axios";
 import { API_URL } from "../../../config/api";
-import type { CreateSellApiPayload } from "../../../typings/sells/types/sellsTypes";
-
+import type { CreateSellApiPayloadType } from "@typings/sells/types";
 
 const baseUrl = axios.create({
     baseURL: `${API_URL}/sell`,
@@ -51,7 +50,7 @@ export const getSellByIdRequest = async (ticket_id: string) => {
 
 //──────────────────────────────────────────── Post ───────────────────────────────────────────//
 
-export const postSellRequest = async (data: CreateSellApiPayload) => {
+export const postSellRequest = async (data: CreateSellApiPayloadType) => {
     const response = await baseUrl.post('/create-sell', data);
     return response.data;
 }

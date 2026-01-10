@@ -36,10 +36,9 @@ import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
 import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "../../../../typings/ui/ui";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
-import type { DialogDataInterface } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
-import type { ProductDialogDataInterface } from "../../../../typings/sells/types/sellsTypes";
+import type { DialogDataInterface } from "@typings/sells/types";
 
-  const getInitialValues = (productVariants: ProductVariant[]): ProductDialogDataInterface => {
+  const getInitialValues = (productVariants: ProductVariant[]): DialogDataInterface => {
     const product: ProductVariant | null = productVariants?.length > 0 ? productVariants[0] : null;
     const productId: string = product?._id ?? '';
 

@@ -11,7 +11,7 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { ProductsExhibitorComponentInterface } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
+import type { ProductsExhibitorComponentInterface } from "@typings/sells/reactComponents";
 import SimpleGrid from "../../../shared/components/SimpleGrid/SimpleGridComponent";
 import ProductsNotFound from "./ProductNotFound";
 import ProductsList from "./ProductsList";

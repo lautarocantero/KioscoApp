@@ -3,11 +3,9 @@ import type { PaymentMethod } from "../enums/sells";
 
 {/*─────────────────── 🔎 tipos usados en sell 🔎 ───────────────────*/}
 
-declare module '@typings/sell-types' {
+    //────────────────────────────────────────── 🔖 SellType 🔖 ─────────────────────────────────────────//
 
-    //────────────────────────────────────────── 🔖 Sell 🔖 ─────────────────────────────────────────//
-
-    interface SellEntity {
+    interface SellEntityInterface {
         ticket_id: string;
         purchase_date: string;
         modification_date: string | null;
@@ -21,7 +19,7 @@ declare module '@typings/sell-types' {
         currency: string;   
     }
 
-    export type SellTicketType = Pick<SellEntity, 
+    export type SellTicketType = Pick<SellEntityInterface, 
         'currency' |
         'iva' | 
         'modification_date' | 
@@ -35,22 +33,22 @@ declare module '@typings/sell-types' {
         'total_amount'  
         >;
 
-    export type Sell = SellEntity;
+    export type SellType = SellEntityInterface;
 
     //────────────────────────────────────────── 🍕 SLICE 🍕 ─────────────────────────────────────────//
 
-    export interface SellState { 
+    export interface SellStateInterface { 
         sells: SellTicketType[],
         sellSelected: SellTicketType | null,
         isLoading: boolean,
         errorMessage: string | null,
     }
 
-    export type SellStateError = Pick <SellState, 'errorMessage'>
+    export type SellStateErrorType = Pick <SellStateInterface, 'errorMessage'>
 
     //────────────────────────────────────────── 🕐 THUNKS 🕐 ─────────────────────────────────────────//
 
-    export type CreateSellRequestPayload = Pick<SellTicketType, 
+    export type CreateSellRequestPayloadType = Pick<SellTicketType, 
         'currency' |
         'iva' | 
         'payment_method' | 
@@ -62,13 +60,13 @@ declare module '@typings/sell-types' {
         'total_amount'
     >
 
-    export interface CreateSellSanitizedPayload {
-        data: CreateSellRequestPayload;
+    export interface CreateSellSanitizedPayloadInterface {
+        data: CreateSellRequestPayloadType;
     }
 
     //────────────────────────────────────────── 🔗 API 🔗 ─────────────────────────────────────────//
 
-    export type CreateSellApiPayload = Omit<Sell, 'ticket_id' | 'modification_date'>;
+    export type CreateSellApiPayloadType = Omit<SellType, 'ticket_id' | 'modification_date'>;
 
    //────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
 
@@ -82,8 +80,6 @@ declare module '@typings/sell-types' {
         totalPrice: number,
     }
 
-    export type DialogVariantDataInterface = Omit<DialogDataInterface, 'productVariantId'>
+    export type DialogVariantDataType = Omit<DialogDataInterface, 'productVariantId'>
 
-    export type VariantDialogDataInterface = Pick<DialogDataInterface, 'productVariant' | 'requiredStock' | 'totalPrice'>;
-
-}
+    export type VariantDialogDataType = Pick<DialogDataInterface, 'productVariant' | 'requiredStock' | 'totalPrice'>;

@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Box } from "@mui/material";
-import type { ProductItemImageInterface } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
+import type { ProductItemImageInterface } from "@typings/sells/reactComponents";
 
 const ProductItemImage = ({source, name}: ProductItemImageInterface):React.ReactNode => {
 

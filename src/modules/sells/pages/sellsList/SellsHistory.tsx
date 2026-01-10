@@ -18,16 +18,16 @@
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState as SellState} from '../../../../store/sell/sellSlice';
-import type { SellTicketType } from '../../../../typings/sells/types/sellsTypes';
+import type { RootState as SellStateInterface} from '../../../../store/sell/sellSlice';
 import type { AppDispatch } from '../../../../store/sell/sellSlice';
 import { getSells } from '../../../../store/sell/sellsThunks';
 import AppLayout from '../../../shared/layout/AppLayout';
 import SellsTable from '../../components/sellsTable/SellsTable';
+import type { SellTicketType } from '@typings/sells/types';
 
 const SellsHistoryPage = ():React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();
-  const { sell } = useSelector((state: SellState) => state);
+  const { sell } = useSelector((state: SellStateInterface) => state);
   const { isLoading, sells} : { isLoading: boolean, sells: SellTicketType[]} = sell;
 
   useEffect(() => {

@@ -1,5 +1,7 @@
 //─────────────────── Componente 🧩: QuantityChip ───────────────────//
 
+import type { QuantityChipInterface } from "@typings/sells/reactComponents";
+
 //─────────────────── Descripción 📝 ───────────────────//
 // Renderiza un 'chip' visual que muestra con color y texto cuantas existencias existen
 // de un producto en una medida en especifico. Ejemplo = 200 ml verde (existencias por encima de punto de reposicion)
@@ -9,7 +11,6 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { QuantityChipInterface } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 
 const QuantityChip = ({ color = "red", label }: QuantityChipInterface): React.ReactNode => {
     const fontSize: string = label?.length > 3 ? "0.6em" : "0.7em";

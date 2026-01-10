@@ -9,7 +9,7 @@
 //──────────────────── Flujo ✴️ ─────────────────────//
 // ➡️ Entrada:  
 //   - `getSells`: no requiere parámetros, solo el `dispatch`.  
-//   - `createSell`: recibe un objeto `CreateSellSanitizedPayload` con los datos de la venta.  
+//   - `createSell`: recibe un objeto `CreateSellSanitizedPayloadInterface` con los datos de la venta.  
 // ❌ Validación inicial:  
 //   - `getSells`: si no se encuentran ventas → `setError`.  
 //   - `createSell`: si no se genera `ticket_id` → lanza error.  
@@ -29,7 +29,7 @@
 
 
 import type { Dispatch } from "@reduxjs/toolkit"
-import type { CreateSellSanitizedPayload, Sell } from "../../typings/sells/types/sellsTypes"
+import type { CreateSellSanitizedPayloadInterface, SellType } from "../../typings/sells/types/sellsTypes"
 import { checkingSells, setError, setSells, setSellSelected } from "./sellSlice";
 import { handleError } from "../shared/handlerStoreError";
 import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest } from "../../modules/sells/api/sellApi";
@@ -38,11 +38,11 @@ import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest
 
 export const getSells = () => {
 
-    return async (dispatch: Dispatch) : Promise<Sell[] | undefined> => {
+    return async (dispatch: Dispatch) : Promise<SellType[] | undefined> => {
         dispatch(checkingSells());
 
         try{
-            const sells: Sell[] = await getSellsRequest();
+            const sells: SellType[] = await getSellsRequest();
             console.log(sells)
 
             if(!sells) {
@@ -51,7 +51,7 @@ export const getSells = () => {
             }
 
             dispatch(setSells(sells.data));
-            return sells.data as Sell[];
+            return sells.data as SellType[];
         } catch(error: unknown) {
             handleError(error);
         }
@@ -59,10 +59,10 @@ export const getSells = () => {
 }
 
 export const getSellById = (ticket_id: string) => {
-    return async (dispatch: Dispatch) : Promise<Sell | undefined> => {
+    return async (dispatch: Dispatch) : Promise<SellType | undefined> => {
         dispatch(checkingSells());
         try {
-            const sell: Sell[] = await getSellByIdRequest(ticket_id);
+            const sell: SellType[] = await getSellByIdRequest(ticket_id);
 
             if(!sell) {
                 dispatch(setError({ errorMessage: "No se ha encontrado la venta"}))
@@ -70,7 +70,7 @@ export const getSellById = (ticket_id: string) => {
             }
 
             dispatch(setSellSelected(sell[0]));
-            return sell[0] as Sell;
+            return sell[0] as SellType;
         } catch (error: unknown) {
             handleError(error);
         }
@@ -79,7 +79,7 @@ export const getSellById = (ticket_id: string) => {
 
 //──────────────────────────────────────────── Post ───────────────────────────────────────────//
 
-export const createSell = ({data}: CreateSellSanitizedPayload) => {
+export const createSell = ({data}: CreateSellSanitizedPayloadInterface) => {
     const {purchase_date,seller_id,seller_name,payment_method,products,sub_total,iva,total_amount,currency} = data;
     
     return async (dispatch: Dispatch) : Promise<string | undefined> => {

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import type {AppDispatch, RootState as SellState} from '../../../../store/sell/sellSlice';
+import type {AppDispatch, RootState as SellStateInterface} from '../../../../store/sell/sellSlice';
 import { getSellById } from "../../../../store/sell/sellsThunks";
 import { CircularProgress, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type Theme } from "@mui/material";
 import type { ProductTicketType } from "../../../../typings/seller/sellerTypes";
@@ -12,7 +12,7 @@ const SellDetailPage = ():React.ReactNode => {
     const dispatch = useDispatch<AppDispatch>();
 
     const { ticket_id } = useParams<{ ticket_id: string }>();
-    const { sell } = useSelector((state: SellState) => state);
+    const { sell } = useSelector((state: SellStateInterface) => state);
     const { sellSelected } = sell;
     
 

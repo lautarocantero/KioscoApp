@@ -16,9 +16,9 @@
 
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography, type SelectChangeEvent, type Theme } from "@mui/material";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
-import type { DialogSelectorType } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 import { useSelector } from "react-redux";
 import type { RootState as ProductVariantState  } from "../../../../store/productVariant/productVariantSlice";
+import type { DialogSelectorType } from "@typings/sells/reactComponents";
 
 const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelectorType): React.ReactNode => {
     const isEmpty: boolean = products?.length <= 0;

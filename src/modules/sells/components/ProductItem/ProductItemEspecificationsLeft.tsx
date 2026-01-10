@@ -17,9 +17,9 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid } from "@mui/material";
-import type { EspecificationsLeftInterface } from "../../../../typings/sells/reactComponents/sellsComponentTypes";
 import ProductItemData from "./ProductItemData";
 import ProductItemImage from "./ProductItemImage";
+import type { EspecificationsLeftInterface } from "@typings/sells/reactComponents";
 
 const ProductItemEspecificationsLeft = ({name = 'product', variants = [], image = '/images/productExample/cocaCola.png'} : EspecificationsLeftInterface ): React.ReactNode => {
 
