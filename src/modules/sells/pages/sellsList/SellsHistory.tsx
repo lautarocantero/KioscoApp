@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState as SellStateInterface } from '../../../../store/sell/sellSlice';
 import { getSellsThunk } from '../../../../store/sell/sellsThunks';
 import AppLayout from '../../../shared/layout/AppLayout';
-import SellsTable from '../../components/sellsTable/SellsTable';
+import SellsTable from '../../components/SellsTable/SellsTable';
 
 const SellsHistoryPage = ():React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();

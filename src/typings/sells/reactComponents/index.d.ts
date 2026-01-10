@@ -1,6 +1,6 @@
 import type { Product } from "../../product/productTypes";
 import type { ProductVariant } from "../../productVariant/productVariant";
-import type { DialogDataInterface, DialogVariantDataType } from "../types";
+import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from "../types";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}
 
@@ -10,6 +10,14 @@ import type { DialogDataInterface, DialogVariantDataType } from "../types";
        isLoading: boolean;
        sells: SellTicketType[];
     }
+
+    export interface SellDataProps {
+        sellSelected: SellTicketType | null;
+    }
+
+    export type SellCartDataProps = Pick<SellDataProps, 'sellSelected'>;
+
+    export type SellCartProductsProps = Pick<SellDataProps, 'sellSelected'>;
 
     //──────────────────────────────────────────── 📋 Product Exhibitor 📋───────────────────────────────────────────//
 
