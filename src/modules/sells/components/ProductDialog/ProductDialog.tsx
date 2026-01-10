@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, type Theme } from "@mui/material";
-import type { DialogDataInterface, ProductDialogInitialValues } from "@typings/sells/types";
+import type { DialogDataInterface, DialogOnSubmitType, ProductDialogInitialValues } from "@typings/sells/types";
 import { useFormik } from "formik";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -77,6 +77,49 @@ import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
       })
   );
 
+    const onSubmit = async ({ data, showSnackBar, dispatch, setShowModal }: DialogOnSubmitType): Promise<void> => {
+
+      const { productVariant, requiredStock }: { productVariant: ProductVariant | null, requiredStock: number } = data;
+
+      if(!productVariant) {
+        showSnackBar(`Ocurrio un error al agregar el producto.`, AlertColor.Error);
+        return;
+      };
+
+      if(requiredStock === 0) {
+        showSnackBar(`No hay stock del producto.`, AlertColor.Error);
+        return;
+      };
+
+      const 
+      { 
+        _id, name, description,image_url,
+        brand,product_id,sku,model_type,
+        model_size,price,expiration_date 
+      } = productVariant;
+
+      const productTicket: ProductTicketType = {
+        _id,
+        name,
+        description,
+        image_url,
+        brand,
+        product_id,
+        sku,
+        model_type,
+        model_size,
+        price,
+        expiration_date,
+        stock_required: requiredStock,
+      }
+
+      await dispatch(addToCartThunk({productData: productTicket}));   
+      setShowModal(false)
+
+      const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
+      showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
+    }  
+
 const ProductDialog = (): React.ReactNode => {
   {/*─────────────────── 🔎 non‑null assertion operator '!' 🔎 ───────────────────*/}
   {/*─────────────────── por si el contexto es undefined en algun momento ───────────────────*/}
@@ -104,51 +147,9 @@ const ProductDialog = (): React.ReactNode => {
       getProductVariants();
   }, [dispatch, productSelected])
 
-  const onSubmit = async (data: DialogDataInterface): Promise<void> => {
-
-    const { productVariant, requiredStock } : {productVariant: ProductVariant | null, requiredStock: number} = data;
-
-    if(!productVariant) {
-      showSnackBar(`Ocurrio un error al agregar el producto.`, AlertColor.Error);
-      return;
-    };
-    if(requiredStock === 0) {
-      showSnackBar(`No hay stock del producto.`, AlertColor.Error);
-      return;
-    };
-
-    const 
-    { 
-      _id, name, description,image_url,
-      brand,product_id,sku,model_type,
-      model_size,price,expiration_date 
-    } = productVariant;
-
-    const productTicket: ProductTicketType = {
-      _id,
-      name,
-      description,
-      image_url,
-      brand,
-      product_id,
-      sku,
-      model_type,
-      model_size,
-      price,
-      expiration_date,
-      stock_required: requiredStock,
-    }
-    
-    await dispatch(addToCartThunk({productData: productTicket}));   
-    setShowModal(false)
-
-    const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
-    showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
-  }  
-
   const { handleSubmit, values, setFieldValue } = useFormik({
     initialValues: getInitialValues({productVariants}),
-    onSubmit,
+    onSubmit: (formValues) =>  onSubmit({data: formValues,showSnackBar, dispatch, setShowModal }),
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema: getValidationSchema(),

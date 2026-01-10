@@ -94,6 +94,13 @@ import type { PaymentMethod } from "../enums/sells";
         totalPrice: number,
     }
 
+    export interface DialogOnSubmitType {
+        data: DialogDataInterface,
+        showSnackBar: (message: string, color: AlertColor) => void,
+        dispatch: AppDispatch,
+        setShowModal: (value: boolean) => void;
+    };
+
     export interface ProductDialogInitialValues {
         productVariants: ProductVariant[],
     }
