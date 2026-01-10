@@ -17,8 +17,19 @@
 
 import { Grid, Typography, type Theme } from "@mui/material";
 import type { DialogDataPriceProps } from "@typings/sells/reactComponents";
+import React, { useMemo } from "react";
 
 const ProductDialogPriceComponent = ({values}: DialogDataPriceProps): React.ReactNode => {
+
+    const formatter = useMemo( () => 
+      new Intl.NumberFormat("es-AR", 
+        { 
+          style: "currency", 
+          currency: "ARS", 
+          minimumFractionDigits: 2, 
+        }),
+      [] 
+    );
 
     if(!values?.productVariant) return null;
 
@@ -43,14 +54,10 @@ const ProductDialogPriceComponent = ({values}: DialogDataPriceProps): React.Reac
                 })}
             >
               {/* ─────────────────── 🔎 el formato numerico es para el dinero, comas decimales 🔎 ─────────────────── */}
-              Total: {new Intl.NumberFormat("es-AR", {
-                style: "currency",
-                currency: "ARS",
-                minimumFractionDigits: 2,
-              }).format(totalPrice)}
+              Total: {formatter.format(totalPrice)}
             </Typography>
         </Grid>
     )
 }
 
-export default ProductDialogPriceComponent;
+export default React.memo(ProductDialogPriceComponent);

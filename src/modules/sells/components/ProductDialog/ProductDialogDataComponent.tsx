@@ -19,6 +19,7 @@ import type { DialogDataProps } from "@typings/sells/reactComponents";
 import ProductDialogPriceComponent from "./ProductDialogPriceComponent";
 import ProductDialogSelector from "./ProductDialogSelector";
 import ProductDialogUnitsComponent from "./ProductDialogUnitsComponent";
+import React from "react";
 
 const ProductDialogDataComponent = ( {products, values, setFieldValue } : DialogDataProps ):React.ReactNode => {
 
@@ -48,7 +49,7 @@ const ProductDialogDataComponent = ( {products, values, setFieldValue } : Dialog
     )
 };
 
-export default ProductDialogDataComponent;
+export default React.memo(ProductDialogDataComponent);
 
 
 

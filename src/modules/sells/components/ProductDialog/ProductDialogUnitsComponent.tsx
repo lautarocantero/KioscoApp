@@ -17,6 +17,7 @@
 import { Grid } from "@mui/material";
 import type { DialogDataDisplayProps } from "@typings/sells/reactComponents";
 import NumberField from "../../../shared/components/NumberField/NumberField";
+import React from "react";
 
 const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: DialogDataDisplayProps ): React.ReactNode => {
 
@@ -44,4 +45,4 @@ const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: Dial
     )
 }
 
-export default ProductVariantDialogUnitsComponent;
+export default React.memo(ProductVariantDialogUnitsComponent);

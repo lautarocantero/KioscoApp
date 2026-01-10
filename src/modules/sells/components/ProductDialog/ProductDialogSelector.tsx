@@ -16,6 +16,7 @@
 
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography, type SelectChangeEvent, type Theme } from "@mui/material";
 import type { DialogSelectorProps } from "@typings/sells/reactComponents";
+import React, { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import type { RootState as ProductVariantState } from "../../../../store/productVariant/productVariantSlice";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
@@ -25,17 +26,7 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
     const { productVariant } = useSelector((state: ProductVariantState) => state);
     const { isLoading } : { isLoading: boolean } = productVariant;
 
-    if(isLoading) return (
-        <CircularProgress />
-    );
-
-    if(isEmpty) return (
-        <Box>
-            <Typography>No se han encontrado Productos</Typography>
-        </Box>
-    );
-
-    const handleChange = (event: SelectChangeEvent<string>) => {
+    const handleChange = useCallback((event: SelectChangeEvent<string>) => {
         const productId: string = event.target.value as string;
 
         if(!productId) return;
@@ -48,7 +39,35 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
 
         setFieldValue('productVariantId', productId );
         setFieldValue('productVariant', productObject);
-    }
+        },
+        [products, setFieldValue]
+    );
+
+    const renderValue = useCallback( 
+        (selected: string) => { 
+            const productObject: ProductVariant | undefined = products.find( 
+                (prodFind: ProductVariant) => String(prodFind?._id) === String(selected) 
+            ); 
+            return productObject ? productObject.name : "";
+        }, 
+        [products] 
+    );
+
+    const productOptions = useMemo( () => 
+        products.map((productObject: ProductVariant) => 
+            ( 
+                <MenuItem 
+                    key={String(productObject?._id)} 
+                    value={String(productObject?._id)}
+                > 
+                    {productObject?.name} 
+                </MenuItem> 
+            )), 
+        [products] 
+    );
+
+    if(isLoading) return (<CircularProgress />);
+    if(isEmpty) return (<Box><Typography>No se han encontrado Productos</Typography></Box>);
 
     return (
         <Box sx={{ minWidth: 120 }} >
@@ -71,16 +90,9 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
                         color: theme?.custom?.fontColor,
                         fontSize: theme?.typography?.body2?.fontSize,
                     })}
-                    renderValue={(selected: string) => {
-                      const productObject: ProductVariant | undefined = products.find((prodFind: ProductVariant) => String(prodFind?._id) === String(selected));
-                      return productObject ? productObject.name : "";
-                    }}
+                    renderValue={renderValue}
                 >
-                {
-                    products.map((productObject: ProductVariant ) => (
-                        <MenuItem key={String(productObject?._id)} value={String(productObject?._id)}>{productObject?.name}</MenuItem>
-                    ))
-                }
+                {productOptions}
             </Select> 
         </FormControl> 
     </Box> 
@@ -88,4 +100,4 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
 };
 
 
-export default ProductDialogSelector;
+export default React.memo(ProductDialogSelector);

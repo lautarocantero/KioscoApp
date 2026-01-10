@@ -8,6 +8,7 @@
 
 import { Box } from "@mui/material";
 import type { ProductDialogImageProps } from "@typings/sells/reactComponents";
+import React from "react";
 
 const ProductDialogImageComponent = ({image_url, name }: ProductDialogImageProps):React.ReactNode => {
 
@@ -30,4 +31,4 @@ const ProductDialogImageComponent = ({image_url, name }: ProductDialogImageProps
     )
 };
 
-export default ProductDialogImageComponent;
+export default React.memo(ProductDialogImageComponent);
