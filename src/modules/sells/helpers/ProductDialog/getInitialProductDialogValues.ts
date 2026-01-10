@@ -1,3 +1,20 @@
+
+//── Helper 🦸: getInitialProductDialogValues ──//
+
+// Descripción 📝
+// Genera los valores iniciales para el formulario del ProductDialog.
+
+// Lógica 🔧
+// - Toma la primera variante de producto o usa un objeto vacío.
+// - Devuelve un objeto con `productVariantId`, `productVariant`, `requiredStock` y `totalPrice`.
+
+// Notas técnicas 💽
+// - Tipado con `DialogDataInterface` y `ProductVariant`.
+// - Usado en el componente `ProductDialog` para inicializar Formik.
+
+//-----------------------------------------------------------------------------//
+
+
 import type { DialogDataInterface } from "@typings/sells/types";
 import type { ProductVariant } from "@typings/productVariant/productVariant";
 

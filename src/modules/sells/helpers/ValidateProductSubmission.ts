@@ -1,3 +1,14 @@
+
+//── Helper 🦸: validateProductSubmission ──//
+
+// Descripción 📝
+// Se encarga de validar que el producto seleccionado pueda agregarse al carrito
+
+// Lógica 🔧
+// - Cuenta con varias validaciones, que de fallar, retornar valid: false y un mensaje detallando el error
+
+//-----------------------------------------------------------------------------//
+
 import type { validateProductSubmissionInterface, ValidationResultType } from "@typings/sells/types";
 
 const validateProductSubmission = ( {productVariant, requiredStock}: validateProductSubmissionInterface): ValidationResultType => {

@@ -1,3 +1,22 @@
+
+//── Helper 🦸: ProductDialogValidationSchema ──//
+
+// Descripción 📝
+// Esquema de validación Yup para el formulario de ProductDialog.
+
+// Lógica 🔧
+// - Valida que `productVariantId` sea obligatorio.
+// - Valida que `productVariant` contenga todos los campos requeridos (id, nombre, descripción, stock, precio, etc.).
+// - Exige que `requiredStock` sea mayor a 0.
+// - Exige que `totalPrice` esté definido.
+
+// Notas técnicas 💽
+// - Implementado con Yup.
+// - Usado en el componente `ProductDialog` dentro de Formik para validar entradas del usuario.
+
+//-----------------------------------------------------------------------------//
+
+
 import * as Yup from "yup";
 
 const ProductDialogValidationSchema = Yup.object().shape({

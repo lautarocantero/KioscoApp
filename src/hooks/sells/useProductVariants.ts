@@ -1,8 +1,28 @@
 
 /**
- * Hook que obtiene las variantes de producto asociadas al producto seleccionado.
- * Encapsula la lógica de useEffect y Redux para mantener el componente limpio.
- */
+ * ┌───────────────────────────────────────────────┐
+ * │           🪝 Hook: useProductVariants          │
+ * └───────────────────────────────────────────────┘
+ *
+ * 📚 Propósito:
+ * - Centralizar la lógica para obtener el producto seleccionado y sus variantes.
+ * - Simplificar el consumo de datos en `ProductDialog` y otros componentes.
+ *
+ * ────────────────────────────────────────────────
+ *
+ * 🔧 Lógica:
+ * 1. Usa Redux para leer `productSelected` y `productVariants`.
+ * 2. Despacha `getProductVariantsById` cuando cambia el producto.
+ * 3. Retorna ambos valores listos para usar en la UI.
+ *
+ * ────────────────────────────────────────────────
+ *
+ * 📝 Ejemplo:
+ * 
+ * const { productSelected, productVariants } = useProductVariants();
+ * 
+ * ────────────────────────────────────────────────*/
+
 
 import { useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";

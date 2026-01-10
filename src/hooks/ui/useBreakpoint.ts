@@ -1,13 +1,19 @@
+
 /**
  * ┌───────────────────────────────────────────────┐
- * │               useBreakpoint Hook              │
+ * │           🪝 Hook: useBreakpoint               │
  * └───────────────────────────────────────────────┘
- * 🎭 Hook personalizado para detectar el breakpoint
- * actual del tema de Material UI.
+ *
+ * 🎭 Descripción:
+ * Hook personalizado para detectar el breakpoint actual del tema de Material UI.
+ *
+ * ────────────────────────────────────────────────
  *
  * 📚 Propósito:
- * - Facilita el diseño responsivo sin repetir lógica.
- * - Devuelve un string con el breakpoint activo.
+ * - Facilitar el diseño responsivo sin repetir lógica.
+ * - Retornar un string con el breakpoint activo.
+ *
+ * ────────────────────────────────────────────────
  *
  * 🔧 Breakpoints soportados:
  * - "xs" → extra pequeño
@@ -16,17 +22,30 @@
  * - "lg" → grande
  * - "xl" → extra grande
  *
+ * ────────────────────────────────────────────────
+ *
  * 🚀 Flujo:
  * 1. Obtiene el tema con `useTheme()`.
  * 2. Evalúa cada breakpoint con `useMediaQuery()`.
  * 3. Retorna el breakpoint activo como tipo `Breakpoint`.
  *
- * 🗺️ Uso típico:
- * ```tsx
+ * ────────────────────────────────────────────────
+ *
+ * 📝 Ejemplo:
+ * 
  * const bp = useBreakpoint();
- * if (bp === "sm") { ... } // lógica para pantallas pequeñas
+ *
+ * return (
+ *   <div>
+ *     {bp === "sm" && <p>Pantalla pequeña</p>}
+ *     {bp === "lg" && <p>Pantalla grande</p>}
+ *   </div>
+ * );
  * ```
+ *
+ * ────────────────────────────────────────────────
  */
+
 
 import { useTheme, useMediaQuery } from "@mui/material";
 
