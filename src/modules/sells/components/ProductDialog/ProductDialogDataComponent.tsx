@@ -6,7 +6,7 @@
 // Renderiza los subcomponentes encargados de seleccionar variante, unidades y precio. 
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// - `ProductDialogDataComponent`: componente principal que recibe props tipadas con `DialogDataInterface`.  
+// - `ProductDialogDataComponent`: componente principal que recibe props tipadas con `DialogDataProps`.  
 //   - `products`: listado de variantes de producto disponibles.  
 //   - `ProductDialogSelector`: selector de variantes de producto.  
 //   - `ProductDialogUnits`: campo para definir cantidad de unidades.  
@@ -15,12 +15,12 @@
 //-----------------------------------------------------------------------------//
 
 import { Box } from "@mui/material";
-import type { DialogDataInterface } from "@typings/sells/reactComponents";
+import type { DialogDataProps } from "@typings/sells/reactComponents";
 import ProductDialogPriceComponent from "./ProductDialogPriceComponent";
 import ProductDialogSelector from "./ProductDialogSelector";
 import ProductDialogUnitsComponent from "./ProductDialogUnitsComponent";
 
-const ProductDialogDataComponent = ( {products, values, setFieldValue } : DialogDataInterface ):React.ReactNode => {
+const ProductDialogDataComponent = ( {products, values, setFieldValue } : DialogDataProps ):React.ReactNode => {
 
     return (
         <Box

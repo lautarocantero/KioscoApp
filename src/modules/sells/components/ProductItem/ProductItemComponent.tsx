@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, type Theme } from "@mui/material";
-import type { ProductItemInterface } from "@typings/sells/reactComponents";
+import type { ProductItemProps } from "@typings/sells/reactComponents";
 import { useContext } from "react";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../../store/auth/authSlice";
@@ -26,7 +26,7 @@ import { ProductDialogContext } from "../../context/Product/ProductDialogContext
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
 import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
 
-const ProductItemComponent = ({ product }: ProductItemInterface): React.ReactNode => {
+const ProductItemComponent = ({ product }: ProductItemProps): React.ReactNode => {
     const { name, variants } : { name: string, variants: ProductVariant[]} = product;
     const { setShowModal } = useContext(ProductDialogContext)!;
     const dispatch = useDispatch<AppDispatch>();

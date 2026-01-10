@@ -16,9 +16,9 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, Typography, type Theme } from "@mui/material";
-import type { DialogDataPriceType } from "@typings/sells/reactComponents";
+import type { DialogDataPriceProps } from "@typings/sells/reactComponents";
 
-const ProductDialogPriceComponent = ({values}: DialogDataPriceType): React.ReactNode => {
+const ProductDialogPriceComponent = ({values}: DialogDataPriceProps): React.ReactNode => {
 
     if(!values?.productVariant) return null;
 

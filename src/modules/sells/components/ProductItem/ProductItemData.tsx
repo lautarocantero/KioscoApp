@@ -19,10 +19,10 @@
 
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { Box, Tooltip, Typography, type Theme } from "@mui/material";
-import type { ItemDataType } from '@typings/sells/reactComponents';
+import type { ItemDataProps } from '@typings/sells/reactComponents';
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
 
-const ProductItemData = ({name = "product", variants = []}: ItemDataType): React.ReactNode => {
+const ProductItemData = ({name = "product", variants = []}: ItemDataProps): React.ReactNode => {
 
     const totalStock: number = variants?.reduce((count: number, product: ProductVariant) => count + product.stock, 0);
 

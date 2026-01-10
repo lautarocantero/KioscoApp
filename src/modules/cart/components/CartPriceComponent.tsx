@@ -9,13 +9,13 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid} from "@mui/material";
-import type { CartPriceComponentInterface } from "../../../typings/sells/types/sellsTypes";
 import { formatCurrency } from "../helpers/formatCurrency";
 import { CartPriceLabel } from "./CartPriceLabelComponent";
+import type { CartPriceProps } from "@typings/sells/reactComponents";
 
 const CartPriceComponent = (
     {productsTotalPrice,ivaPercentage,ivaAmount,total}
-    : CartPriceComponentInterface): React.ReactNode => {
+    : CartPriceProps): React.ReactNode => {
 
     return (
         <Grid 

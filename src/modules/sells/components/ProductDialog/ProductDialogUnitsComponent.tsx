@@ -15,10 +15,10 @@
 
 
 import { Grid } from "@mui/material";
-import type { DialogDataDisplayType } from "@typings/sells/reactComponents";
+import type { DialogDataDisplayProps } from "@typings/sells/reactComponents";
 import NumberField from "../../../shared/components/NumberField/NumberField";
 
-const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: DialogDataDisplayType ): React.ReactNode => {
+const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: DialogDataDisplayProps ): React.ReactNode => {
 
     if(!values?.productVariant) return null;
 

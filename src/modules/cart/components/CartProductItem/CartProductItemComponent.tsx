@@ -14,12 +14,12 @@
 
 
 import { Grid, type Theme } from "@mui/material";
-import type { CartProductItemComponentInterface } from "../../../../typings/sells/types/sellsTypes";
+import type { CartProductItemProps } from "../../../../typings/sells/types/sellsTypes";
 import CartProductButtons from "./CartProductButtons";
 import CartProductItemData from "./CartProductItemDataComponent";
 import CartProductItemImage from "./CartProductItemImageComponent";
 
-const CartProductItemComponent = ({product}: CartProductItemComponentInterface ):React.ReactNode => {
+const CartProductItemComponent = ({product}: CartProductItemProps ):React.ReactNode => {
     const {image_url, name, model_size, stock_required, price } : 
     {image_url: string, name: string, model_size: string, stock_required: number, price: number } = product ;
 

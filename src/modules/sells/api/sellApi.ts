@@ -25,13 +25,13 @@
 //-----------------------------------------------------------------------------
 
 
+import type {
+    CreateSellApiPayloadType,
+    DeleteSellApiPayloadType,
+    GetSellApiPayloadType
+} from "@typings/sells/types";
 import axios from "axios";
 import { API_URL } from "../../../config/api";
-import type { 
-    CreateSellApiPayloadType, 
-    DeleteSellApiPayloadType, 
-    GetSellApiPayloadType 
-} from "@typings/sells/types";
 
 const baseUrl = axios.create({
     baseURL: `${API_URL}/sell`,
@@ -49,6 +49,7 @@ export const getSellsRequest = async () => {
 }
 
 export const getSellByIdRequest = async (data: GetSellApiPayloadType) => {
+    
     const { ticket_id } : { ticket_id: string }  = data;
 
     const response = await baseUrl.get(`/get-sell-by-id/${ticket_id}`);

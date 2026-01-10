@@ -3,10 +3,9 @@ import AppLayout from "../../../shared/layout/AppLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import type {AppDispatch, RootState as SellStateInterface} from '../../../../store/sell/sellSlice';
-import { getSellById } from "../../../../store/sell/sellsThunks";
+import { getSellByIdThunk } from "../../../../store/sell/sellsThunks";
 import { CircularProgress, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type Theme } from "@mui/material";
 import type { ProductTicketType } from "../../../../typings/seller/sellerTypes";
-
 
 const SellDetailPage = ():React.ReactNode => {
     const dispatch = useDispatch<AppDispatch>();
@@ -20,7 +19,7 @@ const SellDetailPage = ():React.ReactNode => {
         if(!ticket_id) return;
 
         const getSellByIdFunction = async () => {
-            await dispatch(getSellById(ticket_id));
+            await dispatch(getSellByIdThunk({ticket_id}));
         };
         getSellByIdFunction();
     }, [ticket_id])
@@ -112,13 +111,14 @@ const SellDetailPage = ():React.ReactNode => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {sellSelected.products?.map((product: ProductTicketType, index: number) => (
+                      {sellSelected.products?.map((product: Partial<ProductTicketType>, index: number) => (
                         <TableRow key={index}>
-                          <TableCell>{product._id}</TableCell>
-                          <TableCell>{product.name.length > 30 ? product.name.substring(0, 30) + '...' : product.name}</TableCell>
-                          <TableCell>{product.price}</TableCell>
-                          <TableCell>{product.stock_required}</TableCell>
-                          <TableCell>{product.price * product.stock_required}$</TableCell>
+                          <TableCell>{product?._id}</TableCell>
+                          <TableCell>{product?.name ? product.name.length > 30 ? product.name.substring(0, 30) + "..." : product.name : ""}</TableCell>
+                          <TableCell>{product?.price}</TableCell>
+                          <TableCell>{product?.stock_required}</TableCell>
+                          <TableCell>{product?.price && product?.stock_required ? product.price * product.stock_required + "$" : ""}</TableCell>
+
                         </TableRow>
                       ))}
                     </TableBody>

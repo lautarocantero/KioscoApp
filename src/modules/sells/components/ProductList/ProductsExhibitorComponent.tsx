@@ -11,12 +11,12 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { ProductsExhibitorComponentInterface } from "@typings/sells/reactComponents";
+import type { ProductsExhibitorProps } from "@typings/sells/reactComponents";
 import SimpleGrid from "../../../shared/components/SimpleGrid/SimpleGridComponent";
 import ProductsNotFound from "./ProductNotFound";
 import ProductsList from "./ProductsList";
 
-const ProductsExhibitorComponent = ({ products, title='Productos' }: ProductsExhibitorComponentInterface): React.ReactNode => {
+const ProductsExhibitorComponent = ({ products, title='Productos' }: ProductsExhibitorProps): React.ReactNode => {
   if (!products || !Array.isArray(products)) return <ProductsNotFound />;
 
   return (

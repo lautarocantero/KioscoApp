@@ -16,16 +16,16 @@
 // - Devuelve un objeto con el estado de stock por cada tamaño.  
 
 //─────────────────── Notas técnicas 💽 ───────────────────//
-// - Tipado con `EvaluateStockType` para recibir las variantes.  
+// - Tipado con `EvaluateStockProps` para recibir las variantes.  
 // - Usa `StockStatusEnum` para estandarizar los estados de stock.  
 // - Se integra en componentes como `ProductItemQuantityHandler` para mostrar chips de disponibilidad por talla.  
 
 //-----------------------------------------------------------------------------//
 
-import type { EvaluateStockType } from "@typings/sells/reactComponents";
+import type { EvaluateStockProps } from "@typings/sells/reactComponents";
 import { StockStatusEnum } from "../../../typings/auth/enums";
 
-    const evaluateStockBySize = ({variants}: EvaluateStockType): Record<string, StockStatusEnum> => {
+    const evaluateStockBySize = ({variants}: EvaluateStockProps): Record<string, StockStatusEnum> => {
 
       const grouped: Record<string, { totalStock: number; totalMinStock: number }> = {};
       const result: Record<string, StockStatusEnum> = {};

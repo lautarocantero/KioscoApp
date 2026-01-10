@@ -11,9 +11,9 @@ import { Grid } from "@mui/material";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import EmptyButton from "../../shared/components/Buttons/EmptyButton";
 import PrimaryButton from "../../shared/components/Buttons/PrimaryButtonComponent";
-import type { CartButtonsComponentInterface } from '../../../typings/sells/types/sellsTypes';
+import type { CartButtonsComponentProps } from '../../../typings/sells/types/sellsTypes';
 
-const CartButtonsComponent = ({generateTicket}: CartButtonsComponentInterface ):React.ReactNode => {
+const CartButtonsComponent = ({generateTicket}: CartButtonsComponentProps ):React.ReactNode => {
     const navigate: NavigateFunction = useNavigate();
 
     return (

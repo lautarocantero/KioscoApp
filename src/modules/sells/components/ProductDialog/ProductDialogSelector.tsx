@@ -6,7 +6,7 @@
 
 //──────────────────── Funciones 🔧 ─────────────────────//
 // ## Funciones 🔧
-// - `ProductDialogSelector`: componente principal que recibe props tipadas con `DialogSelectorType`.  
+// - `ProductDialogSelector`: componente principal que recibe props tipadas con `DialogSelectorProps`.  
 //   - `products`: listado de variantes de producto disponibles.  
 // - Lógica interna:  
 //   - `isLoading`: si esta cargando los productos mostrara un loader.  
@@ -15,12 +15,12 @@
 //-----------------------------------------------------------------------------//
 
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography, type SelectChangeEvent, type Theme } from "@mui/material";
-import type { DialogSelectorType } from "@typings/sells/reactComponents";
+import type { DialogSelectorProps } from "@typings/sells/reactComponents";
 import { useSelector } from "react-redux";
 import type { RootState as ProductVariantState } from "../../../../store/productVariant/productVariantSlice";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
 
-const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelectorType): React.ReactNode => {
+const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelectorProps): React.ReactNode => {
     const isEmpty: boolean = products?.length <= 0;
     const { productVariant } = useSelector((state: ProductVariantState) => state);
     const { isLoading } : { isLoading: boolean } = productVariant;

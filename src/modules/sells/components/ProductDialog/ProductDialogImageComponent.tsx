@@ -7,9 +7,9 @@
 //-----------------------------------------------------------------------------//
 
 import { Box } from "@mui/material";
-import type { ProductDialogImageComponentType } from "@typings/sells/reactComponents";
+import type { ProductDialogImageProps } from "@typings/sells/reactComponents";
 
-const ProductDialogImageComponent = ({image_url, name }: ProductDialogImageComponentType):React.ReactNode => {
+const ProductDialogImageComponent = ({image_url, name }: ProductDialogImageProps):React.ReactNode => {
 
     return (
         <Box

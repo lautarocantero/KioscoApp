@@ -1,25 +1,25 @@
 import type { ProductVariant } from "@typings/productVariant/productVariant";
+import type { AlertColor } from "@typings/ui/ui";
+import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";
 import type { PaymentMethod } from "../enums/sells";
-import type { NavigateFunction } from "react-router-dom";
-import type { AlertColor } from "@typings/ui/ui";
 
 {/*─────────────────── 🔎 tipos usados en sell 🔎 ───────────────────*/}
 
     //────────────────────────────────────────── 🔖 SellType 🔖 ─────────────────────────────────────────//
 
     interface SellEntityInterface {
-        ticket_id: string;
-        purchase_date: string;
+        currency: string;   
+        iva: number;
         modification_date: string | null;
-        seller_id: string;
-        seller_name: string;
         payment_method: PaymentMethod;
         products: ProductVariant[];
+        purchase_date: string;
+        seller_id: string;
+        seller_name: string;
         sub_total: number;
-        iva: number;
+        ticket_id: string;
         total_amount: number;
-        currency: string;   
     }
 
     export type SellTicketType = Pick<SellEntityInterface, 
@@ -41,17 +41,17 @@ import type { AlertColor } from "@typings/ui/ui";
     //────────────────────────────────────────── 🍕 SLICE 🍕 ─────────────────────────────────────────//
 
     export interface SellStateInterface { 
+        errorMessage: string | null,
+        isLoading: boolean,
         sells: SellTicketType[],
         sellSelected: SellTicketType | null,
-        isLoading: boolean,
-        errorMessage: string | null,
     }
 
     export type SellStateErrorType = Pick <SellStateInterface, 'errorMessage'>
 
     //────────────────────────────────────────── 🕐 THUNKS 🕐 ─────────────────────────────────────────//
 
-    export type CreateSellRequestPayloadType = Pick<SellTicketType, 
+    type CreateSellRequestPayloadType = Pick<SellTicketType, 
         'currency' |
         'iva' | 
         'payment_method' | 
@@ -67,6 +67,14 @@ import type { AlertColor } from "@typings/ui/ui";
         data: CreateSellRequestPayloadType;
     }
 
+    export interface GetSellByIdThunkInterface {
+        ticket_id: string;
+    }
+
+    export interface DeleteSellByIdThunkInterface {
+        ticket_id: string;
+    }
+    
     //────────────────────────────────────────── 🔗 API 🔗 ─────────────────────────────────────────//
 
     export type GetSellApiPayloadType = Pick<SellType, 'ticket_id'>;
@@ -78,8 +86,6 @@ import type { AlertColor } from "@typings/ui/ui";
    //────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
 
     export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
-
-    export type SellDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
 
     export interface DialogDataInterface {
         productVariantId: string,
@@ -94,17 +100,13 @@ import type { AlertColor } from "@typings/ui/ui";
 
     export type DialogVariantDataType = Omit<DialogDataInterface, 'productVariantId'>
 
-    export type VariantDialogDataType = Pick<DialogDataInterface, 'productVariant' | 'requiredStock' | 'totalPrice'>;
-
    //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
 
-   export interface SellsHandleDetailInterface {
-        ticket_id: string,
+   export type SellsHandleDetailType = Pick <SellEntityInterface, 'ticket_id'> & {
         navigate: NavigateFunction,
-   }
+  }
 
-   export interface HandleDeleteSellInterface {
-        ticket_id: string,
+   export type HandleDeleteSellType =  Pick <SellEntityInterface, 'ticket_id'> & {
         dispatch: AppDispatch,
         showSnackBar: (message: string, color: AlertColor) => void,
    }

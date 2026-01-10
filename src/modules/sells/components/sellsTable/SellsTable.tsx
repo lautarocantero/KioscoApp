@@ -36,23 +36,23 @@ import Paper from '@mui/material/Paper';
 import type { GridColDef } from '@mui/x-data-grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { esES } from '@mui/x-data-grid/locales';
-import type { HandleDeleteSellInterface, SellsHandleDetailInterface } from '@typings/sells/types';
+import type { SellsTableProps } from '@typings/sells/reactComponents';
+import type { HandleDeleteSellType, SellsHandleDetailType } from '@typings/sells/types';
 import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { type AppDispatch } from '../../../../store/sell/sellSlice';
-import { deleteSellThunk, getSells } from '../../../../store/sell/sellsThunks';
+import { deleteSellThunk, getSellsThunk } from '../../../../store/sell/sellsThunks';
 import type { ProductTicketType } from '../../../../typings/seller/sellerTypes';
 import { AlertColor } from '../../../../typings/ui/ui';
 import { SnackBarContext } from '../../../shared/components/SnackBar/SnackBarContext';
-import type { SellsTablePropsInterface } from '@typings/sells/reactComponents';
 
-const handleDetail = ({ ticket_id, navigate} : SellsHandleDetailInterface) => { 
+const handleDetail = ({ ticket_id, navigate} : SellsHandleDetailType) => { 
   navigate(`/sells-history/${ticket_id}`);
 };
 
-const handleDeleteSell = async({ticket_id, dispatch, showSnackBar }: HandleDeleteSellInterface ) => {
-  const response: string | void = await dispatch(deleteSellThunk(ticket_id));
+const handleDeleteSell = async({ticket_id, dispatch, showSnackBar }: HandleDeleteSellType ) => {
+  const response: string | void = await dispatch(deleteSellThunk({ticket_id}));
 
   if(!response) {
     showSnackBar(`Ocurrio un error al eliminar el producto. Intenta de nuevo.`, AlertColor.Error);
@@ -60,12 +60,12 @@ const handleDeleteSell = async({ticket_id, dispatch, showSnackBar }: HandleDelet
   }
 
   showSnackBar(`Producto eliminado correctamente.`, AlertColor.Success);
-  setTimeout(() => dispatch(getSells()), 200);
+  setTimeout(() => dispatch(getSellsThunk()), 200);
 }
 
 const paginationModel = { page: 0, pageSize: 5 };
 
-const SellsTable = ({isLoading, sells }: SellsTablePropsInterface ): React.ReactNode => {
+const SellsTable = ({isLoading, sells }: SellsTableProps ): React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();  
 
   const navigate = useNavigate();

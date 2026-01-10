@@ -11,11 +11,11 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, Typography, type Theme } from "@mui/material";
-import type { ProductDialogIlustrationInterface } from "@typings/sells/reactComponents";
+import type { ProductDialogIlustrationProps } from "@typings/sells/reactComponents";
 import ProductDialogImage from "./ProductDialogImageComponent";
 
 const ProductDialogIlustrationComponent = (
-    {name = 'Product', image_url = '/images/productExample/cocaCola.png'}: ProductDialogIlustrationInterface ):React.ReactNode => {
+    {name = 'Product', image_url = '/images/productExample/cocaCola.png'}: ProductDialogIlustrationProps ):React.ReactNode => {
 
     return (
         <Grid

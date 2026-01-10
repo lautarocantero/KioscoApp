@@ -1,130 +1,126 @@
 import type { Product } from "../../product/productTypes";
 import type { ProductVariant } from "../../productVariant/productVariant";
+import type { DialogDataInterface, DialogVariantDataType } from "../types";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}
 
+   //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
+
+    export interface SellsTableProps {
+       isLoading: boolean;
+       sells: SellTicketType[];
+    }
+
     //──────────────────────────────────────────── 📋 Product Exhibitor 📋───────────────────────────────────────────//
 
-    export interface ProductsExhibitorComponentInterface {
+    export interface ProductsExhibitorProps {
         title: string;
         products: Product[];
     };
 
-    export type ProductListType  = Pick<ProductsExhibitorComponentInterface, 'products'>;
+    export type ProductListProps  = Pick<ProductsExhibitorProps, 'products'>;
 
     //──────────────────────────────────────────── 🍫 Product Item 🧀 ───────────────────────────────────────────//
-    export interface ProductItemInterface {
+
+    export interface ProductItemProps {
         product: Product;
     };
 
-    export interface ProductItemImageInterface {
+    export interface ProductItemImageProps {
         source: string | undefined,
         name: string | undefined,
     }
 
-    export interface EspecificationsLeftInterface {
+    export interface EspecificationsLeftProps {
         name: string,
         variants: ProductVariant[];
         image: string | undefined;
     }
 
-    export type ItemDataType = Pick<EspecificationsLeftInterface, 'name' | 'variants'>;
+    export type ItemDataProps = Pick<EspecificationsLeftProps, 'name' | 'variants'>;
 
-    export type EspecificationsRightType = Pick<ProductItemInterface, 'product'>;
+    export type EspecificationsRightProps = Pick<ProductItemProps, 'product'>;
 
-    export type AmountDataType = Pick<EspecificationsLeftInterface, 'variants'>;
+    export type AmountDataProps = Pick<EspecificationsLeftProps, 'variants'>;
 
-    export type ItemQuantityHandler = Pick<EspecificationsLeftInterface, 'variants'>;
+    export type ItemQuantityHandlerProps = Pick<EspecificationsLeftProps, 'variants'>;
 
-    export type EvaluateStockType = Pick<EspecificationsLeftInterface, 'variants'>
+    export type EvaluateStockProps = Pick<EspecificationsLeftProps, 'variants'>
 
-    export interface QuantityChipInterface {
+    export interface QuantityChipProps {
       color: string,
       label: string,
     }
 
+   //──────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
+
+    export interface ProductDialogIlustrationProps {
+        name?: string;
+        image_url?: string;
+    }
+
+    export type ProductDialogImageProps = Pick<ProductDialogIlustrationProps, 'name' | 'image_url'>
+
+    export interface DialogDataProps {
+        products: ProductVariant[],
+        values: DialogDataInterface,
+        setFieldValue: SetFieldValue<DialogDataInterface>,
+    };
+
+    export type DialogSelectorProps = Pick<DialogDataProps, 'products' | 'values' | 'setFieldValue'>;
+
+    export type DialogDataDisplayProps = Pick<DialogDataProps, 'setFieldValue'> & {
+        values: DialogVariantDataType,
+        label: string,
+    }
+
+    export type DialogDataPriceProps = Pick <DialogDataProps, 'values'>
+
     //──────────────────────────────────────────── 🛒 Cart 🛒───────────────────────────────────────────//
-    export interface CartProductListComponentInterface {
+
+    export interface CartProductListProps {
         cart: ProductTicketType[],
     }
-    export interface CartPriceComponentInterface {
+    export interface CartPriceProps {
         productsTotalPrice: number,
         ivaPercentage: number,
         ivaAmount: number,
         total: number,
     }
-    export interface CartPriceLabelInterface {
+    export interface CartPriceLabelProps {
       label: string
       nestedLabel?: string
       nestedValue?: string
       labelStyles?: (theme: Theme) => object
       nestedStyles?: (theme: Theme) => object
     }
-    export interface CartProductItemComponentInterface {
+    export interface CartProductItemProps {
         product: ProductTicketType,
     }
-    export interface CartProductItemDataComponentInterface {
+    export interface CartProductItemDataProps {
         name: string | undefined,
         size: string | undefined,
         units: string | undefined,
         price: string | undefined,
     }
-    export interface CartProductItemImageComponentInterface {
+    export interface CartProductItemImageProps {
         image: string | undefined,
         name: string | undefined,
     }
-    export interface CartProductButtonsInterface {
+    export interface CartProductButtonsProps {
         _id: string,
     }
-    export interface CartProductButtonInterface {
+    export interface CartProductButtonProps {
         icon : React.ReactNode, 
         side: CartSide, 
         action: () => void
     }
-    export interface DisplayDataComponentInterface {
+    export interface DisplayDataComponentProps {
         nameEdited: string,
         size: string,
         units: string,
         price: string,
     }
-    export interface CartButtonsComponentInterface {
+    export interface CartButtonsComponentProps {
         generateTicket: () => void,
-    }
-
-    //──────────────────────────────────────────── ⬜ Mode Button ⬛ ───────────────────────────────────────────//
-    export interface ModeButtonComponentInterface {
-       functionAction: () => void,
-       text: string,
-       icon: React.ReactNode,
-    }    
-
-   //──────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
-
-    export interface ProductDialogIlustrationInterface {
-        name?: string;
-        image_url?: string;
-    }
-
-    export type ProductDialogImageComponentType = Pick<ProductDialogIlustrationInterface, 'name' | 'image_url'>
-
-    export interface DialogDataInterface {
-        products: ProductVariant[],
-        values: DialogDataInterface,
-        setFieldValue: SetFieldValue<DialogDataInterface>,
-    };
-
-    export type DialogSelectorType = Pick<DialogDataInterface, 'products' | 'values' | 'setFieldValue'>;
-
-    export type DialogDataDisplayType = Pick<DialogDataInterface, 'setFieldValue'> & {
-        values: DialogVariantDataType,
-        label: string,
-    }
-
-    export type DialogDataPriceType = Pick <DialogDataInterface, 'values'>
-
-   //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
-
-    export interface SellsTablePropsInterface {
-       isLoading: boolean;
-       sells: SellTicketType[];
     }

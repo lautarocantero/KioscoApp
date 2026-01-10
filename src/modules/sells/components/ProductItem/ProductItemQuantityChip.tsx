@@ -1,6 +1,6 @@
 //─────────────────── Componente 🧩: QuantityChip ───────────────────//
 
-import type { QuantityChipInterface } from "@typings/sells/reactComponents";
+import type { QuantityChipProps } from "@typings/sells/reactComponents";
 
 //─────────────────── Descripción 📝 ───────────────────//
 // Renderiza un 'chip' visual que muestra con color y texto cuantas existencias existen
@@ -12,7 +12,7 @@ import type { QuantityChipInterface } from "@typings/sells/reactComponents";
 //-----------------------------------------------------------------------------//
 
 
-const QuantityChip = ({ color = "red", label }: QuantityChipInterface): React.ReactNode => {
+const QuantityChip = ({ color = "red", label }: QuantityChipProps): React.ReactNode => {
     const fontSize: string = label?.length > 3 ? "0.6em" : "0.7em";
     const labelText: string = label.includes("unidades") ? label.replace("unidades", "u.") : label;
 

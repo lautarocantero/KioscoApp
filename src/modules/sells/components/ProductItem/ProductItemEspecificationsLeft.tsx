@@ -5,7 +5,7 @@
 // Renderiza la imagen del producto y sus datos básicos (nombre + stock total).
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// - `ProductItemEspecificationsLeft`: componente principal que recibe props tipadas con `EspecificationsLeftInterface`.  
+// - `ProductItemEspecificationsLeft`: componente principal que recibe props tipadas con `EspecificationsLeftProps`.  
 //   - `name`: nombre del producto (por defecto `"product"` si no se pasa prop).  
 //   - `variants`: listado de variantes del producto (por defecto array vacío).  
 // - Renderiza:  
@@ -17,11 +17,11 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid } from "@mui/material";
-import type { EspecificationsLeftInterface } from "@typings/sells/reactComponents";
+import type { EspecificationsLeftProps } from "@typings/sells/reactComponents";
 import ProductItemData from "./ProductItemData";
 import ProductItemImage from "./ProductItemImage";
 
-const ProductItemEspecificationsLeft = ({name = 'product', variants = [], image = '/images/productExample/cocaCola.png'} : EspecificationsLeftInterface ): React.ReactNode => {
+const ProductItemEspecificationsLeft = ({name = 'product', variants = [], image = '/images/productExample/cocaCola.png'} : EspecificationsLeftProps ): React.ReactNode => {
 
     return (
         <Grid 

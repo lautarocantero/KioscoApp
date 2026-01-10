@@ -12,10 +12,10 @@
 
 import { Grid } from "@mui/material";
 import type { ProductTicketType } from "../../../typings/seller/sellerTypes";
-import type { CartProductListComponentInterface } from "../../../typings/sells/types/sellsTypes";
+import type { CartProductListProps } from "../../../typings/sells/types/sellsTypes";
 import CartProductItem from "./CartProductItem/CartProductItemComponent";
 
-const CartProductListComponent = ({cart}: CartProductListComponentInterface): React.ReactNode => {
+const CartProductListComponent = ({cart}: CartProductListProps): React.ReactNode => {
     
     if(!cart) return null;
     

@@ -26,7 +26,7 @@
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { store } from '../store';
-import type { SellType, SellStateInterface, SellStateErrorType } from '../../typings/sells/types/sellsTypes';
+import type { SellStateErrorType, SellStateInterface, SellType } from '@typings/sells/types';
 
 
 const initialState: SellStateInterface = {

@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, Tooltip, Typography, type Theme } from "@mui/material";
-import type { CartProductItemDataComponentInterface, DisplayDataComponentInterface } from "@typings/sells/reactComponents";
+import type { CartProductItemDataProps, DisplayDataComponentProps } from "@typings/sells/reactComponents";
 
 const ColumnData = ({label = '', value =''}: {label?: string, value: string}): React.ReactNode => {
     return (
@@ -28,7 +28,7 @@ const ColumnData = ({label = '', value =''}: {label?: string, value: string}): R
     )
 }
 
-const DisplayDataComponent = ({nameEdited,size, units, price} : DisplayDataComponentInterface):React.ReactNode => (
+const DisplayDataComponent = ({nameEdited,size, units, price} : DisplayDataComponentProps):React.ReactNode => (
     <Grid
         size={{ xs: 8 }}
         display={'flex'}
@@ -49,7 +49,7 @@ const DisplayDataComponent = ({nameEdited,size, units, price} : DisplayDataCompo
 )
 
 const CartProductItemDataComponent = ({name = 'Coca Cola', size = '2L', units = '1', price = '2500$'}
-    : CartProductItemDataComponentInterface):React.ReactNode => {
+    : CartProductItemDataProps):React.ReactNode => {
 
     const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
 

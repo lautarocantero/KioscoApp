@@ -23,7 +23,7 @@ import { useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { iva } from "../../../config/constants";
-import { createSell } from "../../../store/sell/sellsThunks";
+import { createSellThunk } from "../../../store/sell/sellsThunks";
 import type { AppDispatch, RootState as SellerState } from "../../../store/seller/sellerSlice";
 import { cleanCartThunk } from "../../../store/seller/sellerThunks";
 import type { ProductTicketType } from "../../../typings/seller/sellerTypes";
@@ -116,7 +116,7 @@ const CartPage = ():React.ReactNode => {
         }
 
         localStorage.setItem('last_ticket',JSON.stringify(ticket));
-        const response: string | undefined = await dispatch(createSell({ data: ticket}));
+        const response: string | undefined = await dispatch(createSellThunk({ data: ticket}));
 
         if(!response) {
             showSnackBar(`Ocurrio un error al agregar el producto.`, AlertColor.Error);

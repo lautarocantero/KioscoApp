@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, Typography, Box, type Theme } from "@mui/material"
-import type { CartPriceLabelInterface } from "../../../typings/sells/types/sellsTypes"
+import type { CartPriceLabelProps } from "../../../typings/sells/types/sellsTypes"
 
 export const CartPriceLabel = ({
   label,
@@ -26,7 +26,7 @@ export const CartPriceLabel = ({
   nestedValue,
   labelStyles,
   nestedStyles
-}: CartPriceLabelInterface) => (
+}: CartPriceLabelProps) => (
 
   <Grid>
     <Typography display="flex" justifyContent="flex-end" gap={1}>

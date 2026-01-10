@@ -7,7 +7,7 @@
 // Si no exiten productos, aparecera un loader. 
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// - `ProductsList`: componente principal que recibe props tipadas con `ProductListType`.  
+// - `ProductsList`: componente principal que recibe props tipadas con `ProductListProps`.  
 //   - `products`: listado de productos a mostrar.
 
 //─────────────────── Notas técnicas 💽  ───────────────────//
@@ -17,11 +17,11 @@
 //-----------------------------------------------------------------------------//
 
 import { CircularProgress } from "@mui/material";
-import type { ProductListType } from "@typings/sells/reactComponents";
+import type { ProductListProps } from "@typings/sells/reactComponents";
 import type { Product } from "../../../../typings/product/productTypes";
 import ProductItemComponent from "../ProductItem/ProductItemComponent";
 
-const ProductsList = ({products}: ProductListType):React.ReactNode => {
+const ProductsList = ({products}: ProductListProps):React.ReactNode => {
 
     if(products.length === 0 ) return ( <CircularProgress />)
 
