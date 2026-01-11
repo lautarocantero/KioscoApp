@@ -113,7 +113,7 @@ export const darkTheme = createTheme({
   custom: {
     //────────────── white ──────────────────//
     white: '#eff0f8',
-    whiteTranslucid: '#eff0f826',
+    whiteTranslucid: '#eff0f865',
 
     //────────────── black ──────────────────//
     black: '#333333',

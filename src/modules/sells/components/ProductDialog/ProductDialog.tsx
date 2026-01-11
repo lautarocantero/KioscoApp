@@ -82,6 +82,7 @@ const ProductDialog = (): React.ReactNode => {
   };
 
   const { name, image_url }: {name: string, image_url: string} = productSelected as ProductVariant;
+  const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
 
   return (
     <Dialog 
@@ -101,7 +102,7 @@ const ProductDialog = (): React.ReactNode => {
           textAlign: 'center',
         })}
       >
-        Agregar al carrito
+        {`Agregar ${nameEdited} al carrito`}
       </DialogTitle>
       <Box
         component={'form'}
@@ -135,6 +136,7 @@ const ProductDialog = (): React.ReactNode => {
             aria-label="Cerrar"
             sx={(theme: Theme) => ({
               color: theme?.custom?.whiteTranslucid,
+              fontSize: theme?.typography?.body2?.fontSize,
             })}
           >
             Cerrar
