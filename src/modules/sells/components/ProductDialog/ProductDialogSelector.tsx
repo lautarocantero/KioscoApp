@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
 import type { RootState as ProductVariantState } from "../../../../store/productVariant/productVariantSlice";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
-import handleChangeSelector from "../../helpers/ProductDialog/handleProductDialogSelectorChange";
+import handleChangeSelector from "../../helpers/ProductDialog/Handlers/handleProductDialogSelectorChange";
 
 const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: DialogSelectorProps): React.ReactNode => {
 

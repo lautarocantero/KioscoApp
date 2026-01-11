@@ -37,9 +37,9 @@ import type { AppDispatch } from "../../../../store/productVariant/productVarian
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
 import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
-import getInitialProductDialogValues from "../../helpers/ProductDialog/getInitialProductDialogValues";
-import ProductDialogValidationSchema from "../../helpers/ProductDialog/getProductDialogValidationSchema";
-import onSubmit from "../../helpers/ProductDialog/ProductDialogSubmit";
+import getInitialProductDialogValues from "../../helpers/ProductDialog/Getters/getInitialProductDialogValues";
+import ProductDialogValidationSchema from "../../helpers/ProductDialog/Getters/getProductDialogValidationSchema";
+import onSubmit from "../../helpers/ProductDialog/Handlers/handleProductDialogSubmit";
 import ProductDialogData from "./ProductDialogDataComponent";
 import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
 

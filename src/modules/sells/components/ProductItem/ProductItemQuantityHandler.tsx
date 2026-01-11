@@ -25,7 +25,7 @@ import type { ItemQuantityHandlerProps } from "@typings/sells/reactComponents";
 import { useMemo } from "react";
 import { useBreakpoint } from "../../../../hooks/ui/useBreakpoint";
 import { StockStatusEnum } from "../../../../typings/auth/enums";
-import evaluateStockBySize from "../../helpers/StockStatusHandler";
+import evaluateStockBySize from "../../helpers/ProductItem/StockStatusHandler";
 import QuantityChip from "./ProductItemQuantityChip";
 
 const ProductItemQuantityHandler = ({variants} : ItemQuantityHandlerProps): React.ReactNode => {

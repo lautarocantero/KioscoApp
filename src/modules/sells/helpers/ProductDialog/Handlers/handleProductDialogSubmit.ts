@@ -5,7 +5,7 @@
 // Maneja el envío del formulario en ProductDialog, validando la selección y agregando el producto al carrito.
 
 // Lógica 🔧
-// - Valida `productVariant` y `requiredStock` con `validateProductSubmission`.
+// - Valida `productVariant` y `requiredStock` con `validateProductForCart`.
 // - Si es válido, formatea la variante con `formatProductTicket`.
 // - Despacha `addToCartThunk` para agregar al carrito.
 // - Cierra el modal y muestra un snackbar con feedback.
@@ -20,16 +20,16 @@
 
 import type { ProductVariant } from "@typings/productVariant/productVariant";
 import type { DialogOnSubmitType } from "@typings/sells/types";
-import validateProductSubmission from "./ValidateProductSubmission";
-import { AlertColor } from "../../../../typings/ui/ui";
-import formatProductTicket from "../FormatProductTicket";
+import formatProductTicket from "./handleFormatProductTicket";
 import type { ProductTicketType } from "@typings/seller/sellerTypes";
-import { addToCartThunk } from "../../../../store/seller/sellerThunks";
+import { AlertColor } from "../../../../../typings/ui/ui";
+import validateProductForCart from "../Validation/ValidateProductForCart";
+import { addToCartThunk } from "../../../../../store/seller/sellerThunks";
 
   const onSubmit = async ({ data, showSnackBar, dispatch, setShowModal }: DialogOnSubmitType): Promise<void> => {
     const { productVariant, requiredStock }: { productVariant: ProductVariant | null, requiredStock: number } = data;
 
-    const validation = validateProductSubmission({productVariant, requiredStock});
+    const validation = validateProductForCart({productVariant, requiredStock});
 
     if (!validation.valid) { 
       showSnackBar(validation.message, AlertColor.Error); 

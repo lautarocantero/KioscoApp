@@ -17,7 +17,7 @@ import { Grid } from "@mui/material";
 import type { DialogDataDisplayProps } from "@typings/sells/reactComponents";
 import NumberField from "../../../shared/components/NumberField/NumberField";
 import React from "react";
-import handleChangeUnits from "../../helpers/ProductDialog/handleProductDialogUnitsChange";
+import handleChangeUnits from "../../helpers/ProductDialog/Handlers/handleProductDialogUnitsChange";
 import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
 import type { HandleProductDialogUnitsChangeInterface } from "@typings/sells/types";
 

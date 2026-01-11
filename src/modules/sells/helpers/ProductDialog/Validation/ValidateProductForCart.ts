@@ -1,5 +1,5 @@
 
-//── Helper 🦸: validateProductSubmission ──//
+//── Helper 🦸: validateProductForCart ──//
 
 // Descripción 📝
 // Se encarga de validar que el producto seleccionado pueda agregarse al carrito
@@ -11,7 +11,7 @@
 
 import type { validateProductSubmissionInterface, ValidationResultType } from "@typings/sells/types";
 
-const validateProductSubmission = ( {productVariant, requiredStock}: validateProductSubmissionInterface): ValidationResultType => {
+const validateProductForCart = ( {productVariant, requiredStock}: validateProductSubmissionInterface): ValidationResultType => {
     if (!productVariant) {
       return { valid: false, message: "Ocurrió un error al agregar el producto." };
     }
@@ -35,4 +35,4 @@ const validateProductSubmission = ( {productVariant, requiredStock}: validatePro
     return { valid: true };
 };
 
-export default validateProductSubmission;
+export default validateProductForCart;
