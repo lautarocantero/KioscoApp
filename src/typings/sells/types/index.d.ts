@@ -118,6 +118,16 @@ import type { EspecificationsLeftProps } from "../reactComponents";
 
     export type ValidationResultType = { valid: true } | { valid: false; message: string };
 
+    export interface HandleProductDialogSelectorChangeParams {
+        event: SelectChangeEvent<string>;
+        products: ProductVariant[];
+        setFieldValue: SetFieldValue<DialogDataInterface>;
+    }
+
+    export type validateProductSelectionType = Pick<HandleProductDialogSelectorChangeParams, 'event' | 'products' > & {
+        productId: string;
+    };
+
    //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
 
    export type SellsHandleDetailType = Pick <SellEntityInterface, 'ticket_id'> & {

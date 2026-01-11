@@ -20,7 +20,7 @@
 
 import type { ProductVariant } from "@typings/productVariant/productVariant";
 import type { DialogOnSubmitType } from "@typings/sells/types";
-import validateProductSubmission from "../ValidateProductSubmission";
+import validateProductSubmission from "./ValidateProductSubmission";
 import { AlertColor } from "../../../../typings/ui/ui";
 import formatProductTicket from "../FormatProductTicket";
 import type { ProductTicketType } from "@typings/seller/sellerTypes";

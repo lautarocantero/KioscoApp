@@ -16,32 +16,20 @@
 
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography, type SelectChangeEvent, type Theme } from "@mui/material";
 import type { DialogSelectorProps } from "@typings/sells/reactComponents";
+import type { HandleProductDialogSelectorChangeParams } from "@typings/sells/types";
 import React, { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
+import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
 import type { RootState as ProductVariantState } from "../../../../store/productVariant/productVariantSlice";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
+import handleChangeSelector from "../../helpers/ProductDialog/handleProductDialogSelectorChange";
 
 const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelectorProps): React.ReactNode => {
-    const isEmpty: boolean = products?.length <= 0;
+
+    const isEmpty = useMemo(() => { return (products?.length ?? 0) === 0; }, [products]);
+
     const { productVariant } = useSelector((state: ProductVariantState) => state);
     const { isLoading } : { isLoading: boolean } = productVariant;
-
-    const handleChange = useCallback((event: SelectChangeEvent<string>) => {
-        const productId: string = event.target.value as string;
-
-        if(!productId) return;
-        if(!(typeof(productId) === 'string')) return;
-
-        const productObject: ProductVariant | undefined = products.find((prod: ProductVariant) => prod._id === productId);
-
-        if(!productObject) return;
-        if(productObject === undefined) return;
-
-        setFieldValue('productVariantId', productId );
-        setFieldValue('productVariant', productObject);
-        },
-        [products, setFieldValue]
-    );
 
     const renderValue = useCallback( 
         (selected: string) => { 
@@ -66,6 +54,11 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
         [products] 
     );
 
+    const handleChange = useDelegatedHandler(({ event, products, setFieldValue }: HandleProductDialogSelectorChangeParams) =>
+        handleChangeSelector({ event, products, setFieldValue }),
+        [products, setFieldValue]
+    );
+
     if(isLoading) return (<CircularProgress />);
     if(isEmpty) return (<Box><Typography>No se han encontrado Productos</Typography></Box>);
 
@@ -85,7 +78,7 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
                     id="product-select"
                     value={values?.productVariantId ?? ""}
                     label="Product"
-                    onChange={handleChange}
+                    onChange={(event: SelectChangeEvent<string>) => handleChange({event,products, setFieldValue})}
                     sx={(theme: Theme) => ({
                         color: theme?.custom?.fontColor,
                         fontSize: theme?.typography?.body2?.fontSize,
