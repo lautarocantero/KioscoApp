@@ -13,15 +13,25 @@
 
 //-----------------------------------------------------------------------------//
 
-
 import { Grid } from "@mui/material";
 import type { DialogDataDisplayProps } from "@typings/sells/reactComponents";
 import NumberField from "../../../shared/components/NumberField/NumberField";
 import React from "react";
+import handleChangeUnits from "../../helpers/ProductDialog/handleProductDialogUnitsChange";
+import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
+import type { HandleProductDialogUnitsChangeInterface } from "@typings/sells/types";
 
 const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: DialogDataDisplayProps ): React.ReactNode => {
 
+    const handleChange = useDelegatedHandler(({ incomingValue } : Partial<HandleProductDialogUnitsChangeInterface>) =>
+        handleChangeUnits({ incomingValue, productVariant: values?.productVariant, setFieldValue}),
+        [values, setFieldValue]
+    );
+
     if(!values?.productVariant) return null;
+
+    const stock : number = values?.productVariant?.stock;
+    const { requiredStock } : { requiredStock: number} = values;
 
     return (
         <Grid
@@ -32,14 +42,11 @@ const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: Dial
             <NumberField 
                 label={label}
                 min={1}
-                max={values?.productVariant?.stock}
+                max={stock}
                 size="small"
-                defaultValue={0}
-                value={values?.requiredStock}
-                onValueChange={(val: number | null) => {
-                    if(!val) return;
-                        setFieldValue('requiredStock', val)
-                }}
+                defaultValue={1}
+                value={requiredStock}
+                onValueChange={(value: number | null) => handleChange({incomingValue: value})}
             />
         </Grid>
     )

@@ -118,6 +118,8 @@ import type { EspecificationsLeftProps } from "../reactComponents";
 
     export type ValidationResultType = { valid: true } | { valid: false; message: string };
 
+    export type ValidationResultAdjustedType = { valid: true } | { valid: false; message: string, adjustedValue?: number };
+
     export interface HandleProductDialogSelectorChangeParams {
         event: SelectChangeEvent<string>;
         products: ProductVariant[];
@@ -127,6 +129,12 @@ import type { EspecificationsLeftProps } from "../reactComponents";
     export type validateProductSelectionType = Pick<HandleProductDialogSelectorChangeParams, 'event' | 'products' > & {
         productId: string;
     };
+
+    export interface HandleProductDialogUnitsChangeInterface {
+        incomingValue: number | null | undefined;
+        productVariant: ProductVariant | null,
+        setFieldValue: SetFieldValue<DialogDataInterface>;
+    }
 
    //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
 
