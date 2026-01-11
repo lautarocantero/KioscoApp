@@ -120,13 +120,13 @@ import type { EspecificationsLeftProps } from "../reactComponents";
 
     export type ValidationResultAdjustedType = { valid: true } | { valid: false; message: string, adjustedValue?: number };
 
-    export interface HandleProductDialogSelectorChangeParams {
+    export interface HandleProductDialogSelectorChangeInterface {
         event: SelectChangeEvent<string>;
         products: ProductVariant[];
         setFieldValue: SetFieldValue<DialogDataInterface>;
     }
 
-    export type validateProductSelectionType = Pick<HandleProductDialogSelectorChangeParams, 'event' | 'products' > & {
+    export type validateProductSelectionType = Pick<HandleProductDialogSelectorChangeInterface, 'event' | 'products' > & {
         productId: string;
     };
 

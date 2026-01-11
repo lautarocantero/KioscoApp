@@ -1,8 +1,8 @@
 import type { ProductVariant } from "@typings/productVariant/productVariant";
-import type { HandleProductDialogSelectorChangeParams } from "@typings/sells/types";
+import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/types";
 import validateProductSelection from "./ValidateProductSelection";
  
-const handleChangeProductDialogSelector = ({event, products, setFieldValue} : HandleProductDialogSelectorChangeParams ) => {
+const handleChangeProductDialogSelector = ({event, products, setFieldValue} : HandleProductDialogSelectorChangeInterface ) => {
     const productId: string = event.target.value as string;
 
     const validation = validateProductSelection({event, products, productId});

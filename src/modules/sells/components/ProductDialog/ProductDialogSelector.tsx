@@ -16,7 +16,7 @@
 
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography, type SelectChangeEvent, type Theme } from "@mui/material";
 import type { DialogSelectorProps } from "@typings/sells/reactComponents";
-import type { HandleProductDialogSelectorChangeParams } from "@typings/sells/types";
+import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/types";
 import React, { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
@@ -54,7 +54,7 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
         [products] 
     );
 
-    const handleChange = useDelegatedHandler(({ event, products, setFieldValue }: HandleProductDialogSelectorChangeParams) =>
+    const handleChange = useDelegatedHandler(({ event, products, setFieldValue }: HandleProductDialogSelectorChangeInterface) =>
         handleChangeSelector({ event, products, setFieldValue }),
         [products, setFieldValue]
     );
