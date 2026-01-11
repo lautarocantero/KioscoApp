@@ -24,7 +24,7 @@ import type { RootState as ProductVariantState } from "../../../../store/product
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
 import handleChangeSelector from "../../helpers/ProductDialog/handleProductDialogSelectorChange";
 
-const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelectorProps): React.ReactNode => {
+const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: DialogSelectorProps): React.ReactNode => {
 
     const isEmpty = useMemo(() => { return (products?.length ?? 0) === 0; }, [products]);
 
@@ -93,4 +93,4 @@ const ProductDialogSelector = ({ products, values, setFieldValue }: DialogSelect
 };
 
 
-export default React.memo(ProductDialogSelector);
+export default React.memo(ProductDialogSelectorComponent);
