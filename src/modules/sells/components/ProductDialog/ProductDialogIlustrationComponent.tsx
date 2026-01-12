@@ -1,12 +1,11 @@
 
-//─────────────────── Componente 🧩: ProductDialogIlustrationComponent ───────────────────//
+//─────────────────── Componente 🧩: ProductDialogIllustrationComponent ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
-// Renderiza una imagen representativa del producto junto con su nombre.  
+// Renderiza ilustraciones o gráficos asociados al producto.  
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// -ProductDialogIlustrationComponent
-//      -ProductDialogImage Renderiza la imagen del producto
+//   - Muestra ilustración principal del producto.  
 
 //-----------------------------------------------------------------------------//
 
@@ -17,8 +16,8 @@ import ProductDialogImage from "./ProductDialogImageComponent";
 
 const ProductDialogIlustrationComponent = (
     {
+        image_url = '/images/productExample/cocaCola.png',
         name = 'Product', 
-        image_url = '/images/productExample/cocaCola.png'
     }: ProductDialogIlustrationProps ) : React.ReactNode => {
 
     return (

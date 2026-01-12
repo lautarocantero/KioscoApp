@@ -1,25 +1,23 @@
-//─────────────────── Componente 🧩: ProductDialogUnits ───────────────────//
+
+//─────────────────── Componente 🧩: ProductDialogUnitsComponent ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
-// Campo numérico para seleccionar la cantidad de unidades de un producto dentro del diálogo.
-// Se integra con Formik para actualizar el stock seleccionado.  
+// Control para seleccionar cantidad de unidades del producto.  
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// - ProductDialogUnits: componente principal.
-//   - Recibe values, setFieldValue y label.
-
-//─────────────────── Notas técnicas 💽 ───────────────────//
-// - NumberField es un componente compartido que encapsula la lógica de inputs numéricos.
+//   - Renderiza input numérico para unidades.  
+//   - Valida y ajusta cantidad con `validateProductUnits`.  
+//   - Actualiza campo `requiredStock` en Formik.  
 
 //-----------------------------------------------------------------------------//
 
 import { Grid } from "@mui/material";
 import type { DialogDataDisplayProps } from "@typings/sells/reactComponents";
-import NumberField from "../../../shared/components/NumberField/NumberField";
-import React from "react";
-import handleChangeUnits from "../../helpers/ProductDialog/Handlers/handleProductDialogUnitsChange";
-import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
 import type { HandleProductDialogUnitsChangeInterface } from "@typings/sells/types";
+import React from "react";
+import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
+import NumberField from "../../../shared/components/NumberField/NumberField";
+import handleChangeUnits from "../../helpers/ProductDialog/Handlers/handleProductDialogUnitsChange";
 
 const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: DialogDataDisplayProps ): React.ReactNode => {
 

@@ -9,32 +9,30 @@
 // - Devuelve un objeto con `productVariantId`, `productVariant`, `requiredStock` y `totalPrice`.
 
 // Notas técnicas 💽
-// - Tipado con `DialogDataInterface` y `ProductVariant`.
 // - Usado en el componente `ProductDialog` para inicializar Formik.
 
 //-----------------------------------------------------------------------------//
 
-
-import type { DialogDataInterface } from "@typings/sells/types";
 import type { ProductVariant } from "@typings/productVariant/productVariant";
+import type { DialogDataInterface } from "@typings/sells/types";
 
 const emptyProductVariant: ProductVariant = {
   _id: "",
-  name: "",
-  description: "",
-  created_at: "",
-  updated_at: "",
-  image_url: "",
-  gallery_urls: [],
   brand: "",
+  created_at: "",
+  description: "",
+  expiration_date: "",
+  gallery_urls: [],
+  image_url: "",
+  min_stock: 0,
+  model_size: "",
+  model_type: "",
+  name: "",
+  price: 0,
   product_id: "",
   sku: "",
-  model_type: "",
-  model_size: "",
-  min_stock: 0,
   stock: 0,
-  price: 0,
-  expiration_date: "",
+  updated_at: "",
 };
 
 const getInitialProductDialogValues = (productVariants: ProductVariant[]): DialogDataInterface => {

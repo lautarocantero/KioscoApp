@@ -1,13 +1,24 @@
 
-//── Helper 🦸: validateProductForCart ──//
+/*
+── Helper 🦸: validateProductForCart ──
 
-// Descripción 📝
-// Se encarga de validar que el producto seleccionado pueda agregarse al carrito
+Descripción 📝
+Se encarga de validar que el producto seleccionado pueda agregarse al carrito.
 
-// Lógica 🔧
-// - Cuenta con varias validaciones, que de fallar, retornar valid: false y un mensaje detallando el error
+━━━━━━━━━━ Lógica 🔧 ━━━━━━━━━━
+┌────────────────────────────────────────────┬───────────────────────────────┐
+│ Validación                                 │ Resultado                     │
+├────────────────────────────────────────────┼───────────────────────────────┤
+│ Producto no existe                         │ ❌ Inválido                   │
+│ Cantidad requerida no es un número entero  │ ❌ Inválido                   │
+│ Cantidad requerida menor o igual a 0       │ ❌ Inválido                   │
+│ Cantidad requerida mayor al stock disponible │ ❌ Inválido                 │
+│ Precio del producto menor o igual a 0      │ ❌ Inválido                   │
+│ Todas las condiciones correctas            │ ✅ Válido                     │
+└────────────────────────────────────────────┴───────────────────────────────┘
 
-//-----------------------------------------------------------------------------//
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+*/
 
 import type { validateProductSubmissionInterface, ValidationResultType } from "@typings/sells/types";
 

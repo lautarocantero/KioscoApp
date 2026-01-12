@@ -1,5 +1,5 @@
 
-//─────────────────── Componente 🧩: ProductDialog  ───────────────────//
+//─────────────────── Componente 🧩: ProductDialog ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
 // Diálogo modal para agregar productos al carrito.  
@@ -12,7 +12,7 @@
 //     - `initialValues` generados por `getInitialProductDialogValues`.  
 //     - `validationSchema` definido en `ProductDialogValidationSchema`.  
 //     - `onSubmit` encapsulado en helper `ProductDialogSubmit`.  
-//   - Renderiza ilustración (`ProductDialogIlustration`) y datos (`ProductDialogData`).  
+//   - Renderiza ilustración (`ProductDialogIllustration`) y datos (`ProductDialogData`).  
 //   - Contiene botones de acción: **Cerrar** y **Agregar**.  
 
 //─────────────────── Notas técnicas 💽 ───────────────────//
@@ -22,10 +22,7 @@
 // - `enableReinitialize`: asegura que el formulario se reinicie al cambiar de producto.  
 // - `useMemo` y `useCallback`: optimizan cálculos y evitan recreaciones innecesarias.  
 
-//─────────────────── 📝 To do ───────────────────//
-// - Evaluar soporte para agregar múltiples variantes del mismo producto.  
 //-----------------------------------------------------------------------------//
-
 
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, type Theme } from "@mui/material";
 import type { DialogDataInterface } from "@typings/sells/types";

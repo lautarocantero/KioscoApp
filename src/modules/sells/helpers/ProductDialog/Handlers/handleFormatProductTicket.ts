@@ -3,7 +3,7 @@
 
 // Descripción 📝
 // Convierte una variante de producto (`ProductVariant`) en un objeto
-// `ProductTicketType` listo para usar en el flujo de ventas.
+// `ProductTicketType` listo para despachar tickets al carrito.
 
 // Lógica 🔧
 // - Recibe `productVariant` y `requiredStock`.
@@ -11,8 +11,7 @@
 // - Devuelve un `ProductTicketType` con esos datos más `stock_required`.
 
 // Notas técnicas 💽
-// - Tipado con `FormatProductTicketInterface`.
-// - Se usa en `ProductDialogSubmit` para despachar tickets al carrito.
+// - Se usa en `ProductDialogSubmit`.
 
 //-----------------------------------------------------------------------------//
 
@@ -28,16 +27,16 @@ import type { FormatProductTicketInterface } from "@typings/sells/types";
 
     return {
       _id,
-      name,
-      description,
-      image_url,
       brand,
+      description,
+      expiration_date,
+      image_url,
+      model_size,
+      model_type,
+      name,
+      price,
       product_id,
       sku,
-      model_type,
-      model_size,
-      price,
-      expiration_date,
       stock_required: requiredStock,
     }
   }

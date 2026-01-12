@@ -1,16 +1,13 @@
+
 //─────────────────── Componente 🧩: ProductDialogSelector ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
-// Selector de variantes de producto dentro del diálogo. 
-// Permite al usuario elegir un producto específico y actualiza los valores del formulario con sus datos. 
+// Selector de variantes de producto dentro del diálogo.  
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// ## Funciones 🔧
-// - `ProductDialogSelector`: componente principal que recibe props tipadas con `DialogSelectorProps`.  
-//   - `products`: listado de variantes de producto disponibles.  
-// - Lógica interna:  
-//   - `isLoading`: si esta cargando los productos mostrara un loader.  
-//   - `isEmpty`: si no hay productos, muestra mensaje "No se han encontrado Productos".  
+//   - Renderiza lista de variantes disponibles.  
+//   - Permite seleccionar variante y actualiza Formik.  
+//   - Se integra con validaciones de selección.  
 
 //-----------------------------------------------------------------------------//
 
@@ -22,7 +19,7 @@ import { useSelector } from "react-redux";
 import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
 import type { RootState as ProductVariantState } from "../../../../store/productVariant/productVariantSlice";
 import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
-import handleChangeSelector from "../../helpers/ProductDialog/Handlers/handleProductDialogSelectorChange";
+import handleChangeSelector from "../../helpers/ProductDialog/Handlers/handleChangeProductDialogSelector";
 
 const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: DialogSelectorProps): React.ReactNode => {
 

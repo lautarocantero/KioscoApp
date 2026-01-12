@@ -1,3 +1,19 @@
+
+//── Helper 🦸: handleProductDialogSelectorChange ──//
+
+// Descripción 📝
+// Maneja el cambio de selección de variante dentro del diálogo de producto.
+
+// Lógica 🔧
+// - Actualiza el estado de la variante seleccionada.
+// - Sincroniza los valores dependientes (precio, stock, imagen).
+
+// Notas técnicas 💽
+// - Se usa en ProductDialogSelector
+
+//-----------------------------------------------------------------------------//
+
+
 import type { ProductVariant } from "@typings/productVariant/productVariant";
 import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/types";
 import validateProductSelection from "../Validation/ValidateProductSelection";

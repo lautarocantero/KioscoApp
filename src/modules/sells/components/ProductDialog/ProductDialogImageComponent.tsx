@@ -2,7 +2,11 @@
 //─────────────────── Componente 🧩: ProductDialogImageComponent ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
-// Renderiza la imagen del producto en el Modal
+// Renderiza la imagen principal del producto en el diálogo.  
+
+//──────────────────── Funciones 🔧 ─────────────────────//
+//   - Muestra imagen del producto seleccionada.  
+//   - Permite fallback si no hay imagen disponible.  
 
 //-----------------------------------------------------------------------------//
 

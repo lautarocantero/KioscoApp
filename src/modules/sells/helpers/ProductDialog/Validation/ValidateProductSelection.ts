@@ -1,13 +1,23 @@
 
-//── Helper 🦸: validateProductSelection ──//
+/*
+── Helper 🦸: validateProductSelection ──
 
-// Descripción 📝
-// Se encarga de validar que el producto seleccionado sea válido antes de agregarlo a la venta.
+Descripción 📝
+Se encarga de validar que el producto seleccionado sea válido antes de agregarlo a la venta.
 
-// Lógica 🔧
-// - Cuenta con varias validaciones, que de fallar, retornar valid: false y un mensaje detallando el error
+━━━━━━━━━━ Lógica 🔧 ━━━━━━━━━━
+┌────────────────────────────────────────────┬───────────────────────────────┐
+│ Validación                                 │ Resultado                     │
+├────────────────────────────────────────────┼───────────────────────────────┤
+│ Evento sin target                          │ ❌ Inválido                   │
+│ ProductId inexistente                      │ ❌ Inválido                   │
+│ ProductId vacío                            │ ❌ Inválido                   │
+│ Lista de productos no es array o está vacía│ ❌ Inválido                   │
+│ Todas las condiciones correctas            │ ✅ Válido                     │
+└────────────────────────────────────────────┴───────────────────────────────┘
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+*/
 
-//-----------------------------------------------------------------------------//
 
 import type { validateProductSelectionType, ValidationResultType } from "@typings/sells/types";
 

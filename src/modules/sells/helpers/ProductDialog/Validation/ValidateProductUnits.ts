@@ -1,17 +1,24 @@
-//── Helper 🦸: validateProductUnits ──//
+/*
+── Helper 🦸: validateProductUnits ──
 
-// Descripción 📝
-// Se encarga de validar la cantidad de unidades seleccionadas para un producto.
-// Ajusta el valor a los límites permitidos (mínimo 1, máximo stock).
+Descripción 📝
+Se encarga de validar la cantidad de unidades seleccionadas para un producto.
+Ajusta el valor a los límites permitidos (mínimo 1, máximo stock).
 
-// Lógica 🔧
-// - Si el valor es nulo o no numérico → inválido.
-// - Si el valor es menor o igual a 0 → se ajusta a 1.
-// - Si no existe el producto → inválido.
-// - Si el valor excede el stock → se ajusta al máximo disponible.
-// - Si pasa todas las validaciones → válido.
+━━━━━━━━━━ Lógica 🔧 ━━━━━━━━━━
+┌────────────────────────────────────────────┬───────────────────────────────┐
+│ Validación                                 │ Resultado                     │
+├────────────────────────────────────────────┼───────────────────────────────┤
+│ Valor nulo                                 │ ❌ Inválido                   │
+│ Valor no numérico                          │ ❌ Inválido                   │
+│ Valor menor o igual a 0                    │ ⚠️ Ajustado a 1               │
+│ Producto no seleccionado                   │ ❌ Inválido                   │
+│ Valor mayor al stock disponible            │ ⚠️ Ajustado al máximo         │
+│ Todas las condiciones correctas            │ ✅ Válido                     │
+└────────────────────────────────────────────┴───────────────────────────────┘
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+*/
 
-//-----------------------------------------------------------------------------//
 
 import type { HandleProductDialogUnitsChangeInterface, ValidationResultAdjustedType } from "@typings/sells/types";
 

@@ -1,18 +1,14 @@
+
 //─────────────────── Componente 🧩: ProductDialogPriceComponent ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
-// Muestra el precio total calculado en el diálogo de producto.
-// Se basa en la cantidad seleccionada y el precio unitario.  
+// Muestra el precio del producto y variaciones en el diálogo.  
 
 //──────────────────── Funciones 🔧 ─────────────────────//
-// - ProductDialogPriceComponent: componente principal.
-//   - Recibe values.
-//   - Si product_id está vacío → no renderiza.
-//   - Si productStock es 0 → no renderiza.
-//   - En caso contrario, renderiza Typography con el cálculo Total = productPrice × productStock.
+//   - Renderiza precio base del producto.  
+//   - Muestra descuentos o promociones si existen.  
+//   - Actualiza precio dinámicamente según variante seleccionada.  
 
-//─────────────────── Notas técnicas 💽 ───────────────────//
-// - El cálculo se realiza directamente en JSX para mantener simplicidad.
 //-----------------------------------------------------------------------------//
 
 import { Grid, Typography, type Theme } from "@mui/material";
