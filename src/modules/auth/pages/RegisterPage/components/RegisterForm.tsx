@@ -76,20 +76,20 @@ const getValidationSchema = () =>
     })
   );
 
-const onSubmit = async (data: AuthRegisterRequestPayload, dispatch: AppDispatch): Promise<void> => {
-  try {
-    const sanitizedData = {
-      username: sanitizeInput(data.username, 'Username'),
-      email: sanitizeInput(data.email, 'Email'),
-      password: sanitizeInput(data.password, 'Password'),
-      repeatPassword: sanitizeInput(data.repeatPassword, 'RepeatPassword'),
-    };
-
-    dispatch(startRegister({sanitizedData}));
-  } catch (error: unknown) { 
-    handleError(error);
-  }
-};
+  const onSubmit = async (data: AuthRegisterRequestPayload, dispatch: AppDispatch): Promise<void> => {
+    try {
+      const sanitizedData = {
+        username: sanitizeInput(data.username, 'Username'),
+        email: sanitizeInput(data.email, 'Email'),
+        password: data.password,         // ✅ sin sanitizar
+        repeatPassword: data.repeatPassword, // ✅ sin sanitizar
+      };
+    
+      dispatch(startRegister({sanitizedData}));
+    } catch (error: unknown) { 
+      handleError(error);
+    }
+  };
 
 const RegisterForm = (): React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();

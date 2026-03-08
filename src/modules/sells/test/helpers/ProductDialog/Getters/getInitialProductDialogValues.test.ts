@@ -1,5 +1,5 @@
 import type { ProductVariant } from "@typings/productVariant/productVariant";
-import getInitialProductDialogValues from "../../../sells/helpers/ProductDialog/Getters/getInitialProductDialogValues";
+import getInitialProductDialogValues from "../../../../helpers/ProductDialog/Getters/getInitialProductDialogValues";
 import { describe, it, expect } from "vitest";
 
 describe("Helper: getInitialProductDialogValues", () => {

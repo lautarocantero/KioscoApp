@@ -11,13 +11,12 @@
 
 //-----------------------------------------------------------------------------//
 
-
-import type { HandleProductDialogUnitsChangeInterface, ValidationResultAdjustedType } from "@typings/sells/types";
+import type { HandleProductDialogUnitsChangeInterface, ValidationResultType } from "@typings/sells/types";
 import validateProductUnits from "../Validation/ValidateProductUnits";
 
 const handleChangeUnits = ({incomingValue, productVariant, setFieldValue}: HandleProductDialogUnitsChangeInterface) => {
     
-    const validationResult: ValidationResultAdjustedType = validateProductUnits({incomingValue,productVariant});
+    const validationResult: ValidationResultType = validateProductUnits({incomingValue,productVariant});
 
     {/*─────────────────── 🔎 validacion fallida sin correccion 🔎 ───────────────────*/}
 

@@ -19,10 +19,24 @@ import type { ProductTicketType } from "@typings/seller/sellerTypes";
 import type { FormatProductTicketInterface } from "@typings/sells/types";
 
   const formatProductTicket = ({productVariant, requiredStock } : FormatProductTicketInterface): ProductTicketType | undefined => {
+    
+    if(!productVariant) {
+      throw new Error('No se ha encontrado el producto');
+      return;
+    }
+    
     const {
-      _id, name, description,image_url,
-      brand,product_id,sku,model_type,
-      model_size,price,expiration_date
+      _id, 
+      brand,
+      description,
+      expiration_date,
+      image_url,
+      model_size,
+      model_type,
+      name, 
+      price,
+      product_id,
+      sku,
     } = productVariant;
 
     return {

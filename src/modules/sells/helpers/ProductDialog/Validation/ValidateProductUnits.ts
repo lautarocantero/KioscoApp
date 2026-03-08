@@ -20,12 +20,12 @@ Ajusta el valor a los límites permitidos (mínimo 1, máximo stock).
 */
 
 
-import type { HandleProductDialogUnitsChangeInterface, ValidationResultAdjustedType } from "@typings/sells/types";
+import type { HandleProductDialogUnitsChangeInterface, ValidationResultType } from "@typings/sells/types";
 
 const validateProductUnits = ({
   incomingValue,
   productVariant,
-}: Partial<HandleProductDialogUnitsChangeInterface>): ValidationResultAdjustedType => {
+}: Partial<HandleProductDialogUnitsChangeInterface>): ValidationResultType => {
 
   if (incomingValue == null) {
     return { valid: false, message: "El valor ingresado es nulo." };

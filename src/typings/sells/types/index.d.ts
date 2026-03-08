@@ -116,9 +116,7 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         requiredStock: number;
     }
 
-    export type ValidationResultType = { valid: true } | { valid: false; message: string };
-
-    export type ValidationResultAdjustedType = { valid: true } | { valid: false; message: string, adjustedValue?: number };
+    export type ValidationResultType =  { valid: boolean; message?: string, adjustedValue?: number };
 
     export interface HandleProductDialogSelectorChangeInterface {
         event: SelectChangeEvent<string>;

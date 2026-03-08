@@ -13,20 +13,30 @@
 
 //-----------------------------------------------------------------------------//
 
-
 import type { ProductVariant } from "@typings/productVariant/productVariant";
 import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/types";
 import validateProductSelection from "../Validation/ValidateProductSelection";
  
 const handleChangeProductDialogSelector = ({event, products, setFieldValue} : HandleProductDialogSelectorChangeInterface ) => {
+    
+    if(!event?.target) {
+        throw new Error("No se ha recibido el evento de cambio.");
+        return;
+    }
+
     const productId: string = event.target.value as string;
 
     const validation = validateProductSelection({event, products, productId});
 
-    if (!validation.valid) { 
+    if (!validation.valid && "message" in validation) { 
         throw new Error(validation?.message);
-      return; 
+        return; 
     }
+
+    if (!validation.valid) { 
+      throw new Error("No se ha podido seleccionar el producto");
+      return; 
+  }
 
     const productObject: ProductVariant | undefined = products.find((prod: ProductVariant) => prod._id === productId);
 

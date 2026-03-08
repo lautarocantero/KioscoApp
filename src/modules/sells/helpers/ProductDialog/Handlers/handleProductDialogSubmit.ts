@@ -18,7 +18,7 @@
 
 import type { ProductVariant } from "@typings/productVariant/productVariant";
 import type { ProductTicketType } from "@typings/seller/sellerTypes";
-import type { DialogOnSubmitType } from "@typings/sells/types";
+import type { DialogOnSubmitType, ValidationResultType } from "@typings/sells/types";
 import { addToCartThunk } from "../../../../../store/seller/sellerThunks";
 import { AlertColor } from "../../../../../typings/ui/ui";
 import validateProductForCart from "../Validation/ValidateProductForCart";
@@ -27,9 +27,9 @@ import formatProductTicket from "./handleFormatProductTicket";
   const onSubmit = async ({ data, showSnackBar, dispatch, setShowModal }: DialogOnSubmitType): Promise<void> => {
     const { productVariant, requiredStock }: { productVariant: ProductVariant | null, requiredStock: number } = data;
 
-    const validation = validateProductForCart({productVariant, requiredStock});
+    const validation: ValidationResultType = validateProductForCart({productVariant, requiredStock});
 
-    if (!validation.valid) { 
+    if (!validation.valid && validation.message) { 
       showSnackBar(validation.message, AlertColor.Error); 
       return; 
     }
