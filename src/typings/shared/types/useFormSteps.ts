@@ -15,6 +15,8 @@ export interface StepState {
 
 export interface FormGridProps {
     formSteps: UseFormStepsReturn;
+    prevLink?: string;
+    validateStep: (step: number) => Promise<boolean>;
 }
 
 export interface UseFormStepsReturn {

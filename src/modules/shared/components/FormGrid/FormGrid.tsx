@@ -1,10 +1,26 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, type Theme } from "@mui/material";
 import FormHeaderComponent from "./FormHeader";
 import type { FormGridProps } from "@typings/shared/types/useFormSteps";
+import { useNavigate } from "react-router-dom";
 
 
-const FormGridComponent = ({ formSteps }: FormGridProps): React.ReactNode => {
+const FormGridComponent = ({ formSteps, prevLink, validateStep }: FormGridProps): React.ReactNode => {
     const { stepState, goToNext, goToPrev, isFirst, isLast, totalSteps } = formSteps;
+    const handleNavigate = useNavigate();
+
+    const handleGoBack = () => {
+        if (isFirst) {
+            handleNavigate(`${prevLink}`);
+            return;
+        }
+        goToPrev();
+    };
+
+    const handleGoNext = async () => {
+        const isValid = await validateStep(stepState.currentStep);
+        if (!isValid) return;
+        goToNext();
+    };
 
     return (
         <Grid
@@ -17,18 +33,39 @@ const FormGridComponent = ({ formSteps }: FormGridProps): React.ReactNode => {
                 title={stepState.title}
             />
 
-            {/* Contenido dinámico del step actual */}
             <Grid container sx={{ mt: 3 }}>
                 {stepState.content}
             </Grid>
 
-            {/* Navegación */}
-            <Grid container justifyContent="space-between" sx={{ mt: 6 }}>
-                {!isFirst && (
-                    <Button onClick={goToPrev}>Atrás</Button>
-                )}
-                <Button onClick={goToNext} disabled={isLast}>
-                    {isLast ? "Finalizar" : "Continuar"}
+            <Grid 
+                container 
+                spacing={0}
+                justifyContent="space-between" 
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%",
+                    mt: 6,
+                    mb: 3,
+                }}
+            >
+                <Button 
+                    onClick={handleGoBack}
+                    sx={(theme: Theme) => ({
+                        color: theme?.custom?.fontColor,
+                    })}
+                >
+                    Atrás
+                </Button>
+                <Button 
+                    onClick={handleGoNext}
+                    type={isLast ? "submit" : "button"}
+                    sx={(theme: Theme) => ({
+                        color: theme?.custom?.fontColor,
+                    })}
+                >
+                    {isLast ? "Crear" : "Continuar"}
                 </Button>
             </Grid>
         </Grid>
