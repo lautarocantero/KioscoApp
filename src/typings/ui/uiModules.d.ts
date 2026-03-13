@@ -92,9 +92,30 @@ export interface DialogContextType {
 
 export interface SimpleGridInterface {
   title?: string,
-  position?: string | undefined,
+  position: string | undefined,
   children: PropsWithChildren,
 }
+
+//─────────────────────────────── ➖ FormGrid ➖ ───────────────────────────────//
+
+export interface FormGridInterface {
+  steps: number;
+  titles: string[];
+}
+
+export interface FormGridHeaderInterface {
+  currentStep: number;
+  totalSteps: number;
+  title: string;
+}
+
+export interface FormStepsTitleInterface {
+    title: string;
+}
+
+export type FormGridStepsType = Pick<FormGridInterface, "steps"> & {
+  currentStep: number;
+};
 
 //─────────────────────────────── 🍫 Snack Bar 🍫 ───────────────────────────────//
 

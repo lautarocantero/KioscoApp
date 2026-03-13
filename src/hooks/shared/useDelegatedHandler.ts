@@ -1,11 +1,5 @@
 import { useCallback } from "react";
 
-/**
- * Hook para delegar funciones y memorizarlas.
- * 
- * @param fn - función a delegar
- * @param deps - lista de dependencias
- */
 export function useDelegatedHandler<
   Args extends unknown[],
   Return

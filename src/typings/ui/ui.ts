@@ -24,3 +24,13 @@ export enum AlertColor {
   Warning = 'warning',
   Info = 'info',
 }
+
+//─────────────────────────────── ➖ SimpleGrid ➖ ───────────────────────────────//
+
+export enum PositionVariant {
+  Undefined = 'undefined',
+  Normal = 'normal',
+}
+
+
+

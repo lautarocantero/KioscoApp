@@ -23,7 +23,10 @@ const SimpleGridComponent = ({title, position, children}: SimpleGridInterface ):
         position: 'relative',
         backgroundColor: theme?.custom?.backgroundDark,
         borderRadius: '1em',
-        margin: { xs: "5em 0.4em 1em", md: "5em auto 1em"},
+        margin: { 
+          xs: position == "normal" ? "0em 0.4em 1em" : "5em 0.4em 1em", 
+          md: position == "normal" ?  "0em auto 1em" : "5em auto 1em"
+        },
         padding: { xs: '0.1em' ,md: '0.5em'},
         width: { xs: '100%', md: '90%'},
         minHeight: '10em',

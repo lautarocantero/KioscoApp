@@ -1,6 +1,10 @@
 
 // # Componente: ProductsCreatePage  
 
+import AppLayout from "../../shared/layout/AppLayout";
+import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
+import ProductsFormComponent from "../components/ProductsForm";
+
 // ## Descripción 📦
 // Página destinada a la creación de productos.  
 // Actualmente muestra un texto placeholder indicando la vista.  
@@ -18,9 +22,12 @@
 const ProductsCreatePage = ():React.ReactNode => {
 
     return (
-        <>
-            <p>ProductsCreatePage</p>
-        </>
+        <AppLayout isOptions title='Crear producto'>
+            <SimpleGrid title={"crear producto"} position={"normal"}>
+                <ProductsFormComponent />
+            </SimpleGrid>
+
+        </AppLayout>
     )
 
 }
