@@ -1,10 +1,9 @@
-import { Button, Grid, type Theme } from "@mui/material";
+import { Button, CircularProgress, Grid, type Theme } from "@mui/material";
 import FormHeaderComponent from "./FormHeader";
 import type { FormGridProps } from "@typings/shared/types/useFormSteps";
 import { useNavigate } from "react-router-dom";
 
-
-const FormGridComponent = ({ formSteps, prevLink, validateStep }: FormGridProps): React.ReactNode => {
+const FormGridComponent = ({ formSteps, prevLink, validateStep, isSubmitting = false }: FormGridProps): React.ReactNode => {
     const { stepState, goToNext, goToPrev, isFirst, isLast, totalSteps } = formSteps;
     const handleNavigate = useNavigate();
 
@@ -23,10 +22,7 @@ const FormGridComponent = ({ formSteps, prevLink, validateStep }: FormGridProps)
     };
 
     return (
-        <Grid
-            container
-            sx={{ margin: "3em auto 0", width: "90%" }}
-        >
+        <Grid container sx={{ margin: "3em auto 0", width: "90%" }}>
             <FormHeaderComponent
                 currentStep={stepState.currentStep}
                 totalSteps={totalSteps}
@@ -37,10 +33,10 @@ const FormGridComponent = ({ formSteps, prevLink, validateStep }: FormGridProps)
                 {stepState.content}
             </Grid>
 
-            <Grid 
-                container 
+            <Grid
+                container
                 spacing={0}
-                justifyContent="space-between" 
+                justifyContent="space-between"
                 sx={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -50,22 +46,30 @@ const FormGridComponent = ({ formSteps, prevLink, validateStep }: FormGridProps)
                     mb: 3,
                 }}
             >
-                <Button 
+                <Button
                     onClick={handleGoBack}
+                    disabled={isSubmitting}
                     sx={(theme: Theme) => ({
                         color: theme?.custom?.fontColor,
                     })}
                 >
                     Atrás
                 </Button>
-                <Button 
+
+                <Button
                     onClick={handleGoNext}
                     type={isLast ? "submit" : "button"}
+                    disabled={isSubmitting}
                     sx={(theme: Theme) => ({
                         color: theme?.custom?.fontColor,
+                        minWidth: 100,
                     })}
                 >
-                    {isLast ? "Crear" : "Continuar"}
+                    {isLast && isSubmitting ? (
+                        <CircularProgress size={18} color="inherit" />
+                    ) : (
+                        isLast ? "Crear" : "Continuar"
+                    )}
                 </Button>
             </Grid>
         </Grid>
