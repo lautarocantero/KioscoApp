@@ -37,7 +37,7 @@ import CategoriesPage from "./pages/CategoriesPage"
 import CategoriesListPage from "./pages/CategoriesListPage"
 import CategoriesCreatePage from "./pages/CategoriesCreatePage"
 import CategoriesEditPage from "./pages/CategoriesEditPage"
-
+import ProductVariantCreatePage from "./pages/ProductsCreateVariantPage"
 
 
 const ProductsRoutes = ():React.ReactNode => {
@@ -52,6 +52,7 @@ const ProductsRoutes = ():React.ReactNode => {
             <Route path="/categories-list" element={<CategoriesListPage />} />
             <Route path="/categories-create" element={<CategoriesCreatePage />} />
             <Route path="/categories-edit" element={<CategoriesEditPage />} />
+            <Route path="/products/:productId/variants/new" element={<ProductVariantCreatePage />} />
         </>
     )
 }
