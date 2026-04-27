@@ -30,9 +30,9 @@ import DisplayOptions from '../../shared/components/Options/DisplayOptions';
 import type { LinksInterface } from '../../../typings/account/accountComponentTypes';
 
 const productsLinks: LinksInterface[] = [
+  { icon: <AddIcon />, description: 'Crear Producto', url: '/products-create'},
   { icon: <ClearAllIcon />, description: 'Ver Productos', url: '/products-list'},
   { icon: <DriveFileRenameOutlineIcon />, description: 'Editar Producto', url: '/products-edit'},
-  { icon: <AddIcon />, description: 'Crear Producto', url: '/products-create'},
   { icon: <BookmarksIcon />, description: 'Categorias', url: '/categories'},
 ]
 
