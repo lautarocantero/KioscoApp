@@ -32,38 +32,54 @@
 // - Accesibilidad visual: tipografía escalable y colores contrastados para mejorar legibilidad.  
 
 
-import { Grid, Typography, type Theme } from "@mui/material";
+import { Box, Typography, type Theme } from "@mui/material";
 import type { OptionsHeaderInterface } from "../../../../typings/ui/uiModules";
 
+const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterface): React.ReactNode => {
 
-const OptionsHeader = ({isOptions,title,icon, appTheme}: OptionsHeaderInterface):React.ReactNode => {
-
-  if(!isOptions) return (<></>);
+  if (!isOptions) return <></>;
 
   return (
-      <Grid
+    <Box
+      sx={(theme: Theme) => ({
+        width: "100%",
+        borderBottom: `0.5px solid ${
+          !appTheme ? "rgba(255,255,255,0.1)" : theme.custom?.blackTranslucid
+        }`,
+      })}
+    >
+      <Typography
+        variant="h4"
         sx={(theme: Theme) => ({
-          alignContent: 'center',
-          backgroundColor: !appTheme ? theme.custom.backgroundDark : theme.custom.backgroundLigth,
-          borderRadius: '1em',
-          color: !appTheme ? theme?.custom?.fontColor : theme.custom.fontColorDark,
-          width: '90%',
-          margin: { xs: "4em 0", sm: '4em 0'},
-          padding: {xs: '1em' },
-          textAlign: 'center'
+          fontSize: {
+            xs: theme.typography?.h5.fontSize,
+            sm: theme.typography?.h4.fontSize,
+          },
+          fontWeight: 500,
+          color: !appTheme ? theme.custom?.fontColor : theme.custom?.fontColorDark,
         })}
       >
-        <Typography
-          variant="h1"
-          sx={(theme: Theme) => ({
-            fontSize: {xs: theme?.typography?.h4.fontSize, sm: theme?.typography?.h2.fontSize, md: theme?.typography?.h1.fontSize },
-          })}
-        >
-          {icon && icon}
-          {title}
-        </Typography>
-      </Grid>
-  )
-}
+        {icon && (
+          <Box component="span" sx={{ mr: 1, verticalAlign: "middle" }}>
+            {icon}
+          </Box>
+        )}
+        {title}
+      </Typography>
+      <Typography
+        variant="caption"
+        sx={(theme: Theme) => ({
+          color: !appTheme
+            ? theme.custom?.fontColorTransparent
+            : theme.custom?.fontColorDarkTransparent,
+          mt: 0.5,
+          display: "block",
+        })}
+      >
+        Seleccioná una opción para continuar
+      </Typography>
+    </Box>
+  );
+};
 
 export default OptionsHeader;

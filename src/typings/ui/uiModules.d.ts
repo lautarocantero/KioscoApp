@@ -30,8 +30,10 @@ export interface AppLayoutProps {
 export type OptionLink = {
   icon: React.ReactNode,
   description: string,
+  subtitle?: string,
   url: string,
   function?: () => void | null,
+  value?: string;
 }
 
 export interface DisplayOptionsInterface extends AppLayoutProps {

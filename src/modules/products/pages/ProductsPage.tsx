@@ -31,8 +31,8 @@ import type { LinksInterface } from '../../../typings/account/accountComponentTy
 
 const productsLinks: LinksInterface[] = [
   { icon: <ClearAllIcon />, description: 'Ver Productos', url: '/products-list'},
-  { icon: <AddIcon />, description: 'Crear Producto', url: '/products-create'},
   { icon: <DriveFileRenameOutlineIcon />, description: 'Editar Producto', url: '/products-edit'},
+  { icon: <AddIcon />, description: 'Crear Producto', url: '/products-create'},
   { icon: <BookmarksIcon />, description: 'Categorias', url: '/categories'},
 ]
 

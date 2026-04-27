@@ -2,7 +2,6 @@
 // # Componente: ProductsCreatePage  
 
 import AppLayout from "../../shared/layout/AppLayout";
-import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import ProductsFormComponent from "../components/ProductsForm";
 
 // ## Descripción 📦
@@ -22,11 +21,8 @@ import ProductsFormComponent from "../components/ProductsForm";
 const ProductsCreatePage = ():React.ReactNode => {
 
     return (
-        <AppLayout isOptions title='Crear producto'>
-            <SimpleGrid title={"crear producto"} position={"normal"}>
+        <AppLayout title='Crear producto'>
                 <ProductsFormComponent />
-            </SimpleGrid>
-
         </AppLayout>
     )
 
