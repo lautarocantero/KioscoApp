@@ -1,4 +1,7 @@
 
+import axios from "axios";
+import { API_URL } from "../../../config/api";
+
 // # Módulo: Product Requests  
 
 // ## Descripción 📦
@@ -20,9 +23,6 @@
 // - Ideal para mantener consistencia en headers, timeout y credenciales.  
 //-----------------------------------------------------------------------------//
 
-
-import axios from "axios";
-import { API_URL } from "../../../config/api";
 
 const baseUrl = axios.create({
   baseURL: `${API_URL}/product`,

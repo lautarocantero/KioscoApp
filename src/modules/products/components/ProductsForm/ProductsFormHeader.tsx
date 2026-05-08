@@ -1,6 +1,6 @@
 import { Box, Grid, Typography, type Theme } from "@mui/material";
 import VisualStepperComponent from "./VisualStepper";
-import ProductBannerComponent from "./ProductBanner";
+import ProductBannerComponent from "../ProductBanner";
 import type { ProductsFormHeaderComponentProps } from "@typings/ui/uiModules";
 
 

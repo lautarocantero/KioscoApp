@@ -33,7 +33,7 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import type { store } from '../store';
-import type { ProviderState } from '../../typings/provider/providerTypes';
+import type { ProviderState } from '../../typings/providers/providerTypes';
 
 
 const initialState: ProviderState = {

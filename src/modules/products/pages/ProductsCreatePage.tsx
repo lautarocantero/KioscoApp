@@ -1,8 +1,8 @@
+import AppLayout from "../../shared/layout/AppLayout";
+import ProductsFormComponent from "../components/ProductsForm/ProductsForm"; 
+
 
 // # Componente: ProductsCreatePage  
-
-import AppLayout from "../../shared/layout/AppLayout";
-import ProductsFormComponent from "../components/ProductsForm";
 
 // ## Descripción 📦
 // Página destinada a la creación de productos.  
@@ -22,7 +22,7 @@ const ProductsCreatePage = ():React.ReactNode => {
 
     return (
         <AppLayout title='Crear producto'>
-                <ProductsFormComponent />
+            <ProductsFormComponent />
         </AppLayout>
     )
 

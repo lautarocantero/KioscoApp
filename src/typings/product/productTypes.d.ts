@@ -45,14 +45,8 @@ export type ProductStateError = Pick <ProductState, 'errorMessage'>
 // ║ 🪝 Hooks  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface UseProductsFormReturn {
-    createdProduct: CreatedProduct | null;
-    isSubmitting: boolean;
-    submitError: string | null;
-    setCreatedProduct: (product: CreatedProduct | null) => void;
-    setIsSubmitting: (value: boolean) => void;
-    setSubmitError: (error: string | null) => void;
-}
+export interface CreatedProductInterface { _id: string; name: string };
+
 
 export interface UseProductDataResult {
     productData: Product | null;
@@ -67,6 +61,24 @@ export interface UseFormStateReturn<T> {
     setCreatedEntity: (entity: T | null) => void;
     setIsSubmitting: (value: boolean) => void;
     setSubmitError: (error: string | null) => void;
+}
+
+export interface UseFormStateBase<T> {
+    createdEntity: T | null;
+    isSubmitting: boolean;
+    submitError: string | null;
+    setCreatedEntity: (entity: T | null) => void;
+    setIsSubmitting: (value: boolean) => void;
+    setSubmitError: (error: string | null) => void;
+}
+
+
+export interface UseProductsFormReturn extends UseFormStateBase<CreatedProductInterface> {
+    currentStep: number;
+    totalSteps: number;
+    handleNextStep: (validateForm: () => Promise<FormikErrors<ProductFormValues>>) => Promise<void>;
+    handlePrevStep: () => void;
+    handleSubmit: (values: ProductFormValues) => Promise<void>;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -86,8 +98,6 @@ export interface FormNavigationContextType {
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🛞 Utilidades  🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞                 ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
-
-export interface CreatedProductInterface { _id: string; name: string };
 
 export interface NoProductLoadedComponentProps {
     productError: string | null;
