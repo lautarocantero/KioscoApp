@@ -31,7 +31,7 @@ import { useCallback, useContext, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import useProductVariants from "../../../../hooks/sells/useProductVariants";
 import type { AppDispatch } from "../../../../store/productVariant/productVariantSlice";
-import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
+import type { ProductVariant } from "../../../../typings/productVariant/productVariantTypes";
 import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
 import getInitialProductDialogValues from "../../helpers/ProductDialog/Getters/getInitialProductDialogValues";

@@ -1,7 +1,7 @@
 import { TextField, Grid, Card, CardContent, Box, type Theme, Button, Typography } from "@mui/material";
+import type { ProductVariantFormValues } from "@typings/productVariant/productVariantTypes";
 import { useFormikContext } from "formik";
-import type { ProductVariantFormValues } from "./ProductVariantFormSchema";
-import { useFormNavigation } from "../../../modules/products/context/FormNavigationContext";
+import { useFormNavigation } from "modules/products/context/FormNavigationContext";
 import { useState } from "react";
 
 const sharedSx = (theme: Theme) => ({

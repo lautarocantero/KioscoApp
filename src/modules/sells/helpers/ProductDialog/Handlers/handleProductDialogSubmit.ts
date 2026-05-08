@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------//
 
 
-import type { ProductVariant } from "@typings/productVariant/productVariant";
+import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
 import type { ProductTicketType } from "@typings/seller/sellerTypes";
 import type { DialogOnSubmitType, ValidationResultType } from "@typings/sells/types";
 import { addToCartThunk } from "../../../../../store/seller/sellerThunks";

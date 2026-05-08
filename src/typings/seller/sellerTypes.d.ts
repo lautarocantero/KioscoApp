@@ -1,4 +1,4 @@
-import type { ProductVariant } from "../productVariant/productVariant";
+import type { ProductVariant } from "../productVariant/productVariantTypes";
 import type { CartAmount } from "./seller";
 
 //────────────────────────────────────────────♦️ PRODUCTS ♦️───────────────────────────────────────────//

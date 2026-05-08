@@ -1,4 +1,4 @@
-import type { ProductVariantFormValues } from "@typings/productVariant/productVariant";
+import type { ProductVariantFormValues } from "@typings/productVariant/productVariantTypes";
 import * as Yup from "yup";
 
 

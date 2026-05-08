@@ -1,4 +1,4 @@
-import type { ProductVariant } from "@typings/productVariant/productVariant";
+import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
 import getInitialProductDialogValues from "../../../../helpers/ProductDialog/Getters/getInitialProductDialogValues";
 import { describe, it, expect } from "vitest";
 

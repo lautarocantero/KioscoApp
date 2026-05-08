@@ -15,7 +15,7 @@
 
 import { Grid } from "@mui/material";
 import type { EspecificationsRightProps } from "@typings/sells/reactComponents";
-import type { ProductVariant } from "../../../../typings/productVariant/productVariant";
+import type { ProductVariant } from "../../../../typings/productVariant/productVariantTypes";
 import ProductItemAmountData from "./ProductItemAmountData";
 import ProductItemButton from "./ProductItemButton";
 

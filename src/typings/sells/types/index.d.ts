@@ -1,4 +1,4 @@
-import type { ProductVariant } from "@typings/productVariant/productVariant";
+import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";

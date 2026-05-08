@@ -1,6 +1,6 @@
 import AppLayout from "../../shared/layout/AppLayout";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
-import ProductVariantFormComponent from "../../../modules/productVariants/components/ProductVariantForm";
+import ProductVariantFormComponent from "../../productVariants/components/ProductVarianForm/ProductVariantForm";
 
 // # Componente: ProductVariantCreatePage
 // Página destinada a la creación de presentaciones/variantes de un producto.

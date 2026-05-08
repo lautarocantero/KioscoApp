@@ -13,7 +13,7 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { ProductVariant } from "@typings/productVariant/productVariant";
+import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
 import type { DialogDataInterface } from "@typings/sells/types";
 
 const emptyProductVariant: ProductVariant = {
