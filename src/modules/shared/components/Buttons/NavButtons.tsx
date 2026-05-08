@@ -1,7 +1,7 @@
 import { Box, Button, type Theme } from "@mui/material";
-import { useFormNavigation } from "../../../../../modules/products/context/FormNavigationContext";
+import { useFormNavigation } from "../../../../modules/products/context/FormNavigationContext";
 
-const ProductVariantNavButtons = (): React.ReactNode => {
+const NavButtons = (): React.ReactNode => {
     const { currentStep, onNext, onPrev, validateForm } = useFormNavigation();
 
     return (
@@ -32,7 +32,6 @@ const ProductVariantNavButtons = (): React.ReactNode => {
                     textTransform: "none", fontWeight: 600, minWidth: 120,
                     backgroundColor: "#0386EE",
                     "&:hover": { backgroundColor: "#0270c4" },
-                    "&:disabled": { backgroundColor: "rgba(3,134,238,0.5)" },
                 }}
             >
                 Siguiente →
@@ -41,4 +40,4 @@ const ProductVariantNavButtons = (): React.ReactNode => {
     );
 };
 
-export default ProductVariantNavButtons;
+export default NavButtons;

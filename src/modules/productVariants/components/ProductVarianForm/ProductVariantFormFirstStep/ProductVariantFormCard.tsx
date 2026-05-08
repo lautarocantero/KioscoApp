@@ -1,8 +1,8 @@
 import { Card, CardContent, Box, type Theme } from "@mui/material";
 import ProductVariantFormFields from "./ProductVariantFormFields";
 import ProductVariantImageUpload from "./ProductVariantImageUpload";
-import ProductVariantFormFooter from "./ProductVariantFormFooter";
-import ProductVariantNavButtons from "./ProductVariantNavButtons";
+import FormFooter from "../../../../../modules/shared/components/FormGrid/FormFooter";
+import NavButtons from "../../../../../modules/shared/components/Buttons/NavButtons";
 
 const ProductVariantFormCard = (): React.ReactNode => (
     <Card sx={(theme: Theme) => ({
@@ -23,8 +23,8 @@ const ProductVariantFormCard = (): React.ReactNode => (
             </Box>
         </CardContent>
 
-        <ProductVariantFormFooter />
-        <ProductVariantNavButtons />
+        <FormFooter />
+        <NavButtons />
     </Card>
 );
 

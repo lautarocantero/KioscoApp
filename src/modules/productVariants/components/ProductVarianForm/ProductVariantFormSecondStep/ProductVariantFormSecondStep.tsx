@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, type Theme } from "@mui/material";
-import ProductVariantFormFooter from "../ProductVariantFormFirstStep/ProductVariantFormFooter";
-import ProductVariantNavButtons from "../ProductVariantFormFirstStep/ProductVariantNavButtons";
+import NavButtons from "../../../../../modules/shared/components/Buttons/NavButtons";
 import ProductVariantStockFields from "./ProductVariantStockFields";
+import FormFooter from "../../../../../modules/shared/components/FormGrid/FormFooter";
 
 const ProductVariantFormSecondStep = (): React.ReactNode => (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
@@ -20,8 +20,8 @@ const ProductVariantFormSecondStep = (): React.ReactNode => (
                 <ProductVariantStockFields />
             </CardContent>
 
-            <ProductVariantFormFooter />
-            <ProductVariantNavButtons />
+            <FormFooter />
+            <NavButtons />
         </Card>
     </Box>
 );

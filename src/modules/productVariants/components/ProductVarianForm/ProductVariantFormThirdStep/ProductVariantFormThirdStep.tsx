@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, type Theme } from "@mui/material";
 import ProductVariantExpirationField from "./ProductVariantExpirationField";
 import ProductVariantSubmitButtons from "./ProductVariantSubmitButtons";
-import ProductVariantFormFooter from "../ProductVariantFormFirstStep/ProductVariantFormFooter";
+import FormFooter from "../../../../../modules/shared/components/FormGrid/FormFooter";
 
 const ProductVariantFormThirdStep = (): React.ReactNode => (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
@@ -20,7 +20,7 @@ const ProductVariantFormThirdStep = (): React.ReactNode => (
                 <ProductVariantExpirationField />
             </CardContent>
 
-            <ProductVariantFormFooter />
+            <FormFooter />
             <ProductVariantSubmitButtons />
         </Card>
     </Box>
