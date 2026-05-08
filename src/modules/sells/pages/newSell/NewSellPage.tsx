@@ -20,7 +20,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../../store/product/productSlice";
-import { getProducts } from "../../../../store/product/thunks";
+import { getProducts } from "../../../../store/product/productThunks";
 import type { Product } from '../../../../typings/product/productTypes';
 import SimpleSnackbar from "../../../shared/components/SnackBar/SnackBarComponent";
 import AppLayout from "../../../shared/layout/AppLayout";

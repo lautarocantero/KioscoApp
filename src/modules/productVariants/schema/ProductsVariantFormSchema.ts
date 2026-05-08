@@ -1,26 +1,6 @@
+import type { ProductFormValues } from "@typings/product/productTypes";
 import * as Yup from "yup";
 
-export type ProductFormValues = {
-    // Step 1: Datos del producto
-    name: string;
-    description: string;
-    brand: string;
-    image_url: string;
-
-    // Step 2: Datos técnicos
-    productType: string;
-    stock: number;
-    minStock: number;
-    productImage: File | null;
-
-    // Step 3: Datos técnicos II
-    size: string;
-    barcode: string;
-    expirationDate: Date | null;
-
-    // Step 4: Datos finales
-    supplierId: string;
-};
 
 export const getProductFormInitialValues = (): ProductFormValues => ({
     // Step 1
@@ -30,22 +10,21 @@ export const getProductFormInitialValues = (): ProductFormValues => ({
     image_url: "",
 
     // Step 2
-    productType: "",
-    stock: 0,
-    minStock: 0,
-    productImage: null,
+    sku: "",
+    model_type: "",
+    model_size: "",
+    price: 0,
+    variant_image_url: "",
+    gallery_urls: [],
 
     // Step 3
-    size: "",
-    barcode: "",
-    expirationDate: null,
-
-    // Step 4
-    supplierId: "",
+    stock: 0,
+    min_stock: 0,
+    expiration_date: null,
 });
 
 export const productFormSchema = Yup.object().shape({
-    // Step 1: Validación
+    // Step 1
     name: Yup.string()
         .required("El nombre del producto es requerido")
         .min(3, "El nombre debe tener al menos 3 caracteres")
@@ -62,39 +41,40 @@ export const productFormSchema = Yup.object().shape({
         .url("Debe ser una URL válida")
         .optional(),
 
-    // Step 2: Validación
-    productType: Yup.string()
-        .required("El tipo de producto es requerido"),
+    // Step 2
+    sku: Yup.string()
+        .max(50, "El SKU no puede exceder 50 caracteres"),
+    model_type: Yup.string(),
+    model_size: Yup.string()
+        .min(2, "El tamaño debe tener al menos 2 caracteres"),
+    price: Yup.number()
+        .required("El precio es requerido")
+        .min(0, "El precio no puede ser negativo")
+        .typeError("El precio debe ser un número"),
+    variant_image_url: Yup.string()
+        .url("Debe ser una URL válida")
+        .optional(),
+    gallery_urls: Yup.array()
+        .of(Yup.string().url("Cada URL de galería debe ser válida"))
+        .optional(),
+
+    // Step 3
     stock: Yup.number()
         .required("El stock es requerido")
         .min(0, "El stock no puede ser negativo")
         .typeError("El stock debe ser un número"),
-    minStock: Yup.number()
+    min_stock: Yup.number()
         .required("El stock mínimo es requerido")
         .min(0, "El stock mínimo no puede ser negativo")
         .typeError("El stock mínimo debe ser un número"),
-    productImage: Yup.mixed()
-        .optional(),
-
-    // Step 3: Validación
-    size: Yup.string()
-        .required("El tamaño es requerido"),
-    barcode: Yup.string()
-        .optional()
-        .max(50, "El código de barras no puede exceder 50 caracteres"),
-    expirationDate: Yup.date()
+    expiration_date: Yup.date()
         .optional()
         .nullable()
         .typeError("La fecha debe ser válida"),
-
-    // Step 4: Validación
-    supplierId: Yup.string(),
 });
 
-// Mapeo de campos por paso
 export const stepFieldsMap: Record<number, (keyof ProductFormValues)[]> = {
-    0: ["name", "description", "brand", "image_url"], // Step 1
-    1: ["productType", "stock", "minStock", "productImage"], // Step 2
-    2: ["size", "barcode", "expirationDate"], // Step 3
-    3: [], // Step 4
+    0: ["name", "description", "brand", "image_url"],
+    1: ["sku", "model_type", "model_size", "price", "variant_image_url", "gallery_urls"],
+    2: ["stock", "min_stock", "expiration_date"],
 };

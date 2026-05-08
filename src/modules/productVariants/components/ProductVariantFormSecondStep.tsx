@@ -1,6 +1,7 @@
-import { TextField, Grid, Card, CardContent, Box, type Theme } from "@mui/material";
+import { TextField, Grid, Card, CardContent, Box, type Theme, Button, Typography } from "@mui/material";
 import { useFormikContext } from "formik";
-import type { ProductVariantFormValues } from "./ProductVariantFormSchema";
+import { useFormNavigation } from "../../../modules/products/context/FormNavigationContext";
+import type { ProductVariantFormValues } from "@typings/productVariant/productVariant";
 
 const sharedSx = (theme: Theme) => ({
     "& .MuiInputLabel-root": { color: theme?.custom?.fontColorTransparent },
@@ -13,83 +14,154 @@ const sharedSx = (theme: Theme) => ({
 
 const ProductVariantFormSecondStep = (): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<ProductVariantFormValues>();
+    const { onNext, onPrev, validateForm } = useFormNavigation();
+
+    const handleNextClick = async () => {
+        if (validateForm) {
+            await onNext(validateForm);
+        }
+    };
 
     return (
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "70vh", p: 2 }}>
+        <Box
+            sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "flex-start",
+                minHeight: "auto",
+                p: 2,
+                pt: 0,
+            }}
+        >
             <Card
                 sx={(theme: Theme) => ({
                     width: "100%",
-                    maxWidth: 800,
-                    boxShadow: 3,
+                    maxWidth: 680,
                     bgcolor: theme.custom?.backgroundDark,
+                    border: "0.5px solid",
+                    borderColor: "rgba(255,255,255,0.08)",
+                    borderRadius: "16px",
+                    boxShadow: `
+                        0 1px 3px rgba(0, 0, 0, 0.06),
+                        4px 8px 16px rgba(0, 0, 0, 0.10),
+                        8px 16px 28px rgba(0, 0, 0, 0.08)
+                   `,
                 })}
             >
                 <CardContent sx={{ p: 4 }}>
-                    <Box component="div">
-                        <Grid container spacing={3}>
-                            <Grid xs={12} sm={6}>
+                    <Box>
+                        <Grid container spacing={2.5} display={"flex"} flexDirection={"column"}>
+                            <Grid spacing={{ xs: 12, sm: 12 }}>
                                 <TextField
                                     fullWidth
-                                    label="SKU"
-                                    placeholder="Ej: CC500CLASPET"
-                                    value={values.sku}
-                                    onChange={(e) => setFieldValue("sku", e.target.value.toUpperCase())}
-                                    error={!!errors.sku}
-                                    helperText={errors.sku ?? "Solo letras, números, guiones y guiones bajos"}
+                                    label="Stock"
+                                    type="number"
+                                    placeholder="Ej: 100"
+                                    value={values.stock}
+                                    onChange={(e) => setFieldValue("stock", e.target.value)}
+                                    error={!!errors.stock}
+                                    helperText={errors.stock}
                                     variant="outlined"
                                     sx={sharedSx}
                                     required
                                 />
                             </Grid>
 
-                            <Grid xs={12} sm={6}>
+                            <Grid spacing={{ xs: 12, sm: 12 }}>
                                 <TextField
                                     fullWidth
-                                    label="Tipo de envase / modelo"
-                                    placeholder="Ej: Descartable PET, Lata, Vidrio retornable"
-                                    value={values.model_type}
-                                    onChange={(e) => setFieldValue("model_type", e.target.value)}
-                                    error={!!errors.model_type}
-                                    helperText={errors.model_type}
+                                    label="Stock mínimo"
+                                    type="number"
+                                    placeholder="Ej: 10"
+                                    value={values.min_stock}
+                                    onChange={(e) => setFieldValue("min_stock", e.target.value)}
+                                    error={!!errors.min_stock}
+                                    helperText={errors.min_stock}
                                     variant="outlined"
                                     sx={sharedSx}
                                     required
                                 />
                             </Grid>
 
-                            <Grid xs={12} sm={6}>
+                            <Grid spacing={{ xs: 12, sm: 12 }}>
                                 <TextField
                                     fullWidth
-                                    label="Tamaño / Contenido"
-                                    placeholder="Ej: 500ml, 1kg, 12 unidades"
-                                    value={values.model_size}
-                                    onChange={(e) => setFieldValue("model_size", e.target.value)}
-                                    error={!!errors.model_size}
-                                    helperText={errors.model_size}
+                                    label="Precio"
+                                    type="number"
+                                    placeholder="Ej: 1.50"
+                                    value={values.price}
+                                    onChange={(e) => setFieldValue("price", e.target.value)}
+                                    error={!!errors.price}
+                                    helperText={errors.price}
                                     variant="outlined"
                                     sx={sharedSx}
-                                    required
-                                />
-                            </Grid>
-
-                            <Grid xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    label="Fecha de vencimiento"
-                                    type="date"
-                                    value={values.expiration_date}
-                                    onChange={(e) => setFieldValue("expiration_date", e.target.value)}
-                                    error={!!errors.expiration_date}
-                                    helperText={errors.expiration_date}
-                                    variant="outlined"
-                                    InputLabelProps={{ shrink: true }}
-                                    sx={sharedSx}
+                                    inputProps={{ step: "0.01" }}
                                     required
                                 />
                             </Grid>
                         </Grid>
                     </Box>
                 </CardContent>
+
+                {/* ── Footer con nota de campos requeridos ── */}
+                <Box
+                    sx={{
+                        px: 3,
+                        py: 1.5,
+                        borderTop: "0.5px solid rgba(255,255,255,0.07)",
+                    }}
+                >
+                    <Typography
+                        sx={(theme: Theme) => ({
+                            fontSize: "0.72rem",
+                            color: theme.custom?.fontColorTransparent,
+                            opacity: 0.6,
+                        })}
+                    >
+                        <Box component="span" sx={{ color: "#0386EE", mr: 0.5 }}>*</Box>
+                        Campos requeridos
+                    </Typography>
+                </Box>
+
+                {/* ── Botones de navegación ── */}
+                <Box
+                    sx={{
+                        display: "flex",
+                        gap: 2,
+                        justifyContent: "space-between",
+                        px: 3,
+                        py: 2.5,
+                        borderTop: "0.5px solid rgba(255,255,255,0.07)",
+                        backgroundColor: "rgba(0,0,0,0.2)",
+                    }}
+                >
+                    <Button
+                        onClick={onPrev}
+                        variant="outlined"
+                        sx={(theme: Theme) => ({
+                            textTransform: "none",
+                            fontWeight: 600,
+                            minWidth: 120,
+                            borderColor: theme?.custom?.fontColorTransparent,
+                            color: theme?.custom?.fontColorTransparent,
+                        })}
+                    >
+                        ← Atrás
+                    </Button>
+                    <Button
+                        onClick={handleNextClick}
+                        variant="contained"
+                        sx={{
+                            textTransform: "none",
+                            fontWeight: 600,
+                            minWidth: 120,
+                            backgroundColor: "#0386EE",
+                            "&:hover": { backgroundColor: "#0270c4" },
+                        }}
+                    >
+                        Siguiente →
+                    </Button>
+                </Box>
             </Card>
         </Box>
     );

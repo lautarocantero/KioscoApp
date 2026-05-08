@@ -1,3 +1,5 @@
+import type { CreatedProductInterface } from "@typings/product/productTypes";
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -46,6 +48,33 @@ interface ProductVariantState {
 }
 
 export type ProductVariantStateError = Pick<ProductVariantState, 'errorMessage'>;
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🪝 Hooks  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🛞 Utilidades  🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞                 
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export type CreatedVariantInterface = Pick<CreatedProductInterface, '_id' | 'name'>;
+
+export interface VariantCreatedComponentProps {
+    createdVariant: CreatedVariantInterface;
+    onCreateAnother: () => void;
+}
+
+export interface ProductVariantFormValues {
+    sku:             string;
+    model_type:      string;
+    model_size:      string;
+    image_file?: File | null;
+    image_url:       string;
+    min_stock:       number | "";
+    stock:           number | "";
+    price:           number | "";
+    expiration_date: string;
+}
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🎟️ TICKET  🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️                       ║

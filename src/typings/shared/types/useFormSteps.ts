@@ -29,3 +29,13 @@ export interface UseFormStepsReturn {
     isLast: boolean;
     totalSteps: number;
 }
+
+export interface ActualStepComponentProps {
+    currentStep: number;
+    stepComponents: React.ComponentType[];
+}
+
+export interface FormHeaderComponentProps {
+    stepsLabels: string[];
+    currentStep: number;
+}

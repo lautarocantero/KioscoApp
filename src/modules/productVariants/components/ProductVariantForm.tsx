@@ -1,68 +1,120 @@
-import { useState } from "react";
-import { Grid, Box, Button, Typography, type Theme } from "@mui/material";
+import {
+    Grid, Box
+} from "@mui/material";
 import { Formik } from "formik";
-import { useNavigate, useParams } from "react-router-dom";
+import type { FormikErrors } from "formik";
+import { useParams } from "react-router-dom";
 import { useFormSteps } from "../../../hooks/shared/useFormSteps";
-import FormGridComponent from "../../shared/components/FormGrid/FormGrid";
 import {
     getProductVariantFormInitialValues,
     productVariantFormSchema,
     stepFieldsMap,
     type ProductVariantFormValues,
 } from "./ProductVariantFormSchema";
+import { FormNavigationContext } from "../../products/context/FormNavigationContext";
 import ProductVariantFormFirstStep from "./ProductVariantFormFirstStep";
-import ProductVariantFormThirdStep from "./ProductVariantFormThirdStep";
 import ProductVariantFormSecondStep from "./ProductVariantFormSecondStep";
+import ProductVariantFormThirdStep from "./ProductVariantFormThirdStep";
+import { useProductData } from "../../../hooks/products/useProductData";
+import type { CreatedVariantInterface } from "@typings/productVariant/productVariant";
+import { API_URL } from "../../../config/api";
+import { useProductsForm } from "../../../hooks/products/useProductsForm";
+import LoadingProductComponent from "./LoadingProduct";
+import NoProductLoadedComponent from "./NotProductLoaded";
+import VariantCreatedComponent from "./VariantCreatedComponent";
+import ApiErrorComponent from "../../../modules/products/components/ApiError";
+import ActualStepComponent from "../../../modules/products/components/ActualStep";
+import ProductsFormHeaderComponent from "../../../modules/products/components/ProductsFormHeader";
+import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../config/constants";
+import BaseEntitySummaryComponent from "./BaseEntitySummary";
+import CancelButtonComponent from "../../../modules/shared/components/Buttons/CancelButton";
 
-type CreatedVariant = { _id: string; name: string };
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+const STEPS_LABELS   = ["Datos del producto", "Datos de la presentación", "Stock y operación"];
+const STEP_COMPONENTS = [
+    ProductVariantFormFirstStep,
+    ProductVariantFormSecondStep,
+    ProductVariantFormThirdStep,
+];
 
+// ─────────────────────────────────────────────────────────────────────────────
 const ProductVariantFormComponent = (): React.ReactNode => {
-    const navigate = useNavigate();
     const { productId } = useParams<{ productId: string }>();
-    console.log("Product ID from URL params:", productId);
 
-    const [createdVariant, setCreatedVariant] = useState<CreatedVariant | null>(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitError, setSubmitError] = useState<string | null>(null);
+    // ─── Datos del producto: store primero, fetch como fallback ──────────
+    const { productData, isLoading: loadingProduct, error: productError } = useProductData(productId);
 
-    const stepsConfig = [
-        { title: "Datos básicos",   content: <ProductVariantFormFirstStep /> },
-        { title: "Modelo y envase", content: <ProductVariantFormSecondStep /> },
-        { title: "Stock y precio",  content: <ProductVariantFormThirdStep /> },
-    ];
+    const {
+        createdEntity: createdVariant,
+        isSubmitting,
+        submitError,
+        setCreatedEntity: setCreatedVariant,
+        setIsSubmitting,
+        setSubmitError,
+    } = useProductsForm<CreatedVariantInterface>();
 
-    const formSteps = useFormSteps(stepsConfig);
+    const stepsConfig = STEPS_LABELS.map((label) => ({ title: label, content: null }));
+    const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(stepsConfig);
 
-    // ─── Submit → POST /product-variant/create-product-variant ───────────────
+    // ─── Validar paso actual antes de avanzar ────────────────────────────
+    const handleNextStep = async (
+        validateForm: () => Promise<FormikErrors<ProductVariantFormValues>>
+    ) => {
+        const errors           = await validateForm();
+        const currentStepFields = stepFieldsMap[stepState.currentStep];
+        const hasErrors        = currentStepFields.some(
+            (field) => errors[field as keyof ProductVariantFormValues]
+        );
+        if (!hasErrors) {
+            goToNext();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    };
+
+    const handlePrevStep = () => {
+        goToPrev();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    // ─── Submit ───────────────────────────────────────────────────────────
     const handleSubmit = async (values: ProductVariantFormValues) => {
+        if (!productData) {
+            setSubmitError("Datos del producto no disponibles");
+            return;
+        }
+
         setIsSubmitting(true);
         setSubmitError(null);
 
         try {
-            const body = {
-                name:            values.name,
-                description:     values.description,
-                brand:           values.brand,
-                image_url:       values.image_url,
-                gallery_urls:    [],
-                product_id:      productId ?? values.product_id,
-                sku:             values.sku,
-                model_type:      values.model_type,
-                model_size:      values.model_size,
-                min_stock:       Number(values.min_stock),
-                stock:           Number(values.stock),
-                price:           Number(values.price),
-                expiration_date: values.expiration_date,
-            };
+            // Usar FormData para enviar datos + imagen
+            const formData = new FormData();
+            formData.append("name", productData.name);
+            formData.append("description", productData.description);
+            formData.append("brand", productData.brand);
+            formData.append("image_url", values.image_url || productData.image_url);
+            if (values.image_file) {
+                formData.append("image", values.image_file); // File object real
+            }
+            formData.append("gallery_urls", JSON.stringify(productData.gallery_urls || []));
+            formData.append("product_id", productId ?? "");
+            formData.append("sku", values.sku);
+            formData.append("model_type", values.model_type);
+            formData.append("model_size", values.model_size);
+            formData.append("min_stock", String(values.min_stock));
+            formData.append("stock", String(values.stock));
+            formData.append("price", String(values.price));
+            formData.append("expiration_date", values.expiration_date);
 
-            const response = await fetch(`${API_BASE_URL}/product-variant/create-product-variant`, {
-                method:  "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify(body),
-            });
+            const response = await fetch(
+                `${API_URL}/product-variant/create-product-variant`,
+                {
+                    method:      "POST",
+                    // No establecer Content-Type: se asignará automáticamente con boundary
+                    credentials: "include",
+                    body:        formData,
+                }
+            );
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
@@ -70,7 +122,11 @@ const ProductVariantFormComponent = (): React.ReactNode => {
             }
 
             const data: { _id: string; message: string } = await response.json();
-            setCreatedVariant({ _id: data._id, name: values.name });
+            setCreatedVariant({
+                _id:  data._id,
+                name: `${productData.name} - ${values.model_size}`,
+            });
+
         } catch (error) {
             console.error("❌ Error al crear presentación:", error);
             setSubmitError(
@@ -83,104 +139,70 @@ const ProductVariantFormComponent = (): React.ReactNode => {
         }
     };
 
-    const validateCurrentStep = async (
-        validateForm: () => Promise<Partial<Record<keyof ProductVariantFormValues, string>>>,
-        currentStep: number
-    ): Promise<boolean> => {
-        const errors = await validateForm();
-        const currentStepFields = stepFieldsMap[currentStep];
-        return !currentStepFields.some((field) => errors[field]);
-    };
+    if (loadingProduct) return <LoadingProductComponent />;
 
-    // ─── Pantalla post-submit ─────────────────────────────────────────────────
-    if (createdVariant) {
-        return (
-            <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-                gap={3}
-                mt={6}
-                px={2}
-            >
-                <Typography variant="h6" textAlign="center">
-                    ✅ Presentación <strong>"{createdVariant.name}"</strong> creada correctamente.
-                </Typography>
-                <Typography variant="body2" color="text.secondary" textAlign="center">
-                    ¿Querés agregar otra presentación para este producto?
-                </Typography>
+    if (!productData) return <NoProductLoadedComponent productError={productError} />;
 
-                <Box display="flex" flexDirection="column" gap={2} width="100%" maxWidth={340}>
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        onClick={() => {
-                            setCreatedVariant(null);
-                            setSubmitError(null);
-                        }}
-                        sx={{ textTransform: "none", fontWeight: 600 }}
-                    >
-                        Crear otra presentación
-                    </Button>
+    if (createdVariant) return (
+        <VariantCreatedComponent
+            createdVariant={createdVariant}
+            onCreateAnother={() => { setCreatedVariant(null); setSubmitError(null); }}
+        />
+    );
 
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        onClick={() => navigate(`/products/${productId ?? ""}`)}
-                        sx={(theme: Theme) => ({
-                            textTransform: "none",
-                            borderColor: theme?.custom?.fontColorTransparent,
-                            color: theme?.custom?.fontColorTransparent,
-                        })}
-                    >
-                        Ver producto
-                    </Button>
 
-                    <Button
-                        fullWidth
-                        variant="text"
-                        onClick={() => navigate("/products")}
-                        sx={(theme: Theme) => ({
-                            textTransform: "none",
-                            color: theme?.custom?.fontColorTransparent,
-                        })}
-                    >
-                        Volver a productos
-                    </Button>
-                </Box>
-            </Box>
-        );
-    }
-
-    // ─── Formulario ───────────────────────────────────────────────────────────
     return (
-        <Formik
-            initialValues={getProductVariantFormInitialValues(productId ?? "")}
-            validationSchema={productVariantFormSchema}
-            onSubmit={handleSubmit}
-            validateOnBlur={false}
-            validateOnChange={false}
-        >
-            {({ handleSubmit: formikSubmit, validateForm }) => (
-                <Grid container component="form" onSubmit={formikSubmit}>
-                    {submitError && (
-                        <Grid size={12}>
-                            <Typography color="error" variant="body2" textAlign="center">
-                                ❌ {submitError}
-                            </Typography>
-                        </Grid>
-                    )}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
 
-                    <FormGridComponent
-                        formSteps={formSteps}
-                        prevLink={`/products/${productId ?? ""}`}
-                        validateStep={(step) => validateCurrentStep(validateForm, step)}
-                        isSubmitting={isSubmitting}
-                    />
-                </Grid>
-            )}
-        </Formik>
+            <BaseEntitySummaryComponent
+                label="Producto base"
+                name={productData.name}
+                description="• Estás creando una presentación para este producto"
+            />
+
+            {/* ─── Formulario ────────────────────────────────────────────────── */}
+            <Formik
+                initialValues={getProductVariantFormInitialValues()}
+                validationSchema={productVariantFormSchema}
+                onSubmit={handleSubmit}
+                validateOnBlur={false}
+                validateOnChange={false}
+            >
+                {({ handleSubmit: formikSubmit, validateForm }) => (
+                    <FormNavigationContext.Provider
+                        value={{
+                            currentStep: stepState.currentStep,
+                            totalSteps,
+                            onNext:      handleNextStep,
+                            onPrev:      handlePrevStep,
+                            onSubmit:    formikSubmit,
+                            isSubmitting,
+                            validateForm,
+                        }}
+                    >
+                        <Grid container component="form" onSubmit={formikSubmit}>
+
+                            <ProductsFormHeaderComponent 
+                                stepsLabels={PRODUCTS_VARIANT_STEPS_LABELS} 
+                                currentStep={stepState.currentStep} 
+                            />
+                            <ApiErrorComponent submitError={submitError} />
+
+                            <ActualStepComponent 
+                                currentStep={stepState.currentStep} 
+                                stepComponents={STEP_COMPONENTS} 
+                            />
+
+                             <CancelButtonComponent
+                                navigateTo="/products"
+                                label="← Cancelar y volver a productos"
+                             />
+                            
+                        </Grid>
+                    </FormNavigationContext.Provider>
+                )}
+            </Formik>
+        </Box>
     );
 };
 

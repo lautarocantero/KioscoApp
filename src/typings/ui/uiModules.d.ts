@@ -83,6 +83,11 @@ export interface LogoutButtonProps extends BackButtonProps {
   dispatch: AppDispatch;
 }
 
+export interface CancelButtonComponentProps {
+    navigateTo: string;
+    label?: string;
+}
+
 //─────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────//
 
 export interface DialogContextType {
@@ -118,6 +123,26 @@ export interface FormStepsTitleInterface {
 export type FormGridStepsType = Pick<FormGridInterface, "steps"> & {
   currentStep: number;
 };
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🔒 ProductsForm                                                        ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface FormHeaderComponentProps {
+    stepsLabels: string[];
+    currentStep: number;
+}
+
+export interface ProductsFormHeaderComponentProps extends FormHeaderComponentProps {
+    banner?: React.ReactNode;
+    banner_text?: string;
+}
+
+export interface BaseEntitySummaryComponentProps {
+    label: string;
+    name: string;
+    description?: string;
+}
 
 //─────────────────────────────── 🍫 Snack Bar 🍫 ───────────────────────────────//
 

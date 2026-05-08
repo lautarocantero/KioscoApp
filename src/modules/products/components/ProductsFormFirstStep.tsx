@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Grid, TextField, Typography, Button, type Theme } from "@mui/material";
 import { useFormikContext } from "formik";
-import type { ProductFormValues } from "./ProductsFormSchema";
-import { useFormNavigation } from "./ProductsForm";
+import { useFormNavigation } from "../context/FormNavigationContext";
+import type { ProductFormValues } from "modules/productVariants/schema/ProductsVariantFormSchema";
 
 const sharedSx = (theme: Theme) => ({
     "& .MuiInputLabel-root": {
@@ -111,7 +111,7 @@ const ProductsFormFirstStep = (): React.ReactNode => {
                         <Grid container spacing={2.5}>
 
                             {/* Nombre + Marca — misma fila */}
-                            <Grid item xs={12} sm={6}>
+                            <Grid spacing={{ xs:"12", sm:"6" }}>
                                 <TextField
                                     fullWidth
                                     label="Nombre del producto"
@@ -125,7 +125,7 @@ const ProductsFormFirstStep = (): React.ReactNode => {
                                 />
                             </Grid>
 
-                            <Grid item xs={12} sm={6}>
+                            <Grid spacing={{ xs:"12", sm:"6" }}>
                                 <TextField
                                     fullWidth
                                     label="Marca"
@@ -140,7 +140,7 @@ const ProductsFormFirstStep = (): React.ReactNode => {
                             </Grid>
 
                             {/* Descripción — ancho completo */}
-                            <Grid item xs={12}>
+                            <Grid spacing={{ xs:"12" }}>
                                 <TextField
                                     fullWidth
                                     label="Descripción"
@@ -157,7 +157,7 @@ const ProductsFormFirstStep = (): React.ReactNode => {
                             </Grid>
 
                             {/* URL de imagen — ancho completo */}
-                            <Grid item xs={12}>
+                            <Grid spacing={{ xs:"12" }}>
                                 <TextField
                                     fullWidth
                                     label="URL de imagen"
@@ -173,7 +173,7 @@ const ProductsFormFirstStep = (): React.ReactNode => {
 
                             {/* Preview de imagen si hay URL */}
                             {values.image_url && (
-                                <Grid item xs={12}>
+                                <Grid spacing={{ xs:"12" }}>
                                     <Box
                                         sx={{
                                             border: "0.5px dashed",
