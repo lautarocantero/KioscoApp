@@ -7,7 +7,6 @@ import ProductCreatedComponent from "../ProductCreated";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import ProductsFormHeaderComponent from "./ProductsFormHeader";
-import CancelButtonComponent from "../../../shared/components/Buttons/CancelButton";
 import ProductsFormFirstStep from "./ProductsFormFirstStep";
 import { useProductsForm } from "../../../../hooks/products/useProductsForm";
 
@@ -74,10 +73,6 @@ const ProductsFormComponent = (): React.ReactNode => {
                             stepComponents={STEP_COMPONENTS}
                         />
 
-                        <CancelButtonComponent
-                            navigateTo="/products"
-                            label="← Cancelar y volver a productos"
-                        />
                     </Grid>
                 </FormNavigationContext.Provider>
             )}

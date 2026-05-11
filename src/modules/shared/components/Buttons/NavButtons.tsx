@@ -1,19 +1,29 @@
 import { Box, Button, type Theme } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { useFormNavigation } from "../../../../modules/products/context/FormNavigationContext";
 
 const NavButtons = (): React.ReactNode => {
     const { currentStep, onNext, onPrev, onSubmit, validateForm, totalSteps } = useFormNavigation();
+    const navigate = useNavigate();
 
+    const isFirstStep = currentStep === 0;
     const isLastStep = currentStep === totalSteps - 1;
 
     const handleNext = () => {
         if (!validateForm) return;
         if (isLastStep) {
             onNext(validateForm, onSubmit);
+            return;
         }
-        if (!isLastStep) {
-            onNext(validateForm);
+        onNext(validateForm);
+    };
+
+    const handleBack = () => {
+        if (isFirstStep) {
+            navigate("/products");
+            return;
         }
+        onPrev();
     };
 
     return (
@@ -24,17 +34,15 @@ const NavButtons = (): React.ReactNode => {
             backgroundColor: "rgba(0,0,0,0.2)",
         }}>
             <Button
-                onClick={onPrev}
-                disabled={currentStep === 0}
+                onClick={handleBack}
                 variant="outlined"
                 sx={(theme: Theme) => ({
                     textTransform: "none", fontWeight: 600, minWidth: 120,
                     borderColor: theme?.custom?.fontColorTransparent,
                     color: theme?.custom?.fontColorTransparent,
-                    "&:disabled": { borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.3)" },
                 })}
             >
-                Atrás
+                {isFirstStep ? "← Cancelar" : "← Atrás"}
             </Button>
 
             <Button
