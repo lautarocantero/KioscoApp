@@ -7,6 +7,7 @@ import type { ProductsFormHeaderComponentProps } from "@typings/ui/uiModules";
 const ProductsFormHeaderComponent = ({ 
     stepsLabels, 
     currentStep,
+    showProgressIndicator = false,
     banner,
     banner_text,
 }: ProductsFormHeaderComponentProps) => {
@@ -31,6 +32,7 @@ const ProductsFormHeaderComponent = ({
                         </Typography>
                     </Box>
 
+                    {showProgressIndicator && (
                     <Box sx={{ position: "relative", width: 48, height: 48, flexShrink: 0 }}>
                         <svg width="48" height="48" viewBox="0 0 48 48" style={{ transform: "rotate(-90deg)" }}>
                             <circle cx="24" cy="24" r="20" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2" />
@@ -51,9 +53,12 @@ const ProductsFormHeaderComponent = ({
                             </Typography>
                         </Box>
                     </Box>
+                    )}
                 </Box>
-
-                <VisualStepperComponent stepsLabels={stepsLabels} currentStep={currentStep} />
+                
+                {showProgressIndicator && (
+                    <VisualStepperComponent stepsLabels={stepsLabels} currentStep={currentStep} />
+                )}
 
                 <ProductBannerComponent
                     currentStep={currentStep}

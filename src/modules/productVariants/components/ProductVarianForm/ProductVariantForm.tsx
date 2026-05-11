@@ -76,6 +76,7 @@ const ProductVariantFormComponent = (): React.ReactNode => {
                     >
                         <Grid container component="form" onSubmit={formikSubmit}>
                             <ProductsFormHeaderComponent
+                                showProgressIndicator
                                 stepsLabels={PRODUCTS_VARIANT_STEPS_LABELS}
                                 currentStep={currentStep}
                             />

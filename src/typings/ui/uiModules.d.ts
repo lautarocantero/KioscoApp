@@ -134,6 +134,7 @@ export interface FormHeaderComponentProps {
 }
 
 export interface ProductsFormHeaderComponentProps extends FormHeaderComponentProps {
+    showProgressIndicator?: boolean;
     banner?: React.ReactNode;
     banner_text?: string;
 }

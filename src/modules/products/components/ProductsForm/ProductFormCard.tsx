@@ -1,8 +1,8 @@
 import { Card, CardContent, Box, type Theme } from "@mui/material";
 import ProductFormCardHeader from "./ProductFormCardHeader";
 import ProductFormFields from "./ProductFormFields";
-import ProductFormCardFooter from "./ProductFormCardHeader";
 import NavButtons from "../../../../modules/shared/components/Buttons/NavButtons";
+import FormFooter from "../../../../modules/shared/components/FormGrid/FormFooter";
 
 const ProductFormCard = (): React.ReactNode => (
     <Card sx={(theme: Theme) => ({
@@ -24,7 +24,7 @@ const ProductFormCard = (): React.ReactNode => (
             </Box>
         </CardContent>
 
-        <ProductFormCardFooter />
+        <FormFooter />
         <NavButtons />
     </Card>
 );

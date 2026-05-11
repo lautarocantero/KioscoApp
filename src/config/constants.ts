@@ -3,7 +3,7 @@ export const iva = 0;
 export const REACT_APP_API_URL='https://kioscoappbackend.onrender.com'
 
 export const PRODUCTS_STEPS_LABELS = [
-    "Datos del producto",
+    "Crear Producto",
 ];
 
 export const PRODUCTS_VARIANT_STEPS_LABELS = [
