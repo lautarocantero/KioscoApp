@@ -88,6 +88,10 @@ export interface CancelButtonComponentProps {
     label?: string;
 }
 
+export interface NavButtonsProps {
+    onSubmit?: () => void;
+}
+
 //─────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────//
 
 export interface DialogContextType {
@@ -143,6 +147,11 @@ export interface BaseEntitySummaryComponentProps {
     label: string;
     name: string;
     description?: string;
+}
+
+export interface FormFooterProps {
+    stepErrors?: string[];
+    submitError?: string | null;
 }
 
 //─────────────────────────────── 🍫 Snack Bar 🍫 ───────────────────────────────//

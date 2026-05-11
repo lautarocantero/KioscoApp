@@ -1,14 +1,31 @@
 import { Box, Typography, type Theme } from "@mui/material";
+import type { FormFooterProps } from "@typings/ui/uiModules";
 
-const FormFooter = (): React.ReactNode => (
-    <Box sx={{ px: 3, py: 1.5, borderTop: "0.5px solid rgba(255,255,255,0.07)" }}>
-        <Typography sx={(theme: Theme) => ({
-            fontSize: "0.72rem", color: theme.custom?.fontColorTransparent, opacity: 0.6,
-        })}>
-            <Box component="span" sx={{ color: "#0386EE", mr: 0.5 }}>*</Box>
-            Campos requeridos
-        </Typography>
-    </Box>
-);
+
+const FormFooter = ({ stepErrors, submitError }: FormFooterProps): React.ReactNode => {
+    
+    const allErrors = [
+        ...(stepErrors ?? []),
+        ...(submitError ? [submitError] : []),
+    ];
+
+    if (allErrors.length === 0) return null;
+
+    return (
+        <Box sx={{ px: 3, py: 1.5, borderTop: "0.5px solid rgba(255,255,255,0.07)" }}>
+            {allErrors.map((error, i) => (
+                <Typography key={i} sx={(theme: Theme) => ({
+                    fontSize: "0.72rem",
+                    color: theme.palette.error.light,
+                    display: "flex", alignItems: "center", gap: 0.5,
+                    mb: i < allErrors.length - 1 ? 0.5 : 0,
+                })}>
+                    <Box component="span">•</Box>
+                    {error}
+                </Typography>
+            ))}
+        </Box>
+    );
+};
 
 export default FormFooter;

@@ -70,13 +70,17 @@ export interface UseFormStateBase<T> {
     setCreatedEntity: (entity: T | null) => void;
     setIsSubmitting: (value: boolean) => void;
     setSubmitError: (error: string | null) => void;
+    stepErrors: string[];
 }
-
 
 export interface UseProductsFormReturn extends UseFormStateBase<CreatedProductInterface> {
     currentStep: number;
     totalSteps: number;
-    handleNextStep: (validateForm: () => Promise<FormikErrors<ProductFormValues>>) => Promise<void>;
+    stepErrors: string[];
+    handleNextStep: (
+        validateForm: () => Promise<FormikErrors<ProductFormValues>>,
+        onValidSubmit?: () => void,
+    ) => Promise<void>;
     handlePrevStep: () => void;
     handleSubmit: (values: ProductFormValues) => Promise<void>;
 }
@@ -88,12 +92,18 @@ export interface UseProductsFormReturn extends UseFormStateBase<CreatedProductIn
 export interface FormNavigationContextType {
     currentStep: number;
     totalSteps: number;
-    onNext: (validateForm: () => Promise<FormikErrors<ProductFormValues>>) => Promise<void>;
+    onNext: (
+        validateForm: () => Promise<FormikErrors<ProductFormValues>>,
+        onValidSubmit?: () => void,
+    ) => Promise<void>;
     onPrev: () => void;
     onSubmit: (e?: React.FormEvent<HTMLFormElement>) => void;
     isSubmitting: boolean;
     validateForm?: () => Promise<FormikErrors<ProductFormValues>>;
+    submitError: string | null;
+    stepErrors: string[];
 }
+
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🛞 Utilidades  🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞                 ║

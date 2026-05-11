@@ -17,12 +17,13 @@ const ProductsFormComponent = (): React.ReactNode => {
     const {
         createdEntity: createdProduct,
         isSubmitting,
-        submitError,
         currentStep,
         totalSteps,
         handleNextStep,
         handlePrevStep,
         handleSubmit,
+        submitError,
+        stepErrors, 
     } = useProductsForm();
 
     if (createdProduct) {
@@ -47,6 +48,8 @@ const ProductsFormComponent = (): React.ReactNode => {
                         onSubmit: formikSubmit,
                         isSubmitting,
                         validateForm,
+                        submitError,
+                        stepErrors, 
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit}>

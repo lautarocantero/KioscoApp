@@ -11,23 +11,37 @@ export const useProductsForm = (): UseProductsFormReturn => {
     const [createdEntity, setCreatedEntity] = useState<CreatedProductInterface | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
+    const [stepErrors, setStepErrors] = useState<string[]>([]);
 
     const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(stepsConfig);
 
     const handleNextStep = async (
-        validateForm: () => Promise<FormikErrors<ProductFormValues>>
+        validateForm: () => Promise<FormikErrors<ProductFormValues>>,
+        onValidSubmit?: () => void,
     ) => {
         const errors = await validateForm();
         const currentStepFields = stepFieldsMap[stepState.currentStep];
-        const hasErrors = currentStepFields.some((field) => errors[field]);
+        const currentErrors = currentStepFields
+            .filter((field) => errors[field])
+            .map((field) => errors[field] as string);
+    
+        if (currentErrors.length > 0) {
+            setStepErrors(currentErrors);
+            return;
+        }
+    
+        setStepErrors([]);
+    
+        if (onValidSubmit) onValidSubmit();
 
-        if (!hasErrors) {
+        if (!onValidSubmit) {
             goToNext();
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
     };
 
     const handlePrevStep = () => {
+        setStepErrors([]);
         goToPrev();
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
@@ -63,7 +77,6 @@ export const useProductsForm = (): UseProductsFormReturn => {
             const data: { _id: string; message: string } = await response.json();
             setCreatedEntity({ _id: data._id, name: values.name });
         } catch (error) {
-            console.error("❌ Error al crear producto:", error);
             setSubmitError(
                 error instanceof Error
                     ? error.message
@@ -78,6 +91,7 @@ export const useProductsForm = (): UseProductsFormReturn => {
         createdEntity,
         isSubmitting,
         submitError,
+        stepErrors,
         setCreatedEntity,
         setIsSubmitting,
         setSubmitError,

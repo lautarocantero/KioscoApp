@@ -2,7 +2,19 @@ import { Box, Button, type Theme } from "@mui/material";
 import { useFormNavigation } from "../../../../modules/products/context/FormNavigationContext";
 
 const NavButtons = (): React.ReactNode => {
-    const { currentStep, onNext, onPrev, validateForm } = useFormNavigation();
+    const { currentStep, onNext, onPrev, onSubmit, validateForm, totalSteps } = useFormNavigation();
+
+    const isLastStep = currentStep === totalSteps - 1;
+
+    const handleNext = () => {
+        if (!validateForm) return;
+        if (isLastStep) {
+            onNext(validateForm, onSubmit);
+        }
+        if (!isLastStep) {
+            onNext(validateForm);
+        }
+    };
 
     return (
         <Box sx={{
@@ -22,11 +34,11 @@ const NavButtons = (): React.ReactNode => {
                     "&:disabled": { borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.3)" },
                 })}
             >
-                ← Atrás
+                Atrás
             </Button>
 
             <Button
-                onClick={() => validateForm && onNext(validateForm)}
+                onClick={handleNext}
                 variant="contained"
                 sx={{
                     textTransform: "none", fontWeight: 600, minWidth: 120,
@@ -34,7 +46,7 @@ const NavButtons = (): React.ReactNode => {
                     "&:hover": { backgroundColor: "#0270c4" },
                 }}
             >
-                Siguiente →
+                {isLastStep ? "Crear producto" : "Siguiente"}
             </Button>
         </Box>
     );
