@@ -21,7 +21,7 @@ const ProductVariantFormSecondStep = (): React.ReactNode => (
             </CardContent>
 
             <FormFooter />
-            <NavButtons />
+            <NavButtons SubmitText="Crear"/>
         </Card>
     </Box>
 );

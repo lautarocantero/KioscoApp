@@ -2,7 +2,11 @@ import { Box, Button, type Theme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useFormNavigation } from "../../../../modules/products/context/FormNavigationContext";
 
-const NavButtons = (): React.ReactNode => {
+export interface NavButtonsProps {
+    SubmitText?: string;
+}
+
+const NavButtons = ({SubmitText}: NavButtonsProps): React.ReactNode => {
     const { currentStep, onNext, onPrev, onSubmit, validateForm, totalSteps } = useFormNavigation();
     const navigate = useNavigate();
 
@@ -54,7 +58,7 @@ const NavButtons = (): React.ReactNode => {
                     "&:hover": { backgroundColor: "#0270c4" },
                 }}
             >
-                {isLastStep ? "Crear producto" : "Siguiente"}
+                {isLastStep ? SubmitText : "Siguiente"}
             </Button>
         </Box>
     );

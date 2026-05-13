@@ -29,15 +29,16 @@
 
 
 import { Route } from "react-router-dom"
-import ProductsPage from "./pages/ProductsPage"
-import ProductsListPage from "./pages/ProductsListPage"
-import ProductsCreatePage from "./pages/ProductsCreatePage"
-import ProductsEditPage from "./pages/ProductsEditPage"
+import ProductsPage from "./pages/Products/ProductsPage"
+import ProductsListPage from "./pages/Products/ProductsPage"
+import ProductsCreatePage from "./pages/Products/ProductsCreatePage"
+import ProductsEditPage from "./pages/Products/ProductsEditPage"
 import CategoriesPage from "./pages/CategoriesPage"
 import CategoriesListPage from "./pages/CategoriesListPage"
 import CategoriesCreatePage from "./pages/CategoriesCreatePage"
 import CategoriesEditPage from "./pages/CategoriesEditPage"
 import ProductVariantCreatePage from "./pages/ProductsCreateVariantPage"
+import ProductDetailPage from "./pages/Products/ProductDetailPage"
 
 
 const ProductsRoutes = ():React.ReactNode => {
@@ -45,9 +46,10 @@ const ProductsRoutes = ():React.ReactNode => {
     return (
         <>
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/product/:productId" element={<ProductDetailPage />} />
             <Route path="/products-list" element={<ProductsListPage />} />
             <Route path="/products-create" element={<ProductsCreatePage />} />
-            <Route path="/products-edit" element={<ProductsEditPage />} />
+            <Route path="/products/:productId/edit" element={<ProductsEditPage />} />
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/categories-list" element={<CategoriesListPage />} />
             <Route path="/categories-create" element={<CategoriesCreatePage />} />

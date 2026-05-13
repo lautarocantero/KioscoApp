@@ -24,7 +24,7 @@ const ProductVariantFormCard = (): React.ReactNode => (
         </CardContent>
 
         <FormFooter />
-        <NavButtons />
+        <NavButtons SubmitText="Crear"/>
     </Card>
 );
 

@@ -10,7 +10,6 @@ import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import ProductsFormHeaderComponent from "../../../products/components/ProductsForm/ProductsFormHeader";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
-import CancelButtonComponent from "../../../../modules/shared/components/Buttons/CancelButton";
 import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
 import ProductVariantFormFirstStep from "./ProductVariantFormFirstStep";
 import ProductVariantFormSecondStep from "./ProductVariantFormSecondStep/ProductVariantFormSecondStep";
@@ -84,10 +83,6 @@ const ProductVariantFormComponent = (): React.ReactNode => {
                             <ActualStepComponent
                                 currentStep={currentStep}
                                 stepComponents={STEP_COMPONENTS}
-                            />
-                            <CancelButtonComponent
-                                navigateTo="/products"
-                                label="← Cancelar y volver a productos"
                             />
                         </Grid>
                     </FormNavigationContext.Provider>

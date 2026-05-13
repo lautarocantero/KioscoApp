@@ -1,41 +1,121 @@
-
 import axios from "axios";
 import { API_URL } from "../../../config/api";
+import type { Product } from "@typings/product/productTypes";
 
-// # Módulo: Product Requests  
+// # Módulo: Product Requests
 
 // ## Descripción 📦
-// Configuración de cliente Axios para interactuar con el backend de productos.  
-// Incluye una función para obtener la lista de productos desde la API.  
+// Centraliza todas las llamadas HTTP al recurso `/product` del backend.
+// Cada función mapea 1:1 con un endpoint definido en `ProductRouter`.
 
-// ## Funciones 🔧
-// - `baseUrl`: instancia de Axios configurada con:  
-//   - `baseURL`: `http://localhost:3000/product`  
-//   - `timeout`: 5000 ms  
-//   - `headers`: `Content-Type: application/json`  
-//   - `withCredentials`: true (envía cookies/credenciales en las requests).  
-// - `getProductsRequest`: función asíncrona que:  
-//   - Realiza un `GET` a `/get-products`.  
-//   - Devuelve `response.data` con la lista de productos.  
+// ## Instancia Axios 🔧
+// - `baseURL`: `{API_URL}/product`
+// - `timeout`: 5000 ms
+// - `headers`: `Content-Type: application/json`
+// - `withCredentials`: true
+
+// ## Endpoints cubiertos 📡
+// - GET    /get-products              → getProductsRequest
+// - GET    /get-product-by-id/:_id   → getProductByIdRequest
+// - GET    /get-product-by-name      → getProductByNameRequest
+// - GET    /get-product-by-brand     → getProductByBrandRequest
+// - POST   /create-product           → createProductRequest
+// - DELETE /delete-product           → deleteProductRequest
+// - PUT    /edit-product             → editProductRequest
 
 // ## Notas técnicas 💽
-// - Centraliza la configuración de Axios para reutilización en otros requests.  
-// - Ideal para mantener consistencia en headers, timeout y credenciales.  
+// - Todas las funciones retornan `response.data` tipado.
+// - Los parámetros de query se pasan via `{ params }` para GET.
+// - El body de POST/PUT se serializa automáticamente por Axios.
 //-----------------------------------------------------------------------------//
-
 
 const baseUrl = axios.create({
   baseURL: `${API_URL}/product`,
   timeout: 5000,
-  headers: { 'Content-Type': 'application/json' },
+  headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 
-//──────────────────────────────────────────── Get ───────────────────────────────────────────//
+//──────────────────────────────────────────── GET ────────────────────────────────────────────//
 
-export const getProductsRequest = async () => {
-    const response = await baseUrl.get('/get-products');
-    return response.data;
-}
+/**
+ * Obtiene el listado completo de productos.
+ * `GET /get-products`
+ */
+export const getProductsRequest = async (): Promise<Product[]> => {
+  const response = await baseUrl.get<Product[]>("/get-products");
+  return response.data;
+};
 
-//──────────────────────────────────────────── Post ───────────────────────────────────────────//
+/**
+ * Obtiene un producto por su ID.
+ * `GET /get-product-by-id/:_id`
+ */
+export const getProductByIdRequest = async (_id: string): Promise<Product> => {
+  const response = await baseUrl.get<Product>(`/get-product-by-id/${_id}`);
+  return response.data;
+};
+
+/**
+ * Busca productos por nombre (búsqueda parcial según implementación del backend).
+ * `GET /get-product-by-name?name=<value>`
+ */
+export const getProductByNameRequest = async (
+  name: string
+): Promise<Product[]> => {
+  const response = await baseUrl.get<Product[]>("/get-product-by-name", {
+    params: { name },
+  });
+  return response.data;
+};
+
+/**
+ * Filtra productos por marca.
+ * `GET /get-product-by-brand?brand=<value>`
+ */
+export const getProductByBrandRequest = async (
+  brand: string
+): Promise<Product[]> => {
+  const response = await baseUrl.get<Product[]>("/get-product-by-brand", {
+    params: { brand },
+  });
+  return response.data;
+};
+
+//──────────────────────────────────────────── POST ───────────────────────────────────────────//
+
+/**
+ * Crea un nuevo producto.
+ * `POST /create-product`
+ */
+export const createProductRequest = async (
+  product: Omit<Product, "_id" | "created_at" | "updated_at">
+): Promise<Product> => {
+  const response = await baseUrl.post<Product>("/create-product", product);
+  return response.data;
+};
+
+//──────────────────────────────────────────── PUT ────────────────────────────────────────────//
+
+/**
+ * Edita un producto existente.
+ * `PUT /edit-product`
+ */
+export const editProductRequest = async (
+  product: Partial<Product> & Pick<Product, "_id">
+): Promise<Product> => {
+  const response = await baseUrl.put<Product>("/edit-product", product);
+  return response.data;
+};
+
+//──────────────────────────────────────────── DELETE ─────────────────────────────────────────//
+
+/**
+ * Elimina un producto por su ID.
+ * `DELETE /delete-product`
+ *
+ * Se envía el `_id` en el body ya que el router no define param en la URL.
+ */
+export const deleteProductRequest = async (_id: string): Promise<void> => {
+  await baseUrl.delete("/delete-product", { data: { _id } });
+};
