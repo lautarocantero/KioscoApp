@@ -1,3 +1,4 @@
+import React from "react";
 import AppLayout from "../../shared/layout/AppLayout";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import ProductVariantFormComponent from "../components/ProductVarianForm/ProductVariantForm";

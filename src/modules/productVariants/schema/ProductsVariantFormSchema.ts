@@ -1,80 +1,74 @@
-import type { ProductFormValues } from "@typings/product/productTypes";
+// modules/productVariants/schema/ProductsVariantFormSchema.ts
+
+import type {
+    ProductVariantFormValues,
+    ExistingProductVariantInterface,
+} from "@typings/productVariant/productVariantTypes";
 import * as Yup from "yup";
 
+// ── Initial values ────────────────────────────────────────────────────────────
 
-export const getProductFormInitialValues = (): ProductFormValues => ({
-    // Step 1
-    name: "",
-    description: "",
-    brand: "",
-    image_url: "",
-
-    // Step 2
-    sku: "",
-    model_type: "",
-    model_size: "",
-    price: 0,
-    variant_image_url: "",
-    gallery_urls: [],
-
-    // Step 3
-    stock: 0,
-    min_stock: 0,
-    expiration_date: null,
+export const getProductVariantFormInitialValues = (): ProductVariantFormValues => ({
+    sku:             "",
+    model_type:      "",
+    model_size:      "",
+    image_file:      null,
+    image_url:       "",
+    min_stock:       "",
+    stock:           "",
+    price:           "",
+    expiration_date: "",
 });
 
-export const productFormSchema = Yup.object().shape({
-    // Step 1
-    name: Yup.string()
-        .required("El nombre del producto es requerido")
-        .min(3, "El nombre debe tener al menos 3 caracteres")
-        .max(100, "El nombre no puede exceder 100 caracteres"),
-    description: Yup.string()
-        .required("La descripción es requerida")
-        .min(10, "La descripción debe tener al menos 10 caracteres")
-        .max(500, "La descripción no puede exceder 500 caracteres"),
-    brand: Yup.string()
-        .required("La marca es requerida")
-        .min(2, "La marca debe tener al menos 2 caracteres")
-        .max(50, "La marca no puede exceder 50 caracteres"),
-    image_url: Yup.string()
-        .url("Debe ser una URL válida")
-        .optional(),
-
-    // Step 2
-    sku: Yup.string()
-        .max(50, "El SKU no puede exceder 50 caracteres"),
-    model_type: Yup.string(),
-    model_size: Yup.string()
-        .min(2, "El tamaño debe tener al menos 2 caracteres"),
-    price: Yup.number()
-        .required("El precio es requerido")
-        .min(0, "El precio no puede ser negativo")
-        .typeError("El precio debe ser un número"),
-    variant_image_url: Yup.string()
-        .url("Debe ser una URL válida")
-        .optional(),
-    gallery_urls: Yup.array()
-        .of(Yup.string().url("Cada URL de galería debe ser válida"))
-        .optional(),
-
-    // Step 3
-    stock: Yup.number()
-        .required("El stock es requerido")
-        .min(0, "El stock no puede ser negativo")
-        .typeError("El stock debe ser un número"),
-    min_stock: Yup.number()
-        .required("El stock mínimo es requerido")
-        .min(0, "El stock mínimo no puede ser negativo")
-        .typeError("El stock mínimo debe ser un número"),
-    expiration_date: Yup.date()
-        .optional()
-        .nullable()
-        .typeError("La fecha debe ser válida"),
+export const getProductVariantEditInitialValues = (
+    variant: ExistingProductVariantInterface
+): ProductVariantFormValues => ({
+    sku:             variant.sku,
+    model_type:      variant.model_type,
+    model_size:      variant.model_size,
+    image_file:      null,
+    image_url:       variant.image_url       ?? "",
+    min_stock:       variant.min_stock,
+    stock:           variant.stock,
+    price:           variant.price,
+    expiration_date: variant.expiration_date ?? "",
 });
 
-export const stepFieldsMap: Record<number, (keyof ProductFormValues)[]> = {
-    0: ["name", "description", "brand", "image_url"],
-    1: ["sku", "model_type", "model_size", "price", "variant_image_url", "gallery_urls"],
-    2: ["stock", "min_stock", "expiration_date"],
+// se mantiene por compatibilidad con ProductVariantDetailForm
+export const getProductVariantDetailInitialValues = getProductVariantEditInitialValues;
+
+// ── Schemas ───────────────────────────────────────────────────────────────────
+
+export const productVariantFormSchema = Yup.object({
+    sku:        Yup.string().min(2).max(50).required("SKU requerido"),
+    model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
+    model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
+    image_file: Yup.mixed<File>()
+        .required("Imagen de envase requerida")
+        .test("is-file", "Imagen de envase requerida", (value) => value instanceof File),
+    image_url:       Yup.string(),
+    min_stock:       Yup.number().min(0).required("Stock mínimo requerido").typeError("Debe ser un número"),
+    stock:           Yup.number().min(0).required("Stock requerido").typeError("Debe ser un número"),
+    price:           Yup.number().min(0.01).required("Precio requerido").typeError("Debe ser un número"),
+    expiration_date: Yup.string().required("Fecha de vencimiento requerida"),
+});
+
+export const productVariantEditFormSchema = Yup.object({
+    sku:        Yup.string().min(2).max(50).required("SKU requerido"),
+    model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
+    model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
+    image_file: Yup.mixed<File>().nullable().optional(),
+    image_url:  Yup.string(),
+    min_stock:  Yup.number().min(0).required("Stock mínimo requerido").typeError("Debe ser un número"),
+    stock:      Yup.number().min(0).required("Stock requerido").typeError("Debe ser un número"),
+    price:      Yup.number().min(0.01).required("Precio requerido").typeError("Debe ser un número"),
+    expiration_date: Yup.string().required("Fecha de vencimiento requerida"),
+});
+
+// ── Step fields map ───────────────────────────────────────────────────────────
+
+export const stepFieldsMap: Record<number, (keyof ProductVariantFormValues)[]> = {
+    0: ["sku", "model_type", "model_size", "image_url"],
+    1: ["min_stock", "stock", "price"],
+    2: ["expiration_date"],
 };

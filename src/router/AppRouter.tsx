@@ -29,6 +29,7 @@ import HomePage from "../modules/app/Home/HomePage";
 import AuthRoutes from "../modules/auth/AuthRoutes";
 import CartRoutes from "../modules/cart/CartRoutes";
 import ProductsRoutes from "../modules/products/ProductsRoutes";
+import ProductsVariantRoutes from "../modules/productVariants/ProductVariantRoutes";
 import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
 import SellsRoutes from "../modules/sells/routes/SellsRoutes";
 import ShopRoutes from "../modules/shop/ShopRoutes";
@@ -73,6 +74,7 @@ const AppRouter = ():React.ReactNode => {
                 {AccountRoutes()}
                 {ProvidersRoutes()}
                 {ProductsRoutes()}
+                {ProductsVariantRoutes()}
                 <Route path="*" element={<Navigate to={'/home'} />} />
               </>
             )

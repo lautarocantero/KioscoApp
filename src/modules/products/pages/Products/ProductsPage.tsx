@@ -20,7 +20,7 @@ import PageHeader from "../../../shared/components/GenericDataGrid/PageHeader";
 import GenericDataGrid from "../../../shared/components/GenericDataGrid/GenericDataGrid";
 import ConfirmDialog from "../../../shared/components/ConfirmDialog/ConfirmDialog";
 import AppLayout from "../../../../modules/shared/layout/AppLayout";
-
+import LoupeIcon from '@mui/icons-material/Loupe';
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
@@ -140,13 +140,14 @@ const buildColumns = ({
   {
     field: "actions",
     headerName: "Acciones",
-    width: 130,
+    width: 160,
     sortable: false,
     filterable: false,
     align: "center",
     headerAlign: "center",
     renderCell: (params: GridRenderCellParams<Product>) => (
       <RowActionsCell
+        onPresentations={() => navigate(`/products/${params.row._id}/variants`)}
         onView={() => navigate(`/product/${params.row._id}`)}
         onEdit={() => navigate(`/products/${params.row._id}/edit`)}
         onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
@@ -212,7 +213,8 @@ const ProductsListPage = (): React.ReactNode => {
           title="Productos"
           action={
             <Button variant="contained" size="small" href="/products-create">
-              + Nuevo producto
+              <LoupeIcon />
+              Nuevo producto
             </Button>
           }
         />

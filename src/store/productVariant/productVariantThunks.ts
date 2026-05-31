@@ -39,7 +39,7 @@ import type { Dispatch } from "@reduxjs/toolkit"
 import type { ProductVariant } from "../../typings/productVariant/productVariantTypes"
 import { checkingProductVariants, setError, setProductsVariants, startLoadingProductVariants } from "./productVariantSlice"
 import { handleError } from "../shared/handlerStoreError"
-import { getProductVariantByIdRequest, getProductVariantsByIdRequest } from "../../modules/productVariants/api/productVariantsApi"
+import { getProductVariantByIdRequest, getProductVariantsByProductIdRequest } from "../../modules/productVariants/api/productVariantsApi"
 
 
 export const getProductVariantsById = (product_id: string) => {
@@ -47,7 +47,7 @@ export const getProductVariantsById = (product_id: string) => {
     return async (dispatch: Dispatch): Promise<ProductVariant[] | undefined> => {
         dispatch(startLoadingProductVariants());
         try{
-            const productVariants: ProductVariant[] = await getProductVariantsByIdRequest({product_id});
+            const productVariants: ProductVariant[] = await getProductVariantsByProductIdRequest({product_id});
 
             if(!productVariants) {
                 dispatch(setError({errorMessage: "No se ha encontrado ninguna variante del producto" }));
