@@ -1,10 +1,10 @@
 // modules/productVariants/schema/ProductsVariantFormSchema.ts
 
+import * as Yup from "yup";
 import type {
     ProductVariantFormValues,
     ExistingProductVariantInterface,
 } from "@typings/productVariant/productVariantTypes";
-import * as Yup from "yup";
 
 // ── Initial values ────────────────────────────────────────────────────────────
 
@@ -34,7 +34,7 @@ export const getProductVariantEditInitialValues = (
     expiration_date: variant.expiration_date ?? "",
 });
 
-// se mantiene por compatibilidad con ProductVariantDetailForm
+// alias para compatibilidad con ProductVariantDetailForm
 export const getProductVariantDetailInitialValues = getProductVariantEditInitialValues;
 
 // ── Schemas ───────────────────────────────────────────────────────────────────

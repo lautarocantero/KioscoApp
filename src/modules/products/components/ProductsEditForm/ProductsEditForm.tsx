@@ -1,7 +1,7 @@
 import { Grid, Box } from "@mui/material";
 import { Formik } from "formik";
 import { FormNavigationContext } from "../../context/FormNavigationContext";
-import { getProductEditInitialValues, productEditFormSchema } from "../../schema/ProductsEditFormSchema";
+import { getProductEditInitialValues, productEditFormSchema } from "../../schema/ProductFormSchema";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import ProductsFormHeaderComponent from "../ProductsForm/ProductsFormHeader";

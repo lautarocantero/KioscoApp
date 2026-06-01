@@ -6,7 +6,7 @@ import LoadingProductComponent from "../LoadingProduct";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
 import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
-import { getProductVariantDetailInitialValues } from "../../schema/ProductsVariantFormSchema";
+import { getProductVariantDetailInitialValues } from "../../schema/ProductVariantFormSchema";
 import ProductFormCard from "../../../../modules/products/components/ProductsForm/ProductFormCard";
 
 // # Componente: ProductVariantDetailFormComponent

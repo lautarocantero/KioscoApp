@@ -2,7 +2,7 @@ import { Grid, Box } from "@mui/material";
 import { Formik } from "formik";
 import { FormNavigationContext } from "../../context/FormNavigationContext";
 import { PRODUCTS_STEPS_LABELS } from "../../../../config/constants";
-import { getProductFormInitialValues, productFormSchema } from "../../../productVariants/schema/ProductsVariantFormSchema";
+import { getProductFormInitialValues, productFormSchema } from "../../schema/ProductFormSchema";
 import ProductCreatedComponent from "../ProductCreated";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";

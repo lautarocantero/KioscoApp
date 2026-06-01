@@ -12,8 +12,8 @@ import type {
 } from "@typings/product/productTypes";
 import { useFormSteps } from "../../hooks/shared/useFormSteps";
 import { API_URL } from "../../config/api";
-import { stepFieldsMap } from "../../modules/productVariants/schema/ProductsVariantFormSchema";
-import { editStepFieldsMap } from "../../modules/products/schema/ProductsEditFormSchema";
+import { stepFieldsMap } from "../../modules/productVariants/schema/ProductVariantFormSchema";
+import { editStepFieldsMap } from "../../modules/products/schema/ProductFormSchema";
 import { stepsConfig, editStepsConfig } from "../../config/constants";
 
 

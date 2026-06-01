@@ -12,7 +12,7 @@ import type {
     UpdatedProductVariantInterface,
 } from "@typings/productVariant/productVariantTypes";
 import { API_URL } from "../../config/api";
-import { stepFieldsMap } from "../../modules/productVariants/schema/ProductsVariantFormSchema";
+import { stepFieldsMap } from "../../modules/productVariants/schema/ProductVariantFormSchema";
 
 const STEPS_LABELS = ["Datos del producto", "Datos de la presentación", "Stock y operación"];
 
@@ -102,12 +102,12 @@ function useProductVariantFormCreate() {
 function useProductVariantFormEdit() {
     const { variant_id: variantId } = useParams<{ variant_id: string }>();
 
-    const [editingVariant, setEditingVariant]     = useState<ExistingProductVariantInterface | null>(null);
-    const [updatedVariant, setUpdatedVariant]     = useState<UpdatedProductVariantInterface | null>(null);
-    const [isLoadingEntity, setIsLoadingEntity]   = useState(true);
-    const [isSubmitting, setIsSubmitting]         = useState(false);
-    const [submitError, setSubmitError]           = useState<string | null>(null);
-    const [stepErrors, setStepErrors]             = useState<string[]>([]);
+    const [editingVariant, setEditingVariant]   = useState<ExistingProductVariantInterface | null>(null);
+    const [updatedVariant, setUpdatedVariant]   = useState<UpdatedProductVariantInterface | null>(null);
+    const [isLoadingEntity, setIsLoadingEntity] = useState(true);
+    const [isSubmitting, setIsSubmitting]       = useState(false);
+    const [submitError, setSubmitError]         = useState<string | null>(null);
+    const [stepErrors, setStepErrors]           = useState<string[]>([]);
 
     const stepsConfig = STEPS_LABELS.map((label) => ({ title: label, content: null }));
     const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(stepsConfig);
@@ -128,11 +128,8 @@ function useProductVariantFormEdit() {
                 const raw: ExistingProductVariantInterface | ExistingProductVariantInterface[] =
                     await response.json();
 
-                // ── FIX: la API devuelve un array, tomamos el primer elemento ──
                 const data = Array.isArray(raw) ? raw[0] : raw;
-
                 if (!data) throw new Error("Presentación no encontrada");
-
                 setEditingVariant(data);
             } catch (error) {
                 setSubmitError(
@@ -176,16 +173,20 @@ function useProductVariantFormEdit() {
                 sku:             values.sku,
                 model_type:      values.model_type,
                 model_size:      values.model_size,
-                min_stock:       values.min_stock,
-                stock:           values.stock,
-                price:           values.price,
+                min_stock:       Number(values.min_stock),
+                stock:           Number(values.stock),
+                price:           Number(values.price),
                 expiration_date: values.expiration_date,
                 image_url:       values.image_url ?? "",
                 updated_at:      new Date().toISOString(),
             };
             const response = await fetch(
                 `${API_URL}/product-variant/edit-product-variant/${variantId}`,
-                { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                }
             );
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
