@@ -6,6 +6,7 @@ import { FormNavigationContext } from "../../../products/context/FormNavigationC
 import {
     getPresentationEditInitialValues,
     presentationEditFormSchema,
+    stepFieldsMap,
 } from "../../schema/PresentationFormSchema";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import LoadingProductComponent from "../LoadingProduct";
@@ -14,10 +15,10 @@ import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep"
 import ProductsFormHeaderComponent from "../../../products/components/ProductsForm/ProductsFormHeader";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
 import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
-import ProductVariantFormFirstStep from "../PresentationForm/PresentationFormFirstStep";
-import ProductVariantFormSecondStep from "../PresentationForm/PresentationFormSecondStep";
-import ProductVariantFormThirdStep from "../PresentationForm/PresentationFormThirdStep";
-import VariantUpdatedComponent from "./PresentationUpdatedComponent";
+import ProductVariantFormFirstStep from "../ProductVarianForm/ProductVariantFormFirstStep";
+import ProductVariantFormSecondStep from "../ProductVarianForm/ProductVariantFormSecondStep";
+import ProductVariantFormThirdStep from "../ProductVarianForm/ProductVariantFormThirdStep";
+import VariantUpdatedComponent from "./";
 
 const STEP_COMPONENTS = [
     ProductVariantFormFirstStep,
@@ -37,7 +38,6 @@ const ProductVariantEditFormComponent = (): React.ReactNode => {
         handleNextStep,
         handlePrevStep,
         handleEdit,
-        stepErrors,
     } = useProductVariantForm({ mode: "edit" });
 
     if (isLoadingEntity) return <LoadingProductComponent />;
@@ -70,8 +70,6 @@ const ProductVariantEditFormComponent = (): React.ReactNode => {
                             onSubmit:    formikSubmit,
                             isSubmitting,
                             validateForm,
-                            submitError,
-                            stepErrors,
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit}>
