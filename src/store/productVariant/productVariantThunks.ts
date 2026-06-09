@@ -39,7 +39,7 @@ import type { Dispatch } from "@reduxjs/toolkit"
 import type { ProductVariant } from "../../typings/productVariant/productVariantTypes"
 import { checkingProductVariants, setError, setProductsVariants, startLoadingProductVariants } from "./productVariantSlice"
 import { handleError } from "../shared/handlerStoreError"
-import { getProductVariantByIdRequest, getProductVariantsByProductIdRequest } from "../../modules/presentations/api/productVariantsApi"
+import { getPresentationByIdRequest, getPresentationsByProductIdRequest } from "../../modules/presentations/api/presentationsApi"
 
 
 export const getProductVariantsById = (product_id: string) => {
@@ -47,7 +47,7 @@ export const getProductVariantsById = (product_id: string) => {
     return async (dispatch: Dispatch): Promise<ProductVariant[] | undefined> => {
         dispatch(startLoadingProductVariants());
         try{
-            const productVariants: ProductVariant[] = await getProductVariantsByProductIdRequest({product_id});
+            const productVariants: ProductVariant[] = await getPresentationsByProductIdRequest({product_id});
 
             if(!productVariants) {
                 dispatch(setError({errorMessage: "No se ha encontrado ninguna variante del producto" }));
@@ -68,7 +68,7 @@ export const getProductVariantById = (product_variant_id: string) => {
 
         try{
             {/*─────────────────── 🔎 Se usa un array, pero solo se tendra un elemento en el mismo 🔎 ───────────────────*/}
-            const productVariant: ProductVariant[] = await getProductVariantByIdRequest({product_variant_id});
+            const productVariant: ProductVariant[] = await getPresentationByIdRequest({product_variant_id});
 
             if(!productVariant) {
                 dispatch(setError({errorMessage: "No se ha encontrado el producto en la base de datos" }));

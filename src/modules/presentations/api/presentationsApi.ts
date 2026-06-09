@@ -15,20 +15,20 @@ import type { ProductVariant } from "@typings/productVariant/productVariantTypes
 // - `withCredentials`: true
 
 // ## Endpoints cubiertos 📡
-// - GET    /get-product-variants                          → getProductVariantsRequest
-// - GET    /get-product-variant-by-id/:id                → getProductVariantByIdRequest
-// - GET    /get-product-variant-by-product-id/:productId → getProductVariantsByProductIdRequest
-// - GET    /get-product-variant-by-brand                 → getProductVariantByBrandRequest
-// - GET    /get-product-variant-by-stock                 → getProductVariantByStockRequest
-// - GET    /get-product-variant-by-price                 → getProductVariantByPriceRequest
-// - GET    /get-product-variant-by-size                  → getProductVariantBySizeRequest
-// - GET    /get-product-variant-by-presentation          → getProductVariantByPresentationRequest
-// - POST   /create-product-variant                       → createProductVariantRequest
-// - PUT    /edit-product-variant                         → editProductVariantRequest
-// - DELETE /delete-product-variant                       → deleteProductVariantRequest
+// - GET    /get-product-variants                          → getPresentationsRequest
+// - GET    /get-product-variant-by-id/:id                → getPresentationByIdRequest
+// - GET    /get-product-variant-by-product-id/:productId → getPresentationsByProductIdRequest
+// - GET    /get-product-variant-by-brand                 → getPresentationByBrandRequest
+// - GET    /get-product-variant-by-stock                 → getPresentationByStockRequest
+// - GET    /get-product-variant-by-price                 → getPresentationByPriceRequest
+// - GET    /get-product-variant-by-size                  → getPresentationBySizeRequest
+// - GET    /get-product-variant-by-presentation          → getPresentationByPresentationRequest
+// - POST   /create-product-variant                       → createPresentationRequest
+// - PUT    /edit-product-variant                         → editPresentationRequest
+// - DELETE /delete-product-variant                       → deletePresentationRequest
 
 // ## Notas técnicas 💽
-// - `createProductVariantRequest` usa `FormData` + `multipart/form-data`
+// - `createPresentationRequest` usa `FormData` + `multipart/form-data`
 //   ya que el backend procesa una imagen con `multer`.
 // - DELETE y los GET que usan body envían el payload via `{ data }` / `{ params }`.
 // - `resolveErrorMessage` centraliza la extracción del mensaje de error de Axios.
@@ -47,7 +47,7 @@ const baseUrl = axios.create({
  * Obtiene todas las variantes.
  * `GET /get-product-variants`
  */
-export const getProductVariantsRequest = async (): Promise<ProductVariant[]> => {
+export const getPresentationsRequest = async (): Promise<ProductVariant[]> => {
     const response = await baseUrl.get<ProductVariant[]>("/get-product-variants");
     return response.data;
 };
@@ -56,7 +56,7 @@ export const getProductVariantsRequest = async (): Promise<ProductVariant[]> => 
  * Obtiene una variante por su ID.
  * `GET /get-product-variant-by-id/:product_variant_id`
  */
-export const getProductVariantByIdRequest = async (
+export const getPresentationByIdRequest = async (
     { product_variant_id }: { product_variant_id: string }
 ): Promise<ProductVariant[]> => {
     const response = await baseUrl.get<ProductVariant[]>(
@@ -69,7 +69,7 @@ export const getProductVariantByIdRequest = async (
  * Obtiene todas las variantes de un producto por su ID.
  * `GET /get-product-variant-by-product-id/:product_id`
  */
-export const getProductVariantsByProductIdRequest = async (
+export const getPresentationsByProductIdRequest = async (
     { product_id }: { product_id: string }
 ): Promise<ProductVariant[]> => {
     const response = await baseUrl.get<ProductVariant[]>(
@@ -82,7 +82,7 @@ export const getProductVariantsByProductIdRequest = async (
  * Filtra variantes por marca.
  * `GET /get-product-variant-by-brand` — body: { brand }
  */
-export const getProductVariantByBrandRequest = async (
+export const getPresentationByBrandRequest = async (
     brand: string
 ): Promise<ProductVariant[]> => {
     const response = await baseUrl.get<ProductVariant[]>(
@@ -96,7 +96,7 @@ export const getProductVariantByBrandRequest = async (
  * Filtra variantes por stock.
  * `GET /get-product-variant-by-stock` — body: { stock }
  */
-export const getProductVariantByStockRequest = async (
+export const getPresentationByStockRequest = async (
     stock: number
 ): Promise<ProductVariant[]> => {
     const response = await baseUrl.get<ProductVariant[]>(
@@ -110,7 +110,7 @@ export const getProductVariantByStockRequest = async (
  * Filtra variantes por precio.
  * `GET /get-product-variant-by-price` — body: { price }
  */
-export const getProductVariantByPriceRequest = async (
+export const getPresentationByPriceRequest = async (
     price: number
 ): Promise<ProductVariant[]> => {
     const response = await baseUrl.get<ProductVariant[]>(
@@ -124,7 +124,7 @@ export const getProductVariantByPriceRequest = async (
  * Filtra variantes por tamaño de modelo.
  * `GET /get-product-variant-by-size` — body: { model_size }
  */
-export const getProductVariantBySizeRequest = async (
+export const getPresentationBySizeRequest = async (
     model_size: string
 ): Promise<ProductVariant[]> => {
     const response = await baseUrl.get<ProductVariant[]>(
@@ -138,7 +138,7 @@ export const getProductVariantBySizeRequest = async (
  * Filtra variantes por presentación (model_type).
  * `GET /get-product-variant-by-presentation` — body: { model_type }
  */
-export const getProductVariantByPresentationRequest = async (
+export const getPresentationByPresentationRequest = async (
     model_type: string
 ): Promise<ProductVariant[]> => {
     const response = await baseUrl.get<ProductVariant[]>(
@@ -156,7 +156,7 @@ export const getProductVariantByPresentationRequest = async (
  *
  * Si se provee `image_file`, se sube como archivo; de lo contrario se envía `image_url` como string.
  */
-export const createProductVariantRequest = async (
+export const createPresentationRequest = async (
     data: Omit<ProductVariant, "_id" | "created_at" | "updated_at"> & {
         image_file?: File | null;
     }
@@ -194,7 +194,7 @@ export const createProductVariantRequest = async (
  * Edita una variante existente.
  * `PUT /edit-product-variant` — body: { ...campos }
  */
-export const editProductVariantRequest = async (
+export const editPresentationRequest = async (
     variant: Partial<ProductVariant> & Pick<ProductVariant, "_id">
 ): Promise<{ _id: string; message: string }> => {
     const response = await baseUrl.put<{ _id: string; message: string }>(
@@ -210,6 +210,6 @@ export const editProductVariantRequest = async (
  * Elimina una variante por su ID.
  * `DELETE /delete-product-variant` — body: { _id }
  */
-export const deleteProductVariantRequest = async (_id: string): Promise<void> => {
+export const deletePresentationRequest = async (_id: string): Promise<void> => {
     await baseUrl.delete("/delete-product-variant", { data: { _id } });
 };

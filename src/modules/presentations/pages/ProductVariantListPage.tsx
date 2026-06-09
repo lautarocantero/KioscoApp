@@ -8,9 +8,9 @@ import LoupeIcon from "@mui/icons-material/Loupe";
 
 import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
 import {
-    deleteProductVariantRequest,
-    getProductVariantsByProductIdRequest,
-} from "../api/productVariantsApi";
+    deletePresentationRequest,
+    getPresentationsByProductIdRequest,
+} from "../api/presentationsApi";
 import AppLayout from "../../../modules/shared/layout/AppLayout";
 import PageHeader from "../../shared/components/GenericDataGrid/PageHeader";
 import GenericDataGrid from "../../shared/components/GenericDataGrid/GenericDataGrid";
@@ -211,7 +211,7 @@ const ProductVariantsListPage = (): React.ReactNode => {
         setLoading(true);
         setError(null);
         try {
-            const data = await getProductVariantsByProductIdRequest({ product_id });
+            const data = await getPresentationsByProductIdRequest({ product_id });
             setVariants(data);
         } catch (err: unknown) {
             setError(resolveErrorMessage(err));
@@ -232,7 +232,7 @@ const ProductVariantsListPage = (): React.ReactNode => {
 
     const handleDeleteConfirm = async () => {
         try {
-            await deleteProductVariantRequest(deleteDialog.id);
+            await deletePresentationRequest(deleteDialog.id);
             setVariants((prev) => prev.filter((v) => v._id !== deleteDialog.id));
         } catch (err: unknown) {
             setError(resolveErrorMessage(err));
