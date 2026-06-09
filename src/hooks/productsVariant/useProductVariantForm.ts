@@ -12,7 +12,7 @@ import type {
     UpdatedProductVariantInterface,
 } from "@typings/productVariant/productVariantTypes";
 import { API_URL } from "../../config/api";
-import { stepFieldsMap } from "../../modules/presentations/schema/ProductVariantFormSchema";
+import { stepFieldsMap } from "../../modules/presentations/schema/PresentationFormSchema";
 
 const STEPS_LABELS = ["Datos del producto", "Datos de la presentación", "Stock y operación"];
 

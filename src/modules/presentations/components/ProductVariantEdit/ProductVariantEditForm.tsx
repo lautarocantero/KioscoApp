@@ -4,10 +4,10 @@ import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
 import { FormNavigationContext } from "../../../products/context/FormNavigationContext";
 import {
-    getProductVariantEditInitialValues,
-    productVariantEditFormSchema,
+    getPresentationEditInitialValues,
+    presentationEditFormSchema,
     stepFieldsMap,
-} from "../../schema/ProductVariantFormSchema";
+} from "../../schema/PresentationFormSchema";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import LoadingProductComponent from "../LoadingProduct";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
@@ -53,8 +53,8 @@ const ProductVariantEditFormComponent = (): React.ReactNode => {
             />
 
             <Formik
-                initialValues={getProductVariantEditInitialValues(editingVariant)}
-                validationSchema={productVariantEditFormSchema}
+                initialValues={getPresentationEditInitialValues(editingVariant)}
+                validationSchema={presentationEditFormSchema}
                 onSubmit={handleEdit}
                 validateOnBlur={false}
                 validateOnChange={false}

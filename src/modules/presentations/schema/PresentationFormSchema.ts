@@ -1,14 +1,11 @@
-// modules/productVariants/schema/ProductsVariantFormSchema.ts
-
 import * as Yup from "yup";
 import type {
-    ProductVariantFormValues,
-    ExistingProductVariantInterface,
+    PresentationFormValues,
 } from "@typings/productVariant/productVariantTypes";
 
 // ── Initial values ────────────────────────────────────────────────────────────
 
-export const getProductVariantFormInitialValues = (): ProductVariantFormValues => ({
+export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     sku:             "",
     model_type:      "",
     model_size:      "",
@@ -20,26 +17,26 @@ export const getProductVariantFormInitialValues = (): ProductVariantFormValues =
     expiration_date: "",
 });
 
-export const getProductVariantEditInitialValues = (
-    variant: ExistingProductVariantInterface
-): ProductVariantFormValues => ({
-    sku:             variant.sku,
-    model_type:      variant.model_type,
-    model_size:      variant.model_size,
+export const getPresentationEditInitialValues = (
+    presentation: PresentationFormValues
+): PresentationFormValues => ({
+    sku:             presentation.sku,
+    model_type:      presentation.model_type,
+    model_size:      presentation.model_size,
     image_file:      null,
-    image_url:       variant.image_url       ?? "",
-    min_stock:       variant.min_stock,
-    stock:           variant.stock,
-    price:           variant.price,
-    expiration_date: variant.expiration_date ?? "",
+    image_url:       presentation.image_url       ?? "",
+    min_stock:       presentation.min_stock,
+    stock:           presentation.stock,
+    price:           presentation.price,
+    expiration_date: presentation.expiration_date ?? "",
 });
 
 // alias para compatibilidad con ProductVariantDetailForm
-export const getProductVariantDetailInitialValues = getProductVariantEditInitialValues;
+export const getPresentationDetailInitialValues = getPresentationEditInitialValues;
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
 
-export const productVariantFormSchema = Yup.object({
+export const presentationFormSchema = Yup.object({
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
@@ -53,7 +50,7 @@ export const productVariantFormSchema = Yup.object({
     expiration_date: Yup.string().required("Fecha de vencimiento requerida"),
 });
 
-export const productVariantEditFormSchema = Yup.object({
+export const presentationEditFormSchema = Yup.object({
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
@@ -67,7 +64,7 @@ export const productVariantEditFormSchema = Yup.object({
 
 // ── Step fields map ───────────────────────────────────────────────────────────
 
-export const stepFieldsMap: Record<number, (keyof ProductVariantFormValues)[]> = {
+export const stepFieldsMap: Record<number, (keyof PresentationFormValues)[]> = {
     0: ["sku", "model_type", "model_size", "image_url"],
     1: ["min_stock", "stock", "price"],
     2: ["expiration_date"],

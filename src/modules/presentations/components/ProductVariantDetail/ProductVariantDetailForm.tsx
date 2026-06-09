@@ -6,7 +6,7 @@ import LoadingProductComponent from "../LoadingProduct";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
 import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
-import { getProductVariantDetailInitialValues } from "../../schema/ProductVariantFormSchema";
+import { getPresentationDetailInitialValues } from "../../schema/PresentationFormSchema";
 import ProductFormCard from "../../../../modules/products/components/ProductsForm/ProductFormCard";
 
 // # Componente: ProductVariantDetailFormComponent
@@ -41,7 +41,7 @@ const ProductVariantDetailFormComponent = (): React.ReactNode => {
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
             <ProductFormCard submitText="" showButtons={false}>
                 <Formik
-                    initialValues={getProductVariantDetailInitialValues(variant)}
+                    initialValues={getPresentationDetailInitialValues(variant)}
                     onSubmit={() => {}}
                     validateOnBlur={false}
                     validateOnChange={false}

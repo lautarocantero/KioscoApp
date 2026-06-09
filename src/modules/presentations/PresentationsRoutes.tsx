@@ -5,9 +5,9 @@
 
 // ## Rutas 🛣️
 // ┌──────────────────────────────────────────────────────────────────────────┐
-// │ "/products/:productId/presentations/new"          → ProductVariantCreatePage  │
-// │ "/products/:productId/presentations/:variant_id"  → ProductVariantDetailPage  │
-// │ "/products/:product_id/presentations"             → ProductVariantListPage    │
+// │ "/products/:productId/presentations/new"          → PresentationCreatePage  │
+// │ "/products/:productId/presentations/:variant_id"  → PresentationDetailPage  │
+// │ "/products/:product_id/presentations"             → PresentationListPage    │
 // └──────────────────────────────────────────────────────────────────────────┘
 
 // ## Notas técnicas 💽
@@ -16,20 +16,20 @@
 //-----------------------------------------------------------------------------//
 
 import { Route } from "react-router-dom";
-import ProductVariantCreatePage from "./pages/ProductVariantCreatePage";
-import ProductVariantDetailPage from "./pages/ProductVariantDetailPage";
-import ProductVariantListPage   from "./pages/ProductVariantListPage";
-import ProductVariantEditPage from "./pages/ProductVariantEditPage";
+import PresentationCreatePage from "./pages/PresentationCreatePage";
+import PresentationDetailPage from "./pages/PresentationDetailPage";
+import PresentationListPage   from "./pages/PresentationListPage";
+import PresentationEditPage from "./pages/PresentationEditPage";
 
 const PresentationsRoutes = (): React.ReactNode => {
     return (
         <>
             {/* Estáticos primero */}
-            <Route path="/products/:product_id/presentations/new"                      element={<ProductVariantCreatePage />} />
+            <Route path="/products/:product_id/presentations/new"                      element={<PresentationCreatePage />} />
             {/* Dinámicos después */}
-            <Route path="/products/:product_id/presentations/:presentation_id/edit"    element={<ProductVariantEditPage />} />
-            <Route path="/products/:product_id/presentations/:presentation_id"         element={<ProductVariantDetailPage />} />
-            <Route path="/products/:product_id/presentations"                          element={<ProductVariantListPage />} />
+            <Route path="/products/:product_id/presentations/:presentation_id/edit"    element={<PresentationEditPage />} />
+            <Route path="/products/:product_id/presentations/:presentation_id"         element={<PresentationDetailPage />} />
+            <Route path="/products/:product_id/presentations"                          element={<PresentationListPage />} />
         </>
     );
 };

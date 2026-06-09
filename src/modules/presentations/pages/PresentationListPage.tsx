@@ -11,7 +11,7 @@ import {
     deletePresentationRequest,
     getPresentationsByProductIdRequest,
 } from "../api/presentationsApi";
-import AppLayout from "../../../modules/shared/layout/AppLayout";
+import AppLayout from "../../shared/layout/AppLayout";
 import PageHeader from "../../shared/components/GenericDataGrid/PageHeader";
 import GenericDataGrid from "../../shared/components/GenericDataGrid/GenericDataGrid";
 import ConfirmDialog from "../../shared/components/ConfirmDialog/ConfirmDialog";
@@ -195,7 +195,7 @@ const buildColumns = ({
 
 // ─── página principal ──────────────────────────────────────────────────────────
 
-const ProductVariantsListPage = (): React.ReactNode => {
+const PresentationListPage = (): React.ReactNode => {
     const { product_id } = useParams<{ product_id: string }>();
     const navigate = useNavigate();
 
@@ -303,4 +303,4 @@ const ProductVariantsListPage = (): React.ReactNode => {
     );
 };
 
-export default ProductVariantsListPage;
+export default PresentationListPage;

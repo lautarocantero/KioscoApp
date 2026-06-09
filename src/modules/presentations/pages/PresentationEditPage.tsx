@@ -1,11 +1,11 @@
-// modules/productVariants/pages/ProductVariantEditPage.tsx
+// modules/productVariants/pages/PresentationEditPage.tsx
 
 import React from "react";
 import AppLayout from "../../shared/layout/AppLayout";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import ProductVariantEditFormComponent from "../components/ProductVariantEdit/ProductVariantEditForm";
 
-const ProductVariantEditPage = (): React.ReactNode => {
+const PresentationEditPage = (): React.ReactNode => {
     return (
         <AppLayout title="Editar presentación">
             <SimpleGrid title="Editar presentación" position="normal">
@@ -15,4 +15,4 @@ const ProductVariantEditPage = (): React.ReactNode => {
     );
 };
 
-export default ProductVariantEditPage;
+export default PresentationEditPage;

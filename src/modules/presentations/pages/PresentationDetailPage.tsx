@@ -3,11 +3,11 @@ import AppLayout from "../../shared/layout/AppLayout";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import ProductVariantDetailFormComponent from "../components/ProductVariantDetail/ProductVariantDetailForm";
 
-// # Componente: ProductVariantDetailPage
+// # Componente: PresentationDetailPage
 // Página de solo lectura para visualizar todos los datos de una presentación.
 // Ruta: /products/:productId/presentations/:variant_id
 
-const ProductVariantDetailPage = (): React.ReactNode => {
+const PresentationDetailPage = (): React.ReactNode => {
     return (
         <AppLayout isOptions title="Detalle de presentación">
             <SimpleGrid title="Detalle de presentación" position="normal">
@@ -17,4 +17,4 @@ const ProductVariantDetailPage = (): React.ReactNode => {
     );
 };
 
-export default ProductVariantDetailPage;
+export default PresentationDetailPage;

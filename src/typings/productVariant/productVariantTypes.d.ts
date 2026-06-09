@@ -64,7 +64,7 @@ export interface VariantCreatedComponentProps {
     onCreateAnother: () => void;
 }
 
-export interface ProductVariantFormValues {
+export interface PresentationFormValues {
     sku:             string;
     model_type:      string;
     model_size:      string;

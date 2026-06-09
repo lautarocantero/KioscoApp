@@ -21,7 +21,7 @@ const STEP_COMPONENTS = [
     ProductVariantFormThirdStep,
 ];
 
-const ProductVariantFormComponent = (): React.ReactNode => {
+const PresentationFormComponent = (): React.ReactNode => {
     const {
         productData,
         loadingProduct,
@@ -92,4 +92,4 @@ const ProductVariantFormComponent = (): React.ReactNode => {
     );
 };
 
-export default ProductVariantFormComponent;
+export default PresentationFormComponent;
