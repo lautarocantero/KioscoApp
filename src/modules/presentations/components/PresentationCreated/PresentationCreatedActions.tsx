@@ -1,5 +1,7 @@
-import { Box, Button, type Theme } from "@mui/material";
+import { Box } from "@mui/material";
 import type { VariantCreatedActionsProps } from "@typings/productVariant/productVariantComponentTypes";
+import EmptyButton from "../../../../modules/shared/components/Buttons/EmptyButton";
+import PrimaryButtonComponent from "../../../../modules/shared/components/Buttons/PrimaryButtonComponent";
 import { useNavigate } from "react-router-dom";
 
 
@@ -13,33 +15,21 @@ const VariantCreatedActions = ({ onCreateAnother }: VariantCreatedActionsProps):
             borderTop: "0.5px solid rgba(255,255,255,0.07)",
             backgroundColor: "rgba(0,0,0,0.2)",
         }}>
-            <Button fullWidth variant="contained" onClick={onCreateAnother}
-                sx={{ textTransform: "none", fontWeight: 600, backgroundColor: "#0386EE", "&:hover": { backgroundColor: "#0270c4" } }}
-            >
-                + Crear otra presentación
-            </Button>
-
-            <Button fullWidth variant="outlined" onClick={() => navigate("/products/new")}
-                sx={(theme: Theme) => ({
-                    textTransform: "none", fontWeight: 600,
-                    borderColor: theme?.custom?.fontColorTransparent,
-                    color: theme?.custom?.fontColorTransparent,
-                    "&:hover": { borderColor: "rgba(255,255,255,0.4)" },
-                })}
-            >
-                Crear otro producto
-            </Button>
-
-            <Button fullWidth variant="outlined" onClick={() => navigate("/products")}
-                sx={(theme: Theme) => ({
-                    textTransform: "none", fontWeight: 600,
-                    borderColor: theme?.custom?.fontColorTransparent,
-                    color: theme?.custom?.fontColorTransparent,
-                    "&:hover": { borderColor: "rgba(255,255,255,0.4)" },
-                })}
-            >
-                Ver listado de productos
-            </Button>
+            <PrimaryButtonComponent
+                buttonText="+ Crear otra presentación"
+                buttonOnClick={onCreateAnother}
+                buttonWidth="100%"
+            />
+            <EmptyButton
+                buttonText="Crear otro producto"
+                buttonOnClick={() => navigate("/products/new")}
+                buttonWidth="100%"
+            />
+            <EmptyButton
+                buttonText="Ver listado de productos"
+                buttonOnClick={() => navigate("/products")}
+                buttonWidth="100%"
+            />
         </Box>
     );
 };

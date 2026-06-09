@@ -1,5 +1,3 @@
-// modules/productVariants/components/ProductVariantDetail/ProductVariantDetailForm.tsx
-
 import { Box, Grid, TextField, InputAdornment } from "@mui/material";
 import { Formik } from "formik";
 import LoadingProductComponent from "../LoadingProduct";
@@ -8,17 +6,6 @@ import BaseEntitySummaryComponent from "../BaseEntitySummary";
 import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
 import { getPresentationDetailInitialValues } from "../../schema/PresentationFormSchema";
 import ProductFormCard from "../../../products/components/ProductsForm/ProductFormCard";
-
-// # Componente: ProductVariantDetailFormComponent
-//
-// ## Descripción 📦
-// Formulario de solo lectura para visualizar una presentación existente.
-// Todos los campos se muestran de una sola vez en modo disabled.
-//
-// ## Notas técnicas 💽
-// - El Formik se monta SOLO cuando `variant` ya existe para garantizar
-//   que `initialValues` tenga datos reales desde el primer render.
-// - `enableReinitialize` se mantiene como seguro ante recargas.
 
 const ProductVariantDetailFormComponent = (): React.ReactNode => {
     const {
