@@ -3,7 +3,7 @@
 import React from "react";
 import AppLayout from "../../shared/layout/AppLayout";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
-import ProductVariantEditFormComponent from "../components/ProductVariantEdit/ProductVariantEditForm";
+import ProductVariantEditFormComponent from "../components/PresentationEdit/PresentationEditForm";
 
 const PresentationEditPage = (): React.ReactNode => {
     return (

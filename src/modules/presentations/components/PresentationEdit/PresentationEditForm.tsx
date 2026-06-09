@@ -1,19 +1,24 @@
+// modules/productVariants/components/ProductVariantEdit/ProductVariantEditForm.tsx
+
 import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
 import { FormNavigationContext } from "../../../products/context/FormNavigationContext";
-import { getProductVariantFormInitialValues, productVariantFormSchema } from "./ProductVariantFormSchema";
+import {
+    getPresentationEditInitialValues,
+    presentationEditFormSchema,
+    stepFieldsMap,
+} from "../../schema/PresentationFormSchema";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import LoadingProductComponent from "../LoadingProduct";
-import NoProductLoadedComponent from "../NotProductLoaded";
-import VariantCreatedComponent from "../ProductVariantCreated/VariantCreatedComponent";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import ProductsFormHeaderComponent from "../../../products/components/ProductsForm/ProductsFormHeader";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
 import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
-import ProductVariantFormFirstStep from "./ProductVariantFormFirstStep";
-import ProductVariantFormSecondStep from "./ProductVariantFormSecondStep/ProductVariantFormSecondStep";
-import ProductVariantFormThirdStep from "./ProductVariantFormThirdStep/ProductVariantFormThirdStep";
+import ProductVariantFormFirstStep from "../PresentationForm/PresentationFormFirstStep";
+import ProductVariantFormSecondStep from "../PresentationForm/PresentationFormSecondStep";
+import ProductVariantFormThirdStep from "../PresentationForm/PresentationFormThirdStep";
+import VariantUpdatedComponent from "./PresentationUpdatedComponent";
 
 const STEP_COMPONENTS = [
     ProductVariantFormFirstStep,
@@ -21,45 +26,39 @@ const STEP_COMPONENTS = [
     ProductVariantFormThirdStep,
 ];
 
-const PresentationFormComponent = (): React.ReactNode => {
+const ProductVariantEditFormComponent = (): React.ReactNode => {
     const {
-        productData,
-        loadingProduct,
-        productError,
-        createdVariant,
+        editingVariant,
+        updatedVariant,
+        isLoadingEntity,
         isSubmitting,
         submitError,
         currentStep,
         totalSteps,
         handleNextStep,
         handlePrevStep,
-        handleSubmit,
-        handleCreateAnother,
-    } = useProductVariantForm();
+        handleEdit,
+    } = useProductVariantForm({ mode: "edit" });
 
-    if (loadingProduct)  return <LoadingProductComponent />;
-    if (!productData)    return <NoProductLoadedComponent productError={productError} />;
-    if (createdVariant)  return (
-        <VariantCreatedComponent
-            createdVariant={createdVariant}
-            onCreateAnother={handleCreateAnother}
-        />
-    );
+    if (isLoadingEntity) return <LoadingProductComponent />;
+    if (!editingVariant) return null;
+    if (updatedVariant)  return <VariantUpdatedComponent updatedVariant={updatedVariant} />;
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
             <BaseEntitySummaryComponent
-                label="Producto base"
-                name={productData.name}
-                description="• Estás creando una presentación para este producto"
+                label="Presentación"
+                name={`${editingVariant.model_type} — ${editingVariant.model_size}`}
+                description="• Estás editando los datos de esta presentación"
             />
 
             <Formik
-                initialValues={getProductVariantFormInitialValues()}
-                validationSchema={productVariantFormSchema}
-                onSubmit={handleSubmit}
+                initialValues={getPresentationEditInitialValues(editingVariant)}
+                validationSchema={presentationEditFormSchema}
+                onSubmit={handleEdit}
                 validateOnBlur={false}
                 validateOnChange={false}
+                enableReinitialize
             >
                 {({ handleSubmit: formikSubmit, validateForm }) => (
                     <FormNavigationContext.Provider
@@ -92,4 +91,4 @@ const PresentationFormComponent = (): React.ReactNode => {
     );
 };
 
-export default PresentationFormComponent;
+export default ProductVariantEditFormComponent;

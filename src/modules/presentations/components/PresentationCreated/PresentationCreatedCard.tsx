@@ -1,7 +1,7 @@
 import { Card, CardContent, type Theme } from "@mui/material";
 import type { VariantCreatedComponentProps } from "@typings/productVariant/productVariantTypes";
-import VariantCreatedBody from "./VariantCreatedBody";
-import VariantCreatedActions from "./VariantCreatedActions";
+import VariantCreatedBody from "./PresentationCreatedBody";
+import VariantCreatedActions from "./PresentationCreatedActions";
 
 
 const VariantCreatedCard = ({ createdVariant, onCreateAnother }: VariantCreatedComponentProps): React.ReactNode => (

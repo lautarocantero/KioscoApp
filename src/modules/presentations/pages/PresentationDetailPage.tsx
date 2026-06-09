@@ -1,7 +1,7 @@
 import React from "react";
 import AppLayout from "../../shared/layout/AppLayout";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
-import ProductVariantDetailFormComponent from "../components/ProductVariantDetail/ProductVariantDetailForm";
+import PresentationDetailFormComponent from "../components/PresentationDetail/PresentationDetailForm";
 
 // # Componente: PresentationDetailPage
 // Página de solo lectura para visualizar todos los datos de una presentación.
@@ -11,7 +11,7 @@ const PresentationDetailPage = (): React.ReactNode => {
     return (
         <AppLayout isOptions title="Detalle de presentación">
             <SimpleGrid title="Detalle de presentación" position="normal">
-                <ProductVariantDetailFormComponent />
+                <PresentationDetailFormComponent />
             </SimpleGrid>
         </AppLayout>
     );

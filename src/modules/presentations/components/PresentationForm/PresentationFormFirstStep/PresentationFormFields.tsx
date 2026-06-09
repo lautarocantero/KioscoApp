@@ -1,7 +1,7 @@
 import { Grid, TextField } from "@mui/material";
 import type { ProductVariantFormValues } from "@typings/productVariant/productVariantTypes";
 import { useFormikContext } from "formik";
-import { sharedSx } from "../../../../../modules/shared/components/sharedSx/sharedSx";
+import { sharedSx } from "../../../../shared/components/sharedSx/sharedSx";
 
 const ProductVariantFormFields = (): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<ProductVariantFormValues>();

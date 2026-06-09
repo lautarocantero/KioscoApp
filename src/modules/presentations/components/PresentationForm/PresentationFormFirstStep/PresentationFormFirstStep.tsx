@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import ProductVariantFormCard from "./ProductVariantFormCard";
+import ProductVariantFormCard from "./PresentationFormCard";
 
 const ProductVariantFormFirstStep = (): React.ReactNode => (
     <Box sx={{

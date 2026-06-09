@@ -1,7 +1,7 @@
 import React from "react";
 import AppLayout from "../../shared/layout/AppLayout";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
-import PresentationFormComponent from "../components/ProductVarianForm/PresentationForm";
+import PresentationFormComponent from "../components/PresentationForm/PresentationForm";
 
 
 const PresentationCreatePage = (): React.ReactNode => {

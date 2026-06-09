@@ -2,8 +2,8 @@
 
 import { Card, CardContent, type Theme } from "@mui/material";
 import type { UpdatedProductVariantInterface } from "@typings/productVariant/productVariantTypes";
-import VariantUpdatedBody from "./VariantUpdatedBody";
-import VariantUpdatedActions from "./VariantUpdatedActions";
+import VariantUpdatedBody from "./PresentationUpdatedBody";
+import VariantUpdatedActions from "./PresentationUpdatedActions";
 
 interface Props { updatedVariant: UpdatedProductVariantInterface; }
 

@@ -1,9 +1,9 @@
 import { Box, Card, CardContent, type Theme } from "@mui/material";
-import NavButtons from "../../../../../modules/shared/components/Buttons/NavButtons";
-import ProductVariantStockFields from "./ProductVariantStockFields";
-import FormFooter from "../../../../../modules/shared/components/FormGrid/FormFooter";
+import ProductVariantExpirationField from "./PresentationExpirationField";
+import ProductVariantSubmitButtons from "./PresentationSubmitButtons";
+import FormFooter from "../../../../shared/components/FormGrid/FormFooter";
 
-const ProductVariantFormSecondStep = (): React.ReactNode => (
+const ProductVariantFormThirdStep = (): React.ReactNode => (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
         <Card sx={(theme: Theme) => ({
             width: "100%", maxWidth: 680,
@@ -17,13 +17,13 @@ const ProductVariantFormSecondStep = (): React.ReactNode => (
             `,
         })}>
             <CardContent sx={{ p: 4 }}>
-                <ProductVariantStockFields />
+                <ProductVariantExpirationField />
             </CardContent>
 
             <FormFooter />
-            <NavButtons SubmitText="Crear"/>
+            <ProductVariantSubmitButtons />
         </Card>
     </Box>
 );
 
-export default ProductVariantFormSecondStep;
+export default ProductVariantFormThirdStep;
