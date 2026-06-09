@@ -48,6 +48,13 @@ export interface LinksColumnProps {
   appTheme: boolean;
 }
 
+export type LinkMapperProps = Pick<LinksColumnProps, 'links' | 'appTheme'>;
+
+export type LinkCardProps = Pick<LinksColumnProps, 'appTheme'> & {
+    link: OptionLink;
+    accent: string;
+};
+
 export interface OptionsHeaderInterface {
   isOptions?: boolean;
   title?: string,
@@ -128,9 +135,7 @@ export type FormGridStepsType = Pick<FormGridInterface, "steps"> & {
   currentStep: number;
 };
 
-// /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🔒 ProductsForm                                                        ║
-// ╚══════════════════════════════════════════════════════════════════════╝*/
+//─────────────────────────────── 🔒 ProductsForm 🔒 ───────────────────────────────//
 
 export interface FormHeaderComponentProps {
     stepsLabels: string[];

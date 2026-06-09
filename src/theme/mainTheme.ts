@@ -1,52 +1,4 @@
 
-// # Configuración de Temas: darkTheme & lightTheme  
-
-// ## Descripción 📦  
-// Definición de dos temas globales para la aplicación usando `createTheme` de Material UI.  
-// Se extiende la interfaz `Theme` para incluir propiedades personalizadas (`custom`) y se habilitan opciones experimentales (`unstable_sx`, `unstable_grid`).  
-
-// ## Extensión de Theme 🔧  
-// - Se añade la propiedad `custom` con colores y estilos adicionales:  
-//   - `white`, `whiteTranslucid`, `black`, `blackTranslucid`  
-//   - `lightMain`, `darkSecondary`  
-//   - `fontColor`, `fontColorTransparent`, `fontColorDark`, `fontColorDarkTransparent`  
-//   - `backgroundLigth`, `background`, `backgroundDark`  
-
-// ## darkTheme 🎭  
-// - **Paleta**:  
-//   - `primary.main`: `#0386EE`  
-//   - `secondary.main`: `#0058AF`  
-//   - `error.main`: `#842325`  
-// - **Custom**: tonos oscuros y contrastados (`black`, `backgroundDark`, `fontColor` claro).  
-// - **Tipografía**:  
-//   - Fuente: `'Montserrat', sans-serif`  
-//   - Tamaños consistentes para `h1`–`h5`, `body1`, `body2`, `caption`.  
-
-// ## lightTheme 🎭  
-// - **Paleta**:  
-//   - `primary.main`: `#F58388`  
-//   - `secondary.main`: `#DD767B`  
-//   - `error.main`: `#842325`  
-// - **Custom**: tonos claros y suaves (`background: #FFFFFF`, `fontColor` oscuro).  
-// - **Tipografía**:  
-//   - Fuente: `'Montserat', sans-serif` (⚠️ posible typo, debería ser `'Montserrat'`).  
-//   - Misma jerarquía de tamaños que en `darkTheme`.  
-
-// ## Notas técnicas 💽  
-// - **Consistencia visual**: ambos temas comparten estructura tipográfica y propiedades `custom`.  
-// - **Escalabilidad**: se pueden añadir más propiedades en `custom` para branding o estilos específicos.  
-// - **Accesibilidad**: la diferenciación clara entre `darkTheme` y `lightTheme` asegura contraste adecuado en UI.  
-// - **Detalle**: se habilita `unstable_grid.cssGrid` para usar la nueva versión de Grid (v3).  
-
-// ## Uso 🚀  
-// ```tsx
-// <ThemeProvider theme={darkTheme}>
-//   <App />
-// </ThemeProvider>
-// ```  
-// o alternar dinámicamente con `lightTheme` según el contexto (`ThemeContext`).  
-
-
 import { createTheme } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
@@ -67,6 +19,12 @@ declare module '@mui/material/styles' {
       backgroundDark: string;
       errorLight: string;
       errorDark: string;
+      accentSells: string,
+      accentShop: string,
+      accentProviders: string,
+      accentProducts: string,
+      accentCategories: string,
+      accentAccount: string,
     };
   }
   interface ThemeOptions {
@@ -86,6 +44,12 @@ declare module '@mui/material/styles' {
       backgroundDark?: string;
       errorLight: string;
       errorDark: string;
+      accentSells?: string,
+      accentShop?: string,
+      accentProviders?: string,
+      accentProducts?: string,
+      accentCategories?: string,
+      accentAccount?: string,
     };
     unstable_grid?: {
       cssGrid?: boolean;
@@ -136,9 +100,18 @@ export const darkTheme = createTheme({
     background: '#333333',
     backgroundDark: '#131316d2',
 
+    // ── accent colors ──────────────────//
+    accentSells:      '#0386EE',
+    accentShop:       '#1D9E75',
+    accentProviders:  '#534AB7',
+    accentProducts:   '#1f1f24',
+    accentCategories: '#C2580A',
+    accentAccount:    '#854F0B',
+
     //────────────── error ──────────────────//
     errorLight: "#6b100a6c",
     errorDark: "#310704ff",
+
   },
   typography: {
     fontFamily: `'Montserrat', sans-serif`,
@@ -216,6 +189,14 @@ export const lightTheme = createTheme({
     backgroundLigth: '#bbbbbbff',
     background: '#FFFFFF',
     backgroundDark: '#e3e3e399',
+
+    // ── accent colors ──────────────────//
+      accentSells:      '#0386EE',
+      accentShop:       '#1D9E75',
+      accentProviders:  '#534AB7',
+      accentProducts:   '#1f1f24',
+      accentCategories: '#C2580A',
+      accentAccount:    '#854F0B',
 
     //────────────── error ──────────────────//
     errorLight:"#6b100a6c",
