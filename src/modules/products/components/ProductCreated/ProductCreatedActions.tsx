@@ -28,7 +28,7 @@ const ProductCreatedActions = ({ productId }: ProductCreatedActionsProps): React
 
             <Button
                 fullWidth variant="contained"
-                onClick={() => navigate(`/products/${productId}/variants/new`)}
+                onClick={() => navigate(`/products/${productId}/presentations/new`)}
                 sx={{
                     textTransform: "none", fontWeight: 600,
                     backgroundColor: "#0386EE",

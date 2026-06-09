@@ -5,7 +5,7 @@ import ProductVariantFormComponent from "../components/ProductVarianForm/Product
 
 // # Componente: ProductVariantCreatePage
 // Página destinada a la creación de presentaciones/variantes de un producto.
-// Recibe el productId por parámetro de ruta: /products/:productId/variants/new
+// Recibe el productId por parámetro de ruta: /products/:productId/presentations/new
 
 const ProductVariantCreatePage = (): React.ReactNode => {
     return (

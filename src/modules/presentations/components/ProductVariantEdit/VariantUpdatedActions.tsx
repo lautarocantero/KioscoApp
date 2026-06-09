@@ -16,14 +16,14 @@ const VariantUpdatedActions = ({ variantId }: Props): React.ReactNode => {
             backgroundColor: "rgba(0,0,0,0.2)",
         }}>
             <Button fullWidth variant="contained"
-                onClick={() => navigate(`/products/${productId}/variants/${variantId}`)}
+                onClick={() => navigate(`/products/${productId}/presentations/${variantId}`)}
                 sx={{ textTransform: "none", fontWeight: 600, backgroundColor: "#0386EE", "&:hover": { backgroundColor: "#0270c4" } }}
             >
                 Ver detalle
             </Button>
 
             <Button fullWidth variant="outlined"
-                onClick={() => navigate(`/products/${productId}/variants`)}
+                onClick={() => navigate(`/products/${productId}/presentations`)}
                 sx={(theme: Theme) => ({
                     textTransform: "none", fontWeight: 600,
                     borderColor: theme?.custom?.fontColorTransparent,

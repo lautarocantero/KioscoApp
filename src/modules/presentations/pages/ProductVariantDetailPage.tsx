@@ -5,7 +5,7 @@ import ProductVariantDetailFormComponent from "../components/ProductVariantDetai
 
 // # Componente: ProductVariantDetailPage
 // Página de solo lectura para visualizar todos los datos de una presentación.
-// Ruta: /products/:productId/variants/:variant_id
+// Ruta: /products/:productId/presentations/:variant_id
 
 const ProductVariantDetailPage = (): React.ReactNode => {
     return (

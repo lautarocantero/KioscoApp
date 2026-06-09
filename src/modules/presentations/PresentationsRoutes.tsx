@@ -5,9 +5,9 @@
 
 // ## Rutas 🛣️
 // ┌──────────────────────────────────────────────────────────────────────────┐
-// │ "/products/:productId/variants/new"          → ProductVariantCreatePage  │
-// │ "/products/:productId/variants/:variant_id"  → ProductVariantDetailPage  │
-// │ "/products/:product_id/variants"             → ProductVariantListPage    │
+// │ "/products/:productId/presentations/new"          → ProductVariantCreatePage  │
+// │ "/products/:productId/presentations/:variant_id"  → ProductVariantDetailPage  │
+// │ "/products/:product_id/presentations"             → ProductVariantListPage    │
 // └──────────────────────────────────────────────────────────────────────────┘
 
 // ## Notas técnicas 💽
@@ -21,16 +21,17 @@ import ProductVariantDetailPage from "./pages/ProductVariantDetailPage";
 import ProductVariantListPage   from "./pages/ProductVariantListPage";
 import ProductVariantEditPage from "./pages/ProductVariantEditPage";
 
-const ProductVariantRoutes = (): React.ReactNode => {
+const PresentationsRoutes = (): React.ReactNode => {
     return (
         <>
-            {/* Ruta estática primero para evitar que :variant_id absorba "new" */}
-            <Route path="/products/:productId/variants/new"          element={<ProductVariantCreatePage />} />
-            <Route path="/products/:productId/variants/:variant_id/edit" element={<ProductVariantEditPage />} />
-            <Route path="/products/:productId/variants/:variant_id"  element={<ProductVariantDetailPage />} />
-            <Route path="/products/:product_id/variants"             element={<ProductVariantListPage />} />
+            {/* Estáticos primero */}
+            <Route path="/products/:product_id/presentations/new"                      element={<ProductVariantCreatePage />} />
+            {/* Dinámicos después */}
+            <Route path="/products/:product_id/presentations/:presentation_id/edit"    element={<ProductVariantEditPage />} />
+            <Route path="/products/:product_id/presentations/:presentation_id"         element={<ProductVariantDetailPage />} />
+            <Route path="/products/:product_id/presentations"                          element={<ProductVariantListPage />} />
         </>
     );
 };
 
-export default ProductVariantRoutes;
+export default PresentationsRoutes;

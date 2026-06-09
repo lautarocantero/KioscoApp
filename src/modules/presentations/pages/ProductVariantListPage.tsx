@@ -180,10 +180,10 @@ const buildColumns = ({
         renderCell: (params: GridRenderCellParams<ProductVariant>) => (
             <RowActionsCell
                 onView={() =>
-                    navigate(`/products/${productId}/variants/${params.row._id}`)
+                    navigate(`/products/${productId}/presentations/${params.row._id}`)
                 }
                 onEdit={() =>
-                    navigate(`/products/${productId}/variants/${params.row._id}/edit`)
+                    navigate(`/products/${productId}/presentations/${params.row._id}/edit`)
                 }
                 onDelete={() =>
                     onDeleteRequest(params.row._id, params.row.name)
@@ -258,7 +258,7 @@ const ProductVariantsListPage = (): React.ReactNode => {
                             variant="contained"
                             size="small"
                             onClick={() =>
-                                navigate(`/products/${product_id}/variants/new`)
+                                navigate(`/products/${product_id}/presentations/new`)
                             }
                         >
                             <LoupeIcon sx={{ mr: 0.5, fontSize: 18 }} />

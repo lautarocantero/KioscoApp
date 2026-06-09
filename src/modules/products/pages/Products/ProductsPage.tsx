@@ -147,7 +147,7 @@ const buildColumns = ({
     headerAlign: "center",
     renderCell: (params: GridRenderCellParams<Product>) => (
       <RowActionsCell
-        onPresentations={() => navigate(`/products/${params.row._id}/variants`)}
+        onPresentations={() => navigate(`/products/${params.row._id}/presentations`)}
         onView={() => navigate(`/product/${params.row._id}`)}
         onEdit={() => navigate(`/products/${params.row._id}/edit`)}
         onDelete={() => onDeleteRequest(params.row._id, params.row.name)}

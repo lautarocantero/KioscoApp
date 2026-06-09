@@ -17,7 +17,7 @@ import { stepFieldsMap } from "../../modules/presentations/schema/ProductVariant
 const STEPS_LABELS = ["Datos del producto", "Datos de la presentación", "Stock y operación"];
 
 function useProductVariantFormCreate() {
-    const { productId } = useParams<{ productId: string }>();
+    const { product_id: productId } = useParams<{ product_id: string }>();
     const { productData, isLoading: loadingProduct, error: productError } = useProductData(productId);
     const {
         createdEntity: createdVariant,
@@ -100,7 +100,7 @@ function useProductVariantFormCreate() {
 }
 
 function useProductVariantFormEdit() {
-    const { variant_id: variantId } = useParams<{ variant_id: string }>();
+    const { presentation_id: variantId } = useParams<{ presentation_id: string }>();
 
     const [editingVariant, setEditingVariant]   = useState<ExistingProductVariantInterface | null>(null);
     const [updatedVariant, setUpdatedVariant]   = useState<UpdatedProductVariantInterface | null>(null);

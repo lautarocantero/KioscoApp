@@ -34,7 +34,7 @@ const CARD_COLORS: Record<string, string> = {
   '/products-list':                    '#1f1f24',
   '/products-create':                  '#1f1f24',
   '/products-edit':                    '#1f1f24',
-  '/products/:productId/variants/new': '#1f1f24',
+  '/products/:productId/presentations/new': '#1f1f24',
 
   // Categories — Naranja
   '/categories':                       '#C2580A',
