@@ -39,7 +39,7 @@ import type { Dispatch } from "@reduxjs/toolkit"
 import type { ProductVariant } from "../../typings/productVariant/productVariantTypes"
 import { checkingProductVariants, setError, setProductsVariants, startLoadingProductVariants } from "./productVariantSlice"
 import { handleError } from "../shared/handlerStoreError"
-import { getProductVariantByIdRequest, getProductVariantsByProductIdRequest } from "../../modules/productVariants/api/productVariantsApi"
+import { getProductVariantByIdRequest, getProductVariantsByProductIdRequest } from "../../modules/presentations/api/productVariantsApi"
 
 
 export const getProductVariantsById = (product_id: string) => {

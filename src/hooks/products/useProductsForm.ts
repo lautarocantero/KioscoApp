@@ -12,7 +12,7 @@ import type {
 } from "@typings/product/productTypes";
 import { useFormSteps } from "../../hooks/shared/useFormSteps";
 import { API_URL } from "../../config/api";
-import { stepFieldsMap } from "../../modules/productVariants/schema/ProductVariantFormSchema";
+import { stepFieldsMap } from "../../modules/presentations/schema/ProductVariantFormSchema";
 import { editStepFieldsMap } from "../../modules/products/schema/ProductFormSchema";
 import { stepsConfig, editStepsConfig } from "../../config/constants";
 
