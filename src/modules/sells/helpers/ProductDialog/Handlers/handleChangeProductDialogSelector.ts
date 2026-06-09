@@ -13,7 +13,7 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/productVariant/productVariantTypes";
 import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/types";
 import validateProductSelection from "../Validation/ValidateProductSelection";
  
@@ -38,7 +38,7 @@ const handleChangeProductDialogSelector = ({event, products, setFieldValue} : Ha
       return; 
   }
 
-    const productObject: ProductVariant | undefined = products.find((prod: ProductVariant) => prod._id === productId);
+    const productObject: Presentation | undefined = products.find((prod: Presentation) => prod._id === productId);
 
     if(!productObject) return;
 

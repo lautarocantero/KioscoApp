@@ -1,9 +1,9 @@
-import type { ProductVariant } from "../productVariant/productVariantTypes";
+import type { Presentation } from "../productVariant/productVariantTypes";
 import type { CartAmount } from "./seller";
 
 //────────────────────────────────────────────♦️ PRODUCTS ♦️───────────────────────────────────────────//
 
-export type ProductTicketType = Pick<ProductVariant, 
+export type ProductTicketType = Pick<Presentation, 
     '_id' | 'name' | 'description' | 'image_url' | 'brand' |
     'product_id' | 'sku' | 'model_type' | 'model_size' | 'price' | 
     'expiration_date'> &  {
@@ -16,7 +16,7 @@ export interface SellerStateInterface {
     _id: string | null,
     name: string,
     cart: ProductTicketType[],
-    productSelected: ProductVariant | null,
+    productSelected: Presentation | null,
     description: string,
     created_at: string,
     updated_at: string,
@@ -38,13 +38,13 @@ export type SellerRemoveFromCartActionPayload = Pick<SellerStateInterface, '_id'
 }
 
 export interface SellerSetProductSlicePayload {
-    product: ProductVariant,
+    product: Presentation,
 };
 
 //──────────────────────────────────────────── 🌀 THUNK 🌀 ───────────────────────────────────────────//
 
 export interface SelectProductThunkInterface {
-    productData: ProductVariant,
+    productData: Presentation,
 }
 
 export interface AddToCartThunkInterface {

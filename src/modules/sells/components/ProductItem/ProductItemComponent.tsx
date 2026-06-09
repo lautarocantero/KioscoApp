@@ -20,14 +20,14 @@ import { useContext } from "react";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../../store/auth/authSlice";
 import { selectProductThunk } from "../../../../store/seller/sellerThunks";
-import type { ProductVariant } from "../../../../typings/productVariant/productVariantTypes";
+import type { Presentation } from "../../../../typings/productVariant/productVariantTypes";
 import type { getProductSelectedPayload } from "../../../../typings/seller/sellerTypes";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
 import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
 
 const ProductItemComponent = ({ product }: ProductItemProps): React.ReactNode => {
-    const { name, variants } : { name: string, variants: ProductVariant[]} = product;
+    const { name, variants } : { name: string, variants: Presentation[]} = product;
     const { setShowModal } = useContext(ProductDialogContext)!;
     const dispatch = useDispatch<AppDispatch>();
 

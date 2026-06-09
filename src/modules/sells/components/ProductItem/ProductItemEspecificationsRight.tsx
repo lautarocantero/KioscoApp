@@ -15,14 +15,14 @@
 
 import { Grid } from "@mui/material";
 import type { EspecificationsRightProps } from "@typings/sells/reactComponents";
-import type { ProductVariant } from "../../../../typings/productVariant/productVariantTypes";
+import type { Presentation } from "../../../../typings/productVariant/productVariantTypes";
 import ProductItemAmountData from "./ProductItemAmountData";
 import ProductItemButton from "./ProductItemButton";
 
 
 const ProductItemEspecificationsRight = ({product} : EspecificationsRightProps): React.ReactNode => {
 
-    const {variants} : {variants: ProductVariant[]} = product;
+    const {variants} : {variants: Presentation[]} = product;
 
     return (
         <Grid 

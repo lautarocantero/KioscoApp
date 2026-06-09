@@ -1,8 +1,8 @@
 import axios from "axios";
 import { API_URL } from "../../../config/api";
-import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/productVariant/productVariantTypes";
 
-// # Módulo: ProductVariant Requests
+// # Módulo: Presentation Requests
 
 // ## Descripción 📦
 // Centraliza todas las llamadas HTTP al recurso `/product-variant` del backend.
@@ -47,8 +47,8 @@ const baseUrl = axios.create({
  * Obtiene todas las variantes.
  * `GET /get-product-variants`
  */
-export const getPresentationsRequest = async (): Promise<ProductVariant[]> => {
-    const response = await baseUrl.get<ProductVariant[]>("/get-product-variants");
+export const getPresentationsRequest = async (): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>("/get-product-variants");
     return response.data;
 };
 
@@ -58,8 +58,8 @@ export const getPresentationsRequest = async (): Promise<ProductVariant[]> => {
  */
 export const getPresentationByIdRequest = async (
     { product_variant_id }: { product_variant_id: string }
-): Promise<ProductVariant[]> => {
-    const response = await baseUrl.get<ProductVariant[]>(
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
         `/get-product-variant-by-id/${product_variant_id}`
     );
     return response.data;
@@ -71,8 +71,8 @@ export const getPresentationByIdRequest = async (
  */
 export const getPresentationsByProductIdRequest = async (
     { product_id }: { product_id: string }
-): Promise<ProductVariant[]> => {
-    const response = await baseUrl.get<ProductVariant[]>(
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
         `/get-product-variant-by-product-id/${product_id}`
     );
     return response.data;
@@ -84,8 +84,8 @@ export const getPresentationsByProductIdRequest = async (
  */
 export const getPresentationByBrandRequest = async (
     brand: string
-): Promise<ProductVariant[]> => {
-    const response = await baseUrl.get<ProductVariant[]>(
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
         "/get-product-variant-by-brand",
         { data: { brand } }
     );
@@ -98,8 +98,8 @@ export const getPresentationByBrandRequest = async (
  */
 export const getPresentationByStockRequest = async (
     stock: number
-): Promise<ProductVariant[]> => {
-    const response = await baseUrl.get<ProductVariant[]>(
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
         "/get-product-variant-by-stock",
         { data: { stock } }
     );
@@ -112,8 +112,8 @@ export const getPresentationByStockRequest = async (
  */
 export const getPresentationByPriceRequest = async (
     price: number
-): Promise<ProductVariant[]> => {
-    const response = await baseUrl.get<ProductVariant[]>(
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
         "/get-product-variant-by-price",
         { data: { price } }
     );
@@ -126,8 +126,8 @@ export const getPresentationByPriceRequest = async (
  */
 export const getPresentationBySizeRequest = async (
     model_size: string
-): Promise<ProductVariant[]> => {
-    const response = await baseUrl.get<ProductVariant[]>(
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
         "/get-product-variant-by-size",
         { data: { model_size } }
     );
@@ -140,8 +140,8 @@ export const getPresentationBySizeRequest = async (
  */
 export const getPresentationByPresentationRequest = async (
     model_type: string
-): Promise<ProductVariant[]> => {
-    const response = await baseUrl.get<ProductVariant[]>(
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
         "/get-product-variant-by-presentation",
         { data: { model_type } }
     );
@@ -157,7 +157,7 @@ export const getPresentationByPresentationRequest = async (
  * Si se provee `image_file`, se sube como archivo; de lo contrario se envía `image_url` como string.
  */
 export const createPresentationRequest = async (
-    data: Omit<ProductVariant, "_id" | "created_at" | "updated_at"> & {
+    data: Omit<Presentation, "_id" | "created_at" | "updated_at"> & {
         image_file?: File | null;
     }
 ): Promise<{ _id: string; message: string }> => {
@@ -195,7 +195,7 @@ export const createPresentationRequest = async (
  * `PUT /edit-product-variant` — body: { ...campos }
  */
 export const editPresentationRequest = async (
-    variant: Partial<ProductVariant> & Pick<ProductVariant, "_id">
+    variant: Partial<Presentation> & Pick<Presentation, "_id">
 ): Promise<{ _id: string; message: string }> => {
     const response = await baseUrl.put<{ _id: string; message: string }>(
         "/edit-product-variant",

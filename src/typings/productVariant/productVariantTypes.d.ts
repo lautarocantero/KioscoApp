@@ -28,7 +28,7 @@ interface ProductVariantEntity {
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 // // derivado para no utilizar directamente el ProductVariantEntity
-export type ProductVariant = ProductVariantEntity;
+export type Presentation = ProductVariantEntity;
 
 // // derivado para los datos publicos
 export type ProductVariantPublic = Pick<ProductVariantEntity, 
@@ -42,7 +42,7 @@ export type ProductVariantPublic = Pick<ProductVariantEntity,
 
 // tipo del slice
 interface ProductVariantState {
-    productVariants: ProductVariant[],
+    productVariants: Presentation[],
     isLoading: boolean,
     errorMessage: string | null,
 }

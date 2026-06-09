@@ -29,11 +29,11 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import type { AppDispatch, RootState as ProductVariantState } from "../../store/productVariant/productVariantSlice";
 import { getProductVariantsById } from "../../store/productVariant/productVariantThunks";
 import type { RootState as SellerRootState } from "../../store/seller/sellerSlice";
-import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/productVariant/productVariantTypes";
 
 interface useProductVariantsInterface {
-    productSelected: ProductVariant | null;
-    productVariants: ProductVariant[];
+    productSelected: Presentation | null;
+    productVariants: Presentation[];
 }
 
 const useProductVariants = (): useProductVariantsInterface =>  {

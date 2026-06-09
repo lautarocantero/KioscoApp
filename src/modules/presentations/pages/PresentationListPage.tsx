@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import LoupeIcon from "@mui/icons-material/Loupe";
 
-import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/productVariant/productVariantTypes";
 import {
     deletePresentationRequest,
     getPresentationsByProductIdRequest,
@@ -91,7 +91,7 @@ const buildColumns = ({
         headerName: "Descripción",
         flex: 2,
         minWidth: 200,
-        renderCell: (params: GridRenderCellParams<ProductVariant, string>) => (
+        renderCell: (params: GridRenderCellParams<Presentation, string>) => (
             <Tooltip title={params.value ?? ""}>
                 <span>
                     {(params.value ?? "").length > 60
@@ -107,7 +107,7 @@ const buildColumns = ({
         width: 110,
         align: "center",
         headerAlign: "center",
-        renderCell: (params: GridRenderCellParams<ProductVariant, string>) => (
+        renderCell: (params: GridRenderCellParams<Presentation, string>) => (
             <Chip
                 label={params.value ?? "—"}
                 size="small"
@@ -123,7 +123,7 @@ const buildColumns = ({
         type: "number",
         align: "center",
         headerAlign: "center",
-        renderCell: (params: GridRenderCellParams<ProductVariant, number>) => {
+        renderCell: (params: GridRenderCellParams<Presentation, number>) => {
             const stock = params.value ?? 0;
             const isLow = stock <= (params.row.reorder_point ?? 0);
             return (
@@ -144,7 +144,7 @@ const buildColumns = ({
         align: "center",
         headerAlign: "center",
         renderCell: (
-            params: GridRenderCellParams<ProductVariant, ProductVariantStatus>
+            params: GridRenderCellParams<Presentation, ProductVariantStatus>
         ) => {
             const cfg = STATUS_CONFIG[params.value ?? "unavailable"];
             return (
@@ -163,7 +163,7 @@ const buildColumns = ({
         headerName: "Precio",
         width: 130,
         type: "number",
-        renderCell: (params: GridRenderCellParams<ProductVariant, number>) => (
+        renderCell: (params: GridRenderCellParams<Presentation, number>) => (
             <Typography variant="body2" fontWeight={500}>
                 {formatPrice(params.value ?? 0)}
             </Typography>
@@ -177,7 +177,7 @@ const buildColumns = ({
         filterable: false,
         align: "center",
         headerAlign: "center",
-        renderCell: (params: GridRenderCellParams<ProductVariant>) => (
+        renderCell: (params: GridRenderCellParams<Presentation>) => (
             <RowActionsCell
                 onView={() =>
                     navigate(`/products/${productId}/presentations/${params.row._id}`)
@@ -199,7 +199,7 @@ const PresentationListPage = (): React.ReactNode => {
     const { product_id } = useParams<{ product_id: string }>();
     const navigate = useNavigate();
 
-    const [variants, setVariants] = useState<ProductVariant[]>([]);
+    const [variants, setVariants] = useState<Presentation[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [deleteDialog, setDeleteDialog] =
@@ -277,7 +277,7 @@ const PresentationListPage = (): React.ReactNode => {
                     </Alert>
                 )}
 
-                <GenericDataGrid<ProductVariant>
+                <GenericDataGrid<Presentation>
                     rows={variants}
                     columns={columns}
                     loading={loading}

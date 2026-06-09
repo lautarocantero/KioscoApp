@@ -1,4 +1,4 @@
-import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/productVariant/productVariantTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";
@@ -14,7 +14,7 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         iva: number;
         modification_date: string | null;
         payment_method: PaymentMethod;
-        products: ProductVariant[];
+        products: Presentation[];
         purchase_date: string;
         seller_id: string;
         seller_name: string;
@@ -90,7 +90,7 @@ import type { EspecificationsLeftProps } from "../reactComponents";
 
     export interface DialogDataInterface {
         productVariantId: string,
-        productVariant: ProductVariant | null,
+        productVariant: Presentation | null,
         requiredStock: number,
         totalPrice: number,
     }
@@ -105,14 +105,14 @@ import type { EspecificationsLeftProps } from "../reactComponents";
     export type DialogVariantDataType = Omit<DialogDataInterface, 'productVariantId'>
 
     export interface FormatProductTicketInterface {
-        productVariant: ProductVariant;
+        productVariant: Presentation;
         requiredStock: number;
     }
 
     export type EvaluateStockType = Pick<EspecificationsLeftProps, 'variants'>
 
     export interface validateProductSubmissionInterface {
-        productVariant: ProductVariant | null;
+        productVariant: Presentation | null;
         requiredStock: number;
     }
 
@@ -120,7 +120,7 @@ import type { EspecificationsLeftProps } from "../reactComponents";
 
     export interface HandleProductDialogSelectorChangeInterface {
         event: SelectChangeEvent<string>;
-        products: ProductVariant[];
+        products: Presentation[];
         setFieldValue: SetFieldValue<DialogDataInterface>;
     }
 
@@ -130,7 +130,7 @@ import type { EspecificationsLeftProps } from "../reactComponents";
 
     export interface HandleProductDialogUnitsChangeInterface {
         incomingValue: number | null | undefined;
-        productVariant: ProductVariant | null,
+        productVariant: Presentation | null,
         setFieldValue: SetFieldValue<DialogDataInterface>;
     }
 

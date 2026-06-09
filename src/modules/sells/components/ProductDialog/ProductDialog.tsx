@@ -31,7 +31,7 @@ import { useCallback, useContext, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import useProductVariants from "../../../../hooks/sells/useProductVariants";
 import type { AppDispatch } from "../../../../store/productVariant/productVariantSlice";
-import type { ProductVariant } from "../../../../typings/productVariant/productVariantTypes";
+import type { Presentation } from "../../../../typings/productVariant/productVariantTypes";
 import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
 import getInitialProductDialogValues from "../../helpers/ProductDialog/Getters/getInitialProductDialogValues";
@@ -78,7 +78,7 @@ const ProductDialog = (): React.ReactNode => {
     return null
   };
 
-  const { name, image_url }: {name: string, image_url: string} = productSelected as ProductVariant;
+  const { name, image_url }: {name: string, image_url: string} = productSelected as Presentation;
   const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
 
   return (

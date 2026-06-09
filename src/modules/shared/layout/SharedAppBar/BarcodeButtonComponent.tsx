@@ -33,7 +33,7 @@ import type { AppDispatch } from '../../../../store/auth/authSlice';
 import { getProductVariantById } from '../../../../store/productVariant/productVariantThunks';
 import type { RootState as SellerRootState } from "../../../../store/seller/sellerSlice";
 import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../store/seller/sellerThunks';
-import type { ProductVariant } from '../../../../typings/productVariant/productVariantTypes';
+import type { Presentation } from '../../../../typings/productVariant/productVariantTypes';
 import type { ProductTicketType } from '../../../../typings/seller/sellerTypes';
 import { AlertColor } from '../../../../typings/ui/ui';
 import { SnackBarContext } from '../../components/SnackBar/SnackBarContext';
@@ -60,8 +60,8 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
 
   if (location.pathname !== "/new-sell" && location.pathname !== "/cart") return null;
 
-  const getProductVariant = async ({id}:{id: string}): Promise<ProductVariant> => {
-    const prod: ProductVariant[] | undefined = await dispatch(getProductVariantById(id));
+  const getProductVariant = async ({id}:{id: string}): Promise<Presentation> => {
+    const prod: Presentation[] | undefined = await dispatch(getProductVariantById(id));
 
     if(!prod) {
       showSnackBar(`Código de barras inexistente`, AlertColor.Error);
@@ -75,7 +75,7 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
   const handleAddToCart = async () => {
     if(barcode === '') return;
 
-    const product: ProductVariant = await getProductVariant({id: barcode});
+    const product: Presentation = await getProductVariant({id: barcode});
     
     if(!product) {
       showSnackBar(`Código de barras inexistente`, AlertColor.Error);

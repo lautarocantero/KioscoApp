@@ -14,7 +14,7 @@ interface ProductEntity {
     gallery_urls: string[];
     created_at:   string;
     updated_at:   string;
-    variants:     ProductVariant[];
+    variants:     Presentation[];
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -29,7 +29,7 @@ export type ProductPublic = Omit<ProductEntity, "_id">;
 
 // Producto existente devuelto por GET /product/:id — variants opcionales
 export type ExistingProductInterface = Omit<ProductEntity, "variants"> & {
-    variants?: ProductVariant[];
+    variants?: Presentation[];
 };
 
 // Referencia mínima tras crear un producto (respuesta del POST)

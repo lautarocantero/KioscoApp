@@ -49,7 +49,7 @@
 
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { store } from "../store";
-import type { ProductVariant, ProductVariantState, ProductVariantStateError } from "../../typings/productVariant/productVariantTypes";
+import type { Presentation, ProductVariantState, ProductVariantStateError } from "../../typings/productVariant/productVariantTypes";
 
 
 const initialState: ProductVariantState = {
@@ -62,7 +62,7 @@ export const productVariantSlice = createSlice({
     name: 'productVariants',
     initialState,
     reducers: {
-        setProductsVariants: (state: ProductVariantState, action: PayloadAction<ProductVariant[]>) => {
+        setProductsVariants: (state: ProductVariantState, action: PayloadAction<Presentation[]>) => {
             state.productVariants = action.payload;
             state.isLoading = false;
             state.errorMessage = null;

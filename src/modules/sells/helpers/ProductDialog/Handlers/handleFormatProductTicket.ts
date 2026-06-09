@@ -2,7 +2,7 @@
 //────────── Helper 🦸: formatProductTicket ──────────//
 
 // Descripción 📝
-// Convierte una variante de producto (`ProductVariant`) en un objeto
+// Convierte una variante de producto (`Presentation`) en un objeto
 // `ProductTicketType` listo para despachar tickets al carrito.
 
 // Lógica 🔧

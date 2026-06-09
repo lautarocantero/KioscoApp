@@ -13,10 +13,10 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/productVariant/productVariantTypes";
 import type { DialogDataInterface } from "@typings/sells/types";
 
-const emptyProductVariant: ProductVariant = {
+const emptyProductVariant: Presentation = {
   _id: "",
   brand: "",
   created_at: "",
@@ -35,8 +35,8 @@ const emptyProductVariant: ProductVariant = {
   updated_at: "",
 };
 
-const getInitialProductDialogValues = (productVariants: ProductVariant[]): DialogDataInterface => {
-  const product: ProductVariant = productVariants?.length > 0 ? productVariants[0] : emptyProductVariant;
+const getInitialProductDialogValues = (productVariants: Presentation[]): DialogDataInterface => {
+  const product: Presentation = productVariants?.length > 0 ? productVariants[0] : emptyProductVariant;
   const productId: string = product._id ?? "";
 
   return {

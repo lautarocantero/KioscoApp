@@ -1,5 +1,5 @@
 import type { Product } from "../../product/productTypes";
-import type { ProductVariant } from "../../productVariant/productVariantTypes";
+import type { Presentation } from "../../productVariant/productVariantTypes";
 import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from "../types";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}
@@ -41,7 +41,7 @@ import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from 
 
     export interface EspecificationsLeftProps {
         name: string,
-        variants: ProductVariant[];
+        variants: Presentation[];
         image: string | undefined;
     }
 
@@ -68,7 +68,7 @@ import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from 
     export type ProductDialogImageProps = Pick<ProductDialogIlustrationProps, 'name' | 'image_url'>
 
     export interface DialogDataProps {
-        products: ProductVariant[],
+        products: Presentation[],
         values: DialogDataInterface,
         setFieldValue: SetFieldValue<DialogDataInterface>,
     };

@@ -26,8 +26,8 @@
 // - `setProductsVariants`: actualiza el estado con las variantes obtenidas.  
 
 // ## Tipos 📑  
-// - `ProductVariant`: tipo que representa la estructura de una variante de producto.  
-// - Retorno: `Promise<ProductVariant[] | undefined>` (array de variantes o undefined en caso de error).  
+// - `Presentation`: tipo que representa la estructura de una variante de producto.  
+// - Retorno: `Promise<Presentation[] | undefined>` (array de variantes o undefined en caso de error).  
 
 // ## Notas técnicas 💽  
 // - **Modularidad**: separa la lógica de API (`getProductVariantsByIdRequest`) del manejo de estado.  
@@ -36,7 +36,7 @@
 
 
 import type { Dispatch } from "@reduxjs/toolkit"
-import type { ProductVariant } from "../../typings/productVariant/productVariantTypes"
+import type { Presentation } from "../../typings/productVariant/productVariantTypes"
 import { checkingProductVariants, setError, setProductsVariants, startLoadingProductVariants } from "./productVariantSlice"
 import { handleError } from "../shared/handlerStoreError"
 import { getPresentationByIdRequest, getPresentationsByProductIdRequest } from "../../modules/presentations/api/presentationsApi"
@@ -44,10 +44,10 @@ import { getPresentationByIdRequest, getPresentationsByProductIdRequest } from "
 
 export const getProductVariantsById = (product_id: string) => {
 
-    return async (dispatch: Dispatch): Promise<ProductVariant[] | undefined> => {
+    return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
         dispatch(startLoadingProductVariants());
         try{
-            const productVariants: ProductVariant[] = await getPresentationsByProductIdRequest({product_id});
+            const productVariants: Presentation[] = await getPresentationsByProductIdRequest({product_id});
 
             if(!productVariants) {
                 dispatch(setError({errorMessage: "No se ha encontrado ninguna variante del producto" }));
@@ -55,7 +55,7 @@ export const getProductVariantsById = (product_id: string) => {
             }
 
             dispatch(setProductsVariants(productVariants));
-            return productVariants as ProductVariant[];
+            return productVariants as Presentation[];
         } catch(error: unknown) {
             handleError(error);
         }
@@ -63,12 +63,12 @@ export const getProductVariantsById = (product_id: string) => {
 }
 
 export const getProductVariantById = (product_variant_id: string) => {
-    return async (dispatch: Dispatch): Promise<ProductVariant[] | undefined> => {
+    return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
         dispatch(checkingProductVariants());
 
         try{
             {/*─────────────────── 🔎 Se usa un array, pero solo se tendra un elemento en el mismo 🔎 ───────────────────*/}
-            const productVariant: ProductVariant[] = await getPresentationByIdRequest({product_variant_id});
+            const productVariant: Presentation[] = await getPresentationByIdRequest({product_variant_id});
 
             if(!productVariant) {
                 dispatch(setError({errorMessage: "No se ha encontrado el producto en la base de datos" }));
@@ -76,7 +76,7 @@ export const getProductVariantById = (product_variant_id: string) => {
             }
 
             dispatch(setProductsVariants(productVariant));
-            return productVariant as ProductVariant[];
+            return productVariant as Presentation[];
         } catch (error: unknown) {
             handleError(error);
         }

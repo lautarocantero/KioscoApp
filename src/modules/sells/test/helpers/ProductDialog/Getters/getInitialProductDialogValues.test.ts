@@ -1,9 +1,9 @@
-import type { ProductVariant } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/productVariant/productVariantTypes";
 import getInitialProductDialogValues from "../../../../helpers/ProductDialog/Getters/getInitialProductDialogValues";
 import { describe, it, expect } from "vitest";
 
 describe("Helper: getInitialProductDialogValues", () => {
-  const baseVariant: ProductVariant = {
+  const baseVariant: Presentation = {
     _id: "123",
     brand: "TestBrand",
     created_at: "2024-01-01",

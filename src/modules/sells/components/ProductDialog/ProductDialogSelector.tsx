@@ -18,7 +18,7 @@ import React, { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
 import type { RootState as ProductVariantState } from "../../../../store/productVariant/productVariantSlice";
-import type { ProductVariant } from "../../../../typings/productVariant/productVariantTypes";
+import type { Presentation } from "../../../../typings/productVariant/productVariantTypes";
 import handleChangeSelector from "../../helpers/ProductDialog/Handlers/handleChangeProductDialogSelector";
 
 const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: DialogSelectorProps): React.ReactNode => {
@@ -30,8 +30,8 @@ const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: Dia
 
     const renderValue = useCallback( 
         (selected: string) => { 
-            const productObject: ProductVariant | undefined = products.find( 
-                (prodFind: ProductVariant) => String(prodFind?._id) === String(selected) 
+            const productObject: Presentation | undefined = products.find( 
+                (prodFind: Presentation) => String(prodFind?._id) === String(selected) 
             ); 
             return productObject ? productObject.name : "";
         }, 
@@ -39,7 +39,7 @@ const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: Dia
     );
 
     const productOptions = useMemo( () => 
-        products.map((productObject: ProductVariant) => 
+        products.map((productObject: Presentation) => 
             ( 
                 <MenuItem 
                     key={String(productObject?._id)} 
