@@ -4,7 +4,6 @@ import type { Theme } from "@mui/material";
 import SidebarSubGroup from "./SidebarSubGroup";
 import type { SidebarNavItemProps } from "@typings/ui/uiModules";
 
-
 const SidebarNavItem = ({
   link,
   dark,
@@ -17,7 +16,7 @@ const SidebarNavItem = ({
   isSubLinkActive,
   onNavigate,
 }: SidebarNavItemProps) => (
-  <Box sx={{ width: "100%", borderRadius: "8px", overflow: "hidden" }}>
+  <Box sx={{ width: "100%", borderRadius: "8px", overflow: "hidden", minWidth: 0 }}>
     <Tooltip title={!isHovered ? link.description : ""} placement="right">
       <Box
         onClick={() => onRowClick(link)}
@@ -30,13 +29,14 @@ const SidebarNavItem = ({
           borderRadius: "8px",
           cursor: "pointer",
           whiteSpace: "nowrap",
+          width: isHovered ? "100%" : "36px",
+          transition: "background-color 0.15s, color 0.15s, width 0.22s cubic-bezier(.4,0,.2,1)",
           color: isActive
-            ? dark ? theme.custom?.fontColor        : theme.custom?.backgroundDark
+            ? dark ? theme.custom?.fontColor : theme.custom?.backgroundDark
             : dark ? theme.custom?.fontColorTransparent : theme.custom?.fontColorDarkTransparent,
           backgroundColor: isActive
             ? dark ? theme.custom?.whiteTranslucid : theme.custom?.blackTranslucid
             : "transparent",
-          transition: "background-color 0.15s, color 0.15s",
           "&:hover": {
             backgroundColor: dark ? theme.custom?.whiteTranslucid : theme.custom?.blackTranslucid,
             color: dark ? theme.custom?.fontColor : theme.custom?.fontColorDark,

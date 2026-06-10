@@ -31,7 +31,7 @@ const AppSidebar = ({ isOptions }: AppSidebarProps) => {
         overflow: "hidden",
         display: { xs: "none", sm: "flex" },
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
         py: 2.5,
         gap: 1,
         backgroundColor: dark ? theme.custom?.backgroundWave1 : theme.custom?.white,
@@ -46,7 +46,7 @@ const AppSidebar = ({ isOptions }: AppSidebarProps) => {
     >
       <SidebarLogo dark={dark} onClick={() => navigate("/home")} />
 
-      <Box sx={{ flex: 1, width: "100%", display: "flex", flexDirection: "column", gap: "2px", px: "8px" }}>
+      <Box sx={{ flex: 1, width: "100%", display: "flex", flexDirection: "column", gap: "2px", px: "8px", pl: isHovered ? "8px" : "14px" }}>
         {navLinks.map((link) => {
           const { subGroups, hasSubGroups, isActive, isOpen } = getLinkMeta(link);
           return (
