@@ -19,8 +19,8 @@
 
 import { Grid, Typography, type Theme } from "@mui/material";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
-import type { SharedAppBarContentType } from "../../../../typings/ui/uiModules";
-import LightMode from "../../components/LightMode/LightMode";
+import type { SharedAppBarContentType } from "../../../../../typings/ui/uiModules";
+import LightMode from "../../../components/LightMode/LightMode";
 import CartButtonComponent from "./CartButtonComponent";
 import Filters from "./Filters";
 import BarcodeButtonComponent from "./BarcodeButtonComponent";

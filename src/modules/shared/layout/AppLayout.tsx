@@ -4,8 +4,9 @@ import React, { useContext } from "react";
 import { ThemeContext } from "../../../theme/ThemeContext";
 import type { AppLayoutProps } from "../../../typings/ui/uiModules";
 import OptionsHeader from "./components/OptionsHeader";
-// import SharedAppBar from "./SharedAppBar/SharedAppBar";
-import AppSidebar from "./components/Appsidebar";
+import AppSidebar from "./components/appSideBar/Appsidebar";
+import LightMode from "../components/LightMode/LightMode";
+import BlobBackground from "./components/BlobBackground";
 
 const AppLayout = ({ children, isOptions, title = "App", icon }: PropsWithChildren<AppLayoutProps>): React.ReactNode => {
   const { appTheme } = useContext(ThemeContext);
@@ -16,20 +17,29 @@ const AppLayout = ({ children, isOptions, title = "App", icon }: PropsWithChildr
   return (
     <Box
       component="div"
-      sx={() => ({
+      sx={(t) => ({
         minHeight: "100vh",
         width: "100vw",
-        background: "radial-gradient(ellipse at 30% 20%, #0d184b 0%, #2d2d35 50%, #08082c 100%)",
+        backgroundColor: t.custom.backgroundDark,
         display: "flex",
         flexDirection: "row",
+        position: "relative",
+        overflow: "hidden",
       })}
     >
+
+      <BlobBackground />
+
+      {/* ── Toggle de tema ── */}
+      <Box sx={{ position: "absolute", top: 16, right: 16, zIndex: 10 }}>
+        <LightMode />
+      </Box>
+
       {/* ── Sidebar ── */}
       <AppSidebar isOptions={isOptions} />
 
       {/* ── Contenido principal ── */}
-      <Box sx={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-        {/* <SharedAppBar showFilters={isOptions ? false : true} /> */}
+      <Box sx={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", position: "relative", zIndex: 1 }}>
         <Box
           component="main"
           sx={{
@@ -39,16 +49,26 @@ const AppLayout = ({ children, isOptions, title = "App", icon }: PropsWithChildr
             alignItems: "center",
             justifyContent: "center",
             p: { xs: 2, sm: 3 },
+            gap: { xs: '1.5em', sm: '2em' },
           }}
         >
-          
-          <OptionsHeader
-            isOptions={isOptions}
-            title={title}
-            icon={icon}
-            appTheme={appTheme}
-          />
-          {children}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: { xs: "center", sm: "flex-start" },
+              width: { xs: "98%", sm: "90%", md: "720px" },
+              gap: "1em",
+            }}
+          >
+            <OptionsHeader
+              isOptions={isOptions}
+              title={title}
+              icon={icon}
+              appTheme={appTheme}
+            />
+            {children}
+          </Box>
         </Box>
       </Box>
     </Box>

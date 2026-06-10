@@ -34,9 +34,13 @@
 
 import { Box, Typography, type Theme } from "@mui/material";
 import type { OptionsHeaderInterface } from "../../../../typings/ui/uiModules";
+import { useLocation } from "react-router-dom";
 
 const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterface): React.ReactNode => {
 
+  const { pathname } = useLocation(); 
+  const isHome = pathname === "/home";
+  
   if (!isOptions) return <></>;
 
   return (
@@ -48,12 +52,26 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
         }`,
       })}
     >
+      {isHome && (
+        <Typography
+          variant="body2"
+          sx={(theme: Theme) => ({
+            color: theme.custom?.fontColor,
+            mb: 0.5,
+            display: "block",
+            fontWeight: 400,
+          })}
+        >
+          ¡Hola! 👋
+        </Typography>
+      )}
       <Typography
-        variant="h4"
+        variant="h2"
         sx={(theme: Theme) => ({
           fontSize: {
             xs: theme.typography?.h5.fontSize,
             sm: theme.typography?.h4.fontSize,
+            md: theme.typography?.h2.fontSize,
           },
           fontWeight: 500,
           color: !appTheme ? theme.custom?.fontColor : theme.custom?.fontColorDark,

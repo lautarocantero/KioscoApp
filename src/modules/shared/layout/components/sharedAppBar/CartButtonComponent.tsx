@@ -22,8 +22,8 @@ import { Grid, Tooltip, Typography, type Theme } from "@mui/material";
 import "animate.css";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, type NavigateFunction } from 'react-router-dom';
-import type { RootState as SellerState } from "../../../../store/seller/sellerSlice";
-import type { ProductTicketType } from "../../../../typings/seller/sellerTypes";
+import type { RootState as SellerState } from "../../../../../store/seller/sellerSlice";
+import type { ProductTicketType } from "../../../../../typings/seller/sellerTypes";
 
 
 export const CartButtonComponent = (): React.ReactNode => {

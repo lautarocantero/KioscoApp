@@ -29,14 +29,14 @@ import "animate.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import type { AppDispatch } from '../../../../store/auth/authSlice';
-import { getProductVariantById } from '../../../../store/productVariant/productVariantThunks';
-import type { RootState as SellerRootState } from "../../../../store/seller/sellerSlice";
-import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../store/seller/sellerThunks';
-import type { Presentation } from '../../../../typings/productVariant/productVariantTypes';
-import type { ProductTicketType } from '../../../../typings/seller/sellerTypes';
-import { AlertColor } from '../../../../typings/ui/ui';
-import { SnackBarContext } from '../../components/SnackBar/SnackBarContext';
+import type { AppDispatch } from '../../../../../store/auth/authSlice';
+import { getProductVariantById } from '../../../../../store/productVariant/productVariantThunks';
+import type { RootState as SellerRootState } from "../../../../../store/seller/sellerSlice";
+import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../../store/seller/sellerThunks';
+import type { Presentation } from '../../../../../typings/productVariant/productVariantTypes';
+import type { ProductTicketType } from '../../../../../typings/seller/sellerTypes';
+import { AlertColor } from '../../../../../typings/ui/ui';
+import { SnackBarContext } from '../../../components/SnackBar/SnackBarContext';
 
 export const BarcodeButtonComponent = (): React.ReactNode => {
   const location = useLocation();

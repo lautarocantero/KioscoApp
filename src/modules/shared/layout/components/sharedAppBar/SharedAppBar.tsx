@@ -16,7 +16,7 @@
 
 import { AppBar, Toolbar, type Theme } from "@mui/material";
 import React from "react";
-import type { SharedAppBarInterface } from "../../../../typings/ui/uiModules";
+import type { SharedAppBarInterface } from "../../../../../typings/ui/uiModules";
 import SharedAppBarContent from "./SharedAppBarContent";
 
 const SharedAppBar = ({showFilters}: SharedAppBarInterface): React.ReactNode => {

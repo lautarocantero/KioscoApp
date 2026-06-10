@@ -19,6 +19,69 @@ export interface LinksComponentInterface {
   linksToShow: LinkInterface[];
 }
 
+//─────────────────────────────── APPSIDEBAR 🧱 ───────────────────────────────//
+
+export interface SubLink {
+  label: string;
+  url: string;
+}
+
+export interface SubGroup {
+  groupLabel: string;
+  links: SubLink[];
+}
+
+
+export interface NavLink {
+  url: string;
+  description: string;
+  icon: React.ReactNode;
+  subGroups?: SubGroup[];
+}
+
+export interface AppSidebarProps {
+  isOptions?: boolean;
+}
+
+export interface SidebarLogoProps {
+  dark: boolean;
+  onClick: () => void;
+}
+
+export interface SidebarLogoutProps {
+  dark: boolean;
+  isHovered: boolean;
+  onLogout: () => void;
+}
+
+export interface SidebarNavItemProps {
+  link: NavLink;
+  dark: boolean;
+  isHovered: boolean;
+  isActive: boolean;
+  isOpen: boolean;
+  hasSubGroups: boolean;
+  subGroups: SubGroup[];
+  onRowClick: (link: NavLink) => void;
+  isSubLinkActive: (url: string) => boolean;
+  onNavigate: (url: string) => void;
+}
+
+export interface SidebarSubGroupProps {
+  group: SubGroup;
+  dark: boolean;
+  isHovered: boolean;
+  isSubLinkActive: (url: string) => boolean;
+  onNavigate: (url: string) => void;
+}
+
+export interface SidebarSubLinkProps {
+  subLink: SubLink;
+  dark: boolean;
+  isActive: boolean;
+  onClick: (url: string) => void;
+}
+
 //─────────────────────────────── APP Layout 🧩 ───────────────────────────────//
 
 export interface AppLayoutProps {
