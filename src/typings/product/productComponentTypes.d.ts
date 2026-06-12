@@ -2,6 +2,7 @@
 import type {
     CreatedProductInterface,
     UpdatedProductInterface,
+    DeleteDialogState,
 } from "./productTypes";
 
 
@@ -76,4 +77,15 @@ export interface ProductBannerComponentProps {
 export interface ProductsFormHeaderComponentProps extends ProductBannerComponentProps {
     stepsLabels:           string[];
     showProgressIndicator?: boolean;
+}
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🗑️ PRODUCTO — Eliminación  🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// Props del diálogo de confirmación de eliminación
+export interface ProductDeleteDialogProps {
+    deleteDialog: DeleteDialogState;
+    onConfirm:    () => void;
+    onCancel:     () => void;
 }

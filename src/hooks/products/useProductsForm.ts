@@ -229,7 +229,7 @@ function useProductsFormEdit(): UseProductsEditFormReturn {
                 brand:        values.brand,
                 image_url:    values.image_url    ?? "",
                 gallery_urls: values.gallery_urls ?? [],
-                updated_at:   new Date().toISOString(), // ← se resuelve aquí, no en el form
+                updated_at:   new Date().toISOString(),
             };
 
             const response = await fetch(`${API_URL}/product/edit-product/${productId}`, {

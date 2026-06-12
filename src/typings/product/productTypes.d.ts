@@ -1,4 +1,5 @@
 import type { FormikErrors } from "formik";
+import type { NavigateFunction } from "react-router-dom";
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -157,6 +158,25 @@ export interface UseProductsEditFormReturn extends UseFormStepsBase {
     handleEdit: (values: ProductEditFormValues) => Promise<void>;
 }
 
+// Estado del diálogo de eliminación
+export interface DeleteDialogState {
+    open: boolean;
+    id:   string;
+    name: string;
+}
+
+// Hook de listado y eliminación de productos
+export interface UseProductsReturn {
+    products:             Product[];
+    loading:              boolean;
+    error:                string | null;
+    deleteDialog:         DeleteDialogState;
+    clearError:           () => void;
+    handleDeleteRequest:  (id: string, name: string) => void;
+    handleDeleteCancel:   () => void;
+    handleDeleteConfirm:  () => Promise<void>;
+}
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 💱 CONTEXT  💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -171,9 +191,19 @@ export interface FormNavigationContextType {
         validateForm: () => Promise<FormikErrors<ProductFormValues>>,
         onValidSubmit?: () => void,
     ) => Promise<void>;
-    onPrev:     () => void;
-    onSubmit:   (e?: React.FormEvent<HTMLFormElement>) => void;
+    onPrev:       () => void;
+    onSubmit:     (e?: React.FormEvent<HTMLFormElement>) => void;
     validateForm?: () => Promise<FormikErrors<ProductFormValues>>;
+}
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🗂️ COLUMNAS  🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️           ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// Argumentos para construir las columnas del grid de productos
+export interface BuildColumnsArgs {
+    onDeleteRequest: (id: string, name: string) => void;
+    navigate:        NavigateFunction;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

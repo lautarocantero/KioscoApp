@@ -13,7 +13,12 @@ const ProductFormFields = ({ mode = "create",  disabled = false }: ProductFormFi
     const { values, errors, setFieldValue } = useFormikContext<ProductFormValues & ProductEditFormValues>();
 
     return (
-        <Grid container spacing={2.5} direction="column">
+        <Grid 
+            container 
+            spacing={2.5} 
+            direction="column"
+            sx={{ backgroundColor: "background.paper", borderRadius: 2, p: 3 }}
+        >
             <Grid size={12}>
                 <TextField fullWidth required label="Nombre del producto" variant="outlined"
                     disabled={disabled}
@@ -55,7 +60,7 @@ const ProductFormFields = ({ mode = "create",  disabled = false }: ProductFormFi
                 </Grid>
             )}
 
-            {mode === "edit"  || mode === "view" && (
+            {mode === "edit" && (
                 <Grid size={12}>
                     <Typography variant="body2" sx={{ mb: 1, fontWeight: 500 }}>
                         Galería de imágenes

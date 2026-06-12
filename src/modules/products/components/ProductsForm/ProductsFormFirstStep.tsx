@@ -4,7 +4,7 @@ import ProductFormFields from "./ProductFormFields";
 
 const ProductsFormFirstStep = (): React.ReactNode => (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
-        <ProductFormCard submitText="Crear">
+        <ProductFormCard submitText="Crear" showButtons>
             <ProductFormFields mode="create" />
         </ProductFormCard>
     </Box>

@@ -6,7 +6,7 @@ import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import ProductsFormHeaderComponent from "../ProductsForm/ProductsFormHeader";
 import ProductsEditFirstStep from "./ProductsEditFirstStep";
-import ProductEditSuccessComponent from "./ProductEditSuccess";
+import ProductEditSuccessComponent from "../ProductEdited/ProductEditSuccess";
 import { useProductsForm } from "../../../../hooks/products/useProductsForm";
 
 const EDIT_STEPS_LABELS = ["Editar producto"];

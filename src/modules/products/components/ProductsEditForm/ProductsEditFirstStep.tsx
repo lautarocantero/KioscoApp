@@ -4,7 +4,7 @@ import ProductFormFields from "../ProductsForm/ProductFormFields";
 
 const ProductsEditFirstStep = (): React.ReactNode => (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
-        <ProductFormCard submitText="Guardar">
+        <ProductFormCard submitText="Guardar" showButtons>
             <ProductFormFields mode="edit" />
         </ProductFormCard>
     </Box>

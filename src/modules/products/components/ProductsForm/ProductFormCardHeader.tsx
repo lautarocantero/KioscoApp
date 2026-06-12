@@ -6,11 +6,11 @@ const ProductFormCardHeader = (): React.ReactNode => (
         px: 3, py: 2,
         borderBottom: "0.5px solid rgba(255,255,255,0.07)",
     }}>
-        <Box sx={{
+        <Box sx={theme => ({
             width: 34, height: 34, borderRadius: "8px",
-            background: "rgba(3,134,238,0.15)",
+            background: theme.custom?.white,
             display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-        }}>
+        })}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <rect x="2"  y="2"    width="5.5" height="7"   rx="1.5" fill="#0386EE" opacity="0.9" />
                 <rect x="9"  y="7"    width="5"   height="5"   rx="1.5" fill="#0386EE" opacity="0.5" />

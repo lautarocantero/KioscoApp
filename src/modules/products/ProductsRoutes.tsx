@@ -22,10 +22,10 @@
 //-----------------------------------------------------------------------------//
 
 import { Route } from "react-router-dom";
-import ProductsPage         from "./pages/Products/ProductsPage";
-import ProductsCreatePage   from "./pages/Products/ProductsCreatePage";
+import ProductsPage         from "./pages/Products/ProductsList/ProductsPage";
+import ProductsCreatePage   from "./pages/Products/ProductCreate/ProductsCreatePage";
 import ProductsEditPage     from "./pages/Products/ProductsEditPage";
-import ProductDetailPage    from "./pages/Products/ProductDetailPage";
+import ProductDetailPage    from "./pages/Products/ProductDetail/ProductDetailPage";
 import CategoriesPage       from "./pages/CategoriesPage";
 import CategoriesListPage   from "./pages/CategoriesListPage";
 import CategoriesCreatePage from "./pages/CategoriesCreatePage";
