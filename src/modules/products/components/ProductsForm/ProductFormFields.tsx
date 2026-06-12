@@ -3,11 +3,8 @@ import { useFormikContext, FieldArray } from "formik";
 import type { ProductFormValues, ProductEditFormValues } from "@typings/product/productTypes";
 import ProductImagePreview from "./ProductImagePreview";
 import { sharedSx } from "../../../../modules/shared/components/sharedSx/sharedSx";
+import type { ProductFormFieldsProps } from "@typings/product/productComponentTypes";
 
-interface ProductFormFieldsProps {
-    mode?: "create" | "edit" | "view";
-    disabled?: boolean;
-}
 
 const ProductFormFields = ({ mode = "create",  disabled = false }: ProductFormFieldsProps): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<ProductFormValues & ProductEditFormValues>();

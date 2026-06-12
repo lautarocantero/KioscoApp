@@ -24,7 +24,7 @@
 import { Route } from "react-router-dom";
 import ProductsPage         from "./pages/Products/ProductsList/ProductsPage";
 import ProductsCreatePage   from "./pages/Products/ProductCreate/ProductsCreatePage";
-import ProductsEditPage     from "./pages/Products/ProductsEditPage";
+import ProductsEditPage     from "./pages/Products/ProductEdit/ProductsEditPage";
 import ProductDetailPage    from "./pages/Products/ProductDetail/ProductDetailPage";
 import CategoriesPage       from "./pages/CategoriesPage";
 import CategoriesListPage   from "./pages/CategoriesListPage";

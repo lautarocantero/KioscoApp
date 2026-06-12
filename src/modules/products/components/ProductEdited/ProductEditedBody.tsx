@@ -1,10 +1,8 @@
 // ProductEditedBody.tsx
 import { Box, Typography } from "@mui/material";
 import ProductEditedName from "./ProductEditedName";
+import type { ProductEditedBodyProps } from "@typings/product/productComponentTypes";
 
-interface ProductEditedBodyProps {
-    name: string;
-}
 
 const ProductEditedBody = ({ name }: ProductEditedBodyProps): React.ReactNode => (
     <Box sx={theme => ({ display: "flex", flexDirection: "column", alignItems: "center", py: 4, px: 3, backgroundColor: theme.custom.white, borderRadius: "16px" })}>

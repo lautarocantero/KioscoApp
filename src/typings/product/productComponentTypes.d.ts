@@ -44,6 +44,15 @@ export interface ProductCreatedBodyProps extends ProductNameBase {}
 // Props del bloque de acciones (botones de navegación post-creación)
 export interface ProductCreatedActionsProps extends ProductIdBase {}
 
+export interface ProductCreatedNameProps {
+    name: string;
+}
+
+export interface ProductFormFieldsProps {
+    mode?: "create" | "edit" | "view";
+    disabled?: boolean;
+}
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ ✏️ PRODUCTO — Edición  ✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️            ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -58,6 +67,36 @@ export interface ProductEditSuccessBodyProps extends ProductNameBase {}
 
 // Props del bloque de acciones post-edición (ver / seguir editando)
 export interface ProductEditSuccessActionsProps extends ProductFeedbackBase {}
+
+export interface ProductEditedActionsProps {
+    productId: string;
+}
+
+export interface ProductEditedBodyProps {
+    name: string;
+}
+
+export interface ProductEditedCardProps {
+    updatedProduct: UpdatedProductInterface;
+}
+
+export interface ProductEditedNameProps {
+    name: string;
+}
+
+export interface ProductEditedProps {
+    updatedProduct: UpdatedProductInterface;
+}
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🟥 CARD  🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface ProductFormCardProps {
+    children: React.ReactNode;
+    submitText: string;
+    showButtons?: boolean;
+}
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🏴‍☠️ BANNER  🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️                       ║

@@ -1,6 +1,5 @@
 import { Chip, Tooltip, Typography } from "@mui/material";
 import { type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
-
 import type { BuildColumnsArgs, Product } from "@typings/product/productTypes";
 import RowActionsCell from "../../../../../shared/components/GenericDataGrid/RowActionsCell";
 import { formatDate, truncate } from "../helpers/productHelpers";

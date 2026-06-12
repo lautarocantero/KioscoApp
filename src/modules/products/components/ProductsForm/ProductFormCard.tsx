@@ -2,12 +2,8 @@ import { Card, CardContent, type Theme } from "@mui/material";
 import ProductFormCardHeader from "./ProductFormCardHeader";
 import NavButtons from "../../../../modules/shared/components/Buttons/NavButtons";
 import FormFooter from "../../../../modules/shared/components/FormGrid/FormFooter";
+import type { ProductFormCardProps } from "@typings/product/productComponentTypes";
 
-interface ProductFormCardProps {
-    children: React.ReactNode;
-    submitText: string;
-    showButtons?: boolean;
-}
 
 const ProductFormCard = ({ children, submitText, showButtons }: ProductFormCardProps): React.ReactNode => (
     <Card sx={(theme: Theme) => ({

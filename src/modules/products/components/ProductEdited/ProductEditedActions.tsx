@@ -1,10 +1,8 @@
 // ProductEditedActions.tsx
 import { Box, Button, type Theme } from "@mui/material";
+import type { ProductEditedActionsProps } from "@typings/product/productComponentTypes";
 import { useNavigate } from "react-router-dom";
 
-interface ProductEditedActionsProps {
-    productId: string;
-}
 
 const ProductEditedActions = ({ productId }: ProductEditedActionsProps): React.ReactNode => {
     const navigate = useNavigate();

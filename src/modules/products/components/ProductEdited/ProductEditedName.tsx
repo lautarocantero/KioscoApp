@@ -1,9 +1,7 @@
 // ProductEditedName.tsx
 import { Box, Typography } from "@mui/material";
+import type { ProductEditedNameProps } from "@typings/product/productComponentTypes";
 
-interface ProductEditedNameProps {
-    name: string;
-}
 
 const ProductEditedName = ({ name }: ProductEditedNameProps): React.ReactNode => (
     <Box sx={theme => ({ px: 3, py: 1, borderRadius: "12px", backgroundColor: `${theme.palette.primary.main}12`, mb: 3 })}>

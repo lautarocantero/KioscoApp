@@ -1,9 +1,7 @@
 // ProductCreatedName.tsx
 import { Box, Typography } from "@mui/material";
+import type { ProductCreatedNameProps } from "@typings/product/productComponentTypes";
 
-interface ProductCreatedNameProps {
-    name: string;
-}
 
 const ProductCreatedName = ({ name }: ProductCreatedNameProps): React.ReactNode => (
     <Box sx={theme => ({ px: 3, py: 1, borderRadius: "12px", backgroundColor: `${theme.palette.primary.main}12`, mb: 3 })}>

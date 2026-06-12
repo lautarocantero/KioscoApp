@@ -1,11 +1,8 @@
 import { Card, CardContent } from "@mui/material";
-import type { UpdatedProductInterface } from "@typings/product/productTypes";
 import ProductEditedBody from "./ProductEditedBody";
 import ProductEditedActions from "./ProductEditedActions";
+import type { ProductEditedCardProps } from "@typings/product/productComponentTypes";
 
-interface ProductEditedCardProps {
-    updatedProduct: UpdatedProductInterface;
-}
 
 const ProductEditedCard = ({ updatedProduct }: ProductEditedCardProps): React.ReactNode => (
     <Card sx={theme => ({
