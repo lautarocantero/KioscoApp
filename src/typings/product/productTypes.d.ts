@@ -56,19 +56,7 @@ interface ProductBaseFormValues {
 }
 
 // Formulario de CREACIÓN — agrega campos de variante y stock
-export type ProductFormValues = ProductBaseFormValues & {
-    // Step 2: Presentación — identidad de la variante
-    sku:               string;
-    model_type:        string;
-    model_size:        string;
-    price:             number;
-    variant_image_url: string;
-
-    // Step 3: Stock y operación
-    stock:           number;
-    min_stock:       number;
-    expiration_date: string | null;
-};
+export type ProductFormValues = ProductBaseFormValues & {};
 
 // Formulario de EDICIÓN — solo los campos editables base
 export type ProductEditFormValues = ProductBaseFormValues;
