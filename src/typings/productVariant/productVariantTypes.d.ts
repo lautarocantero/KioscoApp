@@ -5,7 +5,7 @@ import type { CreatedProductInterface } from "@typings/product/productTypes";
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 interface ProductVariantEntity { 
-    _id: string | null;
+    _id: string;
     brand: string;
     created_at: string;
     description: string;

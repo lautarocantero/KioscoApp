@@ -18,7 +18,7 @@
 import { Route } from "react-router-dom";
 import PresentationCreatePage from "./pages/PresentationCreatePage";
 import PresentationDetailPage from "./pages/PresentationDetailPage";
-import PresentationListPage   from "./pages/PresentationListPage";
+import PresentationListPage   from "./pages/PresentationList/PresentationListPage";
 import PresentationEditPage from "./pages/PresentationEditPage";
 
 const PresentationsRoutes = (): React.ReactNode => {
