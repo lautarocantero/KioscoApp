@@ -1,4 +1,4 @@
-import type { Presentation } from "../productVariant/productVariantTypes";
+import type { Presentation } from "../presentation/presentationTypes";
 import type { CartAmount } from "./seller";
 
 //────────────────────────────────────────────♦️ PRODUCTS ♦️───────────────────────────────────────────//

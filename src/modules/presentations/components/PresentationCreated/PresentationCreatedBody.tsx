@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import type { VariantCreatedBodyProps } from "@typings/productVariant/productVariantComponentTypes";
+import type { VariantCreatedBodyProps } from "@typings/presentation/presentationComponentTypes";
 
 
 const VariantCreatedBody = ({ name }: VariantCreatedBodyProps): React.ReactNode => (

@@ -1,13 +1,18 @@
 import { Grid, TextField } from "@mui/material";
-import type { ProductVariantFormValues } from "@typings/productVariant/productVariantTypes";
+import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import { useFormikContext } from "formik";
 import { sharedSx } from "../../../../shared/components/sharedSx/sharedSx";
 
 const ProductVariantFormFields = (): React.ReactNode => {
-    const { values, errors, setFieldValue } = useFormikContext<ProductVariantFormValues>();
+    const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();
 
     return (
-        <Grid container spacing={2.5} display="flex" flexDirection="column">
+        <Grid 
+            container 
+            spacing={2.5} 
+            display="flex" 
+            flexDirection="column"
+        >
             <Grid spacing={{ xs: 12, sm: 12 }}>
                 <TextField
                     fullWidth required label="SKU"

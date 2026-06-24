@@ -49,7 +49,7 @@
 
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { store } from "../store";
-import type { Presentation, ProductVariantState, ProductVariantStateError } from "../../typings/productVariant/productVariantTypes";
+import type { Presentation, ProductVariantState, ProductVariantStateError } from "../../typings/presentation/presentationTypes";
 
 
 const initialState: ProductVariantState = {

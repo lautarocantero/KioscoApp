@@ -2,7 +2,7 @@
 
 import { Box } from "@mui/material";
 import VariantUpdatedCard from "./PresentationUpdatedCard";
-import type { UpdatedProductVariantInterface } from "@typings/productVariant/productVariantTypes";
+import type { UpdatedProductVariantInterface } from "@typings/presentation/presentationTypes";
 
 interface Props { updatedVariant: UpdatedProductVariantInterface; }
 

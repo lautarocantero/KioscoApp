@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import type {
     PresentationFormValues,
-} from "@typings/productVariant/productVariantTypes";
+} from "@typings/presentation/presentationTypes";
 
 // ── Initial values ────────────────────────────────────────────────────────────
 

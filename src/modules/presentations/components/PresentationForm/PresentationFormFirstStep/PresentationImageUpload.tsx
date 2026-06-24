@@ -1,10 +1,10 @@
 import { Box, Button, Typography, type Theme } from "@mui/material";
-import type { ProductVariantFormValues } from "@typings/productVariant/productVariantTypes";
+import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import { useFormikContext } from "formik";
 import { useState } from "react";
 
 const ProductVariantImageUpload = (): React.ReactNode => {
-    const { values, errors, setFieldValue } = useFormikContext<ProductVariantFormValues>();
+    const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();
     const [imagePreview, setImagePreview] = useState<string>("");
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,10 +19,18 @@ const ProductVariantImageUpload = (): React.ReactNode => {
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+        <Box 
+            sx={{ 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: 1.5 , 
+                borderRadius: 2, 
+                p: 3 
+            }}
+        >
             <Typography sx={(theme: Theme) => ({
                 fontSize: "0.9rem", fontWeight: 500,
-                color: theme?.custom?.fontColorTransparent,
+                color: theme?.custom?.fontColorDark,
             })}>
                 Imagen del envase{" "}
                 <Box component="span" sx={{ color: "#0386EE" }}>*</Box>
@@ -50,7 +58,7 @@ const ProductVariantImageUpload = (): React.ReactNode => {
                 }}>
                     <Typography sx={(theme: Theme) => ({
                         fontSize: "0.85rem",
-                        color: theme?.custom?.fontColorTransparent,
+                        color: theme?.custom?.fontColorDark,
                         opacity: 0.6,
                     })}>
                         Selecciona una imagen
@@ -63,8 +71,8 @@ const ProductVariantImageUpload = (): React.ReactNode => {
                 <Button component="span" variant="outlined" fullWidth
                     sx={(theme: Theme) => ({
                         textTransform: "none", fontWeight: 600,
-                        borderColor: theme?.custom?.fontColorTransparent,
-                        color: theme?.custom?.fontColorTransparent,
+                        borderColor: theme?.custom?.fontColorDark,
+                        color: theme?.custom?.fontColorDark,
                         "&:hover": {
                             borderColor: "rgba(3,134,238,0.5)",
                             backgroundColor: "rgba(3,134,238,0.05)",

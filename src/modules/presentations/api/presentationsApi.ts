@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../../../config/api";
-import type { Presentation } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/presentation/presentationTypes";
 
 // # Módulo: Presentation Requests
 

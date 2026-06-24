@@ -36,7 +36,7 @@
 
 
 import type { Dispatch } from "@reduxjs/toolkit"
-import type { Presentation } from "../../typings/productVariant/productVariantTypes"
+import type { Presentation } from "../../typings/presentation/presentationTypes"
 import { checkingProductVariants, setError, setProductsVariants, startLoadingProductVariants } from "./productVariantSlice"
 import { handleError } from "../shared/handlerStoreError"
 import { getPresentationByIdRequest, getPresentationsByProductIdRequest } from "../../modules/presentations/api/presentationsApi"

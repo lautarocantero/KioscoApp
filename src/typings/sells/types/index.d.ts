@@ -1,4 +1,4 @@
-import type { Presentation } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";

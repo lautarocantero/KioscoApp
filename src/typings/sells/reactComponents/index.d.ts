@@ -1,5 +1,5 @@
 import type { Product } from "../../product/productTypes";
-import type { Presentation } from "../../productVariant/productVariantTypes";
+import type { Presentation } from "../../presentation/presentationTypes";
 import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from "../types";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}

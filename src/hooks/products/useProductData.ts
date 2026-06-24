@@ -20,7 +20,6 @@ export const useProductData = (productId: string | undefined): UseProductDataRes
 
     const dispatch    = useDispatch<AppDispatch>();
     const fromStore   = useSelector((state: RootState) => state.product?.currentProduct ?? null);
-    console.log("useProductData - fromStore:", fromStore, "productId:", productId);
 
     // ─── ¿El store ya tiene exactamente este producto? ───────────────────
     const storeHasIt  = fromStore?._id === productId;

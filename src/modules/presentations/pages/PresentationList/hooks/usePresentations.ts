@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-import type { Presentation } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/presentation/presentationTypes";
 import { deletePresentationRequest, getPresentationsByProductIdRequest } from "../../../../../modules/presentations/api/presentationsApi";
 
 // ─── tipos ────────────────────────────────────────────────────────────────────

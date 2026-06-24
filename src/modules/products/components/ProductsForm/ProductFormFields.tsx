@@ -14,7 +14,6 @@ const ProductFormFields = ({ mode = "create",  disabled = false }: ProductFormFi
             container 
             spacing={2.5} 
             direction="column"
-            sx={{ backgroundColor: "background.paper", borderRadius: 2, p: 3 }}
         >
             <Grid size={12}>
                 <TextField fullWidth required label="Nombre del producto" variant="outlined"

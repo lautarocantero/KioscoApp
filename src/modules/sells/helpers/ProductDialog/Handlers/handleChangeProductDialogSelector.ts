@@ -13,7 +13,7 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { Presentation } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/types";
 import validateProductSelection from "../Validation/ValidateProductSelection";
  

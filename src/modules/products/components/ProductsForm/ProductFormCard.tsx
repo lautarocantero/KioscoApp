@@ -1,4 +1,4 @@
-import { Card, CardContent, type Theme } from "@mui/material";
+import { Box, Card, CardContent, type Theme } from "@mui/material";
 import NavButtons from "../../../../modules/shared/components/Buttons/NavButtons";
 import FormFooter from "../../../../modules/shared/components/FormGrid/FormFooter";
 import type { ProductFormCardProps } from "@typings/product/productComponentTypes";
@@ -23,7 +23,11 @@ const ProductFormCard = ({ children, submitText, showButtons }: ProductFormCardP
         />
 
         <CardContent sx={{ p: 3 }}>
-            {children}
+            <Box
+                sx={{ backgroundColor: "background.paper", borderRadius: 2, p: 3 }}
+            >
+                {children}
+            </Box>
         </CardContent>
 
         <FormFooter />

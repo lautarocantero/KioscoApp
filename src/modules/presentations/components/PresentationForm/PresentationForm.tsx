@@ -69,6 +69,8 @@ const PresentationFormComponent = (): React.ReactNode => {
                             onSubmit:    formikSubmit,
                             isSubmitting,
                             validateForm,
+                            submitError,
+                            stepErrors: [],
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit}>

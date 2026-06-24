@@ -3,7 +3,7 @@ import { Chip, Tooltip, Typography } from "@mui/material";
 import { type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
-import type { Presentation } from "@typings/productVariant/productVariantTypes";
+import type { Presentation } from "@typings/presentation/presentationTypes";
 import RowActionsCell from "../../../../../modules/shared/components/GenericDataGrid/RowActionsCell";
 import { formatPrice } from "../helpers/presentationHelpers";
 

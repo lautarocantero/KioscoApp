@@ -1,6 +1,6 @@
 import { Grid, TextField } from "@mui/material";
 import { useFormikContext } from "formik";
-import type { ProductVariantFormValues } from "@typings/productVariant/productVariantTypes";
+import type { ProductVariantFormValues } from "@typings/presentation/presentationTypes";
 import { sharedSx } from "../../../../shared/components/sharedSx/sharedSx";
 
 const ProductVariantExpirationField = (): React.ReactNode => {

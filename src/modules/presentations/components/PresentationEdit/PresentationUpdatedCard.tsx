@@ -1,7 +1,7 @@
 // modules/productVariants/components/ProductVariantUpdated/VariantUpdatedCard.tsx
 
 import { Card, CardContent, type Theme } from "@mui/material";
-import type { UpdatedProductVariantInterface } from "@typings/productVariant/productVariantTypes";
+import type { UpdatedProductVariantInterface } from "@typings/presentation/presentationTypes";
 import VariantUpdatedBody from "./PresentationUpdatedBody";
 import VariantUpdatedActions from "./PresentationUpdatedActions";
 

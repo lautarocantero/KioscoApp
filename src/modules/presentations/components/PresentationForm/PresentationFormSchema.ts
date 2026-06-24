@@ -1,7 +1,7 @@
 import type {
     ProductVariantFormValues,
     ExistingProductVariantInterface,
-} from "@typings/productVariant/productVariantTypes";
+} from "@typings/presentation/presentationTypes";
 import * as Yup from "yup";
 
 export const getProductVariantFormInitialValues = (): ProductVariantFormValues => ({

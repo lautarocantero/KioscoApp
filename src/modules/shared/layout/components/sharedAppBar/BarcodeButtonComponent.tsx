@@ -33,7 +33,7 @@ import type { AppDispatch } from '../../../../../store/auth/authSlice';
 import { getProductVariantById } from '../../../../../store/productVariant/productVariantThunks';
 import type { RootState as SellerRootState } from "../../../../../store/seller/sellerSlice";
 import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../../store/seller/sellerThunks';
-import type { Presentation } from '../../../../../typings/productVariant/productVariantTypes';
+import type { Presentation } from '../../../../../typings/presentation/presentationTypes';
 import type { ProductTicketType } from '../../../../../typings/seller/sellerTypes';
 import { AlertColor } from '../../../../../typings/ui/ui';
 import { SnackBarContext } from '../../../components/SnackBar/SnackBarContext';

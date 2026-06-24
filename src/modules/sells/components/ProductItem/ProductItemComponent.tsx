@@ -20,7 +20,7 @@ import { useContext } from "react";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../../store/auth/authSlice";
 import { selectProductThunk } from "../../../../store/seller/sellerThunks";
-import type { Presentation } from "../../../../typings/productVariant/productVariantTypes";
+import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 import type { getProductSelectedPayload } from "../../../../typings/seller/sellerTypes";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
 import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";

@@ -1,5 +1,5 @@
 import { Card, CardContent, type Theme } from "@mui/material";
-import type { VariantCreatedComponentProps } from "@typings/productVariant/productVariantTypes";
+import type { VariantCreatedComponentProps } from "@typings/presentation/presentationTypes";
 import VariantCreatedBody from "./PresentationCreatedBody";
 import VariantCreatedActions from "./PresentationCreatedActions";
 

@@ -20,7 +20,7 @@
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { Box, Tooltip, Typography, type Theme } from "@mui/material";
 import type { ItemDataProps } from '@typings/sells/reactComponents';
-import type { Presentation } from "../../../../typings/productVariant/productVariantTypes";
+import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 
 const ProductItemData = ({name = "product", variants = []}: ItemDataProps): React.ReactNode => {
 
