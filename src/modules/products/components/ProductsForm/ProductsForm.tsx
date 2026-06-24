@@ -6,9 +6,9 @@ import { getProductFormInitialValues, productFormSchema } from "../../schema/Pro
 import ProductCreatedComponent from "../ProductCreated";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
-import ProductsFormHeaderComponent from "./ProductsFormHeader";
 import ProductsFormFirstStep from "./ProductsFormFirstStep";
 import { useProductsForm } from "../../../../hooks/products/useProductsForm";
+import FormExplanationComponent from "../../../../modules/shared/components/FormGrid/FormExplanation";
 
 const STEP_COMPONENTS = [ProductsFormFirstStep];
 
@@ -52,7 +52,7 @@ const ProductsFormComponent = (): React.ReactNode => {
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit}>
-                        <ProductsFormHeaderComponent
+                        <FormExplanationComponent
                             stepsLabels={PRODUCTS_STEPS_LABELS}
                             currentStep={currentStep}
                             banner={

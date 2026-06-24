@@ -3,8 +3,15 @@ import ProductVariantFormFields from "./PresentationFormFields";
 import ProductVariantImageUpload from "./PresentationImageUpload";
 import FormFooter from "../../../../shared/components/FormGrid/FormFooter";
 import NavButtons from "../../../../shared/components/Buttons/NavButtons";
+import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../../config/constants";
+import { useProductVariantForm } from "../../../../../hooks/productsVariant/useProductVariantForm";
+import FormHeader from "../../../../shared/components/FormGrid/FormHeader";
 
-const ProductVariantFormCard = (): React.ReactNode => (
+const ProductVariantFormCard = (): React.ReactNode => {
+    const { currentStep } = useProductVariantForm();
+
+    
+    return (
     <Card sx={(theme: Theme) => ({
         width: "100%", maxWidth: 680,
         bgcolor: theme.custom?.backgroundDark,
@@ -16,6 +23,14 @@ const ProductVariantFormCard = (): React.ReactNode => (
             8px 16px 28px rgba(0,0,0,0.08)
         `,
     })}>
+
+        <FormHeader
+            title={PRODUCTS_VARIANT_STEPS_LABELS[currentStep]}
+            isMultiStep
+            stepsLabels={PRODUCTS_VARIANT_STEPS_LABELS}
+            currentStep={currentStep}
+            />
+
         <CardContent sx={{ p: 4 }}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
                 <ProductVariantFormFields />
@@ -26,6 +41,6 @@ const ProductVariantFormCard = (): React.ReactNode => (
         <FormFooter />
         <NavButtons SubmitText="Crear"/>
     </Card>
-);
+)};
 
 export default ProductVariantFormCard;

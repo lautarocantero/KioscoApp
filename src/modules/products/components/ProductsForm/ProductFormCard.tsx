@@ -1,8 +1,8 @@
 import { Card, CardContent, type Theme } from "@mui/material";
-import ProductFormCardHeader from "./ProductFormCardHeader";
 import NavButtons from "../../../../modules/shared/components/Buttons/NavButtons";
 import FormFooter from "../../../../modules/shared/components/FormGrid/FormFooter";
 import type { ProductFormCardProps } from "@typings/product/productComponentTypes";
+import FormHeader from "../../../shared/components/FormGrid/FormHeader";
 
 
 const ProductFormCard = ({ children, submitText, showButtons }: ProductFormCardProps): React.ReactNode => (
@@ -15,9 +15,12 @@ const ProductFormCard = ({ children, submitText, showButtons }: ProductFormCardP
             0 1px 3px rgba(0,0,0,0.06),
             4px 8px 16px rgba(0,0,0,0.10),
             8px 16px 28px rgba(0,0,0,0.08)
-        `,
+`,
     })}>
-        <ProductFormCardHeader />
+        <FormHeader
+            title="Datos del producto"
+            subtitle="Información general — aplica a todas las presentaciones"
+        />
 
         <CardContent sx={{ p: 3 }}>
             {children}

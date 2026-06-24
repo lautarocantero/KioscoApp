@@ -4,7 +4,7 @@ import { FormNavigationContext } from "../../context/FormNavigationContext";
 import { getProductEditInitialValues, productEditFormSchema } from "../../schema/ProductFormSchema";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
-import ProductsFormHeaderComponent from "../ProductsForm/ProductsFormHeader";
+// import FormExplanationComponent from "../ProductsForm/ProductsFormHeader";
 import ProductsEditFirstStep from "./ProductsEditFirstStep";
 import ProductEditSuccessComponent from "../ProductEdited/ProductEditSuccess";
 import { useProductsForm } from "../../../../hooks/products/useProductsForm";
@@ -55,7 +55,7 @@ const ProductsEditFormComponent = (): React.ReactNode => {
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit}>
-                        <ProductsFormHeaderComponent
+                        {/* <FormExplanationComponent
                             stepsLabels={EDIT_STEPS_LABELS}
                             currentStep={currentStep}
                             banner={
@@ -67,7 +67,7 @@ const ProductsEditFormComponent = (): React.ReactNode => {
                                 />
                             }
                             banner_text="Modificá los datos del producto. Los cambios actualizarán la fecha de última modificación automáticamente."
-                        />
+                        /> */}
 
                         <ApiErrorComponent submitError={submitError} />
 

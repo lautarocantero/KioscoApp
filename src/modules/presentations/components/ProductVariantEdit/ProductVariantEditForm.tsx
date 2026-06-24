@@ -12,7 +12,7 @@ import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import LoadingProductComponent from "../LoadingProduct";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
-import ProductsFormHeaderComponent from "../../../products/components/ProductsForm/ProductsFormHeader";
+import FormExplanationComponent from "../../../products/components/ProductsForm/ProductsFormHeader";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
 import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
 import ProductVariantFormFirstStep from "../ProductVarianForm/ProductVariantFormFirstStep";
@@ -73,7 +73,7 @@ const ProductVariantEditFormComponent = (): React.ReactNode => {
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit}>
-                            <ProductsFormHeaderComponent
+                            <FormExplanationComponent
                                 showProgressIndicator
                                 stepsLabels={PRODUCTS_VARIANT_STEPS_LABELS}
                                 currentStep={currentStep}

@@ -2,13 +2,11 @@ import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
 import { FormNavigationContext } from "../../../products/context/FormNavigationContext";
 import { getProductVariantFormInitialValues, productVariantFormSchema } from "./PresentationFormSchema";
-import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import LoadingProductComponent from "../LoadingProduct";
 import NoProductLoadedComponent from "../NotProductLoaded";
 import VariantCreatedComponent from "../PresentationCreated/PresentationCreatedComponent";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
-import ProductsFormHeaderComponent from "../../../products/components/ProductsForm/ProductsFormHeader";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
 import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
 import ProductVariantFormFirstStep from "./PresentationFormFirstStep";
@@ -74,11 +72,6 @@ const PresentationFormComponent = (): React.ReactNode => {
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit}>
-                            <ProductsFormHeaderComponent
-                                showProgressIndicator
-                                stepsLabels={PRODUCTS_VARIANT_STEPS_LABELS}
-                                currentStep={currentStep}
-                            />
                             <ApiErrorComponent submitError={submitError} />
                             <ActualStepComponent
                                 currentStep={currentStep}

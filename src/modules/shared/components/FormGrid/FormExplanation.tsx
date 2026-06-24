@@ -1,10 +1,10 @@
 import { Box, Grid, Typography, type Theme } from "@mui/material";
-import VisualStepperComponent from "./VisualStepper";
-import ProductBannerComponent from "./ProductBanner";
 import type { ProductsFormHeaderComponentProps } from "@typings/ui/uiModules";
+import ProductBannerComponent from "../../../../modules/products/components/ProductsForm/ProductBanner";
+import VisualStepperComponent from "../../../../modules/products/components/ProductsForm/VisualStepper";
 
 
-const ProductsFormHeaderComponent = ({ 
+const FormExplanationComponent = ({ 
     stepsLabels, 
     currentStep,
     showProgressIndicator = false,
@@ -70,4 +70,4 @@ const ProductsFormHeaderComponent = ({
     );
 };
 
-export default ProductsFormHeaderComponent;
+export default FormExplanationComponent;
