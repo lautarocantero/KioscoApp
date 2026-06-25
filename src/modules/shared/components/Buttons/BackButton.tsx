@@ -27,13 +27,14 @@ const BackButton = ({appTheme}: BackButtonProps): React.ReactNode => {
             <Button 
                 onClick={()=> navigate(-1)}
                 sx={(theme: Theme) => ({
-                    color: appTheme ? theme?.custom?.blackTranslucid : theme?.custom?.whiteTranslucid,
+                    color: theme?.palette?.primary?.main,
                     fontSize: theme?.typography?.body2?.fontSize,
                 })}
             >
                 <KeyboardReturnIcon sx={(theme) => ({ 
                     fontSize: theme?.typography?.body2?.fontSize,
-                    marginRight: '10px'
+                    marginRight: '10px',
+                    color: theme?.palette?.primary?.main
                 })}/>
                 Volver
             </Button>

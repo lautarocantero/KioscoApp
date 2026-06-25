@@ -6,6 +6,9 @@ import BaseEntitySummaryComponent from "../BaseEntitySummary";
 import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
 import { getPresentationDetailInitialValues } from "../../schema/PresentationFormSchema";
 import ProductFormCard from "../../../products/components/ProductsForm/ProductFormCard";
+import BackButton from "../../../shared/components/Buttons/BackButton";
+import { useContext } from "react";
+import { ThemeContext } from "../../../../theme/ThemeContext";
 
 const ProductVariantDetailFormComponent = (): React.ReactNode => {
     const {
@@ -13,6 +16,8 @@ const ProductVariantDetailFormComponent = (): React.ReactNode => {
         isLoadingEntity,
         submitError,
     } = useProductVariantForm({ mode: "edit" });
+
+    const { appTheme } = useContext(ThemeContext);
 
     if (isLoadingEntity) return <LoadingProductComponent />;
 
@@ -149,6 +154,7 @@ const ProductVariantDetailFormComponent = (): React.ReactNode => {
                         </Box>
                     )}
                 </Formik>
+                <BackButton appTheme={appTheme} />
             </ProductFormCard>
         </Box>
     );

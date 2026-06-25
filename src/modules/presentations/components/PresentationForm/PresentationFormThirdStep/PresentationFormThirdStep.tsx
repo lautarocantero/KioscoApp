@@ -4,7 +4,7 @@ import ProductVariantExpirationField from "./PresentationExpirationField";
 import { useFormNavigation } from "../../../../../modules/products/context/FormNavigationContext";
 
 const ProductVariantFormThirdStep = (): React.ReactNode => {
-    const { currentStep } = useFormNavigation();
+    const { currentStep, actionTitle} = useFormNavigation();
 
     return (
     <Box 
@@ -12,7 +12,7 @@ const ProductVariantFormThirdStep = (): React.ReactNode => {
             display: "flex", justifyContent: "center", alignItems: "flex-start",
             minHeight: "auto", p: 2, pt: 0,
         }}>
-        <PresentationFormCard submitText="Crear" showButtons  currentStep={currentStep}>
+        <PresentationFormCard submitText={actionTitle === "create" ? "Crear" : "Actualizar"} showButtons  currentStep={currentStep}>
             <ProductVariantExpirationField />
         </PresentationFormCard>
     </Box>
