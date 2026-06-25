@@ -16,7 +16,7 @@ const ProductVariantDetailFormComponent = (): React.ReactNode => {
 
     if (isLoadingEntity) return <LoadingProductComponent />;
 
-    // Guardamos hasta tener el variant para que initialValues no sea vacío
+    // Guardar hasta tener el variant para que initialValues no sea vacío
     if (!variant) return (
     <Box sx={{ color: "white", p: 4 }}>
         <pre>isLoadingEntity: {String(isLoadingEntity)}</pre>

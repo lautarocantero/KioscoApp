@@ -52,6 +52,7 @@ const ProductsEditFormComponent = (): React.ReactNode => {
                         validateForm,
                         submitError,
                         stepErrors,
+                        actionTitle: "edit",
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit}>

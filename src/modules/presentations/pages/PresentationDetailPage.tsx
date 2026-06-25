@@ -1,6 +1,5 @@
 import React from "react";
 import AppLayout from "../../shared/layout/AppLayout";
-import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import PresentationDetailFormComponent from "../components/PresentationDetail/PresentationDetailForm";
 
 // # Componente: PresentationDetailPage
@@ -9,10 +8,8 @@ import PresentationDetailFormComponent from "../components/PresentationDetail/Pr
 
 const PresentationDetailPage = (): React.ReactNode => {
     return (
-        <AppLayout isOptions title="Detalle de presentación">
-            <SimpleGrid title="Detalle de presentación" position="normal">
-                <PresentationDetailFormComponent />
-            </SimpleGrid>
+        <AppLayout title="Detalle de presentación">
+            <PresentationDetailFormComponent />
         </AppLayout>
     );
 };

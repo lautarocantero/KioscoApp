@@ -70,6 +70,9 @@ const ProductVariantEditFormComponent = (): React.ReactNode => {
                             onSubmit:    formikSubmit,
                             isSubmitting,
                             validateForm,
+                            submitError,
+                            stepErrors: [],
+                            actionTitle: "edit",
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit}>

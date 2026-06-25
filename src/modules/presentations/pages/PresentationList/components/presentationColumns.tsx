@@ -62,7 +62,7 @@ export const buildColumns = ({
         ),
     },
     {
-        field: "net_content",
+        field: "model_size",
         headerName: "Contenido",
         width: 110,
         align: "center",
@@ -77,7 +77,7 @@ export const buildColumns = ({
         ),
     },
     {
-        field: "stock_current",
+        field: "stock",
         headerName: "Stock",
         width: 100,
         type: "number",

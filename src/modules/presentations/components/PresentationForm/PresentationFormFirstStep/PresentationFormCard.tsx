@@ -2,12 +2,10 @@ import { Card, CardContent, Box, type Theme } from "@mui/material";
 import FormFooter from "../../../../shared/components/FormGrid/FormFooter";
 import NavButtons from "../../../../shared/components/Buttons/NavButtons";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../../config/constants";
-import { useProductVariantForm } from "../../../../../hooks/productsVariant/useProductVariantForm";
 import FormHeader from "../../../../shared/components/FormGrid/FormHeader";
 import type { PresentationFormCardProps } from "@typings/presentation/presentationComponentTypes";
 
-const PresentationFormCard = ({ children, submitText, showButtons }: PresentationFormCardProps): React.ReactNode => {
-    const { currentStep } = useProductVariantForm();
+const PresentationFormCard = ({ children, submitText, showButtons, currentStep }: PresentationFormCardProps): React.ReactNode => {
 
     
     return (

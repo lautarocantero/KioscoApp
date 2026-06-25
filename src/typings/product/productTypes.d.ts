@@ -182,6 +182,7 @@ export interface FormNavigationContextType {
     onPrev:       () => void;
     onSubmit:     (e?: React.FormEvent<HTMLFormElement>) => void;
     validateForm?: () => Promise<FormikErrors<ProductFormValues>>;
+    actionTitle?: "create" | "edit";
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

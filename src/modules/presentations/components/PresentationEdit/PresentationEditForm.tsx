@@ -7,7 +7,6 @@ import {
     getPresentationEditInitialValues,
     presentationEditFormSchema,
 } from "../../schema/PresentationFormSchema";
-import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import LoadingProductComponent from "../LoadingProduct";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
@@ -72,14 +71,10 @@ const ProductVariantEditFormComponent = (): React.ReactNode => {
                             validateForm,
                             submitError,
                             stepErrors,
+                            actionTitle: "edit",
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit}>
-                            {/* <FormExplanationComponent
-                                showProgressIndicator
-                                stepsLabels={PRODUCTS_VARIANT_STEPS_LABELS}
-                                currentStep={currentStep}
-                            /> */}
                             <ApiErrorComponent submitError={submitError} />
                             <ActualStepComponent
                                 currentStep={currentStep}
