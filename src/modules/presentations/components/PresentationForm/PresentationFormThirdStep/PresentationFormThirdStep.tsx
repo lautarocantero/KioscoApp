@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import PresentationFormCard from "../PresentationFormFirstStep/PresentationFormCard";
+import PresentationFormCard from "../PresentationFormCard";
 import ProductVariantExpirationField from "./PresentationExpirationField";
 import { useFormNavigation } from "../../../../../modules/products/context/FormNavigationContext";
 

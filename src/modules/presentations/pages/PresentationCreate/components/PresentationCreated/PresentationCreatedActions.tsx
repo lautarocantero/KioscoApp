@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import type { VariantCreatedActionsProps } from "@typings/presentation/presentationComponentTypes";
-import EmptyButton from "../../../../modules/shared/components/Buttons/EmptyButton";
-import PrimaryButtonComponent from "../../../../modules/shared/components/Buttons/PrimaryButtonComponent";
+import EmptyButton from "../../../../../shared/components/Buttons/EmptyButton";
+import PrimaryButtonComponent from "../../../../../shared/components/Buttons/PrimaryButtonComponent";
 import { useNavigate } from "react-router-dom";
 
 

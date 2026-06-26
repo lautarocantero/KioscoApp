@@ -2,7 +2,7 @@
 import React from "react";
 
 import ConfirmDialog from "../../../../../modules/shared/components/ConfirmDialog/ConfirmDialog";
-import type { DeleteDialogState } from "../hooks/usePresentations";
+import type { DeleteDialogState } from "../../../hooks/usePresentations";
 
 // ─── props ────────────────────────────────────────────────────────────────────
 

@@ -16,10 +16,10 @@
 //-----------------------------------------------------------------------------//
 
 import { Route } from "react-router-dom";
-import PresentationCreatePage from "./pages/PresentationCreatePage";
-import PresentationDetailPage from "./pages/PresentationDetailPage";
+import PresentationCreatePage from "./pages/PresentationCreate/PresentationCreatePage";
+import PresentationDetailPage from "./pages/PresentationDetail/PresentationDetailPage";
 import PresentationListPage   from "./pages/PresentationList/PresentationListPage";
-import PresentationEditPage from "./pages/PresentationEditPage";
+import PresentationEditPage from "./pages/PresentationEdit/PresentationEditPage";
 
 const PresentationsRoutes = (): React.ReactNode => {
     return (

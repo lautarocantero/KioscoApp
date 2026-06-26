@@ -19,5 +19,5 @@ export interface PresentationFormCardProps {
     children: React.ReactNode;
     submitText: string;
     showButtons?: boolean;
-    currentStep: number;
+    currentStep?: number;
 }

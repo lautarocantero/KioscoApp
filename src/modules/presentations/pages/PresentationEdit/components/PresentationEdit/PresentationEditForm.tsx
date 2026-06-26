@@ -2,21 +2,21 @@
 
 import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
-import { FormNavigationContext } from "../../../products/context/FormNavigationContext";
+import { FormNavigationContext } from "../../../../../products/context/FormNavigationContext";
 import {
     getPresentationEditInitialValues,
     presentationEditFormSchema,
-} from "../../schema/PresentationFormSchema";
-import LoadingProductComponent from "../LoadingProduct";
-import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
-import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
+} from "../../../../schema/PresentationFormSchema";
+import LoadingProductComponent from "../../../../components/LoadingProduct";
+import ApiErrorComponent from "../../../../../shared/components/FormGrid/ApiError";
+import ActualStepComponent from "../../../../../shared/components/FormGrid/ActualStep";
 // import FormExplanationComponent from "../../../products/components/ProductsForm/ProductsFormHeader";
-import BaseEntitySummaryComponent from "../BaseEntitySummary";
-import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
-import ProductVariantFormFirstStep from "../PresentationForm/PresentationFormFirstStep";
-import ProductVariantFormSecondStep from "../PresentationForm/PresentationFormSecondStep";
-import ProductVariantFormThirdStep from "../PresentationForm/PresentationFormThirdStep";
-import VariantUpdatedComponent from "./PresentationUpdatedComponent";
+import BaseEntitySummaryComponent from "../../../../components/BaseEntitySummary";
+import { useProductVariantForm } from "../../../../../../hooks/productsVariant/useProductVariantForm";
+import VariantUpdatedComponent from "../presentationUpdated/PresentationUpdatedComponent";
+import ProductVariantFormFirstStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormFirstStep";
+import ProductVariantFormSecondStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormSecondStep";
+import ProductVariantFormThirdStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormThirdStep";
 
 const STEP_COMPONENTS = [
     ProductVariantFormFirstStep,

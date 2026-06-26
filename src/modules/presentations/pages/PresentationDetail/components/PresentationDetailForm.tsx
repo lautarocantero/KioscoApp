@@ -1,16 +1,16 @@
 import { Box, Grid, TextField, InputAdornment } from "@mui/material";
 import { Formik } from "formik";
-import LoadingProductComponent from "../LoadingProduct";
-import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
-import BaseEntitySummaryComponent from "../BaseEntitySummary";
-import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
-import { getPresentationDetailInitialValues } from "../../schema/PresentationFormSchema";
-import ProductFormCard from "../../../products/components/ProductsForm/ProductFormCard";
-import BackButton from "../../../shared/components/Buttons/BackButton";
+import ApiErrorComponent from "../../../../shared/components/FormGrid/ApiError";
+import BaseEntitySummaryComponent from "../../../components/BaseEntitySummary";
+import { useProductVariantForm } from "../../../../../hooks/productsVariant/useProductVariantForm";
+import { getPresentationDetailInitialValues } from "../../../schema/PresentationFormSchema";
+import PresentationFormCard from "../../../components/PresentationForm/PresentationFormCard";
+import BackButton from "../../../../shared/components/Buttons/BackButton";
 import { useContext } from "react";
-import { ThemeContext } from "../../../../theme/ThemeContext";
+import { ThemeContext } from "../../../../../theme/ThemeContext";
+import LoadingProductComponent from "../../../components/LoadingProduct";
 
-const ProductVariantDetailFormComponent = (): React.ReactNode => {
+const PresentationDetailFormComponent = (): React.ReactNode => {
     const {
         editingVariant: variant,
         isLoadingEntity,
@@ -31,7 +31,7 @@ const ProductVariantDetailFormComponent = (): React.ReactNode => {
 
     return (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
-            <ProductFormCard submitText="" showButtons={false}>
+            <PresentationFormCard submitText="" showButtons={false}>
                 <Formik
                     initialValues={getPresentationDetailInitialValues(variant)}
                     onSubmit={() => {}}
@@ -155,9 +155,9 @@ const ProductVariantDetailFormComponent = (): React.ReactNode => {
                     )}
                 </Formik>
                 <BackButton appTheme={appTheme} />
-            </ProductFormCard>
+            </PresentationFormCard>
         </Box>
     );
 };
 
-export default ProductVariantDetailFormComponent;
+export default PresentationDetailFormComponent;

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import LoupeIcon from "@mui/icons-material/Loupe";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import { usePresentations } from "./hooks/usePresentations";
+import { usePresentations } from "../../hooks/usePresentations";
 import { buildColumns } from "./components/presentationColumns";
 import PresentationDeleteDialog from "./components/PresentationDeleteDialog";
 import AppLayout from "../../../../modules/shared/layout/AppLayout";

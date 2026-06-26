@@ -1,6 +1,6 @@
 import React from "react";
-import AppLayout from "../../shared/layout/AppLayout";
-import PresentationFormComponent from "../components/PresentationForm/PresentationForm";
+import AppLayout from "../../../shared/layout/AppLayout";
+import PresentationFormComponent from "../../components/PresentationForm/PresentationForm";
 
 
 const PresentationCreatePage = (): React.ReactNode => {

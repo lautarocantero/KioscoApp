@@ -1,8 +1,8 @@
 import { Card, CardContent, Box, type Theme } from "@mui/material";
-import FormFooter from "../../../../shared/components/FormGrid/FormFooter";
-import NavButtons from "../../../../shared/components/Buttons/NavButtons";
-import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../../config/constants";
-import FormHeader from "../../../../shared/components/FormGrid/FormHeader";
+import FormFooter from "../../../shared/components/FormGrid/FormFooter";
+import NavButtons from "../../../shared/components/Buttons/NavButtons";
+import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
+import FormHeader from "../../../shared/components/FormGrid/FormHeader";
 import type { PresentationFormCardProps } from "@typings/presentation/presentationComponentTypes";
 
 const PresentationFormCard = ({ children, submitText, showButtons, currentStep }: PresentationFormCardProps): React.ReactNode => {
@@ -22,12 +22,16 @@ const PresentationFormCard = ({ children, submitText, showButtons, currentStep }
             `,
         })}>
 
-            <FormHeader
-                title={PRODUCTS_VARIANT_STEPS_LABELS[currentStep]}
-                isMultiStep
-                stepsLabels={PRODUCTS_VARIANT_STEPS_LABELS}
-                currentStep={currentStep}
-                />
+            {
+                currentStep && (
+                    <FormHeader
+                        title={PRODUCTS_VARIANT_STEPS_LABELS[currentStep]}
+                        isMultiStep
+                        stepsLabels={PRODUCTS_VARIANT_STEPS_LABELS}
+                        currentStep={currentStep}
+                    />
+                )
+            }
 
             <CardContent sx={{ p: 3 }}>
                 <Box

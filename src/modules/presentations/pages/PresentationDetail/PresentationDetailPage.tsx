@@ -1,6 +1,6 @@
 import React from "react";
-import AppLayout from "../../shared/layout/AppLayout";
-import PresentationDetailFormComponent from "../components/PresentationDetail/PresentationDetailForm";
+import AppLayout from "../../../shared/layout/AppLayout";
+import PresentationDetailFormComponent from "./components/PresentationDetailForm";
 
 // # Componente: PresentationDetailPage
 // Página de solo lectura para visualizar todos los datos de una presentación.

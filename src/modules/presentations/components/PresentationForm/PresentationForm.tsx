@@ -4,7 +4,6 @@ import { FormNavigationContext } from "../../../products/context/FormNavigationC
 import { getProductVariantFormInitialValues, productVariantFormSchema } from "./PresentationFormSchema";
 import LoadingProductComponent from "../LoadingProduct";
 import NoProductLoadedComponent from "../NotProductLoaded";
-import VariantCreatedComponent from "../PresentationCreated/PresentationCreatedComponent";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
@@ -12,6 +11,7 @@ import { useProductVariantForm } from "../../../../hooks/productsVariant/useProd
 import ProductVariantFormFirstStep from "./PresentationFormFirstStep";
 import ProductVariantFormSecondStep from "./PresentationFormSecondStep/PresentationFormSecondStep";
 import ProductVariantFormThirdStep from "./PresentationFormThirdStep/PresentationFormThirdStep";
+import PresentationCreated from "../../pages/PresentationCreate/components/PresentationCreated/PresentationCreatedComponent"
 
 const STEP_COMPONENTS = [
     ProductVariantFormFirstStep,
@@ -38,7 +38,7 @@ const PresentationFormComponent = (): React.ReactNode => {
     if (loadingProduct)  return <LoadingProductComponent />;
     if (!productData)    return <NoProductLoadedComponent productError={productError} />;
     if (createdVariant)  return (
-        <VariantCreatedComponent
+        <PresentationCreated
             createdVariant={createdVariant}
             onCreateAnother={handleCreateAnother}
         />

@@ -1,8 +1,8 @@
 // modules/productVariants/pages/PresentationEditPage.tsx
 
 import React from "react";
-import AppLayout from "../../shared/layout/AppLayout";
-import ProductVariantEditFormComponent from "../components/PresentationEdit/PresentationEditForm";
+import AppLayout from "../../../shared/layout/AppLayout";
+import ProductVariantEditFormComponent from "../../pages/PresentationEdit/components/PresentationEdit/PresentationEditForm";
 
 const PresentationEditPage = (): React.ReactNode => {
     return (
