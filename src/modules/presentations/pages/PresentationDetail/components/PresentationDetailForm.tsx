@@ -2,7 +2,7 @@ import { Box, Grid, TextField, InputAdornment } from "@mui/material";
 import { Formik } from "formik";
 import ApiErrorComponent from "../../../../shared/components/FormGrid/ApiError";
 import BaseEntitySummaryComponent from "../../../components/BaseEntitySummary";
-import { usePresentationForm } from "../../../../../hooks/presentation/usePresentationForm";
+import { usePresentationEdit } from "../../../../../hooks/presentation/usePresentationForm";
 import { getPresentationDetailInitialValues } from "../../../schema/PresentationFormSchema";
 import BackButton from "../../../../shared/components/Buttons/BackButton";
 import { useContext } from "react";
@@ -15,7 +15,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
         editingVariant: variant,
         isLoadingEntity,
         submitError,
-    } = usePresentationForm({ mode: "edit" });
+    } = usePresentationEdit();
 
     const { appTheme } = useContext(ThemeContext);
 

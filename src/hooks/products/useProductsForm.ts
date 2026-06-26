@@ -12,41 +12,13 @@ import type {
 } from "@typings/product/productTypes";
 import { useFormSteps } from "../../hooks/shared/useFormSteps";
 import { API_URL } from "../../config/api";
-import { stepFieldsMap } from "../../modules/presentations/schema/PresentationFormSchema";
+import { stepFieldsMap } from "../../modules/products/schema/ProductFormSchema";
 import { editStepFieldsMap } from "../../modules/products/schema/ProductFormSchema";
 import { stepsConfig, editStepsConfig } from "../../config/constants";
 
-
-// # Hook: useProductsForm
-//
-// ## Descripción 📦
-// Hook unificado para creación y edición de productos.
-// Se comporta de forma diferente según el `mode` recibido:
-//
-//   mode: "create" (default)
-//     → maneja `handleSubmit` para POST /product/create-product
-//     → expone `createdEntity` al completar
-//
-//   mode: "edit"
-//     → lee `:id` de los params via `useParams`
-//     → carga el producto existente con GET /product/:id
-//     → maneja `handleEdit` para PATCH /product/:id
-//     → actualiza `updated_at` automáticamente
-//     → expone `updatedEntity` al completar
-//
-// ## Notas técnicas 💽
-// - `enableReinitialize` en Formik es necesario para el modo edición,
-//   ya que los initialValues se hidratan después de la carga asíncrona.
-// - `updated_at` nunca aparece en el formulario — se resuelve en el submit.
-//-----------------------------------------------------------------------------//
-
-type UseProductsFormOptions =
-    | { mode?: "create" }
-    | { mode: "edit" };
-
 // ─── Modo CREAR ──────────────────────────────────────────────────────────────
 
-function useProductsFormCreate(): UseProductsFormReturn {
+export function useProductCreate(): UseProductsFormReturn {
     const [createdEntity, setCreatedEntity] = useState<CreatedProductInterface | null>(null);
     const [isSubmitting, setIsSubmitting]   = useState(false);
     const [submitError, setSubmitError]     = useState<string | null>(null);
@@ -145,19 +117,18 @@ function useProductsFormCreate(): UseProductsFormReturn {
 
 // ─── Modo EDITAR ─────────────────────────────────────────────────────────────
 
-function useProductsFormEdit(): UseProductsEditFormReturn {
+export function useProductEdit(): UseProductsEditFormReturn {
     const { productId } = useParams<{ productId: string }>();
 
-    const [editingEntity, setEditingEntity]   = useState<ExistingProductInterface | null>(null);
-    const [updatedEntity, setUpdatedEntity]   = useState<UpdatedProductInterface | null>(null);
+    const [editingEntity, setEditingEntity]     = useState<ExistingProductInterface | null>(null);
+    const [updatedEntity, setUpdatedEntity]     = useState<UpdatedProductInterface | null>(null);
     const [isLoadingEntity, setIsLoadingEntity] = useState(true);
-    const [isSubmitting, setIsSubmitting]     = useState(false);
-    const [submitError, setSubmitError]       = useState<string | null>(null);
-    const [stepErrors, setStepErrors]         = useState<string[]>([]);
+    const [isSubmitting, setIsSubmitting]       = useState(false);
+    const [submitError, setSubmitError]         = useState<string | null>(null);
+    const [stepErrors, setStepErrors]           = useState<string[]>([]);
 
     const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(editStepsConfig);
 
-    // Carga inicial del producto
     useEffect(() => {
         if (!productId) return;
 
@@ -214,7 +185,6 @@ function useProductsFormEdit(): UseProductsEditFormReturn {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    /** PATCH /product/:id — actualiza `updated_at` automáticamente */
     const handleEdit = async (values: ProductEditFormValues) => {
         if (!productId) return;
 
@@ -272,18 +242,4 @@ function useProductsFormEdit(): UseProductsEditFormReturn {
         handlePrevStep,
         handleEdit,
     };
-}
-
-// ─── Export unificado ─────────────────────────────────────────────────────────
-
-export function useProductsForm(options?: { mode?: "create" }): UseProductsFormReturn;
-export function useProductsForm(options: { mode: "edit" }): UseProductsEditFormReturn;
-export function useProductsForm(
-    options: UseProductsFormOptions = {}
-): UseProductsFormReturn | UseProductsEditFormReturn {
-    const mode = "mode" in options ? options.mode : "create";
-    // Los hooks se llaman incondicionalmente — el modo no cambia en runtime
-    const createReturn = useProductsFormCreate();
-    const editReturn   = useProductsFormEdit();
-    return mode === "edit" ? editReturn : createReturn;
 }

@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import { FormNavigationContext } from "../../../../shared/context/FormNavigationContext";
 import { getProductEditInitialValues, productEditFormSchema } from "../../../schema/ProductFormSchema";
 import ActualStepComponent from "../../../../shared/components/FormGrid/ActualStep";
-import { useProductsForm } from "../../../../../hooks/products/useProductsForm";
+import { useProductEdit } from "../../../../../hooks/products/useProductsForm";
 import ProductDetailFirstStep from "./ProductDetailFirstStep";
 
 const VIEW_STEP_COMPONENTS = [ProductDetailFirstStep];
@@ -19,7 +19,7 @@ const ProductDetailFormComponent = (): React.ReactNode => {
         handleEdit,
         submitError,
         stepErrors,
-    } = useProductsForm({ mode: "edit" }); // reutiliza el mismo hook para cargar el producto
+    } = useProductEdit();
 
     return (
         <Formik

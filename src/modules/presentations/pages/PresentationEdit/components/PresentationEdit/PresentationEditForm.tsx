@@ -12,7 +12,7 @@ import ApiErrorComponent from "../../../../../shared/components/FormGrid/ApiErro
 import ActualStepComponent from "../../../../../shared/components/FormGrid/ActualStep";
 // import FormExplanationComponent from "../../../products/components/ProductsForm/ProductsFormHeader";
 import BaseEntitySummaryComponent from "../../../../components/BaseEntitySummary";
-import { usePresentationForm } from "../../../../../../hooks/presentation/usePresentationForm";
+import { usePresentationEdit } from "../../../../../../hooks/presentation/usePresentationForm";
 import VariantUpdatedComponent from "../presentationUpdated/PresentationUpdatedComponent";
 import PresentationFormFirstStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormFirstStep";
 import PresentationFormSecondStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormSecondStep";
@@ -37,7 +37,7 @@ const PresentationEditFormComponent = (): React.ReactNode => {
         handlePrevStep,
         handleEdit,
         stepErrors,
-    } = usePresentationForm({ mode: "edit" });
+    } = usePresentationEdit();
 
     if (isLoadingEntity) return <LoadingProductComponent />;
     if (!editingVariant) return null;

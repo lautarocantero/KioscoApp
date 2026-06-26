@@ -1,35 +1,8 @@
-// hooks/productsVariant/usePresentationForm.ts
-
-/*══════════════════════════════════════════════════════════════════════╗
-║  📖 GLOSARIO                                                         ║
-║                                                                      ║
-║  usePresentationForm(options)                                      ║
-║    Hook público. Recibe { mode: "create" | "edit" } y retorna        ║
-║    el sub-hook correspondiente.                                      ║
-║                                                                      ║
-║  usePresentationFormCreate()                                       ║
-║    Maneja el flujo de CREACIÓN de una variante de producto.          ║
-║    · Obtiene el producto padre via useProductData(productId)         ║
-║    · Envía un FormData multipart al endpoint de creación             ║
-║    · Expone handleCreateAnother para resetear el formulario          ║
-║                                                                      ║
-║  usePresentationFormEdit()                                         ║
-║    Maneja el flujo de EDICIÓN de una variante existente.             ║
-║    · Carga la variante desde la API al montar (useEffect)            ║
-║    · Envía un PUT JSON al endpoint de edición                        ║
-║    · Expone stepErrors para mostrar errores por paso                 ║
-║                                                                      ║
-║  CONSTANTES COMPARTIDAS                                              ║
-║    STEPS_LABELS  – Títulos de los 3 pasos del formulario             ║
-║    buildStepsConfig() – Genera la config de pasos a partir de labels ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import type { FormikErrors } from "formik";
 import { useFormSteps } from "../shared/useFormSteps";
 import { useProductData } from "../products/useProductData";
-import { useProductsForm } from "../products/useProductsForm";
 import type {
     PresentationFormValues,
     Presentation,
@@ -38,42 +11,28 @@ import type {
 import { API_URL } from "../../config/api";
 import { stepFieldsMap } from "../../modules/presentations/schema/PresentationFormSchema";
 
-
 /*══════════════════════════════════════════════════════════════════════╗
-║ 📌 Constantes compartidas  📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌  ║
+║ 📌 Constantes compartidas                                            ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 const STEPS_LABELS = ["Datos del producto", "Datos de la presentación", "Stock y operación"];
-
 const buildStepsConfig = () => STEPS_LABELS.map((label) => ({ title: label, content: null }));
 
-
 /*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 Hook: usePresentationFormCreate  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝 ║
+║ 🪝 Hook: usePresentationCreate                                       ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-function usePresentationFormCreate() {
+export function usePresentationCreate() {
 
-    /*─── Parámetros de ruta ───────────────────────────────────────────*/
     const { product_id: productId } = useParams<{ product_id: string }>();
-
-    /*─── Datos del producto padre ─────────────────────────────────────*/
     const { productData, isLoading: loadingProduct, error: productError } = useProductData(productId);
 
-    /*─── Estado del formulario ────────────────────────────────────────*/
-    const {
-        createdEntity: createdVariant,
-        isSubmitting,
-        submitError,
-        setCreatedEntity: setCreatedVariant,
-        setIsSubmitting,
-        setSubmitError,
-    } = useProductsForm();
+    const [createdVariant, setCreatedVariant] = useState<CreatedVariantInterface | null>(null);
+    const [isSubmitting, setIsSubmitting]     = useState(false);
+    const [submitError, setSubmitError]       = useState<string | null>(null);
 
-    /*─── Pasos del formulario ─────────────────────────────────────────*/
     const { stepState, goToNext, goToPrev, goToStep, totalSteps } = useFormSteps(buildStepsConfig());
 
-    /*─── Navegación entre pasos ───────────────────────────────────────*/
     const handleNextStep = async (
         validateForm: () => Promise<FormikErrors<PresentationFormValues>>,
         onValidSubmit?: () => void,
@@ -85,10 +44,7 @@ function usePresentationFormCreate() {
         );
         if (hasErrors) return;
 
-        if (onValidSubmit) {
-            onValidSubmit();
-            return;
-        }
+        if (onValidSubmit) { onValidSubmit(); return; }
 
         goToNext();
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -99,12 +55,8 @@ function usePresentationFormCreate() {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    /*─── Envío del formulario ─────────────────────────────────────────*/
     const handleSubmit = async (values: PresentationFormValues) => {
-        if (!productData) {
-            setSubmitError("Datos del producto no disponibles");
-            return;
-        }
+        if (!productData) { setSubmitError("Datos del producto no disponibles"); return; }
 
         setIsSubmitting(true);
         setSubmitError(null);
@@ -149,7 +101,6 @@ function usePresentationFormCreate() {
         }
     };
 
-    /*─── Reseteo para crear otra variante ────────────────────────────*/
     const handleCreateAnother = () => {
         setCreatedVariant(null);
         setSubmitError(null);
@@ -157,7 +108,6 @@ function usePresentationFormCreate() {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    /*─── Return ───────────────────────────────────────────────────────*/
     return {
         productId,
         productData,
@@ -176,15 +126,13 @@ function usePresentationFormCreate() {
 }
 
 /*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 Hook: usePresentationFormEdit  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝 ║
+║ 🪝 Hook: usePresentationEdit                                         ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-function usePresentationFormEdit() {
+export function usePresentationEdit() {
 
-    /*─── Parámetros de ruta ───────────────────────────────────────────*/
     const { presentation_id: variantId } = useParams<{ presentation_id: string }>();
 
-    /*─── Estado local ─────────────────────────────────────────────────*/
     const [editingVariant, setEditingVariant]   = useState<Presentation | null>(null);
     const [updatedVariant, setUpdatedVariant]   = useState<CreatedVariantInterface | null>(null);
     const [isLoadingEntity, setIsLoadingEntity] = useState(true);
@@ -192,15 +140,10 @@ function usePresentationFormEdit() {
     const [submitError, setSubmitError]         = useState<string | null>(null);
     const [stepErrors, setStepErrors]           = useState<string[]>([]);
 
-    /*─── Pasos del formulario ─────────────────────────────────────────*/
     const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(buildStepsConfig());
 
-    /*─── Carga inicial de la variante ─────────────────────────────────*/
     useEffect(() => {
-        if (!variantId) {
-            setIsLoadingEntity(false);
-            return;
-        }
+        if (!variantId) { setIsLoadingEntity(false); return; }
 
         const fetchVariant = async () => {
             setIsLoadingEntity(true);
@@ -211,9 +154,7 @@ function usePresentationFormEdit() {
                 );
                 if (!response.ok) throw new Error(`Error ${response.status}`);
 
-                const raw: Presentation | Presentation[] =
-                    await response.json();
-
+                const raw: Presentation | Presentation[] = await response.json();
                 const data = Array.isArray(raw) ? raw[0] : raw;
                 if (!data) throw new Error("Presentación no encontrada");
                 setEditingVariant(data);
@@ -230,10 +171,6 @@ function usePresentationFormEdit() {
         fetchVariant();
     }, [variantId]);
 
-
-    /*══════════════════════════════════════════════════════════════════════╗
-    ║ 🪝 Navegacion entre pasos  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝 ║
-    ╚══════════════════════════════════════════════════════════════════════╝*/
     const handleNextStep = async (
         validateForm: () => Promise<FormikErrors<PresentationFormValues>>,
         onValidSubmit?: () => void,
@@ -244,17 +181,10 @@ function usePresentationFormEdit() {
             (field) => errors[field as keyof PresentationFormValues]
         );
 
-        if (hasErrors) {
-            setStepErrors(Object.values(errors) as string[]);
-            return;
-        }
+        if (hasErrors) { setStepErrors(Object.values(errors) as string[]); return; }
 
         setStepErrors([]);
-
-        if (onValidSubmit) {
-            onValidSubmit();
-            return;
-        }
+        if (onValidSubmit) { onValidSubmit(); return; }
 
         goToNext();
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -266,7 +196,6 @@ function usePresentationFormEdit() {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    /*─── Envío del formulario ─────────────────────────────────────────*/
     const handleEdit = async (values: PresentationFormValues) => {
         if (!variantId) return;
 
@@ -312,7 +241,6 @@ function usePresentationFormEdit() {
         }
     };
 
-    /*─── Return ───────────────────────────────────────────────────────*/
     return {
         variantId,
         editingVariant,
@@ -331,21 +259,4 @@ function usePresentationFormEdit() {
         handlePrevStep,
         handleEdit,
     };
-}
-
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 Hook público: usePresentationForm  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝  ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
-export function usePresentationForm(options?: { mode?: "create" }): ReturnType<typeof usePresentationFormCreate>;
-export function usePresentationForm(options: { mode: "edit" }): ReturnType<typeof usePresentationFormEdit>;
-export function usePresentationForm(options: { mode?: "create" | "edit" } = {}) {
-    const { mode = "create" } = options;
-
-    // ⚠️  Los hooks se invocan por separado en cada componente consumidor.
-    //     Este hook público es solo un selector de tipos; los hooks internos
-    //     deben usarse directamente en los componentes para cumplir con las
-    //     Rules of Hooks y evitar ejecutar ambos en simultáneo.
-    if (mode === "edit") return usePresentationFormEdit();
-    return usePresentationFormCreate();
 }

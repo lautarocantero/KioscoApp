@@ -7,11 +7,11 @@ import NoProductLoadedComponent from "../NotProductLoaded";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
-import { usePresentationForm } from "../../../../hooks/presentation/usePresentationForm";
+import { usePresentationCreate } from "../../../../hooks/presentation/usePresentationForm";
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep/PresentationFormSecondStep";
 import PresentationFormThirdStep from "./PresentationFormThirdStep/PresentationFormThirdStep";
-import PresentationCreated from "../../pages/PresentationCreate/components/PresentationCreated/PresentationCreatedComponent"
+import PresentationCreated from "../../pages/PresentationCreate/components/PresentationCreated/PresentationCreatedComponent";
 
 const STEP_COMPONENTS = [
     PresentationFormFirstStep,
@@ -33,11 +33,11 @@ const PresentationFormComponent = (): React.ReactNode => {
         handlePrevStep,
         handleSubmit,
         handleCreateAnother,
-    } = usePresentationForm();
+    } = usePresentationCreate();
 
-    if (loadingProduct)  return <LoadingProductComponent />;
-    if (!productData)    return <NoProductLoadedComponent productError={productError} />;
-    if (createdVariant)  return (
+    if (loadingProduct) return <LoadingProductComponent />;
+    if (!productData)   return <NoProductLoadedComponent productError={productError} />;
+    if (createdVariant) return (
         <PresentationCreated
             createdVariant={createdVariant}
             onCreateAnother={handleCreateAnother}
@@ -45,7 +45,7 @@ const PresentationFormComponent = (): React.ReactNode => {
     );
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: `100%` }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
             <BaseEntitySummaryComponent
                 label="Producto base"
                 name={productData.name}
@@ -70,7 +70,7 @@ const PresentationFormComponent = (): React.ReactNode => {
                             isSubmitting,
                             validateForm,
                             submitError,
-                            stepErrors: [],
+                            stepErrors:  [],
                             actionTitle: "create",
                         }}
                     >

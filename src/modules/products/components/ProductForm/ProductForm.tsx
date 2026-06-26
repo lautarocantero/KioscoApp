@@ -12,93 +12,105 @@ import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import FormExplanationComponent from "../../../../modules/shared/components/FormGrid/FormExplanation";
 import ProductFormFirstStep from "./ProductFormFirstStep";
-import { useProductsForm } from "../../../../hooks/products/useProductsForm";
+import { useProductCreate, useProductEdit } from "../../../../hooks/products/useProductsForm";
 import ProductCreated from "../../pages/ProductCreate/components/ProductCreated";
 import ProductEdited from "../../pages/ProductEdit/components/ProductEdited";
 import type { ProductFormProps } from "@typings/product/productComponentTypes";
 
-
 const STEP_COMPONENTS = [ProductFormFirstStep];
 
-const ProductForm = ({ mode = "create" }: ProductFormProps): React.ReactNode => {
-    // Ambos modos se llaman incondicionalmente (igual que en el hook)
-    const createForm = useProductsForm({ mode: "create" });
-    const editForm   = useProductsForm({ mode: "edit" });
+// ── Modo CREAR ────────────────────────────────────────────────────────────────
+const ProductCreateForm = (): React.ReactNode => {
+    const form = useProductCreate();
 
-    const isEdit = mode === "edit";
-
-    const {
-        isSubmitting,
-        currentStep,
-        totalSteps,
-        handleNextStep,
-        handlePrevStep,
-        submitError,
-        stepErrors,
-    } = isEdit ? editForm : createForm;
-
-    // ── Estados de éxito ──────────────────────────────────────────────────────
-    if (!isEdit && createForm.createdEntity)
-        return <ProductCreated createdProduct={createForm.createdEntity} />;
-
-    if (isEdit && editForm.updatedEntity)
-        return <ProductEdited updatedProduct={editForm.updatedEntity} />;
-    // ── Config según modo ─────────────────────────────────────────────────────
-    const initialValues = isEdit
-        ? getProductEditInitialValues(editForm.editingEntity)
-        : getProductFormInitialValues();
-
-    const validationSchema = isEdit ? productEditFormSchema : productFormSchema;
-    const onSubmit         = isEdit ? editForm.handleEdit   : createForm.handleSubmit;
+    if (form.createdEntity)
+        return <ProductCreated createdProduct={form.createdEntity} />;
 
     return (
         <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
+            initialValues={getProductFormInitialValues()}
+            validationSchema={productFormSchema}
+            onSubmit={form.handleSubmit}
             validateOnBlur={false}
             validateOnChange={false}
-            enableReinitialize={isEdit}
         >
             {({ handleSubmit: formikSubmit, validateForm }) => (
                 <FormNavigationContext.Provider
                     value={{
-                        currentStep,
-                        totalSteps,
-                        onNext:      handleNextStep,
-                        onPrev:      handlePrevStep,
-                        onSubmit:    formikSubmit,
-                        isSubmitting,
+                        currentStep:  form.currentStep,
+                        totalSteps:   form.totalSteps,
+                        onNext:       form.handleNextStep,
+                        onPrev:       form.handlePrevStep,
+                        onSubmit:     formikSubmit,
+                        isSubmitting: form.isSubmitting,
                         validateForm,
-                        submitError,
-                        stepErrors,
-                        actionTitle: isEdit ? "edit" : "create",
+                        submitError:  form.submitError,
+                        stepErrors:   form.stepErrors,
+                        actionTitle:  "create",
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
-                        {/* Banner explicativo solo en creación */}
-                        {!isEdit && (
-                            <FormExplanationComponent
-                                stepsLabels={PRODUCTS_STEPS_LABELS}
-                                currentStep={currentStep}
-                                banner={
-                                    <Box
-                                        component="img"
-                                        src="/images/productExample/ilustration.png"
-                                        alt="Producto y presentaciones"
-                                        sx={{ width: 420, height: 220, objectFit: "contain", flexShrink: 0 }}
-                                    />
-                                }
-                                banner_text="Primero creás el producto una sola vez — nombre, marca, descripción. Luego agregás sus presentaciones (2L, retornable, lata...) con el stock y precio de cada una"
-                            />
-                        )}
+                        <FormExplanationComponent
+                            stepsLabels={PRODUCTS_STEPS_LABELS}
+                            currentStep={form.currentStep}
+                            banner={
+                                <Box
+                                    component="img"
+                                    src="/images/productExample/ilustration.png"
+                                    alt="Producto y presentaciones"
+                                    sx={{ width: 420, height: 220, objectFit: "contain", flexShrink: 0 }}
+                                />
+                            }
+                            banner_text="Primero creás el producto una sola vez — nombre, marca, descripción. Luego agregás sus presentaciones (2L, retornable, lata...) con el stock y precio de cada una"
+                        />
+                        <ApiErrorComponent submitError={form.submitError} />
+                        <ActualStepComponent
+                            currentStep={form.currentStep}
+                            stepComponents={STEP_COMPONENTS}
+                        />
+                    </Grid>
+                </FormNavigationContext.Provider>
+            )}
+        </Formik>
+    );
+};
 
-                        <ApiErrorComponent submitError={submitError} />
+// ── Modo EDITAR ───────────────────────────────────────────────────────────────
+const ProductEditForm = (): React.ReactNode => {
+    const form = useProductEdit();
 
-                        {/* En edición esperamos a que cargue el producto */}
-                        {(!isEdit || !editForm.isLoadingEntity) && (
+    if (form.updatedEntity)
+        return <ProductEdited updatedProduct={form.updatedEntity} />;
+
+    return (
+        <Formik
+            initialValues={getProductEditInitialValues(form.editingEntity)}
+            validationSchema={productEditFormSchema}
+            onSubmit={form.handleEdit}
+            validateOnBlur={false}
+            validateOnChange={false}
+            enableReinitialize
+        >
+            {({ handleSubmit: formikSubmit, validateForm }) => (
+                <FormNavigationContext.Provider
+                    value={{
+                        currentStep:  form.currentStep,
+                        totalSteps:   form.totalSteps,
+                        onNext:       form.handleNextStep,
+                        onPrev:       form.handlePrevStep,
+                        onSubmit:     formikSubmit,
+                        isSubmitting: form.isSubmitting,
+                        validateForm,
+                        submitError:  form.submitError,
+                        stepErrors:   form.stepErrors,
+                        actionTitle:  "edit",
+                    }}
+                >
+                    <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
+                        <ApiErrorComponent submitError={form.submitError} />
+                        {!form.isLoadingEntity && (
                             <ActualStepComponent
-                                currentStep={currentStep}
+                                currentStep={form.currentStep}
                                 stepComponents={STEP_COMPONENTS}
                             />
                         )}
@@ -108,5 +120,9 @@ const ProductForm = ({ mode = "create" }: ProductFormProps): React.ReactNode => 
         </Formik>
     );
 };
+
+// ── Export público ────────────────────────────────────────────────────────────
+const ProductForm = ({ mode = "create" }: ProductFormProps): React.ReactNode =>
+    mode === "edit" ? <ProductEditForm /> : <ProductCreateForm />;
 
 export default ProductForm;
