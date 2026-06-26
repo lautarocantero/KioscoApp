@@ -15,7 +15,7 @@ export interface VariantCreatedBodyProps {
 // ║ 🟥 CARD  🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface PresentationFormCardProps {
+export interface FormCardProps {
     children: React.ReactNode;
     submitText: string;
     showButtons?: boolean;

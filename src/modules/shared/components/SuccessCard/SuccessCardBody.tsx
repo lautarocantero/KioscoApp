@@ -1,22 +1,28 @@
 import { Box, Typography } from "@mui/material";
-import type { ProductCreatedBodyProps } from "@typings/product/productComponentTypes";
-import ProductCreatedTimeline from "./ProductCreatedTimeline";
-import ProductCreatedName from "./ProductCreatedName";
+import SuccessCardName from "./SuccessCardName";
 
-const ProductCreatedBody = ({ name }: ProductCreatedBodyProps): React.ReactNode => (
+interface SuccessCardBodyProps {
+    name:      string;
+    title:     string;
+    subtitle:  string;
+    timeline?: React.ReactNode;
+}
+
+const SuccessCardBody = ({ name, title, subtitle, timeline }: SuccessCardBodyProps): React.ReactNode => (
     <Box sx={theme => ({ display: "flex", flexDirection: "column", alignItems: "center", py: 4, px: 3, backgroundColor: theme.custom.white, borderRadius: "16px" })}>
-        <ProductCreatedTimeline />
+
+        {timeline}
 
         <Typography sx={theme => ({ fontSize: theme.typography.h6?.fontSize, fontWeight: 700, color: theme.custom.backgroundDark, textAlign: "center", mb: 2 })}>
-            Producto creado correctamente
+            {title}
         </Typography>
 
-        <ProductCreatedName name={name} />
+        <SuccessCardName name={name} />
 
         <Typography sx={theme => ({ maxWidth: 420, textAlign: "center", color: theme.custom.fontColorDark, opacity: 0.8, fontSize: "1rem", lineHeight: 1.6 })}>
-            El siguiente paso es agregar las presentaciones del producto.
+            {subtitle}
         </Typography>
     </Box>
 );
 
-export default ProductCreatedBody;
+export default SuccessCardBody;

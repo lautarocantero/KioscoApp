@@ -1,18 +1,18 @@
-import ProductFormCard from "./ProductFormCard";
 import ProductFormFields from "./ProductFormFields";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
+import FormCard from "../../../../modules/shared/components/FormGrid/FormCard";
 
 const ProductFormFirstStep = (): React.ReactNode => {
     const { actionTitle } = useFormNavigation();
     const isEdit = actionTitle === "edit";
 
     return (
-        <ProductFormCard
+        <FormCard
             submitText={isEdit ? "Guardar" : "Crear"}
             showButtons
         >
             <ProductFormFields mode={isEdit ? "edit" : "create"} />
-        </ProductFormCard>
+        </FormCard>
     );
 };
 

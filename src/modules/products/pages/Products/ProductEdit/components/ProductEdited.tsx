@@ -1,0 +1,32 @@
+import SuccessCard from "../../../../../shared/components/SuccessCard";
+import { useNavigate } from "react-router-dom";
+
+interface ProductEditedProps {
+    updatedProduct: { _id: string; name: string };
+}
+
+const ProductEdited = ({ updatedProduct }: ProductEditedProps): React.ReactNode => {
+    const navigate = useNavigate();
+
+    return (
+        <SuccessCard
+            name={updatedProduct.name}
+            title="Producto actualizado correctamente"
+            subtitle="Los cambios fueron guardados. Podés seguir editando o volver a la lista."
+            actions={[
+                {
+                    label:   "Seguir editando",
+                    variant: "contained",
+                    onClick: () => navigate(`/products/edit/${updatedProduct._id}`),
+                },
+                {
+                    label:   "Ver productos",
+                    variant: "outlined",
+                    onClick: () => navigate("/products"),
+                },
+            ]}
+        />
+    );
+};
+
+export default ProductEdited;

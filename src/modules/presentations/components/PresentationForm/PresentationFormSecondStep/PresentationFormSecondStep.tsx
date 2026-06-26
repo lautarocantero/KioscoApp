@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
 import PresentationStockFields from "./PresentationStockFields";
-import PresentationFormCard from "../PresentationFormCard";
+import FormCard from "../../../../shared/components/FormGrid/FormCard";
 import { useFormNavigation } from "../../../../shared/context/FormNavigationContext";
+import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../../config/constants";
 
 const PresentationFormSecondStep = (): React.ReactNode => {
     const { currentStep } = useFormNavigation(); 
@@ -12,9 +13,9 @@ const PresentationFormSecondStep = (): React.ReactNode => {
             display: "flex", justifyContent: "center", alignItems: "flex-start",
             minHeight: "auto", p: 2, pt: 0,
         }}>
-        <PresentationFormCard submitText="Crear" showButtons  currentStep={currentStep}>
+        <FormCard submitText="Crear" showButtons  multiStepHeader={{ stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS, currentStep }}>
             <PresentationStockFields />
-        </PresentationFormCard>
+        </FormCard>
     </Box>
 )};
 

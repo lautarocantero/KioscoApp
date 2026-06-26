@@ -8,13 +8,13 @@ import {
     productFormSchema,
     productEditFormSchema,
 } from "../../schema/ProductFormSchema";
-import ProductCreatedComponent from "../../pages/Products/ProductCreate/components/ProductCreated";
-import ProductEditSuccessComponent from "../../pages/Products/ProductEdit/components/ProductEdited/ProductEditSuccess";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import FormExplanationComponent from "../../../../modules/shared/components/FormGrid/FormExplanation";
 import ProductFormFirstStep from "./ProductFormFirstStep";
 import { useProductsForm } from "../../../../hooks/products/useProductsForm";
+import ProductCreated from "../../pages/Products/ProductCreate/components/ProductCreated";
+import ProductEdited from "../../pages/Products/ProductEdit/components/ProductEdited";
 
 export interface ProductFormProps {
     mode?: "create" | "edit";
@@ -41,11 +41,10 @@ const ProductForm = ({ mode = "create" }: ProductFormProps): React.ReactNode => 
 
     // ── Estados de éxito ──────────────────────────────────────────────────────
     if (!isEdit && createForm.createdEntity)
-        return <ProductCreatedComponent createdProduct={createForm.createdEntity} />;
+        return <ProductCreated createdProduct={createForm.createdEntity} />;
 
     if (isEdit && editForm.updatedEntity)
-        return <ProductEditSuccessComponent updatedProduct={editForm.updatedEntity} />;
-
+        return <ProductEdited updatedProduct={editForm.updatedEntity} />;
     // ── Config según modo ─────────────────────────────────────────────────────
     const initialValues = isEdit
         ? getProductEditInitialValues(editForm.editingEntity)

@@ -4,11 +4,11 @@ import ApiErrorComponent from "../../../../shared/components/FormGrid/ApiError";
 import BaseEntitySummaryComponent from "../../../components/BaseEntitySummary";
 import { usePresentationForm } from "../../../../../hooks/presentation/usePresentationForm";
 import { getPresentationDetailInitialValues } from "../../../schema/PresentationFormSchema";
-import PresentationFormCard from "../../../components/PresentationForm/PresentationFormCard";
 import BackButton from "../../../../shared/components/Buttons/BackButton";
 import { useContext } from "react";
 import { ThemeContext } from "../../../../../theme/ThemeContext";
 import LoadingProductComponent from "../../../components/LoadingProduct";
+import FormCard from "../../../../shared/components/FormGrid/FormCard";
 
 const PresentationDetailFormComponent = (): React.ReactNode => {
     const {
@@ -31,7 +31,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
 
     return (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
-            <PresentationFormCard submitText="" showButtons={false}>
+            <FormCard submitText="" showButtons={false}>
                 <Formik
                     initialValues={getPresentationDetailInitialValues(variant)}
                     onSubmit={() => {}}
@@ -155,7 +155,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                     )}
                 </Formik>
                 <BackButton appTheme={appTheme} />
-            </PresentationFormCard>
+            </FormCard>
         </Box>
     );
 };
