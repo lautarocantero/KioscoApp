@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, type Theme } from "@mui/material";
 import type { ProductsFormHeaderComponentProps } from "@typings/ui/uiModules";
-import ProductBannerComponent from "../../../../modules/products/components/ProductsForm/ProductBanner";
-import VisualStepperComponent from "../../../../modules/products/components/ProductsForm/VisualStepper";
+import ProductBannerComponent from "../../../../modules/products/components/ProductForm/ProductBanner";
+import VisualStepperComponent from "../../../../modules/products/components/ProductForm/VisualStepper";
 
 
 const FormExplanationComponent = ({ 

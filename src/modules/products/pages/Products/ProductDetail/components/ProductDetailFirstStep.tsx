@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
-import ProductFormCard from "../../../../components/ProductsForm/ProductFormCard";
-import ProductFormFields from "../../../../components/ProductsForm/ProductFormFields";
+import ProductFormCard from "../../../../../../modules/products/components/ProductForm/ProductFormCard";
+import ProductFormFields from "../../../../../../modules/products/components/ProductForm/ProductFormFields";
 
 const ProductDetailFirstStep = (): React.ReactNode => (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
-        <ProductFormCard 
+        <ProductFormCard
             submitText="" showButtons={false}
             
         >

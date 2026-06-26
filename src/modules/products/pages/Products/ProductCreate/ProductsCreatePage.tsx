@@ -1,12 +1,12 @@
+import ProductForm from "../../../../../modules/products/components/ProductForm/ProductForm";
 import AppLayout from "../../../../shared/layout/AppLayout";
-import ProductsFormComponent from "../../../components/ProductsForm/ProductsForm"; 
 
 
 const ProductsCreatePage = ():React.ReactNode => {
 
     return (
         <AppLayout title='Crear producto'>
-            <ProductsFormComponent />
+            <ProductForm mode="create" />
         </AppLayout>
     )
 

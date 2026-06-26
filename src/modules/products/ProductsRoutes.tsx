@@ -26,10 +26,10 @@ import ProductsPage         from "./pages/Products/ProductsList/ProductsPage";
 import ProductsCreatePage   from "./pages/Products/ProductCreate/ProductsCreatePage";
 import ProductsEditPage     from "./pages/Products/ProductEdit/ProductsEditPage";
 import ProductDetailPage    from "./pages/Products/ProductDetail/ProductDetailPage";
-import CategoriesPage       from "./pages/CategoriesPage";
-import CategoriesListPage   from "./pages/CategoriesListPage";
-import CategoriesCreatePage from "./pages/CategoriesCreatePage";
-import CategoriesEditPage   from "./pages/CategoriesEditPage";
+import CategoriesPage       from "./pages/Categories/CategoriesPage";
+import CategoriesListPage   from "./pages/Categories/CategoriesListPage";
+import CategoriesCreatePage from "./pages/Categories/CategoriesCreatePage";
+import CategoriesEditPage   from "./pages/Categories/CategoriesEditPage";
 
 const ProductsRoutes = (): React.ReactNode => {
     return (

@@ -1,5 +1,5 @@
+import ProductForm from "../../../../../modules/products/components/ProductForm/ProductForm";
 import AppLayout from "../../../../shared/layout/AppLayout";
-import ProductsEditFormComponent from "../../../components/ProductsEditForm/ProductsEditForm";
 
 
 // # Componente: ProductsEditPage
@@ -21,7 +21,7 @@ import ProductsEditFormComponent from "../../../components/ProductsEditForm/Prod
 const ProductsEditPage = (): React.ReactNode => {
     return (
         <AppLayout title="Editar producto">
-            <ProductsEditFormComponent />
+            <ProductForm mode="edit"  />
         </AppLayout>
     );
 };

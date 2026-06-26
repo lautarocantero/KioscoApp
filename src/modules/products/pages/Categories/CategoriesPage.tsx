@@ -24,8 +24,8 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import NewLabelIcon from '@mui/icons-material/NewLabel';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
-import DisplayOptions from '../../shared/components/Options/DisplayOptions';
-import type { LinksInterface } from '../../../typings/account/accountComponentTypes';
+import DisplayOptions from '../../../shared/components/Options/DisplayOptions';
+import type { LinksInterface } from '../../../../typings/account/accountComponentTypes';
 
 const categoriesLinks: LinksInterface[] = [
   { icon: <CollectionsBookmarkIcon />, description: 'Ver Categorias', url: '/categories-list'},
