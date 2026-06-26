@@ -7,7 +7,7 @@ import { configureStore } from "@reduxjs/toolkit";
 // Reducers de cada slice
 import authReducer from "./auth/authSlice";
 import productReducer from "./product/productSlice";
-import productVariantReducer from "./productVariant/productVariantSlice";
+import PresentationReducer from "./Presentation/PresentationSlice";
 import sellerReducer from "./seller/sellerSlice";
 import sellReducer from "./sell/sellSlice";
 import providerReducer from "./provider/providerSlice";
@@ -17,7 +17,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,              // Maneja autenticación (login, logout, registro, errores)
     product: productReducer,        // Maneja lista de productos, estado de carga y errores
-    productVariants: productVariantReducer, // Maneja variantes de productos
+    Presentations: PresentationReducer, // Maneja variantes de productos
     seller: sellerReducer,          // Maneja carrito, producto seleccionado y errores
     sell: sellReducer,              // Maneja estado de ventas (estructura inicial)
     provider: providerReducer,      // Maneja estado de proveedores (estructura inicial)
@@ -40,10 +40,10 @@ export type AppDispatch = typeof store.dispatch;           // Tipo del dispatch 
 // - Acciones: setProducts, setError, checkingProducts.
 // - Thunks: getProducts.
 
-// ### productVariantSlice
+// ### PresentationSlice
 // - Estado: variantes de productos, isLoading, errorMessage.
-// - Acciones: setProductsVariants, setError, checkingProductVariants.
-// - Thunks: getProductVariantsById.
+// - Acciones: setProductsVariants, setError, checkingPresentations.
+// - Thunks: getPresentationsById.
 
 // ### sellerSlice
 // - Estado: carrito, producto seleccionado, errorMessage.

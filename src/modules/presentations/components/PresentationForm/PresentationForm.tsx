@@ -7,7 +7,7 @@ import NoProductLoadedComponent from "../NotProductLoaded";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
-import { useProductVariantForm } from "../../../../hooks/productsVariant/useProductVariantForm";
+import { usePresentationForm } from "../../../../hooks/presentation/usePresentationForm";
 import ProductVariantFormFirstStep from "./PresentationFormFirstStep";
 import ProductVariantFormSecondStep from "./PresentationFormSecondStep/PresentationFormSecondStep";
 import ProductVariantFormThirdStep from "./PresentationFormThirdStep/PresentationFormThirdStep";
@@ -29,11 +29,10 @@ const PresentationFormComponent = (): React.ReactNode => {
         submitError,
         currentStep,
         totalSteps,
-        handleNextStep,
         handlePrevStep,
         handleSubmit,
         handleCreateAnother,
-    } = useProductVariantForm();
+    } = usePresentationForm();
 
     if (loadingProduct)  return <LoadingProductComponent />;
     if (!productData)    return <NoProductLoadedComponent productError={productError} />;

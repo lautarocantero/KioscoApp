@@ -1,19 +1,19 @@
-// hooks/productsVariant/useProductVariantForm.ts
+// hooks/productsVariant/usePresentationForm.ts
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║  📖 GLOSARIO                                                         ║
 ║                                                                      ║
-║  useProductVariantForm(options)                                      ║
+║  usePresentationForm(options)                                      ║
 ║    Hook público. Recibe { mode: "create" | "edit" } y retorna        ║
 ║    el sub-hook correspondiente.                                      ║
 ║                                                                      ║
-║  useProductVariantFormCreate()                                       ║
+║  usePresentationFormCreate()                                       ║
 ║    Maneja el flujo de CREACIÓN de una variante de producto.          ║
 ║    · Obtiene el producto padre via useProductData(productId)         ║
 ║    · Envía un FormData multipart al endpoint de creación             ║
 ║    · Expone handleCreateAnother para resetear el formulario          ║
 ║                                                                      ║
-║  useProductVariantFormEdit()                                         ║
+║  usePresentationFormEdit()                                         ║
 ║    Maneja el flujo de EDICIÓN de una variante existente.             ║
 ║    · Carga la variante desde la API al montar (useEffect)            ║
 ║    · Envía un PUT JSON al endpoint de edición                        ║
@@ -27,9 +27,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import type { FormikErrors } from "formik";
-import { useFormSteps } from "../../hooks/shared/useFormSteps";
-import { useProductData } from "../../hooks/products/useProductData";
-import { useProductsForm } from "../../hooks/products/useProductsForm";
+import { useFormSteps } from "../shared/useFormSteps";
+import { useProductData } from "../products/useProductData";
+import { useProductsForm } from "../products/useProductsForm";
 import type {
     PresentationFormValues,
     Presentation,
@@ -49,10 +49,10 @@ const buildStepsConfig = () => STEPS_LABELS.map((label) => ({ title: label, cont
 
 
 /*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 Hook: useProductVariantFormCreate  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝 ║
+║ 🪝 Hook: usePresentationFormCreate  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝 ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-function useProductVariantFormCreate() {
+function usePresentationFormCreate() {
 
     /*─── Parámetros de ruta ───────────────────────────────────────────*/
     const { product_id: productId } = useParams<{ product_id: string }>();
@@ -176,10 +176,10 @@ function useProductVariantFormCreate() {
 }
 
 /*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 Hook: useProductVariantFormEdit  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝 ║
+║ 🪝 Hook: usePresentationFormEdit  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝 ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-function useProductVariantFormEdit() {
+function usePresentationFormEdit() {
 
     /*─── Parámetros de ruta ───────────────────────────────────────────*/
     const { presentation_id: variantId } = useParams<{ presentation_id: string }>();
@@ -334,18 +334,18 @@ function useProductVariantFormEdit() {
 }
 
 /*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 Hook público: useProductVariantForm  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝  ║
+║ 🪝 Hook público: usePresentationForm  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝  ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export function useProductVariantForm(options?: { mode?: "create" }): ReturnType<typeof useProductVariantFormCreate>;
-export function useProductVariantForm(options: { mode: "edit" }): ReturnType<typeof useProductVariantFormEdit>;
-export function useProductVariantForm(options: { mode?: "create" | "edit" } = {}) {
+export function usePresentationForm(options?: { mode?: "create" }): ReturnType<typeof usePresentationFormCreate>;
+export function usePresentationForm(options: { mode: "edit" }): ReturnType<typeof usePresentationFormEdit>;
+export function usePresentationForm(options: { mode?: "create" | "edit" } = {}) {
     const { mode = "create" } = options;
 
     // ⚠️  Los hooks se invocan por separado en cada componente consumidor.
     //     Este hook público es solo un selector de tipos; los hooks internos
     //     deben usarse directamente en los componentes para cumplir con las
     //     Rules of Hooks y evitar ejecutar ambos en simultáneo.
-    if (mode === "edit") return useProductVariantFormEdit();
-    return useProductVariantFormCreate();
+    if (mode === "edit") return usePresentationFormEdit();
+    return usePresentationFormCreate();
 }
