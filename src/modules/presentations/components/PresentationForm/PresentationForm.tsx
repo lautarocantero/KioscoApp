@@ -45,7 +45,7 @@ const PresentationFormComponent = (): React.ReactNode => {
     );
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: `100%` }}>
             <BaseEntitySummaryComponent
                 label="Producto base"
                 name={productData.name}
@@ -74,7 +74,7 @@ const PresentationFormComponent = (): React.ReactNode => {
                             actionTitle: "create",
                         }}
                     >
-                        <Grid container component="form" onSubmit={formikSubmit}>
+                        <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
                             <ApiErrorComponent submitError={submitError} />
                             <ActualStepComponent
                                 currentStep={currentStep}

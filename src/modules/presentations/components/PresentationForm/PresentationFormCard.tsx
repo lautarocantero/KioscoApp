@@ -11,7 +11,7 @@ const PresentationFormCard = ({ children, submitText, showButtons, currentStep }
     return (
 
         <Card sx={(theme: Theme) => ({
-            width: "100%", maxWidth: 680,
+            width: "100%",
             bgcolor: theme.custom?.backgroundDark,
             border: "0.5px solid", borderColor: "rgba(255,255,255,0.08)",
             borderRadius: "16px",
@@ -23,7 +23,7 @@ const PresentationFormCard = ({ children, submitText, showButtons, currentStep }
         })}>
 
             {
-                currentStep && (
+                currentStep !== undefined && (
                     <FormHeader
                         title={PRODUCTS_VARIANT_STEPS_LABELS[currentStep]}
                         isMultiStep
