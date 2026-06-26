@@ -1,6 +1,6 @@
 import React from "react";
 
-import ConfirmDialog from "../../../../../shared/components/ConfirmDialog/ConfirmDialog";
+import ConfirmDialog from "../../../../shared/components/ConfirmDialog/ConfirmDialog";
 import type { ProductDeleteDialogProps } from "@typings/product/productComponentTypes";
 
 const ProductDeleteDialog = ({

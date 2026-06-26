@@ -22,20 +22,19 @@
 //-----------------------------------------------------------------------------//
 
 import { Route } from "react-router-dom";
-import ProductsPage         from "./pages/ProductsList/ProductsPage";
-import ProductsCreatePage   from "./pages/ProductCreate/ProductsCreatePage";
-import ProductsEditPage     from "./pages/ProductEdit/ProductsEditPage";
-import ProductDetailPage    from "./pages/ProductDetail/ProductDetailPage";
+import CategoriesPage from "./pages/CategoriesPage";
+import CategoriesListPage from "./pages/CategoriesListPage";
+import CategoriesCreatePage from "./pages/CategoriesCreatePage";
+import CategoriesEditPage from "./pages/CategoriesEditPage";
 
 const ProductsRoutes = (): React.ReactNode => {
     return (
         <>
-            {/* ── Productos ─────────────────────────────────────────────── */}
-            <Route path="/products"                   element={<ProductsPage />} />
-            <Route path="/products-create"            element={<ProductsCreatePage />} />
-            <Route path="/product/:productId"         element={<ProductDetailPage />} />
-            <Route path="/products/:productId/edit"   element={<ProductsEditPage />} />
-
+            {/* ── Categorías ────────────────────────────────────────────── */}
+            <Route path="/categories"        element={<CategoriesPage />} />
+            <Route path="/categories-list"   element={<CategoriesListPage />} />
+            <Route path="/categories-create" element={<CategoriesCreatePage />} />
+            <Route path="/categories-edit"   element={<CategoriesEditPage />} />
         </>
     );
 };

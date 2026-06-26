@@ -5,8 +5,8 @@ import LoupeIcon from "@mui/icons-material/Loupe";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 
 import type { Product } from "@typings/product/productTypes";
-import GenericDataGrid from "../../../../shared/components/GenericDataGrid/GenericDataGrid";
-import AppLayout from "../../../../shared/layout/AppLayout";
+import GenericDataGrid from "../../../shared/components/GenericDataGrid/GenericDataGrid";
+import AppLayout from "../../../shared/layout/AppLayout";
 import { useProducts } from "./hooks/useProductsList";
 import { buildColumns } from "./components/productColumns";
 import ProductDeleteDialog from "./components/ProductDeleteDialog";

@@ -1,4 +1,4 @@
-import AppLayout from "../../../../shared/layout/AppLayout";
+import AppLayout from "../../../shared/layout/AppLayout";
 import ProductDetailFormComponent from "./components/ProductDetailForm";
 
 

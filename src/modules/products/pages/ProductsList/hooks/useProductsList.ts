@@ -4,7 +4,7 @@ import type { DeleteDialogState, Product, UseProductsReturn } from "@typings/pro
 import {
   deleteProductRequest,
   getProductsRequest,
-} from "../../../../api/productApi";
+} from "../../../api/productApi";
 import { resolveErrorMessage } from "../helpers/productHelpers";
 
 

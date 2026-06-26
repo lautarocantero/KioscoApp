@@ -48,9 +48,17 @@ export interface ProductCreatedNameProps {
     name: string;
 }
 
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📋 FORMULARIO — Campos  📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋           ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
 export interface ProductFormFieldsProps {
     mode?: "create" | "edit" | "view";
     disabled?: boolean;
+}
+
+export interface ProductFormProps {
+    mode?: "create" | "edit";
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -104,7 +112,7 @@ export interface ProductBannerComponentProps {
 
 // Props del encabezado del form (stepper + banner)
 export interface ProductsFormHeaderComponentProps extends ProductBannerComponentProps {
-    stepsLabels:           string[];
+    stepsLabels:            string[];
     showProgressIndicator?: boolean;
 }
 

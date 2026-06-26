@@ -1,5 +1,5 @@
-import ProductForm from "../../../../../modules/products/components/ProductForm/ProductForm";
-import AppLayout from "../../../../shared/layout/AppLayout";
+import ProductForm from "../../components/ProductForm/ProductForm";
+import AppLayout from "../../../shared/layout/AppLayout";
 
 
 // # Componente: ProductsEditPage

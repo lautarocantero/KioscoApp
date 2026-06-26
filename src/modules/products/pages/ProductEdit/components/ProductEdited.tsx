@@ -1,9 +1,7 @@
-import SuccessCard from "../../../../../shared/components/SuccessCard";
+import type { ProductEditedProps } from "@typings/product/productComponentTypes";
+import SuccessCard from "../../../../shared/components/SuccessCard";
 import { useNavigate } from "react-router-dom";
 
-interface ProductEditedProps {
-    updatedProduct: { _id: string; name: string };
-}
 
 const ProductEdited = ({ updatedProduct }: ProductEditedProps): React.ReactNode => {
     const navigate = useNavigate();

@@ -13,12 +13,10 @@ import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep"
 import FormExplanationComponent from "../../../../modules/shared/components/FormGrid/FormExplanation";
 import ProductFormFirstStep from "./ProductFormFirstStep";
 import { useProductsForm } from "../../../../hooks/products/useProductsForm";
-import ProductCreated from "../../pages/Products/ProductCreate/components/ProductCreated";
-import ProductEdited from "../../pages/Products/ProductEdit/components/ProductEdited";
+import ProductCreated from "../../pages/ProductCreate/components/ProductCreated";
+import ProductEdited from "../../pages/ProductEdit/components/ProductEdited";
+import type { ProductFormProps } from "@typings/product/productComponentTypes";
 
-export interface ProductFormProps {
-    mode?: "create" | "edit";
-}
 
 const STEP_COMPONENTS = [ProductFormFirstStep];
 

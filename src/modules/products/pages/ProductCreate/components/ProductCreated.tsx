@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import SuccessCard from "../../../../../shared/components/SuccessCard";
+import SuccessCard from "../../../../shared/components/SuccessCard";
 import ProductCreatedTimeline from "./ProductCreatedTimeline";
+import type { ProductCreatedProps } from "@typings/product/productComponentTypes";
 
-interface ProductCreatedProps {
-    createdProduct: { _id: string; name: string };
-}
 
 const ProductCreated = ({ createdProduct }: ProductCreatedProps): React.ReactNode => {
     const navigate = useNavigate();
