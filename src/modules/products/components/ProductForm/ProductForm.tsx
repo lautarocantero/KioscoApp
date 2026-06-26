@@ -1,6 +1,6 @@
 import { Grid, Box } from "@mui/material";
 import { Formik } from "formik";
-import { FormNavigationContext } from "../../context/FormNavigationContext";
+import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import { PRODUCTS_STEPS_LABELS } from "../../../../config/constants";
 import {
     getProductFormInitialValues,

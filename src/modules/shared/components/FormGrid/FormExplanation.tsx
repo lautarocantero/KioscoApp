@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, type Theme } from "@mui/material";
 import type { ProductsFormHeaderComponentProps } from "@typings/ui/uiModules";
-import ProductBannerComponent from "../../../../modules/products/components/ProductForm/ProductBanner";
-import VisualStepperComponent from "../../../../modules/products/components/ProductForm/VisualStepper";
+import VisualStepperComponent from "./VisualStepper";
+import FormBanner from "./FormBanner";
 
 
 const FormExplanationComponent = ({ 
@@ -60,7 +60,7 @@ const FormExplanationComponent = ({
                     <VisualStepperComponent stepsLabels={stepsLabels} currentStep={currentStep} />
                 )}
 
-                <ProductBannerComponent
+                <FormBanner
                     currentStep={currentStep}
                     banner={banner}
                     banner_text={banner_text}

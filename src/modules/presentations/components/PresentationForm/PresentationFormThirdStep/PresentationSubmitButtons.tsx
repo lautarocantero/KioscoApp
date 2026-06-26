@@ -1,5 +1,5 @@
 import { Box, Button, type Theme } from "@mui/material";
-import { useFormNavigation } from "../../../../products/context/FormNavigationContext";
+import { useFormNavigation } from "../../../../shared/context/FormNavigationContext";
 
 const PresentationSubmitButtons = (): React.ReactNode => {
     const { onPrev, isSubmitting } = useFormNavigation();

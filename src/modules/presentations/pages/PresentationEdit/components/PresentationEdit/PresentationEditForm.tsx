@@ -2,7 +2,7 @@
 
 import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
-import { FormNavigationContext } from "../../../../../products/context/FormNavigationContext";
+import { FormNavigationContext } from "../../../../../shared/context/FormNavigationContext";
 import {
     getPresentationEditInitialValues,
     presentationEditFormSchema,

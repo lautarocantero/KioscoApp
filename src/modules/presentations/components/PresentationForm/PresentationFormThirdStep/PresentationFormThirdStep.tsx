@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import PresentationFormCard from "../PresentationFormCard";
 import PresentationExpirationField from "./PresentationExpirationField";
-import { useFormNavigation } from "../../../../../modules/products/context/FormNavigationContext";
+import { useFormNavigation } from "../../../../shared/context/FormNavigationContext";
 
 const PresentationFormThirdStep = (): React.ReactNode => {
     const { currentStep, actionTitle} = useFormNavigation();

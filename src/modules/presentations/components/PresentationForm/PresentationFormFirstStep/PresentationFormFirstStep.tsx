@@ -1,7 +1,7 @@
 import PresentationFormCard from "../PresentationFormCard";
 import PresentationFormFields from "./PresentationFormFields";
 import PresentationImageUpload from "./PresentationImageUpload";
-import { useFormNavigation } from "../../../../../modules/products/context/FormNavigationContext";
+import { useFormNavigation } from "../../../../shared/context/FormNavigationContext";
 
 const PresentationFormFirstStep = (): React.ReactNode => {
     const { currentStep, actionTitle } = useFormNavigation(); 

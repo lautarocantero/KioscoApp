@@ -1,6 +1,6 @@
 import { Box, Button, type Theme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useFormNavigation } from "../../../../modules/products/context/FormNavigationContext";
+import { useFormNavigation } from "../../context/FormNavigationContext";
 
 export interface NavButtonsProps {
     SubmitText?: string;

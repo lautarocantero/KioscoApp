@@ -1,6 +1,6 @@
 import ProductFormCard from "./ProductFormCard";
 import ProductFormFields from "./ProductFormFields";
-import { useFormNavigation } from "../../../../modules/products/context/FormNavigationContext";
+import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 
 const ProductFormFirstStep = (): React.ReactNode => {
     const { actionTitle } = useFormNavigation();

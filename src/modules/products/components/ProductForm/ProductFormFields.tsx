@@ -1,7 +1,7 @@
 import { Grid, TextField, IconButton, Box, Typography, Button } from "@mui/material";
 import { useFormikContext, FieldArray } from "formik";
 import type { ProductFormValues, ProductEditFormValues } from "@typings/product/productTypes";
-import ProductImagePreview from "./ProductImagePreview";
+import ProductImagePreview from "../../../shared/components/Image/ProductImagePreview";
 import { sharedSx } from "../../../../modules/shared/components/sharedSx/sharedSx";
 import type { ProductFormFieldsProps } from "@typings/product/productComponentTypes";
 
