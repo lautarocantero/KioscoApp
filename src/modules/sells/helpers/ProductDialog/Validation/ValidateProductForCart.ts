@@ -22,8 +22,8 @@ Se encarga de validar que el producto seleccionado pueda agregarse al carrito.
 
 import type { validateProductSubmissionInterface, ValidationResultType } from "@typings/sells/types";
 
-const validateProductForCart = ( {productVariant, requiredStock}: validateProductSubmissionInterface): ValidationResultType => {
-    if (!productVariant) {
+const validateProductForCart = ( {Presentation, requiredStock}: validateProductSubmissionInterface): ValidationResultType => {
+    if (!Presentation) {
       return { valid: false, message: "Ocurrió un error al agregar el producto." };
     }
 
@@ -35,11 +35,11 @@ const validateProductForCart = ( {productVariant, requiredStock}: validateProduc
       return { valid: false, message: "No hay stock del producto, no está disponible actualmente." };
     }
 
-    if (productVariant.stock < requiredStock) {
-      return { valid: false, message: `El stock disponible es de ${productVariant.stock} unidades.` };
+    if (Presentation.stock < requiredStock) {
+      return { valid: false, message: `El stock disponible es de ${Presentation.stock} unidades.` };
     }
 
-    if (productVariant.price <= 0) {
+    if (Presentation.price <= 0) {
       return { valid: false, message: "El precio del producto es inválido." };
     }
 

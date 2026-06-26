@@ -5,9 +5,9 @@
 // Usan Redux para despachar acciones y zod para validar datos.  
 
 //──────────────────── Esquema de validación 🔧 ─────────────────────//
-// - ProductVariantEntitySchema: define la forma esperada de un producto variante.
+// - PresentationEntitySchema: define la forma esperada de un producto variante.
 // - ProductTicketSchema: define la forma esperada de un producto en el carrito.
-// - ProductVariantEntity: tipo inferido a partir del esquema.  
+// - PresentationEntity: tipo inferido a partir del esquema.  
 
 //──────────────────── Thunks ✳️ ─────────────────────//
 
@@ -45,7 +45,7 @@ import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartI
 import { handleError } from "../shared/handlerStoreError";
 import { addToCartAction, addUnitAction, cleanCart, removeFromCart, setError, setProductSelected } from "./sellerSlice";
 
-export const ProductVariantEntitySchema = z.object({
+export const PresentationEntitySchema = z.object({
   _id: z.string().nullable(),
   name: z.string(),
   description: z.string(),
@@ -79,7 +79,7 @@ export const ProductTicketSchema = z.object({
   stock_required: z.number(),
 });
 
-export type ProductVariantEntity = z.infer<typeof ProductVariantEntitySchema>;
+export type PresentationEntity = z.infer<typeof PresentationEntitySchema>;
 
 export const selectProductThunk = ({ productData }: SelectProductThunkInterface) => {
     return async (dispatch: Dispatch): Promise<void> => {
@@ -89,7 +89,7 @@ export const selectProductThunk = ({ productData }: SelectProductThunkInterface)
             return;
         }
 
-        // if( ! ProductVariantEntitySchema.safeParse(productData).success ) {
+        // if( ! PresentationEntitySchema.safeParse(productData).success ) {
             // dispatch(setError({ errorMessage: "El producto no es valido."}));
             // return;
         // }

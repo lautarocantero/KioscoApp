@@ -42,8 +42,8 @@ const handleChangeProductDialogSelector = ({event, products, setFieldValue} : Ha
 
     if(!productObject) return;
 
-    setFieldValue('productVariantId', productId );
-    setFieldValue('productVariant', productObject);
+    setFieldValue('PresentationId', productId );
+    setFieldValue('Presentation', productObject);
 };
 
 export default handleChangeProductDialogSelector;

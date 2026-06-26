@@ -19,16 +19,16 @@ import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandle
 import NumberField from "../../../shared/components/NumberField/NumberField";
 import handleChangeUnits from "../../helpers/ProductDialog/Handlers/handleProductDialogUnitsChange";
 
-const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: DialogDataDisplayProps ): React.ReactNode => {
+const PresentationDialogUnitsComponent = ({values,setFieldValue, label }: DialogDataDisplayProps ): React.ReactNode => {
 
     const handleChange = useDelegatedHandler(({ incomingValue } : Partial<HandleProductDialogUnitsChangeInterface>) =>
-        handleChangeUnits({ incomingValue, productVariant: values?.productVariant, setFieldValue}),
+        handleChangeUnits({ incomingValue, Presentation: values?.Presentation, setFieldValue}),
         [values, setFieldValue]
     );
 
-    if(!values?.productVariant) return null;
+    if(!values?.Presentation) return null;
 
-    const stock : number = values?.productVariant?.stock;
+    const stock : number = values?.Presentation?.stock;
     const { requiredStock } : { requiredStock: number} = values;
 
     return (
@@ -50,4 +50,4 @@ const ProductVariantDialogUnitsComponent = ({values,setFieldValue, label }: Dial
     )
 }
 
-export default React.memo(ProductVariantDialogUnitsComponent);
+export default React.memo(PresentationDialogUnitsComponent);

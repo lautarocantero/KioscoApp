@@ -6,7 +6,7 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 
 // ## Descripción 📦
 // Centraliza todas las llamadas HTTP al recurso `/product-variant` del backend.
-// Cada función mapea 1:1 con un endpoint definido en `ProductVariantRouter`.
+// Cada función mapea 1:1 con un endpoint definido en `PresentationRouter`.
 
 // ## Instancia Axios 🔧
 // - `baseURL`: `{API_URL}/product-variant`

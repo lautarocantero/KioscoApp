@@ -27,13 +27,13 @@ const ProductDialogPriceComponent = ({values}: DialogDataPriceProps): React.Reac
       [] 
     );
 
-    if(!values?.productVariant) return null;
+    if(!values?.Presentation) return null;
 
-    if(values?.productVariantId === "") return null;
+    if(values?.PresentationId === "") return null;
 
     if(values?.requiredStock === 0) return null;
 
-    const totalPrice: number = (values?.productVariant?.price ?? 0) * values?.requiredStock;
+    const totalPrice: number = (values?.Presentation?.price ?? 0) * values?.requiredStock;
 
     return (
         <Grid

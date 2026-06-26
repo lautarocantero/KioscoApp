@@ -4,22 +4,22 @@ import { describe, expect, it } from "vitest";
 
 describe("Helper: getProductDialogValidationSchema", () => {
 
-    it("debería fallar si falta productVariantId", async () => { 
-        const data = { productVariantId: "", requiredStock: 1, totalPrice: 100 }; 
+    it("debería fallar si falta PresentationId", async () => { 
+        const data = { PresentationId: "", requiredStock: 1, totalPrice: 100 }; 
         await expect(ProductDialogValidationSchema.validate(data)) 
             .rejects.toThrow("Campo requerido"); 
     });
 
     it("deberia fallar si el stock <= 0", async () => {
-        const data = { productVariantId: "123", requiredStock: 0, totalPrice: 100};
+        const data = { PresentationId: "123", requiredStock: 0, totalPrice: 100};
         await expect(ProductDialogValidationSchema.validate(data))
             .rejects.toThrow("El stock requerido debe ser mayor a 0");
     });
 
     it("debería fallar si gallery_urls contiene un valor inválido", async () => { 
         const data = { 
-            productVariantId: "123", 
-            productVariant: { 
+            PresentationId: "123", 
+            Presentation: { 
                 gallery_urls: ["not-a-url"], 
                 name: "Test", 
                 price: 10, 

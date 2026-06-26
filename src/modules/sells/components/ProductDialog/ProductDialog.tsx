@@ -7,7 +7,7 @@
 //──────────────────── Funciones 🔧 ─────────────────────//
 //   - Usa `ProductDialogContext` para controlar visibilidad del diálogo.  
 //   - Usa `SnackBarContext` para mostrar feedback al usuario.  
-//   - Consume el hook `useProductVariants` para obtener variantes y producto seleccionado desde Redux.  
+//   - Consume el hook `usePresentations` para obtener variantes y producto seleccionado desde Redux.  
 //   - Configura Formik con:  
 //     - `initialValues` generados por `getInitialProductDialogValues`.  
 //     - `validationSchema` definido en `ProductDialogValidationSchema`.  
@@ -29,8 +29,6 @@ import type { DialogDataInterface } from "@typings/sells/types";
 import { useFormik } from "formik";
 import { useCallback, useContext, useMemo } from "react";
 import { useDispatch } from "react-redux";
-import useProductVariants from "../../../../hooks/sells/useProductVariants";
-import type { AppDispatch } from "../../../../store/productVariant/productVariantSlice";
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
@@ -39,6 +37,8 @@ import ProductDialogValidationSchema from "../../helpers/ProductDialog/Getters/g
 import onSubmit from "../../helpers/ProductDialog/Handlers/handleProductDialogSubmit";
 import ProductDialogData from "./ProductDialogDataComponent";
 import ProductDialogIlustration from "./ProductDialogIlustrationComponent";
+import usePresentations from "../../../../hooks/sells/usePresentations";
+import type { AppDispatch } from "../../../../store/presentation/presentationSlice";
 
 const ProductDialog = (): React.ReactNode => {
   const { showModal, setShowModal } = useContext(ProductDialogContext)!;
@@ -46,11 +46,11 @@ const ProductDialog = (): React.ReactNode => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const {productSelected, productVariants} = useProductVariants();
+  const {productSelected, presentations} = usePresentations();
 
   const initialValues: DialogDataInterface = useMemo(() => 
-    getInitialProductDialogValues(productVariants)
-  , [productVariants]);
+    getInitialProductDialogValues(presentations)
+  , [presentations]);
 
   const validationSchema = useMemo(() => ProductDialogValidationSchema, []);
 
@@ -115,7 +115,7 @@ const ProductDialog = (): React.ReactNode => {
         >
           <ProductDialogIlustration name={name} image_url={image_url}/>
           <ProductDialogData 
-            products={productVariants} 
+            products={presentations} 
             values={values}
             setFieldValue={setFieldValue}
           />

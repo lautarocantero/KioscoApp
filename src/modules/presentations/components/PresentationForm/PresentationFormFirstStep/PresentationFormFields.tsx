@@ -3,7 +3,7 @@ import type { PresentationFormValues } from "@typings/presentation/presentationT
 import { useFormikContext } from "formik";
 import { sharedSx } from "../../../../shared/components/sharedSx/sharedSx";
 
-const ProductVariantFormFields = (): React.ReactNode => {
+const PresentationFormFields = (): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();
 
     return (
@@ -49,4 +49,4 @@ const ProductVariantFormFields = (): React.ReactNode => {
     );
 };
 
-export default ProductVariantFormFields;
+export default PresentationFormFields;

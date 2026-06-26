@@ -1,5 +1,5 @@
 
-// # Thunk: getProductVariantsById  
+// # Thunk: getPresentationsById  
 
 // ## Descripción 📦  
 // Thunk de Redux que obtiene las variantes de un producto específico desde la API.  
@@ -7,21 +7,21 @@
 
 // ## Flujo 🔧  
 // 1. **Inicio de petición**:  
-//    - Se despacha `checkingProductVariants()` para indicar que la aplicación está en proceso de verificación.  
+//    - Se despacha `checkingPresentations()` para indicar que la aplicación está en proceso de verificación.  
 // 2. **Petición a la API**:  
-//    - Llama a `getProductVariantsByIdRequest({ product_id })` para obtener las variantes del producto.  
+//    - Llama a `getPresentationsByIdRequest({ product_id })` para obtener las variantes del producto.  
 // 3. **Validación de respuesta**:  
-//    - Si no se encuentran variantes (`!productVariants`):  
+//    - Si no se encuentran variantes (`!Presentations`):  
 //      - Se despacha `setError` con mensaje `"No se ha encontrado ninguna variante del producto"`.  
 //      - Se lanza un `Error`.  
 //    - Si se encuentran variantes:  
-//      - Se despacha `setProductsVariants(productVariants)` para actualizar el estado global.  
+//      - Se despacha `setProductsVariants(Presentations)` para actualizar el estado global.  
 //      - Se retorna el array de variantes.  
 // 4. **Manejo de errores**:  
 //    - Si ocurre una excepción, se delega a `handleError(error)` para centralizar la lógica de errores.  
 
 // ## Acciones usadas 🎭  
-// - `checkingProductVariants`: marca el inicio de la verificación.  
+// - `checkingPresentations`: marca el inicio de la verificación.  
 // - `setError`: guarda un mensaje de error en el estado.  
 // - `setProductsVariants`: actualiza el estado con las variantes obtenidas.  
 
@@ -30,53 +30,53 @@
 // - Retorno: `Promise<Presentation[] | undefined>` (array de variantes o undefined en caso de error).  
 
 // ## Notas técnicas 💽  
-// - **Modularidad**: separa la lógica de API (`getProductVariantsByIdRequest`) del manejo de estado.  
+// - **Modularidad**: separa la lógica de API (`getPresentationsByIdRequest`) del manejo de estado.  
 // - **Escalabilidad**: se pueden añadir más validaciones (ej. stock mínimo, precios) antes de despachar.  
 // - **Consistencia**: asegura que siempre se despache una acción (`checking`, `error` o `setProductsVariants`) para mantener la UI sincronizada.  
 
 
 import type { Dispatch } from "@reduxjs/toolkit"
 import type { Presentation } from "../../typings/presentation/presentationTypes"
-import { checkingProductVariants, setError, setProductsVariants, startLoadingProductVariants } from "./productVariantSlice"
+import { checkingPresentations, setError, setProductsVariants, startLoadingPresentations } from "./presentationSlice"
 import { handleError } from "../shared/handlerStoreError"
 import { getPresentationByIdRequest, getPresentationsByProductIdRequest } from "../../modules/presentations/api/presentationsApi"
 
 
-export const getProductVariantsById = (product_id: string) => {
+export const getPresentationsById = (product_id: string) => {
 
     return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
-        dispatch(startLoadingProductVariants());
+        dispatch(startLoadingPresentations());
         try{
-            const productVariants: Presentation[] = await getPresentationsByProductIdRequest({product_id});
+            const Presentations: Presentation[] = await getPresentationsByProductIdRequest({product_id});
 
-            if(!productVariants) {
+            if(!Presentations) {
                 dispatch(setError({errorMessage: "No se ha encontrado ninguna variante del producto" }));
                 throw new Error('No se encontraron productos que coincidan con el id ' + product_id);
             }
 
-            dispatch(setProductsVariants(productVariants));
-            return productVariants as Presentation[];
+            dispatch(setProductsVariants(Presentations));
+            return Presentations as Presentation[];
         } catch(error: unknown) {
             handleError(error);
         }
     }
 }
 
-export const getProductVariantById = (product_variant_id: string) => {
+export const getPresentationById = (product_variant_id: string) => {
     return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
-        dispatch(checkingProductVariants());
+        dispatch(checkingPresentations());
 
         try{
             {/*─────────────────── 🔎 Se usa un array, pero solo se tendra un elemento en el mismo 🔎 ───────────────────*/}
-            const productVariant: Presentation[] = await getPresentationByIdRequest({product_variant_id});
+            const Presentation: Presentation[] = await getPresentationByIdRequest({product_variant_id});
 
-            if(!productVariant) {
+            if(!Presentation) {
                 dispatch(setError({errorMessage: "No se ha encontrado el producto en la base de datos" }));
                 throw new Error('No se encontraron variantes del producto');
             }
 
-            dispatch(setProductsVariants(productVariant));
-            return productVariant as Presentation[];
+            dispatch(setProductsVariants(Presentation));
+            return Presentation as Presentation[];
         } catch (error: unknown) {
             handleError(error);
         }

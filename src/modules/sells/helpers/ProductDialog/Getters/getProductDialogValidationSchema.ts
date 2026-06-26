@@ -5,8 +5,8 @@
 // Esquema de validación Yup para el formulario de ProductDialog.
 
 // Lógica 🔧
-// - Valida que `productVariantId` sea obligatorio.
-// - Valida que `productVariant` contenga todos los campos requeridos (id, nombre, descripción, stock, precio, etc.).
+// - Valida que `PresentationId` sea obligatorio.
+// - Valida que `Presentation` contenga todos los campos requeridos (id, nombre, descripción, stock, precio, etc.).
 // - Exige que `requiredStock` sea mayor a 0.
 // - Exige que `totalPrice` esté definido.
 
@@ -19,8 +19,8 @@
 import * as Yup from "yup";
 
 const ProductDialogValidationSchema = Yup.object().shape({
-    productVariantId: Yup.string().required("Campo requerido"),
-    productVariant: Yup.object().shape({
+    PresentationId: Yup.string().required("Campo requerido"),
+    Presentation: Yup.object().shape({
       _id: Yup.string().nullable().required("Campo requerido"),
       brand: Yup.string().required("Campo requerido"),
       created_at: Yup.string().required("Campo requerido"),

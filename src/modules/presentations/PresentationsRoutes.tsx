@@ -1,4 +1,4 @@
-// # Componente: ProductVariantRoutes
+// # Componente: PresentationRoutes
 
 // ## Descripción 📦
 // Definición de rutas para la gestión de presentaciones (variantes) de productos.

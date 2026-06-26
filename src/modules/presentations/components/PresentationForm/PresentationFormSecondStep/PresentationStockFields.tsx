@@ -1,10 +1,10 @@
 import { Grid, TextField } from "@mui/material";
 import { useFormikContext } from "formik";
-import type { ProductVariantFormValues } from "@typings/presentation/presentationTypes";
+import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import { sharedSx } from "../../../../shared/components/sharedSx/sharedSx";
 
-const ProductVariantStockFields = (): React.ReactNode => {
-    const { values, errors, setFieldValue } = useFormikContext<ProductVariantFormValues>();
+const PresentationStockFields = (): React.ReactNode => {
+    const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();
 
     return (
         <Grid container spacing={2.5} display="flex" flexDirection="column">
@@ -45,4 +45,4 @@ const ProductVariantStockFields = (): React.ReactNode => {
     );
 };
 
-export default ProductVariantStockFields;
+export default PresentationStockFields;

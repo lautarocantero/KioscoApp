@@ -22,15 +22,15 @@ const mockedData = {
 
 describe("formatProductTicket", () => {
 
-    it("lanza error si productVariant no está definido", () => {
+    it("lanza error si Presentation no está definido", () => {
       expect(() => {
         // @ts-expect-error probando caso inválido
-        formatProductTicket({ productVariant: undefined, requiredStock: 1 });
+        formatProductTicket({ Presentation: undefined, requiredStock: 1 });
       }).toThrow("No se ha encontrado el producto");
     });
 
     it("devuelve un objeto ProductTicketType válido", () => {
-      const result = formatProductTicket({ productVariant: mockedData, requiredStock: 5 });
+      const result = formatProductTicket({ Presentation: mockedData, requiredStock: 5 });
 
       expect(result).toBeDefined();
       expect(result?._id).toBe("1");
@@ -38,8 +38,8 @@ describe("formatProductTicket", () => {
       expect(result?.stock_required).toBe(5);
     });
 
-    it("incluye todos los campos principales del productVariant", () => {
-      const result = formatProductTicket({ productVariant: mockedData!, requiredStock: 2 });
+    it("incluye todos los campos principales del Presentation", () => {
+      const result = formatProductTicket({ Presentation: mockedData!, requiredStock: 2 });
 
       expect(result).toMatchObject({
         _id: "1", 

@@ -1,10 +1,10 @@
-// modules/productVariants/components/ProductVariantUpdated/VariantUpdatedComponent.tsx
+// modules/Presentations/components/PresentationUpdated/VariantUpdatedComponent.tsx
 
 import { Box } from "@mui/material";
 import VariantUpdatedCard from "./PresentationUpdatedCard";
-import type { UpdatedProductVariantInterface } from "@typings/presentation/presentationTypes";
+import type { UpdatedPresentationInterface } from "@typings/presentation/presentationTypes";
 
-interface Props { updatedVariant: UpdatedProductVariantInterface; }
+interface Props { updatedVariant: UpdatedPresentationInterface; }
 
 const VariantUpdatedComponent = ({ updatedVariant }: Props): React.ReactNode => (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", p: 2, pt: 0 }}>

@@ -24,31 +24,31 @@ const mockedData = {
 
 describe("handleChangeUnits", () => {
   it("actualiza requiredStock si el valor es válido", () => {
-    handleChangeUnits({ incomingValue: 3, productVariant: mockedData, setFieldValue: mockSetFieldValue });
+    handleChangeUnits({ incomingValue: 3, Presentation: mockedData, setFieldValue: mockSetFieldValue });
     expect(mockSetFieldValue).toHaveBeenCalledWith("requiredStock", 3);
   });
 
   it("ajusta requiredStock si el valor es menor a 1", () => {
-    handleChangeUnits({ incomingValue: 0, productVariant: mockedData, setFieldValue: mockSetFieldValue });
+    handleChangeUnits({ incomingValue: 0, Presentation: mockedData, setFieldValue: mockSetFieldValue });
     expect(mockSetFieldValue).toHaveBeenCalledWith("requiredStock", 1);
   });
 
   it("ajusta requiredStock si el valor supera el stock", () => {
-    handleChangeUnits({ incomingValue: 20, productVariant: mockedData, setFieldValue: mockSetFieldValue });
+    handleChangeUnits({ incomingValue: 20, Presentation: mockedData, setFieldValue: mockSetFieldValue });
     expect(mockSetFieldValue).toHaveBeenCalledWith("requiredStock", 5);
   });
 
   it("lanza error si el valor es no numérico", () => {
     expect(() => {
         // @ts-expect-error probando caso inválido
-      handleChangeUnits({ incomingValue: "abc", productVariant: mockedData, setFieldValue: mockSetFieldValue });
+      handleChangeUnits({ incomingValue: "abc", Presentation: mockedData, setFieldValue: mockSetFieldValue });
     }).toThrow("El valor ingresado no es numérico.");
   });
 
   it("lanza error si no hay producto", () => {
     expect(() => {
         // @ts-expect-error probando caso inválido
-        handleChangeUnits({ incomingValue: 2, productVariant: undefined, setFieldValue: mockSetFieldValue });
+        handleChangeUnits({ incomingValue: 2, Presentation: undefined, setFieldValue: mockSetFieldValue });
     }).toThrow("No se ha seleccionado un producto válido.");
   });
 });

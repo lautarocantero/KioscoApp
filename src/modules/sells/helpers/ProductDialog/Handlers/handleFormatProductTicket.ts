@@ -6,7 +6,7 @@
 // `ProductTicketType` listo para despachar tickets al carrito.
 
 // Lógica 🔧
-// - Recibe `productVariant` y `requiredStock`.
+// - Recibe `Presentation` y `requiredStock`.
 // - Extrae los campos principales de la variante.
 // - Devuelve un `ProductTicketType` con esos datos más `stock_required`.
 
@@ -18,9 +18,9 @@
 import type { ProductTicketType } from "@typings/seller/sellerTypes";
 import type { FormatProductTicketInterface } from "@typings/sells/types";
 
-  const formatProductTicket = ({productVariant, requiredStock } : FormatProductTicketInterface): ProductTicketType | undefined => {
+  const formatProductTicket = ({Presentation, requiredStock } : FormatProductTicketInterface): ProductTicketType | undefined => {
     
-    if(!productVariant) {
+    if(!Presentation) {
       throw new Error('No se ha encontrado el producto');
       return;
     }
@@ -37,7 +37,7 @@ import type { FormatProductTicketInterface } from "@typings/sells/types";
       price,
       product_id,
       sku,
-    } = productVariant;
+    } = Presentation;
 
     return {
       _id,

@@ -1,4 +1,4 @@
-// modules/productVariants/components/ProductVariantEdit/ProductVariantEditForm.tsx
+// modules/Presentations/components/PresentationEdit/PresentationEditForm.tsx
 
 import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
@@ -14,17 +14,17 @@ import ActualStepComponent from "../../../../../shared/components/FormGrid/Actua
 import BaseEntitySummaryComponent from "../../../../components/BaseEntitySummary";
 import { usePresentationForm } from "../../../../../../hooks/presentation/usePresentationForm";
 import VariantUpdatedComponent from "../presentationUpdated/PresentationUpdatedComponent";
-import ProductVariantFormFirstStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormFirstStep";
-import ProductVariantFormSecondStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormSecondStep";
-import ProductVariantFormThirdStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormThirdStep";
+import PresentationFormFirstStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormFirstStep";
+import PresentationFormSecondStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormSecondStep";
+import PresentationFormThirdStep from "../../../../../../modules/presentations/components/PresentationForm/PresentationFormThirdStep";
 
 const STEP_COMPONENTS = [
-    ProductVariantFormFirstStep,
-    ProductVariantFormSecondStep,
-    ProductVariantFormThirdStep,
+    PresentationFormFirstStep,
+    PresentationFormSecondStep,
+    PresentationFormThirdStep,
 ];
 
-const ProductVariantEditFormComponent = (): React.ReactNode => {
+const PresentationEditFormComponent = (): React.ReactNode => {
     const {
         editingVariant,
         updatedVariant,
@@ -88,4 +88,4 @@ const ProductVariantEditFormComponent = (): React.ReactNode => {
     );
 };
 
-export default ProductVariantEditFormComponent;
+export default PresentationEditFormComponent;

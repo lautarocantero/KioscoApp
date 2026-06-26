@@ -8,14 +8,14 @@
 //
 //──────────────────── Funciones 🔧 ─────────────────────//
 // • `useEffect`: enfoca el input al mostrarse.
-// • `getProductVariant({id})`: obtiene variante de producto desde el store.
+// • `getPresentation({id})`: obtiene variante de producto desde el store.
 // • `handleAddToCart()`: agrega producto al carrito, incrementa unidades si ya existe.
 // • `handleKeyDown(e)`: ejecuta `handleAddToCart` al presionar Enter.
 // • `showSnackBar()`: muestra notificación de éxito al agregar producto.
 //
 //─────────────────── Notas técnicas 💽 ───────────────────//
 // - Solo se renderiza en rutas `/new-sell` y `/cart`.
-// - Usa Redux Thunks: `getProductVariantById`, `selectProductThunk`, `addOneUnitThunk`, `addToCartThunk`.
+// - Usa Redux Thunks: `getPresentationById`, `selectProductThunk`, `addOneUnitThunk`, `addToCartThunk`.
 // - El nombre del producto se recorta a 25 caracteres para mensajes de SnackBar.
 // - Animación con `animate.css` (`animate__backInRight`).
 // - Contexto: `SnackBarContext` para notificaciones globales.
@@ -30,7 +30,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import type { AppDispatch } from '../../../../../store/auth/authSlice';
-import { getProductVariantById } from '../../../../../store/productVariant/productVariantThunks';
+import { getPresentationById } from '../../../../../store/Presentation/PresentationThunks';
 import type { RootState as SellerRootState } from "../../../../../store/seller/sellerSlice";
 import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../../store/seller/sellerThunks';
 import type { Presentation } from '../../../../../typings/presentation/presentationTypes';
@@ -60,8 +60,8 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
 
   if (location.pathname !== "/new-sell" && location.pathname !== "/cart") return null;
 
-  const getProductVariant = async ({id}:{id: string}): Promise<Presentation> => {
-    const prod: Presentation[] | undefined = await dispatch(getProductVariantById(id));
+  const getPresentation = async ({id}:{id: string}): Promise<Presentation> => {
+    const prod: Presentation[] | undefined = await dispatch(getPresentationById(id));
 
     if(!prod) {
       showSnackBar(`Código de barras inexistente`, AlertColor.Error);
@@ -75,7 +75,7 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
   const handleAddToCart = async () => {
     if(barcode === '') return;
 
-    const product: Presentation = await getProductVariant({id: barcode});
+    const product: Presentation = await getPresentation({id: barcode});
     
     if(!product) {
       showSnackBar(`Código de barras inexistente`, AlertColor.Error);

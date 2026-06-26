@@ -4,7 +4,7 @@ import type { CreatedProductInterface } from "@typings/product/productTypes";
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-interface ProductVariantEntity { 
+interface PresentationEntity { 
     _id: string;
     brand: string;
     created_at: string;
@@ -27,11 +27,11 @@ interface ProductVariantEntity {
 // ║ 🧩 DERIVADOS 🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩                ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-// // derivado para no utilizar directamente el ProductVariantEntity
-export type Presentation = ProductVariantEntity;
+// // derivado para no utilizar directamente el PresentationEntity
+export type Presentation = PresentationEntity;
 
 // // derivado para los datos publicos
-export type ProductVariantPublic = Pick<ProductVariantEntity, 
+export type PresentationPublic = Pick<PresentationEntity, 
     '_id' |'name'| 'description'|'image_url'|
     'brand'| 'sku'|'model_type'|'model_size'|
     'stock'|'price'|'expiration_date'>
@@ -41,13 +41,13 @@ export type ProductVariantPublic = Pick<ProductVariantEntity,
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 // tipo del slice
-interface ProductVariantState {
-    productVariants: Presentation[],
+interface PresentationState {
+    Presentations: Presentation[],
     isLoading: boolean,
     errorMessage: string | null,
 }
 
-export type ProductVariantStateError = Pick<ProductVariantState, 'errorMessage'>;
+export type PresentationStateError = Pick<PresentationState, 'errorMessage'>;
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🪝 Hooks  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝                       ║
@@ -80,4 +80,4 @@ export interface PresentationFormValues {
 // ║ 🎟️ TICKET  🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️🎟️                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type ProductVariantTicketType = ProductVariantPublic;
+export type PresentationTicketType = PresentationPublic;

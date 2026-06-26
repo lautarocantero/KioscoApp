@@ -76,9 +76,9 @@ describe("handleChangeProductDialogSelector", () => {
   });
 
   it("actualiza los campos si el producto se encuentra", () => {
-    const productVariant = mockedData[0]; 
+    const Presentation = mockedData[0]; 
     handleChangeProductDialogSelector({ event: { target: { value: "pv001" } }, products: mockedData, setFieldValue: mockSetFieldValue });
-    expect(mockSetFieldValue).toHaveBeenCalledWith("productVariantId", "pv001");
-    expect(mockSetFieldValue).toHaveBeenCalledWith("productVariant", productVariant);
+    expect(mockSetFieldValue).toHaveBeenCalledWith("PresentationId", "pv001");
+    expect(mockSetFieldValue).toHaveBeenCalledWith("Presentation", Presentation);
   });
 });

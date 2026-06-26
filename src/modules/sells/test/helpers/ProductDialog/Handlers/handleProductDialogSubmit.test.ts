@@ -48,7 +48,7 @@ describe("onSubmit", () => {
   it("muestra error si la validación falla", async () => {
     (validateProductForCart).mockReturnValue({ valid: false, message: "error" });
 
-    await onSubmit({ data: { productVariant: baseProduct, requiredStock: 1 }, showSnackBar: mockShowSnackBar, dispatch: mockDispatch, setShowModal: mockSetShowModal });
+    await onSubmit({ data: { Presentation: baseProduct, requiredStock: 1 }, showSnackBar: mockShowSnackBar, dispatch: mockDispatch, setShowModal: mockSetShowModal });
 
     expect(mockShowSnackBar).toHaveBeenCalledWith("error", AlertColor.Error);
     expect(mockDispatch).not.toHaveBeenCalled();
@@ -58,7 +58,7 @@ describe("onSubmit", () => {
     (validateProductForCart as any).mockReturnValue({ valid: true });
     (formatProductTicket as any).mockReturnValue(undefined);
 
-    await onSubmit({ data: { productVariant: baseProduct, requiredStock: 1 }, showSnackBar: mockShowSnackBar, dispatch: mockDispatch, setShowModal: mockSetShowModal });
+    await onSubmit({ data: { Presentation: baseProduct, requiredStock: 1 }, showSnackBar: mockShowSnackBar, dispatch: mockDispatch, setShowModal: mockSetShowModal });
 
     expect(mockShowSnackBar).toHaveBeenCalledWith("Error agregando el producto al carrito", AlertColor.Error);
     expect(mockDispatch).not.toHaveBeenCalled();
@@ -68,7 +68,7 @@ describe("onSubmit", () => {
     (validateProductForCart as any).mockReturnValue({ valid: true });
     (formatProductTicket as any).mockReturnValue({ ...baseProduct, stock_required: 1 });
 
-    await onSubmit({ data: { productVariant: baseProduct, requiredStock: 1 }, showSnackBar: mockShowSnackBar, dispatch: mockDispatch, setShowModal: mockSetShowModal });
+    await onSubmit({ data: { Presentation: baseProduct, requiredStock: 1 }, showSnackBar: mockShowSnackBar, dispatch: mockDispatch, setShowModal: mockSetShowModal });
 
     expect(mockDispatch).toHaveBeenCalledWith(addToCartThunk({ productData: { ...baseProduct, stock_required: 1 } }));
     expect(mockSetShowModal).toHaveBeenCalledWith(false);
@@ -80,7 +80,7 @@ describe("onSubmit", () => {
     (validateProductForCart as any).mockReturnValue({ valid: true });
     (formatProductTicket as any).mockReturnValue({ ...longNameProduct, stock_required: 1 });
 
-    await onSubmit({ data: { productVariant: longNameProduct, requiredStock: 1 }, showSnackBar: mockShowSnackBar, dispatch: mockDispatch, setShowModal: mockSetShowModal });
+    await onSubmit({ data: { Presentation: longNameProduct, requiredStock: 1 }, showSnackBar: mockShowSnackBar, dispatch: mockDispatch, setShowModal: mockSetShowModal });
 
     expect(mockShowSnackBar).toHaveBeenCalledWith("Agregado 'NombreMuyLargoDeProductoQ...' al carrito", AlertColor.Success);
   });

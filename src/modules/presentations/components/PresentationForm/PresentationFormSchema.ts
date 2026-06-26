@@ -1,10 +1,10 @@
 import type {
-    ProductVariantFormValues,
-    ExistingProductVariantInterface,
+    PresentationFormValues,
+    ExistingPresentationInterface,
 } from "@typings/presentation/presentationTypes";
 import * as Yup from "yup";
 
-export const getProductVariantFormInitialValues = (): ProductVariantFormValues => ({
+export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     sku:             "",
     model_type:      "",
     model_size:      "",
@@ -16,9 +16,9 @@ export const getProductVariantFormInitialValues = (): ProductVariantFormValues =
     expiration_date: "",
 });
 
-export const getProductVariantEditInitialValues = (
-    variant: ExistingProductVariantInterface
-): ProductVariantFormValues => ({
+export const getPresentationEditInitialValues = (
+    variant: ExistingPresentationInterface
+): PresentationFormValues => ({
     sku:             variant.sku,
     model_type:      variant.model_type,
     model_size:      variant.model_size,
@@ -30,10 +30,10 @@ export const getProductVariantEditInitialValues = (
     expiration_date: variant.expiration_date  ?? "",
 });
 
-// alias para ProductVariantDetailForm
-export const getProductVariantDetailInitialValues = getProductVariantEditInitialValues;
+// alias para PresentationDetailForm
+export const getPresentationDetailInitialValues = getPresentationEditInitialValues;
 
-export const productVariantFormSchema = Yup.object({
+export const PresentationFormSchema = Yup.object({
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
@@ -47,7 +47,7 @@ export const productVariantFormSchema = Yup.object({
     expiration_date: Yup.string().required("Fecha de vencimiento requerida"),
 });
 
-export const productVariantEditFormSchema = Yup.object({
+export const PresentationEditFormSchema = Yup.object({
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
@@ -59,7 +59,7 @@ export const productVariantEditFormSchema = Yup.object({
     expiration_date: Yup.string().required("Fecha de vencimiento requerida"),
 });
 
-export const stepFieldsMap: Record<number, (keyof ProductVariantFormValues)[]> = {
+export const stepFieldsMap: Record<number, (keyof PresentationFormValues)[]> = {
     0: ["sku", "model_type", "model_size", "image_url"],
     1: ["min_stock", "stock", "price"],
     2: ["expiration_date"],

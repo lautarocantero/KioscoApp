@@ -24,7 +24,7 @@ import type { HandleProductDialogUnitsChangeInterface, ValidationResultType } fr
 
 const validateProductUnits = ({
   incomingValue,
-  productVariant,
+  Presentation,
 }: Partial<HandleProductDialogUnitsChangeInterface>): ValidationResultType => {
 
   if (incomingValue == null) {
@@ -43,15 +43,15 @@ const validateProductUnits = ({
     };
   }
 
-  if (!productVariant) {
+  if (!Presentation) {
     return { valid: false, message: "No se ha seleccionado un producto válido." };
   }
 
-  if (incomingValue > productVariant.stock) {
+  if (incomingValue > Presentation.stock) {
     return {
       valid: false,
-      message: `La cantidad máxima permitida es ${productVariant.stock}.`, 
-      adjustedValue: productVariant.stock ,
+      message: `La cantidad máxima permitida es ${Presentation.stock}.`, 
+      adjustedValue: Presentation.stock ,
     };
   }
 

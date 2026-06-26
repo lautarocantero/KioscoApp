@@ -58,7 +58,7 @@ export const createProduct = (body: CreateProductBody, navigate: NavigateFunctio
                 variants:     [],   // recién creado, sin variantes aún
             };
 
-            // ─── Guardamos en store → ProductVariantForm lo leerá desde acá ──
+            // ─── Guardamos en store → PresentationForm lo leerá desde acá ──
             dispatch(setCurrentProduct(createdProduct));
 
             // ─── Navegamos al form de variante ────────────────────────────────

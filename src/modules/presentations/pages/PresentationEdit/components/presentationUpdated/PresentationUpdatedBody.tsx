@@ -1,4 +1,4 @@
-// modules/productVariants/components/ProductVariantUpdated/VariantUpdatedBody.tsx
+// modules/Presentations/components/PresentationUpdated/VariantUpdatedBody.tsx
 
 import { Box, Typography } from "@mui/material";
 

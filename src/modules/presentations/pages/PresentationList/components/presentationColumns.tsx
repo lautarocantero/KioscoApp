@@ -9,7 +9,7 @@ import { formatPrice } from "../helpers/presentationHelpers";
 
 // ─── tipos ────────────────────────────────────────────────────────────────────
 
-type ProductVariantStatus = "available" | "out_of_stock" | "unavailable";
+type PresentationStatus = "available" | "out_of_stock" | "unavailable";
 
 export type BuildColumnsArgs = {
     productId: string;
@@ -20,7 +20,7 @@ export type BuildColumnsArgs = {
 // ─── config de estado ─────────────────────────────────────────────────────────
 
 const STATUS_CONFIG: Record<
-    ProductVariantStatus,
+    PresentationStatus,
     { label: string; color: "success" | "error" | "default" }
 > = {
     available:    { label: "Disponible",    color: "success" },
@@ -104,7 +104,7 @@ export const buildColumns = ({
         align: "center",
         headerAlign: "center",
         renderCell: (
-            params: GridRenderCellParams<Presentation, ProductVariantStatus>
+            params: GridRenderCellParams<Presentation, PresentationStatus>
         ) => {
             const cfg = STATUS_CONFIG[params.value ?? "unavailable"];
             return (

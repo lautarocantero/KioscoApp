@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import PresentationFormCard from "../PresentationFormCard";
-import ProductVariantExpirationField from "./PresentationExpirationField";
+import PresentationExpirationField from "./PresentationExpirationField";
 import { useFormNavigation } from "../../../../../modules/products/context/FormNavigationContext";
 
-const ProductVariantFormThirdStep = (): React.ReactNode => {
+const PresentationFormThirdStep = (): React.ReactNode => {
     const { currentStep, actionTitle} = useFormNavigation();
 
     return (
@@ -13,9 +13,9 @@ const ProductVariantFormThirdStep = (): React.ReactNode => {
             minHeight: "auto", p: 2, pt: 0,
         }}>
         <PresentationFormCard submitText={actionTitle === "create" ? "Crear" : "Actualizar"} showButtons  currentStep={currentStep}>
-            <ProductVariantExpirationField />
+            <PresentationExpirationField />
         </PresentationFormCard>
     </Box>
 )};
 
-export default ProductVariantFormThirdStep;
+export default PresentationFormThirdStep;

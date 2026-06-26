@@ -24,17 +24,17 @@ describe("Helper: getInitialProductDialogValues", () => {
 
   it("debe devolver valores iniciales con la primera variante", () => {
     const result = getInitialProductDialogValues([baseVariant]);
-    expect(result.productVariantId).toBe("123");
-    expect(result.productVariant).toEqual(baseVariant);
+    expect(result.PresentationId).toBe("123");
+    expect(result.Presentation).toEqual(baseVariant);
     expect(result.requiredStock).toBe(1); // stock > 0
     expect(result.totalPrice).toBe(0);
   });
 
   it("debe devolver objeto vacío si no hay variantes", () => {
     const result = getInitialProductDialogValues([]);
-    expect(result.productVariantId).toBe("");
-    if (result.productVariant) 
-        expect(result.productVariant.name).toBe(""); // emptyProductVariant
+    expect(result.PresentationId).toBe("");
+    if (result.Presentation) 
+        expect(result.Presentation.name).toBe(""); // emptyPresentation
     expect(result.requiredStock).toBe(0); // stock = 0
     expect(result.totalPrice).toBe(0);
   });

@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
-import ProductVariantStockFields from "./PresentationStockFields";
+import PresentationStockFields from "./PresentationStockFields";
 import PresentationFormCard from "../PresentationFormCard";
 import { useFormNavigation } from "../../../../../modules/products/context/FormNavigationContext";
 
-const ProductVariantFormSecondStep = (): React.ReactNode => {
+const PresentationFormSecondStep = (): React.ReactNode => {
     const { currentStep } = useFormNavigation(); 
     
     return (
@@ -13,9 +13,9 @@ const ProductVariantFormSecondStep = (): React.ReactNode => {
             minHeight: "auto", p: 2, pt: 0,
         }}>
         <PresentationFormCard submitText="Crear" showButtons  currentStep={currentStep}>
-            <ProductVariantStockFields />
+            <PresentationStockFields />
         </PresentationFormCard>
     </Box>
 )};
 
-export default ProductVariantFormSecondStep;
+export default PresentationFormSecondStep;

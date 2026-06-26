@@ -14,9 +14,9 @@
 import type { HandleProductDialogUnitsChangeInterface, ValidationResultType } from "@typings/sells/types";
 import validateProductUnits from "../Validation/ValidateProductUnits";
 
-const handleChangeUnits = ({incomingValue, productVariant, setFieldValue}: HandleProductDialogUnitsChangeInterface) => {
+const handleChangeUnits = ({incomingValue, Presentation, setFieldValue}: HandleProductDialogUnitsChangeInterface) => {
     
-    const validationResult: ValidationResultType = validateProductUnits({incomingValue,productVariant});
+    const validationResult: ValidationResultType = validateProductUnits({incomingValue,Presentation});
 
     {/*─────────────────── 🔎 validacion fallida sin correccion 🔎 ───────────────────*/}
 

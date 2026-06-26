@@ -31,7 +31,7 @@ export const getPresentationEditInitialValues = (
     expiration_date: presentation.expiration_date ?? "",
 });
 
-// alias para compatibilidad con ProductVariantDetailForm
+// alias para compatibilidad con PresentationDetailForm
 export const getPresentationDetailInitialValues = getPresentationEditInitialValues;
 
 // ── Schemas ───────────────────────────────────────────────────────────────────

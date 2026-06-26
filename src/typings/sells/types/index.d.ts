@@ -89,8 +89,8 @@ import type { EspecificationsLeftProps } from "../reactComponents";
     export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
 
     export interface DialogDataInterface {
-        productVariantId: string,
-        productVariant: Presentation | null,
+        PresentationId: string,
+        Presentation: Presentation | null,
         requiredStock: number,
         totalPrice: number,
     }
@@ -102,17 +102,17 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         setShowModal: (value: boolean) => void;
     };
 
-    export type DialogVariantDataType = Omit<DialogDataInterface, 'productVariantId'>
+    export type DialogVariantDataType = Omit<DialogDataInterface, 'PresentationId'>
 
     export interface FormatProductTicketInterface {
-        productVariant: Presentation;
+        Presentation: Presentation;
         requiredStock: number;
     }
 
     export type EvaluateStockType = Pick<EspecificationsLeftProps, 'variants'>
 
     export interface validateProductSubmissionInterface {
-        productVariant: Presentation | null;
+        Presentation: Presentation | null;
         requiredStock: number;
     }
 
@@ -130,7 +130,7 @@ import type { EspecificationsLeftProps } from "../reactComponents";
 
     export interface HandleProductDialogUnitsChangeInterface {
         incomingValue: number | null | undefined;
-        productVariant: Presentation | null,
+        Presentation: Presentation | null,
         setFieldValue: SetFieldValue<DialogDataInterface>;
     }
 

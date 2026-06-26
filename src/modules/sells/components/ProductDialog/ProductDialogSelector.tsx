@@ -17,7 +17,7 @@ import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/
 import React, { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
-import type { RootState as ProductVariantState } from "../../../../store/productVariant/productVariantSlice";
+import type { RootState as PresentationState } from "../../../../store/Presentation/PresentationSlice";
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 import handleChangeSelector from "../../helpers/ProductDialog/Handlers/handleChangeProductDialogSelector";
 
@@ -25,8 +25,8 @@ const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: Dia
 
     const isEmpty = useMemo(() => { return (products?.length ?? 0) === 0; }, [products]);
 
-    const { productVariant } = useSelector((state: ProductVariantState) => state);
-    const { isLoading } : { isLoading: boolean } = productVariant;
+    const { Presentation } = useSelector((state: PresentationState) => state);
+    const { isLoading } : { isLoading: boolean } = Presentation;
 
     const renderValue = useCallback( 
         (selected: string) => { 
@@ -73,7 +73,7 @@ const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: Dia
                 <Select
                     labelId="product-select-label"
                     id="product-select"
-                    value={values?.productVariantId ?? ""}
+                    value={values?.PresentationId ?? ""}
                     label="Product"
                     onChange={(event: SelectChangeEvent<string>) => handleChange({event,products, setFieldValue})}
                     sx={(theme: Theme) => ({

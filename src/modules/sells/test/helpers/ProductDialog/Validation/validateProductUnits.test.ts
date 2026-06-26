@@ -22,40 +22,40 @@ const data = {
 
 describe("validateProductUnits", () => {
   it("falla si el valor es nulo", () => {
-    const result = validateProductUnits({ incomingValue: null, productVariant: data });
+    const result = validateProductUnits({ incomingValue: null, Presentation: data });
     expect(result.valid).toBe(false);
     expect(result.message).toMatch(/nulo/);
   });
 
   it("falla si el valor no es numérico", () => {
     // @ts-expect-error probando valor no numérico
-    const result = validateProductUnits({ incomingValue: "abc" as unknown, productVariant: data });
+    const result = validateProductUnits({ incomingValue: "abc" as unknown, Presentation: data });
     expect(result.valid).toBe(false);
     expect(result.message).toMatch(/no es numérico/);
   });
 
   it("ajusta a 1 si el valor es menor o igual a 0", () => {
-    const result = validateProductUnits({ incomingValue: 0, productVariant: data });
+    const result = validateProductUnits({ incomingValue: 0, Presentation: data });
     expect(result.valid).toBe(false);
     expect(result.adjustedValue).toBe(1);
     expect(result.message).toMatch(/mínima es 1/);
   });
 
   it("falla si no hay producto seleccionado", () => {
-    const result = validateProductUnits({ incomingValue: 2, productVariant: undefined });
+    const result = validateProductUnits({ incomingValue: 2, Presentation: undefined });
     expect(result.valid).toBe(false);
     expect(result.message).toMatch(/producto válido/);
   });
 
   it("ajusta al máximo si el valor supera el stock", () => {
-    const result = validateProductUnits({ incomingValue: 20, productVariant: data });
+    const result = validateProductUnits({ incomingValue: 20, Presentation: data });
     expect(result.valid).toBe(false);
     expect(result.adjustedValue).toBe(5);
     expect(result.message).toMatch(/máxima permitida es 5/);
   });
 
   it("pasa si el valor es válido y dentro del stock", () => {
-    const result = validateProductUnits({ incomingValue: 5, productVariant: data });
+    const result = validateProductUnits({ incomingValue: 5, Presentation: data });
     expect(result.valid).toBe(true);
   });
 });

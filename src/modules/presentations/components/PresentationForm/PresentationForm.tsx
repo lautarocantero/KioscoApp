@@ -1,22 +1,22 @@
 import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
 import { FormNavigationContext } from "../../../products/context/FormNavigationContext";
-import { getProductVariantFormInitialValues, productVariantFormSchema } from "./PresentationFormSchema";
+import { getPresentationFormInitialValues, PresentationFormSchema } from "./PresentationFormSchema";
 import LoadingProductComponent from "../LoadingProduct";
 import NoProductLoadedComponent from "../NotProductLoaded";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import BaseEntitySummaryComponent from "../BaseEntitySummary";
 import { usePresentationForm } from "../../../../hooks/presentation/usePresentationForm";
-import ProductVariantFormFirstStep from "./PresentationFormFirstStep";
-import ProductVariantFormSecondStep from "./PresentationFormSecondStep/PresentationFormSecondStep";
-import ProductVariantFormThirdStep from "./PresentationFormThirdStep/PresentationFormThirdStep";
+import PresentationFormFirstStep from "./PresentationFormFirstStep";
+import PresentationFormSecondStep from "./PresentationFormSecondStep/PresentationFormSecondStep";
+import PresentationFormThirdStep from "./PresentationFormThirdStep/PresentationFormThirdStep";
 import PresentationCreated from "../../pages/PresentationCreate/components/PresentationCreated/PresentationCreatedComponent"
 
 const STEP_COMPONENTS = [
-    ProductVariantFormFirstStep,
-    ProductVariantFormSecondStep,
-    ProductVariantFormThirdStep,
+    PresentationFormFirstStep,
+    PresentationFormSecondStep,
+    PresentationFormThirdStep,
 ];
 
 const PresentationFormComponent = (): React.ReactNode => {
@@ -29,6 +29,7 @@ const PresentationFormComponent = (): React.ReactNode => {
         submitError,
         currentStep,
         totalSteps,
+        handleNextStep,
         handlePrevStep,
         handleSubmit,
         handleCreateAnother,
@@ -52,8 +53,8 @@ const PresentationFormComponent = (): React.ReactNode => {
             />
 
             <Formik
-                initialValues={getProductVariantFormInitialValues()}
-                validationSchema={productVariantFormSchema}
+                initialValues={getPresentationFormInitialValues()}
+                validationSchema={PresentationFormSchema}
                 onSubmit={handleSubmit}
                 validateOnBlur={false}
                 validateOnChange={false}

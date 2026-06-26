@@ -9,7 +9,7 @@
 // - **authSlice** → Maneja autenticación de usuarios.  
 // - **userSlice** → Información y gestión de usuarios.  
 // - **productSlice** → Productos principales.  
-// - **productVariantSlice** → Variantes de productos.  
+// - **PresentationSlice** → Variantes de productos.  
 // - **providerSlice** → Proveedores.  
 // - **sellSlice** → Ventas.  
 // - **sellerSlice** → Vendedores.  
@@ -27,12 +27,12 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./auth/authSlice";
-import productVariantSlice from "./productVariant/productVariantSlice";
 import userSlice from "./user/userSlice";
 import productSlice from "./product/productSlice";
 import providerSlice from "./provider/providerSlice";
 import sellSlice from "./sell/sellSlice";
 import sellerSlice from "./seller/sellerSlice";
+import presentationSlice from "./presentation/presentationSlice";
 
 
 export const store = configureStore({
@@ -40,7 +40,7 @@ export const store = configureStore({
         auth: authSlice,
         user: userSlice,
         product: productSlice,
-        productVariant: productVariantSlice,
+        presentation: presentationSlice,
         provider:providerSlice,
         sell: sellSlice,
         seller: sellerSlice,

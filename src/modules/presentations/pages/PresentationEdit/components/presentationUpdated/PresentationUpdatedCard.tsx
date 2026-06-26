@@ -1,11 +1,11 @@
-// modules/productVariants/components/ProductVariantUpdated/VariantUpdatedCard.tsx
+// modules/Presentations/components/PresentationUpdated/VariantUpdatedCard.tsx
 
 import { Card, CardContent, type Theme } from "@mui/material";
-import type { UpdatedProductVariantInterface } from "@typings/presentation/presentationTypes";
+import type { UpdatedPresentationInterface } from "@typings/presentation/presentationTypes";
 import VariantUpdatedBody from "./PresentationUpdatedBody";
 import VariantUpdatedActions from "./PresentationUpdatedActions";
 
-interface Props { updatedVariant: UpdatedProductVariantInterface; }
+interface Props { updatedVariant: UpdatedPresentationInterface; }
 
 const VariantUpdatedCard = ({ updatedVariant }: Props): React.ReactNode => (
     <Card sx={(theme: Theme) => ({

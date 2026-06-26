@@ -6,7 +6,7 @@
 
 // Lógica 🔧
 // - Toma la primera variante de producto o usa un objeto vacío.
-// - Devuelve un objeto con `productVariantId`, `productVariant`, `requiredStock` y `totalPrice`.
+// - Devuelve un objeto con `PresentationId`, `Presentation`, `requiredStock` y `totalPrice`.
 
 // Notas técnicas 💽
 // - Usado en el componente `ProductDialog` para inicializar Formik.
@@ -16,7 +16,7 @@
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { DialogDataInterface } from "@typings/sells/types";
 
-const emptyProductVariant: Presentation = {
+const emptyPresentation: Presentation = {
   _id: "",
   brand: "",
   created_at: "",
@@ -35,13 +35,13 @@ const emptyProductVariant: Presentation = {
   updated_at: "",
 };
 
-const getInitialProductDialogValues = (productVariants: Presentation[]): DialogDataInterface => {
-  const product: Presentation = productVariants?.length > 0 ? productVariants[0] : emptyProductVariant;
+const getInitialProductDialogValues = (Presentations: Presentation[]): DialogDataInterface => {
+  const product: Presentation = Presentations?.length > 0 ? Presentations[0] : emptyPresentation;
   const productId: string = product._id ?? "";
 
   return {
-    productVariantId: productId,
-    productVariant: product,
+    PresentationId: productId,
+    Presentation: product,
     requiredStock: product.stock > 0 ? 1 : 0,
     totalPrice: 0,
   };

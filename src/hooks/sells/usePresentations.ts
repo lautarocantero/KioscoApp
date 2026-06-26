@@ -1,7 +1,7 @@
 
 /**
  * ┌───────────────────────────────────────────────┐
- * │           🪝 Hook: useProductVariants          │
+ * │           🪝 Hook: usePresentations          │
  * └───────────────────────────────────────────────┘
  *
  * 📚 Propósito:
@@ -11,40 +11,40 @@
  * ────────────────────────────────────────────────
  *
  * 🔧 Lógica:
- * 1. Usa Redux para leer `productSelected` y `productVariants`.
- * 2. Despacha `getProductVariantsById` cuando cambia el producto.
+ * 1. Usa Redux para leer `productSelected` y `Presentations`.
+ * 2. Despacha `getPresentationsById` cuando cambia el producto.
  * 3. Retorna ambos valores listos para usar en la UI.
  *
  * ────────────────────────────────────────────────
  *
  * 📝 Ejemplo:
  * 
- * const { productSelected, productVariants } = useProductVariants();
+ * const { productSelected, Presentations } = usePresentations();
  * 
  * ────────────────────────────────────────────────*/
 
 
 import { useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import type { AppDispatch, RootState as ProductVariantState } from "../../store/productVariant/productVariantSlice";
-import { getProductVariantsById } from "../../store/productVariant/productVariantThunks";
+import type { AppDispatch, RootState as PresentationState } from "../../store/presentation/presentationSlice";
+import { getPresentationsById } from "../../store/presentation/presentationThunks";
 import type { RootState as SellerRootState } from "../../store/seller/sellerSlice";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 
-interface useProductVariantsInterface {
+interface usePresentationsInterface {
     productSelected: Presentation | null;
-    productVariants: Presentation[];
+    presentations: Presentation[];
 }
 
-const useProductVariants = (): useProductVariantsInterface =>  {
+const usePresentations = (): usePresentationsInterface =>  {
   const dispatch = useDispatch<AppDispatch>();
 
   const productSelected = useSelector(
     (state: SellerRootState) => state.seller.productSelected
   );
 
-  const productVariants = useSelector(
-    (state: ProductVariantState) => state.productVariant.productVariants,
+  const presentations = useSelector(
+    (state: PresentationState) => state.presentation.Presentations,
     shallowEqual
   );
 
@@ -52,13 +52,13 @@ const useProductVariants = (): useProductVariantsInterface =>  {
     const fetchVariants = async () => {
       const _idResult: string | null | undefined = productSelected?._id;
       if (!_idResult) return;
-      await dispatch(getProductVariantsById(_idResult));
+      await dispatch(getPresentationsById(_idResult));
     };
 
     fetchVariants();
   }, [dispatch, productSelected]);
 
-  return {productSelected, productVariants};
+  return {productSelected, presentations};
 }
 
-export default useProductVariants;
+export default usePresentations;
