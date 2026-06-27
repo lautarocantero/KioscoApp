@@ -4,10 +4,7 @@ import ProductFormFields from "../../../components/ProductForm/ProductFormFields
 
 const ProductDetailFirstStep = (): React.ReactNode => (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
-        <FormCard
-            submitText="" showButtons={false}
-            
-        >
+        <FormCard readOnly backPath="/products">
             <ProductFormFields mode="view" disabled />
         </FormCard>
     </Box>

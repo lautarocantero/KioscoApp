@@ -8,6 +8,8 @@ export interface FormCardProps {
     children:     React.ReactNode;
     submitText?:  string;
     showButtons?: boolean;
+    readOnly?:    boolean;
+    backPath?:    string;
     maxWidth?:    number | string;
     /** Props del header estático (título + subtitle) — mutuamente excluyente con multiStepHeader */
     header?: Pick<FormHeaderProps, "title" | "subtitle" | "icon">;
@@ -22,6 +24,8 @@ const FormCard = ({
     children,
     submitText,
     showButtons,
+    readOnly,
+    backPath,
     maxWidth,
     header,
     multiStepHeader,
@@ -71,6 +75,7 @@ const FormCard = ({
 
         <FormFooter />
         {showButtons && <NavButtons SubmitText={submitText ?? ""} />}
+        {readOnly    && <NavButtons readOnly backPath={backPath} />}
     </Card>
 );
 

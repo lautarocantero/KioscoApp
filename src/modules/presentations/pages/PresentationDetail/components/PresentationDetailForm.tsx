@@ -31,7 +31,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
 
     return (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "auto", p: 2, pt: 0 }}>
-            <FormCard submitText="" showButtons={false}>
+            <FormCard readOnly backPath="/products">
                 <Formik
                     initialValues={getPresentationDetailInitialValues(variant)}
                     onSubmit={() => {}}
@@ -154,7 +154,6 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                         </Box>
                     )}
                 </Formik>
-                <BackButton appTheme={appTheme} />
             </FormCard>
         </Box>
     );
