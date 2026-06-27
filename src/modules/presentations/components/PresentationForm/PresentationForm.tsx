@@ -7,11 +7,11 @@ import {
     presentationFormSchema,
     presentationEditFormSchema,
 } from "../../schema/PresentationFormSchema";
-import LoadingProductComponent from "../LoadingProduct";
-import NoProductLoadedComponent from "../NotProductLoaded";
+import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
+import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
-import BaseEntitySummaryComponent from "../BaseEntitySummary";
+import BaseEntitySummaryComponent from "../../../shared/components/BaseEntitySummary";
 import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentation/usePresentationForm";
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep";
@@ -33,8 +33,8 @@ interface PresentationFormProps {
 const PresentationCreateForm = (): React.ReactNode => {
     const form = usePresentationCreate();
 
-    if (form.loadingProduct) return <LoadingProductComponent />;
-    if (!form.productData)   return <NoProductLoadedComponent productError={form.productError} />;
+    if (form.loadingProduct) return <LoadingSpinnerComponent />;
+    if (!form.productData)   return <NotEntityLoaded error={form.productError} />;
     if (form.createdVariant) return (
         <PresentationCreated
             createdVariant={form.createdVariant}
@@ -89,8 +89,8 @@ const PresentationCreateForm = (): React.ReactNode => {
 const PresentationEditForm = (): React.ReactNode => {
     const form = usePresentationEdit();
 
-    if (form.isLoadingEntity) return <LoadingProductComponent />;
-    if (!form.editingVariant) return <NoProductLoadedComponent productError={form.submitError} />;
+    if (form.isLoadingEntity) return <LoadingSpinnerComponent />;
+    if (!form.editingVariant) return <NotEntityLoaded error={form.submitError} fallbackText="No se pudo cargar la presentación" />;
     if (form.updatedVariant)  return <PresentationUpdated updatedVariant={form.updatedVariant} />;
 
     return (

@@ -1,7 +1,7 @@
 import { Box, Button, type Theme } from "@mui/material";
-import { useFormNavigation } from "../../../../shared/context/FormNavigationContext";
+import { useFormNavigation } from "../../context/FormNavigationContext";
 
-const PresentationSubmitButtons = (): React.ReactNode => {
+const SubmitButtons = (): React.ReactNode => {
     const { onPrev, isSubmitting } = useFormNavigation();
 
     return (
@@ -40,4 +40,4 @@ const PresentationSubmitButtons = (): React.ReactNode => {
     );
 };
 
-export default PresentationSubmitButtons;
+export default SubmitButtons;

@@ -1,13 +1,13 @@
 import { Box, Grid, TextField, InputAdornment } from "@mui/material";
 import { Formik } from "formik";
 import ApiErrorComponent from "../../../../shared/components/FormGrid/ApiError";
-import BaseEntitySummaryComponent from "../../../components/BaseEntitySummary";
+import BaseEntitySummaryComponent from "../../../../shared/components/BaseEntitySummary";
 import { usePresentationEdit } from "../../../../../hooks/presentation/usePresentationForm";
 import { getPresentationDetailInitialValues } from "../../../schema/PresentationFormSchema";
 import BackButton from "../../../../shared/components/Buttons/BackButton";
 import { useContext } from "react";
 import { ThemeContext } from "../../../../../theme/ThemeContext";
-import LoadingProductComponent from "../../../components/LoadingProduct";
+import LoadingSpinnerComponent from "../../../../shared/components/LoadingSpinner";
 import FormCard from "../../../../shared/components/FormGrid/FormCard";
 
 const PresentationDetailFormComponent = (): React.ReactNode => {
@@ -19,7 +19,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
 
     const { appTheme } = useContext(ThemeContext);
 
-    if (isLoadingEntity) return <LoadingProductComponent />;
+    if (isLoadingEntity) return <LoadingSpinnerComponent />;
 
     // Guardar hasta tener el variant para que initialValues no sea vacío
     if (!variant) return (

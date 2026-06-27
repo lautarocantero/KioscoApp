@@ -7,7 +7,7 @@ import PresentationForm from "../../../../modules/presentations/components/Prese
 const PresentationEditPage = (): React.ReactNode => {
     return (
         <AppLayout title="Editar presentación">
-            <PresentationForm mode = "edit"  />
+            <PresentationForm mode ="edit"  />
         </AppLayout>
     );
 };

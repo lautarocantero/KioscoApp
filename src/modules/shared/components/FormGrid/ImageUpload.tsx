@@ -3,7 +3,7 @@ import type { PresentationFormValues } from "@typings/presentation/presentationT
 import { useFormikContext } from "formik";
 import { useState } from "react";
 
-const PresentationImageUpload = (): React.ReactNode => {
+const ImageUpload = (): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();
     const [imagePreview, setImagePreview] = useState<string>("");
 
@@ -92,4 +92,4 @@ const PresentationImageUpload = (): React.ReactNode => {
     );
 };
 
-export default PresentationImageUpload;
+export default ImageUpload;

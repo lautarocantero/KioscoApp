@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import FormCard from "../../../shared/components/FormGrid/FormCard";
-import PresentationExpirationField from "./PresentationExpirationField";
+import ExpirationField from "../../../shared/components/FormGrid/ExpirationField";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 
@@ -14,7 +14,7 @@ const PresentationFormThirdStep = (): React.ReactNode => {
             minHeight: "auto", p: 2, pt: 0,
         }}>
         <FormCard submitText={actionTitle === "create" ? "Crear" : "Actualizar"} showButtons  multiStepHeader={{ stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS, currentStep }}>
-            <PresentationExpirationField />
+            <ExpirationField />
         </FormCard>
     </Box>
 )};
