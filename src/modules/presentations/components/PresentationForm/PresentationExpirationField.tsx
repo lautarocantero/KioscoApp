@@ -1,7 +1,7 @@
 import { Grid, TextField } from "@mui/material";
 import { useFormikContext } from "formik";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
-import { sharedSx } from "../../../../shared/components/sharedSx/sharedSx";
+import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
 
 const PresentationExpirationField = (): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();

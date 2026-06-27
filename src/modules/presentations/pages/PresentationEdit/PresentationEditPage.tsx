@@ -2,12 +2,12 @@
 
 import React from "react";
 import AppLayout from "../../../shared/layout/AppLayout";
-import PresentationEditFormComponent from "../../pages/PresentationEdit/components/PresentationEdit/PresentationEditForm";
+import PresentationForm from "../../../../modules/presentations/components/PresentationForm/PresentationForm";
 
 const PresentationEditPage = (): React.ReactNode => {
     return (
         <AppLayout title="Editar presentación">
-            <PresentationEditFormComponent />
+            <PresentationForm mode = "edit"  />
         </AppLayout>
     );
 };

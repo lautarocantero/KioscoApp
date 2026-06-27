@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
-import FormCard from "../../../../shared/components/FormGrid/FormCard";
+import FormCard from "../../../shared/components/FormGrid/FormCard";
 import PresentationExpirationField from "./PresentationExpirationField";
-import { useFormNavigation } from "../../../../shared/context/FormNavigationContext";
-import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../../config/constants";
+import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
+import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 
 const PresentationFormThirdStep = (): React.ReactNode => {
     const { currentStep, actionTitle} = useFormNavigation();

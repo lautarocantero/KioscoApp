@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import { deletePresentationRequest, getPresentationsByProductIdRequest } from "../api/presentationsApi";
+import { deletePresentationRequest, getPresentationsByProductIdRequest } from "../../../api/presentationsApi";
 
 // ─── tipos ────────────────────────────────────────────────────────────────────
 

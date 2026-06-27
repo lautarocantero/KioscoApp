@@ -64,6 +64,11 @@ export interface VariantCreatedComponentProps {
     onCreateAnother: () => void;
 }
 
+export interface UpdatedPresentationInterface {
+    _id:  string;
+    name: string;
+}
+
 export interface PresentationFormValues {
     sku:             string;
     model_type:      string;
