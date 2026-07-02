@@ -27,7 +27,7 @@ const ProductDialogValidationSchema = Yup.object().shape({
       description: Yup.string().required("Campo requerido"),
       expiration_date: Yup.string().required("Campo requerido"),
       gallery_urls: Yup.array().of(Yup.string().url("Debe ser una URL válida")).required("Campo requerido"),
-      image_url: Yup.string().required("Campo requerido"),
+      // image_url: Yup.string().required("Campo requerido"),
       min_stock: Yup.number().min(0, "El stock minimo debe ser mayor a 0").required("Campo requerido"),
       model_size: Yup.string().required("Campo requerido"),
       model_type: Yup.string().required("Campo requerido"),

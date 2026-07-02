@@ -1,4 +1,3 @@
-
 //─────────────────── Helper 🧩: createPdfTicket ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
@@ -8,18 +7,35 @@
 
 //──────────────────── Funciones 🔧 ─────────────────────//
 // - createPdfTicket utiliza la librería jsPDF para crear y manipular el documento PDF.
-// - Emplea jspdf-autotable para generar automáticamente la tabla de productos.
+// - Emplea jspdf-autotable (via applyPlugin) para generar automáticamente la tabla de productos.
 // - Usa la función formatCurrency para formatear valores monetarios según la configuración local.
 // - Implementa una función interna "truncate" para evitar desbordes de texto en la tabla.
 // - Calcula dinámicamente la posición final de la tabla para ubicar correctamente los totales.
 // - Genera el archivo final y lo descarga automáticamente con un nombre basado en el ID del ticket.
 
+//─────────────────── Notas técnicas 💽 ───────────────────//
+// - Se usa `applyPlugin(jsPDF)` en vez del import default de autoTable porque en este
+//   proyecto (Vite) el default export de "jspdf-autotable" v3 se resuelve como el módulo
+//   completo en lugar de la función, rompiendo `autoTable(doc, options)`.
+//   `applyPlugin` registra `autoTable` como método en el prototipo de jsPDF de forma segura.
+// - El augment de tipos de abajo declara `doc.autoTable` y `doc.lastAutoTable`, que no
+//   vienen tipados en el paquete base de jsPDF.
+
 //-----------------------------------------------------------------------------//
 
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import { applyPlugin } from "jspdf-autotable";
 import { formatCurrency } from "./formatCurrency";
 import type { SellTicketType } from "../../../typings/sells/types/sellsTypes";
+
+declare module "jspdf" {
+  interface jsPDF {
+    autoTable: (options: Record<string, unknown>) => jsPDF;
+    lastAutoTable: { finalY: number };
+  }
+}
+
+applyPlugin(jsPDF);
 
 export const createPdfTicket = (ticket: SellTicketType): void => {
   const doc = new jsPDF();
@@ -46,7 +62,7 @@ export const createPdfTicket = (ticket: SellTicketType): void => {
       truncate(formatCurrency(p.price * p.stock_required)),
   ]);
 
-  autoTable(doc, {
+  doc.autoTable({
     head: [["Producto", "SKU", "Tipo", "Cant.", "P. Unitario", "P. Total"]],
     body: productRows,
     startY: 55,
@@ -54,7 +70,7 @@ export const createPdfTicket = (ticket: SellTicketType): void => {
 
   //──────────────────────────────────────────── Totales ───────────────────────────────────────────//
 
-  const finalY = (doc).lastAutoTable.finalY + 10;
+  const finalY = doc.lastAutoTable.finalY + 10;
     //──────────── Subtotal más pequeño ────────────────//
 
     doc.setFontSize(10);
