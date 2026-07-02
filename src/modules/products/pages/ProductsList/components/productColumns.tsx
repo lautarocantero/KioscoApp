@@ -1,8 +1,9 @@
-import { Chip, Tooltip, Typography } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
-import type { BuildColumnsArgs, Product } from "@typings/product/productTypes";
+import type { BuildColumnsArgs, PresentationSummary, Product } from "@typings/product/productTypes";
 import RowActionsCell from "../../../../shared/components/GenericDataGrid/RowActionsCell";
 import { formatDate, truncate } from "../helpers/productHelpers";
+import GenericListCell from "../../../../../modules/shared/components/GenericDataGrid/GenericCell";
 
 export const buildColumns = ({
   onDeleteRequest,
@@ -12,19 +13,22 @@ export const buildColumns = ({
     field: "name",
     headerName: "Nombre",
     flex: 1.5,
-    minWidth: 160,
+    minWidth: 150,
+    maxWidth: 150,
   },
   {
     field: "brand",
     headerName: "Marca",
     flex: 1,
-    minWidth: 120,
+    minWidth: 200,
+    maxWidth: 200,
   },
   {
     field: "description",
     headerName: "Descripción",
     flex: 2,
-    minWidth: 200,
+    minWidth: 250,
+    maxWidth: 250,
     renderCell: (params: GridRenderCellParams<Product, string>) => (
       <Tooltip title={params.value ?? ""}>
         <span>{truncate(params.value ?? "", 60)}</span>
@@ -32,38 +36,19 @@ export const buildColumns = ({
     ),
   },
   {
-    field: "variants",
+    field: "presentations",
     headerName: "Presentaciones",
-    flex: 1.5,
-    minWidth: 180,
-    sortable: false,
-    renderCell: (params: GridRenderCellParams<Product>) => {
-      const variants = params.row.variants ?? [];
-      const variantNames: string = variants
-        .map((v: { name?: string }) => v.name ?? "")
-        .filter(Boolean)
-        .join(", ");
-      const display = truncate(variantNames, 50);
-
-      return (
-        <Tooltip title={variantNames}>
-          <>
-            {variants.length > 0 ? (
-              <Chip
-                label={display}
-                size="small"
-                variant="outlined"
-                sx={{ maxWidth: 160, fontSize: "0.72rem" }}
-              />
-            ) : (
-              <Typography variant="caption" color="text.disabled">
-                Sin presentaciones
-              </Typography>
-            )}
-          </>
-        </Tooltip>
-      );
-    },
+    flex: 1,
+    minWidth: 200,
+    renderCell: (params) => (
+      <GenericListCell<PresentationSummary>
+        items={params.value ?? []}
+        emptyLabel="Sin presentaciones"
+        getLabel={(p) => `${p.model_type} ${p.model_size}`}
+        getTooltipLine={(p) => `${p.model_type} ${p.model_size} · ${p.stock} u. · ${p.sku}`}
+        getKey={(p, i) => `${p.sku}-${i}`}
+      />
+    ),
   },
   {
     field: "created_at",

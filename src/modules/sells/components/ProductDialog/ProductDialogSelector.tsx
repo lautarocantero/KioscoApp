@@ -17,7 +17,7 @@ import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/
 import React, { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
-import type { RootState as PresentationState } from "../../../../store/Presentation/PresentationSlice";
+import type { RootState as PresentationState } from "../../../../store/presentation/presentationSlice";
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 import handleChangeSelector from "../../helpers/ProductDialog/Handlers/handleChangeProductDialogSelector";
 
@@ -25,8 +25,8 @@ const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: Dia
 
     const isEmpty = useMemo(() => { return (products?.length ?? 0) === 0; }, [products]);
 
-    const { Presentation } = useSelector((state: PresentationState) => state);
-    const { isLoading } : { isLoading: boolean } = Presentation;
+    const { presentation } = useSelector((state: PresentationState) => state);
+    const { isLoading } : { isLoading: boolean } = presentation;
 
     const renderValue = useCallback( 
         (selected: string) => { 

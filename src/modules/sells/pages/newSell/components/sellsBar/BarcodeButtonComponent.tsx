@@ -24,19 +24,19 @@
 
 
 import BarcodeReaderIcon from '@mui/icons-material/BarcodeReader';
-import { Grid, TextField, Tooltip, type Theme } from "@mui/material";
+import { Grid, TextField, Tooltip, Typography, type Theme } from "@mui/material";
 import "animate.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import type { AppDispatch } from '../../../../../store/auth/authSlice';
-import { getPresentationById } from '../../../../../store/Presentation/PresentationThunks';
-import type { RootState as SellerRootState } from "../../../../../store/seller/sellerSlice";
-import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../../store/seller/sellerThunks';
-import type { Presentation } from '../../../../../typings/presentation/presentationTypes';
-import type { ProductTicketType } from '../../../../../typings/seller/sellerTypes';
-import { AlertColor } from '../../../../../typings/ui/ui';
-import { SnackBarContext } from '../../../components/SnackBar/SnackBarContext';
+import type { AppDispatch } from '../../../../../../store/auth/authSlice';
+import type { RootState as SellerRootState } from "../../../../../../store/seller/sellerSlice";
+import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../../../store/seller/sellerThunks';
+import type { Presentation } from '../../../../../../typings/presentation/presentationTypes';
+import type { ProductTicketType } from '../../../../../../typings/seller/sellerTypes';
+import { AlertColor } from '../../../../../../typings/ui/ui';
+import { SnackBarContext } from '../../../../../../modules/shared/components/SnackBar/SnackBarContext';
+import { getPresentationById } from '../../../../../../store/presentation/presentationThunks';
 
 export const BarcodeButtonComponent = (): React.ReactNode => {
   const location = useLocation();
@@ -133,37 +133,45 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
   };
 
   return (
-    <Grid
-      container
-      onClick={() => setShowInput(prev => !prev)}
-      sx={{
-        margin: '0.8em 0 0',
-        display: 'flex',
-        justifyContent: 'end',
-        width: '100%',
-      }}
-    >
+    <Tooltip title="Usar lectora de código de barras">
       <Grid
         className="animate__animated animate__backInRight"
+        onClick={() => setShowInput(prev => !prev)}
         sx={(theme: Theme) => ({
-          backgroundColor: showInput ? theme?.custom?.white : theme?.custom?.backgroundDark,
-          width: { xs: showInput ? '20em' : '4em', md: showInput ? '20em' : '5em'},
-          height: '2em',
+          borderRadius: '1em',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: showInput ? 'space-between' : 'center',
-          gap: '0.5em',
-          padding: '0.2em 1em',
+          gap: '0.4em',
+          flexShrink: 0,
+          cursor: 'pointer',
           transition: 'all 0.3s ease',
           '&:hover': {
             backgroundColor: theme?.custom?.white,
-            cursor: 'pointer',
           },
-          '&:hover .MuiSvgIcon-root': {
+          '&:hover .MuiSvgIcon-root, &:hover .barcode-label': {
             color: theme?.palette?.primary?.main,
           },
         })}
       >
+        <BarcodeReaderIcon
+          sx={(theme: Theme) => ({
+            color: theme?.custom?.accentProviders,
+            fontSize: theme?.typography?.body1?.fontSize,
+            transition: 'color 0.3s ease',
+          })}
+        />
+        {!showInput && (
+          <Typography
+            className="barcode-label"
+            sx={(theme: Theme) => ({
+              color: theme?.custom?.accentProviders,
+              fontSize: '0.85em',
+              whiteSpace: 'nowrap',
+            })}
+          >
+            Escanear
+          </Typography>
+        )}
         {showInput && (
           <TextField
             inputRef={inputRef}
@@ -172,33 +180,17 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
             variant="outlined"
             size="small"
             onKeyDown={handleKeyDown}
-            placeholder="Escanee el código aquí"
+            onClick={(e) => e.stopPropagation()}
+            placeholder="Escanee aquí"
             focused={true}
             sx={{
-              flex: 1,
-              width: '100%',
-              '& .MuiInputBase-root': {
-                height: '2.2em',
-              },
+              width: '10em',
+              '& .MuiInputBase-root': { height: '2em' },
             }}
           />
         )}
-        <Tooltip title="Usar lectora de código de barras">
-          <BarcodeReaderIcon
-            sx={(theme: Theme) => ({
-              color: theme?.palette?.primary?.main,
-              fontSize: { 
-                xs: theme?.typography?.body1?.fontSize,
-                md: theme?.typography?.h3?.fontSize
-              },
-              transition: 'color 0.3s ease',
-              width: { xs: '4em'},
-              height: { xs: '2em', md: '1em'},
-            })}
-          />
-        </Tooltip>
       </Grid>
-    </Grid>
+    </Tooltip>
   );
 };
 

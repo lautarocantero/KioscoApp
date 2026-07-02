@@ -78,7 +78,7 @@ export function usePresentationCreate() {
             formData.append("expiration_date", values.expiration_date);
             if (values.image_file) formData.append("image", values.image_file);
 
-            const response = await fetch(`${API_URL}/product-variant/create-product-variant`, {
+            const response = await fetch(`${API_URL}/presentation/create-presentation`, {
                 method: "POST",
                 credentials: "include",
                 body: formData,
@@ -149,7 +149,7 @@ export function usePresentationEdit() {
             setIsLoadingEntity(true);
             try {
                 const response = await fetch(
-                    `${API_URL}/product-variant/get-product-variant-by-id/${variantId}`,
+                    `${API_URL}/presentation/get-presentation-by-id/${variantId}`,
                     { credentials: "include" },
                 );
                 if (!response.ok) throw new Error(`Error ${response.status}`);
@@ -216,7 +216,7 @@ export function usePresentationEdit() {
             };
 
             const response = await fetch(
-                `${API_URL}/product-variant/edit-product-variant/${variantId}`,
+                `${API_URL}/presentation/edit-presentation/${variantId}`,
                 {
                     method: "PUT",
                     credentials: "include",

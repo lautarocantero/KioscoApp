@@ -5,27 +5,27 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 // # Módulo: Presentation Requests
 
 // ## Descripción 📦
-// Centraliza todas las llamadas HTTP al recurso `/product-variant` del backend.
+// Centraliza todas las llamadas HTTP al recurso `/presentation` del backend.
 // Cada función mapea 1:1 con un endpoint definido en `PresentationRouter`.
 
 // ## Instancia Axios 🔧
-// - `baseURL`: `{API_URL}/product-variant`
+// - `baseURL`: `{API_URL}/presentation`
 // - `timeout`: 5000 ms
 // - `headers`: `Content-Type: application/json`
 // - `withCredentials`: true
 
 // ## Endpoints cubiertos 📡
-// - GET    /get-product-variants                          → getPresentationsRequest
-// - GET    /get-product-variant-by-id/:id                → getPresentationByIdRequest
-// - GET    /get-product-variant-by-product-id/:productId → getPresentationsByProductIdRequest
-// - GET    /get-product-variant-by-brand                 → getPresentationByBrandRequest
-// - GET    /get-product-variant-by-stock                 → getPresentationByStockRequest
-// - GET    /get-product-variant-by-price                 → getPresentationByPriceRequest
-// - GET    /get-product-variant-by-size                  → getPresentationBySizeRequest
-// - GET    /get-product-variant-by-presentation          → getPresentationByPresentationRequest
-// - POST   /create-product-variant                       → createPresentationRequest
-// - PUT    /edit-product-variant                         → editPresentationRequest
-// - DELETE /delete-product-variant                       → deletePresentationRequest
+// - GET    /get-presentations                          → getPresentationsRequest
+// - GET    /get-presentation-by-id/:id                → getPresentationByIdRequest
+// - GET    /get-presentation-by-product-id/:productId → getPresentationsByProductIdRequest
+// - GET    /get-presentation-by-brand                 → getPresentationByBrandRequest
+// - GET    /get-presentation-by-stock                 → getPresentationByStockRequest
+// - GET    /get-presentation-by-price                 → getPresentationByPriceRequest
+// - GET    /get-presentation-by-size                  → getPresentationBySizeRequest
+// - GET    /get-presentation-by-presentation          → getPresentationByPresentationRequest
+// - POST   /create-presentation                       → createPresentationRequest
+// - PUT    /edit-presentation                         → editPresentationRequest
+// - DELETE /delete-presentation                       → deletePresentationRequest
 
 // ## Notas técnicas 💽
 // - `createPresentationRequest` usa `FormData` + `multipart/form-data`
@@ -35,7 +35,7 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 //-----------------------------------------------------------------------------//
 
 const baseUrl = axios.create({
-    baseURL: `${API_URL}/product-variant`,
+    baseURL: `${API_URL}/presentation`,
     timeout: 5000,
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
@@ -45,48 +45,48 @@ const baseUrl = axios.create({
 
 /**
  * Obtiene todas las variantes.
- * `GET /get-product-variants`
+ * `GET /get-presentations`
  */
 export const getPresentationsRequest = async (): Promise<Presentation[]> => {
-    const response = await baseUrl.get<Presentation[]>("/get-product-variants");
+    const response = await baseUrl.get<Presentation[]>("/get-product-presentations");
     return response.data;
 };
 
 /**
  * Obtiene una variante por su ID.
- * `GET /get-product-variant-by-id/:product_variant_id`
+ * `GET /get-presentation-by-id/:product_variant_id`
  */
 export const getPresentationByIdRequest = async (
     { product_variant_id }: { product_variant_id: string }
 ): Promise<Presentation[]> => {
     const response = await baseUrl.get<Presentation[]>(
-        `/get-product-variant-by-id/${product_variant_id}`
+        `/get-presentation-by-id/${product_variant_id}`
     );
     return response.data;
 };
 
 /**
  * Obtiene todas las variantes de un producto por su ID.
- * `GET /get-product-variant-by-product-id/:product_id`
+ * `GET /get-presentation-by-product-id/:product_id`
  */
 export const getPresentationsByProductIdRequest = async (
     { product_id }: { product_id: string }
 ): Promise<Presentation[]> => {
     const response = await baseUrl.get<Presentation[]>(
-        `/get-product-variant-by-product-id/${product_id}`
+        `/get-presentation-by-product-id/${product_id}`
     );
     return response.data;
 };
 
 /**
  * Filtra variantes por marca.
- * `GET /get-product-variant-by-brand` — body: { brand }
+ * `GET /get-presentation-by-brand` — body: { brand }
  */
 export const getPresentationByBrandRequest = async (
     brand: string
 ): Promise<Presentation[]> => {
     const response = await baseUrl.get<Presentation[]>(
-        "/get-product-variant-by-brand",
+        "/get-presentation-by-brand",
         { data: { brand } }
     );
     return response.data;
@@ -94,13 +94,13 @@ export const getPresentationByBrandRequest = async (
 
 /**
  * Filtra variantes por stock.
- * `GET /get-product-variant-by-stock` — body: { stock }
+ * `GET /get-presentation-by-stock` — body: { stock }
  */
 export const getPresentationByStockRequest = async (
     stock: number
 ): Promise<Presentation[]> => {
     const response = await baseUrl.get<Presentation[]>(
-        "/get-product-variant-by-stock",
+        "/get-presentation-by-stock",
         { data: { stock } }
     );
     return response.data;
@@ -108,13 +108,13 @@ export const getPresentationByStockRequest = async (
 
 /**
  * Filtra variantes por precio.
- * `GET /get-product-variant-by-price` — body: { price }
+ * `GET /get-presentation-by-price` — body: { price }
  */
 export const getPresentationByPriceRequest = async (
     price: number
 ): Promise<Presentation[]> => {
     const response = await baseUrl.get<Presentation[]>(
-        "/get-product-variant-by-price",
+        "/get-presentation-by-price",
         { data: { price } }
     );
     return response.data;
@@ -122,13 +122,13 @@ export const getPresentationByPriceRequest = async (
 
 /**
  * Filtra variantes por tamaño de modelo.
- * `GET /get-product-variant-by-size` — body: { model_size }
+ * `GET /get-presentation-by-size` — body: { model_size }
  */
 export const getPresentationBySizeRequest = async (
     model_size: string
 ): Promise<Presentation[]> => {
     const response = await baseUrl.get<Presentation[]>(
-        "/get-product-variant-by-size",
+        "/get-presentation-by-model-size",
         { data: { model_size } }
     );
     return response.data;
@@ -136,13 +136,13 @@ export const getPresentationBySizeRequest = async (
 
 /**
  * Filtra variantes por presentación (model_type).
- * `GET /get-product-variant-by-presentation` — body: { model_type }
+ * `GET /get-presentation-by-presentation` — body: { model_type }
  */
 export const getPresentationByPresentationRequest = async (
     model_type: string
 ): Promise<Presentation[]> => {
     const response = await baseUrl.get<Presentation[]>(
-        "/get-product-variant-by-presentation",
+        "/get-presentation-by-presentation",
         { data: { model_type } }
     );
     return response.data;
@@ -152,7 +152,7 @@ export const getPresentationByPresentationRequest = async (
 
 /**
  * Crea una nueva variante.
- * `POST /create-product-variant` — multipart/form-data (multer en el backend).
+ * `POST /create-presentation` — multipart/form-data (multer en el backend).
  *
  * Si se provee `image_file`, se sube como archivo; de lo contrario se envía `image_url` como string.
  */
@@ -181,7 +181,7 @@ export const createPresentationRequest = async (
     }
 
     const response = await baseUrl.post<{ _id: string; message: string }>(
-        "/create-product-variant",
+        "/create-presentation",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
     );
@@ -192,13 +192,13 @@ export const createPresentationRequest = async (
 
 /**
  * Edita una variante existente.
- * `PUT /edit-product-variant` — body: { ...campos }
+ * `PUT /edit-presentation` — body: { ...campos }
  */
 export const editPresentationRequest = async (
     variant: Partial<Presentation> & Pick<Presentation, "_id">
 ): Promise<{ _id: string; message: string }> => {
     const response = await baseUrl.put<{ _id: string; message: string }>(
-        "/edit-product-variant",
+        "/edit-presentation/:variant_id",
         variant
     );
     return response.data;
@@ -208,8 +208,8 @@ export const editPresentationRequest = async (
 
 /**
  * Elimina una variante por su ID.
- * `DELETE /delete-product-variant` — body: { _id }
+ * `DELETE /delete-presentation` — body: { _id }
  */
 export const deletePresentationRequest = async (_id: string): Promise<void> => {
-    await baseUrl.delete("/delete-product-variant", { data: { _id } });
+    await baseUrl.delete("/delete-presentation", { data: { _id } });
 };

@@ -3,7 +3,7 @@ import type { NavigateFunction } from "react-router-dom";
 import type { CreateProductBody, Product }      from "../../typings/product/productTypes";
 import { checkingProducts, setCurrentProduct, setError, setProducts } from "./productSlice";
 import { handleError }       from "../shared/handlerStoreError";
-import { getProductsRequest } from "../../modules/products/api/productApi";
+import { getProductsRequest, searchProductsWithPresentationsRequest } from "../../modules/products/api/productApi";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
@@ -74,7 +74,7 @@ export const createProduct = (body: CreateProductBody, navigate: NavigateFunctio
 };
 
 /*══════════════════════════════════════════════════════════════════════╗
-║ 🚀 getProducts (sin cambios, se mantiene igual)                       ║
+║ 🚀 getProducts                                                        ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const getProducts = () => {
 
@@ -92,6 +92,31 @@ export const getProducts = () => {
             return products;
 
         } catch (error: unknown) {
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 searchProducts                                                     ║
+║ 📥 Entrada: term (texto a buscar en el nombre del producto)           ║
+║ ⚙️  Proceso:                                                           ║
+║   1. GET /product/get-product-by-name?name=term                       ║
+║   2. Guarda el resultado en store con setProducts                     ║
+║ 📤 Salida: Product[] o undefined en caso de error                     ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const searchProducts = (term: string) => {
+
+    return async (dispatch: Dispatch): Promise<Product[] | undefined> => {
+        dispatch(checkingProducts());
+
+        try {
+            const products = await searchProductsWithPresentationsRequest(term);
+            dispatch(setProducts(products));
+            return products;
+
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudieron buscar productos" }));
             handleError(error);
         }
     };

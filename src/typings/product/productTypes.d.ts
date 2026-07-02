@@ -163,6 +163,10 @@ export interface UseProductsReturn {
     handleDeleteRequest:  (id: string, name: string) => void;
     handleDeleteCancel:   () => void;
     handleDeleteConfirm:  () => Promise<void>;
+    productsWithPresentations: ProductWithPresentations[];
+    loadingPresentations: boolean;
+    errorPresentations: string | null;
+    refetchProductsWithPresentations: () => Promise<void>;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -201,4 +205,17 @@ export interface BuildColumnsArgs {
 
 export interface NoProductLoadedComponentProps {
     productError: string | null;
+}
+
+export interface PresentationSummary {
+  sku: string;
+  name: string;
+  description: string;
+  model_type: string;
+  model_size: string;
+  stock: number;
+}
+
+export interface ProductWithPresentations extends Omit<Product, "presentations"> {
+  presentations: PresentationSummary[];
 }

@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
-
-import type { DeleteDialogState, Product, UseProductsReturn } from "@typings/product/productTypes";
+import type {
+  DeleteDialogState,
+  Product,
+  ProductWithPresentations,
+  UseProductsReturn,
+} from "@typings/product/productTypes";
 import {
   deleteProductRequest,
   getProductsRequest,
+  getProductsWithPresentationsRequest,
 } from "../../../api/productApi";
 import { resolveErrorMessage } from "../helpers/productHelpers";
 
@@ -50,6 +55,30 @@ export const useProducts = (): UseProductsReturn => {
     }
   };
 
+  // ── productos con presentaciones resumidas (nuevo) ────────────────────────
+  const [productsWithPresentations, setProductsWithPresentations] =
+    useState<ProductWithPresentations[]>([]);
+  const [loadingPresentations, setLoadingPresentations] = useState(true);
+  const [errorPresentations, setErrorPresentations] = useState<string | null>(null);
+
+  const fetchProductsWithPresentations = useCallback(async () => {
+    setLoadingPresentations(true);
+    setErrorPresentations(null);
+    try {
+      const data = await getProductsWithPresentationsRequest();
+      setProductsWithPresentations(data);
+    } catch (err: unknown) {
+      setErrorPresentations(resolveErrorMessage(err));
+    } finally {
+      setLoadingPresentations(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void fetchProductsWithPresentations();
+  }, [fetchProductsWithPresentations]);
+  // ────────────────────────────────────────────────────────────────────────
+
   return {
     products,
     loading,
@@ -59,5 +88,9 @@ export const useProducts = (): UseProductsReturn => {
     handleDeleteRequest,
     handleDeleteCancel,
     handleDeleteConfirm,
+    productsWithPresentations,
+    loadingPresentations,
+    errorPresentations,
+    refetchProductsWithPresentations: fetchProductsWithPresentations,
   };
 };

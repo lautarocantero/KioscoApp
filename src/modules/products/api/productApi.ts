@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../../../config/api";
-import type { Product } from "@typings/product/productTypes";
+import type { Product, ProductWithPresentations } from "@typings/product/productTypes";
 
 // # Módulo: Product Requests
 
@@ -82,6 +82,32 @@ export const getProductByBrandRequest = async (
   return response.data;
 };
 
+/**
+ * Obtiene todos los productos con sus presentaciones resumidas.
+ * `GET /get-products-with-presentations`
+ */
+export const getProductsWithPresentationsRequest = async (): Promise<ProductWithPresentations[]> => {
+  const response = await baseUrl.get<ProductWithPresentations[]>(
+    "/get-products-with-presentations"
+  );
+  return response.data;
+};
+
+/**
+ * Busca productos por nombre de producto O nombre de presentación.
+ * `GET /search-products-with-presentations?term=<value>`
+ */
+export const searchProductsWithPresentationsRequest = async (
+  term: string
+): Promise<ProductWithPresentations[]> => {
+  const response = await baseUrl.get<ProductWithPresentations[]>(
+    "/search-products-with-presentations",
+    { params: { term } }
+  );
+  return response.data;
+};
+
+
 //──────────────────────────────────────────── POST ───────────────────────────────────────────//
 
 /**
@@ -92,7 +118,7 @@ export const createProductRequest = async (
   product: Omit<Product, "_id" | "created_at" | "updated_at">
 ): Promise<Product> => {
   const response = await baseUrl.post<Product>("/create-product", product);
-  return response.data;
+  return response.data; 
 };
 
 //──────────────────────────────────────────── PUT ────────────────────────────────────────────//

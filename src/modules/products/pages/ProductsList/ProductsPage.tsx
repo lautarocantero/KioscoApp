@@ -15,7 +15,7 @@ const ProductsPage = (): React.ReactNode => {
   const navigate = useNavigate();
 
   const {
-    products,
+    productsWithPresentations,
     loading,
     error,
     deleteDialog,
@@ -56,7 +56,7 @@ const ProductsPage = (): React.ReactNode => {
         )}
 
         <GenericDataGrid<Product>
-          rows={products}
+          rows={productsWithPresentations}
           columns={columns}
           loading={loading}
           emptyMessage="No hay productos registrados"

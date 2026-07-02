@@ -26,6 +26,7 @@ import SimpleSnackbar from "../../../shared/components/SnackBar/SnackBarComponen
 import AppLayout from "../../../shared/layout/AppLayout";
 import ProductDialog from "../../components/ProductDialog/ProductDialog";
 import ProductsExhibitor from "../../components/ProductList/ProductsExhibitorComponent";
+import SellBar from "./components/sellsBar/SellBar";
 
 const NewSellPage = ():React.ReactNode => {
 
@@ -43,7 +44,8 @@ const NewSellPage = ():React.ReactNode => {
     }, []);
 
     return (
-        <AppLayout>
+        <AppLayout noCenter>
+            <SellBar showFilters/>
             <ProductsExhibitor products={products} title={'Más vendido'} />
             <ProductDialog />
             <SimpleSnackbar  />

@@ -89,6 +89,7 @@ export interface AppLayoutProps {
   title?: string;
   icon?: React.ReactNode,
   fullWidth?: boolean;
+  noCenter?: boolean;
 }
 
 export type OptionLink = {

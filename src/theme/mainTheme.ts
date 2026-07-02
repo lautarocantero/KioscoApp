@@ -3,62 +3,133 @@ import { createTheme } from '@mui/material/styles';
 declare module '@mui/material/styles' {
   interface Theme {
     custom: {
+      //────────────── white ──────────────────//
       white: string;
       whiteTranslucid: string;
+
+      //────────────── black ──────────────────//
       black: string;
       blackTranslucid: string;
+
+      //────────────── main ──────────────────//
       lightMain: string;
+
+      //────────────── secondary ──────────────────//
       darkSecondary: string;
+
+      //────────────── font ──────────────────//
       fontColor: string;
       fontColorTransparent: string;
-      fontColorDark: string,
-      fontColorDarkTransparent: string,
+      fontColorDark: string;
+      fontColorDarkTransparent: string;
+
+      //────────────── background ──────────────────//
       backgroundLigth: string;
       background: string;
       backgroundDark: string;
       backgroundWave1: string;
       backgroundWave2: string;
       cardBackground: string;
+
+      //────────────── POS Modern UI ──────────────────//
+      posBackground: string;
+      posCard: string;
+      posSurface: string;
+      posSurfaceHover: string;
+      posBorder: string;
+      posDivider: string;
+
+      posText: string;
+      posTextSecondary: string;
+      posPlaceholder: string;
+      posIcon: string;
+
+      posAccent: string;
+      posAccentHover: string;
+
+      posSuccess: string;
+      posSuccessHover: string;
+
+      //────────────── accent colors ──────────────────//
+      accentSells: string;
+      accentShop: string;
+      accentProviders: string;
+      accentProducts: string;
+      accentCategories: string;
+      accentAccount: string;
+
+      //────────────── error ──────────────────//
       errorLight: string;
       errorDark: string;
-      accentSells: string,
-      accentShop: string,
-      accentProviders: string,
-      accentProducts: string,
-      accentCategories: string,
-      accentAccount: string,
     };
   }
+
   interface ThemeOptions {
     custom?: {
+      //────────────── white ──────────────────//
       white?: string;
       whiteTranslucid?: string;
+
+      //────────────── black ──────────────────//
       black?: string;
       blackTranslucid?: string;
+
+      //────────────── main ──────────────────//
       lightMain?: string;
+
+      //────────────── secondary ──────────────────//
       darkSecondary?: string;
+
+      //────────────── font ──────────────────//
       fontColor?: string;
       fontColorTransparent?: string;
-      fontColorDark?: string,
-      fontColorDarkTransparent?: string,
+      fontColorDark?: string;
+      fontColorDarkTransparent?: string;
+
+      //────────────── background ──────────────────//
       backgroundLigth?: string;
       background?: string;
       backgroundDark?: string;
       backgroundWave1?: string;
       backgroundWave2?: string;
       cardBackground?: string;
-      errorLight: string;
-      errorDark: string;
-      accentSells?: string,
-      accentShop?: string,
-      accentProviders?: string,
-      accentProducts?: string,
-      accentCategories?: string,
-      accentAccount?: string,
+
+      //────────────── POS Modern UI ──────────────────//
+      posBackground?: string;
+      posCard?: string;
+      posSurface?: string;
+      posSurfaceHover?: string;
+      posBorder?: string;
+      posDivider?: string;
+
+      posText?: string;
+      posTextSecondary?: string;
+      posPlaceholder?: string;
+      posIcon?: string;
+
+      posAccent?: string;
+      posAccentHover?: string;
+
+      posSuccess?: string;
+      posSuccessHover?: string;
+
+      //────────────── accent colors ──────────────────//
+      accentSells?: string;
+      accentShop?: string;
+      accentProviders?: string;
+      accentProducts?: string;
+      accentCategories?: string;
+      accentAccount?: string;
+
+      //────────────── error ──────────────────//
+      errorLight?: string;
+      errorDark?: string;
     };
+
     unstable_grid?: {
       cssGrid?: boolean;
     };
+
     unstable_sx?: boolean;
   }
 }
@@ -99,6 +170,25 @@ export const darkTheme = createTheme({
     backgroundWave1: '#0d2a6e',
     backgroundWave2: '#1a3a7a',
     cardBackground: 'rgba(255,255,255,0.07)',
+
+    //────────────── POS Modern UI ──────────────────//
+    posBackground: '#11141A',
+    posCard: '#1E222B',
+    posSurface: '#272C36',
+    posSurfaceHover: '#2D3440',
+    posBorder: 'rgba(255,255,255,0.06)',
+    posDivider: '#343946',
+
+    posText: '#F5F7FA',
+    posTextSecondary: '#C9CED8',
+    posPlaceholder: 'rgba(255,255,255,0.45)',
+    posIcon: '#AEB6C4',
+
+    posAccent: '#A65CFF',
+    posAccentHover: '#8E49E8',
+
+    posSuccess: '#8FE34A',
+    posSuccessHover: '#78C83E',
 
     //────────────── accent colors ──────────────────//
     accentSells:      '#0386EE',

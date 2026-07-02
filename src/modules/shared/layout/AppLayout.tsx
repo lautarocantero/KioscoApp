@@ -12,6 +12,7 @@ const AppLayout = ({
   children,
   isOptions,
   fullWidth,
+  noCenter,
   title = "App",
   icon,
 }: PropsWithChildren<AppLayoutProps>): React.ReactNode => {
@@ -61,8 +62,8 @@ const AppLayout = ({
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            marginTop: "3em",
-            justifyContent: fullWidth ? "flex-start" : "center",
+            marginTop: noCenter ? 0 : "3em",
+            justifyContent: noCenter || fullWidth ? "flex-start" : "center",
             p: { xs: 2, sm: 3 },
             gap: { xs: "1.5em", sm: "2em" },
           }}
