@@ -68,7 +68,7 @@ const ConfirmDialog = ({
                 position: "absolute",
                 top: 16,
                 right: 16,
-                color: theme.custom?.posPlaceholder,
+                color: theme.custom?.lightGray,
             })}
         >
             <CloseIcon fontSize="small" />
@@ -99,7 +99,7 @@ const ConfirmDialog = ({
         <DialogContent sx={{ pb: warningText ? 1 : 3, borderBottom: warningText ? `1px solid rgba(255,255,255,0.08)` : "none" }}>
             <DialogContentText
                 component="div"
-                sx={(theme: Theme) => ({ color: theme.custom?.posText, fontSize: "0.95rem", lineHeight: 1.6 })}
+                sx={(theme: Theme) => ({ color: theme.custom?.white, fontSize: "0.95rem", lineHeight: 1.6 })}
             >
                 {description}
             </DialogContentText>
@@ -131,7 +131,7 @@ const ConfirmDialog = ({
                     })}
                 >
                     <WarningAmberRoundedIcon sx={(theme: Theme) => ({ color: theme.palette[confirmColor].main, fontSize: "1.3rem", flexShrink: 0 })} />
-                    <Typography sx={(theme: Theme) => ({ fontSize: "0.8rem", color: theme.custom?.fontColorTransparent, lineHeight: 1.4 })}>
+                    <Typography sx={(theme: Theme) => ({ fontSize: "0.8rem", color: theme.custom?.translucidWhite, lineHeight: 1.4 })}>
                         {warningText}
                     </Typography>
                 </Box>
@@ -143,7 +143,7 @@ const ConfirmDialog = ({
                     sx={(theme: Theme) => ({
                         textTransform: "none",
                         fontWeight: 600,
-                        color: theme.custom?.posPlaceholder,
+                        color: theme.custom?.lightGray,
                     })}
                 >
                     {cancelLabel}

@@ -171,7 +171,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                     <Grid sx={{ textAlign: 'center', mb: '2em' }}>
                         <Typography
                             sx={(theme: Theme) => ({
-                                color: theme?.custom?.posText,
+                                color: theme?.custom?.fontColor,
                                 fontWeight: 600,
                                 fontSize: {
                                     xs: theme?.typography?.h4?.fontSize,
@@ -194,7 +194,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                         </Typography>
                         <Typography
                             sx={(theme: Theme) => ({
-                                color: theme?.custom?.posTextSecondary,
+                                color: theme?.custom?.darkWhite,
                                 fontSize: {
                                     xs: theme?.typography?.body2.fontSize,
                                     sm: theme?.typography?.body1.fontSize
@@ -213,7 +213,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                             flexDirection: { xs: 'column', sm: 'row' },
                             gap: { xs: '1em', sm: '2em' },
                             backgroundColor: theme?.custom?.posCard,
-                            border: `1px solid ${theme?.custom?.posBorder}`,
+                            border: `1px solid ${theme?.custom?.darkGray}`,
                             borderRadius: '1em',
                             padding: '1.5em 2em',
                             mb: '2em',
@@ -237,10 +237,10 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                 <ReceiptLongIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1.2em' })} />
                             </Box>
                             <Box>
-                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.posTextSecondary, fontSize: theme?.typography?.caption.fontSize })}>
+                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.darkWhite, fontSize: theme?.typography?.caption.fontSize })}>
                                     N° de ticket
                                 </Typography>
-                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.posText, fontWeight: 600 })}>
+                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColor, fontWeight: 600 })}>
                                     #{ticketSummary?.ticketNumber ?? '------'}
                                 </Typography>
                             </Box>
@@ -262,10 +262,10 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                 <EventIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1.2em' })} />
                             </Box>
                             <Box>
-                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.posTextSecondary, fontSize: theme?.typography?.caption.fontSize })}>
+                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.darkWhite, fontSize: theme?.typography?.caption.fontSize })}>
                                     Fecha y hora
                                 </Typography>
-                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.posText, fontWeight: 600 })}>
+                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColor, fontWeight: 600 })}>
                                     {ticketSummary?.date ?? '--/--/---- - --:--'}
                                 </Typography>
                             </Box>
@@ -287,7 +287,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                 <AttachMoneyIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1.2em' })} />
                             </Box>
                             <Box>
-                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.posTextSecondary, fontSize: theme?.typography?.caption.fontSize })}>
+                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.darkWhite, fontSize: theme?.typography?.caption.fontSize })}>
                                     Total
                                 </Typography>
                                 <Typography sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontWeight: 700 })}>
@@ -351,7 +351,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '0.4em',
-                                color: theme?.custom?.posTextSecondary,
+                                color: theme?.custom?.darkWhite,
                                 fontSize: {
                                     xs: theme?.typography?.body2.fontSize,
                                     sm: theme?.typography?.body1.fontSize

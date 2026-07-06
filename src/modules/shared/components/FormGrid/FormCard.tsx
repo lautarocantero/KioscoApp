@@ -76,7 +76,7 @@ const FormCard = ({
                 <Box sx={(theme: Theme) => ({
                     borderRadius: 2,
                     px: 2,
-                    color: theme.custom?.fontColorDark,
+                    color: theme.custom?.whiteDark,
                 })}>
 
                     {accordion && (
@@ -135,7 +135,7 @@ const FormCard = ({
                                     pb: 2,
                                     pl: "60px",
                                     pr: 2,
-                                    color: theme.custom?.posTextSecondary ?? theme.custom?.fontColorTransparent,
+                                    color: theme.custom?.darkWhite ?? theme.custom?.translucidWhite,
                                     display: "flex",
                                     flexDirection: "column",
                                     gap: 2,

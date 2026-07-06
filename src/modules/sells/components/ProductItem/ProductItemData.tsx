@@ -30,7 +30,7 @@ const ProductItemData = ({ name = "product", presentations = [] }: ItemDataProps
         <Typography
           sx={(theme: Theme) => ({
             fontSize: theme?.typography?.caption?.fontSize,
-            color: theme.custom?.fontColorTransparent,
+            color: theme.custom?.translucidWhite,
           })}
         >
           {subtitle}
@@ -40,7 +40,7 @@ const ProductItemData = ({ name = "product", presentations = [] }: ItemDataProps
       <Typography
         sx={(theme: Theme) => ({
           fontSize: theme?.typography?.caption?.fontSize,
-          color: theme.custom?.fontColorTransparent,
+          color: theme.custom?.translucidWhite,
           mt: "0.4em",
         })}
       >

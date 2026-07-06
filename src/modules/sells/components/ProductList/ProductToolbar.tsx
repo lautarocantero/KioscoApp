@@ -64,7 +64,7 @@ const ProductsToolbar = ({
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
         <Typography
           variant="body2"
-          sx={(theme: Theme) => ({ color: theme.custom?.fontColorTransparent })}
+          sx={(theme: Theme) => ({ color: theme.custom?.translucidWhite })}
         >
           Ordenar por:
         </Typography>
@@ -77,7 +77,7 @@ const ProductsToolbar = ({
             minWidth: "170px",
             borderRadius: "8px",
             backgroundColor: theme.custom?.posSurface,
-            color: theme.custom?.fontColor,
+            color: theme.custom?.white,
             height: "1.5em",
           })}
         >
@@ -105,7 +105,7 @@ const ProductsToolbar = ({
               borderRadius: "6px",
               backgroundColor: viewMode === "grid" ? theme.palette?.primary?.main : "transparent",
               color:
-                viewMode === "grid" ? theme.custom?.posBackground : theme.custom?.fontColorTransparent,
+                viewMode === "grid" ? theme.custom?.posBackground : theme.custom?.translucidWhite,
             })}
           >
             <GridViewIcon fontSize="small" />
@@ -118,7 +118,7 @@ const ProductsToolbar = ({
               borderRadius: "6px",
               backgroundColor: viewMode === "list" ? theme.palette?.primary?.main : "transparent",
               color:
-                viewMode === "list" ? theme.custom?.posBackground : theme.custom?.fontColorTransparent,
+                viewMode === "list" ? theme.custom?.posBackground : theme.custom?.translucidWhite,
             })}
           >
             <ViewListIcon fontSize="small" />

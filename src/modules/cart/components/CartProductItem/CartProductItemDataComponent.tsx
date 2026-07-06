@@ -16,7 +16,7 @@ const CartProductItemDataComponent = ({ name = 'Coca Cola', size = '2L', categor
             <Grid sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '0.2em' }}>
                 <Typography
                     sx={(theme: Theme) => ({
-                        color: theme?.custom?.white,
+                        color: theme?.custom?.fontColor,
                         fontWeight: 600,
                         fontSize: theme?.typography?.body2?.fontSize,
                     })}
@@ -25,7 +25,7 @@ const CartProductItemDataComponent = ({ name = 'Coca Cola', size = '2L', categor
                 </Typography>
                 <Typography
                     sx={(theme: Theme) => ({
-                        color: theme?.custom?.whiteTranslucid,
+                        color: theme?.custom?.translucidWhite,
                         fontSize: theme?.typography?.caption?.fontSize,
                     })}
                 >

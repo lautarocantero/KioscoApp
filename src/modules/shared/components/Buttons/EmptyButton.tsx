@@ -12,7 +12,7 @@
 //   - `buttonWidth`: ancho del botón (por defecto `"280px"`).  
 // - Renderiza un `Button` de MUI con estilos personalizados:  
 //   - Fondo transparente.  
-//   - Color de fuente definido por el tema (`fontColorTransparent`).  
+//   - Color de fuente definido por el tema (`translucidWhite`).  
 //   - Bordes redondeados (`borderRadius: 35`).  
 //   - Tipografía adaptada al estilo `body2`.  
 //   - Texto sin transformación (`textTransform: "none"`).  
@@ -36,7 +36,7 @@ const EmptyButton = ({
     <Button
       sx={{
         backgroundColor: "transparent",
-        color: (theme: Theme) => theme?.custom?.fontColorTransparent,
+        color: (theme: Theme) => theme?.custom?.translucidWhite,
         width: buttonWidth,
         borderRadius: 35,
         padding: 1,

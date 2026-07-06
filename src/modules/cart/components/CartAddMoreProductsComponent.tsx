@@ -24,13 +24,13 @@ const CartAddMoreProductsComponent = ({ onClick }: CartAddMoreProductsProps): Re
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: 0.5,
-                border: `1.5px dashed ${theme?.custom?.whiteTranslucid}`,
+                border: `1.5px dashed ${theme?.custom?.translucidWhite}`,
                 borderRadius: '1em',
                 padding: '1.5em',
                 marginTop: '0.7em',
                 cursor: 'pointer',
                 '&:hover': {
-                    backgroundColor: theme?.custom?.whiteTranslucid,
+                    backgroundColor: theme?.custom?.translucidWhite,
                 },
             })}
         >
@@ -47,7 +47,7 @@ const CartAddMoreProductsComponent = ({ onClick }: CartAddMoreProductsProps): Re
             </Typography>
             <Typography
                 sx={(theme: Theme) => ({
-                    color: theme?.custom?.whiteTranslucid,
+                    color: theme?.custom?.translucidWhite,
                     fontSize: theme?.typography?.body2?.fontSize,
                 })}
             >

@@ -25,10 +25,10 @@ const CartPriceRow = (
     >
         <Typography
             sx={(theme: Theme) => ({
-                color: theme?.custom?.whiteTranslucid,
+                color: theme?.custom?.translucidWhite,
                 fontSize: theme?.typography?.body2?.fontSize,
                 fontWeight: bold ? 700 : 400,
-                ...(bold ? { color: theme?.custom?.white } : {}),
+                ...(bold ? { color: theme?.custom?.fontColor } : {}),
             })}
         >
             {label}
@@ -67,7 +67,7 @@ const CartPriceComponent = (
 
             <Divider
                 sx={(theme: Theme) => ({
-                    borderColor: theme?.custom?.whiteTranslucid,
+                    borderColor: theme?.custom?.translucidWhite,
                     my: 0.5,
                 })}
             />

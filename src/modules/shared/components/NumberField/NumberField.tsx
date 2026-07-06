@@ -21,7 +21,7 @@
 
 // ## Renderizado 🎨  
 // - `FormControl`:  
-//   - Estilos dinámicos basados en `Theme` (`fontColor`, bordes, etc.).  
+//   - Estilos dinámicos basados en `Theme` (`white`, bordes, etc.).  
 //   - Maneja estados `disabled`, `required` y `error`.  
 // - `InputLabel`: etiqueta flotante vinculada al campo.  
 // - `OutlinedInput`: campo de texto numérico con borde y estilos adaptados al tema.  
@@ -85,9 +85,9 @@ export default function NumberField({
             '& .MuiInputLabel-root': { color: theme?.custom?.fontColor, },   
             '& .MuiOutlinedInput-root': {
               color: theme?.custom?.fontColor,
-              '& fieldset': { borderColor: theme?.custom?.fontColor, },      
-              '&:hover fieldset': { borderColor: theme?.custom?.fontColor, },
-              '&.Mui-focused fieldset': { borderColor: theme?.custom?.fontColor, },
+              '& fieldset': { borderColor: theme?.custom?.white, },      
+              '&:hover fieldset': { borderColor: theme?.custom?.white, },
+              '&.Mui-focused fieldset': { borderColor: theme?.custom?.white, },
             },
             '& .MuiFormHelperText-root': { color: theme?.custom?.fontColor, }
           })}

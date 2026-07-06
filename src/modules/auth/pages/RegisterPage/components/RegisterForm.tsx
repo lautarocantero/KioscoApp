@@ -129,7 +129,7 @@ const RegisterForm = (): React.ReactNode => {
           textDecoration: "none",
           textAlign: "center",
           display: "block",
-          color: (theme: Theme ) => theme?.custom?.fontColorTransparent,
+          color: (theme: Theme ) => theme?.custom?.translucidFontColor,
           fontSize: (theme: Theme ) => theme?.typography?.body2.fontSize,
           borderRadius: "1em",
           width: "100%",

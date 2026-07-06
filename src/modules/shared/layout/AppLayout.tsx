@@ -7,7 +7,7 @@ import type { AppLayoutProps } from "../../../typings/ui/uiModules";
 import OptionsHeader from "./components/OptionsHeader";
 import AppSidebar from "./components/appSideBar/Appsidebar";
 import LightMode from "../components/LightMode/LightMode";
-import { SearchBar } from "../components/SearchBar/SearchBar";
+import SearchBar from "../components/SearchBar/SearchBar";
 
 const AppLayout = ({
   children,
@@ -119,8 +119,8 @@ const AppLayout = ({
                     },
                     fontWeight: 500,
                     color: !appTheme
-                      ? theme.custom?.fontColor
-                      : theme.custom?.fontColorDark,
+                      ? theme.custom?.white
+                      : theme.custom?.whiteDark,
                     display: "flex",
                     alignItems: "center",
                     flexShrink: 0,

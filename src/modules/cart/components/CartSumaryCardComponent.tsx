@@ -41,7 +41,7 @@ const CartSummaryCardComponent = ({ children, onGenerateTicket, onBack }: CartSu
                     display: 'flex',
                     alignItems: 'center',
                     gap: 1.2,
-                    color: theme?.custom?.white,
+                    color: theme?.custom?.fontColor,
                     fontWeight: 700,
                 })}
             >
@@ -51,7 +51,7 @@ const CartSummaryCardComponent = ({ children, onGenerateTicket, onBack }: CartSu
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor: theme?.palette?.primary?.main,
-                        color: theme?.custom?.white,
+                        color: theme?.custom?.fontColor,
                         borderRadius: '0.5em',
                         width: '1.7em',
                         height: '1.7em',
@@ -85,7 +85,7 @@ const CartSummaryCardComponent = ({ children, onGenerateTicket, onBack }: CartSu
                 <ShieldOutlinedIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, mt: '0.1em' })} />
                 <Typography
                     sx={(theme: Theme) => ({
-                        color: theme?.custom?.white,
+                        color: theme?.custom?.fontColor,
                         fontSize: theme?.typography?.caption?.fontSize,
                     })}
                 >

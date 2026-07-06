@@ -65,13 +65,13 @@ const ProductDialogPresentationRowComponent = ({
                 <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColor, fontWeight: 500 })}>
                     {presentation?.name}
                 </Typography>
-                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColorTransparent, fontSize: theme?.typography?.caption?.fontSize })}>
+                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.translucidWhite, fontSize: theme?.typography?.caption?.fontSize })}>
                     {presentation?.type}
                 </Typography>
             </Box>
 
             <Box display={'flex'} flexDirection={'column'} sx={{ minWidth: '7em' }}>
-                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColorTransparent, fontSize: theme?.typography?.caption?.fontSize })}>
+                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.translucidWhite, fontSize: theme?.typography?.caption?.fontSize })}>
                     Stock actual
                 </Typography>
                 <Stack direction={'row'} alignItems={'center'} gap={1}>

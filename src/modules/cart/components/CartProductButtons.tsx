@@ -23,11 +23,11 @@ const CartProductButtons = ({_id}: CartProductButtonsProps): React.ReactNode => 
             <IconButton
                 onClick={() => dispatch(removeFromCartThunk({ _id, amount: CartAmount.All }))}
                 sx={(theme: Theme) => ({
-                    border: `1px solid ${theme?.custom?.whiteTranslucid}`,
+                    border: `1px solid ${theme?.custom?.translucidWhite}`,
                     borderRadius: '0.6em',
                 })}
             >
-                <DeleteOutlineIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.custom?.white })} />
+                <DeleteOutlineIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.custom?.fontColor })} />
             </IconButton>
         </Tooltip>
     )

@@ -21,7 +21,7 @@ const ProductItemButton = ({ onClick }: ProductItemButtonProps): React.ReactNode
     <AddShoppingCartIcon
       sx={(theme: Theme) => ({
         fontSize: "1.2rem",
-        color: theme.custom?.fontColor,
+        color: theme.custom?.white,
       })}
     />
   </Button>

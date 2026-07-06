@@ -3,11 +3,11 @@ import type { SupplierFormFieldsProps } from "@typings/providers/providerCompone
 
 
 const textFieldSx = (theme: Theme) => ({
-    "& .MuiInputLabel-root": { color: theme?.custom?.fontColorTransparent },
+    "& .MuiInputLabel-root": { color: theme?.custom?.translucidWhite },
     "& .MuiOutlinedInput-root": {
-        "& fieldset": { borderColor: theme?.custom?.fontColorTransparent },
-        "&:hover fieldset": { borderColor: theme?.custom?.fontColorTransparent },
-        "&.Mui-focused fieldset": { borderColor: theme?.custom?.fontColorTransparent },
+        "& fieldset": { borderColor: theme?.custom?.translucidWhite },
+        "&:hover fieldset": { borderColor: theme?.custom?.translucidWhite },
+        "&.Mui-focused fieldset": { borderColor: theme?.custom?.translucidWhite },
     },
 });
 

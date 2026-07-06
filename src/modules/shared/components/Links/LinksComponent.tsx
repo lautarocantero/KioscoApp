@@ -17,7 +17,7 @@
 // - Estilos dinámicos:  
 //   - `fontSize`: adaptado al `caption` del tema.  
 //   - `textDecoration`: controlado por `Breakpoint`.  
-//   - `color`: tomado de `theme.custom.fontColor`.  
+//   - `color`: tomado de `theme.custom.white`.  
 
 // ## Notas técnicas 💽  
 // - **Bug actual**: dentro del `.map`, el `return` está implícito pero no se está devolviendo el JSX (falta `return`).  
@@ -49,7 +49,7 @@ const LinksComponent = ({ linksToShow }: LinksComponentInterface): React.ReactNo
             sx={{
               fontSize: (theme: Theme) => theme?.typography?.caption?.fontSize,
               textDecoration: { [Breakpoint.Xs]: underline.xs, [Breakpoint.Md]: underline.md },
-              color: (theme: Theme) => theme?.custom?.fontColor,
+              color: (theme: Theme) => theme?.custom?.white,
             }}
           >
             {label}

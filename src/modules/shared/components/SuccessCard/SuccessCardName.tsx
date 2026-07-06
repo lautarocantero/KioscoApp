@@ -26,7 +26,7 @@ const SuccessCardName = ({ name }: SuccessCardNameProps): React.ReactNode => (
         })
     }>
         <CategoryIcon />
-        <Typography sx={theme => ({ color: theme.custom.posText, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "20ch" })}>
+        <Typography sx={theme => ({ color: theme.custom.white, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "20ch" })}>
             {name}
         </Typography>
     </Box>

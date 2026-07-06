@@ -18,10 +18,10 @@ const SidebarLogout = ({ dark, isHovered, onLogout }: SidebarLogoutProps) => (
         borderRadius: "8px",
         cursor: "pointer",
         whiteSpace: "nowrap",
-        color: dark ? theme.custom?.fontColorTransparent : theme.custom?.fontColorDarkTransparent,
+        color: dark ? theme.custom?.translucidWhite : theme.custom?.whiteDarkTransparent,
         transition: "background 0.13s, color 0.13s",
         "&:hover": {
-          color: dark ? theme.custom?.fontColor : theme.custom?.fontColorDark,
+          color: dark ? theme.custom?.white : theme.custom?.whiteDark,
         },
       })}
     >

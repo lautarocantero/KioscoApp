@@ -38,7 +38,7 @@ const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObjec
         alignItems={'flex-start'} ///*─────────────────── 🔎 alinear todo a la izquierda 🔎 ───────────────────*
         gap={0.5}
         sx={(theme: Theme) => ({
-            borderTop: `1px solid ${theme?.custom?.whiteTranslucid}`,
+            borderTop: `1px solid ${theme?.custom?.translucidWhite}`,
             marginTop: '1em',
             paddingTop: '1em',
             width: '100%',
@@ -52,7 +52,7 @@ const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObjec
                     alignItems: 'center',
                     gap: 0.8,
                     textAlign: 'left', 
-                    color: theme?.custom?.white,
+                    color: theme?.custom?.fontColor,
                     fontWeight: 600,
                     marginBottom: '0.3em',
                 })}>
@@ -64,7 +64,7 @@ const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObjec
             onChange={handleChange}
             sx={(theme: Theme) => ({
                 '& .MuiFormControlLabel-root': {
-                    color: theme?.custom?.white,
+                    color: theme?.custom?.fontColor,
                     marginLeft: 0,
                     marginBottom: '-0.4em', ///*─────────────────── 🔎 reduce espacio entre filas 🔎 ───────────────────*
                 },
@@ -72,7 +72,7 @@ const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObjec
                     fontSize: theme?.typography?.body2?.fontSize,
                 },
                 '& .MuiRadio-root': {
-                    color: theme?.custom?.whiteTranslucid,
+                    color: theme?.custom?.translucidWhite,
                     padding: '0.4em',
                 },
                 '& .MuiSvgIcon-root': {

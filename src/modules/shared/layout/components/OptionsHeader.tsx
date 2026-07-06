@@ -1,37 +1,3 @@
-
-// # Componente: OptionsHeader  
-
-// ## Descripción 📦  
-// Encabezado reutilizable para secciones de opciones dentro de la aplicación.  
-// Renderiza un título acompañado de un ícono, con estilos dinámicos basados en el tema (`appTheme`).  
-// Solo se muestra si la prop `isOptions` es verdadera, lo que permite ocultarlo en contextos donde no aplica.  
-
-// ## Lógica 🔧  
-// - Props (`OptionsHeaderInterface`):  
-//   - `isOptions`: determina si el encabezado debe renderizarse.  
-//   - `title`: texto principal del encabezado.  
-//   - `icon`: ícono opcional que acompaña al título.  
-//   - `appTheme`: booleano que define si se usa tema claro u oscuro.  
-// - Renderizado condicional:  
-//   - Si `isOptions` es `false`, retorna un fragmento vacío.  
-//   - Si `true`, renderiza un `Grid` con estilos y un `Typography` para el título.  
-
-// ## Renderizado 🎨  
-// - `Grid`:  
-//   - Fondo dinámico (`backgroundDark` o `backgroundLigth`).  
-//   - Color de fuente adaptado al tema (`fontColor` o `fontColorDark`).  
-//   - Bordes redondeados, márgenes y padding responsivos.  
-//   - Texto centrado.  
-// - `Typography`:  
-//   - Variante `h1` con tamaños de fuente adaptados a breakpoints (`xs`, `sm`, `md`).  
-//   - Renderiza ícono (si existe) seguido del título.  
-
-// ## Notas técnicas 💽  
-// - Modularidad: puede reutilizarse en cualquier sección de opciones (`DisplayOptions`).  
-// - Flexibilidad: soporta ícono opcional y estilos dinámicos según tema.  
-// - Accesibilidad visual: tipografía escalable y colores contrastados para mejorar legibilidad.  
-
-
 import { Box, Typography, type Theme } from "@mui/material";
 import type { OptionsHeaderInterface } from "../../../../typings/ui/uiModules";
 import { useLocation } from "react-router-dom";
@@ -56,7 +22,7 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
         <Typography
           variant="body2"
           sx={(theme: Theme) => ({
-            color: theme.custom?.fontColor,
+            color: theme.custom?.white,
             mb: 0.5,
             display: "block",
             fontWeight: 400,
@@ -74,7 +40,7 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
             md: theme.typography?.h2.fontSize,
           },
           fontWeight: 500,
-          color: !appTheme ? theme.custom?.fontColor : theme.custom?.fontColorDark,
+          color: !appTheme ? theme.custom?.white : theme.custom?.whiteDark,
         })}
       >
         {icon && (
@@ -88,8 +54,8 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
         variant="caption"
         sx={(theme: Theme) => ({
           color: !appTheme
-            ? theme.custom?.fontColorTransparent
-            : theme.custom?.fontColorDarkTransparent,
+            ? theme.custom?.translucidWhite
+            : theme.custom?.whiteDarkTransparent,
           mt: 0.5,
           display: "block",
         })}

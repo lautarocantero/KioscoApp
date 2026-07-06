@@ -25,7 +25,6 @@
 //
 //-----------------------------------------------------------------------------//
 
-import { DialogProvider } from "./modules/shared/components/SimpleDialog/DialogProvider"
 import SnackBarProvider from "./modules/shared/components/SnackBar/SnackBarProvider"
 import AppRouther from "./router/AppRouter"
 import { AppTheme } from "./theme/AppTheme"
@@ -34,13 +33,11 @@ import { LightDarkThemeProvider } from "./theme/LightDarkThemeProvider"
 const KioscoApp = () => {
   return (
     <LightDarkThemeProvider>
-      <DialogProvider>
           <SnackBarProvider>
             <AppTheme>  
               <AppRouther />  
             </AppTheme>
           </SnackBarProvider>
-      </DialogProvider>
     </LightDarkThemeProvider>
   )
 }

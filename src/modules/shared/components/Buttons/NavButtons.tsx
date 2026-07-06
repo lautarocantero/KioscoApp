@@ -38,8 +38,8 @@ const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: Na
             <Button onClick={handleBack} variant="outlined"
                 sx={(theme: Theme) => ({
                     textTransform: "none", fontWeight: 600, minWidth: 120,
-                    borderColor: theme?.custom?.fontColorTransparent,
-                    color: theme?.custom?.fontColorTransparent,
+                    borderColor: theme?.custom?.translucidWhite,
+                    color: theme?.custom?.translucidWhite,
                 })}
             >
                 {readOnly ? "Volver" : isFirstStep ? "Cancelar" : "Atrás"}

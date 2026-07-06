@@ -28,7 +28,7 @@ const SellDataComponent = ({sellSelected}: SellDataProps): React.ReactNode => {
       <Typography
           component={'h2'}
           sx={(theme: Theme) => ({
-              color: theme?.custom?.white,
+              color: theme?.custom?.fontColor,
               m: 'auto'
           })}
       >

@@ -11,8 +11,8 @@ const SupplierDialogActions = ({
             disabled={isLoading}
             sx={(theme: Theme) => ({
                 textTransform: "none",
-                borderColor: theme?.custom?.fontColorTransparent,
-                color: theme?.custom?.fontColorTransparent,
+                borderColor: theme?.custom?.translucidWhite,
+                color: theme?.custom?.translucidWhite,
             })}
         >
             Cancelar

@@ -17,7 +17,7 @@ const CartProductPriceColumnComponent = ({ label, value }: CartProductPriceColum
     <Grid sx={{ display: 'flex', flexDirection: 'column', minWidth: '6em' }}>
         <Typography
             sx={(theme: Theme) => ({
-                color: theme?.custom?.whiteTranslucid,
+                color: theme?.custom?.translucidWhite,
                 fontSize: theme?.typography?.caption?.fontSize,
             })}
         >
@@ -25,7 +25,7 @@ const CartProductPriceColumnComponent = ({ label, value }: CartProductPriceColum
         </Typography>
         <Typography
             sx={(theme: Theme) => ({
-                color: theme?.custom?.white,
+                color: theme?.custom?.fontColor,
                 fontWeight: 600,
                 fontSize: theme?.typography?.body2?.fontSize,
             })}

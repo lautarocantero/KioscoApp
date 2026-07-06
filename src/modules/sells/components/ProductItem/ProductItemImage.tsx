@@ -29,7 +29,7 @@ const ProductItemImage = ({ source, name, onClick }: Props): React.ReactNode => 
         <ImageNotSupportedOutlinedIcon
           sx={(theme: Theme) => ({
             fontSize: "1.6rem",
-            color: theme.custom?.fontColorTransparent,
+            color: theme.custom?.translucidWhite,
           })}
         />
       </Box>

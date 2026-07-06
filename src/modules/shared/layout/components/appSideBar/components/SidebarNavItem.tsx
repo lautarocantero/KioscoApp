@@ -32,8 +32,8 @@ const SidebarNavItem = ({
           width: isHovered ? "100%" : "36px",
           transition: "background-color 0.15s, color 0.15s, width 0.22s cubic-bezier(.4,0,.2,1), backdrop-filter 0.15s",
           color: isActive
-            ? dark ? theme.custom?.fontColor : theme.custom?.backgroundDark
-            : dark ? theme.custom?.fontColorTransparent : theme.custom?.fontColorDarkTransparent,
+            ? dark ? theme.custom?.white : theme.custom?.backgroundDark
+            : dark ? theme.custom?.translucidWhite : theme.custom?.whiteDarkTransparent,
 
           backgroundColor: isActive
             ? isHovered
@@ -47,7 +47,7 @@ const SidebarNavItem = ({
 
           "&:hover": {
             backgroundColor: dark ? theme.palette?.primary?.main : theme.custom?.blackTranslucid,
-            color: dark ? theme.custom?.fontColor : theme.custom?.fontColorDark,
+            color: dark ? theme.custom?.white : theme.custom?.whiteDark,
             backdropFilter: "none",
           },
         })}

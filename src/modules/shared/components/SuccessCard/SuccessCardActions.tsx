@@ -39,7 +39,7 @@ const SuccessCardActions = ({ actions }: SuccessCardActionsProps): React.ReactNo
                         textTransform: "none",
                         fontWeight: 500,
                         fontSize: "0.9rem",
-                        color: theme.custom?.posText,
+                        color: theme.custom?.white,
                         "&:hover": { backgroundColor: "transparent", opacity: 0.8 },
                     })}
                 >

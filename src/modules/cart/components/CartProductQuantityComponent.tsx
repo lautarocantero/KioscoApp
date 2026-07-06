@@ -37,7 +37,7 @@ const CartProductQuantityComponent = ({ _id, quantity }: CartProductQuantityProp
         <Grid sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Typography
                 sx={(theme: Theme) => ({
-                    color: theme?.custom?.whiteTranslucid,
+                    color: theme?.custom?.translucidWhite,
                     fontSize: theme?.typography?.caption?.fontSize,
                     mb: '0.2em',
                 })}
@@ -49,7 +49,7 @@ const CartProductQuantityComponent = ({ _id, quantity }: CartProductQuantityProp
                     display: 'flex',
                     alignItems: 'center',
                     gap: 1,
-                    border: `1px solid ${theme?.custom?.whiteTranslucid}`,
+                    border: `1px solid ${theme?.custom?.translucidWhite}`,
                     borderRadius: '0.6em',
                     padding: '0.1em 0.4em',
                 })}
@@ -57,7 +57,7 @@ const CartProductQuantityComponent = ({ _id, quantity }: CartProductQuantityProp
                 <IconButton size="small" onClick={handleDecrease}>
                     <RemoveIcon fontSize="inherit" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
                 </IconButton>
-                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.white, minWidth: '1em', textAlign: 'center' })}>
+                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColor, minWidth: '1em', textAlign: 'center' })}>
                     {quantity}
                 </Typography>
                 <IconButton size="small" onClick={handleIncrease}>

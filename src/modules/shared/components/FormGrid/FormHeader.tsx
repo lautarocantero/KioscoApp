@@ -49,13 +49,13 @@ const FormHeader = ({
                     <Box>
                         <Typography sx={(theme: Theme) => ({
                             fontSize: "1.3rem", fontWeight: 500, lineHeight: 1.3,
-                            color: theme?.custom?.white,
+                            color: theme?.custom?.fontColor,
                         })}>
                             {title}
                         </Typography>
                         {subtitle && (
                             <Typography sx={(theme: Theme) => ({
-                                fontSize: "0.75rem", color: theme.custom?.fontColorTransparent, mt: "2px",
+                                fontSize: "0.75rem", color: theme.custom?.translucidWhite, mt: "2px",
                             })}>
                                 {subtitle}
                             </Typography>
@@ -86,7 +86,7 @@ const FormHeader = ({
                             </Box>
                         </Box>
                         <Typography sx={(theme: Theme) => ({
-                            fontSize: "0.6rem", color: theme.custom?.fontColorTransparent, mt: "2px",
+                            fontSize: "0.6rem", color: theme.custom?.translucidWhite, mt: "2px",
                         })}>
                             Completado
                         </Typography>

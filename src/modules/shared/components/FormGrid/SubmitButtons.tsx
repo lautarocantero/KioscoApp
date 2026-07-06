@@ -16,8 +16,8 @@ const SubmitButtons = (): React.ReactNode => {
                 variant="outlined"
                 sx={(theme: Theme) => ({
                     textTransform: "none", fontWeight: 600, minWidth: 120,
-                    borderColor: theme?.custom?.fontColorTransparent,
-                    color: theme?.custom?.fontColorTransparent,
+                    borderColor: theme?.custom?.translucidWhite,
+                    color: theme?.custom?.translucidWhite,
                 })}
             >
                 ← Atrás

@@ -43,7 +43,7 @@ export const SearchBar = ({
           px: 1.5,
           py: 0.75,
           borderRadius: "8px",
-          border: `1px solid ${theme.custom?.posBorder ?? theme.custom?.blackTranslucid}`,
+          border: `1px solid ${theme.custom?.darkGray ?? theme.custom?.blackTranslucid}`,
           backgroundColor: theme.custom?.posBackground,
         }),
         ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
@@ -52,7 +52,7 @@ export const SearchBar = ({
       <SearchIcon
         sx={(theme: Theme) => ({
           fontSize: "1.1rem",
-          color: theme.palette?.primary?.main ?? theme.custom?.fontColorTransparent,
+          color: theme.palette?.primary?.main ?? theme.custom?.translucidWhite,
           flexShrink: 0,
         })}
       />
@@ -64,9 +64,9 @@ export const SearchBar = ({
         sx={(theme: Theme) => ({
           flex: 1,
           fontSize: "0.9rem",
-          color: theme.custom?.posText ?? theme.custom?.fontColor,
+          color: theme.custom?.white ?? theme.custom?.white,
           "& input::placeholder": {
-            color: theme.custom?.posPlaceholder ?? theme.custom?.fontColorTransparent,
+            color: theme.custom?.lightGray ?? theme.custom?.translucidWhite,
             opacity: 1,
           },
         })}
@@ -82,7 +82,7 @@ export const SearchBar = ({
           <DeleteIcon
             sx={(theme: Theme) => ({
               fontSize: "1.1rem",
-              color: theme.palette?.primary?.main ?? theme.custom?.fontColorTransparent,
+              color: theme.palette?.primary?.main ?? theme.custom?.translucidWhite,
             })}
           />
         </IconButton>
@@ -90,7 +90,7 @@ export const SearchBar = ({
         <Typography
           variant="caption"
           sx={(theme: Theme) => ({
-            color: theme.custom?.posPlaceholder ?? theme.custom?.fontColorTransparent,
+            color: theme.custom?.lightGray ?? theme.custom?.translucidWhite,
             flexShrink: 0,
           })}
         >

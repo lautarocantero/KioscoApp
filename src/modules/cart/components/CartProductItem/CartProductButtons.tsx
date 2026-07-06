@@ -23,12 +23,12 @@ const CartProductButtonsComponent = ({ _id }: CartProductButtonsProps): React.Re
                     onClick={() => dispatch(removeFromCartThunk({ _id, amount: CartAmount.All }))}
                     sx={(theme: Theme) => ({
                         backgroundColor: theme?.custom?.backgroundDark,
-                        border: `1px solid ${theme?.custom?.whiteTranslucid}`,
+                        border: `1px solid ${theme?.custom?.translucidWhite}`,
                         borderRadius: '0.3em',
                         width: '1.6em',
                         height: '1.6em',
                         '&:hover': {
-                            backgroundColor: theme?.custom?.whiteTranslucid,
+                            backgroundColor: theme?.custom?.translucidWhite,
                         },
                     })}
                 >

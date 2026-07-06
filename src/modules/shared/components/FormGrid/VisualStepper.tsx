@@ -18,7 +18,7 @@ const VisualStepperComponent = ({ stepsLabels, currentStep }: FormHeaderComponen
                         sx={(theme: Theme) => ({
                             "& .MuiStepLabel-label": {
                                 fontSize: "0.75rem",
-                                color: theme.custom?.fontColorTransparent,
+                                color: theme.custom?.translucidWhite,
                                 mt: 1,
                             },
                             "& .MuiStepLabel-label.Mui-active": {
@@ -26,7 +26,7 @@ const VisualStepperComponent = ({ stepsLabels, currentStep }: FormHeaderComponen
                                 fontWeight: 600,
                             },
                             "& .MuiStepLabel-label.Mui-completed": {
-                                color: theme.custom?.fontColorTransparent,
+                                color: theme.custom?.translucidWhite,
                             },
                         })}
                     >

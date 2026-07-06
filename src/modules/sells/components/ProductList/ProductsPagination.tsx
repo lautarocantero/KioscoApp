@@ -21,7 +21,7 @@ const ProductsPagination = ({ page, count, onChange }: ProductsPaginationProps):
         justifyContent: "center",
         mt: 3,
         "& .MuiPaginationItem-root": {
-          color: theme.custom?.fontColorTransparent,
+          color: theme.custom?.translucidWhite,
         },
         "& .Mui-selected": {
           backgroundColor: `${theme.palette?.primary?.main} !important`,

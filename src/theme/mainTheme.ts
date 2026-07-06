@@ -5,7 +5,7 @@ declare module '@mui/material/styles' {
     custom: {
       //────────────── white ──────────────────//
       white: string;
-      whiteTranslucid: string;
+      translucidWhite: string;
 
       //────────────── black ──────────────────//
       black: string;
@@ -21,28 +21,23 @@ declare module '@mui/material/styles' {
 
       //────────────── font ──────────────────//
       fontColor: string;
-      fontColorTransparent: string;
+      translucidFontColor: string;
       fontColorDark: string;
       fontColorDarkTransparent: string;
 
       //────────────── background ──────────────────//
-      backgroundLigth: string;
       background: string;
       backgroundDark: string;
-      cardBackground: string;
 
       //────────────── POS Modern UI ──────────────────//
       posBackground: string;
       posCard: string;
       posSurface: string;
-      posSurfaceHover: string;
-      posBorder: string;
-      posDivider: string;
+      darkGray: string;
 
       posText: string;
-      posTextSecondary: string;
-      posPlaceholder: string;
-      posIcon: string;
+      darkWhite: string;
+      lightGray: string;
 
       posAccent: string;
       posAccentHover: string;
@@ -68,7 +63,7 @@ declare module '@mui/material/styles' {
     custom?: {
       //────────────── white ──────────────────//
       white?: string;
-      whiteTranslucid?: string;
+      translucidWhite?: string;
 
       //────────────── black ──────────────────//
       black?: string;
@@ -84,28 +79,23 @@ declare module '@mui/material/styles' {
 
       //────────────── font ──────────────────//
       fontColor?: string;
-      fontColorTransparent?: string;
+      translucidFontColor?: string;
       fontColorDark?: string;
       fontColorDarkTransparent?: string;
 
       //────────────── background ──────────────────//
-      backgroundLigth?: string;
       background?: string;
       backgroundDark?: string;
-      cardBackground?: string;
 
       //────────────── POS Modern UI ──────────────────//
       posBackground?: string;
       posCard?: string;
       posSurface?: string;
-      posSurfaceHover?: string;
-      posBorder?: string;
-      posDivider?: string;
+      darkGray?: string;
 
       posText?: string;
-      posTextSecondary?: string;
-      posPlaceholder?: string;
-      posIcon?: string;
+      darkWhite?: string;
+      lightGray?: string;
 
       posAccent?: string;
       posAccentHover?: string;
@@ -156,31 +146,31 @@ export const darkTheme = createTheme({
     errorLight: "#6b100a6c",
     errorDark:  "#310704ff",
 
+    //────────────── fonts ──────────────────//
+    fontColor: '#F5F7FA',
+    translucidFontColor: 'rgba(245,247,250,0.4)',
     //────────────── white ──────────────────//
-    white: '#eff0f8',
-    whiteTranslucid: '#eff0f865',
-    fontColor: '#eff0f8',
-    fontColorTransparent: '#eff0f842',
-    backgroundLigth: '#525253ff',
-    cardBackground: 'rgba(255,255,255,0.07)',
-    posBorder: 'rgba(255,255,255,0.06)',
-    posPlaceholder: 'rgba(255,255,255,0.45)',
-    posText: '#F5F7FA',
-    posTextSecondary: '#C9CED8',
-    posIcon: '#AEB6C4',
+    
+    white: '#F5F7FA',
+    darkWhite: '#C9CED8',//letra secundaria
+    translucidWhite: 'rgba(245,247,250,0.4)', 
+
+    //────────────── gray ──────────────────//
+    lightGray: 'rgba(255,255,255,0.45)', // botones secundarios
+    darkGray: 'rgba(255,255,255,0.06)', // bordes
+    
 
     //────────────── black ──────────────────//
-    black: '#333333',
-    blackTranslucid: '#09090966',
-    fontColorDark: '#333333',
-    fontColorDarkTransparent: '#09090966',
-    background: '#333333',
-    backgroundDark: '#0c0d11',
-    posBackground: '#11141A',
-    posCard: '#1f2125',
-    posSurface: '#272C36',
-    posSurfaceHover: '#2D3440',
-    posDivider: '#343946',
+    black: '#333333', // 14
+
+    posCard: '#1f2125', // 1
+    fontColorDarkTransparent: '#09090966', // 5
+    posBackground: '#11141A', // 9
+    backgroundDark: '#0c0d11', // 10
+    blackTranslucid: '#09090966', // 11
+    posSurface: '#272C36', // 11
+    fontColorDark: '#333333', // 22
+    background: '#333333', // 129
   },
   typography: {
     fontFamily: `'Montserrat', sans-serif`,
@@ -209,7 +199,7 @@ export const lightTheme = createTheme({
   custom: {
     //────────────── white ──────────────────//
     white: '#eff0f8',
-    whiteTranslucid: '#eff0f826',
+    translucidWhite: '#eff0f826',
 
     //────────────── black ──────────────────//
     black: '#333333',
@@ -223,15 +213,13 @@ export const lightTheme = createTheme({
 
     //────────────── font ──────────────────//
     fontColor: '#333333',
-    fontColorTransparent: '#3333333d',
+    translucidFontColor: '#3333333d',
     fontColorDark: '#333333',
     fontColorDarkTransparent: '#09090966',
 
     //────────────── background ──────────────────//
-    backgroundLigth: '#bbbbbbff',
     background: '#FFFFFF',
     backgroundDark: '#fde8d8',
-    cardBackground: '#ffffff',
 
     //────────────── error ──────────────────//
     errorLight: "#6b100a6c",

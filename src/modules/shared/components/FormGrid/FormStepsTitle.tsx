@@ -9,7 +9,7 @@ const FormStepsTitleComponent = ( {title}: FormStepsTitleInterface ):React.React
             <Typography
                 component={"h2"}
                 sx={{
-                    color: (theme: Theme) => ( theme?.custom?.fontColor ),
+                    color: (theme: Theme) => ( theme?.custom?.white ),
                     fontSize: (theme: Theme) => theme?.typography?.body2,
                     textAlign: 'end',
                 }}

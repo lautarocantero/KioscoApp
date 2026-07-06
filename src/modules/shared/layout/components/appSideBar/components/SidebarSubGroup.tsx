@@ -12,7 +12,7 @@ const SidebarSubGroup = ({ group, dark, isHovered, isSubLinkActive, onNavigate }
         fontWeight: 500,
         letterSpacing: "0.08em",
         textTransform: "uppercase",
-        color: dark ? theme.custom?.fontColorTransparent : theme.custom?.fontColorDarkTransparent,
+        color: dark ? theme.custom?.translucidWhite : theme.custom?.whiteDarkTransparent,
         px: "12px",
         pt: "8px",
         pb: "2px",

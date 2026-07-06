@@ -39,7 +39,7 @@ const CartHeaderComponent = ({ itemsCount, onClearCart }: CartHeaderProps): Reac
                     <Box>
                         <Typography
                             sx={(theme: Theme) => ({
-                                color: theme?.custom?.white,
+                                color: theme?.custom?.fontColor,
                                 fontWeight: 700,
                                 fontSize: theme?.typography?.h5?.fontSize,
                             })}
@@ -48,7 +48,7 @@ const CartHeaderComponent = ({ itemsCount, onClearCart }: CartHeaderProps): Reac
                         </Typography>
                         <Typography
                             sx={(theme: Theme) => ({
-                                color: theme?.custom?.whiteTranslucid,
+                                color: theme?.custom?.translucidWhite,
                                 fontSize: theme?.typography?.body2?.fontSize,
                             })}
                         >
@@ -61,13 +61,13 @@ const CartHeaderComponent = ({ itemsCount, onClearCart }: CartHeaderProps): Reac
                     onClick={onClearCart}
                     startIcon={<DeleteSweepIcon />}
                     sx={(theme: Theme) => ({
-                        color: theme?.custom?.white,
+                        color: theme?.custom?.fontColor,
                         borderRadius: '0.7em',
-                        border: `1px solid ${theme?.custom?.whiteTranslucid}`,
+                        border: `1px solid ${theme?.custom?.translucidWhite}`,
                         textTransform: 'none',
                         fontSize: theme?.typography?.body2?.fontSize,
                         '&:hover': {
-                            backgroundColor: theme?.custom?.whiteTranslucid,
+                            backgroundColor: theme?.custom?.translucidWhite,
                             color: theme?.custom?.fontColor,
                         },
                     })}

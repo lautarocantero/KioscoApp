@@ -21,7 +21,7 @@ const ProductImagePreview = ({ imageUrl }: ProductImagePreviewProps): React.Reac
         />
         <Typography sx={(theme: Theme) => ({
             fontSize: "0.75rem",
-            color: theme.custom?.fontColorTransparent,
+            color: theme.custom?.translucidWhite,
             wordBreak: "break-all",
         })}>
             {imageUrl}

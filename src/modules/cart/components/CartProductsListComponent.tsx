@@ -52,7 +52,7 @@ const CartProductListComponent = ({ cart }: CartProductListProps): React.ReactNo
                 <Grid container display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                     <Typography
                         sx={(theme: Theme) => ({
-                            color: theme?.custom?.whiteTranslucid,
+                            color: theme?.custom?.translucidWhite,
                             fontSize: theme?.typography?.body2?.fontSize,
                             display: 'flex',
                             alignItems: 'center',
@@ -87,7 +87,7 @@ const CartProductListComponent = ({ cart }: CartProductListProps): React.ReactNo
                             startIcon={<GridViewIcon fontSize="small" />}
                             sx={(theme: Theme) => ({
                                 textTransform: 'none',
-                                color: view === 'grid' ? theme?.palette?.primary?.main : theme?.custom?.whiteTranslucid,
+                                color: view === 'grid' ? theme?.palette?.primary?.main : theme?.custom?.translucidWhite,
                                 backgroundColor: view === 'grid' ? alpha(theme?.custom?.darkSecondary, 0.3) : 'transparent',
                                 fontSize: theme?.typography?.body2?.fontSize,
                                 p: '0.5em',
@@ -100,7 +100,7 @@ const CartProductListComponent = ({ cart }: CartProductListProps): React.ReactNo
                             startIcon={<ViewListIcon fontSize="small" />}
                             sx={(theme: Theme) => ({
                                 textTransform: 'none',
-                                color: view === 'list' ? theme?.palette?.primary?.main : theme?.custom?.whiteTranslucid,
+                                color: view === 'list' ? theme?.palette?.primary?.main : theme?.custom?.translucidWhite,
                                 backgroundColor: view === 'list' ? alpha(theme?.custom?.darkSecondary, 0.3) : 'transparent',
                                 fontSize: theme?.typography?.body2?.fontSize,
                                 p: '0.5em',

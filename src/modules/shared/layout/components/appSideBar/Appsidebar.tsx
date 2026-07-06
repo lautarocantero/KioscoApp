@@ -46,7 +46,7 @@ const AppSidebar = () => {
           py: 2.5,
           gap: 1,
           borderRight: dark
-            ? `1px solid ${theme.custom?.whiteTranslucid}`
+            ? `1px solid ${theme.custom?.translucidWhite}`
             : `1px solid ${theme.custom?.blackTranslucid}`,
           height: "100vh",
           position: "fixed",
@@ -64,7 +64,7 @@ const AppSidebar = () => {
             onClick={toggleSidebar}
             size="small"
             sx={(theme: Theme) => ({
-              color: theme.custom?.posIcon ?? theme.custom?.fontColorTransparent,
+              color: theme.custom?.white,
               transition: "transform 0.22s cubic-bezier(.4,0,.2,1)",
               transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
             })}

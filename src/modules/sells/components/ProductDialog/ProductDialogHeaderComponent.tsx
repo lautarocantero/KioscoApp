@@ -72,7 +72,7 @@ const ProductDialogHeaderComponent = ({
                     <Typography
                         sx={(theme: Theme) => ({
                             fontSize: theme?.typography?.body2?.fontSize,
-                            color: theme?.custom?.fontColorTransparent,
+                            color: theme?.custom?.translucidWhite,
                             mt: 0.5,
                         })}
                     >
@@ -82,12 +82,12 @@ const ProductDialogHeaderComponent = ({
                 <Stack direction={'row'} alignItems={'center'} gap={0.5} sx={{ mt: 2 }}>
                     <Inventory2OutlinedIcon
                         fontSize="small"
-                        sx={(theme: Theme) => ({ color: theme?.custom?.fontColorTransparent })}
+                        sx={(theme: Theme) => ({ color: theme?.custom?.translucidWhite })}
                     />
                     <Typography
                         sx={(theme: Theme) => ({
                             fontSize: theme?.typography?.caption?.fontSize,
-                            color: theme?.custom?.fontColorTransparent,
+                            color: theme?.custom?.translucidWhite,
                         })}
                     >
                         Total en stock (todas las presentaciones)

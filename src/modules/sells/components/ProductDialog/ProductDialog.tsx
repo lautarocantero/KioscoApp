@@ -59,7 +59,6 @@ const ProductDialog = (): React.ReactNode => {
       fullWidth
       maxWidth="md"
       sx={(theme: Theme) => ({
-        backgroundColor: theme?.custom?.cardBackground, 
         width: '100%',
       })}
     >

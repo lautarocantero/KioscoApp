@@ -51,7 +51,7 @@ const SuccessCardBody = ({ name, title, subtitle, timeline, showSuccessIcon = tr
         <Typography sx={(theme) => ({
             maxWidth: 420,
             textAlign: "center",
-            color: theme.custom?.fontColorTransparent ?? "rgba(255,255,255,0.6)",
+            color: theme.custom?.translucidWhite ?? "rgba(255,255,255,0.6)",
             fontSize: "1rem",
             lineHeight: 1.6,
         })}>

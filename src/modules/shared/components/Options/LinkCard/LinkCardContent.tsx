@@ -36,7 +36,7 @@ const LinkCardContent = ({ link, accent, appTheme}: LinkCardContentProps): React
             <Box sx={(t: Theme) => ({
                 fontSize: "1.8rem",
                 fontWeight: 700,
-                color: appTheme ? t.custom.fontColorDark : t.custom.white,
+                color: appTheme ? t.custom.whiteDark : t.custom.white,
                 lineHeight: 1.1,
             })}>
                 {link.value}
@@ -45,7 +45,7 @@ const LinkCardContent = ({ link, accent, appTheme}: LinkCardContentProps): React
 
         <Box sx={(t: Theme) => ({
             fontSize: "0.72rem",
-            color: appTheme ? t.custom.fontColorDark : t.custom.white,
+            color: appTheme ? t.custom.whiteDark : t.custom.white,
             lineHeight: 1.4,
             mt: "1px",
         })}>

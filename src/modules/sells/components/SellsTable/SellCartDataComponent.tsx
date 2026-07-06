@@ -31,7 +31,7 @@ const SellCartDataComponent = ({sellSelected}: SellCartDataProps ): React.ReactN
       <Typography
           component={'h2'}
           sx={(theme: Theme) => ({
-              color: theme?.custom?.white,
+              color: theme?.custom?.fontColor,
               m: 'auto'
           })}
       >
