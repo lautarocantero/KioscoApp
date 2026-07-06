@@ -44,7 +44,7 @@ export const SearchBar = ({
           py: 0.75,
           borderRadius: "8px",
           border: `1px solid ${theme.custom?.darkGray ?? theme.custom?.blackTranslucid}`,
-          backgroundColor: theme.custom?.black,
+          backgroundColor: theme.custom?.lightBackground,
         }),
         ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
       ]}
@@ -64,9 +64,9 @@ export const SearchBar = ({
         sx={(theme: Theme) => ({
           flex: 1,
           fontSize: "0.9rem",
-          color: theme.custom?.white ?? theme.custom?.white,
+          color: theme.custom?.fontColor,
           "& input::placeholder": {
-            color: theme.custom?.lightGray ?? theme.custom?.translucidWhite,
+            color: theme.custom?.fontColor,
             opacity: 1,
           },
         })}

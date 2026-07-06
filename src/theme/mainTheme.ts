@@ -152,58 +152,60 @@ export const lightTheme = createTheme({
   unstable_grid: { cssGrid: true },
   palette: {
     mode: 'light',
-    primary:   { main: '#8E49E8' },
-    secondary: { main: '#78C83E' },
-    error:     { main: '#842325' },
+    primary:   { main: '#8B5CF6' },   // violeta principal (más moderno tipo Tailwind)
+    secondary: { main: '#22C55E' },   // verde suave de acento
+    error:     { main: '#EF4444' },
   },
   custom: {
-    //────────────── main ──────────────────//
-    lightMain: '#AC7AEE',
-    darkMain: '#8E49E8',
+    //────────────── main (violeta) ──────────────────//
+    lightMain: '#C4B5FD',  // violeta claro (cards/icon bg)
+    darkMain:  '#8B5CF6',  // principal
 
-    //────────────── secondary ──────────────────//
-    lightSecondary: '#ACF174',
-    darkSecondary: '#78C83E',
+    //────────────── secondary (verde) ──────────────────//
+    lightSecondary: '#BBF7D0',
+    darkSecondary:  '#22C55E',
 
     //────────────── error ──────────────────//
-    errorLight: "#6b100a6c",
-    errorDark:  "#310704ff",
+    errorLight: "#FECACA",
+    errorDark:  "#7F1D1D",
 
     //────────────── background ──────────────────//
-    lightBackground: '#FCFBFF',
-    background: '#FFFFFF',
-    darkBackground: '#F4F2FA',
+    lightBackground: '#F8F7FF', // fondo general (ligeramente violeta)
+    background:      '#e2def3', // surface base
+    darkBackground:  '#c6bdf1', // cards elevadas suaves
 
     //────────────── fonts ──────────────────//
-    fontColor: '#333333',
-    translucidFontColor: 'rgba(51,51,51,0.4)',
+    fontColor: '#1F2937', // gris oscuro moderno
+    translucidFontColor: 'rgba(31,41,55,0.5)',
 
     //────────────── white ──────────────────//
     white: '#FFFFFF',
-    darkWhite: '#5B5D66', //letra secundaria
-    translucidWhite: 'rgba(51,51,51,0.4)',
+    darkWhite: '#6B7280', // texto secundario
+    translucidWhite: 'rgba(31,41,55,0.4)',
 
     //────────────── gray ──────────────────//
-    lightGray: 'rgba(51,51,51,0.06)', // botones secundarios
-    darkGray: 'rgba(51,51,51,0.08)', // bordes
+    lightGray: 'rgba(0,0,0,0.04)', // hover suave
+    darkGray:  'rgba(0,0,0,0.08)', // borders
 
     //────────────── black ──────────────────//
-    black: '#333333',
-    darkblack: '#1A1A1A',
-    blackTranslucid: '#09090966',
-
+    black: '#111827',
+    darkblack: '#030712',
+    blackTranslucid: '#00000033',
   },
+
   typography: {
     fontFamily: `'Montserrat', sans-serif`,
     htmlFontSize: 16,
     fontSize: 16,
+
     h1: { fontSize: '3rem',   fontWeight: 700 },
     h2: { fontSize: '2.5rem', fontWeight: 600 },
     h3: { fontSize: '2rem',   fontWeight: 500 },
     h4: { fontSize: '1.5rem', fontWeight: 500 },
-    h5: { fontSize: '1.25rem',fontWeight: 400 },
-    body1:   { fontSize: '1.2rem'   },
-    body2:   { fontSize: '0.875rem' },
-    caption: { fontSize: '0.75rem'  },
+    h5: { fontSize: '1.25rem',fontWeight: 500 },
+
+    body1:   { fontSize: '1.1rem' },
+    body2:   { fontSize: '0.9rem' },
+    caption: { fontSize: '0.75rem' },
   },
 });

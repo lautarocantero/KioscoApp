@@ -22,7 +22,7 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
         <Typography
           variant="body2"
           sx={(theme: Theme) => ({
-            color: theme.custom?.white,
+            color: theme.custom?.fontColor,
             mb: 0.5,
             display: "block",
             fontWeight: 400,
