@@ -49,8 +49,8 @@ const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: Na
                 <Button onClick={handleNext} variant="contained"
                     sx={(theme: Theme) => ({
                         textTransform: "none", fontWeight: 600, minWidth: 120,
-                        backgroundColor: theme?.custom?.posAccent,
-                        "&:hover": { backgroundColor: theme?.custom?.posAccentHover },
+                        backgroundColor: theme?.palette?.primary?.main,
+                        "&:hover": { backgroundColor: theme?.custom?.darkSecondary },
                     })}
                 >
                     {isLastStep ? SubmitText : "Siguiente"}

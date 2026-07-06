@@ -2,51 +2,51 @@ import type { Theme } from "@mui/material";
 
 export const getCardColors = (theme: Theme): Record<string, string> => ({
   // Sells — Azul
-  '/sells':                                  theme.custom.accentSells,
-  '/new-sell':                               theme.custom.accentSells,
-  '/sells-history':                          theme.custom.accentSells,
-  '/sells-history/:ticket_id':               theme.custom.accentSells,
-  '/cart':                                   theme.custom.accentSells,
-  '/cart-order-confirmed':                   theme.custom.accentSells,
+  '/sells':                                  theme?.palette?.primary?.main,
+  '/new-sell':                               theme?.palette?.primary?.main,
+  '/sells-history':                          theme?.palette?.primary?.main,
+  '/sells-history/:ticket_id':               theme?.palette?.primary?.main,
+  '/cart':                                   theme?.palette?.primary?.main,
+  '/cart-order-confirmed':                   theme?.palette?.primary?.main,
 
 
   // Shop — Verde
-  '/shop':                                   theme.custom.accentShop,
-  '/shop-administrators':                    theme.custom.accentShop,
-  '/shop-administrators-list':               theme.custom.accentShop,
-  '/shop-administrators-create':             theme.custom.accentShop,
-  '/shop-administrators-edit':               theme.custom.accentShop,
-  '/shop-sellers':                           theme.custom.accentShop,
-  '/shop-sellers-list':                      theme.custom.accentShop,
-  '/shop-sellers-create':                    theme.custom.accentShop,
-  '/shop-sellers-edit':                      theme.custom.accentShop,
-  '/shop-stadistics':                        theme.custom.accentShop,
+  '/shop':                                   theme?.palette?.primary?.main,
+  '/shop-administrators':                    theme?.palette?.primary?.main,
+  '/shop-administrators-list':               theme?.palette?.primary?.main,
+  '/shop-administrators-create':             theme?.palette?.primary?.main,
+  '/shop-administrators-edit':               theme?.palette?.primary?.main,
+  '/shop-sellers':                           theme?.palette?.primary?.main,
+  '/shop-sellers-list':                      theme?.palette?.primary?.main,
+  '/shop-sellers-create':                    theme?.palette?.primary?.main,
+  '/shop-sellers-edit':                      theme?.palette?.primary?.main,
+  '/shop-stadistics':                        theme?.palette?.primary?.main,
 
 
   // Providers — Violeta
-  '/providers':                              theme.custom.accentProviders,
-  '/providers-list':                         theme.custom.accentProviders,
-  '/providers-create':                       theme.custom.accentProviders,
-  '/providers-edit':                         theme.custom.accentProviders,
+  '/providers':                              theme?.palette?.primary?.main,
+  '/providers-list':                         theme?.palette?.primary?.main,
+  '/providers-create':                       theme?.palette?.primary?.main,
+  '/providers-edit':                         theme?.palette?.primary?.main,
 
 
   // Products — Gris oscuro
-  '/products':                               theme.custom.accentProducts,
-  '/products-list':                          theme.custom.accentProducts,
-  '/products-create':                        theme.custom.accentProducts,
-  '/products-edit':                          theme.custom.accentProducts,
-  '/products/:productId/presentations/new':  theme.custom.accentProducts,
+  '/products':                               theme?.palette?.primary?.main,
+  '/products-list':                          theme?.palette?.primary?.main,
+  '/products-create':                        theme?.palette?.primary?.main,
+  '/products-edit':                          theme?.palette?.primary?.main,
+  '/products/:productId/presentations/new':  theme?.palette?.primary?.main,
 
 
   // Categories — Naranja
-  '/categories':                             theme.custom.accentCategories,
-  '/categories-list':                        theme.custom.accentCategories,
-  '/categories-create':                      theme.custom.accentCategories,
-  '/categories-edit':                        theme.custom.accentCategories,
+  '/categories':                             theme?.palette?.primary?.main,
+  '/categories-list':                        theme?.palette?.primary?.main,
+  '/categories-create':                      theme?.palette?.primary?.main,
+  '/categories-edit':                        theme?.palette?.primary?.main,
 
 
   // Account — Marrón dorado
-  '/account':                                theme.custom.accentAccount,
-  '/account-edit':                           theme.custom.accentAccount,
-  '/account-subscription':                   theme.custom.accentAccount,
+  '/account':                                theme?.palette?.primary?.main,
+  '/account-edit':                           theme?.palette?.primary?.main,
+  '/account-subscription':                   theme?.palette?.primary?.main,
 });

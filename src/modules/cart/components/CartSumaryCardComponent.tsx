@@ -28,8 +28,8 @@ const CartSummaryCardComponent = ({ children, onGenerateTicket, onBack }: CartSu
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
-                border: `1px solid ${theme?.custom?.posAccent}`,
-                boxShadow: `0 0 0.6em ${alpha(theme?.custom?.posAccent, 0.25)}`,
+                border: `1px solid ${theme?.palette?.primary?.main}`,
+                boxShadow: `0 0 0.6em ${alpha(theme?.palette?.primary?.main, 0.25)}`,
                 borderRadius: '0.3em',
                 padding: '1.5em',
                 position: { md: 'sticky' },
@@ -50,7 +50,7 @@ const CartSummaryCardComponent = ({ children, onGenerateTicket, onBack }: CartSu
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: theme?.custom?.posAccent,
+                        backgroundColor: theme?.palette?.primary?.main,
                         color: theme?.custom?.white,
                         borderRadius: '0.5em',
                         width: '1.7em',
@@ -77,12 +77,12 @@ const CartSummaryCardComponent = ({ children, onGenerateTicket, onBack }: CartSu
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: 1,
-                    backgroundColor: alpha(theme?.custom?.posAccent, 0.12),
+                    backgroundColor: alpha(theme?.palette?.primary?.main, 0.12),
                     borderRadius: '0.8em',
                     padding: '0.8em 1em',
                 })}
             >
-                <ShieldOutlinedIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.custom?.posAccent, mt: '0.1em' })} />
+                <ShieldOutlinedIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, mt: '0.1em' })} />
                 <Typography
                     sx={(theme: Theme) => ({
                         color: theme?.custom?.white,
@@ -100,7 +100,7 @@ const CartSummaryCardComponent = ({ children, onGenerateTicket, onBack }: CartSu
                     display: 'flex',
                     alignItems: 'center',
                     gap: 0.5,
-                    color: theme?.custom?.posAccent,
+                    color: theme?.palette?.primary?.main,
                     cursor: 'pointer',
                     fontSize: theme?.typography?.body2?.fontSize,
                 })}

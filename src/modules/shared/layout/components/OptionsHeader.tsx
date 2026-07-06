@@ -78,7 +78,7 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
         })}
       >
         {icon && (
-          <Box component="span" sx={(theme) => ({ mr: 1, verticalAlign: "middle", color: theme?.custom?.posAccent  })}>
+          <Box component="span" sx={(theme) => ({ mr: 1, verticalAlign: "middle", color: theme?.palette?.primary?.main  })}>
             {icon}
           </Box>
         )}

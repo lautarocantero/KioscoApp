@@ -63,8 +63,8 @@ const CartProductListComponent = ({ cart }: CartProductListProps): React.ReactNo
                         <Box
                             component="span"
                             sx={(theme: Theme) => ({
-                                backgroundColor: alpha(theme?.custom?.posAccentHover, 0.3),
-                                color: theme?.custom?.posAccent,
+                                backgroundColor: alpha(theme?.custom?.darkSecondary, 0.3),
+                                color: theme?.palette?.primary?.main,
                                 borderRadius: '1em',
                                 padding: '0 0.6em',
                                 fontSize: theme?.typography?.caption?.fontSize,
@@ -77,7 +77,7 @@ const CartProductListComponent = ({ cart }: CartProductListProps): React.ReactNo
                     <Box
                         sx={(theme: Theme) => ({
                             display: 'flex',
-                            border: `1px solid ${alpha(theme?.custom?.posAccentHover, 0.3)}`,
+                            border: `1px solid ${alpha(theme?.custom?.darkSecondary, 0.3)}`,
                             borderRadius: '0.2em',
                             overflow: 'hidden',
                         })}
@@ -87,8 +87,8 @@ const CartProductListComponent = ({ cart }: CartProductListProps): React.ReactNo
                             startIcon={<GridViewIcon fontSize="small" />}
                             sx={(theme: Theme) => ({
                                 textTransform: 'none',
-                                color: view === 'grid' ? theme?.custom?.posAccent : theme?.custom?.whiteTranslucid,
-                                backgroundColor: view === 'grid' ? alpha(theme?.custom?.posAccentHover, 0.3) : 'transparent',
+                                color: view === 'grid' ? theme?.palette?.primary?.main : theme?.custom?.whiteTranslucid,
+                                backgroundColor: view === 'grid' ? alpha(theme?.custom?.darkSecondary, 0.3) : 'transparent',
                                 fontSize: theme?.typography?.body2?.fontSize,
                                 p: '0.5em',
                             })}
@@ -100,8 +100,8 @@ const CartProductListComponent = ({ cart }: CartProductListProps): React.ReactNo
                             startIcon={<ViewListIcon fontSize="small" />}
                             sx={(theme: Theme) => ({
                                 textTransform: 'none',
-                                color: view === 'list' ? theme?.custom?.posAccent : theme?.custom?.whiteTranslucid,
-                                backgroundColor: view === 'list' ? alpha(theme?.custom?.posAccentHover, 0.3) : 'transparent',
+                                color: view === 'list' ? theme?.palette?.primary?.main : theme?.custom?.whiteTranslucid,
+                                backgroundColor: view === 'list' ? alpha(theme?.custom?.darkSecondary, 0.3) : 'transparent',
                                 fontSize: theme?.typography?.body2?.fontSize,
                                 p: '0.5em',
                             })}

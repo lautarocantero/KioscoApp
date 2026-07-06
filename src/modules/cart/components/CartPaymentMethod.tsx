@@ -56,7 +56,7 @@ const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObjec
                     fontWeight: 600,
                     marginBottom: '0.3em',
                 })}>
-                    <CreditCardIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.custom?.posAccent })} />
+                    <CreditCardIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
                     Método de pago
             </FormLabel>
           <RadioGroup
@@ -79,7 +79,7 @@ const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObjec
                     fontSize: '1.1rem',
                 },
                 '& .MuiRadio-root.Mui-checked': {
-                    color: theme?.custom?.posAccent,
+                    color: theme?.palette?.primary?.main,
                 },
                 display: 'flex',
                 flexDirection: 'column',

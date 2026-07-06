@@ -11,7 +11,7 @@ const ProductItemButton = ({ onClick }: ProductItemButtonProps): React.ReactNode
     onClick={onClick}
     aria-label="Agregar al carrito"
     sx={(theme: Theme) => ({
-      backgroundColor: theme?.custom?.posAccentHover,
+      backgroundColor: theme?.custom?.darkMain,
       borderRadius: "0.5em",
       width: "100%",
       padding: "0.5em",

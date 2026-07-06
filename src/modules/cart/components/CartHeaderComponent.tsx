@@ -12,8 +12,6 @@
 
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import GridViewIcon from '@mui/icons-material/GridView';
-import ViewListIcon from '@mui/icons-material/ViewList';
 import { alpha, Box, Button, Grid, Typography, type Theme } from "@mui/material";
 import { useState } from "react";
 
@@ -30,13 +28,13 @@ const CartHeaderComponent = ({ itemsCount, onClearCart }: CartHeaderProps): Reac
                 <Grid display="flex" alignItems="center" gap={1.5}>
                     <Box
                         sx={(theme: Theme) => ({
-                            backgroundColor: alpha(theme?.custom?.posAccentHover, 0.3),
+                            // backgroundColor: alpha(theme?.custom?.darkSecondary, 0.3),
                             borderRadius: '0.7em',
                             padding: '0.5em',
                             display: 'flex',
                         })}
                     >
-                        <ShoppingCartIcon sx={(theme: Theme) => ({ color: theme?.custom?.posAccent })} />
+                        <ShoppingCartIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
                     </Box>
                     <Box>
                         <Typography

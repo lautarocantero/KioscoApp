@@ -75,7 +75,7 @@ const CartPriceComponent = (
             <CartPriceRow
                 label="Total a cobrar"
                 value={formatCurrency(total)}
-                valueColor={(theme) => theme?.custom?.posAccent}
+                valueColor={(theme) => theme?.palette?.primary?.main}
                 bold
             />
         </Grid>

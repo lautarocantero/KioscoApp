@@ -60,7 +60,7 @@ export const CartButtonComponent = (): React.ReactNode => {
               >
         <ShoppingCartIcon
           sx={(theme: Theme) => ({
-            color: theme?.custom?.posSuccess,
+            color: theme?.palette?.secondary?.main,
             fontSize: theme?.typography?.body1?.fontSize,
             transition: 'color 0.3s ease',
           })}
@@ -71,7 +71,7 @@ export const CartButtonComponent = (): React.ReactNode => {
           sx={(theme: Theme) => ({
             position: 'absolute',
             right: '-1em',
-            backgroundColor: theme?.custom?.posSuccessHover,
+            backgroundColor: theme?.custom?.darkSecondary,
             color: '#fff',
             borderRadius: '50%',
             width: '1.3em',

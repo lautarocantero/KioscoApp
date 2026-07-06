@@ -60,13 +60,13 @@ const LightMode = () => {
     >
       <Brightness4
         sx={(theme: Theme) =>({
-          color: appTheme ? theme?.custom?.posAccent : theme?.custom?.blackTranslucid,
+          color: appTheme ? theme?.palette?.primary?.main : theme?.custom?.blackTranslucid,
           height: '0.8em',
         })}
       />
       <ModeNight
         sx={(theme: Theme) =>({
-          color: !appTheme ? theme?.custom?.posAccent : theme?.custom?.blackTranslucid,
+          color: !appTheme ? theme?.palette?.primary?.main : theme?.custom?.blackTranslucid,
           height: '0.8em',
         })}
       />

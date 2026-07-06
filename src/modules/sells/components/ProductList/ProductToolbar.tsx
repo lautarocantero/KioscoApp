@@ -51,11 +51,11 @@ const ProductsToolbar = ({
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         <Inventory2OutlinedIcon
-          sx={(theme: Theme) => ({ color: theme.custom?.posAccent, fontSize: "1.2rem" })}
+          sx={(theme: Theme) => ({ color: theme.palette?.primary?.main, fontSize: "1.2rem" })}
         />
         <Typography
           variant="body2"
-          sx={(theme: Theme) => ({ color: theme.custom?.posAccent, fontWeight: 600 })}
+          sx={(theme: Theme) => ({ color: theme.palette?.primary?.main, fontWeight: 600 })}
         >
           {totalCount} productos encontrados
         </Typography>
@@ -103,7 +103,7 @@ const ProductsToolbar = ({
             aria-label="Vista de cuadrícula"
             sx={(theme: Theme) => ({
               borderRadius: "6px",
-              backgroundColor: viewMode === "grid" ? theme.custom?.posAccent : "transparent",
+              backgroundColor: viewMode === "grid" ? theme.palette?.primary?.main : "transparent",
               color:
                 viewMode === "grid" ? theme.custom?.posBackground : theme.custom?.fontColorTransparent,
             })}
@@ -116,7 +116,7 @@ const ProductsToolbar = ({
             aria-label="Vista de lista"
             sx={(theme: Theme) => ({
               borderRadius: "6px",
-              backgroundColor: viewMode === "list" ? theme.custom?.posAccent : "transparent",
+              backgroundColor: viewMode === "list" ? theme.palette?.primary?.main : "transparent",
               color:
                 viewMode === "list" ? theme.custom?.posBackground : theme.custom?.fontColorTransparent,
             })}

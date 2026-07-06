@@ -44,7 +44,7 @@ const FormHeader = ({
                         background: theme.custom?.white,
                         display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                     })}>
-                        {icon ?? getDefaultIcon(theme.custom?.posAccent)}
+                        {icon ?? getDefaultIcon(theme.palette?.primary?.main)}
                     </Box>
                     <Box>
                         <Typography sx={(theme: Theme) => ({
@@ -71,7 +71,7 @@ const FormHeader = ({
                                 <circle
                                     cx="18" cy="18" r="15"
                                     fill="none"
-                                    stroke={theme.custom?.posAccent}
+                                    stroke={theme.palette?.primary?.main}
                                     strokeWidth="2"
                                     strokeDasharray={2 * Math.PI * 15}
                                     strokeDashoffset={2 * Math.PI * 15 * (1 - (currentStep + 1) / stepsLabels.length)}
@@ -80,7 +80,7 @@ const FormHeader = ({
                                 />
                             </svg>
                             <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                                <Typography sx={{ fontSize: "0.65rem", fontWeight: 700, color: theme.custom?.posAccent }}>
+                                <Typography sx={{ fontSize: "0.65rem", fontWeight: 700, color: theme.palette?.primary?.main }}>
                                     {progress}%
                                 </Typography>
                             </Box>
@@ -102,8 +102,8 @@ const FormHeader = ({
                                 width: 28, height: 28, borderRadius: "50%",
                                 display: "flex", alignItems: "center", justifyContent: "center",
                                 flexShrink: 0,
-                                bgcolor: index <= currentStep ? theme.custom?.posAccentHover : "rgba(255,255,255,0.08)",
-                                outline: `1px solid ${index <= currentStep ? theme.custom?.posAccent : "rgba(255,255,255,0.15)"}`,
+                                bgcolor: index <= currentStep ? themecustom?.darkSecondary : "rgba(255,255,255,0.08)",
+                                outline: `1px solid ${index <= currentStep ? theme.palette?.primary?.main : "rgba(255,255,255,0.15)"}`,
                                 outlineOffset: "2px",
                             }}>
                                 <Typography sx={{
@@ -115,7 +115,7 @@ const FormHeader = ({
                             </Box>
                             <Typography sx={{
                                 fontSize: "0.72rem", ml: 1, whiteSpace: "nowrap",
-                                color: index === currentStep ? theme.custom?.posAccent : "rgba(255,255,255,0.45)",
+                                color: index === currentStep ? theme.palette?.primary?.main : "rgba(255,255,255,0.45)",
                                 fontWeight: index === currentStep ? 500 : 400,
                             }}>
                                 {label}
@@ -123,7 +123,7 @@ const FormHeader = ({
                             {index < stepsLabels.length - 1 && (
                                 <Box sx={{
                                     flex: 1, height: "1px", mx: 1,
-                                    bgcolor: index < currentStep ? theme.custom?.posAccent : "rgba(255,255,255,0.12)",
+                                    bgcolor: index < currentStep ? theme.palette?.primary?.main : "rgba(255,255,255,0.12)",
                                 }} />
                             )}
                         </Box>

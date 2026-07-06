@@ -13,8 +13,8 @@ const ProductItemBadge = ({ label }: ProductItemBadgeProps): React.ReactNode => 
       top: "0.8em",
       right: "0.8em",
       backgroundColor: "transparent",
-      border: `1px solid ${theme.custom?.posAccent ?? theme.palette.primary.main}`,
-      color: theme.custom?.posAccent ?? theme.palette.primary.main,
+      border: `1px solid ${theme.palette?.primary?.main ?? theme.palette?.primary?.main}`,
+      color: theme.palette?.primary?.main ?? theme.palette?.primary?.main,
       fontSize: "0.7rem",
       height: "22px",
     })}

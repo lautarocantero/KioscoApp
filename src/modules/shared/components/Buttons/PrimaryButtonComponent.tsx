@@ -27,7 +27,7 @@ const PrimaryButtonComponent = ({
       sx={{
         backgroundColor: (theme: Theme) =>
           buttonColor === "default"
-            ? theme?.custom?.posAccent
+            ? theme?.palette?.primary?.main
             : theme?.palette?.error?.main,
         color: (theme: Theme) => theme?.custom?.white,
         mt: {xs:marginTop, md: '0'},

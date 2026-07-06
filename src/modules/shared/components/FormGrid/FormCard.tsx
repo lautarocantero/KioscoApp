@@ -89,13 +89,13 @@ const FormCard = ({
                                 mb: 3,
                                 backgroundColor: theme.custom?.posSurface ?? "rgba(3,134,238,0.06)",
                                 borderRadius: "12px !important",
-                                border: `1px solid ${theme.custom?.posAccent ?? "#0386EE"}33`,
+                                border: `1px solid ${theme.palette?.primary?.main ?? "#0386EE"}33`,
                                 "&:before": { display: "none" },
                             })}
                         >
                             <AccordionSummary
                                 expandIcon={
-                                    <ExpandMoreIcon sx={(theme: Theme) => ({ color: theme.custom?.posAccent ?? "#0386EE" })} />
+                                    <ExpandMoreIcon sx={(theme: Theme) => ({ color: theme.palette?.primary?.main ?? "#0386EE" })} />
                                 }
                                 sx={{
                                     minHeight: "60px",
@@ -108,7 +108,7 @@ const FormCard = ({
                                         width: 32,
                                         height: 32,
                                         borderRadius: "50%",
-                                        border: `1.5px solid ${theme.custom?.posAccent ?? "#0386EE"}`,
+                                        border: `1.5px solid ${theme.palette?.primary?.main ?? "#0386EE"}`,
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
@@ -116,14 +116,14 @@ const FormCard = ({
                                     })}
                                 >
                                     <InfoOutlinedIcon
-                                        sx={(theme: Theme) => ({ fontSize: "1.1rem", color: theme.custom?.posAccent ?? "#0386EE" })}
+                                        sx={(theme: Theme) => ({ fontSize: "1.1rem", color: theme.palette?.primary?.main ?? "#0386EE" })}
                                     />
                                 </Box>
                                 <Typography
                                     sx={(theme: Theme) => ({
                                         fontSize: "0.95rem",
                                         fontWeight: 600,
-                                        color: theme.custom?.posAccent ?? "#0386EE",
+                                        color: theme.palette?.primary?.main ?? "#0386EE",
                                     })}
                                 >
                                     {accordion.title}

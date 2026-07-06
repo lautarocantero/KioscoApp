@@ -13,8 +13,10 @@ declare module '@mui/material/styles' {
 
       //────────────── main ──────────────────//
       lightMain: string;
+      darkMain?: string;
 
       //────────────── secondary ──────────────────//
+      lightSecondary?: string;
       darkSecondary: string;
 
       //────────────── font ──────────────────//
@@ -74,8 +76,10 @@ declare module '@mui/material/styles' {
 
       //────────────── main ──────────────────//
       lightMain?: string;
+      darkMain?: string;
 
       //────────────── secondary ──────────────────//
+      lightSecondary?: string;
       darkSecondary?: string;
 
       //────────────── font ──────────────────//
@@ -135,67 +139,48 @@ export const darkTheme = createTheme({
   unstable_grid: { cssGrid: true },
   palette: {
     mode: 'dark',
-    primary:   { main: '#0386EE' },
-    secondary: { main: '#0058AF' },
+    primary:   { main: '#A65CFF' },
+    secondary: { main: '#8FE34A' },
     error:     { main: '#842325' },
   },
   custom: {
-    //────────────── white ──────────────────//
-    white: '#eff0f8',
-    whiteTranslucid: '#eff0f865',
-
-    //────────────── black ──────────────────//
-    black: '#333333',
-    blackTranslucid: '#09090966',
-
     //────────────── main ──────────────────//
-    lightMain: '#66A3FB',
+    lightMain: '#ac7aee',  //editar
+    darkMain: '#8E49E8',
 
     //────────────── secondary ──────────────────//
-    darkSecondary: '#00357E',
-
-    //────────────── font ──────────────────//
-    fontColor: '#eff0f8',
-    fontColorTransparent: '#eff0f842',
-    fontColorDark: '#333333',
-    fontColorDarkTransparent: '#09090966',
-
-    //────────────── background ──────────────────//
-    backgroundLigth: '#525253ff',
-    background: '#333333',
-    backgroundDark: '#0c0d11',
-    cardBackground: 'rgba(255,255,255,0.07)',
-
-    //────────────── POS Modern UI ──────────────────//
-    posBackground: '#11141A',
-    posCard: '#1f2125',
-    posSurface: '#272C36',
-    posSurfaceHover: '#2D3440',
-    posBorder: 'rgba(255,255,255,0.06)',
-    posDivider: '#343946',
-
-    posText: '#F5F7FA',
-    posTextSecondary: '#C9CED8',
-    posPlaceholder: 'rgba(255,255,255,0.45)',
-    posIcon: '#AEB6C4',
-
-    posAccent: '#A65CFF',
-    posAccentHover: '#8E49E8',
-
-    posSuccess: '#8FE34A',
-    posSuccessHover: '#78C83E',
-
-    //────────────── accent colors ──────────────────//
-    accentSells:      '#0386EE',
-    accentShop:       '#1D9E75',
-    accentProviders:  '#534AB7',
-    accentProducts:   '#1f1f24',
-    accentCategories: '#C2580A',
-    accentAccount:    '#854F0B',
+    lightSecondary: '#acf174', //editar
+    darkSecondary: '#78C83E',
 
     //────────────── error ──────────────────//
     errorLight: "#6b100a6c",
     errorDark:  "#310704ff",
+
+    //────────────── white ──────────────────//
+    white: '#eff0f8',
+    whiteTranslucid: '#eff0f865',
+    fontColor: '#eff0f8',
+    fontColorTransparent: '#eff0f842',
+    backgroundLigth: '#525253ff',
+    cardBackground: 'rgba(255,255,255,0.07)',
+    posBorder: 'rgba(255,255,255,0.06)',
+    posPlaceholder: 'rgba(255,255,255,0.45)',
+    posText: '#F5F7FA',
+    posTextSecondary: '#C9CED8',
+    posIcon: '#AEB6C4',
+
+    //────────────── black ──────────────────//
+    black: '#333333',
+    blackTranslucid: '#09090966',
+    fontColorDark: '#333333',
+    fontColorDarkTransparent: '#09090966',
+    background: '#333333',
+    backgroundDark: '#0c0d11',
+    posBackground: '#11141A',
+    posCard: '#1f2125',
+    posSurface: '#272C36',
+    posSurfaceHover: '#2D3440',
+    posDivider: '#343946',
   },
   typography: {
     fontFamily: `'Montserrat', sans-serif`,
@@ -247,14 +232,6 @@ export const lightTheme = createTheme({
     background: '#FFFFFF',
     backgroundDark: '#fde8d8',
     cardBackground: '#ffffff',
-
-    //────────────── accent colors ──────────────────//
-    accentSells:      '#0386EE',
-    accentShop:       '#1D9E75',
-    accentProviders:  '#534AB7',
-    accentProducts:   '#1f1f24',
-    accentCategories: '#C2580A',
-    accentAccount:    '#854F0B',
 
     //────────────── error ──────────────────//
     errorLight: "#6b100a6c",

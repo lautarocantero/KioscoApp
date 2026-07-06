@@ -38,7 +38,7 @@ const CartEmptyComponent = ({ onExploreProducts }: CartEmptyProps): React.ReactN
                     width: 140,
                     height: 140,
                     borderRadius: '50%',
-                    border: `1px dashed ${theme?.custom?.posAccent}55`,
+                    border: `1px dashed ${theme?.palette?.primary?.main}55`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -48,7 +48,7 @@ const CartEmptyComponent = ({ onExploreProducts }: CartEmptyProps): React.ReactN
                 <ShoppingCartOutlinedIcon
                     sx={(theme: Theme) => ({
                         fontSize: 64,
-                        color: theme?.custom?.posAccent,
+                        color: theme?.palette?.primary?.main,
                     })}
                 />
             </Box>

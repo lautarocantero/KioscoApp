@@ -129,7 +129,7 @@ const AppLayout = ({
                   {icon && (
                     <Box
                       component="span"
-                      sx={(theme) => ({ mr: 1, verticalAlign: "middle", color: theme.custom?.posAccent })}
+                      sx={(theme) => ({ mr: 1, verticalAlign: "middle", color: theme.palette?.primary?.main })}
                     >
                       {icon}
                     </Box>
@@ -158,16 +158,16 @@ const AppLayout = ({
                     sx={(theme) => ({
                       ml: "auto",
                       flexShrink: 0,
-                      color: theme.custom?.posSuccess, // 👈 el color "reposo" ahora lo define el Button, no el ícono
+                      color: theme.palette?.secondary?.main, // 👈 el color "reposo" ahora lo define el Button, no el ícono
                       textTransform: "none",
                       fontWeight: 500,
                       fontSize: "0.875rem",
                       borderRadius: "0.5em",
-                      border: `1px solid ${theme.custom?.posSuccess}`,
+                      border: `1px solid ${theme.palette?.secondary?.main}`,
                       px: 2.5,
                       py: 0.75,
                       "&:hover": {
-                        backgroundColor: theme.custom?.posSuccess,
+                        backgroundColor: theme.palette?.secondary?.main,
                         color: theme.custom?.black,
                       },
                     })}

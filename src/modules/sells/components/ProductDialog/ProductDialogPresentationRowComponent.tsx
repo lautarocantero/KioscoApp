@@ -101,7 +101,7 @@ const ProductDialogPresentationRowComponent = ({
                     disabled={!canAdd}
                     onClick={() => onAddToCart(presentation, quantity)}
                     sx={(theme: Theme) => ({
-                        backgroundColor: theme?.custom?.posAccent,
+                        backgroundColor: theme?.palette?.primary?.main,
                         color: theme?.palette?.primary?.contrastText ?? '#fff',
                         borderRadius: '0.4em',
                         width: '1.5em',

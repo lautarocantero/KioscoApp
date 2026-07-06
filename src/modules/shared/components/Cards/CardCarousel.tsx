@@ -149,10 +149,10 @@ const CardCarousel = ({
                             height: 40,
                             zIndex: 2,
                             bgcolor: theme.custom?.posSurface ?? "rgba(139,92,246,0.12)",
-                            border: `1.5px solid ${theme.custom?.posAccent ?? "#8B5CF6"}`,
-                            color: theme.custom?.posAccent ?? "#8B5CF6",
+                            border: `1.5px solid ${theme.palette?.primary?.main ?? "#8B5CF6"}`,
+                            color: theme.palette?.primary?.main ?? "#8B5CF6",
                             "&:hover": {
-                                bgcolor: theme.custom?.posAccent ?? "#8B5CF6",
+                                bgcolor: theme.palette?.primary?.main ?? "#8B5CF6",
                                 color: "#fff",
                             },
                         })}
@@ -174,10 +174,10 @@ const CardCarousel = ({
                             height: 40,
                             zIndex: 2,
                             bgcolor: theme.custom?.posSurface ?? "rgba(139,92,246,0.12)",
-                            border: `1.5px solid ${theme.custom?.posAccent ?? "#8B5CF6"}`,
-                            color: theme.custom?.posAccent ?? "#8B5CF6",
+                            border: `1.5px solid ${theme.palette?.primary?.main ?? "#8B5CF6"}`,
+                            color: theme.palette?.primary?.main ?? "#8B5CF6",
                             "&:hover": {
-                                bgcolor: theme.custom?.posAccent ?? "#8B5CF6",
+                                bgcolor: theme.palette?.primary?.main ?? "#8B5CF6",
                                 color: "#fff",
                             },
                         })}
@@ -202,7 +202,7 @@ const CardCarousel = ({
                                 border: "none",
                                 p: 0,
                                 cursor: "pointer",
-                                bgcolor: i === activeIndex ? theme.custom?.posAccent ?? "#8B5CF6" : "rgba(255,255,255,0.2)",
+                                bgcolor: i === activeIndex ? theme.palette?.primary?.main ?? "#8B5CF6" : "rgba(255,255,255,0.2)",
                                 transition: "background-color 0.2s",
                             })}
                         />

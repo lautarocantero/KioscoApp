@@ -12,7 +12,7 @@ const LinkMapper = ({ links, appTheme }: LinkMapperProps): React.ReactNode => {
         <LinkCard
             key={link.url}
             link={link}
-            accent={cardColors[link.url] ?? theme.custom.accentProducts}
+            accent={cardColors[link.url] ?? theme?.palette?.primary?.main}
             appTheme={appTheme}
         />
     ));

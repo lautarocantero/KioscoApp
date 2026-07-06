@@ -104,7 +104,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                 alignItems: "center",
                                 gap: "0.5em",
                                 ml: { xs: "1em", sm: "0.5em" },
-                                color: theme?.custom?.posAccent,
+                                color: theme?.palette?.primary?.main,
                                 fontSize: {
                                     xs: theme?.typography?.body2.fontSize,
                                     sm: theme?.typography?.h5.fontSize,
@@ -112,7 +112,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                 width: "fit-content",
                                 "&:hover": {
                                     cursor: "pointer",
-                                    color: theme?.custom?.posAccentHover
+                                    color: theme?.custom?.darkSecondary
                                 },
                             })}
                         >
@@ -136,12 +136,12 @@ const OrderConfirmedPage = (): React.ReactNode => {
                             sx={(theme: Theme) => ({
                                 position: 'relative',
                                 display: 'flex',
-                                filter: `drop-shadow(0 0 2.5em ${theme?.custom?.posAccent}55)`
+                                filter: `drop-shadow(0 0 2.5em ${theme?.palette?.primary?.main}55)`
                             })}
                         >
                             <ReceiptIcon
                                 sx={(theme: Theme) => ({
-                                    color: theme?.custom?.posAccent,
+                                    color: theme?.palette?.primary?.main,
                                     fontSize: {
                                         xs: '7em',
                                         sm: '9em',
@@ -154,7 +154,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                     position: 'absolute',
                                     bottom: '-0.1em',
                                     right: '-0.1em',
-                                    color: theme?.custom?.posAccent,
+                                    color: theme?.palette?.primary?.main,
                                     backgroundColor: theme?.custom?.posBackground,
                                     borderRadius: '50%',
                                     fontSize: {
@@ -183,7 +183,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                             <Typography
                                 component={'span'}
                                 sx={(theme: Theme) => ({
-                                    color: theme?.custom?.posAccent,
+                                    color: theme?.palette?.primary?.main,
                                     fontWeight: 600,
                                     fontSize: 'inherit'
                                 })}
@@ -234,7 +234,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                     backgroundColor: theme?.custom?.posSurface,
                                 })}
                             >
-                                <ReceiptLongIcon sx={(theme: Theme) => ({ color: theme?.custom?.posAccent, fontSize: '1.2em' })} />
+                                <ReceiptLongIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1.2em' })} />
                             </Box>
                             <Box>
                                 <Typography sx={(theme: Theme) => ({ color: theme?.custom?.posTextSecondary, fontSize: theme?.typography?.caption.fontSize })}>
@@ -259,7 +259,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                     backgroundColor: theme?.custom?.posSurface,
                                 })}
                             >
-                                <EventIcon sx={(theme: Theme) => ({ color: theme?.custom?.posAccent, fontSize: '1.2em' })} />
+                                <EventIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1.2em' })} />
                             </Box>
                             <Box>
                                 <Typography sx={(theme: Theme) => ({ color: theme?.custom?.posTextSecondary, fontSize: theme?.typography?.caption.fontSize })}>
@@ -284,13 +284,13 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                     backgroundColor: theme?.custom?.posSurface,
                                 })}
                             >
-                                <AttachMoneyIcon sx={(theme: Theme) => ({ color: theme?.custom?.posAccent, fontSize: '1.2em' })} />
+                                <AttachMoneyIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1.2em' })} />
                             </Box>
                             <Box>
                                 <Typography sx={(theme: Theme) => ({ color: theme?.custom?.posTextSecondary, fontSize: theme?.typography?.caption.fontSize })}>
                                     Total
                                 </Typography>
-                                <Typography sx={(theme: Theme) => ({ color: theme?.custom?.posAccent, fontWeight: 700 })}>
+                                <Typography sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontWeight: 700 })}>
                                     {ticketSummary ? formatCurrency(ticketSummary.total) : '$ ----'}
                                 </Typography>
                             </Box>
@@ -312,14 +312,14 @@ const OrderConfirmedPage = (): React.ReactNode => {
                             startIcon={<PrintIcon />}
                             onClick={() => printTicket()}
                             sx={(theme: Theme) => ({
-                                color: theme?.custom?.posAccent,
-                                borderColor: theme?.custom?.posAccent,
+                                color: theme?.palette?.primary?.main,
+                                borderColor: theme?.palette?.primary?.main,
                                 borderRadius: '0.7em',
                                 textTransform: 'none',
                                 padding: '0.6em 1.5em',
                                 '&:hover': {
-                                    borderColor: theme?.custom?.posAccentHover,
-                                    backgroundColor: `${theme?.custom?.posAccent}11`
+                                    borderColor: theme?.custom?.darkSecondary,
+                                    backgroundColor: `${theme?.palette?.primary?.main}11`
                                 }
                             })}
                         >
@@ -331,12 +331,12 @@ const OrderConfirmedPage = (): React.ReactNode => {
                             variant="contained"
                             startIcon={<AddIcon />}
                             sx={(theme: Theme) => ({
-                                backgroundColor: theme?.custom?.posAccent,
+                                backgroundColor: theme?.palette?.primary?.main,
                                 borderRadius: '0.7em',
                                 textTransform: 'none',
                                 padding: '0.6em 1.5em',
                                 '&:hover': {
-                                    backgroundColor: theme?.custom?.posAccentHover,
+                                    backgroundColor: theme?.custom?.darkSecondary,
                                 }
                             })}
                         >
@@ -358,7 +358,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                 },
                             })}
                         >
-                            <DownloadIcon sx={(theme: Theme) => ({ color: theme?.custom?.posAccent, fontSize: '1em' })} />
+                            <DownloadIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1em' })} />
                             Si no se ha descargado, presiona
                             <Typography
                                 component={'span'}
@@ -368,7 +368,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                     fontWeight: 600,
                                     '&:hover': {
                                         cursor: 'pointer',
-                                        color: theme?.custom?.posAccentHover
+                                        color: theme?.custom?.darkSecondary
                                     }
                                 })}
                                 onClick={() => { printTicket() }}

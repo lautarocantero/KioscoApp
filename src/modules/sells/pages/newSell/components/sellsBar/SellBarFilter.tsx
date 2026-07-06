@@ -26,14 +26,14 @@ export const SellbarFilter = (): React.ReactNode => {
         >
             <Typography sx={(theme: Theme) => ({
               fontSize: '0.85em',
-              color: theme?.custom?.posSuccess,
+              color: theme?.palette?.secondary?.main,
               whiteSpace: 'nowrap',
             })}>
               Tipo
             </Typography>
             <KeyboardArrowDownIcon sx={(theme: Theme) => ({
               fontSize: '1em',
-              color: theme?.custom?.posSuccess,
+              color: theme?.palette?.secondary?.main,
             })}/>
         </Grid>
     )

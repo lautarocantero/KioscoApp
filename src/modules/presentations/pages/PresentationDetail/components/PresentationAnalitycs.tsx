@@ -39,7 +39,7 @@ const PresentationAnalytics = ({ data, onDateRangeClick }: PresentationAnalytics
                     <Box>
                         <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
                             {data.title} -{" "}
-                            <Typography component="span" variant="inherit" sx={(theme) => ({ color: theme.custom?.posAccent })}>
+                            <Typography component="span" variant="inherit" sx={(theme) => ({ color: theme.palette?.primary?.main })}>
                                 Demo
                             </Typography>
                         </Typography>

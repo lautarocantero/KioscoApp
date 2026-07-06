@@ -52,7 +52,7 @@ export const SearchBar = ({
       <SearchIcon
         sx={(theme: Theme) => ({
           fontSize: "1.1rem",
-          color: theme.custom?.posAccent ?? theme.custom?.fontColorTransparent,
+          color: theme.palette?.primary?.main ?? theme.custom?.fontColorTransparent,
           flexShrink: 0,
         })}
       />
@@ -82,7 +82,7 @@ export const SearchBar = ({
           <DeleteIcon
             sx={(theme: Theme) => ({
               fontSize: "1.1rem",
-              color: theme.custom?.posAccent ?? theme.custom?.fontColorTransparent,
+              color: theme.palette?.primary?.main ?? theme.custom?.fontColorTransparent,
             })}
           />
         </IconButton>

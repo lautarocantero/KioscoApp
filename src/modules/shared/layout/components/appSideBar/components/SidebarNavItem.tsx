@@ -37,8 +37,8 @@ const SidebarNavItem = ({
 
           backgroundColor: isActive
             ? isHovered
-              ? dark ? theme.custom?.posAccent : theme.custom?.blackTranslucid // expandido: color sólido igual que antes
-              : dark ? alpha(theme.custom?.posAccent, 0.30) : "rgba(0, 0, 0, 0.12)" // contraído: glass semi-transparente
+              ? dark ? theme.palette?.primary?.main : theme.custom?.blackTranslucid // expandido: color sólido igual que antes
+              : dark ? alpha(theme.palette?.primary?.main, 0.30) : "rgba(0, 0, 0, 0.12)" // contraído: glass semi-transparente
             : "transparent",
           backdropFilter: isActive && !isHovered ? "blur(8px)" : "none",
           border: isActive && !isHovered
@@ -46,7 +46,7 @@ const SidebarNavItem = ({
             : "1px solid transparent",
 
           "&:hover": {
-            backgroundColor: dark ? theme.custom?.posAccent : theme.custom?.blackTranslucid,
+            backgroundColor: dark ? theme.palette?.primary?.main : theme.custom?.blackTranslucid,
             color: dark ? theme.custom?.fontColor : theme.custom?.fontColorDark,
             backdropFilter: "none",
           },

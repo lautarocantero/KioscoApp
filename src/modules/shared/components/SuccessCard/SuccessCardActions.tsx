@@ -34,7 +34,7 @@ const SuccessCardActions = ({ actions }: SuccessCardActionsProps): React.ReactNo
                 <Button
                     key={label}
                     onClick={onClick}
-                    startIcon={<ArrowBackIcon sx={(theme: Theme) => ({ fontSize: "1rem", color: theme.custom?.posSuccess })} />}
+                    startIcon={<ArrowBackIcon sx={(theme: Theme) => ({ fontSize: "1rem", color: theme.palette?.secondary?.main })} />}
                     sx={(theme: Theme) => ({
                         textTransform: "none",
                         fontWeight: 500,
