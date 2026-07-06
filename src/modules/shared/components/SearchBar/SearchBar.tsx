@@ -44,7 +44,7 @@ export const SearchBar = ({
           py: 0.75,
           borderRadius: "8px",
           border: `1px solid ${theme.custom?.darkGray ?? theme.custom?.blackTranslucid}`,
-          backgroundColor: theme.custom?.posBackground,
+          backgroundColor: theme.custom?.black,
         }),
         ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
       ]}

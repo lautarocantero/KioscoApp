@@ -148,7 +148,7 @@ const CardCarousel = ({
                             width: 40,
                             height: 40,
                             zIndex: 2,
-                            bgcolor: theme.custom?.posSurface ?? "rgba(139,92,246,0.12)",
+                            bgcolor: theme.custom?.darkBackground ?? "rgba(139,92,246,0.12)",
                             border: `1.5px solid ${theme.palette?.primary?.main ?? "#8B5CF6"}`,
                             color: theme.palette?.primary?.main ?? "#8B5CF6",
                             "&:hover": {
@@ -173,7 +173,7 @@ const CardCarousel = ({
                             width: 40,
                             height: 40,
                             zIndex: 2,
-                            bgcolor: theme.custom?.posSurface ?? "rgba(139,92,246,0.12)",
+                            bgcolor: theme.custom?.darkBackground ?? "rgba(139,92,246,0.12)",
                             border: `1.5px solid ${theme.palette?.primary?.main ?? "#8B5CF6"}`,
                             color: theme.palette?.primary?.main ?? "#8B5CF6",
                             "&:hover": {

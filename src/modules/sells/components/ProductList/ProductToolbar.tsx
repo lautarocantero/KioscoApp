@@ -76,7 +76,7 @@ const ProductsToolbar = ({
           sx={(theme: Theme) => ({
             minWidth: "170px",
             borderRadius: "8px",
-            backgroundColor: theme.custom?.posSurface,
+            backgroundColor: theme.custom?.darkBackground,
             color: theme.custom?.white,
             height: "1.5em",
           })}
@@ -94,7 +94,7 @@ const ProductsToolbar = ({
             gap: 0.5,
             p: 0.5,
             borderRadius: "8px",
-            backgroundColor: theme.custom?.posSurface,
+            backgroundColor: theme.custom?.darkBackground,
           })}
         >
           <IconButton
@@ -105,7 +105,7 @@ const ProductsToolbar = ({
               borderRadius: "6px",
               backgroundColor: viewMode === "grid" ? theme.palette?.primary?.main : "transparent",
               color:
-                viewMode === "grid" ? theme.custom?.posBackground : theme.custom?.translucidWhite,
+                viewMode === "grid" ? theme.custom?.darkBackground : theme.custom?.translucidWhite,
             })}
           >
             <GridViewIcon fontSize="small" />
@@ -118,7 +118,7 @@ const ProductsToolbar = ({
               borderRadius: "6px",
               backgroundColor: viewMode === "list" ? theme.palette?.primary?.main : "transparent",
               color:
-                viewMode === "list" ? theme.custom?.posBackground : theme.custom?.translucidWhite,
+                viewMode === "list" ? theme.custom?.darkBackground : theme.custom?.translucidWhite,
             })}
           >
             <ViewListIcon fontSize="small" />

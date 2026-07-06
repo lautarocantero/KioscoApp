@@ -20,7 +20,7 @@ export const SellBarActions = ({ showFilters }: SellBarActionsProps): React.Reac
         flexShrink: 0,
         height: '2em',
         width: "100%",
-        borderTop: `0.1em solid ${theme?.custom?.posSurface}`,
+        borderTop: `0.1em solid ${theme?.custom?.darkBackground}`,
         marginTop: "0.5em",
       })}
     >
@@ -37,7 +37,7 @@ export const SellBarActions = ({ showFilters }: SellBarActionsProps): React.Reac
             right: 0,
             height: '50%',
             width: '0.1em',
-            backgroundColor: theme?.custom?.posSurface,
+            backgroundColor: theme?.custom?.darkBackground,
           },
         })}
       >
@@ -57,7 +57,7 @@ export const SellBarActions = ({ showFilters }: SellBarActionsProps): React.Reac
             right: 0,
             height: '50%',
             width: '0.1em',
-            backgroundColor: theme?.custom?.posSurface,
+            backgroundColor: theme?.custom?.darkBackground,
           },
         })}
       >

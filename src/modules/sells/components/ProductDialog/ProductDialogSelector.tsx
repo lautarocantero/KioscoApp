@@ -69,7 +69,7 @@ const ProductDialogSelectorComponent = ({ products }: DialogSelectorProps): Reac
                 <Typography
                     sx={(theme: Theme) => ({
                         color: theme?.custom?.fontColor,
-                        backgroundColor: theme?.custom?.backgroundDark,
+                        backgroundColor: theme?.custom?.darkBackground,
                         borderRadius: '1em',
                         px: 1,
                         fontSize: theme?.typography?.caption?.fontSize,
@@ -93,7 +93,7 @@ const ProductDialogSelectorComponent = ({ products }: DialogSelectorProps): Reac
                         backgroundColor: 'transparent',
                     },
                     '&::-webkit-scrollbar-thumb': {
-                        backgroundColor: theme?.custom?.backgroundDark ?? 'rgba(255,255,255,0.15)',
+                        backgroundColor: theme?.custom?.darkBackground ?? 'rgba(255,255,255,0.15)',
                         borderRadius: '1em',
                     },
                 })}

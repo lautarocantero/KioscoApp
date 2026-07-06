@@ -16,7 +16,7 @@ const SuccessCardName = ({ name }: SuccessCardNameProps): React.ReactNode => (
             display: "flex", 
             alignItems: "center", 
             gap: 1, 
-            backgroundColor: alpha(theme.custom.posBackground, 0.3),
+            backgroundColor: alpha(theme.custom.darkBackground, 0.3),
             width: "15em",
             maxWidth: "15em",
             minWidth: "15em",

@@ -155,7 +155,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                     bottom: '-0.1em',
                                     right: '-0.1em',
                                     color: theme?.palette?.primary?.main,
-                                    backgroundColor: theme?.custom?.posBackground,
+                                    backgroundColor: theme?.custom?.darkBackground,
                                     borderRadius: '50%',
                                     fontSize: {
                                         xs: '2.2em',
@@ -212,7 +212,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                             display: 'flex',
                             flexDirection: { xs: 'column', sm: 'row' },
                             gap: { xs: '1em', sm: '2em' },
-                            backgroundColor: theme?.custom?.posCard,
+                            backgroundColor: theme?.custom?.black,
                             border: `1px solid ${theme?.custom?.darkGray}`,
                             borderRadius: '1em',
                             padding: '1.5em 2em',
@@ -231,7 +231,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                     width: '2.5em',
                                     height: '2.5em',
                                     borderRadius: '50%',
-                                    backgroundColor: theme?.custom?.posSurface,
+                                    backgroundColor: theme?.custom?.darkBackground,
                                 })}
                             >
                                 <ReceiptLongIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1.2em' })} />
@@ -256,7 +256,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                     width: '2.5em',
                                     height: '2.5em',
                                     borderRadius: '50%',
-                                    backgroundColor: theme?.custom?.posSurface,
+                                    backgroundColor: theme?.custom?.darkBackground,
                                 })}
                             >
                                 <EventIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1.2em' })} />
@@ -281,7 +281,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                                     width: '2.5em',
                                     height: '2.5em',
                                     borderRadius: '50%',
-                                    backgroundColor: theme?.custom?.posSurface,
+                                    backgroundColor: theme?.custom?.darkBackground,
                                 })}
                             >
                                 <AttachMoneyIcon sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontSize: '1.2em' })} />

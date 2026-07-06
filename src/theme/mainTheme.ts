@@ -3,72 +3,45 @@ import { createTheme } from '@mui/material/styles';
 declare module '@mui/material/styles' {
   interface Theme {
     custom: {
-      //────────────── white ──────────────────//
-      white: string;
-      translucidWhite: string;
-
-      //────────────── black ──────────────────//
-      black: string;
-      blackTranslucid: string;
-
       //────────────── main ──────────────────//
       lightMain: string;
-      darkMain?: string;
+      darkMain: string;
 
       //────────────── secondary ──────────────────//
-      lightSecondary?: string;
+      lightSecondary: string;
       darkSecondary: string;
-
-      //────────────── font ──────────────────//
-      fontColor: string;
-      translucidFontColor: string;
-      fontColorDark: string;
-      fontColorDarkTransparent: string;
-
-      //────────────── background ──────────────────//
-      background: string;
-      backgroundDark: string;
-
-      //────────────── POS Modern UI ──────────────────//
-      posBackground: string;
-      posCard: string;
-      posSurface: string;
-      darkGray: string;
-
-      posText: string;
-      darkWhite: string;
-      lightGray: string;
-
-      posAccent: string;
-      posAccentHover: string;
-
-      posSuccess: string;
-      posSuccessHover: string;
-
-      //────────────── accent colors ──────────────────//
-      accentSells: string;
-      accentShop: string;
-      accentProviders: string;
-      accentProducts: string;
-      accentCategories: string;
-      accentAccount: string;
 
       //────────────── error ──────────────────//
       errorLight: string;
       errorDark: string;
+
+      //────────────── background ──────────────────//
+      lightBackground: string;
+      background: string;
+      darkBackground: string;
+
+      //────────────── fonts ──────────────────//
+      fontColor: string;
+      translucidFontColor: string;
+
+      //────────────── white ──────────────────//
+      white: string;
+      darkWhite: string;
+      translucidWhite: string;
+
+      //────────────── gray ──────────────────//
+      lightGray: string;
+      darkGray: string;
+
+      //────────────── black ──────────────────//
+      black: string;
+      darkblack: string;
+      blackTranslucid: string;
     };
   }
 
   interface ThemeOptions {
     custom?: {
-      //────────────── white ──────────────────//
-      white?: string;
-      translucidWhite?: string;
-
-      //────────────── black ──────────────────//
-      black?: string;
-      blackTranslucid?: string;
-
       //────────────── main ──────────────────//
       lightMain?: string;
       darkMain?: string;
@@ -77,43 +50,32 @@ declare module '@mui/material/styles' {
       lightSecondary?: string;
       darkSecondary?: string;
 
-      //────────────── font ──────────────────//
-      fontColor?: string;
-      translucidFontColor?: string;
-      fontColorDark?: string;
-      fontColorDarkTransparent?: string;
-
-      //────────────── background ──────────────────//
-      background?: string;
-      backgroundDark?: string;
-
-      //────────────── POS Modern UI ──────────────────//
-      posBackground?: string;
-      posCard?: string;
-      posSurface?: string;
-      darkGray?: string;
-
-      posText?: string;
-      darkWhite?: string;
-      lightGray?: string;
-
-      posAccent?: string;
-      posAccentHover?: string;
-
-      posSuccess?: string;
-      posSuccessHover?: string;
-
-      //────────────── accent colors ──────────────────//
-      accentSells?: string;
-      accentShop?: string;
-      accentProviders?: string;
-      accentProducts?: string;
-      accentCategories?: string;
-      accentAccount?: string;
-
       //────────────── error ──────────────────//
       errorLight?: string;
       errorDark?: string;
+
+      //────────────── background ──────────────────//
+      lightBackground?: string;
+      background?: string;
+      darkBackground?: string;
+
+      //────────────── fonts ──────────────────//
+      fontColor?: string;
+      translucidFontColor?: string;
+
+      //────────────── white ──────────────────//
+      white?: string;
+      darkWhite?: string;
+      translucidWhite?: string;
+
+      //────────────── gray ──────────────────//
+      lightGray?: string;
+      darkGray?: string;
+
+      //────────────── black ──────────────────//
+      black?: string;
+      darkblack?: string;
+      blackTranslucid?: string;
     };
 
     unstable_grid?: {
@@ -146,11 +108,16 @@ export const darkTheme = createTheme({
     errorLight: "#6b100a6c",
     errorDark:  "#310704ff",
 
+    //────────────── background ──────────────────//
+    lightBackground: '#272C36',
+    background: '#1f2125',
+    darkBackground: '#0c0d11',
+    
     //────────────── fonts ──────────────────//
     fontColor: '#F5F7FA',
     translucidFontColor: 'rgba(245,247,250,0.4)',
+
     //────────────── white ──────────────────//
-    
     white: '#F5F7FA',
     darkWhite: '#C9CED8',//letra secundaria
     translucidWhite: 'rgba(245,247,250,0.4)', 
@@ -159,18 +126,11 @@ export const darkTheme = createTheme({
     lightGray: 'rgba(255,255,255,0.45)', // botones secundarios
     darkGray: 'rgba(255,255,255,0.06)', // bordes
     
-
     //────────────── black ──────────────────//
-    black: '#333333', // 14
+    black: '#333333',
+    darkblack: '#1f2125',
+    blackTranslucid: '#09090966',
 
-    posCard: '#1f2125', // 1
-    fontColorDarkTransparent: '#09090966', // 5
-    posBackground: '#11141A', // 9
-    backgroundDark: '#0c0d11', // 10
-    blackTranslucid: '#09090966', // 11
-    posSurface: '#272C36', // 11
-    fontColorDark: '#333333', // 22
-    background: '#333333', // 129
   },
   typography: {
     fontFamily: `'Montserrat', sans-serif`,
@@ -192,38 +152,46 @@ export const lightTheme = createTheme({
   unstable_grid: { cssGrid: true },
   palette: {
     mode: 'light',
-    primary:   { main: '#F58388' },
-    secondary: { main: '#DD767B' },
+    primary:   { main: '#8E49E8' },
+    secondary: { main: '#78C83E' },
     error:     { main: '#842325' },
   },
   custom: {
-    //────────────── white ──────────────────//
-    white: '#eff0f8',
-    translucidWhite: '#eff0f826',
-
-    //────────────── black ──────────────────//
-    black: '#333333',
-    blackTranslucid: '#09090966',
-
     //────────────── main ──────────────────//
-    lightMain: '#FCA4A7',
+    lightMain: '#AC7AEE',
+    darkMain: '#8E49E8',
 
     //────────────── secondary ──────────────────//
-    darkSecondary: '#C0676B',
-
-    //────────────── font ──────────────────//
-    fontColor: '#333333',
-    translucidFontColor: '#3333333d',
-    fontColorDark: '#333333',
-    fontColorDarkTransparent: '#09090966',
-
-    //────────────── background ──────────────────//
-    background: '#FFFFFF',
-    backgroundDark: '#fde8d8',
+    lightSecondary: '#ACF174',
+    darkSecondary: '#78C83E',
 
     //────────────── error ──────────────────//
     errorLight: "#6b100a6c",
     errorDark:  "#310704ff",
+
+    //────────────── background ──────────────────//
+    lightBackground: '#FCFBFF',
+    background: '#FFFFFF',
+    darkBackground: '#F4F2FA',
+
+    //────────────── fonts ──────────────────//
+    fontColor: '#333333',
+    translucidFontColor: 'rgba(51,51,51,0.4)',
+
+    //────────────── white ──────────────────//
+    white: '#FFFFFF',
+    darkWhite: '#5B5D66', //letra secundaria
+    translucidWhite: 'rgba(51,51,51,0.4)',
+
+    //────────────── gray ──────────────────//
+    lightGray: 'rgba(51,51,51,0.06)', // botones secundarios
+    darkGray: 'rgba(51,51,51,0.08)', // bordes
+
+    //────────────── black ──────────────────//
+    black: '#333333',
+    darkblack: '#1A1A1A',
+    blackTranslucid: '#09090966',
+
   },
   typography: {
     fontFamily: `'Montserrat', sans-serif`,

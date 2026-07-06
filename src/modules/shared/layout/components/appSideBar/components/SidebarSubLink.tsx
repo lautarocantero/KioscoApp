@@ -18,7 +18,7 @@ const SidebarSubLink = ({ subLink, dark, isActive, onClick }: SidebarSubLinkProp
       fontSize: "12px",
       whiteSpace: "nowrap",
       color: isActive
-        ? dark ? theme.custom?.white        : theme.custom?.backgroundDark
+        ? dark ? theme.custom?.white        : theme.custom?.darkBackground
         : dark ? theme.custom?.translucidWhite : theme.custom?.whiteDarkTransparent,
       fontWeight: isActive ? 500 : 400,
       transition: "background 0.12s, color 0.12s",

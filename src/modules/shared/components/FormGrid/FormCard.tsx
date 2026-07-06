@@ -87,7 +87,7 @@ const FormCard = ({
                             elevation={0}
                             sx={(theme: Theme) => ({
                                 mb: 3,
-                                backgroundColor: theme.custom?.posSurface ?? "rgba(3,134,238,0.06)",
+                                backgroundColor: theme.custom?.darkBackground ?? "rgba(3,134,238,0.06)",
                                 borderRadius: "12px !important",
                                 border: `1px solid ${theme.palette?.primary?.main ?? "#0386EE"}33`,
                                 "&:before": { display: "none" },

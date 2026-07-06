@@ -36,7 +36,7 @@ const AppLayout = ({
       sx={(t) => ({
         height: "100vh",
         width: "100vw",
-        backgroundColor: t.custom.posBackground,
+        backgroundColor: t.custom.background,
         position: "relative",
         overflow: "hidden",
         display: "flex",

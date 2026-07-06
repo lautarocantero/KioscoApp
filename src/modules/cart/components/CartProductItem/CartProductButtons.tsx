@@ -22,7 +22,7 @@ const CartProductButtonsComponent = ({ _id }: CartProductButtonsProps): React.Re
                 <IconButton
                     onClick={() => dispatch(removeFromCartThunk({ _id, amount: CartAmount.All }))}
                     sx={(theme: Theme) => ({
-                        backgroundColor: theme?.custom?.backgroundDark,
+                        backgroundColor: theme?.custom?.darkBackground,
                         border: `1px solid ${theme?.custom?.translucidWhite}`,
                         borderRadius: '0.3em',
                         width: '1.6em',

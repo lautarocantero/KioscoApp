@@ -93,7 +93,7 @@ const AuthLayout = ({ children }: PropsWithChildren): React.ReactNode => {
               borderRadius: { xs: "1em" },
               overflowX: "hidden",
               backgroundColor: {
-                xs: theme.custom?.backgroundDark || "rgba(0,0,0,0.6)",
+                xs: theme.custom?.darkBackground || "rgba(0,0,0,0.6)",
               },
             })}
           >

@@ -25,7 +25,7 @@ const ProductsPagination = ({ page, count, onChange }: ProductsPaginationProps):
         },
         "& .Mui-selected": {
           backgroundColor: `${theme.palette?.primary?.main} !important`,
-          color: `${theme.custom?.posBackground} !important`,
+          color: `${theme.custom?.darkBackground} !important`,
         },
       })}
     />

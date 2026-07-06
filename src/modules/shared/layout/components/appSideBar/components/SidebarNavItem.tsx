@@ -32,7 +32,7 @@ const SidebarNavItem = ({
           width: isHovered ? "100%" : "36px",
           transition: "background-color 0.15s, color 0.15s, width 0.22s cubic-bezier(.4,0,.2,1), backdrop-filter 0.15s",
           color: isActive
-            ? dark ? theme.custom?.white : theme.custom?.backgroundDark
+            ? dark ? theme.custom?.white : theme.custom?.darkBackground
             : dark ? theme.custom?.translucidWhite : theme.custom?.whiteDarkTransparent,
 
           backgroundColor: isActive

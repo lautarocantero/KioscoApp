@@ -12,7 +12,7 @@
 //   - Incluye un subtítulo descriptivo y un `CircularProgress` como indicador visual de carga.  
 
 // ## Notas técnicas 💽
-// - Estilos dinámicos con `Theme`: color de fuente y fondo (`custom.fontColor`, `custom.backgroundDark`).  
+// - Estilos dinámicos con `Theme`: color de fuente y fondo (`custom.fontColor`, `custom.darkBackground`).  
 // - Fondo transparente en móviles y oscuro en pantallas medianas/grandes (con fallback RGBA).  
 //-----------------------------------------------------------------------------//
 
@@ -36,7 +36,7 @@ const LoginLoader = (): React.ReactNode => {
         color: theme?.custom?.fontColor,
         backgroundColor: {
           xs: "transparent",
-          md: theme.custom?.backgroundDark || "rgba(0,0,0,0.6)", // Fallback opcional
+          md: theme.custom?.darkBackground || "rgba(0,0,0,0.6)", // Fallback opcional
         },
       })}
     >

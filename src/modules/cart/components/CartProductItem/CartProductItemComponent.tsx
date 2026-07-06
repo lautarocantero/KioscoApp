@@ -30,7 +30,7 @@ const CartProductItemComponent = ({product}: CartProductItemProps): React.ReactN
                 alignItems: 'center',
                 width: '100%',
                 gap: 1.5,
-                backgroundColor: theme?.custom?.posBackground,
+                backgroundColor: theme?.custom?.darkBackground,
                 borderRadius: '1em',
                 padding: '0.8em 1em',
                 marginBottom: '0.8em',

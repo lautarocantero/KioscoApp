@@ -54,7 +54,7 @@ const AppSidebar = () => {
           left: 0,
           transition: "width 0.22s cubic-bezier(.4,0,.2,1), min-width 0.22s cubic-bezier(.4,0,.2,1)",
           zIndex: 1200,
-          backgroundColor: theme.custom?.posBackground,
+          backgroundColor: theme.custom?.darkBackground,
           boxShadow: isExpanded ? "4px 0 24px rgba(0,0,0,0.25)" : "none",
         })}
       >
