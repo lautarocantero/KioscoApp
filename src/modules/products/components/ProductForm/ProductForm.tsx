@@ -1,7 +1,6 @@
-import { Grid, Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Formik } from "formik";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
-import { PRODUCTS_STEPS_LABELS } from "../../../../config/constants";
 import {
     getProductFormInitialValues,
     getProductEditInitialValues,
@@ -10,9 +9,8 @@ import {
 } from "../../schema/ProductFormSchema";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
-import FormExplanationComponent from "../../../../modules/shared/components/FormGrid/FormExplanation";
 import ProductFormFirstStep from "./ProductFormFirstStep";
-import { useProductCreate, useProductEdit } from "../../../../hooks/products/useProductsForm";
+import { useProductCreate, useProductDetail, useProductEdit } from "../../../../hooks/products/useProductsForm";
 import ProductCreated from "../../pages/ProductCreate/components/ProductCreated";
 import ProductEdited from "../../pages/ProductEdit/components/ProductEdited";
 import type { ProductFormProps } from "@typings/product/productComponentTypes";
@@ -50,19 +48,6 @@ const ProductCreateForm = (): React.ReactNode => {
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
-                        <FormExplanationComponent
-                            stepsLabels={PRODUCTS_STEPS_LABELS}
-                            currentStep={form.currentStep}
-                            banner={
-                                <Box
-                                    component="img"
-                                    src="/images/productExample/ilustration.png"
-                                    alt="Producto y presentaciones"
-                                    sx={{ width: 420, height: 220, objectFit: "contain", flexShrink: 0 }}
-                                />
-                            }
-                            banner_text="Primero creás el producto una sola vez — nombre, marca, descripción. Luego agregás sus presentaciones (2L, retornable, lata...) con el stock y precio de cada una"
-                        />
                         <ApiErrorComponent submitError={form.submitError} />
                         <ActualStepComponent
                             currentStep={form.currentStep}
@@ -121,8 +106,52 @@ const ProductEditForm = (): React.ReactNode => {
     );
 };
 
+// ── Modo DETALLE ─────────────────────────────────────────────────────────────
+const ProductDetailForm = (): React.ReactNode => {
+    const form = useProductDetail();
+
+    return (
+        <Formik
+            initialValues={getProductEditInitialValues(form.viewingEntity)}
+            onSubmit={() => {}}
+            enableReinitialize
+        >
+            {() => (
+                <FormNavigationContext.Provider
+                    value={{
+                        currentStep:  0,
+                        totalSteps:   1,
+                        onNext:       async () => {},
+                        onPrev:       () => {},
+                        onSubmit:     () => {},
+                        isSubmitting: false,
+                        validateForm: async () => ({}),
+                        submitError:  form.loadError,
+                        stepErrors:   [],
+                        actionTitle:  "detail",
+                    }}
+                >
+                    <Grid container sx={{ width: "100%" }}>
+                        <ApiErrorComponent submitError={form.loadError} />
+                        {!form.isLoadingEntity && (
+                            <ActualStepComponent
+                                currentStep={0}
+                                stepComponents={STEP_COMPONENTS}
+                            />
+                        )}
+                    </Grid>
+                </FormNavigationContext.Provider>
+            )}
+        </Formik>
+    );
+};
+
 // ── Export público ────────────────────────────────────────────────────────────
-const ProductForm = ({ mode = "create" }: ProductFormProps): React.ReactNode =>
-    mode === "edit" ? <ProductEditForm /> : <ProductCreateForm />;
+const ProductForm = ({ mode = "create" }: ProductFormProps): React.ReactNode => {
+    if (mode === "edit") return <ProductEditForm />;
+    if (mode === "detail") return <ProductDetailForm />;
+    return <ProductCreateForm />;
+};
+
 
 export default ProductForm;

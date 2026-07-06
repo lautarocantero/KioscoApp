@@ -53,12 +53,28 @@ export interface ProductCreatedNameProps {
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface ProductFormFieldsProps {
-    mode?: "create" | "edit" | "view";
-    disabled?: boolean;
+    mode?: "create" | "edit" | "detail";
+    readOnly?: boolean;
+    icons?: {
+        name?: FieldIconConfig;
+        brand?: FieldIconConfig;
+        description?: FieldIconConfig;
+        image_url?: FieldIconConfig;
+    };
 }
 
 export interface ProductFormProps {
-    mode?: "create" | "edit";
+    mode?: "create" | "edit" | "detail";
+}
+
+export interface FieldIconConfig {
+    icon: React.ReactNode;
+    color: string;
+}
+
+export  interface FieldWithIconProps {
+    iconConfig?: FieldIconConfig;
+    children: React.ReactNode;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

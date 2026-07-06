@@ -39,10 +39,6 @@ export interface NavLink {
   subGroups?: SubGroup[];
 }
 
-export interface AppSidebarProps {
-  isOptions?: boolean;
-}
-
 export interface SidebarLogoProps {
   dark: boolean;
   onClick: () => void;
@@ -86,10 +82,22 @@ export interface SidebarSubLinkProps {
 
 export interface AppLayoutProps {
   isOptions?: boolean;
-  title?: string;
-  icon?: React.ReactNode,
   fullWidth?: boolean;
   noCenter?: boolean;
+  title?: string;
+  icon?: React.ReactNode;
+
+  // ── Search bar ──
+  hasSearchBar?: boolean;
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
+  searchPlaceholder?: string;
+
+  // ── New item button ──
+  hasNewItem?: boolean;
+  newItemLabel?: string;
+  onNewItemClick?: () => void;
+  newItemHref?: string;
 }
 
 export type OptionLink = {
@@ -237,4 +245,59 @@ export interface SnackBarContextInterface {
   snackBar: SnackBarState;
   showSnackBar: (message: string, color: AlertColor) => void;
   closeSnackBar: () => void;
+}
+
+//─────────────────────────────── Analytics 🟦🟩🟥🟨 ───────────────────────────────//
+
+export interface AnalyticsKpi {
+    id: string;
+    label: string;
+    value: string;
+    deltaPct: number;
+    comparisonLabel: string;
+    icon: React.ReactNode;
+    iconColor: string;
+}
+
+export interface DailySalesPoint {
+    date: string;
+    units: number;
+}
+
+export interface WeeklySalesPoint {
+    weekLabel: string;
+    units: number;
+}
+
+export interface TopSellingDay {
+    date: string;
+    units: number;
+}
+
+// export interface SalesChannelSlice { //por el momento innecesario, se puede agregar si se necesita en el futuro
+//     label: string;
+//     value: number;
+//     pct: number;
+//     color: string;
+// }
+
+export interface PeriodSummaryItem {
+    label: string;
+    value: string;
+    subValue?: string;
+    icon: React.ReactNode;
+    iconColor: string;
+}
+
+export interface PresentationAnalyticsData {
+    title: string;
+    subtitle: string;
+    dateRangeLabel: string;
+    kpis: AnalyticsKpi[];
+    dailySales: DailySalesPoint[];
+    weeklySales: WeeklySalesPoint[];
+    topSellingDays: TopSellingDay[];
+    // salesByChannel: SalesChannelSlice[];
+    // totalUnitsLabel: string;
+    periodSummary: PeriodSummaryItem[];
 }

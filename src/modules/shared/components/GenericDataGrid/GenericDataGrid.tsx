@@ -28,7 +28,7 @@ interface GenericDataGridProps<T extends { _id: string }>
 function GenericDataGrid<T extends { _id: string }>({
   rows,
   columns,
-  height = 600,
+  height = 720,
   emptyMessage = "No hay registros",
   loading,
   ...rest

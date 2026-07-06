@@ -11,7 +11,6 @@ import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
-import BaseEntitySummaryComponent from "../../../shared/components/BaseEntitySummary";
 import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentation/usePresentationForm";
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep";
@@ -44,11 +43,6 @@ const PresentationCreateForm = (): React.ReactNode => {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
-            <BaseEntitySummaryComponent
-                label="Producto base"
-                name={form.productData.name}
-                description="• Estás creando una presentación para este producto"
-            />
             <Formik
                 initialValues={getPresentationFormInitialValues()}
                 validationSchema={presentationFormSchema}
@@ -95,11 +89,6 @@ const PresentationEditForm = (): React.ReactNode => {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
-            <BaseEntitySummaryComponent
-                label="Presentación"
-                name={`${form.editingVariant.model_type} - ${form.editingVariant.model_size}`}
-                description="• Estás editando esta presentación"
-            />
             <Formik
                 initialValues={getPresentationEditInitialValues(form.editingVariant)}
                 validationSchema={presentationEditFormSchema}

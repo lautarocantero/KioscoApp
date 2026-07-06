@@ -1,40 +1,28 @@
-
 //─────────────────── Componente 🧩: CartProductItemImageComponent ───────────────────//
-
+//
 //─────────────────── Descripción 📝 ───────────────────//
-// Renderiza la imagen del producto que se encuentra en el listado de productos del carrito
-
+// Renderiza la miniatura del producto dentro de la fila del carrito.
+//
 //-----------------------------------------------------------------------------//
 
 import { Box, Grid } from "@mui/material";
 import type { CartProductItemImageProps } from "../../../../typings/sells/types/sellsTypes";
 
-const CartProductItemImageComponent = ({image = "/images/productExample/cocaCola.png", name = 'product'} 
-    : CartProductItemImageProps):React.ReactNode => {
+const CartProductItemImageComponent = ({image = "/images/productExample/cocaCola.png", name = 'product'}
+    : CartProductItemImageProps): React.ReactNode => {
     return (
-        <Grid
-            size={{ xs: 4 }}
-            display={'flex'}
-            alignItems={'center'}
-            sx={{
-                overflow: 'hidden'
-            }}
-        >
+        <Grid sx={{ flexShrink: 0 }}>
             <Box
                 component={'img'}
                 src={image}
                 alt={name}
                 sx={{
-                    borderRadius: '1em 0em 0em 1em',
-                    width: {xs: '95%', md: '20em'},
-                    minHeight: {xs: '100%', md: '10em'},
-                    height: {xs: '100%', md: "10em"},
-                    maxHeight: {xs: '5em', md: '10em'},
-                    objectFit: { xs: 'cover', sm: 'contain'},
-                    objectPosition: 'top',
+                    borderRadius: '0.7em',
+                    width: '3.5em',
+                    height: '3.5em',
+                    objectFit: 'cover',
                 }}
-            >
-            </Box>
+            />
         </Grid>
     )
 }

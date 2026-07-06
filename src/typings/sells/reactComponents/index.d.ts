@@ -41,17 +41,17 @@ import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from 
 
     export interface EspecificationsLeftProps {
         name: string,
-        variants: Presentation[];
+        presentations: Presentation[];
         image: string | undefined;
     }
 
-    export type ItemDataProps = Pick<EspecificationsLeftProps, 'name' | 'variants'>;
+    export type ItemDataProps = Pick<EspecificationsLeftProps, 'name' | 'presentations'>;
 
     export type EspecificationsRightProps = Pick<ProductItemProps, 'product'>;
 
-    export type AmountDataProps = Pick<EspecificationsLeftProps, 'variants'>;
+    export type AmountDataProps = Pick<EspecificationsLeftProps, 'presentations'>;
 
-    export type ItemQuantityHandlerProps = Pick<EspecificationsLeftProps, 'variants'>;
+    export type ItemQuantityHandlerProps = Pick<EspecificationsLeftProps, 'presentations'>;
 
     export interface QuantityChipProps {
       color: string,
@@ -68,6 +68,7 @@ import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from 
     export type ProductDialogImageProps = Pick<ProductDialogIlustrationProps, 'name' | 'image_url'>
 
     export interface DialogDataProps {
+        name: string,
         products: Presentation[],
         values: DialogDataInterface,
         setFieldValue: SetFieldValue<DialogDataInterface>,

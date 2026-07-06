@@ -27,12 +27,12 @@ const PrimaryButtonComponent = ({
       sx={{
         backgroundColor: (theme: Theme) =>
           buttonColor === "default"
-            ? theme?.palette?.primary?.main
+            ? theme?.custom?.posAccent
             : theme?.palette?.error?.main,
         color: (theme: Theme) => theme?.custom?.white,
         mt: {xs:marginTop, md: '0'},
         width: buttonWidth,
-        borderRadius: 35,
+        borderRadius: "0.4em",
         padding: padding,
         textTransform: "none",
         fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,

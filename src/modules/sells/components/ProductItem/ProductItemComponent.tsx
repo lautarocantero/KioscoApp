@@ -1,20 +1,4 @@
-
-//─────────────────── Componente 🧩: ProductItem ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Representa un producto dentro de la vista de ventas.
-// Al hacer click en el se abre un modal mostrando los detalles del producto para agregarlo al carrito.
-// Divide la presentación en dos secciones: izquierda (imagen y nombre) y derecha (especificaciones y boton ilustrativo).  
-
-//──────────────────── Funciones 🔧 ─────────────────────//
-// - ProductItem: componente principal. Recibe product.
-// - ⌚ Antes: el modal se abría con un botón; ahora se abre al clickear la imagen (feedback de usuarios).
-//     - ProductItemEspecificationsLeft: muestra nombre e imagen/variantes.
-//     - ProductItemEspecificationsRight: muestra especificaciones y botón para agregar al carrito.
-
-//-----------------------------------------------------------------------------//
-
-import { Grid, type Theme } from "@mui/material";
+import { Grid, Tooltip, type Theme } from "@mui/material";
 import type { ProductItemProps } from "@typings/sells/reactComponents";
 import { useContext } from "react";
 import { useDispatch } from "react-redux";
@@ -23,47 +7,58 @@ import { selectProductThunk } from "../../../../store/seller/sellerThunks";
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 import type { getProductSelectedPayload } from "../../../../typings/seller/sellerTypes";
 import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
-import ProductItemEspecificationsLeft from "./ProductItemEspecificationsLeft";
-import ProductItemEspecificationsRight from "./ProductItemEspecificationsRight";
+import ProductItemImage from "./ProductItemImage";
+import ProductItemData from "./ProductItemData";
+import ProductItemButton from "./ProductItemButton";
+import ProductItemBadge from "./ProductItemBadge";
+import { getNoisyBackgroundSx } from "../../../../modules/shared/components/NoisyBackground/NoisyBackground";
 
 const ProductItemComponent = ({ product }: ProductItemProps): React.ReactNode => {
-    const { name, variants } : { name: string, variants: Presentation[]} = product;
-    const { setShowModal } = useContext(ProductDialogContext)!;
-    const dispatch = useDispatch<AppDispatch>();
+  const { name, presentations, category }: { name: string; presentations: Presentation[]; category?: string } = product;
+  const { setShowModal } = useContext(ProductDialogContext)!;
+  const dispatch = useDispatch<AppDispatch>();
 
-    const selectProduct = async({product}: Partial<getProductSelectedPayload>): Promise<void> => {
-        if(!product) throw new Error('No se ha seleccionado un producto');
-        await dispatch(selectProductThunk({productData: product }));
-        setShowModal(true);
-    }
 
-    return (
-        <Grid 
-            container
-            sx={(theme: Theme) => ({
-                alignItems: "center",
-                backgroundColor: theme?.custom?.background, 
-                borderRadius: "1em",
-                color: theme?.custom?.fontColor,
-                display: "flex",
-                flexDirection: {md: 'column'},
-                height: {xs: 'auto', sm: '200px', md: '400px'},
-                justifyContent: "space-between",
-                "&:first-of-type": { margin: { xs: "2em auto 0em", md: "1.5em auto 0em"}},
-                margin: { xs: "0em auto", md: "1.5em auto 0em"},
-                padding: "0.3em",
-                width: {xs: "95%", md:'15em'},
-            })}
-            onClick={ () => { 
-                selectProduct({product});
-            }}
-        >
-        {/* --------- 🔎 Izquierda: imagen + nombre 🔎 --------- */}
-            <ProductItemEspecificationsLeft name={name} variants={variants} image={product?.image_url}/>
-        {/* --------- 🔎 Derecha: especificaciones + botón 🔎 --------- */}
-            <ProductItemEspecificationsRight product={product} />
+  const selectProduct = async ({ product }: Partial<getProductSelectedPayload>): Promise<void> => {
+    if (!product) throw new Error("No se ha seleccionado un producto");
+    await dispatch(selectProductThunk({ productData: product }));
+    setShowModal(true);
+  };
+
+  return (
+    <Tooltip title={name}>
+      <Grid
+        container
+        sx={(theme: Theme) => ({
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          gap: "0.8em",
+          border: `1px solid ${theme.custom?.blackTranslucid}`,
+          borderRadius: "0.5em",
+          color: theme?.custom?.fontColor,
+          padding: "1em",
+          width: "100%",
+          maxWidth: "300px",
+          height: "12em",
+          ...getNoisyBackgroundSx(theme),
+        })}
+      >
+        {category && <ProductItemBadge label={category} />}
+
+        <Grid sx={{ display: "flex", flexDirection: "row", gap: "0.8em", width: "100%" }}>
+          <ProductItemImage
+            source={product?.image_url}
+            name={name}
+            onClick={() => selectProduct({ product })}
+          />
+          <ProductItemData name={name} presentations={presentations} />
         </Grid>
-    );
+
+        <ProductItemButton onClick={() => selectProduct({ product })} />
+      </Grid>
+    </Tooltip>
+  );
 };
 
 export default ProductItemComponent;

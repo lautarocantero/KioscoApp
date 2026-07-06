@@ -15,7 +15,7 @@ interface ProductEntity {
     gallery_urls: string[];
     created_at:   string;
     updated_at:   string;
-    variants:     Presentation[];
+    presentations:     Presentation[];
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -146,6 +146,13 @@ export interface UseProductsEditFormReturn extends UseFormStepsBase {
     handleEdit: (values: ProductEditFormValues) => Promise<void>;
 }
 
+export interface UseProductsDetailFormReturn {
+    viewingEntity: ExistingProductInterface | null;
+    isLoadingEntity: boolean;
+    loadError: string | null;
+    setViewingEntity: React.Dispatch<React.SetStateAction<ExistingProductInterface | null>>;
+}
+
 // Estado del diálogo de eliminación
 export interface DeleteDialogState {
     open: boolean;
@@ -167,6 +174,8 @@ export interface UseProductsReturn {
     loadingPresentations: boolean;
     errorPresentations: string | null;
     refetchProductsWithPresentations: () => Promise<void>;
+    searchTerm: string;
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -186,7 +195,7 @@ export interface FormNavigationContextType {
     onPrev:       () => void;
     onSubmit:     (e?: React.FormEvent<HTMLFormElement>) => void;
     validateForm?: () => Promise<FormikErrors<ProductFormValues>>;
-    actionTitle?: "create" | "edit";
+    actionTitle?: "create" | "edit" | "detail" ;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

@@ -148,6 +148,34 @@ export const getPresentationByPresentationRequest = async (
     return response.data;
 };
 
+/**
+ * Busca presentaciones de un producto por término (name, sku, model_type, model_size).
+ * `GET /get-presentation-by-product-id/:product_id/search` — query: { term }
+ */
+export const searchPresentationsByProductIdRequest = async (
+    { product_id, term }: { product_id: string; term: string }
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
+        `/get-presentation-by-product-id/${product_id}/search`,
+        { params: { term } }
+    );
+    return response.data;
+};
+
+/**
+ * Obtiene las analíticas de ventas de una presentación puntual.
+ * `GET /get-presentation-analytics/:presentation_id` — query: { start_date?, end_date? }
+ */
+export const getPresentationAnalyticsRequest = async (
+    { presentation_id, start_date, end_date }:
+    { presentation_id: string; start_date?: string; end_date?: string }
+): Promise<PresentationAnalyticsRaw> => {
+    const response = await baseUrl.get<PresentationAnalyticsRaw>(
+        `/get-presentation-analytics/${presentation_id}`,
+        { params: { start_date, end_date } }
+    );
+    return response.data;
+};
 //──────────────────────────────────────────── POST ───────────────────────────────────────────//
 
 /**

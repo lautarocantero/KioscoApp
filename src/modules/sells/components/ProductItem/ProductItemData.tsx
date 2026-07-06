@@ -1,89 +1,66 @@
-//─────────────────── Componente 🧩: ProductItemData ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Muestra la información básica de un producto dentro de la vista de ítem.
-// Incluye el nombre y el stock total calculado a partir de sus variantes.  
-
-//──────────────────── Funciones 🔧 ─────────────────────//
-// - ProductItemData: componente principal.
-//   - Recibe name y variants.
-//   - Calcula totalStock sumando el stock de todas las variantes.
-//   - Renderiza:
-//     - Tooltip con el nombre completo.
-//     - Typography con el nombre truncado.
-//     - Typography con InventoryIcon y el stock total.
-
-//─────────────────── Notas técnicas 💽 ───────────────────//
-// - El nombre se limita a dos líneas con WebkitLineClamp y textOverflow.
-//-----------------------------------------------------------------------------//
-
 import InventoryIcon from '@mui/icons-material/Inventory';
-import { Box, Tooltip, Typography, type Theme } from "@mui/material";
+import { Box, Typography, type Theme } from "@mui/material";
 import type { ItemDataProps } from '@typings/sells/reactComponents';
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 
-const ProductItemData = ({name = "product", variants = []}: ItemDataProps): React.ReactNode => {
+const ProductItemData = ({ name = "product", presentations = [] }: ItemDataProps): React.ReactNode => {
+  const totalStock: number = presentations?.reduce(
+    (count: number, presentation: Presentation) => count + presentation.stock,
+    0
+  ) ?? 0;
+  const subtitle: string | undefined = presentations?.[0]?.name;
 
-    const totalStock: number = variants?.reduce((count: number, product: Presentation) => count + product.stock, 0);
+  if (!name) return null;
 
-    return (
-        <Box 
-            display="flex" 
-            flexDirection="column" 
-            sx={{
-                alignSelf: 'flex-start',
-                flexWrap: 'wrap',
-                width: {xs: 50, sm: 200, md: '100%' }
-            }}
-        >   
-        <Tooltip title={name}>
-            <Typography
-                sx={(theme: Theme) => ({
-                    display: '-webkit-box',
-                    fontSize: { 
-                        xs: theme?.typography?.caption?.fontSize, 
-                        sm: theme?.typography?.h4?.fontSize,
-                        md: theme?.typography?.h5?.fontSize,
-                    },
-                    fontWeight: 600,
-                    marginLeft: {xs: '0.2em', sm: '1em'},
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                })}
-            >
-                { name }
-            </Typography>
-        </Tooltip>
-            <Typography
-                sx={(theme: Theme) => ({
-                    fontSize: { 
-                        xs: theme?.typography?.caption?.fontSize, 
-                        sm: theme?.typography?.h4?.fontSize,
-                        md: theme?.typography?.body1?.fontSize,
-                    },
-                    lineHeight: 1.5,
-                })}
-            >
-                <InventoryIcon
-                    sx={(theme: Theme) => ({
-                        fontSize: { 
-                            xs: theme?.typography?.caption?.fontSize, 
-                            sm: theme?.typography?.h4?.fontSize,
-                            md: theme?.typography?.body1?.fontSize,
-                        },
-                        verticalAlign: "middle",
-                        position: 'relative',
-                        marginLeft: {xs: '0.2em', sm: '1em'},
-                        marginRight: "0.3em",
-                        bottom: '0.10em',
-                    })}
-                />
-                {`${totalStock}`}
-            </Typography>
-        </Box>
-    )
-}
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", flex: 1, minWidth: 0, gap: "0.2em" }}>
+      <Typography
+        sx={(theme: Theme) => ({
+          fontWeight: 600,
+          fontSize: theme?.typography?.body1?.fontSize,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        })}
+      >
+        {name}
+      </Typography>
+
+      {subtitle && (
+        <Typography
+          sx={(theme: Theme) => ({
+            fontSize: theme?.typography?.caption?.fontSize,
+            color: theme.custom?.fontColorTransparent,
+          })}
+        >
+          {subtitle}
+        </Typography>
+      )}
+
+      <Typography
+        sx={(theme: Theme) => ({
+          fontSize: theme?.typography?.caption?.fontSize,
+          color: theme.custom?.fontColorTransparent,
+          mt: "0.4em",
+        })}
+      >
+        Stock actual
+      </Typography>
+
+      <Typography
+        sx={(theme: Theme) => ({
+          display: "flex",
+          alignItems: "center",
+          gap: "0.3em",
+          fontSize: theme?.typography?.body2?.fontSize,
+          fontWeight: 500,
+        })}
+      >
+        <InventoryIcon sx={{ fontSize: "1em" }} />
+        {totalStock}
+      </Typography>
+    </Box>
+  );
+};
 
 export default ProductItemData;

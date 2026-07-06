@@ -103,23 +103,25 @@ export const selectProductThunk = ({ productData }: SelectProductThunkInterface)
 }
 
 export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
-
-    return async (dispatch:Dispatch): Promise<void> => {
+    return async (dispatch: Dispatch): Promise<boolean> => {
         if (!productData) {
             dispatch(setError({ errorMessage: "No se ha proporcionado un producto."}));
-            return;
-        }
-        {/*─────────────────── 🔎 si no es del mismo tipo que el squema 🔎 ───────────────────*/}
-        if( ! ProductTicketSchema.safeParse(productData).success ) {
-            dispatch(setError({ errorMessage: "El producto no es valido."}));
-            return;
+            return false;
         }
 
-        try{
-            dispatch(addToCartAction({ product: productData}));
-            
-        } catch(error: unknown) {
+        const parsed = ProductTicketSchema.safeParse(productData);
+        if (!parsed.success) {
+            dispatch(setError({ errorMessage: "El producto no es valido."}));
+            console.error('ProductTicketSchema validation failed:', parsed.error.flatten()); // 🔎 sacar en prod
+            return false;
+        }
+
+        try {
+            dispatch(addToCartAction({ product: productData }));
+            return true;
+        } catch (error: unknown) {
             handleError(error);
+            return false;
         }
     }
 }

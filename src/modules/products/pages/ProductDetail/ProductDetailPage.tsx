@@ -1,11 +1,11 @@
+import ProductForm from "../../components/ProductForm/ProductForm";
 import AppLayout from "../../../shared/layout/AppLayout";
-import ProductDetailFormComponent from "./components/ProductDetailForm";
 
 
 const ProductDetailPage = (): React.ReactNode => {
     return (
         <AppLayout title="Detalle del producto">
-            <ProductDetailFormComponent />
+            <ProductForm mode="detail" />
         </AppLayout>
     );
 };

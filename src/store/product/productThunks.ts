@@ -3,7 +3,7 @@ import type { NavigateFunction } from "react-router-dom";
 import type { CreateProductBody, Product }      from "../../typings/product/productTypes";
 import { checkingProducts, setCurrentProduct, setError, setProducts } from "./productSlice";
 import { handleError }       from "../shared/handlerStoreError";
-import { getProductsRequest, searchProductsWithPresentationsRequest } from "../../modules/products/api/productApi";
+import { getProductsRequest, getProductsWithPresentationsRequest, searchProductsWithPresentationsRequest } from "../../modules/products/api/productApi";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
@@ -81,7 +81,7 @@ export const getProducts = () => {
     return async (dispatch: Dispatch): Promise<Product[] | undefined> => {
         dispatch(checkingProducts());
         try {
-            const products: Product[] = await getProductsRequest();
+            const products: Product[] = await getProductsWithPresentationsRequest();
 
             if (!products) {
                 dispatch(setError({ errorMessage: "No se ha encontrado ningun producto" }));

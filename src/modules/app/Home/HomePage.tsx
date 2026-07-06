@@ -1,4 +1,4 @@
-import { HomePageLinks } from '../../../config/HomePageLinks';
+import { HomePageLinks } from '../../../config/Links';
 import DisplayOptions from '../../shared/components/Options/DisplayOptions';
 
 const HomePage = (): React.ReactNode => {

@@ -99,7 +99,6 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         data: DialogDataInterface,
         showSnackBar: (message: string, color: AlertColor) => void,
         dispatch: AppDispatch,
-        setShowModal: (value: boolean) => void;
     };
 
     export type DialogVariantDataType = Omit<DialogDataInterface, 'PresentationId'>

@@ -1,37 +1,57 @@
-
-//─────────────────── Componente 🧩: ProductItemImage ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Renderiza la imagen ilustrativa de un producto dentro del ítem.  
-// Actualmente utiliza una imagen de ejemplo (`/images/productExample/cocaCola.png`). 
-
-//──────────────────── Funciones 🔧 ─────────────────────//
-// - `ProductItemImage`: componente principal que renderiza una imagen del producto.  
-
-//─────────────────── Notas técnicas 💽  ───────────────────//
-// tanto el src como el name no se utilizan, se usara un texto fijo hasta remplazarlo
-// por nombres y src reales.  
-
-//-----------------------------------------------------------------------------//
-
-import { Box } from "@mui/material";
+import { Box, type Theme } from "@mui/material";
+import ImageNotSupportedOutlinedIcon from "@mui/icons-material/ImageNotSupportedOutlined";
 import type { ProductItemImageProps } from "@typings/sells/reactComponents";
 
-const ProductItemImage = ({source, name}: ProductItemImageProps):React.ReactNode => {
-
-    return (
-        <Box
-            component="img"
-            src={source}
-            alt={name}
-            sx={{
-                width: { xs: 90, sm: 200, md: '300' },
-                height: { xs: 80, sm: 180 },
-                objectFit: "contain",
-                borderRadius: "0.3em",
-            }}
-        />    
-    )
+interface Props extends ProductItemImageProps {
+  onClick?: () => void;
 }
+
+const IMAGE_SIZE = "110px";
+const IMAGE_HEIGHT = "120px";
+
+const ProductItemImage = ({ source, name, onClick }: Props): React.ReactNode => {
+  if (!source) {
+    return (
+      <Box
+        onClick={onClick}
+        sx={(theme: Theme) => ({
+          width: IMAGE_SIZE,
+          height: IMAGE_HEIGHT,
+          flexShrink: 0,
+          borderRadius: "0.5em",
+          backgroundColor: theme.custom?.blackTranslucid,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: onClick ? "pointer" : "default",
+        })}
+      >
+        <ImageNotSupportedOutlinedIcon
+          sx={(theme: Theme) => ({
+            fontSize: "1.6rem",
+            color: theme.custom?.fontColorTransparent,
+          })}
+        />
+      </Box>
+    );
+  }
+
+  return (
+    <Box
+      component="img"
+      src={source}
+      alt={name}
+      onClick={onClick}
+      sx={{
+        width: IMAGE_SIZE,
+        height: IMAGE_HEIGHT,
+        objectFit: "cover",
+        borderRadius: "0.5em",
+        cursor: onClick ? "pointer" : "default",
+        flexShrink: 0,
+      }}
+    />
+  );
+};
 
 export default ProductItemImage;

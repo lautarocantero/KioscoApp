@@ -10,8 +10,8 @@ const ProductCreated = ({ createdProduct }: ProductCreatedProps): React.ReactNod
     return (
         <SuccessCard
             name={createdProduct.name}
-            title="Producto creado correctamente"
-            subtitle="El siguiente paso es agregar las presentaciones del producto."
+            title="¡Producto creado correctamente!"
+            subtitle="El siguiente paso es agregar las presentaciones del producto para ponerlo a la venta."
             timeline={<ProductCreatedTimeline />}
             actions={[
                 {

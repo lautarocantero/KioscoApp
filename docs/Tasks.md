@@ -1,10 +1,25 @@
 ## 🗂️ To-Do / Roadmap
 
-- [ ] Diseño de interfaz inicial (layout y navegación)
-- [ ] Módulo de productos (CRUD)
-- [ ] Registro de ventas
-- [ ] Control de inventario básico
-- [ ] Sistema de alertas o notificaciones (opcional)
-- [ ] Implementación de base de datos
+- [ ] Refactorizar todo. 
+- [ ] Agregar disenos sx 
 
 ---
+home:
+- [ ] Poner datos reales y sacar el mock.
+---
+Sidebar:
+- [ ] hacer que cualquier elemento clicleable del sidebar lo abra, y solo la flecha lo contraiga.
+- [ ] actualizar sidebar, hay rutas imposibles o mal hechas.
+---
+Presentaciones:
+- [ ] detail no deja claro de quien es hija la presentacion.
+- [ ] Terminar la demo de analytics en presentatino detail.
+---
+ventas:
+- [ ] quitar desplazamiento de iconos del searchbar.
+- [ ] comprar productos no baja el stock.
+- [ ] refactor visual.
+- [ ] solo mostrar productos con stock.
+- [ ] Agregar la tabla de tipos, luego hacer crud, pero agregarla ya.
+- [ ] refactorizar todo el modulo.
+

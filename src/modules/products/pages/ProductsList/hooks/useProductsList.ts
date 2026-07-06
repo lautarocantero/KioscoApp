@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type {
   DeleteDialogState,
   Product,
@@ -9,13 +9,14 @@ import {
   deleteProductRequest,
   getProductsRequest,
   getProductsWithPresentationsRequest,
+  searchProductsWithPresentationsRequest, // 👈 nuevo import
 } from "../../../api/productApi";
 import { resolveErrorMessage } from "../helpers/productHelpers";
 
 
 const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
-export const useProducts = (): UseProductsReturn => {
+export const useProductsList = (): UseProductsReturn => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +27,7 @@ export const useProducts = (): UseProductsReturn => {
     setLoading(true);
     setError(null);
     try {
-      const data = await getProductsRequest();
+      const data = await getProductsWithPresentationsRequest();
       setProducts(data);
     } catch (err: unknown) {
       setError(resolveErrorMessage(err));
@@ -48,6 +49,11 @@ export const useProducts = (): UseProductsReturn => {
     try {
       await deleteProductRequest(deleteDialog.id);
       setProducts((prev) => prev.filter((p) => p._id !== deleteDialog.id));
+      if (searchTerm.trim() === "") {
+        await fetchProductsWithPresentations();
+      } else {
+        await searchProductsWithPresentations(searchTerm);
+      }
     } catch (err: unknown) {
       setError(resolveErrorMessage(err));
     } finally {
@@ -55,7 +61,7 @@ export const useProducts = (): UseProductsReturn => {
     }
   };
 
-  // ── productos con presentaciones resumidas (nuevo) ────────────────────────
+  // ── productos con presentaciones resumidas ────────────────────────
   const [productsWithPresentations, setProductsWithPresentations] =
     useState<ProductWithPresentations[]>([]);
   const [loadingPresentations, setLoadingPresentations] = useState(true);
@@ -74,9 +80,34 @@ export const useProducts = (): UseProductsReturn => {
     }
   }, []);
 
+  // ── búsqueda (nuevo) ────────────────────────────────────────────────
+  const [searchTerm, setSearchTerm] = useState("");
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  const searchProductsWithPresentations = useCallback(async (term: string) => {
+    setLoadingPresentations(true);
+    setErrorPresentations(null);
+    try {
+      const data = await searchProductsWithPresentationsRequest(term);
+      setProductsWithPresentations(data);
+    } catch (err: unknown) {
+      setErrorPresentations(resolveErrorMessage(err));
+    } finally {
+      setLoadingPresentations(false);
+    }
+  }, []);
+
   useEffect(() => {
-    void fetchProductsWithPresentations();
-  }, [fetchProductsWithPresentations]);
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      if (searchTerm.trim() === "") {
+        void fetchProductsWithPresentations();
+      } else {
+        void searchProductsWithPresentations(searchTerm);
+      }
+    }, 350);
+    return () => clearTimeout(debounceRef.current);
+  }, [searchTerm, fetchProductsWithPresentations, searchProductsWithPresentations]);
   // ────────────────────────────────────────────────────────────────────────
 
   return {
@@ -92,5 +123,7 @@ export const useProducts = (): UseProductsReturn => {
     loadingPresentations,
     errorPresentations,
     refetchProductsWithPresentations: fetchProductsWithPresentations,
+    searchTerm,  
+    setSearchTerm, 
   };
 };

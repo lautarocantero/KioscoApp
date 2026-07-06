@@ -1,93 +1,124 @@
-
-//─────────────────── Componente 🧩: ProductDialogSelector ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Selector de variantes de producto dentro del diálogo.  
-
-//──────────────────── Funciones 🔧 ─────────────────────//
-//   - Renderiza lista de variantes disponibles.  
-//   - Permite seleccionar variante y actualiza Formik.  
-//   - Se integra con validaciones de selección.  
-
-//-----------------------------------------------------------------------------//
-
-import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography, type SelectChangeEvent, type Theme } from "@mui/material";
+import { Box, Stack, Typography, type Theme } from "@mui/material";
 import type { DialogSelectorProps } from "@typings/sells/reactComponents";
-import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/types";
-import React, { useCallback, useMemo } from "react";
-import { useSelector } from "react-redux";
-import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
-import type { RootState as PresentationState } from "../../../../store/presentation/presentationSlice";
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
-import handleChangeSelector from "../../helpers/ProductDialog/Handlers/handleChangeProductDialogSelector";
+import React, { useCallback, useContext, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useDelegatedHandler } from "../../../../hooks/shared/useDelegatedHandler";
+import type { AppDispatch } from "../../../../store/presentation/presentationSlice";
+import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
+import ProductDialogPresentationRowComponent from "./ProductDialogPresentationRowComponent";
+import handleAddProductDialogItemToCart from "./handleAddProductItemToCart";
 
-const ProductDialogSelectorComponent = ({ products, values, setFieldValue }: DialogSelectorProps): React.ReactNode => {
+interface AddedItem {
+    presentationId: string;
+    price: number;
+    quantity: number;
+}
 
-    const isEmpty = useMemo(() => { return (products?.length ?? 0) === 0; }, [products]);
+const ProductDialogSelectorComponent = ({ products }: DialogSelectorProps): React.ReactNode => {
 
-    const { presentation } = useSelector((state: PresentationState) => state);
-    const { isLoading } : { isLoading: boolean } = presentation;
+    const isEmpty = useMemo(() => (products?.length ?? 0) === 0, [products]);
 
-    const renderValue = useCallback( 
-        (selected: string) => { 
-            const productObject: Presentation | undefined = products.find( 
-                (prodFind: Presentation) => String(prodFind?._id) === String(selected) 
-            ); 
-            return productObject ? productObject.name : "";
-        }, 
-        [products] 
+    const dispatch = useDispatch<AppDispatch>();
+    const { showSnackBar } = useContext(SnackBarContext)!;
+
+    const [quantities, setQuantities] = useState<Record<string, number>>({});
+    const [addedItems, setAddedItems] = useState<AddedItem[]>([]);
+
+    const getQuantity = useCallback(
+        (presentationId: string) => quantities[presentationId] ?? 1,
+        [quantities]
     );
 
-    const productOptions = useMemo( () => 
-        products.map((productObject: Presentation) => 
-            ( 
-                <MenuItem 
-                    key={String(productObject?._id)} 
-                    value={String(productObject?._id)}
-                > 
-                    {productObject?.name} 
-                </MenuItem> 
-            )), 
-        [products] 
+    const handleQuantityChange = useCallback((presentationId: string, value: number | null) => {
+        setQuantities((prev) => ({ ...prev, [presentationId]: value ?? 1 }));
+    }, []);
+
+    const handleAddToCart = useDelegatedHandler(
+        async ({ presentation, quantity }: { presentation: Presentation; quantity: number }) => {
+            const wasAdded: boolean = await handleAddProductDialogItemToCart({ presentation, quantity, dispatch, showSnackBar });
+
+            if (!wasAdded) return;
+
+            setAddedItems((prev) => [
+                ...prev,
+                { presentationId: String(presentation?._id), price: presentation?.price ?? 0, quantity },
+            ]);
+        },
+        [dispatch, showSnackBar]
     );
 
-    const handleChange = useDelegatedHandler(({ event, products, setFieldValue }: HandleProductDialogSelectorChangeInterface) =>
-        handleChangeSelector({ event, products, setFieldValue }),
-        [products, setFieldValue]
+    const formatter = useMemo(
+        () => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 2 }),
+        []
     );
 
-    if(isLoading) return (<CircularProgress />);
-    if(isEmpty) return (<Box><Typography>No se han encontrado Productos</Typography></Box>);
+    const sessionTotal = useMemo(
+        () => addedItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+        [addedItems]
+    );
+
+    if (isEmpty) return (<Box><Typography>No se han encontrado Productos</Typography></Box>);
 
     return (
-        <Box sx={{ minWidth: 120 }} >
-            <FormControl fullWidth> 
-                <InputLabel 
-                    id="product-select-label"
+        <Box display={'flex'} flexDirection={'column'} gap={1}>
+            <Stack direction={'row'} alignItems={'center'} gap={1}>
+                <Typography sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontWeight: 'bold' })}>
+                    Presentaciones
+                </Typography>
+                <Typography
                     sx={(theme: Theme) => ({
                         color: theme?.custom?.fontColor,
+                        backgroundColor: theme?.custom?.backgroundDark,
+                        borderRadius: '1em',
+                        px: 1,
+                        fontSize: theme?.typography?.caption?.fontSize,
                     })}
                 >
-                    Producto
-                </InputLabel> 
-                <Select
-                    labelId="product-select-label"
-                    id="product-select"
-                    value={values?.PresentationId ?? ""}
-                    label="Product"
-                    onChange={(event: SelectChangeEvent<string>) => handleChange({event,products, setFieldValue})}
-                    sx={(theme: Theme) => ({
-                        color: theme?.custom?.fontColor,
-                        fontSize: theme?.typography?.body2?.fontSize,
-                    })}
-                    renderValue={renderValue}
-                >
-                {productOptions}
-            </Select> 
-        </FormControl> 
-    </Box> 
+                    {products.length}
+                </Typography>
+            </Stack>
+
+            <Box
+                display={'flex'}
+                flexDirection={'column'}
+                sx={(theme: Theme) => ({
+                    maxHeight: '18em',
+                    overflowY: 'auto',
+                    pr: '0.3em',
+                    '&::-webkit-scrollbar': {
+                        width: '0.5em',
+                    },
+                    '&::-webkit-scrollbar-track': {
+                        backgroundColor: 'transparent',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        backgroundColor: theme?.custom?.backgroundDark ?? 'rgba(255,255,255,0.15)',
+                        borderRadius: '1em',
+                    },
+                })}
+            >
+                {products.map((productObject: Presentation) => (
+                    <ProductDialogPresentationRowComponent
+                        key={String(productObject?._id)}
+                        presentation={productObject}
+                        quantity={getQuantity(String(productObject?._id))}
+                        onQuantityChange={handleQuantityChange}
+                        onAddToCart={(pres: Presentation, quantity: number) => handleAddToCart({ presentation: pres, quantity })}
+                    />
+                ))}
+                
+            </Box>
+
+            {addedItems.length > 0 && (
+                <Stack direction={'row'} justifyContent={'flex-end'} sx={{ mt: 1 }}>
+                    <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColor, fontWeight: 'bold' })}>
+                        Total agregado: {formatter.format(sessionTotal)}
+                    </Typography>
+                </Stack>
+            )}
+        </Box>
     );
 };
-
 
 export default React.memo(ProductDialogSelectorComponent);

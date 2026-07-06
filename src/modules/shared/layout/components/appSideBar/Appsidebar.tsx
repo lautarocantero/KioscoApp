@@ -1,18 +1,19 @@
-import { Box } from "@mui/material";
 import type { Theme } from "@mui/material";
-import type { AppSidebarProps } from "@typings/ui/uiModules";
-import { useAppSidebar } from "./useAppSidebar";
-import SidebarLogo from "./components/SidebarLogo";
-import SidebarNavItem from "./components/SidebarNavItem";
+import { Box, IconButton } from "@mui/material";
+import LastPageIcon from "@mui/icons-material/LastPage";
 import SidebarLogout from "./components/SidebarLogout";
+import SidebarNavItem from "./components/SidebarNavItem";
+import { useAppSidebar } from "./useAppSidebar";
 
-const AppSidebar = ({ isOptions }: AppSidebarProps) => {
+const COLLAPSED_WIDTH = "72px";
+const EXPANDED_WIDTH = "220px";
+
+const AppSidebar = () => {
   const {
     dark,
-    isHovered,
+    isExpanded,
+    toggleSidebar,
     navLinks,
-    handleMouseEnter,
-    handleMouseLeave,
     handleNavClick,
     handleLogout,
     getLinkMeta,
@@ -21,54 +22,81 @@ const AppSidebar = ({ isOptions }: AppSidebarProps) => {
   } = useAppSidebar();
 
   return (
-    <Box
-      component="nav"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      sx={(theme: Theme) => ({
-        width: { xs: 0, sm: isHovered ? "220px" : "64px" },
-        minWidth: { xs: 0, sm: isHovered ? "220px" : "64px" },
-        overflow: "hidden",
-        display: { xs: "none", sm: "flex" },
-        flexDirection: "column",
-        alignItems: "flex-start",
-        py: 2.5,
-        gap: 1,
-        backgroundColor: dark ? theme.custom?.backgroundWave1 : theme.custom?.white,
-        borderRight: dark
-          ? `1px solid ${theme.custom?.whiteTranslucid}`
-          : `1px solid ${theme.custom?.blackTranslucid}`,
-        minHeight: "100vh",
-        transition: "width 0.22s cubic-bezier(.4,0,.2,1), min-width 0.22s cubic-bezier(.4,0,.2,1)",
-        zIndex: 1200,
-        position: "relative",
-      })}
-    >
-      <SidebarLogo dark={dark} onClick={() => navigate("/home")} />
+    <>
+      {/* ── Espaciador: reserva el ancho fijo en el flujo, nunca cambia ── */}
+      <Box
+        sx={{
+          width: { xs: 0, sm: COLLAPSED_WIDTH },
+          minWidth: { xs: 0, sm: COLLAPSED_WIDTH },
+          flexShrink: 0,
+          height: "100vh",
+        }}
+      />
 
-      <Box sx={{ flex: 1, width: "100%", display: "flex", flexDirection: "column", gap: "2px", px: "8px", pl: isHovered ? "8px" : "14px" }}>
-        {navLinks.map((link) => {
-          const { subGroups, hasSubGroups, isActive, isOpen } = getLinkMeta(link);
-          return (
-            <SidebarNavItem
-              key={link.url}
-              link={link}
-              dark={dark}
-              isHovered={isHovered}
-              isActive={isActive}
-              isOpen={isOpen}
-              hasSubGroups={hasSubGroups}
-              subGroups={subGroups}
-              onRowClick={handleNavClick}
-              isSubLinkActive={isSubLinkActive}
-              onNavigate={navigate}
-            />
-          );
+      {/* ── Panel visual: flota por encima, se expande sin empujar nada ── */}
+      <Box
+        component="nav"
+        sx={(theme: Theme) => ({
+          width: { xs: 0, sm: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH },
+          minWidth: { xs: 0, sm: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH },
+          overflow: "hidden",
+          display: { xs: "none", sm: "flex" },
+          flexDirection: "column",
+          alignItems: "flex-start",
+          py: 2.5,
+          gap: 1,
+          borderRight: dark
+            ? `1px solid ${theme.custom?.whiteTranslucid}`
+            : `1px solid ${theme.custom?.blackTranslucid}`,
+          height: "100vh",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          transition: "width 0.22s cubic-bezier(.4,0,.2,1), min-width 0.22s cubic-bezier(.4,0,.2,1)",
+          zIndex: 1200,
+          backgroundColor: theme.custom?.posBackground,
+          boxShadow: isExpanded ? "4px 0 24px rgba(0,0,0,0.25)" : "none",
         })}
-      </Box>
+      >
+        {/* ── Botón toggle ── */}
+        <Box sx={{ width: "100%", display: "flex", justifyContent: isExpanded ? "flex-end" : "center", px: isExpanded ? "10px" : 0 }}>
+          <IconButton
+            onClick={toggleSidebar}
+            size="small"
+            sx={(theme: Theme) => ({
+              color: theme.custom?.posIcon ?? theme.custom?.fontColorTransparent,
+              transition: "transform 0.22s cubic-bezier(.4,0,.2,1)",
+              transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+            })}
+          >
+            <LastPageIcon sx={{ fontSize: "1.2rem" }} />
+          </IconButton>
+        </Box>
 
-      <SidebarLogout dark={dark} isHovered={isHovered} onLogout={handleLogout} />
-    </Box>
+        <Box sx={{ flex: 1, width: "100%", display: "flex", flexDirection: "column", gap: "2px", px: "8px", pl: isExpanded ? "8px" : "18px" }}>
+          {navLinks.map((link) => {
+            const { subGroups, hasSubGroups, isActive, isOpen } = getLinkMeta(link);
+            return (
+              <SidebarNavItem
+                key={link.url}
+                link={link}
+                dark={dark}
+                isHovered={isExpanded}
+                isActive={isActive}
+                isOpen={isOpen}
+                hasSubGroups={hasSubGroups}
+                subGroups={subGroups}
+                onRowClick={handleNavClick}
+                isSubLinkActive={isSubLinkActive}
+                onNavigate={navigate}
+              />
+            );
+          })}
+        </Box>
+
+        <SidebarLogout dark={dark} isHovered={isExpanded} onLogout={handleLogout} />
+      </Box>
+    </>
   );
 };
 

@@ -44,7 +44,7 @@ const NewSellPage = ():React.ReactNode => {
     }, []);
 
     return (
-        <AppLayout noCenter>
+        <AppLayout noCenter fullWidth>
             <SellBar showFilters/>
             <ProductsExhibitor products={products} title={'Más vendido'} />
             <ProductDialog />

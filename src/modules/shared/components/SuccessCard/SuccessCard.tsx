@@ -1,6 +1,7 @@
-import { Box, Card, CardContent } from "@mui/material";
+import { Box, CardContent } from "@mui/material";
 import SuccessCardBody from "./SuccessCardBody";
 import SuccessCardActions from "./SuccessCardActions";
+import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 
 export interface SuccessCardAction {
     label:   string;
@@ -17,16 +18,15 @@ export interface SuccessCardProps {
 }
 
 const SuccessCard = ({ name, title, subtitle, actions, timeline }: SuccessCardProps): React.ReactNode => (
-    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", p: 2, pt: 0 }}>
-        <Card sx={theme => ({
-            width: "100%",
-            maxWidth: 720,
-            backgroundColor: theme.custom.white,
-            borderRadius: "24px",
-            overflow: "hidden",
-            boxShadow: "0 12px 32px rgba(0,0,0,0.12)",
-        })}>
-            <CardContent sx={{ p: 0 }}>
+    <Box sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        p: 2,
+        pt: 0
+    }}>
+        <NoisyCard maxWidth={720} borderRadius="24px">
+            <CardContent sx={{ p: 0, position: "relative", zIndex: 1 }}>
                 <SuccessCardBody
                     name={name}
                     title={title}
@@ -35,7 +35,7 @@ const SuccessCard = ({ name, title, subtitle, actions, timeline }: SuccessCardPr
                 />
                 <SuccessCardActions actions={actions} />
             </CardContent>
-        </Card>
+        </NoisyCard>
     </Box>
 );
 

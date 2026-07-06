@@ -1,4 +1,3 @@
-
 //─────────────────── Componente 🧩: CartPaymentMethod ───────────────────//
 //
 //─────────────────── Descripción 📝 ───────────────────//
@@ -9,18 +8,19 @@
 // - Renderiza un grupo de opciones de pago (Transferencia, Efectivo, Débito, Crédito).
 // - Usa `useRef` (inyectado como prop) para guardar el método seleccionado.
 // - `handleChange`: actualiza el ref con el valor elegido.
-// - Alinea todos los elementos a la derecha para consistencia visual.
+// - Alinea todos los elementos a la izquierda, en columna, con ícono junto al título.
 //
 //─────────────────── Notas técnicas 💽 ───────────────────//
-// - `RadioGroup` se adapta responsivamente: columna en XS, fila en SM+.
-// - Los hijos del RadioGroup heredan color blanco (texto e íconos).
+// - Los hijos del RadioGroup heredan color blanco (texto) y el radio 
+//   seleccionado usa el color primario (púrpura).
 // - Se define un valor por defecto: `PaymentMethod.Transfer`.
 //
 //-----------------------------------------------------------------------------//
 
 
 import React from "react";
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, type Theme } from "@mui/material";
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Typography, type Theme } from "@mui/material";
 import { PaymentMethod } from "../../../typings/sells/enums/sells";
 
 const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObject<string>}): React.ReactNode => {
@@ -35,45 +35,62 @@ const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObjec
         container 
         display="flex" 
         flexDirection="column"
-        alignItems={'flex-end'} ///*─────────────────── 🔎 alinear todo al final 🔎 ───────────────────*
-        gap={1}
+        alignItems={'flex-start'} ///*─────────────────── 🔎 alinear todo a la izquierda 🔎 ───────────────────*
+        gap={0.5}
         sx={(theme: Theme) => ({
             borderTop: `1px solid ${theme?.custom?.whiteTranslucid}`,
-            marginTop: '1em'
+            marginTop: '1em',
+            paddingTop: '1em',
+            width: '100%',
         })}
     >
-        <FormControl component="fieldset">
+        <FormControl component="fieldset" sx={{ width: '100%' }}>
             <FormLabel 
                 component="legend" 
                 sx={(theme: Theme) => ({ 
-                    textAlign: 'right', 
-                    color: theme?.custom?.white 
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.8,
+                    textAlign: 'left', 
+                    color: theme?.custom?.white,
+                    fontWeight: 600,
+                    marginBottom: '0.3em',
                 })}>
+                    <CreditCardIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.custom?.posAccent })} />
                     Método de pago
             </FormLabel>
           <RadioGroup
-            row
             defaultValue={PaymentMethod?.Transfer}
             onChange={handleChange}
             sx={(theme: Theme) => ({
                 '& .MuiFormControlLabel-root': {
-                    color: theme?.custom?.white ,
+                    color: theme?.custom?.white,
+                    marginLeft: 0,
+                    marginBottom: '-0.4em', ///*─────────────────── 🔎 reduce espacio entre filas 🔎 ───────────────────*
+                },
+                '& .MuiFormControlLabel-label': {
+                    fontSize: theme?.typography?.body2?.fontSize,
                 },
                 '& .MuiRadio-root': {
-                    color: theme?.custom?.white ,
+                    color: theme?.custom?.whiteTranslucid,
+                    padding: '0.4em',
+                },
+                '& .MuiSvgIcon-root': {
+                    fontSize: '1.1rem',
                 },
                 '& .MuiRadio-root.Mui-checked': {
-                    color: theme?.custom?.white ,
+                    color: theme?.custom?.posAccent,
                 },
                 display: 'flex',
-                flexDirection: { xs: 'column', sm: 'row'}
+                flexDirection: 'column',
+                gap: 0,
             })}
-          >
+        >
             <FormControlLabel value={PaymentMethod?.Transfer} control={<Radio />} label="Transferencia" />
             <FormControlLabel value={PaymentMethod?.Cash} control={<Radio />} label="Efectivo" />
             <FormControlLabel value={PaymentMethod?.Debit} control={<Radio />} label="Débito" />
             <FormControlLabel value={PaymentMethod?.Credit} control={<Radio />} label="Crédito" />
-          </RadioGroup>
+        </RadioGroup>
         </FormControl>
     </Grid>
   );

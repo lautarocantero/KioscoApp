@@ -1,8 +1,7 @@
 // ─── Componente 🧩: PresentationListPage ─────────────────────────────────────
 import React from "react";
-import { Alert, Button } from "@mui/material";
+import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import LoupeIcon from "@mui/icons-material/Loupe";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { usePresentations } from "../PresentationList/hooks/usePresentations";
@@ -26,6 +25,8 @@ const PresentationListPage = (): React.ReactNode => {
         handleDeleteRequest,
         handleDeleteCancel,
         handleDeleteConfirm,
+        searchTerm,
+        setSearchTerm,
     } = usePresentations();
 
     const columns = buildColumns({
@@ -35,25 +36,19 @@ const PresentationListPage = (): React.ReactNode => {
     });
 
     return (
-        <AppLayout fullWidth title="Presentaciones" icon={<ViewListIcon />}>
-            <div style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-end",
-            }}>
-                <Button
-                    variant="contained"
-                    size="small"
-                    onClick={() =>
-                        navigate(`/products/${productId}/presentations/new`)
-                    }
-                    sx={{ alignSelf: "flex-end", mb: 1 }}
-                >
-                    <LoupeIcon sx={{ mr: 0.5, fontSize: 18 }} />
-                    Nueva presentación
-                </Button>
-
+        <AppLayout
+            fullWidth
+            title="Presentaciones"
+            icon={<ViewListIcon />}
+            hasSearchBar
+            searchPlaceholder="600gr, pack x6..."
+            searchValue={searchTerm}
+            onSearchChange={setSearchTerm}
+            hasNewItem
+            newItemLabel="Nueva presentación"
+            newItemHref={`/products/${productId}/presentations/new`}
+        >
+            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
                 {error && (
                     <Alert severity="error" sx={{ mb: 2 }} onClose={clearError}>
                         {error}

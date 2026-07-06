@@ -2,6 +2,7 @@ import { AppBar, Toolbar, type Theme } from "@mui/material";
 import React from "react";
 import type { SharedAppBarInterface } from "../../../../../../typings/ui/uiModules";
 import SellBarContent from "./SellBarContent";
+import { getNoisyBackgroundSx } from "../../../../../shared/components/NoisyBackground/NoisyBackground";
 
 const SellBar = ({showFilters}: SharedAppBarInterface): React.ReactNode => {
   return (
@@ -10,10 +11,10 @@ const SellBar = ({showFilters}: SharedAppBarInterface): React.ReactNode => {
       elevation={0}
       position="relative"
       sx={(theme: Theme) => ({
-        width: "100%",
-        backgroundColor: theme?.custom?.posBackground,
+        width:  { xs: "98%", sm: "90%", md: "720px" },
         borderRadius: "0.5em",
         alignSelf: "center",
+        ...getNoisyBackgroundSx(theme),
       })}
       data-testid="login-appbar"
     >

@@ -1,10 +1,14 @@
 // ─── Hook 🪝: usePresentations ────────────────────────────────────────────────
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import { deletePresentationRequest, getPresentationsByProductIdRequest } from "../../../api/presentationsApi";
+import {
+    deletePresentationRequest,
+    getPresentationsByProductIdRequest,
+    searchPresentationsByProductIdRequest,
+} from "../../../api/presentationsApi";
 
 // ─── tipos ────────────────────────────────────────────────────────────────────
 
@@ -38,7 +42,7 @@ export const usePresentations = () => {
     const [deleteDialog, setDeleteDialog] =
         useState<DeleteDialogState>(CLOSED_DIALOG);
 
-    // ── fetch ──────────────────────────────────────────────────────────────────
+    // ── fetch base ─────────────────────────────────────────────────────────────
 
     const fetchPresentations = useCallback(async () => {
         if (!product_id) return;
@@ -54,9 +58,40 @@ export const usePresentations = () => {
         }
     }, [product_id]);
 
+    // ── búsqueda ───────────────────────────────────────────────────────────────
+
+    const [searchTerm, setSearchTerm] = useState("");
+    const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+    const searchPresentations = useCallback(
+        async (term: string) => {
+            if (!product_id) return;
+            setLoading(true);
+            setError(null);
+            try {
+                const data = await searchPresentationsByProductIdRequest({ product_id, term });
+                setPresentations(data);
+            } catch (err: unknown) {
+                setError(resolveErrorMessage(err));
+            } finally {
+                setLoading(false);
+            }
+        },
+        [product_id]
+    );
+
     useEffect(() => {
-        void fetchPresentations();
-    }, [fetchPresentations]);
+        if (!product_id) return;
+        clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+            if (searchTerm.trim() === "") {
+                void fetchPresentations();
+            } else {
+                void searchPresentations(searchTerm);
+            }
+        }, 350);
+        return () => clearTimeout(debounceRef.current);
+    }, [searchTerm, product_id, fetchPresentations, searchPresentations]);
 
     // ── handlers ───────────────────────────────────────────────────────────────
 
@@ -73,6 +108,11 @@ export const usePresentations = () => {
             setPresentations((prev) =>
                 prev.filter((p) => p._id !== deleteDialog.id)
             );
+            if (searchTerm.trim() === "") {
+                await fetchPresentations();
+            } else {
+                await searchPresentations(searchTerm);
+            }
         } catch (err: unknown) {
             setError(resolveErrorMessage(err));
         } finally {
@@ -90,5 +130,7 @@ export const usePresentations = () => {
         handleDeleteRequest,
         handleDeleteCancel,
         handleDeleteConfirm,
+        searchTerm,
+        setSearchTerm,
     };
 };

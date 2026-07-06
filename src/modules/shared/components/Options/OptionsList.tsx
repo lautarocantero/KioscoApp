@@ -19,11 +19,8 @@
 
 import { Grid } from '@mui/material';
 import type { OptionLink, OptionsListInterface } from '../../../../typings/ui/uiModules';
-import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../../../../store/auth/authSlice';
 import { useContext } from 'react';
 import { ThemeContext } from '../../../../theme/ThemeContext';
-import LogoutButton from '../Buttons/LogoutButton';
 import BackButton from '../Buttons/BackButton';
 import LinksColumnComponent from './LinksColumnComponent';
 
@@ -38,7 +35,6 @@ const splitLinks = (links: OptionLink[]) => {
 
 const OptionsList = ({ links, disconnect }: OptionsListInterface): React.ReactNode => {
   const { appTheme } = useContext(ThemeContext);
-  const dispatch = useDispatch<AppDispatch>();
 
   {/*─────────────────── 🔎 dividir en dos mitades 🔎 ───────────────────*/}
   const { leftLinks ,rightLinks }: { leftLinks: OptionLink[],rightLinks: OptionLink[] }  = splitLinks(links);
@@ -53,7 +49,6 @@ const OptionsList = ({ links, disconnect }: OptionsListInterface): React.ReactNo
       <LinksColumnComponent links={rightLinks} appTheme={appTheme} />
 
       {/*─────────────────── 🔎 Botones extra 🔎 ───────────────────*/}
-      {disconnect && <LogoutButton dispatch={dispatch} appTheme={appTheme} />}
       {!disconnect && <BackButton appTheme={appTheme} />}
       
     </Grid>

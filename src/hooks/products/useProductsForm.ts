@@ -9,6 +9,7 @@ import type {
     ProductEditFormValues,
     UseProductsFormReturn,
     UseProductsEditFormReturn,
+    UseProductsDetailFormReturn,
 } from "@typings/product/productTypes";
 import { useFormSteps } from "../../hooks/shared/useFormSteps";
 import { API_URL } from "../../config/api";
@@ -241,5 +242,46 @@ export function useProductEdit(): UseProductsEditFormReturn {
         handleNextStep,
         handlePrevStep,
         handleEdit,
+    };
+}
+
+// ─── Modo DETALLE ────────────────────────────────────────────────────────────
+
+export function useProductDetail(): UseProductsDetailFormReturn {
+    const { productId } = useParams<{ productId: string }>();
+
+    const [viewingEntity, setViewingEntity]     = useState<ExistingProductInterface | null>(null);
+    const [isLoadingEntity, setIsLoadingEntity] = useState(true);
+    const [loadError, setLoadError]             = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!productId) return;
+
+        const fetchProduct = async () => {
+            setIsLoadingEntity(true);
+            try {
+                const response = await fetch(`${API_URL}/product/get-product-by-id/${productId}`);
+                if (!response.ok) throw new Error(`Error ${response.status}`);
+                const data: ExistingProductInterface = await response.json();
+                setViewingEntity(data);
+            } catch (error) {
+                setLoadError(
+                    error instanceof Error
+                        ? error.message
+                        : "No se pudo cargar el producto"
+                );
+            } finally {
+                setIsLoadingEntity(false);
+            }
+        };
+
+        fetchProduct();
+    }, [productId]);
+
+    return {
+        viewingEntity,
+        isLoadingEntity,
+        loadError,
+        setViewingEntity,
     };
 }

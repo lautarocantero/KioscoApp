@@ -1,62 +1,47 @@
-
 //─────────────────── Componente 🧩: CartProductItem ───────────────────//
-
+//
 //─────────────────── Descripción 📝 ───────────────────//
-// Componente que se encarga de mostrar la informacion de un producto que se agrego al carrito
-
-//──────────────────── Funciones 🔧 ─────────────────────//
-// -CartProductItemComponent Componente principal que renderiza la informacion del producto
-//      -CartProductItemImage Muestra la imagen del producto
-//      -CartProductItemData  Muestra la informacion del producto (nombre, tamaño, stock, precio)
-//      -CartProductButtons Muestra 2 botones para eliminar una unidad o la totalidad del carrito
-
+// Fila de producto del carrito: imagen, nombre/tamaño, precio unitario,
+// stepper de cantidad, subtotal y botón de eliminar.
+//
 //-----------------------------------------------------------------------------//
-
 
 import { Grid, type Theme } from "@mui/material";
 import type { CartProductItemProps } from "../../../../typings/sells/types/sellsTypes";
+import { formatCurrency } from "../../helpers/formatCurrency";
 import CartProductButtons from "./CartProductButtons";
 import CartProductItemData from "./CartProductItemDataComponent";
 import CartProductItemImage from "./CartProductItemImageComponent";
+import CartProductPriceColumn from "../CartProductPriceColumnComponent";
+import CartProductQuantity from "../CartProductQuantityComponent";
 
-const CartProductItemComponent = ({product}: CartProductItemProps ):React.ReactNode => {
-    const {image_url, name, model_size, stock_required, price } : 
-    {image_url: string, name: string, model_size: string, stock_required: number, price: number } = product ;
+const CartProductItemComponent = ({product}: CartProductItemProps): React.ReactNode => {
+    const {image_url, name, model_size, stock_required, price, _id}:
+    {image_url: string, name: string, model_size: string, stock_required: number, price: number, _id?: string} = product;
 
-    return(
+    const subtotal: number = price * stock_required;
+
+    return (
         <Grid
             container
-            sx={{
+            sx={(theme: Theme) => ({
                 display: 'flex',
-                flexDirection: 'column'
-            }}
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
+                gap: 1.5,
+                backgroundColor: theme?.custom?.posBackground,
+                borderRadius: '1em',
+                padding: '0.8em 1em',
+                marginBottom: '0.8em',
+            })}
         >
-            <Grid
-                sx={(theme: Theme) => ({
-                    backgroundColor: theme?.custom?.whiteTranslucid,
-                    borderRadius: '1em 1em 0em 0em',
-                    minHeight: { xs: '5em', md: '8em'},
-                    marginTop: { xs: '0.3em', md: '0.5em' },
-                    display: 'flex',
-                    flexDirection: 'row',
-                    width: '100%'
-                })}
-            >
-                <CartProductItemImage image={image_url} name={name} />
-                <CartProductItemData name={name} size ={model_size} units={String(stock_required)} price={`${price}$`}/>
-            </Grid>
-            <Grid
-                sx={(theme: Theme) => ({
-                    backgroundColor: theme?.custom?.whiteTranslucid,
-                    borderRadius: '0em 0em 1em 1em',
-                    minHeight: { xs: '3em' },
-                    display: 'flex',
-                    flexDirection: 'row',
-                    width: '100%'
-                })}
-            >
-                <CartProductButtons _id={String(product?._id)}/>
-            </Grid>
+            <CartProductItemImage image={image_url} name={name} />
+            <CartProductItemData name={name} size={model_size} />
+            <CartProductPriceColumn label="Precio unitario" value={formatCurrency(price)} />
+            <CartProductQuantity _id={String(_id)} quantity={stock_required} />
+            <CartProductPriceColumn label="Subtotal" value={formatCurrency(subtotal)} />
+            <CartProductButtons _id={String(_id)} />
         </Grid>
     )
 }

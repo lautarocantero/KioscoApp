@@ -1,4 +1,4 @@
-import { Box, Collapse, Tooltip } from "@mui/material";
+import { alpha, Box, Collapse, Tooltip } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import type { Theme } from "@mui/material";
 import SidebarSubGroup from "./SidebarSubGroup";
@@ -30,16 +30,25 @@ const SidebarNavItem = ({
           cursor: "pointer",
           whiteSpace: "nowrap",
           width: isHovered ? "100%" : "36px",
-          transition: "background-color 0.15s, color 0.15s, width 0.22s cubic-bezier(.4,0,.2,1)",
+          transition: "background-color 0.15s, color 0.15s, width 0.22s cubic-bezier(.4,0,.2,1), backdrop-filter 0.15s",
           color: isActive
             ? dark ? theme.custom?.fontColor : theme.custom?.backgroundDark
             : dark ? theme.custom?.fontColorTransparent : theme.custom?.fontColorDarkTransparent,
+
           backgroundColor: isActive
-            ? dark ? theme.custom?.whiteTranslucid : theme.custom?.blackTranslucid
+            ? isHovered
+              ? dark ? theme.custom?.posAccent : theme.custom?.blackTranslucid // expandido: color sólido igual que antes
+              : dark ? alpha(theme.custom?.posAccent, 0.30) : "rgba(0, 0, 0, 0.12)" // contraído: glass semi-transparente
             : "transparent",
+          backdropFilter: isActive && !isHovered ? "blur(8px)" : "none",
+          border: isActive && !isHovered
+            ? `1px solid ${dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)"}`
+            : "1px solid transparent",
+
           "&:hover": {
-            backgroundColor: dark ? theme.custom?.whiteTranslucid : theme.custom?.blackTranslucid,
+            backgroundColor: dark ? theme.custom?.posAccent : theme.custom?.blackTranslucid,
             color: dark ? theme.custom?.fontColor : theme.custom?.fontColorDark,
+            backdropFilter: "none",
           },
         })}
       >

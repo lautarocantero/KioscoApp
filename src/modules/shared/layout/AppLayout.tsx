@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import type { PropsWithChildren } from "react";
 import React, { useContext } from "react";
 import { ThemeContext } from "../../../theme/ThemeContext";
@@ -6,15 +7,23 @@ import type { AppLayoutProps } from "../../../typings/ui/uiModules";
 import OptionsHeader from "./components/OptionsHeader";
 import AppSidebar from "./components/appSideBar/Appsidebar";
 import LightMode from "../components/LightMode/LightMode";
-import BlobBackground from "./components/BlobBackground";
+import { SearchBar } from "../components/SearchBar/SearchBar";
 
 const AppLayout = ({
   children,
   isOptions,
   fullWidth,
   noCenter,
-  title = "App",
+  title,
   icon,
+  hasSearchBar,
+  searchValue,
+  onSearchChange,
+  searchPlaceholder = "Buscar...",
+  hasNewItem,
+  newItemLabel = "Nuevo",
+  onNewItemClick,
+  newItemHref,
 }: PropsWithChildren<AppLayoutProps>): React.ReactNode => {
   const { appTheme } = useContext(ThemeContext);
 
@@ -25,24 +34,22 @@ const AppLayout = ({
     <Box
       component="div"
       sx={(t) => ({
-        minHeight: "100vh",
+        height: "100vh",
         width: "100vw",
-        backgroundColor: t.custom.backgroundDark,
-        display: "flex",
-        flexDirection: "row",
+        backgroundColor: t.custom.posBackground,
         position: "relative",
         overflow: "hidden",
+        display: "flex",
+        flexDirection: "row",
       })}
     >
-      <BlobBackground />
-
       {/* ── Toggle de tema ── */}
       <Box sx={{ position: "absolute", top: 16, right: 16, zIndex: 10 }}>
         <LightMode />
       </Box>
 
       {/* ── Sidebar ── */}
-      <AppSidebar isOptions={isOptions} />
+      <AppSidebar />
 
       {/* ── Contenido principal ── */}
       <Box
@@ -50,9 +57,11 @@ const AppLayout = ({
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          overflow: "hidden",
+          overflowY: "auto",
+          overflowX: "hidden",
           position: "relative",
           zIndex: 1,
+          height: "100%",
         }}
       >
         <Box
@@ -72,7 +81,10 @@ const AppLayout = ({
             sx={{
               display: "flex",
               flexDirection: "column",
-              alignItems: { xs: "center", sm: "flex-start" },
+              alignItems: {
+                xs: "center",
+                sm: fullWidth ? "stretch" : "flex-start",
+              },
               width: fullWidth ? "100%" : { xs: "98%", sm: "90%", md: "720px" },
               gap: "1em",
             }}
@@ -88,16 +100,15 @@ const AppLayout = ({
             {/* Header para páginas fullWidth (listados, tablas) */}
             {fullWidth && !isOptions && (
               <Box
-                sx={(theme) => ({
+                sx={{
                   width: "100%",
-                  borderBottom: `0.5px solid ${
-                    !appTheme
-                      ? "rgba(255,255,255,0.1)"
-                      : theme.custom?.blackTranslucid
-                  }`,
-                  pb: 1,
-                })}
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  flexWrap: "wrap",
+                }}
               >
+                {/* Título + ícono */}
                 <Typography
                   variant="h2"
                   sx={(theme) => ({
@@ -110,15 +121,60 @@ const AppLayout = ({
                     color: !appTheme
                       ? theme.custom?.fontColor
                       : theme.custom?.fontColorDark,
+                    display: "flex",
+                    alignItems: "center",
+                    flexShrink: 0,
                   })}
                 >
                   {icon && (
-                    <Box component="span" sx={{ mr: 1, verticalAlign: "middle" }}>
+                    <Box
+                      component="span"
+                      sx={(theme) => ({ mr: 1, verticalAlign: "middle", color: theme.custom?.posAccent })}
+                    >
                       {icon}
                     </Box>
                   )}
                   {title}
                 </Typography>
+
+                {/* Search bar */}
+                {hasSearchBar && (
+                  <SearchBar
+                    value={searchValue as string}
+                    onChange={onSearchChange as (value: string) => void}
+                    placeholder={searchPlaceholder}
+                  />
+                )}
+
+                {/* Botón nuevo item */}
+                {hasNewItem && (
+                  <Button
+                    onClick={onNewItemClick}
+                    href={newItemHref}
+                    disableElevation
+                    startIcon={
+                      <AddIcon sx={{ fontSize: "1.1rem" }} /> // 👈 sin color, hereda currentColor
+                    }
+                    sx={(theme) => ({
+                      ml: "auto",
+                      flexShrink: 0,
+                      color: theme.custom?.posSuccess, // 👈 el color "reposo" ahora lo define el Button, no el ícono
+                      textTransform: "none",
+                      fontWeight: 500,
+                      fontSize: "0.875rem",
+                      borderRadius: "0.5em",
+                      border: `1px solid ${theme.custom?.posSuccess}`,
+                      px: 2.5,
+                      py: 0.75,
+                      "&:hover": {
+                        backgroundColor: theme.custom?.posSuccess,
+                        color: theme.custom?.black,
+                      },
+                    })}
+                  >
+                    {newItemLabel}
+                  </Button>
+                )}
               </Box>
             )}
 

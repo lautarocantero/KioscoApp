@@ -1,4 +1,5 @@
 import { Box, Button, type Theme } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import type { SuccessCardAction } from "./SuccessCard";
 
 interface SuccessCardActionsProps {
@@ -6,29 +7,40 @@ interface SuccessCardActionsProps {
 }
 
 const SuccessCardActions = ({ actions }: SuccessCardActionsProps): React.ReactNode => (
-    <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column" }, px: 3, py: 2.5, width: "50%", margin: "0 auto" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, px: 3, pb: 4, pt: 1 }}>
         {actions.map(({ label, onClick, variant }) =>
             variant === "contained" ? (
                 <Button
                     key={label}
-                    fullWidth
-                    variant="contained"
                     onClick={onClick}
-                    sx={{ textTransform: "none", fontWeight: 600, backgroundColor: "#0386EE", "&:hover": { backgroundColor: "#0270c4" } }}
+                    sx={{
+                        textTransform: "none",
+                        fontWeight: 700,
+                        px: 4,
+                        py: 1.3,
+                        borderRadius: "12px",
+                        fontSize: "1rem",
+                        color: "#fff",
+                        background: "linear-gradient(90deg, #7C3AED 0%, #8B5CF6 100%)",
+                        boxShadow: "0 4px 16px rgba(124,58,237,0.4)",
+                        "&:hover": {
+                            background: "linear-gradient(90deg, #6D28D9 0%, #7C3AED 100%)",
+                        },
+                    }}
                 >
                     {label}
                 </Button>
             ) : (
                 <Button
                     key={label}
-                    fullWidth
-                    variant="outlined"
                     onClick={onClick}
+                    startIcon={<ArrowBackIcon sx={(theme: Theme) => ({ fontSize: "1rem", color: theme.custom?.posSuccess })} />}
                     sx={(theme: Theme) => ({
-                        textTransform: "none", fontWeight: 600,
-                        borderColor: theme?.custom?.fontColorTransparent,
-                        color: theme?.custom?.black,
-                        "&:hover": { borderColor: "rgba(255,255,255,0.4)" },
+                        textTransform: "none",
+                        fontWeight: 500,
+                        fontSize: "0.9rem",
+                        color: theme.custom?.posText,
+                        "&:hover": { backgroundColor: "transparent", opacity: 0.8 },
                     })}
                 >
                     {label}

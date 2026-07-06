@@ -27,8 +27,6 @@ declare module '@mui/material/styles' {
       backgroundLigth: string;
       background: string;
       backgroundDark: string;
-      backgroundWave1: string;
-      backgroundWave2: string;
       cardBackground: string;
 
       //────────────── POS Modern UI ──────────────────//
@@ -90,8 +88,6 @@ declare module '@mui/material/styles' {
       backgroundLigth?: string;
       background?: string;
       backgroundDark?: string;
-      backgroundWave1?: string;
-      backgroundWave2?: string;
       cardBackground?: string;
 
       //────────────── POS Modern UI ──────────────────//
@@ -138,6 +134,7 @@ export const darkTheme = createTheme({
   unstable_sx: true,
   unstable_grid: { cssGrid: true },
   palette: {
+    mode: 'dark',
     primary:   { main: '#0386EE' },
     secondary: { main: '#0058AF' },
     error:     { main: '#842325' },
@@ -166,14 +163,12 @@ export const darkTheme = createTheme({
     //────────────── background ──────────────────//
     backgroundLigth: '#525253ff',
     background: '#333333',
-    backgroundDark: '#0d1b4b',
-    backgroundWave1: '#0d2a6e',
-    backgroundWave2: '#1a3a7a',
+    backgroundDark: '#0c0d11',
     cardBackground: 'rgba(255,255,255,0.07)',
 
     //────────────── POS Modern UI ──────────────────//
     posBackground: '#11141A',
-    posCard: '#1E222B',
+    posCard: '#1f2125',
     posSurface: '#272C36',
     posSurfaceHover: '#2D3440',
     posBorder: 'rgba(255,255,255,0.06)',
@@ -221,6 +216,7 @@ export const lightTheme = createTheme({
   unstable_sx: true,
   unstable_grid: { cssGrid: true },
   palette: {
+    mode: 'light',
     primary:   { main: '#F58388' },
     secondary: { main: '#DD767B' },
     error:     { main: '#842325' },
@@ -250,8 +246,6 @@ export const lightTheme = createTheme({
     backgroundLigth: '#bbbbbbff',
     background: '#FFFFFF',
     backgroundDark: '#fde8d8',
-    backgroundWave1: '#f9c4a0',
-    backgroundWave2: '#f5a878',
     cardBackground: '#ffffff',
 
     //────────────── accent colors ──────────────────//

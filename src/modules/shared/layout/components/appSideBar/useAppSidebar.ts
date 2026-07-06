@@ -4,9 +4,11 @@ import { useDispatch } from "react-redux";
 import { ThemeContext } from "../../../../../theme/ThemeContext";
 import type { AppDispatch } from "../../../../../store/user/userSlice";
 import { startLogout } from "../../../../../store/auth/thunks";
-import { HomePageLinks } from "../../../../../config/HomePageLinks";
+import { SidebarNavLinks } from "../../../../../config/Links";
 import { NAV_SUBGROUPS } from "./NavSubGroups";
 import type { NavLink } from "@typings/ui/uiModules";
+
+const SIDEBAR_STORAGE_KEY = "sidebar-expanded";
 
 export const useAppSidebar = () => {
   const { appTheme } = useContext(ThemeContext);
@@ -15,18 +17,23 @@ export const useAppSidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [openSection, setOpenSection] = useState<string | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(() => {
+    const stored = localStorage.getItem(SIDEBAR_STORAGE_KEY);
+    return stored === "true";
+  });
 
+  const toggleSidebar = () => {
+    setIsExpanded((prev) => {
+      const next = !prev;
+      localStorage.setItem(SIDEBAR_STORAGE_KEY, String(next));
+      return next;
+    });
+  };
   const dark = !appTheme;
 
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setOpenSection(null);
-  };
 
   const toggleSection = (url: string) => {
-    if (!isHovered) return;
+    if (!isExpanded) return;
     setOpenSection((prev) => (prev === url ? null : url));
   };
 
@@ -41,7 +48,7 @@ export const useAppSidebar = () => {
 
   const handleLogout = () => dispatch(startLogout());
 
-  const navLinks = HomePageLinks as NavLink[];
+  const navLinks = SidebarNavLinks as NavLink[];
 
   const getLinkMeta = (link: NavLink) => ({
     subGroups: NAV_SUBGROUPS[link.url] ?? [],
@@ -54,10 +61,9 @@ export const useAppSidebar = () => {
 
   return {
     dark,
-    isHovered,
+    isExpanded,
     navLinks,
-    handleMouseEnter,
-    handleMouseLeave,
+    toggleSidebar,
     handleNavClick,
     handleLogout,
     getLinkMeta,

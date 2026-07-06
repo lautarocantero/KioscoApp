@@ -1,61 +1,51 @@
+import { Chip, Grid, Tooltip, Typography, type Theme } from "@mui/material";
 
-//─────────────────── Componente 🧩: CartProductItemData ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Renderiza todos los datos del producto (nombre, tamaño, stock, precio)
-
-//──────────────────── Funciones 🔧 ─────────────────────//
-// -CartProductItemDataComponent renderiza los componentes que le dan sentido a la pagina
-// -DisplayDataComponent se encarga de renderizar la informacion del producto que le pasa CartProductItemData
-// -ColumnData se encarga de renderizar los datos de las columnas
-
-//-----------------------------------------------------------------------------//
-
-import { Grid, Tooltip, Typography, type Theme } from "@mui/material";
-import type { CartProductItemDataProps, DisplayDataComponentProps } from "@typings/sells/reactComponents";
-
-const ColumnData = ({label = '', value =''}: {label?: string, value: string}): React.ReactNode => {
-    return (
-        <Grid size={{md: 2}}>
-            <Typography
-                sx={(theme: Theme) => ({
-                    fontSize: theme?.typography?.caption?.fontSize,
-                })}
-            >
-                {label}{value}
-            </Typography>
-        </Grid>
-    )
+type CartProductItemDataProps = {
+    name?: string;
+    size?: string;
+    category?: string; // 📝 opcional hasta que exista en ProductTicketType
 }
 
-const DisplayDataComponent = ({nameEdited,size, units, price} : DisplayDataComponentProps):React.ReactNode => (
-    <Grid
-        size={{ xs: 8 }}
-        display={'flex'}
-        flexDirection={{ xs: 'column', sm: 'row'}}
-        sx={(theme: Theme) => ({
-            alignItems: {sm: 'center'},
-            gap: {xs: '0.1em', sm: '2em'},
-            "& .MuiTypography-root": {
-              color: theme?.palette?.common?.white,
-            },
-          })}
-    >
-        <ColumnData value={nameEdited}/>
-        <ColumnData value={size} label="Presentación: "/>
-        <ColumnData value={units} label="Unidades: "/>
-        <ColumnData value={price} label="Precio unitario: "/>
-    </Grid>
-)
-
-const CartProductItemDataComponent = ({name = 'Coca Cola', size = '2L', units = '1', price = '2500$'}
-    : CartProductItemDataProps):React.ReactNode => {
+const CartProductItemDataComponent = ({ name = 'Coca Cola', size = '2L', category }
+    : CartProductItemDataProps): React.ReactNode => {
 
     const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
 
     return (
         <Tooltip title={name}>
-            <DisplayDataComponent nameEdited={nameEdited} size={size} units={units} price={price} />
+            <Grid sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '0.2em' }}>
+                <Typography
+                    sx={(theme: Theme) => ({
+                        color: theme?.custom?.white,
+                        fontWeight: 600,
+                        fontSize: theme?.typography?.body2?.fontSize,
+                    })}
+                >
+                    {nameEdited}
+                </Typography>
+                <Typography
+                    sx={(theme: Theme) => ({
+                        color: theme?.custom?.whiteTranslucid,
+                        fontSize: theme?.typography?.caption?.fontSize,
+                    })}
+                >
+                    {size}
+                </Typography>
+                {category && (
+                    <Chip
+                        label={category}
+                        size="small"
+                        sx={(theme: Theme) => ({
+                            alignSelf: 'flex-start',
+                            height: '1.4em',
+                            fontSize: '0.65rem',
+                            fontWeight: 600,
+                            color: theme?.palette?.primary?.main,
+                            backgroundColor: `${theme?.palette?.primary?.main}22`,
+                        })}
+                    />
+                )}
+            </Grid>
         </Tooltip>
     )
 }

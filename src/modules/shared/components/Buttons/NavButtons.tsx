@@ -34,7 +34,6 @@ const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: Na
             display: "flex", gap: 2, justifyContent: readOnly ? "flex-start" : "space-between",
             px: 3, py: 2.5,
             borderTop: "0.5px solid rgba(255,255,255,0.07)",
-            backgroundColor: "rgba(0,0,0,0.2)",
         }}>
             <Button onClick={handleBack} variant="outlined"
                 sx={(theme: Theme) => ({
@@ -43,16 +42,16 @@ const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: Na
                     color: theme?.custom?.fontColorTransparent,
                 })}
             >
-                {isFirstStep && !readOnly ? "Cancelar" : "Atrás"}
+                {readOnly ? "Volver" : isFirstStep ? "Cancelar" : "Atrás"}
             </Button>
 
             {!readOnly && (
                 <Button onClick={handleNext} variant="contained"
-                    sx={{
+                    sx={(theme: Theme) => ({
                         textTransform: "none", fontWeight: 600, minWidth: 120,
-                        backgroundColor: "#0386EE",
-                        "&:hover": { backgroundColor: "#0270c4" },
-                    }}
+                        backgroundColor: theme?.custom?.posAccent,
+                        "&:hover": { backgroundColor: theme?.custom?.posAccentHover },
+                    })}
                 >
                     {isLastStep ? SubmitText : "Siguiente"}
                 </Button>
