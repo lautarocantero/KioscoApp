@@ -1,6 +1,6 @@
 import { Grid, Typography, type Theme } from "@mui/material";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
-import type { SharedAppBarContentType } from "../../../../../../typings/ui/uiModules";
+import type { SharedAppBarContentType } from "../../../../../../typings/ui/appbar.types";
 import { SellbarSearch } from "./SellBarSearch";
 import SellBarActions from "./SellBarActions";
 

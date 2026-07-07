@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import type { Theme } from "@mui/material";
 import SidebarSubLink from "./SidebarSubLink";
-import type { SidebarSubGroupProps } from "@typings/ui/uiModules";
+import type { SidebarSubGroupProps } from "@typings/ui/sidebar.types";
 
 
 const SidebarSubGroup = ({ group, dark, isHovered, isSubLinkActive, onNavigate }: SidebarSubGroupProps) => (
@@ -12,7 +12,7 @@ const SidebarSubGroup = ({ group, dark, isHovered, isSubLinkActive, onNavigate }
         fontWeight: 500,
         letterSpacing: "0.08em",
         textTransform: "uppercase",
-        color: dark ? theme.custom?.translucidWhite : theme.custom?.whiteDarkTransparent,
+        color: dark ? theme.custom?.translucidWhite : theme.custom?.darkWhite,
         px: "12px",
         pt: "8px",
         pb: "2px",

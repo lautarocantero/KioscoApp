@@ -7,8 +7,8 @@
 //-----------------------------------------------------------------------------//
 
 import { Grid, Typography } from "@mui/material";
+import type { SimpleGridInterface } from "@typings/ui/grid.types";
 import React from "react";
-import type { SimpleGridInterface } from "../../../../typings/ui/uiModules";
 
 const SimpleGridComponent = ({children}: SimpleGridInterface ): React.ReactNode => {
     

@@ -76,7 +76,7 @@ const FormCard = ({
                 <Box sx={(theme: Theme) => ({
                     borderRadius: 2,
                     px: 2,
-                    color: theme.custom?.whiteDark,
+                    color: theme.custom?.darkWhite,
                 })}>
 
                     {accordion && (

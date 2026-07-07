@@ -9,7 +9,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Button, type Theme } from "@mui/material";
-import type { PrimaryButtonComponentProps } from "../../../../typings/ui/uiModules";
+import type { PrimaryButtonComponentProps } from "@typings/ui/buttons.types";
 
 const PrimaryButtonComponent = ({
   buttonText,

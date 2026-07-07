@@ -1,42 +1,8 @@
-//─────────────────── Componente 🧩: SimpleSnackbar ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Renderiza un Snackbar global consumiendo el contexto `SnackBarContext`. 
-// Muestra mensajes dinámicos con severidad (color) y cierre automático. 
-// Incluye botón de cierre manual integrado en el `Alert`.
-
-//──────────────────── Funciones 🔧 ─────────────────────// 
-// • `useContext(SnackBarContext)!`: obtiene estado y función de cierre. 
-// • `closeSnackBar`: cierra el Snackbar, manejando eventos de usuario. 
-// • Renderiza `Snackbar` + `Alert` con mensaje y severidad.
-
-//─────────────────── Notas técnicas 💽 ───────────────────//
-// - El estado `snackBar` proviene del contexto: { open, message, color }. 
-// - `autoHideDuration` fijo en 6000 ms. 
-// - Usa componentes de Material UI: Snackbar, Alert. 
-// - Se emplea el operador `!` para asegurar que el contexto no sea `undefined`.
-
-//─────────────────── Ejemplo de uso 🎆🎇 ───────────────────//
-// import SimpleSnackbar from './SimpleSnackbar';
-//
-// export default function App() {
-//   return (
-//     <div>
-//       {/* El contexto SnackBarProvider debe envolver la app */}
-//        const { showSnackBar } = useContext(SnackBarContext)!;
-//        showSnackBar('Agregado producto al carrito', AlertColor.Success);
-//        showSnackBar(`Ocurrio un error al agregar el producto.`, AlertColor.Error);
-//     </div>
-//   );
-// }
-
-//-----------------------------------------------------------------------------//
-
 import Snackbar from '@mui/material/Snackbar';
 import { useContext } from 'react';
 import { SnackBarContext } from './SnackBarContext';
 import { Alert } from '@mui/material';
-import type { SnackBarState } from '../../../../typings/ui/uiModules';
+import type { SnackBarState } from '@typings/ui/snackbar.types';
 
 const SimpleSnackbar = (): React.ReactNode => {
   {/*─────────────────── 🔎 non‑null assertion operator '!' 🔎 ───────────────────*/}

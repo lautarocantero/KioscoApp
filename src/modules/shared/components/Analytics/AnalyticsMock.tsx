@@ -5,7 +5,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
 import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutlined";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
-import type { PresentationAnalyticsData } from "@typings/ui/uiModules";
+import type { PresentationAnalyticsData } from "@typings/ui/analytics.types";
 
 const dailySales = [
     { date: "01 may", units: 32 }, { date: "02 may", units: 41 }, { date: "03 may", units: 38 },
@@ -35,13 +35,6 @@ const topSellingDays = [
     { date: "30 may", units: 72 },
     { date: "18 may", units: 68 },
     { date: "05 may", units: 64 },
-];
-
-const salesByChannel = [
-    { label: "Tienda Online", value: 524, pct: 42, color: "#8B5CF6" },
-    { label: "Mayoristas", value: 374, pct: 30, color: "#4ADE80" },
-    { label: "Minoristas", value: 250, pct: 20, color: "#38BDF8" },
-    { label: "Retail", value: 100, pct: 8, color: "#FBBF24" },
 ];
 
 export const mockPresentationAnalytics: PresentationAnalyticsData = {

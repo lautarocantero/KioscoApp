@@ -2,12 +2,8 @@ import { Box, Button, type Theme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { FormNavigationContext } from "../../context/FormNavigationContext";
+import type { NavButtonsProps } from "@typings/ui/buttons.types";
 
-export interface NavButtonsProps {
-    SubmitText?:  string;
-    backPath?:    string;
-    readOnly?:    boolean;
-}
 
 const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: NavButtonsProps): React.ReactNode => {
     const context     = useContext(FormNavigationContext);

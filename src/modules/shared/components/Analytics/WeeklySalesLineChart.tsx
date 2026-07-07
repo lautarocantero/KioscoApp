@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, MenuItem, Select, Typography } from "@mui/material";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import NoisyCard from "../Cards/NoisyCard";
-import type { WeeklySalesPoint } from "@typings/ui/uiModules";
+import type { WeeklySalesPoint } from "@typings/ui/analytics.types";
 
 interface WeeklySalesLineChartProps {
     data: WeeklySalesPoint[];

@@ -5,7 +5,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
 import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutlined";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
-import type { PresentationAnalyticsData } from "@typings/ui/uiModules";
+import type { PresentationAnalyticsData, PresentationAnalyticsRaw } from "@typings/ui/analytics.types";
 
 const currencyFmt = new Intl.NumberFormat("es-AR", {
     style: "currency",

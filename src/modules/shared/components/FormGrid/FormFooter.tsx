@@ -1,5 +1,5 @@
 import { Box, Typography, type Theme } from "@mui/material";
-import type { FormFooterProps } from "@typings/ui/uiModules";
+import type { FormFooterProps } from "@typings/shared/types/useFormSteps";
 
 
 const FormFooter = ({ stepErrors, submitError }: FormFooterProps): React.ReactNode => {

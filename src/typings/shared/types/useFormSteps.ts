@@ -1,5 +1,9 @@
-
 {/*─────────────────── 🔎 UseFormSteps 🔎 ───────────────────*/}
+
+export interface FormStepsInterface {
+  steps: number;
+  currentStep: number;
+};
 
 export interface StepConfig {
     title: string;
@@ -38,4 +42,10 @@ export interface ActualStepComponentProps {
 export interface FormHeaderComponentProps {
     stepsLabels: string[];
     currentStep: number;
+}
+
+
+export interface FormFooterProps {
+    stepErrors?: string[];
+    submitError?: string | null;
 }

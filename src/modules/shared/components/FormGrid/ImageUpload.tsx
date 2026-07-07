@@ -30,7 +30,7 @@ const ImageUpload = (): React.ReactNode => {
         >
             <Typography sx={(theme: Theme) => ({
                 fontSize: "0.9rem", fontWeight: 500,
-                color: theme?.custom?.whiteDark,
+                color: theme?.custom?.darkWhite,
             })}>
                 Imagen del envase{" "}
                 <Box component="span" sx={{ color: "#0386EE" }}>*</Box>
@@ -58,7 +58,7 @@ const ImageUpload = (): React.ReactNode => {
                 }}>
                     <Typography sx={(theme: Theme) => ({
                         fontSize: "0.85rem",
-                        color: theme?.custom?.whiteDark,
+                        color: theme?.custom?.darkWhite,
                         opacity: 0.6,
                     })}>
                         Selecciona una imagen
@@ -71,8 +71,8 @@ const ImageUpload = (): React.ReactNode => {
                 <Button component="span" variant="outlined" fullWidth
                     sx={(theme: Theme) => ({
                         textTransform: "none", fontWeight: 600,
-                        borderColor: theme?.custom?.whiteDark,
-                        color: theme?.custom?.whiteDark,
+                        borderColor: theme?.custom?.darkWhite,
+                        color: theme?.custom?.darkWhite,
                         "&:hover": {
                             borderColor: "rgba(3,134,238,0.5)",
                             backgroundColor: "rgba(3,134,238,0.05)",

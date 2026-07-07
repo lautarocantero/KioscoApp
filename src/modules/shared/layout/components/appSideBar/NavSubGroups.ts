@@ -1,4 +1,4 @@
-import type { SubGroup } from "@typings/ui/uiModules";
+import type { SubGroup } from "@typings/ui/sidebar.types";
 
 
 export const NAV_SUBGROUPS: Record<string, SubGroup[]> = {

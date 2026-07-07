@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import type { PeriodSummaryItem } from "@typings/ui/uiModules";
 import NoisyCard from "../Cards/NoisyCard";
+import type { PeriodSummaryItem } from "@typings/ui/analytics.types";
 
 interface PeriodSummaryCardProps {
     items: PeriodSummaryItem[];

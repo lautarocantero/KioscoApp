@@ -1,19 +1,10 @@
 
-//─────────────────── Componente 🧩: BackButton ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Boton que se encarga de retroceder en el historial de navegacion
-// obtiene un tema para renderizarse con el color adecuado
-
-//-----------------------------------------------------------------------------//
-
 import { useNavigate } from "react-router-dom";
 import { Button, Grid, type Theme } from "@mui/material";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import type { BackButtonProps } from "../../../../typings/ui/uiModules";
 
 
-const BackButton = ({appTheme}: BackButtonProps): React.ReactNode => {
+const BackButton = (): React.ReactNode => {
     const navigate = useNavigate();
     return (
         <Grid

@@ -1,13 +1,14 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import type { PropsWithChildren } from "react";
 import React, { useContext } from "react";
 import { ThemeContext } from "../../../theme/ThemeContext";
-import type { AppLayoutProps } from "../../../typings/ui/uiModules";
 import OptionsHeader from "./components/OptionsHeader";
 import AppSidebar from "./components/appSideBar/Appsidebar";
 import LightMode from "../components/LightMode/LightMode";
 import SearchBar from "../components/SearchBar/SearchBar";
+import { NoContentLoaded } from "../components/NoContentLoadedComponent";
+import type { AppLayoutProps } from "@typings/ui/layout.types";
 
 const AppLayout = ({
   children,
@@ -25,10 +26,10 @@ const AppLayout = ({
   onNewItemClick,
   newItemHref,
 }: PropsWithChildren<AppLayoutProps>): React.ReactNode => {
+
   const { appTheme } = useContext(ThemeContext);
 
-  if (!children || React.Children.count(children) === 0)
-    return <Typography>No children Loaded...</Typography>;
+  <NoContentLoaded message="No hay contenido cargado..." />
 
   return (
     <Box
@@ -109,33 +110,7 @@ const AppLayout = ({
                 }}
               >
                 {/* Título + ícono */}
-                <Typography
-                  variant="h2"
-                  sx={(theme) => ({
-                    fontSize: {
-                      xs: theme.typography?.h5.fontSize,
-                      sm: theme.typography?.h4.fontSize,
-                      md: theme.typography?.h3.fontSize,
-                    },
-                    fontWeight: 500,
-                    color: !appTheme
-                      ? theme.custom?.white
-                      : theme.custom?.whiteDark,
-                    display: "flex",
-                    alignItems: "center",
-                    flexShrink: 0,
-                  })}
-                >
-                  {icon && (
-                    <Box
-                      component="span"
-                      sx={(theme) => ({ mr: 1, verticalAlign: "middle", color: theme.palette?.primary?.main })}
-                    >
-                      {icon}
-                    </Box>
-                  )}
-                  {title}
-                </Typography>
+                
 
                 {/* Search bar */}
                 {hasSearchBar && (

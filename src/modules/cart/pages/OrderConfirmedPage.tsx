@@ -24,10 +24,10 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Button, Grid, Typography, type Theme } from "@mui/material";
-import type { SellTicketType } from '../../../typings/sells/types/sellsTypes';
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import AppLayout from "../../shared/layout/AppLayout";
 import { createPdfTicket } from "../helpers/createPdfTicket";
+import type { SellTicketType } from '@typings/sells/types';
 
 //──────────────────── Types 🧾 ─────────────────────//
 type TicketSummaryType = {
@@ -363,7 +363,7 @@ const OrderConfirmedPage = (): React.ReactNode => {
                             <Typography
                                 component={'span'}
                                 sx={(theme: Theme) => ({
-                                    color: theme.custom.posAccent,
+                                    color: theme.palette?.primary?.main,
                                     fontSize: 'inherit',
                                     fontWeight: 600,
                                     '&:hover': {

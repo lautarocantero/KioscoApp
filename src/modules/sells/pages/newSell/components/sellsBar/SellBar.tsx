@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, type Theme } from "@mui/material";
 import React from "react";
-import type { SharedAppBarInterface } from "../../../../../../typings/ui/uiModules";
+import type { SharedAppBarInterface } from "../../../../../../typings/ui/appbar.types";
 import SellBarContent from "./SellBarContent";
 import { getNoisyBackgroundSx } from "../../../../../shared/components/NoisyBackground/NoisyBackground";
 

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Box, MenuItem, Select, Typography } from "@mui/material";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
-import type { DailySalesPoint } from "@typings/ui/uiModules";
-import NoisyCard from "../Cards/NoisyCard";
+import type { DailySalesPoint } from "@typings/ui/analytics.types";
 
 interface DailySalesBarChartProps {
     data: DailySalesPoint[];

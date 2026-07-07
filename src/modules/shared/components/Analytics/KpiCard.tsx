@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import type { AnalyticsKpi } from "@typings/ui/uiModules";
+import type { AnalyticsKpi } from "@typings/ui/analytics.types";
 
 interface KpiCardProps {
     kpi: AnalyticsKpi;

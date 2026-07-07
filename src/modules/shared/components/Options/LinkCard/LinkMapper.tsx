@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/material/styles';
-import type { LinkMapperProps, OptionLink } from '../../../../../typings/ui/uiModules';
 import { getCardColors } from '../helpers/getCardColors';
 import LinkCard from './LinkCard';
+import type { LinkMapperProps, OptionLink } from '@typings/ui/layout.types';
 
 
 const LinkMapper = ({ links, appTheme }: LinkMapperProps): React.ReactNode => {

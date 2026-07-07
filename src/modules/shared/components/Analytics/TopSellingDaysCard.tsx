@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import type { TopSellingDay } from "@typings/ui/uiModules";
 import NoisyCard from "../Cards/NoisyCard";
+import type { TopSellingDay } from "@typings/ui/analytics.types";
 
 interface TopSellingDaysCardProps {
     days: TopSellingDay[];

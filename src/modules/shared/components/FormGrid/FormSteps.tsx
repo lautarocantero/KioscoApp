@@ -1,7 +1,7 @@
 import { Box, Grid } from "@mui/material";
-import type { FormGridStepsType } from "@typings/ui/uiModules";
+import type { FormStepsInterface } from "@typings/shared/types/useFormSteps";
 
-const FormStepsComponent = ({ steps, currentStep }: FormGridStepsType): React.ReactNode => {
+const FormStepsComponent = ({ steps, currentStep }: FormStepsInterface): React.ReactNode => {
 
     const getFilter = (index: number) => {
         if (index < currentStep) return "brightness(0) invert(1)"; // completado → filtro blanco

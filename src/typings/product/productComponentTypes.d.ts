@@ -123,16 +123,6 @@ export interface ProductBannerComponentProps {
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ 📋 FORMULARIO — Header  📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋           ║
-// ╚══════════════════════════════════════════════════════════════════════╝*/
-
-// Props del encabezado del form (stepper + banner)
-export interface ProductsFormHeaderComponentProps extends ProductBannerComponentProps {
-    stepsLabels:            string[];
-    showProgressIndicator?: boolean;
-}
-
-// /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🗑️ PRODUCTO — Eliminación  🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 

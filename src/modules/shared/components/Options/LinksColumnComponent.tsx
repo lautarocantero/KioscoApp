@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
-import type { LinksColumnProps } from '../../../../typings/ui/uiModules';
 import LinkMapper from './LinkCard/LinkMapper';
+import type { LinksColumnProps } from '@typings/ui/layout.types';
 
 const LinksColumnComponent = ({ links, appTheme }: LinksColumnProps): React.ReactNode => {
     return (

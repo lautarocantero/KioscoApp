@@ -6,7 +6,7 @@ import type { AppDispatch } from "../../../../../store/user/userSlice";
 import { startLogout } from "../../../../../store/auth/thunks";
 import { SidebarNavLinks } from "../../../../../config/Links";
 import { NAV_SUBGROUPS } from "./NavSubGroups";
-import type { NavLink } from "@typings/ui/uiModules";
+import type { NavLinkInterface } from "@typings/ui/sidebar.types";
 
 const SIDEBAR_STORAGE_KEY = "sidebar-expanded";
 
@@ -37,7 +37,7 @@ export const useAppSidebar = () => {
     setOpenSection((prev) => (prev === url ? null : url));
   };
 
-  const handleNavClick = (link: NavLink) => {
+  const handleNavClick = (link: NavLinkInterface) => {
     const hasSubGroups = !!NAV_SUBGROUPS[link.url]?.length;
     if (hasSubGroups) {
       toggleSection(link.url);
@@ -48,9 +48,9 @@ export const useAppSidebar = () => {
 
   const handleLogout = () => dispatch(startLogout());
 
-  const navLinks = SidebarNavLinks as NavLink[];
+  const navLinks = SidebarNavLinks as NavLinkInterface[];
 
-  const getLinkMeta = (link: NavLink) => ({
+  const getLinkMeta = (link: NavLinkInterface) => ({
     subGroups: NAV_SUBGROUPS[link.url] ?? [],
     hasSubGroups: !!NAV_SUBGROUPS[link.url]?.length,
     isActive: location.pathname.startsWith(link.url) && link.url !== "/",

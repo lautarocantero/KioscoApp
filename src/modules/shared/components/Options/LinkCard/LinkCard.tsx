@@ -1,8 +1,8 @@
 import { Link } from '@mui/material';
 import { Link as LinkReactRouter } from 'react-router-dom';
-import type { LinkCardProps } from '../../../../../typings/ui/uiModules';
 import LinkCardIcon from './LinkCardIcon';
 import LinkCardContent from './LinkCardContent';
+import type { LinkCardProps } from '@typings/ui/layout.types';
 
 const LinkCard = ({ link, accent, appTheme }: LinkCardProps): React.ReactNode => (
     <Link

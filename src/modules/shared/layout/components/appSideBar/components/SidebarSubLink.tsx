@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import type { Theme } from "@mui/material";
-import type { SidebarSubLinkProps } from "@typings/ui/uiModules";
+import type { SidebarSubLinkProps } from "@typings/ui/sidebar.types";
 
 
 const SidebarSubLink = ({ subLink, dark, isActive, onClick }: SidebarSubLinkProps) => (
@@ -19,12 +19,12 @@ const SidebarSubLink = ({ subLink, dark, isActive, onClick }: SidebarSubLinkProp
       whiteSpace: "nowrap",
       color: isActive
         ? dark ? theme.custom?.white        : theme.custom?.darkBackground
-        : dark ? theme.custom?.translucidWhite : theme.custom?.whiteDarkTransparent,
+        : dark ? theme.custom?.translucidWhite : theme.custom?.darkWhite,
       fontWeight: isActive ? 500 : 400,
       transition: "background 0.12s, color 0.12s",
       "&:hover": {
         backgroundColor: dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
-        color: dark ? theme.custom?.white : theme.custom?.whiteDark,
+        color: dark ? theme.custom?.white : theme.custom?.darkWhite,
       },
     })}
   >

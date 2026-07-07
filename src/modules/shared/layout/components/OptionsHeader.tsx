@@ -1,5 +1,5 @@
 import { Box, Typography, type Theme } from "@mui/material";
-import type { OptionsHeaderInterface } from "../../../../typings/ui/uiModules";
+import type { OptionsHeaderInterface } from "@typings/ui/layout.types";
 import { useLocation } from "react-router-dom";
 
 const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterface): React.ReactNode => {
@@ -40,7 +40,7 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
             md: theme.typography?.h2.fontSize,
           },
           fontWeight: 500,
-          color: !appTheme ? theme.custom?.white : theme.custom?.whiteDark,
+          color: !appTheme ? theme.custom?.white : theme.custom?.darkWhite,
         })}
       >
         {icon && (
@@ -55,7 +55,7 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
         sx={(theme: Theme) => ({
           color: !appTheme
             ? theme.custom?.translucidWhite
-            : theme.custom?.whiteDarkTransparent,
+            : theme.custom?.darkWhite,
           mt: 0.5,
           display: "block",
         })}
