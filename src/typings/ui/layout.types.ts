@@ -7,6 +7,7 @@ export interface AppLayoutProps {
   noCenter?: boolean;
   title?: string;
   icon?: ReactNode;
+  greetings?: string;
 
   // ── Search bar ──
   hasSearchBar?: boolean;
@@ -51,5 +52,5 @@ export type LinkCardProps = Pick<LinksColumnProps, 'appTheme'> & {
 
 export interface OptionsHeaderInterface
   extends Pick<AppLayoutProps, 'isOptions' | 'title' | 'icon'> {
-  appTheme: boolean;
+    greetings?: string,
 }

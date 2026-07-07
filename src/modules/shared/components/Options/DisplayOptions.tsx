@@ -4,9 +4,9 @@ import AppLayout from "../../layout/AppLayout";
 import OptionsList from "./OptionsList";
 import type { DisplayOptionsInterface } from "@typings/ui/layout.types";
 
-const DisplayOptions = ({ title, icon, links, disconnect }: DisplayOptionsInterface): React.ReactNode => {
+const DisplayOptions = ({ title, icon, links, disconnect, greetings }: DisplayOptionsInterface): React.ReactNode => {
   return (
-    <AppLayout isOptions title={title} icon={icon ?? null}>
+    <AppLayout isOptions title={title} icon={icon ?? null} greetings={greetings}>
       <Grid
         container
         display="flex"

@@ -1,24 +1,24 @@
 import { Box, Typography, type Theme } from "@mui/material";
 import type { OptionsHeaderInterface } from "@typings/ui/layout.types";
-import { useLocation } from "react-router-dom";
+import { useContext, type ReactNode } from "react";
+import { ThemeContext } from "../../../../theme/ThemeContext";
 
-const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterface): React.ReactNode => {
-
-  const { pathname } = useLocation(); 
-  const isHome = pathname === "/home";
+const OptionsHeader = ({ isOptions, title, icon, greetings }: OptionsHeaderInterface): ReactNode => {
+  const { appTheme: isDarkMode } = useContext(ThemeContext);
   
-  if (!isOptions) return <></>;
+  if (!isOptions) return null;
 
   return (
     <Box
+      component={"header"}
       sx={(theme: Theme) => ({
         width: "100%",
         borderBottom: `0.5px solid ${
-          !appTheme ? "rgba(255,255,255,0.1)" : theme.custom?.blackTranslucid
+          theme.custom?.darkGray
         }`,
       })}
     >
-      {isHome && (
+      {greetings && (
         <Typography
           variant="body2"
           sx={(theme: Theme) => ({
@@ -28,11 +28,12 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
             fontWeight: 400,
           })}
         >
-          ¡Hola! 👋
+          {greetings}
         </Typography>
       )}
       <Typography
         variant="h2"
+        component="h1"
         sx={(theme: Theme) => ({
           fontSize: {
             xs: theme.typography?.h5.fontSize,
@@ -40,7 +41,7 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
             md: theme.typography?.h2.fontSize,
           },
           fontWeight: 500,
-          color: !appTheme ? theme.custom?.white : theme.custom?.darkWhite,
+          color: !isDarkMode ? theme.custom?.white : theme.custom?.darkWhite,
         })}
       >
         {icon && (
@@ -53,7 +54,7 @@ const OptionsHeader = ({ isOptions, title, icon, appTheme }: OptionsHeaderInterf
       <Typography
         variant="caption"
         sx={(theme: Theme) => ({
-          color: !appTheme
+          color: !isDarkMode
             ? theme.custom?.translucidWhite
             : theme.custom?.darkWhite,
           mt: 0.5,

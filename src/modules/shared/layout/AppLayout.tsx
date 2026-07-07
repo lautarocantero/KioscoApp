@@ -1,8 +1,6 @@
 import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import type { PropsWithChildren } from "react";
-import React, { useContext } from "react";
-import { ThemeContext } from "../../../theme/ThemeContext";
+import type { PropsWithChildren, ReactNode } from "react";
 import OptionsHeader from "./components/OptionsHeader";
 import AppSidebar from "./components/appSideBar/Appsidebar";
 import LightMode from "../components/LightMode/LightMode";
@@ -16,6 +14,7 @@ const AppLayout = ({
   fullWidth,
   noCenter,
   title,
+  greetings,
   icon,
   hasSearchBar,
   searchValue,
@@ -25,11 +24,12 @@ const AppLayout = ({
   newItemLabel = "Nuevo",
   onNewItemClick,
   newItemHref,
-}: PropsWithChildren<AppLayoutProps>): React.ReactNode => {
+}: PropsWithChildren<AppLayoutProps>): ReactNode => {
+  
 
-  const { appTheme } = useContext(ThemeContext);
-
-  <NoContentLoaded message="No hay contenido cargado..." />
+  <NoContentLoaded message="No hay contenido cargado..." >
+    {children}
+  </NoContentLoaded>
 
   return (
     <Box
@@ -95,7 +95,7 @@ const AppLayout = ({
               isOptions={isOptions}
               title={title}
               icon={icon}
-              appTheme={appTheme}
+              greetings={greetings}
             />
 
             {/* Header para páginas fullWidth (listados, tablas) */}

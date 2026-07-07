@@ -3,7 +3,7 @@ import DisplayOptions from '../../shared/components/Options/DisplayOptions';
 
 const HomePage = (): React.ReactNode => {
     return (
-      <DisplayOptions title='¿Qué deseas hacer?' links={HomePageLinks} disconnect/>
+      <DisplayOptions title='¿Qué deseas hacer?' links={HomePageLinks} disconnect greetings='¡Hola! 👋'/>
     )
 }
 
