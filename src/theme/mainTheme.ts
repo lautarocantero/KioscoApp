@@ -181,7 +181,7 @@ export const lightTheme = createTheme({
     //────────────── white ──────────────────//
     white: '#FFFFFF',
     darkWhite: '#6B7280', // texto secundario
-    translucidWhite: 'rgba(31,41,55,0.4)',
+    translucidWhite: 'rgba(245,247,250,0.4)', 
 
     //────────────── gray ──────────────────//
     lightGray: 'rgba(0,0,0,0.04)', // hover suave

@@ -4,7 +4,10 @@ import SidebarSubLink from "./SidebarSubLink";
 import type { SidebarSubGroupProps } from "@typings/ui/sidebar.types";
 
 
-const SidebarSubGroup = ({ group, dark, isHovered, isSubLinkActive, onNavigate }: SidebarSubGroupProps) => (
+const SidebarSubGroup = ({ group, isHovered, isSubLinkActive, onNavigate }: SidebarSubGroupProps) => {
+  const { groupLabel, links} = group;
+
+  return (
   <Box>
     <Box
       sx={(theme: Theme) => ({
@@ -12,7 +15,7 @@ const SidebarSubGroup = ({ group, dark, isHovered, isSubLinkActive, onNavigate }
         fontWeight: 500,
         letterSpacing: "0.08em",
         textTransform: "uppercase",
-        color: dark ? theme.custom?.translucidWhite : theme.custom?.darkWhite,
+        color:  theme.custom?.white,
         px: "12px",
         pt: "8px",
         pb: "2px",
@@ -21,19 +24,18 @@ const SidebarSubGroup = ({ group, dark, isHovered, isSubLinkActive, onNavigate }
         whiteSpace: "nowrap",
       })}
     >
-      {group.groupLabel}
+      {groupLabel}
     </Box>
 
-    {group.links.map((subLink) => (
+    {links.map((subLink) => (
       <SidebarSubLink
         key={subLink.url}
         subLink={subLink}
-        dark={dark}
         isActive={isSubLinkActive(subLink.url)}
         onClick={onNavigate}
       />
     ))}
   </Box>
-);
+);}
 
 export default SidebarSubGroup;

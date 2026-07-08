@@ -1,19 +1,18 @@
 import type { Theme } from "@mui/material";
-import { Box, IconButton } from "@mui/material";
-import LastPageIcon from "@mui/icons-material/LastPage";
+import { Box } from "@mui/material";
 import SidebarLogout from "./components/SidebarLogout";
-import SidebarNavItem from "./components/SidebarNavItem";
-import { useAppSidebar } from "./useAppSidebar";
+import { useAppSidebar } from "./hooks/useAppSidebar";
+import { COLLAPSED_WIDTH, EXPANDED_WIDTH } from "../../../../../config/constants";
+import SidebarToggleComponent from "./components/SidebarToggle";
+import SidebarLinksList from "./components/SidebarLinksList";
 
-const COLLAPSED_WIDTH = "72px";
-const EXPANDED_WIDTH = "220px";
 
-const AppSidebar = () => {
+const AppSidebar = (): React.ReactNode => {
   const {
-    dark,
+    darkTheme,
     isExpanded,
-    toggleSidebar,
     navLinks,
+    toggleSidebar,
     handleNavClick,
     handleLogout,
     getLinkMeta,
@@ -45,7 +44,7 @@ const AppSidebar = () => {
           alignItems: "flex-start",
           py: 2.5,
           gap: 1,
-          borderRight: dark
+          borderRight: darkTheme
             ? `1px solid ${theme.custom?.translucidWhite}`
             : `1px solid ${theme.custom?.blackTranslucid}`,
           height: "100vh",
@@ -54,47 +53,22 @@ const AppSidebar = () => {
           left: 0,
           transition: "width 0.22s cubic-bezier(.4,0,.2,1), min-width 0.22s cubic-bezier(.4,0,.2,1)",
           zIndex: 1200,
-          backgroundColor: theme.custom?.darkBackground,
+          backgroundColor: theme.palette.primary.main,
           boxShadow: isExpanded ? "4px 0 24px rgba(0,0,0,0.25)" : "none",
         })}
       >
-        {/* ── Botón toggle ── */}
-        <Box sx={{ width: "100%", display: "flex", justifyContent: isExpanded ? "flex-end" : "center", px: isExpanded ? "10px" : 0 }}>
-          <IconButton
-            onClick={toggleSidebar}
-            size="small"
-            sx={(theme: Theme) => ({
-              color: theme.custom?.white,
-              transition: "transform 0.22s cubic-bezier(.4,0,.2,1)",
-              transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
-            })}
-          >
-            <LastPageIcon sx={{ fontSize: "1.2rem" }} />
-          </IconButton>
-        </Box>
+        <SidebarToggleComponent isExpanded={isExpanded} toggleSidebar={toggleSidebar} />
 
-        <Box sx={{ flex: 1, width: "100%", display: "flex", flexDirection: "column", gap: "2px", px: "8px", pl: isExpanded ? "8px" : "18px" }}>
-          {navLinks.map((link) => {
-            const { subGroups, hasSubGroups, isActive, isOpen } = getLinkMeta(link);
-            return (
-              <SidebarNavItem
-                key={link.url}
-                link={link}
-                dark={dark}
-                isHovered={isExpanded}
-                isActive={isActive}
-                isOpen={isOpen}
-                hasSubGroups={hasSubGroups}
-                subGroups={subGroups}
-                onRowClick={handleNavClick}
-                isSubLinkActive={isSubLinkActive}
-                onNavigate={navigate}
-              />
-            );
-          })}
-        </Box>
+        <SidebarLinksList
+          isExpanded={isExpanded}
+          navLinks={navLinks}
+          handleNavClick={handleNavClick}
+          getLinkMeta={getLinkMeta}
+          isSubLinkActive={isSubLinkActive}
+          navigate={navigate}
+        />
 
-        <SidebarLogout dark={dark} isHovered={isExpanded} onLogout={handleLogout} />
+        <SidebarLogout isHovered={isExpanded} onLogout={handleLogout} />
       </Box>
     </>
   );

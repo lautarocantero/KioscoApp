@@ -4,7 +4,8 @@ import type { Theme } from "@mui/material";
 import type { SidebarLogoutProps } from "@typings/ui/sidebar.types";
 
 
-const SidebarLogout = ({ dark, isHovered, onLogout }: SidebarLogoutProps) => (
+const SidebarLogout = ({ isHovered, onLogout }: SidebarLogoutProps) => (
+
   <Tooltip title={!isHovered ? "Cerrar sesión" : ""} placement="right">
     <Box
       onClick={onLogout}
@@ -18,10 +19,10 @@ const SidebarLogout = ({ dark, isHovered, onLogout }: SidebarLogoutProps) => (
         borderRadius: "8px",
         cursor: "pointer",
         whiteSpace: "nowrap",
-        color: dark ? theme.custom?.translucidWhite : theme.custom?.translucidWhite,
+        color: theme.custom?.translucidWhite,
         transition: "background 0.13s, color 0.13s",
         "&:hover": {
-          color: dark ? theme.custom?.white : theme.custom?.darkWhite,
+          color: theme.custom?.darkWhite,
         },
       })}
     >

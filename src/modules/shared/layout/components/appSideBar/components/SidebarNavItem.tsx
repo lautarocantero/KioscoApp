@@ -1,12 +1,11 @@
-import { alpha, Box, Collapse, Tooltip } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { alpha, Box, Tooltip } from "@mui/material";
 import type { Theme } from "@mui/material";
-import SidebarSubGroup from "./SidebarSubGroup";
 import type { SidebarNavItemProps } from "@typings/ui/sidebar.types";
+import SidebarExpandMore from "./SidebarExpandMore";
+import SidebarExpandedList from "./SidebarExpandedList";
 
 const SidebarNavItem = ({
   link,
-  dark,
   isHovered,
   isActive,
   isOpen,
@@ -15,9 +14,12 @@ const SidebarNavItem = ({
   onRowClick,
   isSubLinkActive,
   onNavigate,
-}: SidebarNavItemProps) => (
+}: SidebarNavItemProps) => {
+  const {icon, description} = link;
+
+  return (
   <Box sx={{ width: "100%", borderRadius: "8px", overflow: "hidden", minWidth: 0 }}>
-    <Tooltip title={!isHovered ? link.description : ""} placement="right">
+    <Tooltip title={!isHovered ? description : ""} placement="right">
       <Box
         onClick={() => onRowClick(link)}
         sx={(theme: Theme) => ({
@@ -31,33 +33,37 @@ const SidebarNavItem = ({
           whiteSpace: "nowrap",
           width: isHovered ? "100%" : "36px",
           transition: "background-color 0.15s, color 0.15s, width 0.22s cubic-bezier(.4,0,.2,1), backdrop-filter 0.15s",
-          color: isActive
-            ? dark ? theme.custom?.white : theme.custom?.darkBackground
-            : dark ? theme.custom?.translucidWhite : theme.custom?.darkWhite,
-
+          color: theme.custom.fontColor,
           backgroundColor: isActive
             ? isHovered
-              ? dark ? theme.palette?.primary?.main : theme.custom?.blackTranslucid // expandido: color sólido igual que antes
-              : dark ? alpha(theme.palette?.primary?.main, 0.30) : "rgba(0, 0, 0, 0.12)" // contraído: glass semi-transparente
-            : "transparent",
+              ? theme.palette?.primary?.light : theme.custom?.blackTranslucid
+              : alpha(theme.palette?.primary?.main, 0.30),
           backdropFilter: isActive && !isHovered ? "blur(8px)" : "none",
           border: isActive && !isHovered
-            ? `1px solid ${dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)"}`
+            ? `1px solid ${theme.custom.lightGray}`
             : "1px solid transparent",
 
           "&:hover": {
-            backgroundColor: dark ? theme.palette?.primary?.main : theme.custom?.blackTranslucid,
-            color: dark ? theme.custom?.white : theme.custom?.darkWhite,
+            backgroundColor: theme.palette?.primary?.light,
+            color: theme.custom.darkWhite,
             backdropFilter: "none",
           },
         })}
       >
-        <Box sx={{ fontSize: "1.1rem", flexShrink: 0, width: "24px", display: "flex", justifyContent: "center" }}>
-          {link.icon}
+        <Box sx={(theme: Theme) => ({ 
+          color: theme.custom.white,
+          fontSize: "1.1rem",
+          flexShrink: 0,
+          width: "24px",
+          display: "flex",
+          justifyContent: "center" 
+        })}>
+          {icon}
         </Box>
 
         <Box
-          sx={{
+          sx={(theme: Theme) => ({
+            color: theme.custom.white,
             flex: 1,
             fontSize: "11px",
             fontWeight: 500,
@@ -66,45 +72,26 @@ const SidebarNavItem = ({
             opacity: isHovered ? 1 : 0,
             transition: "opacity 0.15s 0.05s",
             overflow: "hidden",
-          }}
+          })}
         >
-          {link.description}
+          {description}
         </Box>
 
-        {hasSubGroups && (
-          <Box
-            sx={{
-              ml: "auto",
-              opacity: isHovered ? 1 : 0,
-              transition: "opacity 0.15s, transform 0.2s",
-              transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <ExpandMoreIcon sx={{ fontSize: "1rem" }} />
-          </Box>
-        )}
+        <SidebarExpandMore isHovered={isHovered} isOpen={isOpen} hasSubGroups={hasSubGroups} />
+
       </Box>
     </Tooltip>
 
-    {hasSubGroups && (
-      <Collapse in={isOpen && isHovered} timeout={220}>
-        <Box sx={{ backgroundColor: "rgba(0,0,0,0.15)", borderRadius: "0 0 8px 8px", pb: "6px" }}>
-          {subGroups.map((group) => (
-            <SidebarSubGroup
-              key={group.groupLabel}
-              group={group}
-              dark={dark}
-              isHovered={isHovered}
-              isSubLinkActive={isSubLinkActive}
-              onNavigate={onNavigate}
-            />
-          ))}
-        </Box>
-      </Collapse>
-    )}
+    <SidebarExpandedList
+      hasSubGroups={hasSubGroups}
+      isOpen={isOpen}
+      isHovered={isHovered}
+      subGroups={subGroups}
+      isSubLinkActive={isSubLinkActive}
+      onNavigate={onNavigate}
+    />
+
   </Box>
-);
+)};
 
 export default SidebarNavItem;

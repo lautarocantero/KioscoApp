@@ -13,9 +13,6 @@ export const NAV_SUBGROUPS: Record<string, SubGroup[]> = {
     {
       groupLabel: "Presentaciones",
       links: [
-        // Las rutas de presentaciones requieren un productId;
-        // estos links son puntos de entrada generales.
-        { label: "Listado",  url: "/products" },   // ajustá según tu flujo
         { label: "Crear",    url: "/products-create" },
       ],
     },
@@ -26,7 +23,6 @@ export const NAV_SUBGROUPS: Record<string, SubGroup[]> = {
       links: [
         { label: "Listado", url: "/shop-administrators-list" },
         { label: "Crear",   url: "/shop-administrators-create" },
-        { label: "Editar",  url: "/shop-administrators-edit" },
       ],
     },
     {
@@ -34,7 +30,6 @@ export const NAV_SUBGROUPS: Record<string, SubGroup[]> = {
       links: [
         { label: "Listado", url: "/shop-sellers-list" },
         { label: "Crear",   url: "/shop-sellers-create" },
-        { label: "Editar",  url: "/shop-sellers-edit" },
       ],
     },
   ],
@@ -44,7 +39,6 @@ export const NAV_SUBGROUPS: Record<string, SubGroup[]> = {
       links: [
         { label: "Listado", url: "/providers-list" },
         { label: "Crear",   url: "/providers-create" },
-        { label: "Editar",  url: "/providers-edit" },
       ],
     },
   ],

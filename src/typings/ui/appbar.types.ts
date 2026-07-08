@@ -17,3 +17,4 @@ export interface LinkInterface {
 export interface LinksComponentInterface {
   linksToShow: LinkInterface[];
 }
+
