@@ -1,12 +1,12 @@
-# Kiosco
+# Stoko
 
 Sistema de gestión para ventas minoristas y tiendas de abarrotes. Actualmente en desarrollo, enfocado en facilitar el control de ventas, productos y operaciones diarias.
 
 ## 📝 Descripción
 
-Kiosco es una aplicación web diseñada para pequeños negocios, como kioscos o tiendas de abarrotes. Permitirá administrar productos, registrar ventas y llevar un control básico del inventario.
+Stoko es una aplicación web diseñada para pequeños negocios, como kioscos o tiendas de abarrotes. Permitirá administrar productos, registrar ventas y llevar un control básico del inventario.
 
-![Kiosco ilustration](public/images/kiosco_images/kiosco-ilustration.jpg) 
+![Stoko ilustration](public/images/kiosco_images/stoko-ilustration.jpg) 
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -50,7 +50,7 @@ products/<br>
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/usuario/kiosco.git
+git clone https://github.com/usuario/stoko.git
 
 # Instalar dependencias
 yarn

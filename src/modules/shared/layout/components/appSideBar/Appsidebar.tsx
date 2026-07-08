@@ -7,6 +7,7 @@ import SidebarToggleComponent from "./components/SidebarToggle";
 import SidebarLinksList from "./components/SidebarLinksList";
 import { getNoisyBackgroundSx } from "../../../../../modules/shared/components/NoisyBackground/NoisyBackground";
 import SidebarUserData from "./components/SidebarUserData/SidebarUserData";
+import "animate.css";
 
 
 const AppSidebar = (): React.ReactNode => {

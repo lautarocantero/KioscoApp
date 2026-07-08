@@ -1,7 +1,7 @@
-//─────────────────── Componente 🧩: KioscoApp ───────────────────//
+//─────────────────── Componente 🧩: StokoApp ───────────────────//
 //
 //─────────────────── Descripción 📝 ───────────────────//
-// Punto de entrada principal de la aplicación Kiosco.
+// Punto de entrada principal de la aplicación Stoko.
 // Orquesta los distintos *providers* de contexto y temas,
 // asegurando que toda la aplicación tenga acceso a:
 // - Temas claro/oscuro
@@ -30,7 +30,7 @@ import AppRouther from "./router/AppRouter"
 import { AppTheme } from "./theme/AppTheme"
 import { LightDarkThemeProvider } from "./theme/LightDarkThemeProvider"
 
-const KioscoApp = () => {
+const StokoApp = () => {
   return (
     <LightDarkThemeProvider>
           <SnackBarProvider>
@@ -42,4 +42,4 @@ const KioscoApp = () => {
   )
 }
 
-export default KioscoApp
+export default StokoApp

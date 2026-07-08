@@ -2,11 +2,11 @@
 // # Componente: KioscoTitle  
 
 // ## Descripción 📦
-// Título principal del kiosco con ícono representativo.  
+// Título principal del stoko con ícono representativo.  
 // Renderiza un `Typography` estilizado que combina texto y un ícono de tienda.  
 
 // ## Funciones 🔧
-// - `KioscoTitle`: componente principal que devuelve el título "Kiosco".  
+// - `KioscoTitle`: componente principal que devuelve el título "Stoko".  
 //   - Usa `Typography` de MUI con estilo flexible y responsivo.  
 //   - Aplica color dinámico desde el tema (`theme.custom.fontColor`).  
 //   - Ajusta el tamaño de fuente según el breakpoint (`xs`, `md`).  
@@ -14,7 +14,7 @@
 
 // ## Notas técnicas 💽
 // - Variante tipográfica: `h1`.  
-// - Ícono con `titleAccess="kiosco icon"` para accesibilidad.  
+// - Ícono con `titleAccess="stoko icon"` para accesibilidad.  
 //-----------------------------------------------------------------------------//
 
 
@@ -32,10 +32,10 @@ const KioscoTitle = (): React.ReactNode => (
     }}
     variant="h1">
     <span>
-      Kiosco
+      Stoko
     </span>
     <span>
-      <StoreMallDirectoryIcon sx={{ fontSize: "2em" }} titleAccess="kiosco icon"/>
+      <StoreMallDirectoryIcon sx={{ fontSize: "2em" }} titleAccess="stoko icon"/>
     </span>
   </Typography>
 )

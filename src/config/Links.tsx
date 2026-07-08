@@ -5,7 +5,7 @@ import WarehouseIcon from "@mui/icons-material/Warehouse";
 import PersonIcon from "@mui/icons-material/Person";
 
 const KioscoLink = {
-  description: "Kiosco",
+  description: "Stoko",
   icon: (
     <svg width="32" height="32" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
       <path d="M10 24 Q9 45 26 46 Q43 45 42 24 Z" fill="white" opacity="0.95" />
@@ -50,5 +50,5 @@ export const SidebarNavLinks = [
 ];
 
 export const HomePageLinks = SidebarNavLinks.filter(
-  (link) => link.description !== "Kiosco"
+  (link) => link.description !== "Stoko"
 );

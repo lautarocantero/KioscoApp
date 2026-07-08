@@ -20,14 +20,14 @@ describe('InitialFormState', () => {
         )
     })
 
-    it(`should show 'Kiosco'`, () => {
+    it(`should show 'Stoko'`, () => {
         renderWithTheme(
             <MemoryRouter>
                 <InitialFormState />
             </MemoryRouter>
         )
-        expect(document.querySelector('h1').textContent).toContain('Kiosco');
-        expect(screen.findAllByAltText("kiosco icon")).toBeTruthy()
+        expect(document.querySelector('h1').textContent).toContain('Stoko');
+        expect(screen.findAllByAltText("stoko icon")).toBeTruthy()
     });
 
     it('InitialFormButtons should show both buttons correctly', () => {

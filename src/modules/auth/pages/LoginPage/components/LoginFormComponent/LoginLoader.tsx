@@ -8,7 +8,7 @@
 // ## Funciones 🔧
 // - `LoginLoader`: componente principal que devuelve el loader de autenticación.  
 //   - Usa `Grid` de MUI como contenedor con estilos responsivos.  
-//   - Muestra un título (`Typography h2`) con el texto "Bienvenido a Kiosco!".  
+//   - Muestra un título (`Typography h2`) con el texto "Bienvenido a Stoko!".  
 //   - Incluye un subtítulo descriptivo y un `CircularProgress` como indicador visual de carga.  
 
 // ## Notas técnicas 💽
@@ -46,7 +46,7 @@ const LoginLoader = (): React.ReactNode => {
           fontSize: theme?.typography?.h2?.fontSize,
         })}
       >
-        Bienvenido a Kiosco!
+        Bienvenido a Stoko!
       </Typography>
       <Typography>La mejor forma de gestionar tu local minorista</Typography>
       <CircularProgress />

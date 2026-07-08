@@ -6,7 +6,7 @@
 // Renderiza un `Grid` con animación `pulse` que contiene `KioscoTitle`.  
 
 // ## Funciones 🔧
-// - `AuthTitle`: componente principal que devuelve el título del kiosco.  
+// - `AuthTitle`: componente principal que devuelve el título del stoko.  
 //   - Usa `Grid` de MUI como contenedor.  
 //   - Aplica clases de `animate.css` para animación (`animate__animated animate__pulse`).  
 //   - Renderiza el componente `KioscoTitle` dentro del contenedor.  
