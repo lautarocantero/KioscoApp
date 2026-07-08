@@ -47,12 +47,6 @@ export const SidebarNavLinks = [
     url: "/providers",
     subtitle: "5 activos · próx. lunes",
   },
-  {
-    description: "Cuenta",
-    icon: <PersonIcon />,
-    url: "/account",
-    subtitle: "Perfil y configuración",
-  },
 ];
 
 export const HomePageLinks = SidebarNavLinks.filter(

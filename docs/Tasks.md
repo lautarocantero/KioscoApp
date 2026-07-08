@@ -9,7 +9,9 @@ home:
 ---
 Sidebar:
 - [ ] hacer que cualquier elemento clicleable del sidebar lo abra, y solo la flecha lo contraiga.
-- [ ] actualizar sidebar, hay rutas imposibles o mal hechas.
+---
+auth:
+- [ ] Agregar el campo rol a account.
 ---
 Presentaciones:
 - [ ] detail no deja claro de quien es hija la presentacion.

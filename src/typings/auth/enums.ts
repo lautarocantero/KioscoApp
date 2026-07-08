@@ -7,13 +7,8 @@ export enum AuthStatus {
     NotAuthenticated = "not-authenticated",
 };
 
-{/*─────────────────── 🔎 stock 🔎 ───────────────────*/}
-
-export enum StockStatusEnum {
-    green = "green",
-    yellow = "yellow",
-    red = "red",
-}
-
-{/*─────────────────── 🔎 products 🔎 ───────────────────*/}
+export enum AuthRoleEnum {
+    Administrador = "Administrador",
+    Usuario = "Usuario",
+};
 

@@ -6,6 +6,7 @@ import { COLLAPSED_WIDTH, EXPANDED_WIDTH } from "../../../../../config/constants
 import SidebarToggleComponent from "./components/SidebarToggle";
 import SidebarLinksList from "./components/SidebarLinksList";
 import { getNoisyBackgroundSx } from "../../../../../modules/shared/components/NoisyBackground/NoisyBackground";
+import SidebarUserData from "./components/SidebarUserData/SidebarUserData";
 
 
 const AppSidebar = (): React.ReactNode => {
@@ -65,6 +66,8 @@ const AppSidebar = (): React.ReactNode => {
           isSubLinkActive={isSubLinkActive}
           navigate={navigate}
         />
+
+        <SidebarUserData />
 
         <SidebarLogout isHovered={isExpanded} onLogout={handleLogout} />
       </Box>
