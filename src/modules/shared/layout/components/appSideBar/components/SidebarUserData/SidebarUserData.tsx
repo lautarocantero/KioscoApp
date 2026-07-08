@@ -1,15 +1,16 @@
+// SidebarUserData.tsx
 import { memo } from "react";
 import { Box } from "@mui/material";
-import { useAppSidebar } from "../../hooks/useAppSidebar";
 import SidebarUserAvatar from "./SidebarUserAvatar";
 import SidebarUserInfo from "./SidebarUserInfo";
 import SidebarUserSettings from "./SidebarUserSettings";
 import { useSidebarUserData } from "../../hooks/useSidebarUserData";
+import type { SidebarUserDataProps } from "@typings/ui/sidebar.types";
 
-const SidebarUserData = (): React.ReactNode => {
+
+const SidebarUserData = ({ isExpanded }: SidebarUserDataProps): React.ReactNode => {
   const { userData, isLoading } = useSidebarUserData();
-  const { avatarUrl, name, role } = userData;
-  const { isExpanded } = useAppSidebar();
+  const { avatarUrl, name, role } = userData ?? {};
 
   if (isLoading || !userData) return null;
 

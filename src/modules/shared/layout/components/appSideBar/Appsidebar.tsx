@@ -68,7 +68,7 @@ const AppSidebar = (): React.ReactNode => {
           navigate={navigate}
         />
 
-        <SidebarUserData />
+        <SidebarUserData isExpanded={isExpanded} />
 
         <SidebarLogout isHovered={isExpanded} onLogout={handleLogout} />
       </Box>

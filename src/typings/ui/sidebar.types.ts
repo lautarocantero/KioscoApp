@@ -67,6 +67,8 @@ export type SidebarCollapseProps = Pick<SidebarNavItemProps,
   "onNavigate" 
 >
 
+export type SidebarUserDataProps = Pick<SidebarToggleProps, "isExpanded">
+
 export type SidebarLinksListProps  = Pick<SidebarToggleProps, "isExpanded"> & {
   navLinks: NavLinkInterface[];
   handleNavClick: (link: NavLinkInterface) => void
@@ -79,3 +81,4 @@ export type SidebarLinksListProps  = Pick<SidebarToggleProps, "isExpanded"> & {
   isSubLinkActive: (url: string) => boolean;
   navigate: NavigateFunction;
 }
+
