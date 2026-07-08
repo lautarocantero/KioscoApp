@@ -6,7 +6,7 @@ Sistema de gestión para ventas minoristas y tiendas de abarrotes. Actualmente e
 
 Stoko es una aplicación web diseñada para pequeños negocios, como kioscos o tiendas de abarrotes. Permitirá administrar productos, registrar ventas y llevar un control básico del inventario.
 
-![Stoko ilustration](public/images/kiosco_images/stoko-ilustration.jpg) 
+![Stoko ilustration](public/images/kiosco_images/kiosco-ilustration.jpg) 
 
 ## 🛠️ Tecnologías Utilizadas
 
