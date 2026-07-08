@@ -12,15 +12,18 @@ const SidebarLogout = ({ isHovered, onLogout }: SidebarLogoutProps) => (
       sx={(theme: Theme) => ({
         display: "flex",
         alignItems: "center",
-        gap: "10px",
-        width: "calc(100% - 16px)",
+        justifyContent: isHovered ? "flex-start" : "center",
+        gap: isHovered ? "10px" : 0,
+        width: isHovered ? "100%" : "36px",
         height: "36px",
-        px: "6px",
+        px: isHovered ? "6px" : 0,
+        ml: isHovered ? 0 : "auto",
+        mr: isHovered ? 0 : "auto",
         borderRadius: "8px",
         cursor: "pointer",
         whiteSpace: "nowrap",
         color: theme.custom?.translucidWhite,
-        transition: "background 0.13s, color 0.13s",
+        transition: "background 0.13s, color 0.13s, width 0.22s cubic-bezier(.4,0,.2,1)",
         "&:hover": {
           color: theme.custom?.darkWhite,
         },
@@ -36,7 +39,9 @@ const SidebarLogout = ({ isHovered, onLogout }: SidebarLogoutProps) => (
           letterSpacing: "0.04em",
           textTransform: "uppercase",
           opacity: isHovered ? 1 : 0,
-          transition: "opacity 0.15s 0.05s",
+          maxWidth: isHovered ? "160px" : 0,
+          overflow: "hidden",
+          transition: "opacity 0.15s 0.05s, max-width 0.22s cubic-bezier(.4,0,.2,1)",
         }}
       >
         Cerrar sesión

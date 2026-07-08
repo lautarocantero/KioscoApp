@@ -1,7 +1,6 @@
-import { useContext, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ThemeContext } from "../../../../../../theme/ThemeContext";
 import type { AppDispatch } from "../../../../../../store/user/userSlice";
 import { startLogout } from "../../../../../../store/auth/thunks";
 import { SidebarNavLinks } from "../../../../../../config/Links";
@@ -12,13 +11,11 @@ import { SIDEBAR_STORAGE_KEY } from "../../../../../../config/constants";
 
 export const useAppSidebar = () => {
 
-  const { appTheme: lightTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const location = useLocation();
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const darkTheme = !lightTheme;
   const navLinks = SidebarNavLinks as NavLinkInterface[];
 
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -60,7 +57,6 @@ export const useAppSidebar = () => {
   const isSubLinkActive = useCallback((url: string) => location.pathname === url, [location.pathname]);
 
   return {
-    darkTheme,
     isExpanded,
     navLinks,
     toggleSidebar,

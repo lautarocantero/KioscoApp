@@ -5,11 +5,11 @@ import { useAppSidebar } from "./hooks/useAppSidebar";
 import { COLLAPSED_WIDTH, EXPANDED_WIDTH } from "../../../../../config/constants";
 import SidebarToggleComponent from "./components/SidebarToggle";
 import SidebarLinksList from "./components/SidebarLinksList";
+import { getNoisyBackgroundSx } from "../../../../../modules/shared/components/NoisyBackground/NoisyBackground";
 
 
 const AppSidebar = (): React.ReactNode => {
   const {
-    darkTheme,
     isExpanded,
     navLinks,
     toggleSidebar,
@@ -38,23 +38,21 @@ const AppSidebar = (): React.ReactNode => {
         sx={(theme: Theme) => ({
           width: { xs: 0, sm: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH },
           minWidth: { xs: 0, sm: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH },
-          overflow: "hidden",
           display: { xs: "none", sm: "flex" },
           flexDirection: "column",
           alignItems: "flex-start",
           py: 2.5,
           gap: 1,
-          borderRight: darkTheme
-            ? `1px solid ${theme.custom?.translucidWhite}`
-            : `1px solid ${theme.custom?.blackTranslucid}`,
+          borderRight: theme.custom.darkGray,
           height: "100vh",
+          transition: "width 0.22s cubic-bezier(.4,0,.2,1), min-width 0.22s cubic-bezier(.4,0,.2,1)",
+          zIndex: 1200,
+          boxShadow: isExpanded ? "4px 0 24px rgba(0,0,0,0.25)" : "none",
+          ...getNoisyBackgroundSx({ theme, backgroundColor: theme.palette.primary.main }),
           position: "fixed",
           top: 0,
           left: 0,
-          transition: "width 0.22s cubic-bezier(.4,0,.2,1), min-width 0.22s cubic-bezier(.4,0,.2,1)",
-          zIndex: 1200,
-          backgroundColor: theme.palette.primary.main,
-          boxShadow: isExpanded ? "4px 0 24px rgba(0,0,0,0.25)" : "none",
+          overflow: "hidden",
         })}
       >
         <SidebarToggleComponent isExpanded={isExpanded} toggleSidebar={toggleSidebar} />

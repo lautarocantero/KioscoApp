@@ -1,8 +1,18 @@
 import type { Theme } from "@mui/material";
 
-export const getNoisyBackgroundSx = (theme: Theme, noiseOpacity = 0.06) => ({
+type NoisyBackgroundOptions = {
+    theme: Theme;
+    noiseOpacity?: number;
+    backgroundColor?: string;
+};
+
+export const getNoisyBackgroundSx = ({
+    theme,
+    noiseOpacity = 0.06,
+    backgroundColor = theme?.custom?.blackTranslucid,
+}: NoisyBackgroundOptions) => ({
     position: "relative" as const,
-    backgroundColor: theme.custom?.posCard,
+    backgroundColor,
     overflow: "hidden" as const,
     "&::before": {
         content: '""',
