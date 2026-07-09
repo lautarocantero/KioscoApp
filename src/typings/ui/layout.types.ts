@@ -40,15 +40,17 @@ export type OptionsListInterface = Pick<DisplayOptionsInterface, 'links' | 'disc
 
 export interface LinksColumnProps {
   links: OptionLink[];
-  appTheme: boolean;
 }
 
-export type LinkMapperProps = Pick<LinksColumnProps, 'links' | 'appTheme'>;
+export type LinkMapperProps = Pick<LinksColumnProps, 'links'>;
 
-export type LinkCardProps = Pick<LinksColumnProps, 'appTheme'> & {
+export interface LinkCardProps {
     link: OptionLink;
-    accent: string;
 };
+
+export type LinkCardIconProps = Pick<OptionLink, 'icon'>; 
+
+export type LinkCardContentProps = Pick<LinkCardProps, 'link'>; 
 
 export interface OptionsHeaderInterface
   extends Pick<AppLayoutProps, 'isOptions' | 'title' | 'icon'> {

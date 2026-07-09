@@ -1,36 +1,29 @@
 import { Grid } from '@mui/material';
-import { useContext } from 'react';
-import { ThemeContext } from '../../../../theme/ThemeContext';
 import BackButton from '../Buttons/BackButton';
 import LinksColumnComponent from './LinksColumnComponent';
 import type { OptionLink, OptionsListInterface } from '@typings/ui/layout.types';
+import { splitLinks } from './helper/SplitLinks';
 
-const splitLinks = (links: OptionLink[]) => { 
-
-  const mid = Math.ceil(links.length / 2); 
-  const leftLinks = links.slice(0, mid); 
-  const rightLinks = links.slice(mid); 
-
-  return { leftLinks, rightLinks }; 
-};
 
 const OptionsList = ({ links, disconnect }: OptionsListInterface): React.ReactNode => {
-  const { appTheme } = useContext(ThemeContext);
 
   {/*─────────────────── 🔎 dividir en dos mitades 🔎 ───────────────────*/}
   const { leftLinks ,rightLinks }: { leftLinks: OptionLink[],rightLinks: OptionLink[] }  = splitLinks(links);
 
   return (
     <Grid container spacing={2}>
-
       {/*─────────────────── 🔎 Columna izquierda 🔎 ───────────────────*/}
-      <LinksColumnComponent links={leftLinks} appTheme={appTheme} />
+      <LinksColumnComponent links={leftLinks} />
 
       {/*─────────────────── 🔎 Columna derecha 🔎 ───────────────────*/}
-      <LinksColumnComponent links={rightLinks} appTheme={appTheme} />
+      <LinksColumnComponent links={rightLinks} />
 
       {/*─────────────────── 🔎 Botones extra 🔎 ───────────────────*/}
-      {!disconnect && <BackButton />}
+      {!disconnect && (
+        <Grid size={{ xs: 12 }}>
+          <BackButton />
+        </Grid>
+      )}
       
     </Grid>
   );

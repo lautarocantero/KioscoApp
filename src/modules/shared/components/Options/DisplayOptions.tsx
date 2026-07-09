@@ -1,5 +1,5 @@
 
-import { Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import AppLayout from "../../layout/AppLayout";
 import OptionsList from "./OptionsList";
 import type { DisplayOptionsInterface } from "@typings/ui/layout.types";
@@ -7,11 +7,10 @@ import type { DisplayOptionsInterface } from "@typings/ui/layout.types";
 const DisplayOptions = ({ title, icon, links, disconnect, greetings }: DisplayOptionsInterface): React.ReactNode => {
   return (
     <AppLayout isOptions title={title} icon={icon ?? null} greetings={greetings}>
-      <Grid
-        container
+      <Box
         display="flex"
         flexDirection="column"
-        spacing="1em"
+        gap="1em"
         sx={{
           width: { xs: '98%', sm: '90%', md: '720px' },
           mb: '1em',
@@ -19,7 +18,7 @@ const DisplayOptions = ({ title, icon, links, disconnect, greetings }: DisplayOp
         }}
       >
         <OptionsList links={links} disconnect={disconnect ?? undefined} />
-      </Grid>
+      </Box>
     </AppLayout>
   );
 };

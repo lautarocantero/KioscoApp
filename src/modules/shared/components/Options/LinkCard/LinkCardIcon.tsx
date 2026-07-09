@@ -1,12 +1,8 @@
 import { Box } from '@mui/material';
+import type { LinkCardIconProps } from '@typings/ui/layout.types';
 
-interface LinkCardIconProps {
-    icon: React.ReactNode;
-    accent: string;
-}
 
-// LinkCardIcon.tsx
-const LinkCardIcon = ({ icon, accent }: LinkCardIconProps): React.ReactNode => (
+const LinkCardIcon = ({ icon }: LinkCardIconProps): React.ReactNode => (
     <Box
         sx={{
             width: "72px",
@@ -19,18 +15,20 @@ const LinkCardIcon = ({ icon, accent }: LinkCardIconProps): React.ReactNode => (
         }}
     >
         <Box
-            sx={{
+            className="link-card-icon-box"
+            sx={(theme) => ({
                 width: "68px",
                 height: "68px",
                 borderRadius: "12px",
-                backgroundColor: accent,
+                backgroundColor: theme.palette.primary.light,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "1.6rem",
-                color: "#fff",
+                color: theme.custom.white,
                 flexShrink: 0,
-            }}
+                transition: "background-color 0.15s, color 0.15s",
+            })}
         >
             {icon}
         </Box>

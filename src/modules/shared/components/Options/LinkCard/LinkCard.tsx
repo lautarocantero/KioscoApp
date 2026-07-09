@@ -4,11 +4,11 @@ import LinkCardIcon from './LinkCardIcon';
 import LinkCardContent from './LinkCardContent';
 import type { LinkCardProps } from '@typings/ui/layout.types';
 
-const LinkCard = ({ link, accent, appTheme }: LinkCardProps): React.ReactNode => (
+const LinkCard = ({ link }: LinkCardProps): React.ReactNode => (
     <Link
         component={LinkReactRouter}
         to={link.url}
-        sx={{
+        sx={(theme) => ({
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
@@ -17,21 +17,31 @@ const LinkCard = ({ link, accent, appTheme }: LinkCardProps): React.ReactNode =>
             borderRadius: "16px",
             overflow: "hidden",
             textDecoration: "none",
-            backgroundColor: "rgba(255,255,255,0.06)",
-            border: `1px solid ${accent}44`,
+            backgroundColor: theme.custom.darkGray,
+            border: `1px solid ${theme.custom.darkGray}44`,
             backdropFilter: "blur(8px)",
             cursor: "pointer",
             transition: "transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease, background-color 0.15s",
             "&:hover": {
-                backgroundColor: "rgba(255,255,255,0.10)",
-                border: `1px solid ${accent}99`,
+                backgroundColor: theme.custom.darkMain,
+                border: `1px solid ${theme.palette.primary.main}66`,
                 transform: "translateY(-3px)",
-                boxShadow: `0 8px 24px ${accent}33`,
+                boxShadow: `0 8px 24px ${theme.palette.primary.main}40`,
             },
-        }}
+            "&:hover .link-card-icon-box": {
+                backgroundColor: theme.custom.white,
+                color: theme.palette.primary.main,
+            },
+            "&:hover .link-card-description": {
+                color: theme.custom.white,
+            },
+            "&:hover .link-card-value, &:hover .link-card-subtitle": {
+                color: theme.custom.white,
+            },
+        })}
     >
-        <LinkCardIcon icon={link.icon} accent={accent} />
-        <LinkCardContent link={link} accent={accent} appTheme={appTheme}/>
+        <LinkCardIcon icon={link.icon} />
+        <LinkCardContent link={link} />
     </Link>
 );
 

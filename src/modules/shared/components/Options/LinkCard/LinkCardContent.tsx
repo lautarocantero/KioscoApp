@@ -1,13 +1,12 @@
 import { Box, type Theme } from '@mui/material';
-import type { OptionLink } from '../../../../../typings/ui/uiModules';
+import type { LinkCardContentProps } from '@typings/ui/layout.types';
 
-interface LinkCardContentProps {
-    link: OptionLink;
-    accent: string;
-    appTheme: boolean;
-}
 
-const LinkCardContent = ({ link, accent, appTheme}: LinkCardContentProps): React.ReactNode => (
+const LinkCardContent = ({ link }: LinkCardContentProps): React.ReactNode => {
+
+    const { description, value, subtitle } = link;
+
+    return (
     <Box
         sx={{
             display: "flex",
@@ -20,38 +19,47 @@ const LinkCardContent = ({ link, accent, appTheme}: LinkCardContentProps): React
         }}
     >
         <Box
-            sx={{
+            className="link-card-description"
+            sx={(theme) => ({
                 fontSize: "0.72rem",
                 fontWeight: 600,
-                color: accent,
+                color: theme.palette.primary.light,
                 lineHeight: 1.2,
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",
-            }}
+                transition: "color 0.15s",
+            })}
         >
-            {link.description}
+            {description}
         </Box>
 
-        {link.value && (
-            <Box sx={(t: Theme) => ({
+        <Box
+            className="link-card-value"
+            sx={(t: Theme) => ({
                 fontSize: "1.8rem",
                 fontWeight: 700,
-                color: appTheme ? t.custom.darkWhite : t.custom.white,
+                color: t.custom.darkWhite,
                 lineHeight: 1.1,
-            })}>
-                {link.value}
-            </Box>
-        )}
+                visibility: value ? "visible" : "hidden",
+                transition: "color 0.15s",
+            })}
+        >
+            {value ?? "0"}
+        </Box>
 
-        <Box sx={(t: Theme) => ({
-            fontSize: "0.72rem",
-            color: appTheme ? t.custom.darkWhite : t.custom.white,
-            lineHeight: 1.4,
-            mt: "1px",
-        })}>
-            {link.subtitle ?? "Ver sección →"}
+        <Box
+            className="link-card-subtitle"
+            sx={(t: Theme) => ({
+                fontSize: "0.72rem",
+                color: t.custom.darkWhite,
+                lineHeight: 1.4,
+                mt: "1px",
+                transition: "color 0.15s",
+            })}
+        >
+            {subtitle ?? "Ver sección →"}
         </Box>
     </Box>
-);
+);}
 
 export default LinkCardContent;
