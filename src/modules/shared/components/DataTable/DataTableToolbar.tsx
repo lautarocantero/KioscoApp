@@ -23,7 +23,7 @@ const DataTableToolbar = ({ search, newItem }: DataTableToolbarProps): React.Rea
                     disableElevation
                     startIcon={<AddIcon sx={{ fontSize: "1.1rem" }} />}
                     sx={(theme) => ({
-                        ml: "auto",
+                        ml: { xs: "none", sm: "auto" },
                         flexShrink: 0,
                         color: theme.palette.secondary.main,
                         textTransform: "none",

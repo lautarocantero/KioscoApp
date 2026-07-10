@@ -34,6 +34,7 @@ const PresentationListPage = (): React.ReactNode => {
     return (
         <AppLayout fullWidth title="Presentaciones" icon={<ViewListIcon />}>
             <DataTable<Presentation>
+                title={"Presentaciones"}
                 rows={presentations}
                 columns={columns}
                 loading={loading}
