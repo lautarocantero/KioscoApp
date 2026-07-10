@@ -3,7 +3,7 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import type { Product } from "@typings/product/productTypes";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import AppLayout from "../../../shared/layout/AppLayout";
-import { useProductsList } from "./hooks/useProductsList";
+import { useProducts } from "../../../../hooks/products/useProducts";
 
 const ProductsListPage = (): React.ReactNode => {
     const {
@@ -17,7 +17,7 @@ const ProductsListPage = (): React.ReactNode => {
         searchTerm,
         setSearchTerm,
         columns,
-    } = useProductsList();
+    } = useProducts();
 
     return (
         <AppLayout fullWidth>

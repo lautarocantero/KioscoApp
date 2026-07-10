@@ -10,13 +10,13 @@ import {
   deleteProductRequest,
   getProductsWithPresentationsRequest,
   searchProductsWithPresentationsRequest,
-} from "../../../api/productApi";
-import { resolveErrorMessage } from "../helpers/productHelpers";
-import { buildColumns } from "../components/productColumns";
+} from "../../modules/products/api/productApi";
+import { resolveErrorMessage } from "../../modules/products/pages/ProductsList/helpers/productHelpers";
+import { buildColumns } from "../../modules/products/pages/ProductsList/components/productColumns";
 
 const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
-export const useProductsList = (): UseProductsReturn => {
+export const useProducts = (): UseProductsReturn => {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState<Product[]>([]);
