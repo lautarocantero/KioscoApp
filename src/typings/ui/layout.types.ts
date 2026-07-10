@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+//────────────────────────────────────────── 🔖Layout ─────────────────────────────────────────//
 
 export interface AppLayoutProps {
   isOptions?: boolean;
@@ -8,27 +9,26 @@ export interface AppLayoutProps {
   title?: string;
   icon?: ReactNode;
   greetings?: string;
-
-  // ── Search bar ──
-  hasSearchBar?: boolean;
-  searchValue?: string;
-  onSearchChange?: (value: string) => void;
-  searchPlaceholder?: string;
-
-  // ── New item button ──
-  hasNewItem?: boolean;
-  newItemLabel?: string;
-  onNewItemClick?: () => void;
-  newItemHref?: string;
 }
 
-export type OptionLink = {
-  icon: ReactNode,
-  description: string,
-  subtitle?: string,
-  url: string,
-  function?: (() => void) | null,
+//────────────────────────────────────────── 🔖 OptionsCards 🔖 ─────────────────────────────────────────//
+
+export interface LinkDataResult {
+  value?: string | number | null;
+  loading?: boolean;
+  error?: string | null;
+  subtitle?: string | number | null;
+}
+
+export interface OptionLink {
+  description: string;
+  icon: React.ReactNode;
+  url: string;
   value?: string;
+  loading?: boolean;
+  subtitle?: string;
+  useData?: () => LinkDataResult;
+  formatValue?: (value: string | number | null | undefined) => string;
 }
 
 export interface DisplayOptionsInterface extends AppLayoutProps {

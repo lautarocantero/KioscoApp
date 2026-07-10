@@ -44,7 +44,7 @@ const CartProductListComponent = ({ cart }: CartProductListProps): React.ReactNo
                 py: '2em',
                 px: '1.5em',
                 borderRadius: '8px',
-                ...getNoisyBackgroundSx(theme),
+                ...getNoisyBackgroundSx({theme}),
             })}
         >
             {/* Fila superior: contador + toggle de vista */}

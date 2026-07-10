@@ -2,9 +2,9 @@ import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import CategoryIcon from "@mui/icons-material/Category";
 import StoreIcon from "@mui/icons-material/Store";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
-import PersonIcon from "@mui/icons-material/Person";
+import type { OptionLink } from "@typings/ui/layout.types";
 
-const KioscoLink = {
+const KioscoLink: OptionLink = {
   description: "Stoko",
   icon: (
     <svg width="32" height="32" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,7 @@ const KioscoLink = {
   subtitle: "Hoy · última hace 20 min",
 };
 
-export const SidebarNavLinks = [
+export const SidebarNavLinks: OptionLink[] = [
   KioscoLink,
   {
     description: "Ventas",
@@ -45,10 +45,6 @@ export const SidebarNavLinks = [
     description: "Proveedores",
     icon: <WarehouseIcon />,
     url: "/providers",
-    subtitle: "5 activos · próx. lunes",
+    subtitle: "",
   },
 ];
-
-export const HomePageLinks = SidebarNavLinks.filter(
-  (link) => link.description !== "Stoko"
-);

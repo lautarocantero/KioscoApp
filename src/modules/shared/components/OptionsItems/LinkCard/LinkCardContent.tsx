@@ -1,10 +1,10 @@
-import { Box, type Theme } from '@mui/material';
+import { Box, Skeleton, type Theme } from '@mui/material';
 import type { LinkCardContentProps } from '@typings/ui/layout.types';
 
 
 const LinkCardContent = ({ link }: LinkCardContentProps): React.ReactNode => {
 
-    const { description, value, subtitle } = link;
+    const { description, value, subtitle, loading } = link;
 
     return (
     <Box
@@ -35,17 +35,26 @@ const LinkCardContent = ({ link }: LinkCardContentProps): React.ReactNode => {
 
         <Box
             className="link-card-value"
-            aria-hidden={!value}
+            aria-hidden={!loading && !value}
             sx={(t: Theme) => ({
                 fontSize: "1.8rem",
                 fontWeight: 700,
                 color: t.custom.darkWhite,
                 lineHeight: 1.1,
-                visibility: value ? "visible" : "hidden",
+                visibility: loading || value ? "visible" : "hidden",
                 transition: "color 0.15s",
             })}
         >
-            {value ?? "0"}
+            {loading ? (
+                <Skeleton
+                    variant="text"
+                    width={40}
+                    height={32}
+                    sx={(t: Theme) => ({ bgcolor: t.custom.darkGray })}
+                />
+            ) : (
+                value ?? "0"
+            )}
         </Box>
 
         <Box

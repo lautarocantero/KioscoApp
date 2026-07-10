@@ -1,21 +1,10 @@
-import type { Product, UseProductDataResult } from "@typings/product/productTypes";
+import type { Product, ProductStats, UseProductDataResult, UseProductStatsResult } from "@typings/product/productTypes";
 import { useEffect, useState }   from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentProduct, type AppDispatch, type RootState } from "../../store/product/productSlice";
+import type { LinkDataResult } from "@typings/ui/layout.types";
+import { API_URL } from "../../config/api";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
-
-
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 useProductData                                                     ║
-║                                                                       ║
-║ Prioridad de fuente de datos:                                         ║
-║   1. store.products.currentProduct  → flujo normal (sin fetch)       ║
-║   2. fetch fallback                 → refresh de página / URL directa ║
-║                                                                       ║
-║ El fetch además sincroniza el store para que navegaciones             ║
-║ posteriores dentro de la misma sesión tampoco vuelvan a fetchear.    ║
-╚══════════════════════════════════════════════════════════════════════╝*/
 export const useProductData = (productId: string | undefined): UseProductDataResult => {
 
     const dispatch    = useDispatch<AppDispatch>();
@@ -58,7 +47,7 @@ export const useProductData = (productId: string | undefined): UseProductDataRes
         const fetchProduct = async () => {
             try {
                 const response = await fetch(
-                    `${API_BASE_URL}/product/get-product-by-id/${productId}`,  // ya estaba bien
+                    `${API_URL}/product/get-product-by-id/${productId}`,  // ya estaba bien
                     { credentials: "include" }
                 );
             
@@ -92,4 +81,71 @@ export const useProductData = (productId: string | undefined): UseProductDataRes
     }, [productId, storeHasIt]);     // storeHasIt se recalcula en cada render
 
     return { productData, isLoading, error };
+};
+
+
+
+
+export const useProductStats = (): UseProductStatsResult => {
+    const [totalProducts, setTotalProducts]       = useState<number | null>(null);
+    const [lowStockProducts, setLowStockProducts] = useState<number | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError]     = useState<string | null>(null);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const fetchStats = async (): Promise<void> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await fetch(
+                    `${API_URL}/product/get-product-stats`,
+                    { credentials: "include" }
+                );
+
+                if (!response.ok) throw new Error(`Error ${response.status}`);
+
+                const stats: ProductStats = await response.json();
+
+                if (!isMounted) return;
+                setTotalProducts(stats.totalProducts);
+                setLowStockProducts(stats.lowStockProducts);
+            } catch {
+                if (!isMounted) return;
+                setError("No se pudo obtener los datos de productos");
+            } finally {
+                if (isMounted) setLoading(false);
+            }
+        };
+
+        void fetchStats();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+    return { totalProducts, lowStockProducts, loading, error };
+};
+
+// 👇 Adaptador para las cards de HomePageLinks / SidebarNavLinks
+export const useProductsLinkData = (): LinkDataResult => {
+    const { totalProducts, lowStockProducts, loading, error } = useProductStats();
+
+    const subtitle = error
+        ? undefined
+        : lowStockProducts === null
+            ? undefined
+            : lowStockProducts === 0
+                ? "Sin stock bajo"
+                : `${lowStockProducts} con stock bajo`;
+
+    return {
+        value: totalProducts,
+        loading,
+        error,
+        subtitle,
+    };
 };

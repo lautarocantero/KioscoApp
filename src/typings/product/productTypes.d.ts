@@ -178,6 +178,20 @@ export interface UseProductsReturn {
     setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }
 
+// useProductData
+
+export  interface ProductStats {
+    totalProducts: number;
+    lowStockProducts: number;
+}
+
+export  interface UseProductStatsResult {
+    totalProducts: number | null;
+    lowStockProducts: number | null;
+    loading: boolean;
+    error: string | null;
+}
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 💱 CONTEXT  💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/

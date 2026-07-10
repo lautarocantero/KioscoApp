@@ -84,6 +84,15 @@ import type { EspecificationsLeftProps } from "../reactComponents";
 
     export type DeleteSellApiPayloadType = Pick<SellType, 'ticket_id'>;
 
+    //────────────────────────────────────────── 🔗 HOOKS 🔗 ─────────────────────────────────────────//
+
+    export interface UseSellsResult {
+        count: number | null;
+        lastSaleAt: string | null;
+        loading: boolean;
+        error: string | null;
+    }
+
    //────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
 
     export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>

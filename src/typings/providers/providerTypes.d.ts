@@ -39,6 +39,12 @@ export interface UseSupplierFormReturn extends SupplierFormState {
     handleSubmit: () => Promise<void>;
 }
 
+export interface UseProviderStatsResult {
+    totalProviders: number | null;
+    loading: boolean;
+    error: string | null;
+}
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🛞 Utilidades  🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞                 ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/

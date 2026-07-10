@@ -1,9 +1,11 @@
-import { HomePageLinks } from '../../../config/Links';
-import DisplayOptions from '../../shared/components/Options/DisplayOptions';
+import { useHomePageLinks } from '../../../hooks/shared/useLinksData';
+import DisplayOptions from '../../shared/components/OptionsItems/DisplayOptions';
 
 const HomePage = (): React.ReactNode => {
+    const links = useHomePageLinks();
+
     return (
-      <DisplayOptions title='¿Qué deseas hacer?' links={HomePageLinks} disconnect greetings='¡Hola! 👋'/>
+      <DisplayOptions title='¿Qué deseas hacer?' links={links} disconnect greetings='¡Hola! 👋'/>
     )
 }
 

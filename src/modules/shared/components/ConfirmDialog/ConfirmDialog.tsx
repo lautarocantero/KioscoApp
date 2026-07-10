@@ -48,7 +48,7 @@ const ConfirmDialog = ({
       onClose={onCancel}
       PaperProps={{
           sx: (theme: Theme) => ({
-              ...getNoisyBackgroundSx(theme),
+              ...getNoisyBackgroundSx({theme}),
               border: "0.5px solid",
               borderColor: "rgba(255,255,255,0.08)",
               borderRadius: "16px",

@@ -1,11 +1,10 @@
+import type { OptionLink } from "@typings/ui/layout.types";
+
 
 //──────────────────────────────────────────── 🌐 Links 🌐 ───────────────────────────────────────────//
 
-export interface LinksInterface {
-    icon: React.ReactNode,
-    description: string,
-    url: string,
-}
+export type LinksType = Pick<OptionLink, 'description' | 'icon' |  'url' |  'value' |  
+'loading' |  'subtitle' |  'useData' |  'formatValue'>
 
 //──────────────────────────────────────────── 🌐 Sidebar Account 🌐 ───────────────────────────────────────────//
 

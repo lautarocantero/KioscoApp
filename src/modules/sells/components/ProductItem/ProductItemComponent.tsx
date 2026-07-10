@@ -41,7 +41,7 @@ const ProductItemComponent = ({ product }: ProductItemProps): React.ReactNode =>
           width: "100%",
           maxWidth: "300px",
           height: "12em",
-          ...getNoisyBackgroundSx(theme),
+          ...getNoisyBackgroundSx({theme}),
         })}
       >
         {category && <ProductItemBadge label={category} />}

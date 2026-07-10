@@ -14,7 +14,7 @@ const SellBar = ({showFilters}: SharedAppBarInterface): React.ReactNode => {
         width:  { xs: "98%", sm: "90%", md: "720px" },
         borderRadius: "0.5em",
         alignSelf: "center",
-        ...getNoisyBackgroundSx(theme),
+        ...getNoisyBackgroundSx({theme}),
       })}
       data-testid="login-appbar"
     >

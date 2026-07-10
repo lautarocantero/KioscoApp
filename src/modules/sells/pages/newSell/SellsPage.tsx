@@ -1,24 +1,18 @@
-
-//─────────────────── Componente 🧩: sellsLinks ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Contiene los enlaces principales de navegación para la página de ventas.
-
-//──────────────────── Links 🌐 ─────────────────────//
-// - Nueva venta
-// - Ver ventas
-
-//-----------------------------------------------------------------------------//
-
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
-import type { LinksInterface } from '../../../../typings/account/accountComponentTypes';
-import DisplayOptions from '../../../shared/components/Options/DisplayOptions';
+import type { LinksType } from '../../../../typings/account/accountComponentTypes';
+import DisplayOptions from '../../../shared/components/OptionsItems/DisplayOptions';
 
-const sellsLinks: LinksInterface[] = [
-  { icon: <AddShoppingCartIcon />, description: 'Nueva venta', url: '/new-sell'},
-  { icon: <StickyNote2Icon />, description: 'Ver ventas', url: '/sells-history'},
+const sellsLinks: LinksType[] = [
+  { 
+    description: 'Nueva venta',
+    icon: <AddShoppingCartIcon />, 
+    url: '/new-sell',
+    subtitle: 'Nueva venta', 
+    
+    },
+  { icon: <StickyNote2Icon />, description: 'Ver ventas', subtitle: 'Nueva venta', url: '/sells-history'},
 ]
 
 const SellsPage = ():React.ReactNode => {

@@ -25,9 +25,9 @@ import NewLabelIcon from '@mui/icons-material/NewLabel';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import DisplayOptions from '../../../shared/components/Options/DisplayOptions';
-import type { LinksInterface } from '../../../../typings/account/accountComponentTypes';
+import type { LinksType } from '../../../../typings/account/accountComponentTypes';
 
-const categoriesLinks: LinksInterface[] = [
+const categoriesLinks: LinksType[] = [
   { icon: <CollectionsBookmarkIcon />, description: 'Ver Categorias', url: '/categories-list'},
   { icon: <NewLabelIcon />, description: 'Crear Categoria', url: '/categories-create'},
   { icon: <DriveFileRenameOutlineIcon />, description: 'Editar Categoria', url: '/categories-edit'},

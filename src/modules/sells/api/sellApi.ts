@@ -1,30 +1,3 @@
-
-// # Módulo: SellType Requests  
-
-// ## Descripción 📦
-// Configuración de cliente Axios para interactuar con el backend de ventas.  
-// Incluye funciones para obtener y crear ventas en la API.  
-
-// ## Funciones 🔧
-// - `baseUrl`: instancia de Axios configurada con:  
-//   - `baseURL`: `${API_URL}/SELL`  
-//   - `timeout`: 5000 ms  
-//   - `headers`: `Content-Type: application/json`  
-//   - `withCredentials`: true (envía cookies/credenciales en las requests).  
-// - `getSellsRequest`: función asíncrona que:  
-//   - Realiza un `GET` a `/get-sells`.  
-//   - Devuelve `response.data` con la lista de ventas.  
-// - `postSellRequest`: función asíncrona que:  
-//   - Realiza un `POST` a `/create-sell` con el payload `CreateSellApiPayloadType`.  
-//   - Devuelve `response.data` con la venta creada.  
-
-// ## Notas técnicas 💽
-// - Centraliza la configuración de Axios para reutilización en otros requests.  
-// - Ideal para mantener consistencia en headers, timeout y credenciales.  
-// - Facilita la extensión futura para otros endpoints relacionados con ventas.  
-//-----------------------------------------------------------------------------
-
-
 import type {
     CreateSellApiPayloadType,
     DeleteSellApiPayloadType,
@@ -53,6 +26,12 @@ export const getSellByIdRequest = async (data: GetSellApiPayloadType) => {
     const { ticket_id } : { ticket_id: string }  = data;
 
     const response = await baseUrl.get(`/get-sell-by-id/${ticket_id}`);
+    return response.data;
+}
+
+export const getTodaySellsCountRequest = async (): Promise<{ count: number, lastSaleAt: string | null }> => {
+
+    const response = await baseUrl.get('/get-today-sells-count');
     return response.data;
 }
 

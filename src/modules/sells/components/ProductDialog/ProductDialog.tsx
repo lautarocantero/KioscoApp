@@ -1,5 +1,3 @@
-
-
 import { Box, Button, Dialog, DialogActions, DialogContent, type Theme } from "@mui/material";
 import type { DialogDataInterface } from "@typings/sells/types";
 import { useFormik } from "formik";
@@ -11,9 +9,9 @@ import getInitialProductDialogValues from "../../helpers/ProductDialog/Getters/g
 import ProductDialogValidationSchema from "../../helpers/ProductDialog/Getters/getProductDialogValidationSchema";
 import onSubmit from "../../helpers/ProductDialog/Handlers/handleProductDialogSubmit";
 import ProductDialogData from "./ProductDialogDataComponent";
-import usePresentations from "../../../../hooks/sells/usePresentations";
-import type { AppDispatch } from "../../../../store/presentation/presentationSlice";
+import usePresentations from "../../../../hooks/presentation/usePresentations";
 import { getNoisyBackgroundSx } from "../../../../modules/shared/components/NoisyBackground/NoisyBackground";
+import type { AppDispatch } from "store/product/productSlice";
 
 const ProductDialog = (): React.ReactNode => {
   const { showModal, setShowModal } = useContext(ProductDialogContext)!;
@@ -58,7 +56,7 @@ const ProductDialog = (): React.ReactNode => {
       onClose={() => setShowModal(false)}
       fullWidth
       maxWidth="md"
-      sx={(theme: Theme) => ({
+      sx={({
         width: '100%',
       })}
     >
@@ -71,7 +69,7 @@ const ProductDialog = (): React.ReactNode => {
             color: theme?.custom?.fontColor,
             width: '100%',
             padding: { xs: '0.1em', sm: '2em', },
-            ...getNoisyBackgroundSx(theme)
+            ...getNoisyBackgroundSx({theme})
           })}
         >
           <ProductDialogData 
@@ -86,7 +84,7 @@ const ProductDialog = (): React.ReactNode => {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'flex-start',
-            ...getNoisyBackgroundSx(theme)
+            ...getNoisyBackgroundSx({theme})
           })}
         >
           <Button 
