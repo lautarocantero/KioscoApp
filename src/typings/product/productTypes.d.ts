@@ -176,6 +176,7 @@ export interface UseProductsReturn {
     refetchProductsWithPresentations: () => Promise<void>;
     searchTerm: string;
     setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+    columns: GridColDef[],
 }
 
 // useProductData

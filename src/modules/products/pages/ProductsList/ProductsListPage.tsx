@@ -1,35 +1,26 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import type { Product } from "@typings/product/productTypes";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useProductsList } from "./hooks/useProductsList";
-import { buildColumns } from "./components/productColumns";
 
 const ProductsListPage = (): React.ReactNode => {
-    const navigate = useNavigate();
-
     const {
         productsWithPresentations,
         loading,
         error,
         deleteDialog,
         clearError,
-        handleDeleteRequest,
         handleDeleteCancel,
         handleDeleteConfirm,
         searchTerm,
         setSearchTerm,
+        columns,
     } = useProductsList();
 
-    const columns = buildColumns({
-        onDeleteRequest: handleDeleteRequest,
-        navigate,
-    });
-
     return (
-        <AppLayout fullWidth title="Productos" icon={<StorefrontIcon />}>
+        <AppLayout fullWidth>
             <DataTable<Product>
                 title={"Productos"}
                 rows={productsWithPresentations}

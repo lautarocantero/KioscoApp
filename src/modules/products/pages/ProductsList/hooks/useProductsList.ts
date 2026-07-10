@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type {
   DeleteDialogState,
   Product,
@@ -7,16 +8,17 @@ import type {
 } from "@typings/product/productTypes";
 import {
   deleteProductRequest,
-  getProductsRequest,
   getProductsWithPresentationsRequest,
-  searchProductsWithPresentationsRequest, // 👈 nuevo import
+  searchProductsWithPresentationsRequest,
 } from "../../../api/productApi";
 import { resolveErrorMessage } from "../helpers/productHelpers";
-
+import { buildColumns } from "../components/productColumns";
 
 const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
 export const useProductsList = (): UseProductsReturn => {
+  const navigate = useNavigate();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -80,7 +82,7 @@ export const useProductsList = (): UseProductsReturn => {
     }
   }, []);
 
-  // ── búsqueda (nuevo) ────────────────────────────────────────────────
+  // ── búsqueda ────────────────────────────────────────────────────────
   const [searchTerm, setSearchTerm] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -110,6 +112,13 @@ export const useProductsList = (): UseProductsReturn => {
   }, [searchTerm, fetchProductsWithPresentations, searchProductsWithPresentations]);
   // ────────────────────────────────────────────────────────────────────────
 
+  // ── columnas de la tabla (antes armadas en la page) ──────────────────
+  const columns = buildColumns({
+    onDeleteRequest: handleDeleteRequest,
+    navigate,
+  });
+  // ────────────────────────────────────────────────────────────────────────
+
   return {
     products,
     loading,
@@ -123,7 +132,8 @@ export const useProductsList = (): UseProductsReturn => {
     loadingPresentations,
     errorPresentations,
     refetchProductsWithPresentations: fetchProductsWithPresentations,
-    searchTerm,  
-    setSearchTerm, 
+    searchTerm,
+    setSearchTerm,
+    columns,
   };
 };
