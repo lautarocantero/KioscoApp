@@ -7,11 +7,16 @@ import { splitLinks } from './helper/SplitLinks';
 
 const OptionsList = ({ links, disconnect }: OptionsListInterface): React.ReactNode => {
 
-  {/*─────────────────── 🔎 dividir en dos mitades 🔎 ───────────────────*/}
-  const { leftLinks ,rightLinks }: { leftLinks: OptionLink[],rightLinks: OptionLink[] }  = splitLinks(links);
+  const { leftLinks, rightLinks }: { leftLinks: OptionLink[], rightLinks: OptionLink[] } = splitLinks(links);
 
   return (
-    <Grid container spacing={2}>
+    <Grid
+      container
+      spacing={2}
+      component="nav"
+      aria-label="Opciones disponibles"
+      role="list"
+    >
       {/*─────────────────── 🔎 Columna izquierda 🔎 ───────────────────*/}
       <LinksColumnComponent links={leftLinks} />
 
@@ -24,7 +29,7 @@ const OptionsList = ({ links, disconnect }: OptionsListInterface): React.ReactNo
           <BackButton />
         </Grid>
       )}
-      
+
     </Grid>
   );
 };

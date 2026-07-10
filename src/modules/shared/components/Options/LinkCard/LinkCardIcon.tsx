@@ -4,6 +4,7 @@ import type { LinkCardIconProps } from '@typings/ui/layout.types';
 
 const LinkCardIcon = ({ icon }: LinkCardIconProps): React.ReactNode => (
     <Box
+        aria-hidden="true"
         sx={{
             width: "72px",
             minWidth: "72px",

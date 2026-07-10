@@ -28,6 +28,10 @@ const LinkCard = ({ link }: LinkCardProps): React.ReactNode => (
                 transform: "translateY(-3px)",
                 boxShadow: `0 8px 24px ${theme.palette.primary.main}40`,
             },
+            "&:focus-visible": {
+                outline: `2px solid ${theme.palette.primary.main}`,
+                outlineOffset: "2px",
+            },
             "&:hover .link-card-icon-box": {
                 backgroundColor: theme.custom.white,
                 color: theme.palette.primary.main,

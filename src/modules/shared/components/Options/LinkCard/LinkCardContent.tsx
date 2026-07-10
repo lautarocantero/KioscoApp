@@ -35,6 +35,7 @@ const LinkCardContent = ({ link }: LinkCardContentProps): React.ReactNode => {
 
         <Box
             className="link-card-value"
+            aria-hidden={!value}
             sx={(t: Theme) => ({
                 fontSize: "1.8rem",
                 fontWeight: 700,
@@ -57,7 +58,11 @@ const LinkCardContent = ({ link }: LinkCardContentProps): React.ReactNode => {
                 transition: "color 0.15s",
             })}
         >
-            {subtitle ?? "Ver sección →"}
+            {subtitle ?? (
+                <>
+                    Ver sección <Box component="span" aria-hidden="true">→</Box>
+                </>
+            )}
         </Box>
     </Box>
 );}
