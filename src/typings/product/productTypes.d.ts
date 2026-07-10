@@ -78,11 +78,13 @@ export type UpdateProductBody = ProductBaseFormValues & {
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-interface ProductState {
-    products:       Product[];
-    currentProduct: Product | null;
-    isLoading:      boolean;
-    errorMessage:   string | null;
+export interface ProductState {
+    products:             Product[];
+    currentProduct:       Product | null;
+    isLoading:            boolean;
+    errorMessage:         string | null;
+    isLoadingCurrent:     boolean;
+    currentProductError:  string | null;
 }
 
 export type ProductStateError = Pick<ProductState, "errorMessage">;
@@ -162,21 +164,17 @@ export interface DeleteDialogState {
 
 // Hook de listado y eliminación de productos
 export interface UseProductsReturn {
-    products:             Product[];
-    loading:              boolean;
-    error:                string | null;
-    deleteDialog:         DeleteDialogState;
-    clearError:           () => void;
-    handleDeleteRequest:  (id: string, name: string) => void;
-    handleDeleteCancel:   () => void;
-    handleDeleteConfirm:  () => Promise<void>;
-    productsWithPresentations: ProductWithPresentations[];
-    loadingPresentations: boolean;
-    errorPresentations: string | null;
-    refetchProductsWithPresentations: () => Promise<void>;
-    searchTerm: string;
-    setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
-    columns: GridColDef[],
+  productsWithPresentations: ProductWithPresentations[]; // viene de state.product.products
+  loading: boolean;
+  error: string | null;
+  deleteDialog: DeleteDialogState;
+  clearError: () => void;
+  handleDeleteRequest: (id: string, name: string) => void;
+  handleDeleteCancel: () => void;
+  handleDeleteConfirm: () => Promise<void>;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  columns: GridColDef[];
 }
 
 // useProductData

@@ -3,10 +3,12 @@ import type { store } from "../store";
 import type { Product, ProductState, ProductStateError } from "../../typings/product/productTypes";
 
 const initialState: ProductState = {
-    products:       [],
-    currentProduct: null,
-    isLoading:      false,
-    errorMessage:   null,
+    products:            [],
+    currentProduct:      null,
+    isLoading:           false,
+    errorMessage:        null,
+    isLoadingCurrent:    false,
+    currentProductError: null,
 }
 
 export const productSlice = createSlice({
@@ -20,24 +22,41 @@ export const productSlice = createSlice({
             state.errorMessage = null;
         },
 
-        // ─── Guarda el producto recién creado (o el que se está editando) ───
         setCurrentProduct: (state: ProductState, action: PayloadAction<Product>) => {
-            state.currentProduct = action.payload;
+            state.currentProduct      = action.payload;
+            state.isLoadingCurrent    = false;
+            state.currentProductError = null;
         },
 
-        // ─── Limpia el producto del store (logout, navegación fuera del flujo) ───
         clearCurrentProduct: (state: ProductState) => {
             state.currentProduct = null;
         },
 
         setError: (state: ProductState, action: PayloadAction<ProductStateError>) => {
             state.errorMessage = action.payload.errorMessage;
+            state.isLoading    = false;
         },
 
         checkingProducts: (state: ProductState) => {
             state.products     = [];
             state.isLoading    = true;
             state.errorMessage = null;
+        },
+
+        // 🆕 loading/error puntual para el producto actual (no toca la lista)
+        checkingCurrentProduct: (state: ProductState) => {
+            state.isLoadingCurrent    = true;
+            state.currentProductError = null;
+        },
+
+        setCurrentProductError: (state: ProductState, action: PayloadAction<string>) => {
+            state.isLoadingCurrent    = false;
+            state.currentProductError = action.payload;
+        },
+
+        // 🆕 borra un producto de la lista sin necesidad de refetch
+        removeProduct: (state: ProductState, action: PayloadAction<string>) => {
+            state.products = state.products.filter((p) => p._id !== action.payload);
         },
     }
 });
@@ -48,6 +67,9 @@ export const {
     clearCurrentProduct,
     setError,
     checkingProducts,
+    checkingCurrentProduct,
+    setCurrentProductError,
+    removeProduct,
 } = productSlice.actions;
 
 export type RootState   = ReturnType<typeof store.getState>;

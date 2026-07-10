@@ -1,84 +1,36 @@
-import type { Product, ProductStats, UseProductDataResult, UseProductStatsResult } from "@typings/product/productTypes";
+import type { ProductStats, UseProductDataResult, UseProductStatsResult } from "@typings/product/productTypes";
 import { useEffect, useState }   from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentProduct, type AppDispatch, type RootState } from "../../store/product/productSlice";
+import { type AppDispatch, type RootState } from "../../store/product/productSlice";
+import { getProductById } from "../../store/product/productThunks";
 import type { LinkDataResult } from "@typings/ui/layout.types";
 import { API_URL } from "../../config/api";
 
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 useProductData                                                     ║
+║                                                                       ║
+║ Ahora consume el store en lugar de fetch manual:                     ║
+║   1. Lee currentProduct/isLoadingCurrent/currentProductError del store ║
+║   2. Si el store no tiene este producto (refresh, URL directa, etc.), ║
+║      despacha el thunk getProductById, que ya se encarga de           ║
+║      fetchear y guardar en store                                      ║
+╚══════════════════════════════════════════════════════════════════════╝*/
 export const useProductData = (productId: string | undefined): UseProductDataResult => {
 
-    const dispatch    = useDispatch<AppDispatch>();
-    const fromStore   = useSelector((state: RootState) => state.product?.currentProduct ?? null);
+    const dispatch  = useDispatch<AppDispatch>();
 
-    // ─── ¿El store ya tiene exactamente este producto? ───────────────────
-    const storeHasIt  = fromStore?._id === productId;
+    const productData = useSelector((state: RootState) => state.product?.currentProduct ?? null);
+    const isLoading    = useSelector((state: RootState) => state.product?.isLoadingCurrent ?? false);
+    const error        = useSelector((state: RootState) => state.product?.currentProductError ?? null);
 
-    const [productData, setProductData] = useState<Product | null>(
-        storeHasIt ? fromStore : null
-    );
-    const [isLoading, setIsLoading] = useState<boolean>(!storeHasIt);
-    const [error,     setError]     = useState<string | null>(null);
+    const storeHasIt = productData?._id === productId;
 
     useEffect(() => {
-        // ─── Cambiamos de producto: reseteamos estado local ───────────────
-        if (!storeHasIt) {
-            setProductData(null);
-            setIsLoading(true);
-            setError(null);
-        }
+        if (!productId) return;
+        if (storeHasIt) return; // ya está en store, no hace falta refetch
 
-        // ─── Caso 1: el store ya tiene el producto correcto ───────────────
-        if (storeHasIt) {
-            setProductData(fromStore);
-            setIsLoading(false);
-            return;
-        }
-
-        // ─── Caso 2: falta el id (no debería pasar, pero lo protegemos) ──
-        if (!productId) {
-            setError("ID de producto no disponible");
-            setIsLoading(false);
-            return;
-        }
-
-        // ─── Caso 3: fetch fallback (refresh, URL directa, link externo) ──
-        let cancelled = false;
-
-        const fetchProduct = async () => {
-            try {
-                const response = await fetch(
-                    `${API_URL}/product/get-product-by-id/${productId}`,  // ya estaba bien
-                    { credentials: "include" }
-                );
-            
-                if (!response.ok) throw new Error(`Error ${response.status}`);
-            
-                // Ahora el backend devuelve Product directamente (no Product[])
-                const product: Product = await response.json();
-            
-                if (!product?._id) throw new Error("Producto no encontrado");
-            
-                if (!cancelled) {
-                    setProductData(product);
-                    dispatch(setCurrentProduct(product));
-                }
-            
-            } catch (err) {
-                if (!cancelled) {
-                    console.error("useProductData fetch error:", err);
-                    setError("No se pudo cargar los datos del producto");
-                }
-            } finally {
-                if (!cancelled) setIsLoading(false);
-            }
-        };
-
-        fetchProduct();
-
-        // ─── Cleanup: si el componente se desmonta antes de terminar ─────
-        return () => { cancelled = true; };
-
-    }, [productId, storeHasIt]);     // storeHasIt se recalcula en cada render
+        void dispatch(getProductById(productId));
+    }, [productId, storeHasIt, dispatch]);
 
     return { productData, isLoading, error };
 };

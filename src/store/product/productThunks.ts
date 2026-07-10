@@ -1,11 +1,24 @@
 import type { Dispatch }     from "@reduxjs/toolkit";
 import type { NavigateFunction } from "react-router-dom";
 import type { CreateProductBody, Product }      from "../../typings/product/productTypes";
-import { checkingProducts, setCurrentProduct, setError, setProducts } from "./productSlice";
+import {
+    checkingProducts,
+    checkingCurrentProduct,
+    setCurrentProduct,
+    setCurrentProductError,
+    setError,
+    setProducts,
+    removeProduct,
+} from "./productSlice";
 import { handleError }       from "../shared/handlerStoreError";
-import { getProductsRequest, getProductsWithPresentationsRequest, searchProductsWithPresentationsRequest } from "../../modules/products/api/productApi";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+import {
+    getProductsWithPresentationsRequest,
+    searchProductsWithPresentationsRequest,
+    getProductByIdRequest,
+    editProductRequest,
+    deleteProductRequest,
+} from "../../modules/products/api/productApi";
+import { API_URL } from "../../config/api";
 
 // ─── Respuesta de POST /product/create-product ────────────────────────────────
 type CreateProductResponse = {
@@ -29,7 +42,7 @@ export const createProduct = (body: CreateProductBody, navigate: NavigateFunctio
         dispatch(checkingProducts());
 
         try {
-            const response = await fetch(`${API_BASE_URL}/product/create-product`, {
+            const response = await fetch(`${API_URL}/product/create-product`, {
                 method:      "POST",
                 headers:     { "Content-Type": "application/json" },
                 credentials: "include",
@@ -43,9 +56,6 @@ export const createProduct = (body: CreateProductBody, navigate: NavigateFunctio
 
             const data: CreateProductResponse = await response.json();
 
-            // ─── Construimos el objeto completo con los datos que ya tenemos ───
-            // El backend solo devuelve { _id, message }, así que completamos
-            // con los datos del body que acabamos de enviar.
             const createdProduct: Product = {
                 _id:          data._id,
                 name:         body.name,
@@ -55,7 +65,7 @@ export const createProduct = (body: CreateProductBody, navigate: NavigateFunctio
                 image_url:    body.image_url,
                 gallery_urls: body.gallery_urls,
                 brand:        body.brand,
-                variants:     [],   // recién creado, sin variantes aún
+                presentations:     [], 
             };
 
             // ─── Guardamos en store → PresentationForm lo leerá desde acá ──
@@ -92,6 +102,7 @@ export const getProducts = () => {
             return products;
 
         } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudieron obtener los productos" }));
             handleError(error);
         }
     };
@@ -117,6 +128,93 @@ export const searchProducts = (term: string) => {
 
         } catch (error: unknown) {
             dispatch(setError({ errorMessage: "No se pudieron buscar productos" }));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 getProductById                                                     ║
+║ 📥 Entrada: _id                                                        ║
+║ ⚙️  Proceso:                                                           ║
+║   1. GET /get-product-by-id/:_id                                      ║
+║   2. Si ya coincide con el currentProduct del store, evita refetch    ║
+║      (esa lógica vive en el hook, no acá)                              ║
+║   3. Guarda el resultado en currentProduct sin tocar la lista          ║
+║ 📤 Salida: Product o undefined en caso de error                       ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const getProductById = (_id: string) => {
+
+    return async (dispatch: Dispatch): Promise<Product | undefined> => {
+        dispatch(checkingCurrentProduct());
+
+        try {
+            const product = await getProductByIdRequest(_id);
+            dispatch(setCurrentProduct(product));
+            return product;
+
+        } catch (error: unknown) {
+            dispatch(setCurrentProductError("No se pudo cargar el producto"));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 editProduct                                                        ║
+║ 📥 Entrada: producto parcial con _id + los valores editados            ║
+║ ⚙️  Proceso:                                                           ║
+║   1. PUT /edit-product                                                 ║
+║   2. El backend solo devuelve { _id, message }, no el Product completo║
+║      así que reconstruimos el objeto con lo que ya teníamos en el     ║
+║      store + los campos nuevos enviados                               ║
+║   3. Guarda el resultado en currentProduct                             ║
+║ 📤 Salida: Product actualizado o undefined en caso de error            ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const editProduct = (body: Partial<Product> & Pick<Product, "_id">) => {
+
+    return async (dispatch: Dispatch, getState: () => { product: { currentProduct: Product | null } }): Promise<Product | undefined> => {
+        dispatch(checkingCurrentProduct());
+
+        try {
+            await editProductRequest(body);
+
+            // ─── El backend no devuelve el producto completo, así que lo   ───
+            // ─── reconstruimos combinando lo que había en store + lo nuevo ───
+            const previous = getState().product.currentProduct;
+            const updated: Product = {
+                ...(previous as Product),
+                ...body,
+                updated_at: new Date().toISOString(),
+            };
+
+            dispatch(setCurrentProduct(updated));
+            return updated;
+
+        } catch (error: unknown) {
+            dispatch(setCurrentProductError("Error al actualizar el producto"));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 deleteProduct                                                      ║
+║ 📥 Entrada: _id                                                        ║
+║ ⚙️  Proceso:                                                           ║
+║   1. DELETE /delete-product                                            ║
+║   2. Saca el producto de la lista en store sin necesidad de refetch   ║
+║ 📤 Salida: void                                                        ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const deleteProduct = (_id: string) => {
+
+    return async (dispatch: Dispatch): Promise<void> => {
+        try {
+            await deleteProductRequest(_id);
+            dispatch(removeProduct(_id));
+
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudo eliminar el producto" }));
             handleError(error);
         }
     };

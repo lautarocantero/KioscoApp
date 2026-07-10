@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { useParams } from "react-router-dom";
 import { Formik } from "formik";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import {
@@ -10,7 +11,8 @@ import {
 import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
 import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import ProductFormFirstStep from "./ProductFormFirstStep";
-import { useProductCreate, useProductDetail, useProductEdit } from "../../../../hooks/products/useProductsForm";
+import { useProductCreate, useProductEdit } from "../../../../hooks/products/useProductsForm";
+import { useProductData } from "../../../../hooks/products/useProductData";
 import ProductCreated from "../../pages/ProductCreate/components/ProductCreated";
 import ProductEdited from "../../pages/ProductEdit/components/ProductEdited";
 import type { ProductFormProps } from "@typings/product/productComponentTypes";
@@ -107,12 +109,19 @@ const ProductEditForm = (): React.ReactNode => {
 };
 
 // ── Modo DETALLE ─────────────────────────────────────────────────────────────
+// Antes usaba useProductDetail (duplicado). Ahora usa useProductData
+// directamente, igual que useProductEdit hace para precargar.
 const ProductDetailForm = (): React.ReactNode => {
-    const form = useProductDetail();
+    const { productId } = useParams<{ productId: string }>();
+    const {
+        productData: viewingEntity,
+        isLoading: isLoadingEntity,
+        error: loadError,
+    } = useProductData(productId);
 
     return (
         <Formik
-            initialValues={getProductEditInitialValues(form.viewingEntity)}
+            initialValues={getProductEditInitialValues(viewingEntity)}
             onSubmit={() => {}}
             enableReinitialize
         >
@@ -126,14 +135,14 @@ const ProductDetailForm = (): React.ReactNode => {
                         onSubmit:     () => {},
                         isSubmitting: false,
                         validateForm: async () => ({}),
-                        submitError:  form.loadError,
+                        submitError:  loadError,
                         stepErrors:   [],
                         actionTitle:  "detail",
                     }}
                 >
                     <Grid container sx={{ width: "100%" }}>
-                        <ApiErrorComponent submitError={form.loadError} />
-                        {!form.isLoadingEntity && (
+                        <ApiErrorComponent submitError={loadError} />
+                        {!isLoadingEntity && (
                             <ActualStepComponent
                                 currentStep={0}
                                 stepComponents={STEP_COMPONENTS}

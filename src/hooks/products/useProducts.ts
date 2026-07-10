@@ -1,46 +1,43 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type {
-  DeleteDialogState,
-  Product,
-  ProductWithPresentations,
-  UseProductsReturn,
-} from "@typings/product/productTypes";
-import {
-  deleteProductRequest,
-  getProductsWithPresentationsRequest,
-  searchProductsWithPresentationsRequest,
-} from "../../modules/products/api/productApi";
-import { resolveErrorMessage } from "../../modules/products/pages/ProductsList/helpers/productHelpers";
+import { useDispatch, useSelector } from "react-redux";
+import type { DeleteDialogState, UseProductsReturn } from "@typings/product/productTypes";
+import type { AppDispatch, RootState } from "../../store/product/productSlice";
+import { getProducts, searchProducts, deleteProduct } from "../../store/product/productThunks";
 import { buildColumns } from "../../modules/products/pages/ProductsList/components/productColumns";
 
 const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
 export const useProducts = (): UseProductsReturn => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const products    = useSelector((state: RootState) => state.product.products);
+  const loading     = useSelector((state: RootState) => state.product.isLoading);
+  const storeError  = useSelector((state: RootState) => state.product.errorMessage);
+
   const [error, setError] = useState<string | null>(null);
-  const [deleteDialog, setDeleteDialog] =
-    useState<DeleteDialogState>(CLOSED_DIALOG);
-
-  const fetchProducts = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getProductsWithPresentationsRequest();
-      setProducts(data);
-    } catch (err: unknown) {
-      setError(resolveErrorMessage(err));
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
 
   useEffect(() => {
-    void fetchProducts();
-  }, [fetchProducts]);
+    setError(storeError);
+  }, [storeError]);
+
+  // ── búsqueda con debounce ──────────────────────────────────────────
+  const [searchTerm, setSearchTerm] = useState("");
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  useEffect(() => {
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      if (searchTerm.trim() === "") {
+        void dispatch(getProducts());
+      } else {
+        void dispatch(searchProducts(searchTerm));
+      }
+    }, 350);
+    return () => clearTimeout(debounceRef.current);
+  }, [searchTerm, dispatch]);
 
   const handleDeleteRequest = (id: string, name: string) =>
     setDeleteDialog({ open: true, id, name });
@@ -48,79 +45,14 @@ export const useProducts = (): UseProductsReturn => {
   const handleDeleteCancel = () => setDeleteDialog(CLOSED_DIALOG);
 
   const handleDeleteConfirm = async () => {
-    try {
-      await deleteProductRequest(deleteDialog.id);
-      setProducts((prev) => prev.filter((p) => p._id !== deleteDialog.id));
-      if (searchTerm.trim() === "") {
-        await fetchProductsWithPresentations();
-      } else {
-        await searchProductsWithPresentations(searchTerm);
-      }
-    } catch (err: unknown) {
-      setError(resolveErrorMessage(err));
-    } finally {
-      handleDeleteCancel();
-    }
+    await dispatch(deleteProduct(deleteDialog.id));
+    setDeleteDialog(CLOSED_DIALOG);
   };
 
-  // ── productos con presentaciones resumidas ────────────────────────
-  const [productsWithPresentations, setProductsWithPresentations] =
-    useState<ProductWithPresentations[]>([]);
-  const [loadingPresentations, setLoadingPresentations] = useState(true);
-  const [errorPresentations, setErrorPresentations] = useState<string | null>(null);
-
-  const fetchProductsWithPresentations = useCallback(async () => {
-    setLoadingPresentations(true);
-    setErrorPresentations(null);
-    try {
-      const data = await getProductsWithPresentationsRequest();
-      setProductsWithPresentations(data);
-    } catch (err: unknown) {
-      setErrorPresentations(resolveErrorMessage(err));
-    } finally {
-      setLoadingPresentations(false);
-    }
-  }, []);
-
-  // ── búsqueda ────────────────────────────────────────────────────────
-  const [searchTerm, setSearchTerm] = useState("");
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  const searchProductsWithPresentations = useCallback(async (term: string) => {
-    setLoadingPresentations(true);
-    setErrorPresentations(null);
-    try {
-      const data = await searchProductsWithPresentationsRequest(term);
-      setProductsWithPresentations(data);
-    } catch (err: unknown) {
-      setErrorPresentations(resolveErrorMessage(err));
-    } finally {
-      setLoadingPresentations(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      if (searchTerm.trim() === "") {
-        void fetchProductsWithPresentations();
-      } else {
-        void searchProductsWithPresentations(searchTerm);
-      }
-    }, 350);
-    return () => clearTimeout(debounceRef.current);
-  }, [searchTerm, fetchProductsWithPresentations, searchProductsWithPresentations]);
-  // ────────────────────────────────────────────────────────────────────────
-
-  // ── columnas de la tabla (antes armadas en la page) ──────────────────
-  const columns = buildColumns({
-    onDeleteRequest: handleDeleteRequest,
-    navigate,
-  });
-  // ────────────────────────────────────────────────────────────────────────
+  const columns = buildColumns({ onDeleteRequest: handleDeleteRequest, navigate });
 
   return {
-    products,
+    productsWithPresentations: products,
     loading,
     error,
     deleteDialog,
@@ -128,10 +60,6 @@ export const useProducts = (): UseProductsReturn => {
     handleDeleteRequest,
     handleDeleteCancel,
     handleDeleteConfirm,
-    productsWithPresentations,
-    loadingPresentations,
-    errorPresentations,
-    refetchProductsWithPresentations: fetchProductsWithPresentations,
     searchTerm,
     setSearchTerm,
     columns,

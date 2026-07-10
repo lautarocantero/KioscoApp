@@ -1,25 +1,28 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import type { FormikErrors } from "formik";
 import type {
     CreatedProductInterface,
     UpdatedProductInterface,
-    ExistingProductInterface,
     ProductFormValues,
     ProductEditFormValues,
     UseProductsFormReturn,
     UseProductsEditFormReturn,
-    UseProductsDetailFormReturn,
 } from "@typings/product/productTypes";
+import type { AppDispatch } from "../../store/product/productSlice";
+import { createProduct, editProduct } from "../../store/product/productThunks";
+import { useProductData } from "./useProductData";
 import { useFormSteps } from "../../hooks/shared/useFormSteps";
-import { API_URL } from "../../config/api";
-import { stepFieldsMap } from "../../modules/products/schema/ProductFormSchema";
-import { editStepFieldsMap } from "../../modules/products/schema/ProductFormSchema";
+import { stepFieldsMap, editStepFieldsMap } from "../../modules/products/schema/ProductFormSchema";
 import { stepsConfig, editStepsConfig } from "../../config/constants";
 
 // ─── Modo CREAR ──────────────────────────────────────────────────────────────
 
 export function useProductCreate(): UseProductsFormReturn {
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+
     const [createdEntity, setCreatedEntity] = useState<CreatedProductInterface | null>(null);
     const [isSubmitting, setIsSubmitting]   = useState(false);
     const [submitError, setSubmitError]     = useState<string | null>(null);
@@ -59,6 +62,9 @@ export function useProductCreate(): UseProductsFormReturn {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
+    // ─── Ahora despacha el thunk createProduct en vez de fetch manual ───────
+    // El thunk ya se encarga de: POST al backend, armar el Product completo,
+    // guardarlo en currentProduct, y navegar al form de variante.
     const handleSubmit = async (values: ProductFormValues) => {
         setIsSubmitting(true);
         setSubmitError(null);
@@ -76,19 +82,13 @@ export function useProductCreate(): UseProductsFormReturn {
                 variants:     [],
             };
 
-            const response = await fetch(`${API_URL}/product/create-product`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-            });
+            const created = await dispatch(createProduct(body, navigate));
 
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData?.message ?? `Error ${response.status}`);
+            if (!created) {
+                throw new Error("Error al crear el producto");
             }
 
-            const data: { _id: string; message: string } = await response.json();
-            setCreatedEntity({ _id: data._id, name: values.name });
+            setCreatedEntity({ _id: created._id, name: created.name });
         } catch (error) {
             setSubmitError(
                 error instanceof Error
@@ -120,39 +120,22 @@ export function useProductCreate(): UseProductsFormReturn {
 
 export function useProductEdit(): UseProductsEditFormReturn {
     const { productId } = useParams<{ productId: string }>();
+    const dispatch = useDispatch<AppDispatch>();
 
-    const [editingEntity, setEditingEntity]     = useState<ExistingProductInterface | null>(null);
+    // ─── Precarga vía store: mismo hook que usa la pantalla de detalle ──────
+    // Si el store ya tiene este producto no refetchea; si no, dispara getProductById.
+    const {
+        productData: editingEntity,
+        isLoading: isLoadingEntity,
+        error: loadError,
+    } = useProductData(productId);
+
     const [updatedEntity, setUpdatedEntity]     = useState<UpdatedProductInterface | null>(null);
-    const [isLoadingEntity, setIsLoadingEntity] = useState(true);
     const [isSubmitting, setIsSubmitting]       = useState(false);
-    const [submitError, setSubmitError]         = useState<string | null>(null);
+    const [submitError, setSubmitError]         = useState<string | null>(loadError);
     const [stepErrors, setStepErrors]           = useState<string[]>([]);
 
     const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(editStepsConfig);
-
-    useEffect(() => {
-        if (!productId) return;
-
-        const fetchProduct = async () => {
-            setIsLoadingEntity(true);
-            try {
-                const response = await fetch(`${API_URL}/product/get-product-by-id/${productId}`);
-                if (!response.ok) throw new Error(`Error ${response.status}`);
-                const data: ExistingProductInterface = await response.json();
-                setEditingEntity(data);
-            } catch (error) {
-                setSubmitError(
-                    error instanceof Error
-                        ? error.message
-                        : "No se pudo cargar el producto"
-                );
-            } finally {
-                setIsLoadingEntity(false);
-            }
-        };
-
-        fetchProduct();
-    }, [productId]);
 
     const handleNextStep = async (
         validateForm: () => Promise<FormikErrors<ProductEditFormValues>>,
@@ -186,6 +169,7 @@ export function useProductEdit(): UseProductsEditFormReturn {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
+    // ─── Ahora despacha el thunk editProduct en vez de fetch manual ─────────
     const handleEdit = async (values: ProductEditFormValues) => {
         if (!productId) return;
 
@@ -200,21 +184,15 @@ export function useProductEdit(): UseProductsEditFormReturn {
                 brand:        values.brand,
                 image_url:    values.image_url    ?? "",
                 gallery_urls: values.gallery_urls ?? [],
-                updated_at:   new Date().toISOString(),
             };
 
-            const response = await fetch(`${API_URL}/product/edit-product/${productId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-            });
+            const updated = await dispatch(editProduct(body));
 
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData?.message ?? `Error ${response.status}`);
+            if (!updated) {
+                throw new Error("Error al actualizar el producto");
             }
 
-            setUpdatedEntity({ _id: productId, name: values.name });
+            setUpdatedEntity({ _id: updated._id, name: updated.name });
         } catch (error) {
             setSubmitError(
                 error instanceof Error
@@ -233,7 +211,7 @@ export function useProductEdit(): UseProductsEditFormReturn {
         isSubmitting,
         submitError,
         stepErrors,
-        setEditingEntity,
+        setEditingEntity: () => { /* ya no aplica: editingEntity viene del store */ },
         setUpdatedEntity,
         setIsSubmitting,
         setSubmitError,
@@ -242,46 +220,5 @@ export function useProductEdit(): UseProductsEditFormReturn {
         handleNextStep,
         handlePrevStep,
         handleEdit,
-    };
-}
-
-// ─── Modo DETALLE ────────────────────────────────────────────────────────────
-
-export function useProductDetail(): UseProductsDetailFormReturn {
-    const { productId } = useParams<{ productId: string }>();
-
-    const [viewingEntity, setViewingEntity]     = useState<ExistingProductInterface | null>(null);
-    const [isLoadingEntity, setIsLoadingEntity] = useState(true);
-    const [loadError, setLoadError]             = useState<string | null>(null);
-
-    useEffect(() => {
-        if (!productId) return;
-
-        const fetchProduct = async () => {
-            setIsLoadingEntity(true);
-            try {
-                const response = await fetch(`${API_URL}/product/get-product-by-id/${productId}`);
-                if (!response.ok) throw new Error(`Error ${response.status}`);
-                const data: ExistingProductInterface = await response.json();
-                setViewingEntity(data);
-            } catch (error) {
-                setLoadError(
-                    error instanceof Error
-                        ? error.message
-                        : "No se pudo cargar el producto"
-                );
-            } finally {
-                setIsLoadingEntity(false);
-            }
-        };
-
-        fetchProduct();
-    }, [productId]);
-
-    return {
-        viewingEntity,
-        isLoadingEntity,
-        loadError,
-        setViewingEntity,
     };
 }
