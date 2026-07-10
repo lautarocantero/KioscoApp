@@ -25,6 +25,7 @@ const DataTableToolbar = ({ search, newItem }: DataTableToolbarProps): React.Rea
                     sx={(theme) => ({
                         ml: { xs: "none", sm: "auto" },
                         flexShrink: 0,
+                        backgroundColor: theme.custom?.lightBackground,
                         color: theme.palette.secondary.main,
                         textTransform: "none",
                         fontWeight: 500,

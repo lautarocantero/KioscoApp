@@ -38,6 +38,7 @@ const ProductsListPage = (): React.ReactNode => {
                 error={error}
                 onClearError={clearError}
                 emptyMessage="No hay productos registrados"
+                height={"35em"}
                 search={{
                     value: searchTerm,
                     onChange: setSearchTerm,

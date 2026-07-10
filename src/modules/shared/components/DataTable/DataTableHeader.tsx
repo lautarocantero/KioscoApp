@@ -8,7 +8,7 @@ const DataTableHeader = ({ title, search, newItem }: DataTableHeaderProps): Reac
     return (
         <Box
             component="header"
-            sx={{ width: "100%", display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 3 }}
+            sx={{ width: "100%", display: "flex", flexDirection: { xs: "column" }, gap: 3 }}
         >
             {title && (
                 <Typography
@@ -17,14 +17,14 @@ const DataTableHeader = ({ title, search, newItem }: DataTableHeaderProps): Reac
                     sx={(theme) => ({
                         fontSize: theme.typography.h2.fontSize,
                         fontWeight: 700,
-                        color: theme.custom.white,
+                        color: theme.custom.fontColor,
                         maxWidth: { xs: "100%", sm: 200 },
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                     })}
                 >
-                    {title.length > 11 ? `${title.slice(0, 11)}...` : title}
+                    {title}
                 </Typography>
             )}
 
