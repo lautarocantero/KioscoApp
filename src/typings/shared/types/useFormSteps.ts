@@ -39,6 +39,15 @@ export interface ActualStepComponentProps {
     stepComponents: React.ComponentType[];
 }
 
+export interface FormHeaderProps {
+    title: string;
+    subtitle?: string;
+    icon?: React.ReactNode;
+    isMultiStep?: boolean;
+    stepsLabels?: string[];
+    currentStep?: number;
+}
+
 export interface FormHeaderComponentProps {
     stepsLabels: string[];
     currentStep: number;

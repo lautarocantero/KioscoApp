@@ -14,7 +14,6 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { getNoisyBackgroundSx } from "../NoisyBackground/NoisyBackground";
 
 export interface ConfirmDialogProps {
     open: boolean;
@@ -44,22 +43,23 @@ const ConfirmDialog = ({
     onCancel,
 }: ConfirmDialogProps): React.ReactNode => (
     <Dialog
-      open={open}
-      onClose={onCancel}
-      PaperProps={{
-          sx: (theme: Theme) => ({
-              ...getNoisyBackgroundSx({theme}),
-              border: "0.5px solid",
-              borderColor: "rgba(255,255,255,0.08)",
-              borderRadius: "16px",
-              minWidth: 480,
-              boxShadow: `
-                  0 1px 3px rgba(0,0,0,0.06),
-                  4px 8px 16px rgba(0,0,0,0.10),
-                  8px 16px 28px rgba(0,0,0,0.08)
-              `,
-          }),
-      }}
+        open={open}
+        onClose={onCancel}
+        slotProps={{
+        paper: {
+            sx: {
+                border: "0.5px solid",
+                borderColor: "rgba(255,255,255,0.08)",
+                borderRadius: "16px",
+                minWidth: 480,
+                boxShadow: `
+                    0 1px 3px rgba(0,0,0,0.06),
+                    4px 8px 16px rgba(0,0,0,0.10),
+                    8px 16px 28px rgba(0,0,0,0.08)
+                `,
+            },
+        },
+    }}
     >
         <IconButton
             onClick={onCancel}
@@ -91,7 +91,7 @@ const ConfirmDialog = ({
             >
                 {icon ?? <DeleteOutlineIcon sx={{ fontSize: "1.6rem" }} />}
             </Box>
-            <Typography sx={(theme: Theme) => ({ fontSize: "1.15rem", fontWeight: 700, color: theme.custom?.white })}>
+            <Typography sx={(theme: Theme) => ({ fontSize: "1.15rem", fontWeight: 700, color: theme.custom?.fontColor })}>
                 {title}
             </Typography>
         </DialogTitle>
@@ -99,7 +99,7 @@ const ConfirmDialog = ({
         <DialogContent sx={{ pb: warningText ? 1 : 3, borderBottom: warningText ? `1px solid rgba(255,255,255,0.08)` : "none" }}>
             <DialogContentText
                 component="div"
-                sx={(theme: Theme) => ({ color: theme.custom?.white, fontSize: "0.95rem", lineHeight: 1.6 })}
+                sx={(theme: Theme) => ({ color: theme.custom?.fontColor, fontSize: "0.95rem", lineHeight: 1.6 })}
             >
                 {description}
             </DialogContentText>
@@ -131,7 +131,7 @@ const ConfirmDialog = ({
                     })}
                 >
                     <WarningAmberRoundedIcon sx={(theme: Theme) => ({ color: theme.palette[confirmColor].main, fontSize: "1.3rem", flexShrink: 0 })} />
-                    <Typography sx={(theme: Theme) => ({ fontSize: "0.8rem", color: theme.custom?.translucidWhite, lineHeight: 1.4 })}>
+                    <Typography sx={(theme: Theme) => ({ fontSize: "0.8rem", color: theme.custom?.fontColor, lineHeight: 1.4 })}>
                         {warningText}
                     </Typography>
                 </Box>
@@ -143,7 +143,7 @@ const ConfirmDialog = ({
                     sx={(theme: Theme) => ({
                         textTransform: "none",
                         fontWeight: 600,
-                        color: theme.custom?.lightGray,
+                        color: theme.custom?.translucidFontColor,
                     })}
                 >
                     {cancelLabel}

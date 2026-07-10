@@ -3,25 +3,25 @@ import type { ProductImagePreviewProps } from "@typings/product/productComponent
 
 
 const ProductImagePreview = ({ imageUrl }: ProductImagePreviewProps): React.ReactNode => (
-    <Box sx={{
-        border: "0.5px dashed", borderColor: "rgba(255,255,255,0.12)",
+    <Box sx={(theme: Theme) => ({
+        border: `0.5px dashed", borderColor: "rgba(255,255,255,0.12)`,
         borderRadius: "10px", p: 1.5,
         display: "flex", alignItems: "center", gap: 2,
-        background: "rgba(255,255,255,0.02)",
-    }}>
+        background: `${theme.custom.darkGray}`,
+    })}> 
         <Box
             component="img"
             src={imageUrl}
             alt="Vista previa"
             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-            sx={{
+            sx={(theme: Theme) => ({
                 width: 56, height: 56, borderRadius: "8px",
-                objectFit: "cover", background: "rgba(255,255,255,0.06)", flexShrink: 0,
-            }}
+                objectFit: "cover", background: `${theme.custom.darkGray}`, flexShrink: 0,
+            })}
         />
         <Typography sx={(theme: Theme) => ({
             fontSize: "0.75rem",
-            color: theme.custom?.translucidWhite,
+            color: theme.custom?.translucidFontColor,
             wordBreak: "break-all",
         })}>
             {imageUrl}

@@ -6,7 +6,7 @@ import type { NavButtonsProps } from "@typings/ui/buttons.types";
 
 
 const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: NavButtonsProps): React.ReactNode => {
-    const context     = useContext(FormNavigationContext);
+    const context     = useContext(FormNavigationContext); //pasar esto a un hook
     const navigate    = useNavigate();
 
     const currentStep = context?.currentStep ?? 0;
@@ -34,8 +34,8 @@ const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: Na
             <Button onClick={handleBack} variant="outlined"
                 sx={(theme: Theme) => ({
                     textTransform: "none", fontWeight: 600, minWidth: 120,
-                    borderColor: theme?.custom?.translucidWhite,
-                    color: theme?.custom?.translucidWhite,
+                    borderColor: theme?.custom?.translucidFontColor,
+                    color: theme?.custom?.translucidFontColor,
                 })}
             >
                 {readOnly ? "Volver" : isFirstStep ? "Cancelar" : "Atrás"}

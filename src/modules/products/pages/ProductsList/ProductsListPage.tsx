@@ -1,5 +1,4 @@
 import React from "react";
-import StorefrontIcon from "@mui/icons-material/Storefront";
 import type { Product } from "@typings/product/productTypes";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import AppLayout from "../../../shared/layout/AppLayout";

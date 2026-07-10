@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { FormikErrors } from "formik";
 import type {
@@ -21,7 +21,6 @@ import { stepsConfig, editStepsConfig } from "../../config/constants";
 
 export function useProductCreate(): UseProductsFormReturn {
     const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate();
 
     const [createdEntity, setCreatedEntity] = useState<CreatedProductInterface | null>(null);
     const [isSubmitting, setIsSubmitting]   = useState(false);
@@ -62,9 +61,6 @@ export function useProductCreate(): UseProductsFormReturn {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    // ─── Ahora despacha el thunk createProduct en vez de fetch manual ───────
-    // El thunk ya se encarga de: POST al backend, armar el Product completo,
-    // guardarlo en currentProduct, y navegar al form de variante.
     const handleSubmit = async (values: ProductFormValues) => {
         setIsSubmitting(true);
         setSubmitError(null);
@@ -82,7 +78,7 @@ export function useProductCreate(): UseProductsFormReturn {
                 variants:     [],
             };
 
-            const created = await dispatch(createProduct(body, navigate));
+            const created = await dispatch(createProduct(body));
 
             if (!created) {
                 throw new Error("Error al crear el producto");
@@ -122,8 +118,6 @@ export function useProductEdit(): UseProductsEditFormReturn {
     const { productId } = useParams<{ productId: string }>();
     const dispatch = useDispatch<AppDispatch>();
 
-    // ─── Precarga vía store: mismo hook que usa la pantalla de detalle ──────
-    // Si el store ya tiene este producto no refetchea; si no, dispara getProductById.
     const {
         productData: editingEntity,
         isLoading: isLoadingEntity,
@@ -211,7 +205,7 @@ export function useProductEdit(): UseProductsEditFormReturn {
         isSubmitting,
         submitError,
         stepErrors,
-        setEditingEntity: () => { /* ya no aplica: editingEntity viene del store */ },
+        setEditingEntity: () => {  },
         setUpdatedEntity,
         setIsSubmitting,
         setSubmitError,

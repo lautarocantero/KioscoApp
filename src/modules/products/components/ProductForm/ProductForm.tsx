@@ -109,8 +109,6 @@ const ProductEditForm = (): React.ReactNode => {
 };
 
 // ── Modo DETALLE ─────────────────────────────────────────────────────────────
-// Antes usaba useProductDetail (duplicado). Ahora usa useProductData
-// directamente, igual que useProductEdit hace para precargar.
 const ProductDetailForm = (): React.ReactNode => {
     const { productId } = useParams<{ productId: string }>();
     const {

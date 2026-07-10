@@ -36,7 +36,7 @@ type CreateProductResponse = {
 ║   4. Navega al formulario de variante                                 ║
 ║ 📤 Salida: Product creado o undefined en caso de error                ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-export const createProduct = (body: CreateProductBody, navigate: NavigateFunction) => {
+export const createProduct = (body: CreateProductBody, navigate?: NavigateFunction) => {
 
     return async (dispatch: Dispatch): Promise<Product | undefined> => {
         dispatch(checkingProducts());
@@ -65,14 +65,13 @@ export const createProduct = (body: CreateProductBody, navigate: NavigateFunctio
                 image_url:    body.image_url,
                 gallery_urls: body.gallery_urls,
                 brand:        body.brand,
-                presentations:     [], 
+                presentations:     [],
             };
 
-            // ─── Guardamos en store → PresentationForm lo leerá desde acá ──
             dispatch(setCurrentProduct(createdProduct));
 
-            // ─── Navegamos al form de variante ────────────────────────────────
-            navigate(`/products/${data._id}/variant/new`);
+            // ─── Navegación opcional: solo si el caller la pide ────────────
+            navigate?.(`/products/${data._id}/variant/new`);
 
             return createdProduct;
 
@@ -172,22 +171,23 @@ export const getProductById = (_id: string) => {
 ║ 📤 Salida: Product actualizado o undefined en caso de error            ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const editProduct = (body: Partial<Product> & Pick<Product, "_id">) => {
-
     return async (dispatch: Dispatch, getState: () => { product: { currentProduct: Product | null } }): Promise<Product | undefined> => {
         dispatch(checkingCurrentProduct());
 
         try {
-            await editProductRequest(body);
-
-            // ─── El backend no devuelve el producto completo, así que lo   ───
-            // ─── reconstruimos combinando lo que había en store + lo nuevo ───
             const previous = getState().product.currentProduct;
-            const updated: Product = {
-                ...(previous as Product),
+
+            const fullBody = {
+                ...previous,
                 ...body,
                 updated_at: new Date().toISOString(),
+                created_at: previous?.created_at ?? body.created_at ?? new Date().toISOString(),
+                presentations: previous?.presentations ?? [],
             };
 
+            await editProductRequest(fullBody);
+
+            const updated: Product = { ...(previous as Product), ...fullBody };
             dispatch(setCurrentProduct(updated));
             return updated;
 

@@ -1,13 +1,5 @@
 import { Box, Typography, useTheme, type Theme } from "@mui/material";
-
-export interface FormHeaderProps {
-    title: string;
-    subtitle?: string;
-    icon?: React.ReactNode;
-    isMultiStep?: boolean;
-    stepsLabels?: string[];
-    currentStep?: number;
-}
+import type { FormHeaderProps } from "@typings/shared/types/useFormSteps";
 
 const getDefaultIcon = (color: string) => (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -41,7 +33,7 @@ const FormHeader = ({
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                     <Box sx={(theme: Theme) => ({
                         width: 34, height: 34, borderRadius: "8px",
-                        background: theme.custom?.white,
+                        background: theme.custom?.darkBackground,
                         display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                     })}>
                         {icon ?? getDefaultIcon(theme.palette?.primary?.main)}
@@ -102,7 +94,7 @@ const FormHeader = ({
                                 width: 28, height: 28, borderRadius: "50%",
                                 display: "flex", alignItems: "center", justifyContent: "center",
                                 flexShrink: 0,
-                                bgcolor: index <= currentStep ? themecustom?.darkSecondary : "rgba(255,255,255,0.08)",
+                                bgcolor: index <= currentStep ? theme.custom?.darkSecondary : "rgba(255,255,255,0.08)",
                                 outline: `1px solid ${index <= currentStep ? theme.palette?.primary?.main : "rgba(255,255,255,0.15)"}`,
                                 outlineOffset: "2px",
                             }}>
