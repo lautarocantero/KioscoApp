@@ -5,7 +5,7 @@ const DataTableErrorAlert = ({ error, onClose }: DataTableErrorAlertProps): Reac
     if (!error) return null;
 
     return (
-        <Alert severity="error" sx={{ mb: 2, width: "100%" }} onClose={onClose}>
+        <Alert severity="error" sx={{ mb: 2, width: "100%" }} onClose={onClose} closeText="Cerrar">
             {error}
         </Alert>
     );

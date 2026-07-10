@@ -1,4 +1,3 @@
-// components/PresentationsCell.tsx
 import React from "react";
 import { Tooltip, Typography, Stack, Box } from "@mui/material";
 import type { GenericCellProps } from "@typings/ui/dataTable.types";
@@ -21,6 +20,7 @@ function GenericListCell<T>({
 
   const [first, ...rest] = items;
   const label = getLabel(first);
+  const fullListLabel = items.map((item) => getTooltipLine(item)).join(", ");
 
   return (
     <Tooltip
@@ -36,7 +36,12 @@ function GenericListCell<T>({
       arrow
       placement="top"
     >
-      <Box sx={{ cursor: "default", display: "inline-block" }}>
+      <Box
+        tabIndex={0}
+        role="button"
+        aria-label={fullListLabel}
+        sx={{ cursor: "default", display: "inline-block", "&:focus-visible": { outline: (theme) => `2px solid ${theme.palette.primary.main}`, outlineOffset: 2 } }}
+      >
         <Typography variant="body2">
           {label}
           {rest.length > 0 && (

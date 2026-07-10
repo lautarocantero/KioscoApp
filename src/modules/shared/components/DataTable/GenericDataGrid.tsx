@@ -33,25 +33,14 @@ function GenericDataGrid<T extends { _id: string }>({
         slots={{
           loadingOverlay: () => (
             <Box
-              sx={{
-                display: "flex",
-                height: "100%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              sx={{ display: "flex", height: "100%", alignItems: "center", justifyContent: "center" }}
+              role="status"
             >
-              <CircularProgress />
+              <CircularProgress aria-label="Cargando registros" />
             </Box>
           ),
           noRowsOverlay: () => (
-            <Box
-              sx={{
-                display: "flex",
-                height: "100%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+            <Box sx={{ display: "flex", height: "100%", alignItems: "center", justifyContent: "center" }}>
               <Typography color="text.secondary">{emptyMessage}</Typography>
             </Box>
           ),

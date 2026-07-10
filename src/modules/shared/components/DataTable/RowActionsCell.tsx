@@ -13,11 +13,11 @@ const RowActionsCell = ({
   onDelete,
   onPresentations,
 }: RowActionsCellProps): React.ReactNode => (
-  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }} role="group" aria-label="Acciones de la fila">
 
     {onPresentations && (
       <Tooltip title="Ver presentaciones">
-        <IconButton size="small" color="success" onClick={onPresentations}>
+        <IconButton size="small" color="success" onClick={onPresentations} aria-label="Ver presentaciones">
           <CookieIcon fontSize="small" />
         </IconButton>
       </Tooltip>
@@ -25,7 +25,7 @@ const RowActionsCell = ({
 
     {onView && (
       <Tooltip title="Ver detalle">
-        <IconButton size="small" color="info" onClick={onView}>
+        <IconButton size="small" color="info" onClick={onView} aria-label="Ver detalle">
           <VisibilityOutlinedIcon fontSize="small" />
         </IconButton>
       </Tooltip>
@@ -33,7 +33,7 @@ const RowActionsCell = ({
 
     {onEdit && (
       <Tooltip title="Editar">
-        <IconButton size="small" color="warning" onClick={onEdit}>
+        <IconButton size="small" color="warning" onClick={onEdit} aria-label="Editar">
           <EditOutlinedIcon fontSize="small" />
         </IconButton>
       </Tooltip>
@@ -41,7 +41,7 @@ const RowActionsCell = ({
 
     {onDelete && (
       <Tooltip title="Eliminar">
-        <IconButton size="small" color="error" onClick={onDelete}>
+        <IconButton size="small" color="error" onClick={onDelete} aria-label="Eliminar">
           <DeleteOutlineIcon fontSize="small" />
         </IconButton>
       </Tooltip>
