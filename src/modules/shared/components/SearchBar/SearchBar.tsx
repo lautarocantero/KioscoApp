@@ -24,6 +24,7 @@ export const SearchBar = ({
   sx,
   fullWidth,
 }: SearchBarProps): React.ReactNode => {
+
   const handleClear = () => {
     onChange("");
     onClear?.();

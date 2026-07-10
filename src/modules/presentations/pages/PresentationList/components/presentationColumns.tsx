@@ -4,7 +4,7 @@ import { type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import RowActionsCell from "../../../../../modules/shared/components/GenericDataGrid/RowActionsCell";
+import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import { formatPrice } from "../helpers/presentationHelpers";
 
 // ─── tipos ────────────────────────────────────────────────────────────────────

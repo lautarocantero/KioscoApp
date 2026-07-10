@@ -1,14 +1,8 @@
 // components/PresentationsCell.tsx
 import React from "react";
 import { Tooltip, Typography, Stack, Box } from "@mui/material";
+import type { GenericCellProps } from "@typings/ui/dataTable.types";
 
-interface GenericCellProps<T> {
-  items: T[];
-  emptyLabel: string;
-  getLabel: (item: T) => string;
-  getTooltipLine: (item: T) => string;
-  getKey: (item: T, index: number) => string;
-}
 
 function GenericListCell<T>({
   items,

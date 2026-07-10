@@ -1,70 +1,70 @@
 import React from "react";
-import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import type { Product } from "@typings/product/productTypes";
-import GenericDataGrid from "../../../shared/components/GenericDataGrid/GenericDataGrid";
+import DataTable from "../../../shared/components/DataTable/DataTable";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useProductsList } from "./hooks/useProductsList";
 import { buildColumns } from "./components/productColumns";
-import ProductDeleteDialog from "./components/ProductDeleteDialog";
 
 const ProductsListPage = (): React.ReactNode => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const {
-    productsWithPresentations,
-    loading,
-    error,
-    deleteDialog,
-    clearError,
-    handleDeleteRequest,
-    handleDeleteCancel,
-    handleDeleteConfirm,
-    searchTerm,
-    setSearchTerm,
-  } = useProductsList();
+    const {
+        productsWithPresentations,
+        loading,
+        error,
+        deleteDialog,
+        clearError,
+        handleDeleteRequest,
+        handleDeleteCancel,
+        handleDeleteConfirm,
+        searchTerm,
+        setSearchTerm,
+    } = useProductsList();
 
-  const columns = buildColumns({
-    onDeleteRequest: handleDeleteRequest,
-    navigate,
-  });
+    const columns = buildColumns({
+        onDeleteRequest: handleDeleteRequest,
+        navigate,
+    });
 
-  return (
-    <AppLayout
-      fullWidth
-      title="Productos"
-      icon={<StorefrontIcon />}
-      hasSearchBar
-      searchPlaceholder="Azucar 600gr..."
-      searchValue={searchTerm}
-      onSearchChange={setSearchTerm}
-      hasNewItem
-      newItemLabel="Nuevo producto"
-      newItemHref="/products-create"
-    >
-      <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }} onClose={clearError}>
-            {error}
-          </Alert>
-        )}
-
-        <GenericDataGrid<Product>
-          rows={productsWithPresentations}
-          columns={columns}
-          loading={loading}
-          emptyMessage="No hay productos registrados"
-        />
-
-        <ProductDeleteDialog
-          deleteDialog={deleteDialog}
-          onConfirm={() => void handleDeleteConfirm()}
-          onCancel={handleDeleteCancel}
-        />
-      </div>
-    </AppLayout>
-  );
+    return (
+        <AppLayout fullWidth title="Productos" icon={<StorefrontIcon />}>
+            <DataTable<Product>
+                title={"Productos"}
+                rows={productsWithPresentations}
+                columns={columns}
+                loading={loading}
+                error={error}
+                onClearError={clearError}
+                emptyMessage="No hay productos registrados"
+                search={{
+                    value: searchTerm,
+                    onChange: setSearchTerm,
+                    placeholder: "Azucar 600gr...",
+                }}
+                newItem={{
+                    label: "Nuevo producto",
+                    href: "/products-create",
+                }}
+                deleteDialog={{
+                    open: deleteDialog.open,
+                    title: "Confirmar eliminación",
+                    description: (
+                        <>
+                            ¿Estás seguro de que querés eliminar el producto{" "}
+                            <strong>{deleteDialog.name}</strong>? Esta acción no se puede deshacer.
+                            También se eliminarán sus presentaciones y stock asociado.
+                        </>
+                    ),
+                    warningText: "Esta acción eliminará el producto de forma permanente.",
+                    confirmLabel: "Eliminar",
+                    onConfirm: () => void handleDeleteConfirm(),
+                    onCancel: handleDeleteCancel,
+                }}
+            />
+        </AppLayout>
+    );
 };
 
 export default ProductsListPage;

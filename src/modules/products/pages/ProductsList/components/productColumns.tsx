@@ -1,9 +1,9 @@
 import { Tooltip } from "@mui/material";
 import { type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
 import type { BuildColumnsArgs, PresentationSummary, Product } from "@typings/product/productTypes";
-import RowActionsCell from "../../../../shared/components/GenericDataGrid/RowActionsCell";
+import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import { formatDate, truncate } from "../helpers/productHelpers";
-import GenericListCell from "../../../../../modules/shared/components/GenericDataGrid/GenericCell";
+import GenericListCell from "../../../../shared/components/DataTable/GenericCell";
 
 export const buildColumns = ({
   onDeleteRequest,

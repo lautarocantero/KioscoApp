@@ -1,10 +1,3 @@
-// ─── Componente 🧩: GenericDataGrid ──────────────────────────────────────────
-// DataGrid de MUI totalmente genérico.
-// - Tipado con <T extends { _id: string }> para identificar filas sin acoplamientos.
-// - Incorpora overlays de loading y de "sin datos" listos para usar.
-// - Todas las opciones de MUI DataGrid se pueden sobreescribir vía `slotProps`
-//   y el spread final de props.
-
 import React from "react";
 import {
   Box,
@@ -13,17 +6,9 @@ import {
 } from "@mui/material";
 import {
   DataGrid,
-  type DataGridProps,
-  type GridColDef,
 } from "@mui/x-data-grid";
+import type { GenericDataGridProps } from "@typings/ui/dataTable.types";
 
-interface GenericDataGridProps<T extends { _id: string }>
-  extends Omit<DataGridProps, "rows" | "columns" | "getRowId"> {
-  rows: T[];
-  columns: GridColDef[];
-  height?: number | string;
-  emptyMessage?: string;
-}
 
 function GenericDataGrid<T extends { _id: string }>({
   rows,

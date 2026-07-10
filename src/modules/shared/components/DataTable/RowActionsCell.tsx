@@ -1,21 +1,11 @@
-// ─── Componente 🧩: RowActionsCell ───────────────────────────────────────────
-// Celda de acciones reutilizable para cualquier DataGrid.
-// Recibe las tres acciones como callbacks opcionales; si alguna no se pasa,
-// el botón correspondiente no se renderiza.
-
 import React from "react";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import CookieIcon from '@mui/icons-material/Cookie';
+import type { RowActionsCellProps } from "@typings/ui/dataTable.types";
 
-interface RowActionsCellProps {
-  onView?: () => void;
-  onEdit?: () => void;
-  onDelete?: () => void;
-  onPresentations?: () => void;
-}
 
 const RowActionsCell = ({
   onView,
