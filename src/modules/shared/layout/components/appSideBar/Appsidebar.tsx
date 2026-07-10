@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Theme } from "@mui/material";
 import { Box } from "@mui/material";
 import SidebarLogout from "./components/SidebarLogout";
@@ -8,6 +9,8 @@ import SidebarLinksList from "./components/SidebarLinksList";
 import { getNoisyBackgroundSx } from "../../../../../modules/shared/components/NoisyBackground/NoisyBackground";
 import SidebarUserData from "./components/SidebarUserData/SidebarUserData";
 import "animate.css";
+import SidebarToggleButtonMobile from "./components/SidebarToggleButtonMobile";
+import SidebarMobileDrawer from "./components/SidebarMobileDrawer";
 
 
 const AppSidebar = (): React.ReactNode => {
@@ -20,10 +23,28 @@ const AppSidebar = (): React.ReactNode => {
     getLinkMeta,
     isSubLinkActive,
     navigate,
+    isMobileOpen, 
+    setIsMobileOpen
   } = useAppSidebar();
+
+  
 
   return (
     <>
+      {/* ── Mobile: botón hamburguesa + drawer ── */}
+      <SidebarToggleButtonMobile onOpen={() => setIsMobileOpen(true)} />
+
+      <SidebarMobileDrawer
+        open={isMobileOpen}
+        onClose={() => setIsMobileOpen(false)}
+        navLinks={navLinks}
+        handleNavClick={handleNavClick}
+        handleLogout={handleLogout}
+        getLinkMeta={getLinkMeta}
+        isSubLinkActive={isSubLinkActive}
+        navigate={navigate}
+      />
+
       {/* ── Espaciador: reserva el ancho fijo en el flujo, nunca cambia ── */}
       <Box
         sx={{
@@ -34,7 +55,7 @@ const AppSidebar = (): React.ReactNode => {
         }}
       />
 
-      {/* ── Panel visual: flota por encima, se expande sin empujar nada ── */}
+      {/* ── Panel visual desktop: flota por encima, se expande sin empujar nada ── */}
       <Box
         component="nav"
         sx={(theme: Theme) => ({

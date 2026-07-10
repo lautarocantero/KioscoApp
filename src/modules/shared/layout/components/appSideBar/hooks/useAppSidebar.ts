@@ -23,6 +23,7 @@ export const useAppSidebar = () => {
     const stored = localStorage.getItem(SIDEBAR_STORAGE_KEY);
     return stored === "true";
   });
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const toggleSidebar = useCallback(() => {
     setIsExpanded((prev) => {
@@ -65,5 +66,7 @@ export const useAppSidebar = () => {
     getLinkMeta,
     isSubLinkActive,
     navigate,
+    isMobileOpen, 
+    setIsMobileOpen
   };
 };
