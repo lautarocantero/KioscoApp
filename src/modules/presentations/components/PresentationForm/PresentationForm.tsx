@@ -9,8 +9,8 @@ import {
 } from "../../schema/PresentationFormSchema";
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
-import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
-import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
+import ApiErrorComponent from "../../../shared/components/FormCard/ApiError";
+import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentation/usePresentationForm";
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep";

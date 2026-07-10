@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import FormCard from "../../../shared/components/FormGrid/FormCard";
-import ExpirationField from "../../../shared/components/FormGrid/ExpirationField";
+import FormCard from "../../../shared/components/FormCard/FormCard";
+import ExpirationField from "../../../shared/components/FormCard/ExpirationField";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";

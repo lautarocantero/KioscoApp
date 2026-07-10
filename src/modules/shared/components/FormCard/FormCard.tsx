@@ -13,32 +13,9 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import NavButtons from "../Buttons/NavButtons";
 import FormFooter from "./FormFooter";
 import FormHeader from "./FormHeader";
-import type { FormHeaderProps } from "./FormHeader";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
+import type { FormCardProps } from "@typings/shared/reactComponents";
 
-export interface FormCardProps {
-    children:     React.ReactNode;
-    submitText?:  string;
-    showButtons?: boolean;
-    readOnly?:    boolean;
-    backPath?:    string;
-    maxWidth?:    number | string;
-    header?: Pick<FormHeaderProps, "title" | "subtitle" | "icon">;
-    multiStepHeader?: {
-        stepsLabels: string[];
-        currentStep: number;
-    };
-    accordion?: {
-        title: string;
-        content: string;
-        defaultExpanded?: boolean;
-        bannerImage?: {
-            src: string;
-            alt: string;
-            maxHeight?: number | string;
-        };
-    };
-}
 
 const FormCard = ({
     children,

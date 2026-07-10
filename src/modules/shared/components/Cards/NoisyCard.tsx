@@ -1,19 +1,12 @@
-import { Card, type SxProps, type Theme } from "@mui/material";
+import type { NoisyCardProps } from "@typings/ui/noisyCard.types";
 import { getNoisyBackgroundSx } from "../NoisyBackground/NoisyBackground";
+import { Card, type Theme } from "@mui/material";
 
-export interface NoisyCardProps {
-    children: React.ReactNode;
-    maxWidth?: number | string;
-    borderRadius?: number | string;
-    noiseOpacity?: number;
-    sx?: SxProps<Theme>;
-}
 
 const NoisyCard = ({
     children,
     maxWidth,
     borderRadius = "16px",
-    noiseOpacity = 0.06,
     sx,
 }: NoisyCardProps): React.ReactNode => (
     <Card
@@ -29,7 +22,7 @@ const NoisyCard = ({
                     4px 8px 16px rgba(0,0,0,0.10),
                     8px 16px 28px rgba(0,0,0,0.08)
                 `,
-                ...getNoisyBackgroundSx(theme, noiseOpacity),
+                ...getNoisyBackgroundSx({theme}),
             }),
             ...(Array.isArray(sx) ? sx : [sx]),
         ]}

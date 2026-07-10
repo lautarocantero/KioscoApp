@@ -1,6 +1,6 @@
 import ProductFormFields from "./ProductFormFields";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
-import FormCard from "../../../../modules/shared/components/FormGrid/FormCard";
+import FormCard from "../../../../modules/shared/components/FormCard/FormCard";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";

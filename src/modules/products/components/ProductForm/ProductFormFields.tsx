@@ -4,7 +4,7 @@ import type { ProductFormValues, ProductEditFormValues } from "@typings/product/
 import ProductImagePreview from "../../../shared/components/Image/ProductImagePreview";
 import { sharedSx } from "../../../../modules/shared/components/sharedSx/sharedSx";
 import type { ProductFormFieldsProps } from "@typings/product/productComponentTypes";
-import FieldWithIcon from "../../../shared/components/FormGrid/FieldWithIcon";
+import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
 
 
 const ProductFormFields = ({ mode = "create", readOnly = false, icons }: ProductFormFieldsProps): React.ReactNode => {

@@ -1,6 +1,6 @@
-import FormCard from "../../../shared/components/FormGrid/FormCard";
+import FormCard from "../../../shared/components/FormCard/FormCard";
 import PresentationFormFields from "./PresentationFormFields";
-import ImageUpload from "../../../shared/components/FormGrid/ImageUpload";
+import ImageUpload from "../../../shared/components/FormCard/ImageUpload";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import QrCode2OutlinedIcon from "@mui/icons-material/QrCode2Outlined";

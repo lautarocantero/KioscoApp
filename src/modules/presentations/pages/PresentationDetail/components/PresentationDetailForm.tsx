@@ -1,10 +1,10 @@
 import { Box, Grid, Typography, Chip } from "@mui/material";
 import { Formik } from "formik";
-import ApiErrorComponent from "../../../../shared/components/FormGrid/ApiError";
+import ApiErrorComponent from "../../../../shared/components/FormCard/ApiError";
 import { usePresentationEdit } from "../../../../../hooks/presentation/usePresentationForm";
 import { getPresentationDetailInitialValues } from "../../../schema/PresentationFormSchema";
 import LoadingSpinnerComponent from "../../../../shared/components/LoadingSpinner";
-import FormCard from "../../../../shared/components/FormGrid/FormCard";
+import FormCard from "../../../../shared/components/FormCard/FormCard";
 import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";

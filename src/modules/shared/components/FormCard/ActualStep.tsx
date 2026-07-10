@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import type { ActualStepComponentProps } from "@typings/shared/types/useFormSteps";
+import type { ActualStepComponentProps } from "@typings/shared/reactComponents";
 
 
 const ActualStepComponent = ({ currentStep, stepComponents }: ActualStepComponentProps) => {

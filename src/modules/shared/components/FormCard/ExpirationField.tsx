@@ -2,7 +2,7 @@ import { Grid, TextField } from "@mui/material";
 import { useFormikContext } from "formik";
 import type { ExpirationFieldProps, PresentationFormValues } from "@typings/presentation/presentationTypes";
 import { sharedSx } from "../sharedSx/sharedSx";
-import FieldWithIcon from "../../../shared/components/FormGrid/FieldWithIcon";
+import FieldWithIcon from "./FieldWithIcon";
 
 const ExpirationField = ({ icon }: ExpirationFieldProps): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();
@@ -17,7 +17,6 @@ const ExpirationField = ({ icon }: ExpirationFieldProps): React.ReactNode => {
                         onChange={(e) => setFieldValue("expiration_date", e.target.value)}
                         error={!!errors.expiration_date} helperText={errors.expiration_date}
                         variant="outlined" sx={sharedSx}
-                        InputLabelProps={{ shrink: true }}
                     />
                 </FieldWithIcon>
             </Grid>

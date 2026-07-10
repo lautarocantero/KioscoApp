@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import PresentationStockFields from "./PresentationStockFields";
-import FormCard from "../../../shared/components/FormGrid/FormCard";
+import FormCard from "../../../shared/components/FormCard/FormCard";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";

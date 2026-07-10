@@ -1,4 +1,3 @@
-// shared/components/FieldWithIcon/FieldWithIcon.tsx
 import { Box } from "@mui/material";
 import type { FieldWithIconProps } from "@typings/product/productComponentTypes";
 

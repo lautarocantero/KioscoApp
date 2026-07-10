@@ -2,7 +2,7 @@ import { Grid, TextField } from "@mui/material";
 import type { PresentationFormFieldsProps, PresentationFormValues } from "@typings/presentation/presentationTypes";
 import { useFormikContext } from "formik";
 import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
-import FieldWithIcon from "../../../shared/components/FormGrid/FieldWithIcon";
+import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
 
 const PresentationFormFields = ({ icons }: PresentationFormFieldsProps): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();

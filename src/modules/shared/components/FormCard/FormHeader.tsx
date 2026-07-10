@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme, type Theme } from "@mui/material";
-import type { FormHeaderProps } from "@typings/shared/types/useFormSteps";
+import type { FormCardHeaderProps } from "@typings/shared/reactComponents";
 
 const getDefaultIcon = (color: string) => (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -17,7 +17,7 @@ const FormHeader = ({
     isMultiStep = false,
     stepsLabels = [],
     currentStep = 0,
-}: FormHeaderProps): React.ReactNode => {
+}: FormCardHeaderProps): React.ReactNode => {
     const theme = useTheme();
 
     const progress = stepsLabels.length > 0

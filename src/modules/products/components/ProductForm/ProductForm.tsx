@@ -8,14 +8,14 @@ import {
     productFormSchema,
     productEditFormSchema,
 } from "../../schema/ProductFormSchema";
-import ApiErrorComponent from "../../../shared/components/FormGrid/ApiError";
-import ActualStepComponent from "../../../shared/components/FormGrid/ActualStep";
 import ProductFormFirstStep from "./ProductFormFirstStep";
 import { useProductCreate, useProductEdit } from "../../../../hooks/products/useProductsForm";
 import { useProductData } from "../../../../hooks/products/useProductData";
 import ProductCreated from "../../pages/ProductCreate/components/ProductCreated";
 import ProductEdited from "../../pages/ProductEdit/components/ProductEdited";
 import type { ProductFormProps } from "@typings/product/productComponentTypes";
+import ApiErrorComponent from "../../../../modules/shared/components/FormCard/ApiError";
+import ActualStepComponent from "../../../../modules/shared/components/FormCard/ActualStep";
 
 const STEP_COMPONENTS = [ProductFormFirstStep];
 

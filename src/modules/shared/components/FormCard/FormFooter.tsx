@@ -1,8 +1,8 @@
 import { Box, Typography, type Theme } from "@mui/material";
-import type { FormFooterProps } from "@typings/shared/types/useFormSteps";
+import type { FormCardFooterProps } from "@typings/shared/reactComponents";
 
 
-const FormFooter = ({ stepErrors, submitError }: FormFooterProps): React.ReactNode => {
+const FormFooter = ({ stepErrors, submitError }: FormCardFooterProps): React.ReactNode => {
     
     const allErrors = [
         ...(stepErrors ?? []),
