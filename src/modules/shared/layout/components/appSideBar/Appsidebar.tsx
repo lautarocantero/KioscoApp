@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { Theme } from "@mui/material";
 import { Box } from "@mui/material";
 import SidebarLogout from "./components/SidebarLogout";

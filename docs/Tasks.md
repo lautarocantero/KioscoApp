@@ -2,16 +2,15 @@
 
 - [ ] Refactorizar todo. 
 - [ ] Agregar disenos sx 
+- [ ] Leer la documentacion y dejarla presentable
 
 ---
 home:
 - [ ] Poner datos reales y sacar el mock.
 ---
 Sidebar:
-- [ ] hacer que cualquier elemento clicleable del sidebar lo abra, y solo la flecha lo contraiga.
 ---
 auth:
-- [ ] Agregar el campo rol a account.
 ---
 Presentaciones:
 - [ ] detail no deja claro de quien es hija la presentacion.
