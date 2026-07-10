@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../../../../store/user/userSlice";
 import { startLogout } from "../../../../../../store/auth/thunks";
 import { SidebarNavLinks } from "../../../../../../config/Links";
-import { NAV_SUBGROUPS } from "../NavSubGroups";
+import { NAV_SUBGROUPS } from "../helper/NavSubGroups";
 import type { NavLinkInterface } from "@typings/ui/sidebar.types";
 import { SIDEBAR_STORAGE_KEY } from "../../../../../../config/constants";
 
