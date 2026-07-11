@@ -1,13 +1,3 @@
-
-//─────────────────── Componente 🧩: PrimaryButtonComponent ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Botón principal reutilizable para acciones destacadas dentro de la interfaz.  
-// Permite personalizar texto, color, tipo, ancho, padding y atributos de prueba (`data-testid`).  
-// Se integra como acción primaria en formularios, flujos de usuario y pantallas clave.  
-
-//-----------------------------------------------------------------------------//
-
 import { Button, type Theme } from "@mui/material";
 import type { PrimaryButtonComponentProps } from "@typings/ui/buttons.types";
 

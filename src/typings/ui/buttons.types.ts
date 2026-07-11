@@ -21,8 +21,13 @@ export interface EmptyButtonProps {
   buttonWidth?: ResponsiveWidth;
 }
 
-export interface NavButtonsProps {
+export interface FormNavButtonsProps {
     SubmitText?:  string;
     backPath?:    string;
     readOnly?:    boolean;
 }
+
+export type UseFormNavButtonsParams = {
+    backPath: string;
+    readOnly: boolean;
+};

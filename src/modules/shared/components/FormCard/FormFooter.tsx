@@ -1,6 +1,6 @@
 import type { FormCardFooterProps } from "@typings/shared/reactComponents";
-import NavButtons from "../Buttons/NavButtons";
 import ApiErrorComponent from "./ApiError";
+import FormNavButtons from "../Buttons/FormNavButtons";
 
 const FormFooter = ({
     stepErrors,
@@ -15,8 +15,8 @@ const FormFooter = ({
         <>
             <ApiErrorComponent submitError={submitError} stepErrors={stepErrors} />
 
-            {showButtons && <NavButtons SubmitText={submitText ?? ""} backPath={backPath} />}
-            {readOnly    && <NavButtons readOnly backPath={backPath} />}
+            {showButtons && <FormNavButtons SubmitText={submitText ?? ""} backPath={backPath} />}
+            {readOnly    && <FormNavButtons readOnly backPath={backPath} />}
         </>
     );
 };

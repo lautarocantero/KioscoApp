@@ -1,29 +1,10 @@
 import { Box, Button, type Theme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { FormNavigationContext } from "../../context/FormNavigationContext";
-import type { NavButtonsProps } from "@typings/ui/buttons.types";
+import type { FormNavButtonsProps } from "@typings/ui/buttons.types";
+import { useFormNavButtons } from "../../../../hooks/shared/useFormNavButtons";
 
 
-const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: NavButtonsProps): React.ReactNode => {
-    const context     = useContext(FormNavigationContext); //pasar esto a un hook
-    const navigate    = useNavigate();
-
-    const currentStep = context?.currentStep ?? 0;
-    const totalSteps  = context?.totalSteps  ?? 1;
-    const isFirstStep = currentStep === 0;
-    const isLastStep  = currentStep === totalSteps - 1;
-
-    const handleNext = () => {
-        if (!context?.validateForm) return;
-        if (isLastStep) { context.onNext(context.validateForm, context.onSubmit); return; }
-        context.onNext(context.validateForm);
-    };
-
-    const handleBack = () => {
-        if (isFirstStep || readOnly) { navigate(backPath); return; }
-        context?.onPrev();
-    };
+const FormNavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: FormNavButtonsProps): React.ReactNode => {
+    const { isFirstStep, isLastStep, handleNext, handleBack } = useFormNavButtons({ backPath, readOnly });
 
     return (
         <Box sx={(theme: Theme) => ({
@@ -56,4 +37,4 @@ const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: Na
     );
 };
 
-export default NavButtons;
+export default FormNavButtons;
