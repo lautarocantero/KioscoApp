@@ -2,9 +2,18 @@ import { getPresentationAnalyticsRequest } from "../../modules/presentations/api
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { resolveErrorMessage } from "../../utils/formatter/resolveErrorMessage";
+import type { PresentationAnalyticsRaw } from "@typings/ui/analytics.types";
 
-export function usePresentationAnalytics() {
-    const { presentation_id } = useParams<{ presentation_id: string }>();
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 usePresentationAnalytics                                           ║
+║                                                                       ║
+║ `presentationId` opcional: si se provee, tiene prioridad sobre la URL. ║
+║ Permite reusar el hook fuera de la ruta de presentación (ej. desde    ║
+║ el detalle de producto, cambiando de presentación sin navegar).       ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export function usePresentationAnalytics(presentationId?: string) {
+    const { presentation_id: presentationIdFromUrl } = useParams<{ presentation_id: string }>();
+    const resolvedPresentationId = presentationId ?? presentationIdFromUrl;
 
     const [analytics, setAnalytics]   = useState<PresentationAnalyticsRaw | null>(null);
     const [isLoading, setIsLoading]   = useState(true);
@@ -12,13 +21,13 @@ export function usePresentationAnalytics() {
     const [dateRange, setDateRange]   = useState<{ start_date?: string; end_date?: string }>({});
 
     const fetchAnalytics = useCallback(async () => {
-        if (!presentation_id) { setIsLoading(false); return; }
+        if (!resolvedPresentationId) { setIsLoading(false); return; }
 
         setIsLoading(true);
         setError(null);
         try {
             const data = await getPresentationAnalyticsRequest({
-                presentation_id,
+                presentation_id: resolvedPresentationId,
                 start_date: dateRange.start_date,
                 end_date: dateRange.end_date,
             });
@@ -28,7 +37,7 @@ export function usePresentationAnalytics() {
         } finally {
             setIsLoading(false);
         }
-    }, [presentation_id, dateRange]);
+    }, [resolvedPresentationId, dateRange]);
 
     useEffect(() => {
         fetchAnalytics();

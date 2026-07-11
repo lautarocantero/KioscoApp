@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
+import type { Presentation } from "@typings/presentation/presentationTypes";
 import type {
     CreatedProductInterface,
     UpdatedProductInterface,
@@ -110,6 +111,21 @@ export interface ProductEditedNameProps {
 
 export interface ProductEditedProps {
     updatedProduct: UpdatedProductInterface;
+}
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🔍 PRODUCTO — DETALLE  🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface PresentationSelectorProps {
+    presentations: Presentation[];
+    selectedPresentationId: string | undefined;
+    onChange: (presentationId: string) => void;
+    disabled?: boolean;
+}
+
+export interface ProductAnalyticsSectionProps {
+    productId: string | undefined;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

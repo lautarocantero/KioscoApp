@@ -19,6 +19,8 @@ export const EXPANDED_WIDTH = "220px";
 
 export const SIDEBAR_STORAGE_KEY = "sidebar-expanded";
 
+export const DRAG_THRESHOLD_PX = 80;
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🟥 FORMULARIOS  🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥              ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/

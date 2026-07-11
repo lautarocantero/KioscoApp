@@ -1,32 +1,9 @@
-import { useCallback, useMemo, useRef, useState } from "react";
-import { Box, IconButton, Typography, type SxProps, type Theme } from "@mui/material";
+import { Box, IconButton, Typography, type Theme } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SwipeOutlinedIcon from "@mui/icons-material/SwipeOutlined";
-
-export interface CardCarouselItem {
-    id: string;
-    content: React.ReactNode;
-    /** Ancho en px de esta card en particular. Si se omite, usa `defaultCardWidth`. */
-    width?: number;
-}
-
-export interface CardCarouselProps {
-    /** Cards a renderizar, en orden. Cada una puede declarar su propio `width`. */
-    items: CardCarouselItem[];
-    /** Ancho usado para los items que no declaran `width` propio. */
-    defaultCardWidth?: number;
-    gap?: number;
-    /** Ancho máximo del viewport completo (contiene la card activa + el peek de la siguiente). */
-    maxViewportWidth?: number | string;
-    /** Index controlado (opcional). Si no se pasa, el componente maneja su propio estado. */
-    activeIndex?: number;
-    onIndexChange?: (index: number) => void;
-    hintText?: string | ((index: number, total: number) => string | undefined);
-    showDots?: boolean;
-    showArrows?: boolean;
-    sx?: SxProps<Theme>;
-}
+import type { CardCarouselProps } from "@typings/ui/cardCarousel";
+import { useCardCarousel } from "../../../../hooks/ui/useCardCarousel";
 
 const CardCarousel = ({
     items,
@@ -40,68 +17,21 @@ const CardCarousel = ({
     showArrows = true,
     sx,
 }: CardCarouselProps): React.ReactNode => {
-    const [internalIndex, setInternalIndex] = useState(0);
-    const isControlled = controlledIndex !== undefined;
-    const activeIndex = isControlled ? controlledIndex! : internalIndex;
-    const total = items.length;
+    const {
+        activeIndex,
+        total,
+        widths,
+        translateX,
+        activeWidth,
+        isDragging,
+        resolvedHint,
+        goTo,
+        handlePointerDown,
+        handlePointerMove,
+        handlePointerUp,
+    } = useCardCarousel({ items, defaultCardWidth, gap, activeIndex: controlledIndex, onIndexChange, hintText });
 
-    const widths = useMemo(() => items.map((item) => item.width ?? defaultCardWidth), [items, defaultCardWidth]);
-
-    // offsets[i] = distancia acumulada desde x=0 hasta el borde izquierdo de la card i.
-    const offsets = useMemo(() => {
-        const acc: number[] = [];
-        let running = 0;
-        widths.forEach((w, i) => {
-            acc.push(running);
-            running += w + gap;
-        });
-        return acc;
-    }, [widths, gap]);
-
-    const dragRef = useRef({ startX: 0, dragging: false, deltaPx: 0 });
-    const [dragOffset, setDragOffset] = useState(0);
-
-    const goTo = useCallback(
-        (index: number) => {
-            const clamped = Math.max(0, Math.min(total - 1, index));
-            if (!isControlled) setInternalIndex(clamped);
-            onIndexChange?.(clamped);
-        },
-        [isControlled, onIndexChange, total]
-    );
-
-    const handlePointerDown = (e: React.PointerEvent) => {
-        if (total <= 1) return;
-        dragRef.current = { startX: e.clientX, dragging: true, deltaPx: 0 };
-    };
-
-    const handlePointerMove = (e: React.PointerEvent) => {
-        if (!dragRef.current.dragging) return;
-        const delta = e.clientX - dragRef.current.startX;
-        dragRef.current.deltaPx = delta;
-        setDragOffset(delta);
-    };
-
-    const handlePointerUp = () => {
-        if (!dragRef.current.dragging) return;
-        const delta = dragRef.current.deltaPx;
-        const threshold = 80;
-
-        if (delta < -threshold && activeIndex < total - 1) goTo(activeIndex + 1);
-        else if (delta > threshold && activeIndex > 0) goTo(activeIndex - 1);
-
-        dragRef.current.dragging = false;
-        dragRef.current.deltaPx = 0;
-        setDragOffset(0);
-    };
-
-    // La card activa siempre arranca en x=0 del viewport (su offset acumulado se resta del track).
-    const baseOffset = -offsets[activeIndex];
-    const translateX = baseOffset + dragOffset;
-
-    const activeWidth = widths[activeIndex];
-
-    const resolvedHint = typeof hintText === "function" ? hintText(activeIndex, total) : hintText;
+    if (total === 0) return null;
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", ...sx }}>
@@ -125,7 +55,7 @@ const CardCarousel = ({
                             gap: `${gap}px`,
                             width: "max-content",
                             transform: `translateX(${translateX}px)`,
-                            transition: dragRef.current.dragging ? "none" : "transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)",
+                            transition: isDragging ? "none" : "transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)",
                         }}
                     >
                         {items.map((item, i) => (
@@ -148,12 +78,12 @@ const CardCarousel = ({
                             width: 40,
                             height: 40,
                             zIndex: 2,
-                            bgcolor: theme.custom?.darkBackground ?? "rgba(139,92,246,0.12)",
-                            border: `1.5px solid ${theme.palette?.primary?.main ?? "#8B5CF6"}`,
-                            color: theme.palette?.primary?.main ?? "#8B5CF6",
+                            bgcolor: theme.custom.darkBackground,
+                            border: `1.5px solid ${theme.palette.primary.main}`,
+                            color: theme.palette.primary.main,
                             "&:hover": {
-                                bgcolor: theme.palette?.primary?.main ?? "#8B5CF6",
-                                color: "#fff",
+                                bgcolor: theme.palette.primary.main,
+                                color: theme.custom.white,
                             },
                         })}
                     >
@@ -173,12 +103,12 @@ const CardCarousel = ({
                             width: 40,
                             height: 40,
                             zIndex: 2,
-                            bgcolor: theme.custom?.darkBackground ?? "rgba(139,92,246,0.12)",
-                            border: `1.5px solid ${theme.palette?.primary?.main ?? "#8B5CF6"}`,
-                            color: theme.palette?.primary?.main ?? "#8B5CF6",
+                            bgcolor: theme.custom.darkBackground,
+                            border: `1.5px solid ${theme.palette.primary.main}`,
+                            color: theme.palette.primary.main,
                             "&:hover": {
-                                bgcolor: theme.palette?.primary?.main ?? "#8B5CF6",
-                                color: "#fff",
+                                bgcolor: theme.palette.primary.main,
+                                color: theme.custom.white,
                             },
                         })}
                     >
@@ -202,7 +132,7 @@ const CardCarousel = ({
                                 border: "none",
                                 p: 0,
                                 cursor: "pointer",
-                                bgcolor: i === activeIndex ? theme.palette?.primary?.main ?? "#8B5CF6" : "rgba(255,255,255,0.2)",
+                                bgcolor: i === activeIndex ? theme.palette.primary.main : theme.custom.lightGray,
                                 transition: "background-color 0.2s",
                             })}
                         />
