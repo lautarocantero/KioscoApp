@@ -5,14 +5,14 @@
 - [ ] Leer la documentacion y dejarla presentable
 
 ---
-home:
-- [ ] Poner datos reales y sacar el mock.
----
-Sidebar:
----
-auth:
+
+Productos:
+- [ ] dejar unicamente el campo de url de imagen y eliminar los gallery urls por ahora.
+- [ ] detalle de productos debe de mostrar las estadisticas de las presentaciones hijas del producto.
+- [ ] editar producto debe eliminar el campo de gallery url.
 ---
 Presentaciones:
+- [ ] dejar unicamente el campo de url de imagen y eliminar los gallery urls por ahora.
 - [ ] detail no deja claro de quien es hija la presentacion.
 - [ ] Terminar la demo de analytics en presentatino detail.
 ---

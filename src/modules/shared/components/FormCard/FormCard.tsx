@@ -67,7 +67,7 @@ const FormCard = ({
                                 mb: 3,
                                 backgroundColor: theme.custom?.darkBackground ?? "rgba(3,134,238,0.06)",
                                 borderRadius: "12px !important",
-                                border: `1px solid ${theme.palette?.primary?.main ?? "#0386EE"}33`,
+                                border: `1px solid ${theme.palette?.primary?.main}`,
                                 "&:before": { display: "none" },
                             })}
                         >
@@ -101,7 +101,7 @@ const FormCard = ({
                                     sx={(theme: Theme) => ({
                                         fontSize: "0.95rem",
                                         fontWeight: 600,
-                                        color: theme.palette?.primary?.main ?? "#0386EE",
+                                        color: theme.custom.fontColor,
                                     })}
                                 >
                                     {accordion.title}
@@ -113,13 +113,13 @@ const FormCard = ({
                                     pb: 2,
                                     pl: "60px",
                                     pr: 2,
-                                    color: theme.custom?.darkWhite ?? theme.custom?.translucidWhite,
+                                    color: theme.custom?.fontColor,
                                     display: "flex",
                                     flexDirection: "column",
                                     gap: 2,
                                 })}
                             >
-                                <Typography sx={{ fontSize: "0.85rem", lineHeight: 1.5 }}>
+                                <Typography sx={{ fontSize: "0.85rem", lineHeight: 1.5}}>
                                     {accordion.content}
                                 </Typography>
                                 {accordion.bannerImage && (

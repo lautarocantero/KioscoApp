@@ -26,11 +26,11 @@ const NavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: Na
     };
 
     return (
-        <Box sx={{
+        <Box sx={(theme: Theme) => ({
             display: "flex", gap: 2, justifyContent: readOnly ? "flex-start" : "space-between",
             px: 3, py: 2.5,
-            borderTop: "0.5px solid rgba(255,255,255,0.07)",
-        }}>
+            borderTop: `0.5px solid ${theme?.custom?.darkGray}`,
+        })}>
             <Button onClick={handleBack} variant="outlined"
                 sx={(theme: Theme) => ({
                     textTransform: "none", fontWeight: 600, minWidth: 120,
