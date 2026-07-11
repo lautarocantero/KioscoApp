@@ -1,12 +1,8 @@
 import { Box, CircularProgress } from "@mui/material";
 import type { Product } from "../../../../typings/product/productTypes";
 import ProductItemComponent from "../ProductItem/ProductItemComponent";
-import type { ViewMode } from "./ProductToolbar";
+import type { ProductListProps } from "@typings/sells/reactComponents";
 
-export interface ProductListProps {
-  products: Product[];
-  viewMode?: ViewMode;
-}
 
 const ProductsList = ({ products, viewMode = "grid" }: ProductListProps): React.ReactNode => {
   if (products.length === 0) return <CircularProgress />;

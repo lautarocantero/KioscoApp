@@ -1,10 +1,14 @@
 import type { Product } from "../../product/productTypes";
 import type { Presentation } from "../../presentation/presentationTypes";
 import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from "../types";
+import type { ViewMode } from "modules/sells/components/ProductList/ProductToolbar";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}
 
    //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
+
+
+   
 
     export interface SellsTableProps {
        isLoading: boolean;
@@ -26,12 +30,16 @@ import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from 
         products: Product[];
     };
 
-    export type ProductListProps  = Pick<ProductsExhibitorProps, 'products'>;
+    export type ProductListProps  = Pick<ProductsExhibitorProps, 'products'> & {
+        viewMode?: ViewMode;
+    };
+
 
     //──────────────────────────────────────────── 🍫 Product Item 🧀 ───────────────────────────────────────────//
 
     export interface ProductItemProps {
         product: Product;
+        viewMode?: ViewMode;
     };
 
     export interface ProductItemImageProps {
