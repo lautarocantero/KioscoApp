@@ -3,17 +3,17 @@ import { alpha, type Theme } from "@mui/material/styles";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
-import KpiCard from "../../../../shared/components/Analytics/KpiCard";
-import DailySalesBarChart from "../../../../shared/components/Analytics/DailySalesBarChart";
-import WeeklySalesLineChart from "../../../../shared/components/Analytics/WeeklySalesLineChart";
-import TopSellingDaysCard from "../../../../shared/components/Analytics/TopSellingDaysCard";
+import NoisyCard from "../../../../../modules/shared/components/Cards/NoisyCard";
+import KpiCard from "../../../../../modules/shared/components/Analytics/KpiCard";
+import DailySalesBarChart from "../../../../../modules/shared/components/Analytics/DailySalesBarChart";
+import WeeklySalesLineChart from "../../../../../modules/shared/components/Analytics/WeeklySalesLineChart";
+import TopSellingDaysCard from "../../../../../modules/shared/components/Analytics/TopSellingDaysCard";
 // import SalesByChannelCard from "../../../../../modules/shared/components/Analytics/SalesByChannelCard";
-import PeriodSummaryCard from "../../../../shared/components/Analytics/PeriodSumatyCard";
-import PresentationSelector from "../../../components/PresentationSelector";
+import PeriodSummaryCard from "../../../../../modules/shared/components/Analytics/PeriodSumatyCard";
+import PresentationSelector from "../../../../../modules/products/components/PresentationSelector";
 import type { PresentationAnalyticsProps } from "@typings/product/productComponentTypes";
 
-const ProductAnalyticsSection = ({
+const PresentationAnalytics = ({
     data,
     onDateRangeClick,
     presentations,
@@ -117,4 +117,4 @@ const ProductAnalyticsSection = ({
     );
 };
 
-export default ProductAnalyticsSection;
+export default PresentationAnalytics;
