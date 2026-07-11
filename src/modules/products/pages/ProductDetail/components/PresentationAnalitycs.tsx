@@ -1,19 +1,19 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
+import { alpha, type Theme } from "@mui/material/styles";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import NoisyCard from "../../../../../modules/shared/components/Cards/NoisyCard";
-import KpiCard from "../../../../../modules/shared/components/Analytics/KpiCard";
-import DailySalesBarChart from "../../../../../modules/shared/components/Analytics/DailySalesBarChart";
-import WeeklySalesLineChart from "../../../../../modules/shared/components/Analytics/WeeklySalesLineChart";
-import TopSellingDaysCard from "../../../../../modules/shared/components/Analytics/TopSellingDaysCard";
+import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
+import KpiCard from "../../../../shared/components/Analytics/KpiCard";
+import DailySalesBarChart from "../../../../shared/components/Analytics/DailySalesBarChart";
+import WeeklySalesLineChart from "../../../../shared/components/Analytics/WeeklySalesLineChart";
+import TopSellingDaysCard from "../../../../shared/components/Analytics/TopSellingDaysCard";
 // import SalesByChannelCard from "../../../../../modules/shared/components/Analytics/SalesByChannelCard";
-import PeriodSummaryCard from "../../../../../modules/shared/components/Analytics/PeriodSumatyCard";
-import PresentationSelector from "../../../../../modules/products/components/PresentationSelector";
+import PeriodSummaryCard from "../../../../shared/components/Analytics/PeriodSumatyCard";
+import PresentationSelector from "../../../components/PresentationSelector";
 import type { PresentationAnalyticsProps } from "@typings/product/productComponentTypes";
 
-
-const PresentationAnalytics = ({
+const ProductAnalyticsSection = ({
     data,
     onDateRangeClick,
     presentations,
@@ -29,23 +29,23 @@ const PresentationAnalytics = ({
                 {/* ── Header ─────────────────────────────────────────── */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                     <Box
-                        sx={{
+                        sx={(theme: Theme) => ({
                             width: 44,
                             height: 44,
                             borderRadius: "12px",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            bgcolor: "rgba(139,92,246,0.18)",
-                            color: "#A78BFA",
-                        }}
+                            bgcolor: alpha(theme.palette.primary.main, 0.18),
+                            color: theme.palette.primary.main,
+                        })}
                     >
                         <BarChartOutlinedIcon />
                     </Box>
                     <Box>
                         <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
                             {data.title} -{" "}
-                            <Typography component="span" variant="inherit" sx={(theme) => ({ color: theme.palette?.primary?.main })}>
+                            <Typography component="span" variant="inherit" sx={(theme: Theme) => ({ color: theme.palette.primary.main })}>
                                 Demo
                             </Typography>
                         </Typography>
@@ -74,13 +74,13 @@ const PresentationAnalytics = ({
                         variant="outlined"
                         startIcon={<CalendarMonthOutlinedIcon fontSize="small" />}
                         endIcon={<ExpandMoreIcon fontSize="small" />}
-                        sx={{
+                        sx={(theme: Theme) => ({
                             textTransform: "none",
-                            borderColor: "rgba(255,255,255,0.12)",
-                            color: "text.primary",
+                            borderColor: theme.custom.darkGray,
+                            color: theme.custom.fontColor,
                             fontSize: "0.8rem",
                             borderRadius: "10px",
-                        }}
+                        })}
                     >
                         {data.dateRangeLabel}
                     </Button>
@@ -117,4 +117,4 @@ const PresentationAnalytics = ({
     );
 };
 
-export default PresentationAnalytics;
+export default ProductAnalyticsSection;

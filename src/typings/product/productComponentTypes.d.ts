@@ -5,6 +5,7 @@ import type {
     UpdatedProductInterface,
     DeleteDialogState,
 } from "./productTypes";
+import type { PresentationAnalyticsData } from "@typings/ui/analytics.types";
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -126,6 +127,16 @@ export interface PresentationSelectorProps {
 
 export interface ProductAnalyticsSectionProps {
     productId: string | undefined;
+}
+
+export interface PresentationAnalyticsProps {
+    data: PresentationAnalyticsData;
+    onDateRangeClick?: () => void;
+    /** Presentaciones disponibles para el selector. Si no se pasan presentations + onPresentationChange, el selector no se muestra. */
+    presentations?: Presentation[];
+    selectedPresentationId?: string;
+    onPresentationChange?: (presentationId: string) => void;
+    isPresentationSelectorDisabled?: boolean;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
