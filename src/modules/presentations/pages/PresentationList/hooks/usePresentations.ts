@@ -1,16 +1,13 @@
-// ─── Hook 🪝: usePresentations ────────────────────────────────────────────────
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import {
     deletePresentationRequest,
     getPresentationsByProductIdRequest,
     searchPresentationsByProductIdRequest,
 } from "../../../api/presentationsApi";
+import { resolveErrorMessage } from "../../../../../utils/formatter/resolveErrorMessage";
 
-// ─── tipos ────────────────────────────────────────────────────────────────────
 
 export interface DeleteDialogState {
     open: boolean;
@@ -19,17 +16,6 @@ export interface DeleteDialogState {
 }
 
 const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
-
-// ─── helper ───────────────────────────────────────────────────────────────────
-
-const resolveErrorMessage = (err: unknown): string => {
-    if (axios.isAxiosError(err)) {
-        return (
-            (err.response?.data as { message?: string })?.message ?? err.message
-        );
-    }
-    return err instanceof Error ? err.message : "Error desconocido";
-};
 
 // ─── hook ─────────────────────────────────────────────────────────────────────
 

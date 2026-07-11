@@ -2,37 +2,6 @@ import axios from "axios";
 import { API_URL } from "../../../config/api";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 
-// # Módulo: Presentation Requests
-
-// ## Descripción 📦
-// Centraliza todas las llamadas HTTP al recurso `/presentation` del backend.
-// Cada función mapea 1:1 con un endpoint definido en `PresentationRouter`.
-
-// ## Instancia Axios 🔧
-// - `baseURL`: `{API_URL}/presentation`
-// - `timeout`: 5000 ms
-// - `headers`: `Content-Type: application/json`
-// - `withCredentials`: true
-
-// ## Endpoints cubiertos 📡
-// - GET    /get-presentations                          → getPresentationsRequest
-// - GET    /get-presentation-by-id/:id                → getPresentationByIdRequest
-// - GET    /get-presentation-by-product-id/:productId → getPresentationsByProductIdRequest
-// - GET    /get-presentation-by-brand                 → getPresentationByBrandRequest
-// - GET    /get-presentation-by-stock                 → getPresentationByStockRequest
-// - GET    /get-presentation-by-price                 → getPresentationByPriceRequest
-// - GET    /get-presentation-by-size                  → getPresentationBySizeRequest
-// - GET    /get-presentation-by-presentation          → getPresentationByPresentationRequest
-// - POST   /create-presentation                       → createPresentationRequest
-// - PUT    /edit-presentation                         → editPresentationRequest
-// - DELETE /delete-presentation                       → deletePresentationRequest
-
-// ## Notas técnicas 💽
-// - `createPresentationRequest` usa `FormData` + `multipart/form-data`
-//   ya que el backend procesa una imagen con `multer`.
-// - DELETE y los GET que usan body envían el payload via `{ data }` / `{ params }`.
-// - `resolveErrorMessage` centraliza la extracción del mensaje de error de Axios.
-//-----------------------------------------------------------------------------//
 
 const baseUrl = axios.create({
     baseURL: `${API_URL}/presentation`,

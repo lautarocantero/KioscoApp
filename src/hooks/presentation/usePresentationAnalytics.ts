@@ -1,7 +1,7 @@
 import { getPresentationAnalyticsRequest } from "../../modules/presentations/api/presentationsApi";
-import { resolveErrorMessage } from "../../modules/products/pages/ProductsList/helpers/productHelpers";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import { resolveErrorMessage } from "../../utils/formatter/resolveErrorMessage";
 
 export function usePresentationAnalytics() {
     const { presentation_id } = useParams<{ presentation_id: string }>();
