@@ -15,22 +15,16 @@ import {
     getProductsWithPresentationsRequest,
     searchProductsWithPresentationsRequest,
     getProductByIdRequest,
+    createProductRequest,
     editProductRequest,
     deleteProductRequest,
 } from "../../modules/products/api/productApi";
-import { API_URL } from "../../config/api";
-
-// ─── Respuesta de POST /product/create-product ────────────────────────────────
-type CreateProductResponse = {
-    _id:     string;
-    message: string;
-};
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🚀 createProduct                                                      ║
 ║ 📥 Entrada: body con los campos del producto + navigate               ║
 ║ ⚙️  Proceso:                                                           ║
-║   1. POST /product/create-product                                     ║
+║   1. POST /product/create-product (via productApi)                    ║
 ║   2. Construye el objeto Product completo con el _id devuelto         ║
 ║   3. Lo guarda en store con setCurrentProduct (sin nuevo fetch)       ║
 ║   4. Navega al formulario de variante                                 ║
@@ -42,19 +36,7 @@ export const createProduct = (body: CreateProductBody, navigate?: NavigateFuncti
         dispatch(checkingProducts());
 
         try {
-            const response = await fetch(`${API_URL}/product/create-product`, {
-                method:      "POST",
-                headers:     { "Content-Type": "application/json" },
-                credentials: "include",
-                body:        JSON.stringify(body),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData?.message ?? `Error ${response.status}`);
-            }
-
-            const data: CreateProductResponse = await response.json();
+            const data = await createProductRequest(body);
 
             const createdProduct: Product = {
                 _id:          data._id,

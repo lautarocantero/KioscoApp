@@ -1,33 +1,12 @@
 import axios from "axios";
 import { API_URL } from "../../../config/api";
-import type { Product, ProductWithPresentations } from "@typings/product/productTypes";
+import type { CreateProductBody, Product, ProductWithPresentations } from "@typings/product/productTypes";
 
-// # Módulo: Product Requests
-
-// ## Descripción 📦
-// Centraliza todas las llamadas HTTP al recurso `/product` del backend.
-// Cada función mapea 1:1 con un endpoint definido en `ProductRouter`.
-
-// ## Instancia Axios 🔧
-// - `baseURL`: `{API_URL}/product`
-// - `timeout`: 5000 ms
-// - `headers`: `Content-Type: application/json`
-// - `withCredentials`: true
-
-// ## Endpoints cubiertos 📡
-// - GET    /get-products              → getProductsRequest
-// - GET    /get-product-by-id/:_id   → getProductByIdRequest
-// - GET    /get-product-by-name      → getProductByNameRequest
-// - GET    /get-product-by-brand     → getProductByBrandRequest
-// - POST   /create-product           → createProductRequest
-// - DELETE /delete-product           → deleteProductRequest
-// - PUT    /edit-product             → editProductRequest
-
-// ## Notas técnicas 💽
-// - Todas las funciones retornan `response.data` tipado.
-// - Los parámetros de query se pasan via `{ params }` para GET.
-// - El body de POST/PUT se serializa automáticamente por Axios.
-//-----------------------------------------------------------------------------//
+// ─── Respuesta de POST /product/create-product ────────────────────────────────
+export type CreateProductResponse = {
+  _id:     string;
+  message: string;
+};
 
 const baseUrl = axios.create({
   baseURL: `${API_URL}/product`,
@@ -113,12 +92,15 @@ export const searchProductsWithPresentationsRequest = async (
 /**
  * Crea un nuevo producto.
  * `POST /create-product`
+ *
+ * El backend no devuelve el Product completo, solo `{ _id, message }`.
+ * La reconstrucción del objeto completo queda a cargo del thunk.
  */
 export const createProductRequest = async (
-  product: Omit<Product, "_id" | "created_at" | "updated_at">
-): Promise<Product> => {
-  const response = await baseUrl.post<Product>("/create-product", product);
-  return response.data; 
+  product: CreateProductBody
+): Promise<CreateProductResponse> => {
+  const response = await baseUrl.post<CreateProductResponse>("/create-product", product);
+  return response.data;
 };
 
 //──────────────────────────────────────────── PUT ────────────────────────────────────────────//
