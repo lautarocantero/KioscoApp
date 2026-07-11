@@ -12,7 +12,6 @@ interface ProductEntity {
     description:  string;
     brand:        string;
     image_url:    string;
-    gallery_urls: string[];
     created_at:   string;
     updated_at:   string;
     presentations:     Presentation[];
@@ -28,9 +27,9 @@ export type Product = ProductEntity;
 // Solo los campos públicos (sin _id)
 export type ProductPublic = Omit<ProductEntity, "_id">;
 
-// Producto existente devuelto por GET /product/:id — variants opcionales
-export type ExistingProductInterface = Omit<ProductEntity, "variants"> & {
-    variants?: Presentation[];
+// Producto existente devuelto por GET /product/:id — presentations opcionales
+export type ExistingProductInterface = Omit<ProductEntity, "presentations"> & {
+    presentations?: Presentation[];
 };
 
 // Referencia mínima tras crear un producto (respuesta del POST)
@@ -52,7 +51,6 @@ interface ProductBaseFormValues {
     description:  string;
     brand:        string;
     image_url:    string;
-    gallery_urls: string[];
 }
 
 // Formulario de CREACIÓN — agrega campos de variante y stock
@@ -62,11 +60,10 @@ export type ProductFormValues = ProductBaseFormValues & {};
 export type ProductEditFormValues = ProductBaseFormValues;
 
 // Cuerpo enviado al POST /product/create-product
-export type CreateProductBody = Omit<ProductBaseFormValues, "gallery_urls"> & {
+export type CreateProductBody = ProductBaseFormValues & {
     created_at:   string;
     updated_at:   string;
-    gallery_urls: string[];
-    variants:     unknown[];
+    presentations:     unknown[];
 };
 
 // Cuerpo enviado al PATCH /product/:id

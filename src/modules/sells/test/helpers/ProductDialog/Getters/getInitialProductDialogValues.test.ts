@@ -9,7 +9,6 @@ describe("Helper: getInitialProductDialogValues", () => {
     created_at: "2024-01-01",
     description: "Test product",
     expiration_date: "2025-01-01",
-    gallery_urls: [],
     image_url: "/img/test.png",
     min_stock: 0,
     model_size: "M",

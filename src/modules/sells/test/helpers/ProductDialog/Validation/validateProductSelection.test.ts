@@ -2,7 +2,6 @@ import validateProductSelection from "../../../../helpers/ProductDialog/Validati
 import { describe, expect, it } from "vitest";
 
 const data = {
-    gallery_urls: ["not-a-url"], 
     name: "Test", 
     price: 10, 
     stock: 5, 

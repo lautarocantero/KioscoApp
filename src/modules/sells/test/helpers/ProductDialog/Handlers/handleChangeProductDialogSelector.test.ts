@@ -10,10 +10,6 @@ const mockedData = [
         created_at: "2026-01-01T10:00:00Z", 
         description: "Producto de prueba número 1", 
         expiration_date: "2027-01-01T00:00:00Z", 
-        gallery_urls: 
-            [
-                "https://example.com/img1.png", 
-                "https://example.com/img2.png"], 
         image_url: "https://example.com/img-main1.png", 
         min_stock: 5, 
         model_size: "M", 
@@ -31,7 +27,6 @@ const mockedData = [
         created_at: "2026-01-02T11:00:00Z", 
         description: "Producto de prueba número 2", 
         expiration_date: "2027-06-01T00:00:00Z", 
-        gallery_urls: ["https://example.com/img3.png"], 
         image_url: "https://example.com/img-main2.png", 
         min_stock: 2, 
         model_size: "L", 

@@ -36,7 +36,6 @@ const baseProduct = {
   stock: 10,
   created_at: "2026-01-01",
   updated_at: "2026-01-02",
-  gallery_urls: [],
   min_stock: 1,
 };
 

@@ -14,7 +14,6 @@ export const getProductFormInitialValues = (): ProductFormValues => ({
     description: "",
     brand:       "",
     image_url:   "",
-    gallery_urls: [],
 });
 
 export const getProductEditInitialValues = (
@@ -24,7 +23,6 @@ export const getProductEditInitialValues = (
     description:  product?.description  ?? "",
     brand:        product?.brand        ?? "",
     image_url:    product?.image_url    ?? "",
-    gallery_urls: product?.gallery_urls ?? [],
 });
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
@@ -49,9 +47,6 @@ export const productFormSchema = Yup.object({
         .url("Debe ser una URL válida")
         .nullable()
         .optional(),
-    gallery_urls: Yup.array()
-        .of(Yup.string().url("Cada URL de galería debe ser válida"))
-        .optional(),
 });
 
 export const productEditFormSchema = Yup.object({
@@ -71,17 +66,14 @@ export const productEditFormSchema = Yup.object({
         .url("Debe ser una URL válida")
         .nullable()
         .optional(),
-    gallery_urls: Yup.array()
-        .of(Yup.string().url("Cada URL de galería debe ser válida"))
-        .optional(),
 });
 
 // ── Step fields map ───────────────────────────────────────────────────────────
 
 export const stepFieldsMap: Record<number, (keyof ProductFormValues)[]> = {
-    0: ["name", "description", "brand", "image_url", "gallery_urls"],
+    0: ["name", "description", "brand", "image_url"],
 };
 
 export const editStepFieldsMap: Record<number, (keyof ProductEditFormValues)[]> = {
-    0: ["name", "description", "brand", "image_url", "gallery_urls"],
+    0: ["name", "description", "brand", "image_url"],
 };

@@ -1,5 +1,5 @@
-import { Grid, TextField, IconButton, Box, Typography, Button } from "@mui/material";
-import { useFormikContext, FieldArray } from "formik";
+import { Grid, TextField, Typography } from "@mui/material";
+import { useFormikContext } from "formik";
 import type { ProductFormValues, ProductEditFormValues } from "@typings/product/productTypes";
 import ProductImagePreview from "../../../shared/components/Image/ProductImagePreview";
 import { sharedSx } from "../../../../modules/shared/components/sharedSx/sharedSx";
@@ -65,51 +65,6 @@ const ProductFormFields = ({ mode = "create", readOnly = false, icons }: Product
                 </Grid>
             )}
 
-            {mode === "edit" && (
-                <Grid size={12}>
-                    <Typography variant="body2" sx={{ mb: 1, fontWeight: 500 }}>
-                        Galería de imágenes
-                    </Typography>
-
-                    <FieldArray name="gallery_urls">
-                        {({ push, remove }) => (
-                            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-                                {values.gallery_urls?.map((_, index) => (
-                                    <Box key={index} sx={{ display: "flex", gap: 1, alignItems: "flex-start" }}>
-                                        <TextField
-                                            name={`gallery_urls[${index}]`}
-                                            label={`Imagen ${index + 1}`}
-                                            fullWidth
-                                            disabled={readOnly}
-                                            placeholder="https://example.com/foto.jpg"
-                                            size="small"
-                                            sx={sharedSx}
-                                        />
-                                        <IconButton
-                                            onClick={() => remove(index)}
-                                            size="small"
-                                            color="error"
-                                            aria-label={`Eliminar imagen ${index + 1}`}
-                                            sx={{ mt: 0.5 }}
-                                        >
-                                            ✕
-                                        </IconButton>
-                                    </Box>
-                                ))}
-
-                                <Button
-                                    variant="outlined"
-                                    size="small"
-                                    onClick={() => push("")}
-                                    sx={{ alignSelf: "flex-start", mt: 0.5 }}
-                                >
-                                    + Agregar imagen a galería
-                                </Button>
-                            </Box>
-                        )}
-                    </FieldArray>
-                </Grid>
-            )}
         </Grid>
     );
 };

@@ -22,7 +22,6 @@ const emptyPresentation: Presentation = {
   created_at: "",
   description: "",
   expiration_date: "",
-  gallery_urls: [],
   image_url: "",
   min_stock: 0,
   model_size: "",

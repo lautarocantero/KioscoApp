@@ -67,7 +67,6 @@ export function usePresentationCreate() {
             formData.append("description",     productData.description);
             formData.append("brand",           productData.brand);
             formData.append("image_url",       values.image_url || productData.image_url);
-            formData.append("gallery_urls",    JSON.stringify(productData.gallery_urls || []));
             formData.append("product_id",      productId ?? "");
             formData.append("sku",             values.sku);
             formData.append("model_type",      values.model_type);

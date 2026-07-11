@@ -9,7 +9,6 @@ const mockedData = {
     created_at: "2024", 
     description: "desc", 
     expiration_date: "2025", 
-    gallery_urls: ["not-a-url"], 
     image_url: "img.png", 
     min_stock: 1, 
     model_size: "M", 

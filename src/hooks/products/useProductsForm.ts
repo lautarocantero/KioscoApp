@@ -76,9 +76,8 @@ export function useProductCreate(): UseProductsFormReturn {
                 created_at:   now,
                 updated_at:   now,
                 image_url:    values.image_url    ?? "",
-                gallery_urls: values.gallery_urls ?? [],
                 brand:        values.brand,
-                variants:     [],
+                presentations:     [],
             };
 
             const created = await dispatch(createProduct(body));
@@ -179,7 +178,6 @@ export function useProductEdit(): UseProductsEditFormReturn {
                 description:  values.description,
                 brand:        values.brand,
                 image_url:    values.image_url    ?? "",
-                gallery_urls: values.gallery_urls ?? [],
             };
 
             const updated = await dispatch(editProduct(body));

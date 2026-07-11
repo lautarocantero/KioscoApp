@@ -45,7 +45,6 @@ export const createProduct = (body: CreateProductBody, navigate?: NavigateFuncti
                 created_at:   body.created_at,
                 updated_at:   body.updated_at,
                 image_url:    body.image_url,
-                gallery_urls: body.gallery_urls,
                 brand:        body.brand,
                 presentations:     [],
             };

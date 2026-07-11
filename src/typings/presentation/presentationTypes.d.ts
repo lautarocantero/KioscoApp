@@ -10,7 +10,6 @@ interface PresentationEntity {
     created_at: string;
     description: string;
     expiration_date: string;
-    gallery_urls: string[];
     image_url: string;
     min_stock: number;
     model_size: string;

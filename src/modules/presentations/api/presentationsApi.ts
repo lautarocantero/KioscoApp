@@ -158,7 +158,7 @@ export const createPresentationRequest = async (
         image_file?: File | null;
     }
 ): Promise<{ _id: string; message: string }> => {
-    const { image_file, gallery_urls, ...rest } = data;
+    const { image_file, ...rest } = data;
 
     const formData = new FormData();
 
@@ -168,9 +168,6 @@ export const createPresentationRequest = async (
             formData.append(key, String(value));
         }
     });
-
-    // galería como JSON string (el backend la parsea con JSON.parse)
-    formData.append("gallery_urls", JSON.stringify(gallery_urls ?? []));
 
     // imagen como archivo o URL
     if (image_file) {

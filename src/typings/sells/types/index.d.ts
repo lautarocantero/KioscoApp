@@ -117,7 +117,7 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         requiredStock: number;
     }
 
-    export type EvaluateStockType = Pick<EspecificationsLeftProps, 'variants'>
+    export type EvaluateStockType = Pick<EspecificationsLeftProps, 'presentations'>
 
     export interface validateProductSubmissionInterface {
         Presentation: Presentation | null;
