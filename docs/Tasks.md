@@ -5,22 +5,22 @@
 - [ ] Leer la documentacion y dejarla presentable
 
 ---
-
+sidebar:
+- [ ] Al darle click a un elemento del sidebar que tenga sub elementos abrir el navbar.
+---
 Productos:
-- [ ] dejar unicamente el campo de url de imagen y eliminar los gallery urls por ahora.
 - [ ] detalle de productos debe de mostrar las estadisticas de las presentaciones hijas del producto.
-- [ ] editar producto debe eliminar el campo de gallery url.
 ---
 Presentaciones:
-- [ ] dejar unicamente el campo de url de imagen y eliminar los gallery urls por ahora.
 - [ ] detail no deja claro de quien es hija la presentacion.
 - [ ] Terminar la demo de analytics en presentatino detail.
 ---
 ventas:
 - [ ] quitar desplazamiento de iconos del searchbar.
-- [ ] comprar productos no baja el stock.
 - [ ] refactor visual.
+- [ ] comprar productos no baja el stock.
 - [ ] solo mostrar productos con stock.
 - [ ] Agregar la tabla de tipos, luego hacer crud, pero agregarla ya.
+- [ ] al darle a listado en ventas deberia de mostrar una mui table.
 - [ ] refactorizar todo el modulo.
 
