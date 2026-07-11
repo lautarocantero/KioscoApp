@@ -1,30 +1,23 @@
-import { Box, Typography, type Theme } from "@mui/material";
 import type { FormCardFooterProps } from "@typings/shared/reactComponents";
+import NavButtons from "../Buttons/NavButtons";
+import ApiErrorComponent from "./ApiError";
 
-
-const FormFooter = ({ stepErrors, submitError }: FormCardFooterProps): React.ReactNode => {
-    
-    const allErrors = [
-        ...(stepErrors ?? []),
-        ...(submitError ? [submitError] : []),
-    ];
-
-    if (allErrors.length === 0) return null;
+const FormFooter = ({
+    stepErrors,
+    submitError,
+    showButtons,
+    readOnly,
+    submitText,
+    backPath,
+}: FormCardFooterProps): React.ReactNode => {
 
     return (
-        <Box sx={{ px: 3, py: 1.5, borderTop: "0.5px solid rgba(255,255,255,0.07)" }}>
-            {allErrors.map((error, i) => (
-                <Typography key={i} sx={(theme: Theme) => ({
-                    fontSize: "0.72rem",
-                    color: theme.palette.error.light,
-                    display: "flex", alignItems: "center", gap: 0.5,
-                    mb: i < allErrors.length - 1 ? 0.5 : 0,
-                })}>
-                    <Box component="span">•</Box>
-                    {error}
-                </Typography>
-            ))}
-        </Box>
+        <>
+            <ApiErrorComponent submitError={submitError} stepErrors={stepErrors} />
+
+            {showButtons && <NavButtons SubmitText={submitText ?? ""} backPath={backPath} />}
+            {readOnly    && <NavButtons readOnly backPath={backPath} />}
+        </>
     );
 };
 

@@ -69,8 +69,6 @@ export const createProduct = (body: CreateProductBody, navigate?: NavigateFuncti
             };
 
             dispatch(setCurrentProduct(createdProduct));
-
-            // ─── Navegación opcional: solo si el caller la pide ────────────
             navigate?.(`/products/${data._id}/variant/new`);
 
             return createdProduct;
@@ -78,6 +76,7 @@ export const createProduct = (body: CreateProductBody, navigate?: NavigateFuncti
         } catch (error: unknown) {
             dispatch(setError({ errorMessage: "Error al crear el producto" }));
             handleError(error);
+            throw error;
         }
     };
 };
@@ -194,6 +193,7 @@ export const editProduct = (body: Partial<Product> & Pick<Product, "_id">) => {
         } catch (error: unknown) {
             dispatch(setCurrentProductError("Error al actualizar el producto"));
             handleError(error);
+            throw error; // 🆕 mismo motivo que en createProduct
         }
     };
 };

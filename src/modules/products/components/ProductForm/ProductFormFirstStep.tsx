@@ -7,7 +7,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 
 const ProductFormFirstStep = (): React.ReactNode => {
-    const { actionTitle } = useFormNavigation();
+    const { actionTitle, submitError, stepErrors } = useFormNavigation();
     const isEdit   = actionTitle === "edit";
     const isDetail = actionTitle === "detail";
 
@@ -19,6 +19,8 @@ const ProductFormFirstStep = (): React.ReactNode => {
             showButtons={!isDetail}
             readOnly={isDetail}
             header={{ title }}
+            submitError={submitError}
+            stepErrors={stepErrors}
             accordion={
                 isDetail
                     ? undefined

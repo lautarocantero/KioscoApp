@@ -7,7 +7,7 @@
 // ## Rutas 🛣️
 // ┌────────────────────────────────────────────────────────────┐
 // │ "/products"                      → ProductsListPage            │
-// │ "/products-create"               → ProductsCreatePage      │
+// │ "/products-create"               → ProductCreatePage      │
 // │ "/product/:productId"            → ProductDetailPage       │
 // │ "/products/:productId/edit"      → ProductsEditPage        │
 // │ "/categories"                    → CategoriesPage          │
@@ -23,7 +23,7 @@
 
 import { Route } from "react-router-dom";
 import ProductsListPage         from "./pages/ProductsList/ProductsListPage";
-import ProductsCreatePage   from "./pages/ProductCreate/ProductsCreatePage";
+import ProductCreatePage   from "./pages/ProductCreate/ProductCreatePage";
 import ProductsEditPage     from "./pages/ProductEdit/ProductsEditPage";
 import ProductDetailPage    from "./pages/ProductDetail/ProductDetailPage";
 
@@ -32,7 +32,7 @@ const ProductsRoutes = (): React.ReactNode => {
         <>
             {/* ── Productos ─────────────────────────────────────────────── */}
             <Route path="/products"                   element={<ProductsListPage />} />
-            <Route path="/products-create"            element={<ProductsCreatePage />} />
+            <Route path="/products-create"            element={<ProductCreatePage />} />
             <Route path="/product/:productId"         element={<ProductDetailPage />} />
             <Route path="/products/:productId/edit"   element={<ProductsEditPage />} />
 

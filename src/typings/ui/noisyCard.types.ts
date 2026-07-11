@@ -7,3 +7,9 @@ export interface NoisyCardProps {
     noiseOpacity?: number;
     sx?: SxProps<Theme>;
 }
+
+export type NoisyBackgroundOptions = {
+    theme: Theme;
+    noiseOpacity?: number;
+    backgroundColor?: string;
+};

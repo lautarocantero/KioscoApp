@@ -1,4 +1,4 @@
-import type { StepConfig, StepState } from "@typings/shared/types/FormCard";
+import type { StepConfig, StepState } from "@typings/shared/types/formCard.types";
 import { useState, useCallback } from "react";
 
 export const useFormSteps = (stepsConfig: StepConfig[]) => {

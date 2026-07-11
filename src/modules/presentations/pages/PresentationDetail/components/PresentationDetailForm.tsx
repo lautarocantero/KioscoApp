@@ -1,6 +1,5 @@
 import { Box, Grid, Typography, Chip } from "@mui/material";
 import { Formik } from "formik";
-import ApiErrorComponent from "../../../../shared/components/FormCard/ApiError";
 import { usePresentationEdit } from "../../../../../hooks/presentation/usePresentationForm";
 import { getPresentationDetailInitialValues } from "../../../schema/PresentationFormSchema";
 import LoadingSpinnerComponent from "../../../../shared/components/LoadingSpinner";
@@ -122,6 +121,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
             <FormCard
                 readOnly
                 backPath={`/products/${product_id}/presentations`}
+                submitError={submitError}
                 header={{
                     title: "Detalles del producto",
                     subtitle: "Información completa del producto (solo lectura)",
@@ -143,8 +143,6 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
 
                         return (
                             <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                                <ApiErrorComponent submitError={submitError} />
-
                                 {/* ── Información básica ──────────────────────── */}
                                 <NoisyCard sx={{ p: 2.5 }}>
                                     <SectionHeader

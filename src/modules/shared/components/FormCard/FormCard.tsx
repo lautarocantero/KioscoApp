@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import NavButtons from "../Buttons/NavButtons";
 import FormFooter from "./FormFooter";
 import FormHeader from "./FormHeader";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
@@ -27,6 +26,8 @@ const FormCard = ({
     header,
     multiStepHeader,
     accordion,
+    submitError,
+    stepErrors, 
 }: FormCardProps): React.ReactNode => {
     const [expanded, setExpanded] = useState(accordion?.defaultExpanded ?? false);
 
@@ -142,9 +143,14 @@ const FormCard = ({
                 </Box>
             </CardContent>
 
-            <FormFooter />
-            {showButtons && <NavButtons SubmitText={submitText ?? ""} backPath={backPath} />}
-            {readOnly    && <NavButtons readOnly backPath={backPath} />}
+            <FormFooter
+                submitError={submitError}
+                stepErrors={stepErrors}
+                showButtons={showButtons}
+                readOnly={readOnly}
+                submitText={submitText}
+                backPath={backPath}
+            />
         </NoisyCard>
     );
 };

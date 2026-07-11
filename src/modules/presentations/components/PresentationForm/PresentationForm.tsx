@@ -9,7 +9,6 @@ import {
 } from "../../schema/PresentationFormSchema";
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
-import ApiErrorComponent from "../../../shared/components/FormCard/ApiError";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentation/usePresentationForm";
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
@@ -66,7 +65,6 @@ const PresentationCreateForm = (): React.ReactNode => {
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
-                            <ApiErrorComponent submitError={form.submitError} />
                             <ActualStepComponent
                                 currentStep={form.currentStep}
                                 stepComponents={STEP_COMPONENTS}
@@ -113,7 +111,6 @@ const PresentationEditForm = (): React.ReactNode => {
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
-                            <ApiErrorComponent submitError={form.submitError} />
                             <ActualStepComponent
                                 currentStep={form.currentStep}
                                 stepComponents={STEP_COMPONENTS}

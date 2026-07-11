@@ -14,6 +14,7 @@ import type { AppDispatch } from "../../store/product/productSlice";
 import { createProduct, editProduct } from "../../store/product/productThunks";
 import { useProductData } from "./useProductData";
 import { useFormSteps } from "../../hooks/shared/useFormSteps";
+import { useErrorParser } from "../shared/useErrorParser";
 import { stepFieldsMap, editStepFieldsMap } from "../../modules/products/schema/ProductFormSchema";
 import { stepsConfig, editStepsConfig } from "../../config/constants";
 
@@ -26,6 +27,8 @@ export function useProductCreate(): UseProductsFormReturn {
     const [isSubmitting, setIsSubmitting]   = useState(false);
     const [submitError, setSubmitError]     = useState<string | null>(null);
     const [stepErrors, setStepErrors]       = useState<string[]>([]);
+
+    const { parseError } = useErrorParser();
 
     const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(stepsConfig);
 
@@ -86,11 +89,8 @@ export function useProductCreate(): UseProductsFormReturn {
 
             setCreatedEntity({ _id: created._id, name: created.name });
         } catch (error) {
-            setSubmitError(
-                error instanceof Error
-                    ? error.message
-                    : "Error inesperado al crear el producto"
-            );
+            const message = await parseError(error, "Error inesperado al crear el producto");
+            setSubmitError(message);
         } finally {
             setIsSubmitting(false);
         }
@@ -128,6 +128,8 @@ export function useProductEdit(): UseProductsEditFormReturn {
     const [isSubmitting, setIsSubmitting]       = useState(false);
     const [submitError, setSubmitError]         = useState<string | null>(loadError);
     const [stepErrors, setStepErrors]           = useState<string[]>([]);
+
+    const { parseError } = useErrorParser();
 
     const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(editStepsConfig);
 
@@ -188,11 +190,8 @@ export function useProductEdit(): UseProductsEditFormReturn {
 
             setUpdatedEntity({ _id: updated._id, name: updated.name });
         } catch (error) {
-            setSubmitError(
-                error instanceof Error
-                    ? error.message
-                    : "Error inesperado al actualizar el producto"
-            );
+            const message = await parseError(error, "Error inesperado al actualizar el producto");
+            setSubmitError(message);
         } finally {
             setIsSubmitting(false);
         }

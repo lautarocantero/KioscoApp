@@ -14,7 +14,6 @@ import { useProductData } from "../../../../hooks/products/useProductData";
 import ProductCreated from "../../pages/ProductCreate/components/ProductCreated";
 import ProductEdited from "../../pages/ProductEdit/components/ProductEdited";
 import type { ProductFormProps } from "@typings/product/productComponentTypes";
-import ApiErrorComponent from "../../../../modules/shared/components/FormCard/ApiError";
 import ActualStepComponent from "../../../../modules/shared/components/FormCard/ActualStep";
 
 const STEP_COMPONENTS = [ProductFormFirstStep];
@@ -50,7 +49,6 @@ const ProductCreateForm = (): React.ReactNode => {
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
-                        <ApiErrorComponent submitError={form.submitError} />
                         <ActualStepComponent
                             currentStep={form.currentStep}
                             stepComponents={STEP_COMPONENTS}
@@ -94,7 +92,6 @@ const ProductEditForm = (): React.ReactNode => {
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
-                        <ApiErrorComponent submitError={form.submitError} />
                         {!form.isLoadingEntity && (
                             <ActualStepComponent
                                 currentStep={form.currentStep}
@@ -139,7 +136,6 @@ const ProductDetailForm = (): React.ReactNode => {
                     }}
                 >
                     <Grid container sx={{ width: "100%" }}>
-                        <ApiErrorComponent submitError={loadError} />
                         {!isLoadingEntity && (
                             <ActualStepComponent
                                 currentStep={0}

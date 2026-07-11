@@ -3,46 +3,64 @@ import type React from "react";
 
 export interface ActualStepComponentProps {
     currentStep: number;
-    stepComponents: ComponentType[];
+    stepComponents: React.ComponentType[];
+}
+
+
+export interface FormErrorsProps {
+    submitError?: string | null;
+    stepErrors?: string[];
+}
+
+
+export interface FormNavActionsProps {
+    submitText?:  string;
+    showButtons?: boolean;
+    readOnly?:    boolean;
+    backPath?:    string;
 }
 
 
 export interface FormCardHeaderProps {
     title: string;
     subtitle?: string;
-    icon?: ReactNode;
+    icon?: React.ReactNode;
     isMultiStep?: boolean;
     stepsLabels?: string[];
     currentStep?: number;
 }
 
 
-export interface FormCardFooterProps {
-    stepErrors?: string[];
-    submitError?: string | null;
+export interface MultiStepHeaderConfig {
+    stepsLabels: string[];
+    currentStep: number;
 }
 
 
-export interface FormCardProps {
-    children:     React.ReactNode;
-    submitText?:  string;
-    showButtons?: boolean;
-    readOnly?:    boolean;
-    backPath?:    string;
-    maxWidth?:    number | string;
+export interface BannerImageConfig {
+    src: string;
+    alt: string;
+    maxHeight?: number | string;
+}
+
+
+export interface AccordionConfig {
+    title: string;
+    content: string;
+    defaultExpanded?: boolean;
+    bannerImage?: BannerImageConfig;
+}
+
+
+export interface FormCardFooterProps extends FormNavActionsProps, FormErrorsProps {}
+
+export type ApiErrorComponentProps = FormErrorsProps;
+
+
+export interface FormCardProps extends FormNavActionsProps, FormErrorsProps {
+    children: React.ReactNode;
+    maxWidth?: number | string;
     header?: Pick<FormCardHeaderProps, "title" | "subtitle" | "icon">;
-    multiStepHeader?: {
-        stepsLabels: string[];
-        currentStep: number;
-    };
-    accordion?: {
-        title: string;
-        content: string;
-        defaultExpanded?: boolean;
-        bannerImage?: {
-            src: string;
-            alt: string;
-            maxHeight?: number | string;
-        };
-    };
+    multiStepHeader?: MultiStepHeaderConfig;
+    accordion?: AccordionConfig;
 }

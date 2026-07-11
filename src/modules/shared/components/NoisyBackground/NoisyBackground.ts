@@ -1,15 +1,12 @@
-import type { Theme } from "@mui/material";
+import type { NoisyBackgroundOptions } from "@typings/ui/noisyCard.types";
 
-type NoisyBackgroundOptions = {
-    theme: Theme;
-    noiseOpacity?: number;
-    backgroundColor?: string;
-};
 
 export const getNoisyBackgroundSx = ({
     theme,
     noiseOpacity = 0.06,
-    backgroundColor = theme?.custom?.blackTranslucid,
+    backgroundColor = theme.palette.mode === "light"
+        ? theme?.custom?.lightBackground
+        : theme?.custom?.darkBackground,
 }: NoisyBackgroundOptions) => ({
     position: "relative" as const,
     backgroundColor,

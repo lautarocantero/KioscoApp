@@ -7,7 +7,7 @@
 // ## Rutas 🛣️
 // ┌────────────────────────────────────────────────────────────┐
 // │ "/products"                      → ProductsListPage            │
-// │ "/products-create"               → ProductsCreatePage      │
+// │ "/products-create"               → ProductCreatePage      │
 // │ "/product/:productId"            → ProductDetailPage       │
 // │ "/products/:productId/edit"      → ProductsEditPage        │
 // │ "/categories"                    → CategoriesPage          │
