@@ -9,7 +9,15 @@ sidebar:
 - [ ] Al darle click a un elemento del sidebar que tenga sub elementos abrir el navbar.
 ---
 Productos:
-- [ ] detalle de productos debe de mostrar las estadisticas de las presentaciones hijas del producto.
+- [ ] modificar visualmente los botones de los filtros.
+- [ ] hacer que el filtro de vendedores funcione.
+- [ ] hacer que la card de unidades por dia funcione (hardcodeado).
+- [ ] eliminar la card de abajo (por semana) innecesaria.
+- [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc.
+- [ ] Agregar a la card de estadisticas el nombre de la presentacion vista de forma mas clara.
+- [ ] Agregar tema claro a todo.
+- [ ] Agregar disenos sx 
+
 ---
 Presentaciones:
 - [ ] detail no deja claro de quien es hija la presentacion.

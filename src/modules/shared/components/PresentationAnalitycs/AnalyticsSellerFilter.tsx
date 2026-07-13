@@ -4,7 +4,7 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import type { SellerFilterProps } from "@typings/ui/analytics.types";
 
 /** Vendedores hardcodeados hasta que exista el endpoint real */
-const HARDCODED_SELLERS = [{ id: "all", name: "Todos los vendedores" }]; // to do des hardcodear esto
+const HARDCODED_SELLERS = [{ id: "all", name: "Todos los vendedores" }];
 
 export const SellerFilter = ({ sellerId, onChange }: SellerFilterProps) => {
     return (

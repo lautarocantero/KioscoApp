@@ -1,14 +1,3 @@
-//─────────────────── Componente 🧩: CartProductQuantity ───────────────────//
-//
-//─────────────────── Descripción 📝 ───────────────────//
-// Stepper de cantidad para un producto en el carrito.
-// El "-" resta una unidad (dispatcha removeFromCartThunk con CartAmount.One).
-//
-//📝 To do: conectar el "+" a la lógica real de sumar una unidad al carrito
-// (falta definir/crear el thunk correspondiente, ej: increaseCartThunk).
-//
-//-----------------------------------------------------------------------------//
-
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Grid, IconButton, Typography, type Theme } from "@mui/material";
