@@ -1,5 +1,4 @@
 import type { Theme } from "@mui/material";
-import { width } from "@mui/system";
 
 /** Tokens de tipografía reutilizados por los distintos estilos de campo */
 const fontSize = {
@@ -54,7 +53,7 @@ export const filterInputSx = (theme: Theme) => ({
     ...outlinedBorderSx(theme, theme.custom.darkGray, "10px"),
 });
 
-export const datePickerInputSx = (theme: Theme) => ({
+export const datePickerInputSx = (theme: Theme, isActive = false) => ({
     borderRadius: "20px",
     width: 200,
     "& .MuiPickersInputBase-sectionsContainer": {
@@ -69,4 +68,10 @@ export const datePickerInputSx = (theme: Theme) => ({
         border: `1px solid ${theme.custom.darkGray} !important`,
         borderRadius: "20px",
     },
+    ...(isActive && {
+        "& .MuiPickersSectionList-root": {
+            color: theme.palette.primary.main,
+            fontWeight: 600,
+        },
+    }),
 });

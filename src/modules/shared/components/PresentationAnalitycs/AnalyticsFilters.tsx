@@ -17,6 +17,8 @@ export const AnalyticsFilters = ({ presentations, onPresentationChange, selected
         sellerId,
         handleSellerChange,
         handleApplyFilters,
+        isStartDateActive,
+    isEndDateActive,
     } = useAnalytics({ onApplyFilters });
 
     return (
@@ -32,6 +34,8 @@ export const AnalyticsFilters = ({ presentations, onPresentationChange, selected
                 label="Fecha de inicio"
                 value={startDate}
                 onChange={setStartDate}
+                isActive={isStartDateActive}
+                disableFuture
             />
 
             <DateFilterPicker
@@ -39,6 +43,8 @@ export const AnalyticsFilters = ({ presentations, onPresentationChange, selected
                 value={endDate}
                 onChange={setEndDate}
                 minDate={startDate ?? undefined}
+                isActive={isEndDateActive}
+                disableFuture
             />
 
             <SellerFilter sellerId={sellerId} onChange={handleSellerChange} />

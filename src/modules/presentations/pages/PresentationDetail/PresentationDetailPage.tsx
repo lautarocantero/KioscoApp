@@ -3,10 +3,10 @@ import { Alert, Box } from "@mui/material";
 import AppLayout from "../../../shared/layout/AppLayout";
 import CardCarousel from "../../../shared/components/Cards/CardCarousel";
 import PresentationDetailFormComponent from "./components/PresentationDetailForm";
-import PresentationAnalytics from "./components/PresentationAnalytics";
 import { usePresentationAnalytics } from "../../../../hooks/presentation/usePresentationAnalytics";
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import { mapPresentationAnalytics } from "./components/mapPresentationAnalytics";
+import PresentationAnalytics from "./components/PresentationAnalitycs";
 
 const PresentationDetailPage = (): React.ReactNode => {
     const { analytics, isLoading, error } = usePresentationAnalytics();

@@ -7,4 +7,7 @@ export interface DateFilterPickerProps {
   minDate?: Dayjs;
   maxDate?: Dayjs;
   disabled?: boolean;
+  disableFuture?: boolean;
+  disablePast?: boolean;
+  isActive: boolean;
 }

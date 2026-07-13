@@ -6,16 +6,6 @@ import { mapPresentationAnalytics } from "../../../../../modules/presentations/p
 import type { ProductAnalyticsSectionProps } from "@typings/product/productComponentTypes";
 import PresentationAnalytics from "../../../../../modules/shared/components/PresentationAnalitycs/PresentationAnalitycs";
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 📊 ProductAnalyticsSection                                            ║
-║                                                                       ║
-║ El producto no vende, sus presentaciones sí. Este bloque:             ║
-║   1. Trae las presentaciones hijas del producto                       ║
-║   2. Muestra por defecto las estadísticas de la primera disponible    ║
-║   3. Permite cambiar de presentación vía selector (dentro de la card) ║
-║   4. Reutiliza PresentationAnalytics tal cual se usa en su propia page║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
 const ProductAnalyticsSection = ({ productId }: ProductAnalyticsSectionProps): React.ReactNode => {
     const {
         presentations,
@@ -29,6 +19,7 @@ const ProductAnalyticsSection = ({ productId }: ProductAnalyticsSectionProps): R
         analytics,
         isLoading: isLoadingAnalytics,
         error: analyticsError,
+        applyFilters,
     } = usePresentationAnalytics(selectedPresentationId);
 
     const analyticsData = analytics ? mapPresentationAnalytics(analytics, "analytics") : null;
@@ -41,17 +32,19 @@ const ProductAnalyticsSection = ({ productId }: ProductAnalyticsSectionProps): R
         return <Alert severity="info">Este producto todavía no tiene presentaciones cargadas.</Alert>;
     }
 
+    if (isLoadingAnalytics && !analyticsData) return <LoadingSpinnerComponent />;
+
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 1 }}>
-            {isLoadingAnalytics && <LoadingSpinnerComponent />}
             {analyticsError && <Alert severity="error">{analyticsError}</Alert>}
-            {!isLoadingAnalytics && analyticsData && (
+            {analyticsData && (
                 <PresentationAnalytics
                     data={analyticsData}
                     presentations={presentations}
                     selectedPresentationId={selectedPresentationId}
                     onPresentationChange={setSelectedPresentationId}
                     isPresentationSelectorDisabled={isLoadingAnalytics}
+                    onApplyFilters={applyFilters}
                 />
             )}
         </Box>
