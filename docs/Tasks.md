@@ -10,7 +10,6 @@ sidebar:
 ---
 Productos:
 - [ ] modificar visualmente los botones de los filtros.
-- [ ] hacer que el filtro de vendedores traiga vendedores reales.
 - [ ] hacer que la card de unidades por dia funcione (hardcodeado).
 - [ ] eliminar la card de abajo (por semana) innecesaria.
 - [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc.
@@ -26,6 +25,7 @@ Presentaciones:
 ventas:
 - [ ] quitar desplazamiento de iconos del searchbar.
 - [ ] refactor visual.
+- [ ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar
 - [ ] comprar productos no baja el stock.
 - [ ] solo mostrar productos con stock.
 - [ ] Agregar la tabla de tipos, luego hacer crud, pero agregarla ya.
@@ -33,6 +33,7 @@ ventas:
 - [ ] refactorizar todo el modulo.
 
 vendedores:
+- [ ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar
 - [ ] modificar datos para que no sean los mismos que auth, tambien los campos.
 
 
