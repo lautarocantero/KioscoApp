@@ -23,7 +23,7 @@ const PresentationSelector = ({
                 textTransform: "none",
                 fontSize: "0.8rem",
                 color: theme.custom.fontColor,
-                borderRadius: "10px",
+                borderRadius: "5em",
                 minWidth: 180,
                 "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: theme.custom.darkGray,

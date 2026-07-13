@@ -1,10 +1,10 @@
 import { Box, Button } from "@mui/material";
 import DateFilterPicker from "../DateFilterPicker/DateFilterPicker";
-import { useAnalytics } from "../../../../hooks/shared/useAnalytics";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import { PresentationFilter } from "./AnalyticsPresentationsFilter";
 import { SellerFilter } from "./AnalyticsSellerFilter";
 import type { AnalyticsFiltersProps } from "@typings/ui/analytics.types";
+import { useAnalytics } from "../../../../hooks/shared/useAnalitycs";
 
 export const AnalyticsFilters = ({ presentations, onPresentationChange, selectedPresentationId, isPresentationSelectorDisabled, onApplyFilters }: AnalyticsFiltersProps) => {
 
