@@ -1,4 +1,5 @@
 import type { Theme } from "@mui/material";
+import { width } from "@mui/system";
 
 /** Tokens de tipografía reutilizados por los distintos estilos de campo */
 const fontSize = {
@@ -55,6 +56,7 @@ export const filterInputSx = (theme: Theme) => ({
 
 export const datePickerInputSx = (theme: Theme) => ({
     borderRadius: "20px",
+    width: 200,
     "& .MuiPickersInputBase-sectionsContainer": {
         fontSize: fontSize.filterInput,
     },
