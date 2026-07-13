@@ -1,28 +1,22 @@
-import { useState } from "react";
-import { Box, MenuItem, Select, Typography } from "@mui/material";
+import { Box, Typography, useTheme, type Theme } from "@mui/material";
+import type { DailySalesBarChartProps } from "@typings/ui/analytics.types";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
-import type { DailySalesPoint } from "@typings/ui/analytics.types";
 
-interface DailySalesBarChartProps {
-    data: DailySalesPoint[];
-    granularityOptions?: string[];
-    defaultGranularity?: string;
-    onGranularityChange?: (value: string) => void;
-}
 
-const CustomTooltip = ({ active, payload, label }: any): React.ReactNode => {
+const CustomTooltip = ({ active, payload, label, theme }: any): React.ReactNode => {
     if (!active || !payload?.length) return null;
     return (
         <Box
             sx={{
-                bgcolor: "rgba(20,20,28,0.95)",
-                border: "1px solid rgba(139,92,246,0.4)",
+                bgcolor: theme.custom.tooltipBackground,
+                border: "1px solid",
+                borderColor: theme.custom.accentPurpleTransparent,
                 borderRadius: "8px",
                 px: 1.5,
                 py: 1,
             }}
         >
-            <Typography variant="caption" sx={{ display: "block", color: "text.secondary" }}>
+            <Typography variant="caption" sx={{ display: "block", color: theme.custom.mutedFontColor }}>
                 {label}
             </Typography>
             <Box
@@ -31,7 +25,7 @@ const CustomTooltip = ({ active, payload, label }: any): React.ReactNode => {
                     px: 1,
                     py: 0.25,
                     borderRadius: "6px",
-                    bgcolor: "rgba(139,92,246,0.25)",
+                    bgcolor: theme.custom.accentPurpleSoft,
                     display: "inline-block",
                 }}
             >
@@ -43,70 +37,53 @@ const CustomTooltip = ({ active, payload, label }: any): React.ReactNode => {
     );
 };
 
+const getChartTitle = (startDate?: string, endDate?: string): string => {
+    if (!startDate || !endDate) return "Unidades vendidas";
+    return `Unidades vendidas entre ${startDate} y ${endDate}`;
+};
+
 const DailySalesBarChart = ({
     data,
-    granularityOptions = ["Día", "Semana", "Mes"],
-    defaultGranularity = "Día",
-    onGranularityChange,
+    startDate,
+    endDate,
 }: DailySalesBarChartProps): React.ReactNode => {
-    const [granularity, setGranularity] = useState(defaultGranularity);
+    const theme = useTheme();
 
     return (
         <Box
-            sx={{
+            sx={(theme: Theme) => ({
                 p: 2.5,
                 height: "100%",
                 borderRadius: "14px",
                 border: "0.5px solid",
-                borderColor: "rgba(255,255,255,0.08)",
-                bgcolor: "rgba(255,255,255,0.02)",
-            }}
+                borderColor: theme.custom.darkGray,
+                bgcolor: theme.custom.background,
+            })}
         >
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                    Unidades vendidas por día
+                    {getChartTitle(startDate, endDate)}
                 </Typography>
-                <Select
-                    size="small"
-                    value={granularity}
-                    onChange={(e) => {
-                        setGranularity(e.target.value);
-                        onGranularityChange?.(e.target.value);
-                    }}
-                    sx={{
-                        fontSize: "0.8rem",
-                        height: 32,
-                        minWidth: 90,
-                        bgcolor: "rgba(255,255,255,0.04)",
-                        "& .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(255,255,255,0.1)" },
-                    }}
-                >
-                    {granularityOptions.map((opt) => (
-                        <MenuItem key={opt} value={opt}>
-                            {opt}
-                        </MenuItem>
-                    ))}
-                </Select>
             </Box>
 
             <Box sx={{ width: "100%", height: 220 }}>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data} margin={{ top: 8, right: 4, left: -20, bottom: 0 }}>
-                        <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.06)" />
+                        <CartesianGrid vertical={false} stroke={theme.custom.white} />
                         <XAxis
                             dataKey="date"
                             interval={4}
-                            tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }}
-                            axisLine={{ stroke: "rgba(255,255,255,0.1)" }}
+                            tick={{ fill: theme.custom.lightMain, fontSize: 11 }}
+                            axisLine={{ stroke: theme.palette.primary.main }}
                             tickLine={false}
                         />
                         <YAxis
-                            tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }}
+                            tick={{ fill: theme.palette.primary.main, fontSize: 11 }}
                             axisLine={false}
                             tickLine={false}
                         />
-                        <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(139,92,246,0.08)" }} />
-                        <Bar dataKey="units" fill="#8B5CF6" radius={[4, 4, 0, 0]} maxBarSize={14} />
+                        <Tooltip content={<CustomTooltip theme={theme} />} cursor={{ fill: theme.custom.darkGray }} />
+                        <Bar dataKey="units" fill={theme.palette.primary.main} radius={[4, 4, 0, 0]} maxBarSize={14} />
                     </BarChart>
                 </ResponsiveContainer>
             </Box>

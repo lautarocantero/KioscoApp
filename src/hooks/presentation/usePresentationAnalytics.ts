@@ -14,20 +14,6 @@ const getDefaultDateRange = () => ({
 
 const DEFAULT_SELLER_ID = "all";
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 usePresentationAnalytics                                           ║
-║                                                                       ║
-║ `presentationId` opcional: si se provee, tiene prioridad sobre la URL. ║
-║ Permite reusar el hook fuera de la ruta de presentación (ej. desde    ║
-║ el detalle de producto, cambiando de presentación sin navegar).       ║
-║                                                                       ║
-║ El fetch usa `appliedPresentationId`, no el `presentationId` "vivo":  ║
-║ así, si el consumidor cambia de presentación en un selector antes de  ║
-║ hacer clic en "Aplicar filtros", el fetch no se dispara hasta que     ║
-║ `applyFilters` lo confirme — igual que fecha/vendedor.                ║
-║ La primera vez que llega un id (carga inicial / cambio de producto)   ║
-║ se aplica automáticamente, sin esperar "Aplicar".                     ║
-╚══════════════════════════════════════════════════════════════════════╝*/
 export function usePresentationAnalytics(presentationId?: string) {
     const { presentation_id: presentationIdFromUrl } = useParams<{ presentation_id: string }>();
     const resolvedPresentationId = presentationId ?? presentationIdFromUrl;
@@ -38,10 +24,8 @@ export function usePresentationAnalytics(presentationId?: string) {
     const [dateRange, setDateRange]   = useState<{ start_date?: string; end_date?: string }>(getDefaultDateRange);
     const [sellerId, setSellerId]     = useState<string>(DEFAULT_SELLER_ID);
 
-    // id "aplicado": el que realmente dispara el fetch
     const [appliedPresentationId, setAppliedPresentationId] = useState<string | undefined>(undefined);
 
-    // primera vez que llega un id (o cambia de producto sin selección previa), se autoaplica
     useEffect(() => {
         if (resolvedPresentationId && appliedPresentationId === undefined) {
             setAppliedPresentationId(resolvedPresentationId);
@@ -72,12 +56,14 @@ export function usePresentationAnalytics(presentationId?: string) {
         fetchAnalytics();
     }, [fetchAnalytics]);
 
-    /** Adapta AnalyticsFilters (Dayjs) al shape de dateRange (string) que espera el fetch.
-     *  También confirma acá el cambio de presentación pendiente en el selector. */
+    /** Si el usuario definió fecha de inicio/fin, se usan tal cual.
+     *  Si dejó alguna (o ambas) sin definir, se recalcula el default
+     *  "último mes hasta hoy" para esa punta, en vez de perderlo. */
     const applyFilters = useCallback(({ startDate, endDate, sellerId }: AnalyticsFiltersInterface) => {
+        const defaults = getDefaultDateRange();
         setDateRange({
-            start_date: startDate?.format("YYYY-MM-DD"),
-            end_date: endDate?.format("YYYY-MM-DD"),
+            start_date: startDate ? startDate.format("YYYY-MM-DD") : defaults.start_date,
+            end_date: endDate ? endDate.format("YYYY-MM-DD") : defaults.end_date,
         });
         setSellerId(sellerId ?? DEFAULT_SELLER_ID);
         if (resolvedPresentationId) {

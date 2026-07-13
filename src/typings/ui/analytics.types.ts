@@ -137,3 +137,12 @@ export interface AnalyticsFiltersButtonsProps {
     onClear: () => void;
     areFiltersActive: boolean;
 }
+
+export interface DailySalesBarChartProps {
+    data: DailySalesPoint[];
+    granularityOptions?: string[];
+    defaultGranularity?: string;
+    onGranularityChange?: (value: string) => void;
+    startDate?: string;
+    endDate?: string;
+}
