@@ -1,17 +1,31 @@
 import type { SelectChangeEvent } from "@mui/material";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { PresentationAnalyticsProps } from "@typings/product/productComponentTypes";
-import type { AnalyticsFiltersInterface, DailySalesPoint, StockEvolutionPoint } from "@typings/shared/types/useAnalyticsFormState.types";
-
-
-//─── 🧩 Props de componentes ──────────────────────────────────
-type AnalyticsData = PresentationAnalyticsProps["data"];
+import type {
+    AnalyticsData,
+    AnalyticsFiltersInterface,
+    AnalyticsKpi,
+    DailySalesPoint,
+    PeriodSummaryItem,
+    StockEvolutionPoint,
+    TopSellingDay,
+} from "@typings/shared/types/useAnalytics.types";
 
 export interface AnalyticsHeaderProps {
     title: string;
     subtitle: string;
 }
 
+export interface KpiCardProps {
+    kpi: AnalyticsKpi;
+}
+
+export interface PeriodSummaryCardProps {
+    items: PeriodSummaryItem[];
+}
+
+export interface TopSellingDaysCardProps {
+    days: TopSellingDay[];
+}
 
 export interface AnalyticsChartsProps {
     dailySales: AnalyticsData["dailySales"];
@@ -39,7 +53,7 @@ export interface AnalyticsFiltersProps {
 }
 
 /** El filtro de presentación es un subconjunto de AnalyticsFiltersProps, no de PresentationAnalyticsProps directamente. */
-export type PresentationFilterProps = Pick<AnalyticsFiltersProps, "presentations" | "onPresentationChange" | "selectedPresentationId" | "isPresentationSelectorDisabled"> & {
+export type PresentationFilterProps = Pick<AnalyticsFiltersProps,"presentations" | "onPresentationChange" | "selectedPresentationId" | "isPresentationSelectorDisabled"> & {
     label: string;
 };
 

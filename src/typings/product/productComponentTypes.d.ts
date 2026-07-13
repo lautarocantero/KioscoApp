@@ -7,7 +7,7 @@ import type {
 } from "./productTypes";
 import type { PresentationAnalyticsData } from "@typings/ui/analytics.types";
 import type { Dayjs } from "dayjs";
-import type { AnalyticsFiltersInterface } from "@typings/shared/types/useAnalyticsFormState.types";
+import type { AnalyticsFiltersInterface } from "@typings/shared/types/useAnalytics.types";
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -139,8 +139,6 @@ export interface PresentationAnalyticsProps {
     isPresentationSelectorDisabled?: boolean;
     onApplyFilters?: (filters: AnalyticsFiltersInterface) => void;
 }
-
-export interface AnalyticsFiltersProps extends AnalyticsFiltersInterface {}
 
 
 // /*══════════════════════════════════════════════════════════════════════╗

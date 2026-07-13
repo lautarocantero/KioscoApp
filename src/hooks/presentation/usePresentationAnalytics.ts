@@ -3,8 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { resolveErrorMessage } from "../../utils/formatter/resolveErrorMessage";
-import type { PresentationAnalyticsRaw } from "@typings/ui/analytics.types";
-import type { AnalyticsFiltersInterface } from "@typings/shared/types/useAnalyticsFormState.types";
+import type { AnalyticsFiltersInterface, PresentationAnalyticsRaw } from "@typings/shared/types/useAnalytics.types";
 
 /** Rango por defecto: último mes hasta hoy, igual al criterio inicial de useAnalyticsFormState */
 const getDefaultDateRange = () => ({

@@ -1,46 +1,9 @@
 import { Box, Typography, useTheme, type Theme } from "@mui/material";
 import type { DailySalesBarChartProps } from "@typings/ui/analytics.types";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
+import CustomTooltip from "./CustomToolTip";
+import { getChartTitle } from "./AnalyticsHelper";
 
-
-const CustomTooltip = ({ active, payload, label, theme }: any): React.ReactNode => {
-    if (!active || !payload?.length) return null;
-    return (
-        <Box
-            sx={{
-                bgcolor: theme.custom.tooltipBackground,
-                border: "1px solid",
-                borderColor: theme.custom.accentPurpleTransparent,
-                borderRadius: "8px",
-                px: 1.5,
-                py: 1,
-            }}
-        >
-            <Typography variant="caption" sx={{ display: "block", color: theme.custom.mutedFontColor }}>
-                {label}
-            </Typography>
-            <Box
-                sx={{
-                    mt: 0.5,
-                    px: 1,
-                    py: 0.25,
-                    borderRadius: "6px",
-                    bgcolor: theme.custom.accentPurpleSoft,
-                    display: "inline-block",
-                }}
-            >
-                <Typography variant="caption" sx={{ fontWeight: 700 }}>
-                    {payload[0].value} unidades
-                </Typography>
-            </Box>
-        </Box>
-    );
-};
-
-const getChartTitle = (startDate?: string, endDate?: string): string => {
-    if (!startDate || !endDate) return "Unidades vendidas";
-    return `Unidades vendidas entre ${startDate} y ${endDate}`;
-};
 
 const DailySalesBarChart = ({
     data,

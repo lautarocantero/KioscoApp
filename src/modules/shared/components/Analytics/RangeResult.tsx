@@ -7,8 +7,7 @@ import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined
 import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutlined";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import type { Theme } from "@mui/material/styles";
-import type { RangeResult } from "@typings/ui/analytics.types";
-import type { PresentationAnalyticsData } from "@typings/shared/types/useAnalyticsFormState.types";
+import type { PresentationAnalyticsData, RangeResult } from "@typings/shared/types/useAnalytics.types";
 import {
     formatDayLabel,
     formatRangeLabel,

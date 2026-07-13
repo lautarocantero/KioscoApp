@@ -1,5 +1,6 @@
 import type { Dayjs } from "dayjs";
 import type { ReactNode } from "react";
+import type { PresentationAnalyticsProps } from "@typings/product/productComponentTypes";
 
 export interface AnalyticsFiltersInterface {
     startDate: Dayjs | null;
@@ -10,15 +11,15 @@ export interface AnalyticsFiltersInterface {
 export interface UseAnalyticsParams {
     onApplyFilters?: (filters: AnalyticsFiltersInterface) => void;
 }
-//─── 📦 Datos crudos (raw) ───────────────────────────────────
-export interface AnalyticsTotals {
+
+interface AnalyticsTotals {
     units: number;
     revenue: number;
     activeDays: number;
     avgTicket: number;
 }
 
-export interface AnalyticsDeltas {
+interface AnalyticsDeltas {
     unitsPct?: number;
     revenuePct?: number;
     activeDaysPct?: number;
@@ -26,24 +27,24 @@ export interface AnalyticsDeltas {
 }
 
 /** Punto genérico de unidades por fecha. Usado tanto para ventas diarias como para "top selling days". */
-export interface DayUnitsPoint {
+interface DayUnitsPoint {
     date: string;
     units: number;
 }
 
-export interface WeekUnitsPoint {
+interface WeekUnitsPoint {
     weekLabel: string;
     units: number;
 }
 
-export interface PeriodSummaryRaw {
+interface PeriodSummaryRaw {
     maxDaily?: DayUnitsPoint;
     minDaily?: DayUnitsPoint;
     avgDailyUnits: number;
     activeDaysCount: number;
 }
 
-export interface DateRange {
+interface DateRange {
     start: string;
     end: string;
 }
@@ -59,7 +60,7 @@ export interface PresentationAnalyticsRaw {
 }
 
 //─── 🎨 Datos ya formateados para presentación ───────────────
-export interface IconWithColor {
+interface IconWithColor {
     icon: ReactNode;
     iconColor: string;
 }
@@ -80,7 +81,6 @@ export interface PeriodSummaryItem extends IconWithColor {
 
 /** Alias explícitos: mismo shape que los raw points, pero ya procesados para UI. */
 export type DailySalesPoint = DayUnitsPoint;
-export type WeeklySalesPoint = WeekUnitsPoint;
 export type TopSellingDay = DayUnitsPoint;
 
 export interface StockEvolutionPoint {
@@ -88,6 +88,7 @@ export interface StockEvolutionPoint {
     stock: number;
 }
 
+/** Dato ya mapeado, consumido por PresentationAnalytics. También es la base de AnalyticsData (usado para construir props). */
 export interface PresentationAnalyticsData {
     title: string;
     subtitle: string;
@@ -98,3 +99,20 @@ export interface PresentationAnalyticsData {
     topSellingDays: TopSellingDay[];
     periodSummary: PeriodSummaryItem[];
 }
+
+//─── 🧮 Tipos internos de cálculo (mapper/helpers) ───────────
+export interface DailyBucket {
+    date: string;
+    units: number;
+    revenue: number;
+}
+
+export interface RangeResult {
+    dailyBuckets: DailyBucket[];
+    totalUnits: number;
+    totalRevenue: number;
+    activeDays: number;
+}
+
+//─── 🔗 Alias derivado, usado para construir props en analytics.types.ts ───
+export type AnalyticsData = PresentationAnalyticsProps["data"];

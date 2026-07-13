@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import type { SelectChangeEvent } from "@mui/material";
-import type { UseAnalyticsParams } from "@typings/shared/types/useAnalyticsFormState.types";
+import type { UseAnalyticsParams } from "@typings/shared/types/useAnalytics.types";
 
 
 const getDefaultStartDate = () => dayjs().subtract(1, "month");

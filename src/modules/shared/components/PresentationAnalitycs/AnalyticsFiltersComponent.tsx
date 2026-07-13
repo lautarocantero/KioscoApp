@@ -3,8 +3,8 @@ import DateFilterPicker from "../DateFilterPicker/DateFilterPicker";
 import { PresentationFilter } from "./AnalyticsPresentationsFilter";
 import { SellerFilter } from "./AnalyticsSellerFilter";
 import type { AnalyticsFiltersProps } from "@typings/ui/analytics.types";
-import { useAnalyticsFormState } from "../../../../hooks/shared/useAnalyticsFormState";
 import { AnalyticsFiltersButtons } from "./AnalyticsButtons";
+import { useAnalyticsFormState } from "../../../../hooks/shared/useAnalyticsFormState";
 
 const AnalyticsFiltersComponent = ({ presentations, onPresentationChange, selectedPresentationId, isPresentationSelectorDisabled, onApplyFilters }: AnalyticsFiltersProps) => {
 

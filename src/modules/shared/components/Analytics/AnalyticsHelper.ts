@@ -1,6 +1,5 @@
 // mappers/presentationAnalytics.helpers.ts
-import type { DailyBucket, RangeResult } from "@typings/ui/analytics.types";
-import type { StockEvolutionPoint } from "@typings/shared/types/useAnalyticsFormState.types";
+import type { DailyBucket, RangeResult, StockEvolutionPoint } from "@typings/shared/types/useAnalytics.types";
 
 export const formatDayLabel = (isoDate: string): string => {
     const d = new Date(isoDate);
@@ -63,3 +62,8 @@ export const getPeriodStats = (dailyBuckets: DailyBucket[]): PeriodStats => {
 
 export const getAvgTicket = (result: RangeResult): number =>
     result.totalUnits > 0 ? result.totalRevenue / result.totalUnits : 0;
+
+export const getChartTitle = (startDate?: string, endDate?: string): string => {
+    if (!startDate || !endDate) return "Unidades vendidas";
+    return `Unidades vendidas entre ${startDate} y ${endDate}`;
+};
