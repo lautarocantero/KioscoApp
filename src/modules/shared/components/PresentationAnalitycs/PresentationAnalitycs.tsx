@@ -15,7 +15,7 @@ const PresentationAnalytics = ({
     isPresentationSelectorDisabled,
     onApplyFilters,
 }: PresentationAnalyticsProps): React.ReactNode => {
-    const { title, subtitle, kpis, dailySales, weeklySales , topSellingDays, periodSummary} = data;
+    const { title, subtitle, kpis, dailySales, stockEvolution , topSellingDays, periodSummary} = data;
 
     return (
         <NoisyCard sx={{ height: "100%" }}>
@@ -38,7 +38,7 @@ const PresentationAnalytics = ({
                 {/* ── Cuerpo: charts + sidebar ──────────────────────── */}
                 <AnalyticsBody
                     dailySales={dailySales}
-                    weeklySales={weeklySales}
+                    stockEvolution={stockEvolution}
                     topSellingDays={topSellingDays}
                     periodSummary={periodSummary}
                 />

@@ -9,9 +9,7 @@ sidebar:
 - [ ] Al darle click a un elemento del sidebar que tenga sub elementos abrir el navbar.
 ---
 Productos:
-- [ ] modificar visualmente los botones de los filtros.
-- [ ] hacer que la card de unidades por dia funcione (hardcodeado).
-- [ ] eliminar la card de abajo (por semana) innecesaria, poner card de stock de producto.
+- [ ] hacer que la card de stock funcione, implementar cambios en backend.
 - [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc.
 - [ ] Agregar a la card de estadisticas el nombre de la presentacion vista de forma mas clara.
 - [ ] Agregar tema claro a todo.

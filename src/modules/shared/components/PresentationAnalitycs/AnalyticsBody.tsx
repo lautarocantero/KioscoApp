@@ -6,14 +6,14 @@ import type { AnalyticsBodyProps } from "@typings/ui/analytics.types";
 
 export const AnalyticsBody = ({
     dailySales,
-    weeklySales,
+    stockEvolution,
     topSellingDays,
     periodSummary,
 }: AnalyticsBodyProps): React.ReactNode => {
     return (
         <Grid container spacing={2}>
             <Grid size={{ xs: 12, md: 8 }}>
-                <AnalyticsCharts dailySales={dailySales} weeklySales={weeklySales} />
+                <AnalyticsCharts dailySales={dailySales} stockEvolution={stockEvolution} />
             </Grid>
 
             <Grid size={{ xs: 12, md: 4 }}>
