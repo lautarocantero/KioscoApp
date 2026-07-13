@@ -6,13 +6,15 @@ import type { SelectChangeEvent } from "@mui/material";
 import type { UseAnalyticsParams } from "@typings/shared/types/useAnalytics.types";
 
 
-export const useAnalytics = ({ onApplyFilters }: UseAnalyticsParams) => {
-    const [startDate, setStartDateState] = useState<Dayjs | null>(dayjs().subtract(1, "month"));
-    const [endDate, setEndDateState] = useState<Dayjs | null>(dayjs());
-    const [sellerId, setSellerId] = useState("all");
+const getDefaultStartDate = () => dayjs().subtract(1, "month");
+const getDefaultEndDate = () => dayjs();
+const DEFAULT_SELLER_ID = "all";
 
-    // Se activan solo cuando el usuario efectivamente interactúa con el picker,
-    // sin importar si el valor elegido coincide con el default.
+export const useAnalytics = ({ onApplyFilters }: UseAnalyticsParams) => {
+    const [startDate, setStartDateState] = useState<Dayjs | null>(getDefaultStartDate);
+    const [endDate, setEndDateState] = useState<Dayjs | null>(getDefaultEndDate);
+    const [sellerId, setSellerId] = useState(DEFAULT_SELLER_ID);
+
     const [isStartDateActive, setIsStartDateActive] = useState(false);
     const [isEndDateActive, setIsEndDateActive] = useState(false);
 
@@ -32,6 +34,23 @@ export const useAnalytics = ({ onApplyFilters }: UseAnalyticsParams) => {
         onApplyFilters?.({ startDate, endDate, sellerId });
     };
 
+    /** Vuelve todo al estado inicial y re-aplica automáticamente (refetch sin filtros). */
+    const handleClearFilters = useCallback(() => {
+        const defaultStart = getDefaultStartDate();
+        const defaultEnd = getDefaultEndDate();
+
+        setStartDateState(defaultStart);
+        setEndDateState(defaultEnd);
+        setSellerId(DEFAULT_SELLER_ID);
+        setIsStartDateActive(false);
+        setIsEndDateActive(false);
+
+        onApplyFilters?.({ startDate: defaultStart, endDate: defaultEnd, sellerId: DEFAULT_SELLER_ID });
+    }, [onApplyFilters]);
+
+    /** Hay algún filtro tocado por el usuario, más allá de coincidir o no con el default. */
+    const areFiltersActive = isStartDateActive || isEndDateActive || sellerId !== DEFAULT_SELLER_ID;
+
     return {
         startDate,
         setStartDate,
@@ -40,7 +59,9 @@ export const useAnalytics = ({ onApplyFilters }: UseAnalyticsParams) => {
         sellerId,
         handleSellerChange,
         handleApplyFilters,
+        handleClearFilters,
         isStartDateActive,
         isEndDateActive,
+        areFiltersActive,
     };
 };

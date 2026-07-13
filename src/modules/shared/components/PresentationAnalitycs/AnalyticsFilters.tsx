@@ -1,11 +1,10 @@
 import { Box } from "@mui/material";
 import DateFilterPicker from "../DateFilterPicker/DateFilterPicker";
-import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import { PresentationFilter } from "./AnalyticsPresentationsFilter";
 import { SellerFilter } from "./AnalyticsSellerFilter";
 import type { AnalyticsFiltersProps } from "@typings/ui/analytics.types";
 import { useAnalytics } from "../../../../hooks/shared/useAnalitycs";
-import PrimaryButtonComponent from "../Buttons/PrimaryButtonComponent";
+import { AnalyticsFiltersButtons } from "./AnalyticsButtons";
 
 export const AnalyticsFilters = ({ presentations, onPresentationChange, selectedPresentationId, isPresentationSelectorDisabled, onApplyFilters }: AnalyticsFiltersProps) => {
 
@@ -17,8 +16,10 @@ export const AnalyticsFilters = ({ presentations, onPresentationChange, selected
         sellerId,
         handleSellerChange,
         handleApplyFilters,
+        handleClearFilters,
         isStartDateActive,
-    isEndDateActive,
+        isEndDateActive,
+        areFiltersActive,
     } = useAnalytics({ onApplyFilters });
 
     return (
@@ -49,13 +50,10 @@ export const AnalyticsFilters = ({ presentations, onPresentationChange, selected
 
             <SellerFilter sellerId={sellerId} onChange={handleSellerChange} />
 
-            <PrimaryButtonComponent
-                buttonText="Aplicar filtros"
-                buttonOnClick={handleApplyFilters}
-                icon={<TuneOutlinedIcon fontSize="small" sx={{ mr: 0.75 }} />}
-                buttonWidth="auto"
-                marginTop={"0"}
-                dataTestId="apply-filters-button"
+            <AnalyticsFiltersButtons
+                onApply={handleApplyFilters}
+                onClear={handleClearFilters}
+                areFiltersActive={areFiltersActive}
             />
         </Box>
     );

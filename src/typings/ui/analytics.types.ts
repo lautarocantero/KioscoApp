@@ -128,3 +128,9 @@ export interface SellerFilterProps {
     sellerId: string;
     onChange: (e: SelectChangeEvent) => void;
 }
+
+export interface AnalyticsFiltersButtonsProps {
+    onApply: () => void;
+    onClear: () => void;
+    areFiltersActive: boolean;
+}
