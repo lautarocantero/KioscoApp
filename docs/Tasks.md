@@ -10,6 +10,7 @@ sidebar:
 ---
 Productos:
 - [ ] modificar visualmente los botones de los filtros.
+- [ ] funcionan raros ls filtros, no espera a que le de al boton, el borrar filtros no resetea la presentacion
 - [ ] hacer que la card de unidades por dia funcione (hardcodeado).
 - [ ] eliminar la card de abajo (por semana) innecesaria.
 - [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc.
