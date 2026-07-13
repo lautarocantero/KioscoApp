@@ -20,9 +20,13 @@ const DEFAULT_SELLER_ID = "all";
 ║ `presentationId` opcional: si se provee, tiene prioridad sobre la URL. ║
 ║ Permite reusar el hook fuera de la ruta de presentación (ej. desde    ║
 ║ el detalle de producto, cambiando de presentación sin navegar).       ║
-║ Por defecto trae el último mes. `applyFilters` ya viene en el shape   ║
-║ que espera `onApplyFilters` de AnalyticsFilters/useAnalyticsFormState, así que ║
-║ se puede conectar directo sin wrapper en cada componente consumidor.  ║
+║                                                                       ║
+║ El fetch usa `appliedPresentationId`, no el `presentationId` "vivo":  ║
+║ así, si el consumidor cambia de presentación en un selector antes de  ║
+║ hacer clic en "Aplicar filtros", el fetch no se dispara hasta que     ║
+║ `applyFilters` lo confirme — igual que fecha/vendedor.                ║
+║ La primera vez que llega un id (carga inicial / cambio de producto)   ║
+║ se aplica automáticamente, sin esperar "Aplicar".                     ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export function usePresentationAnalytics(presentationId?: string) {
     const { presentation_id: presentationIdFromUrl } = useParams<{ presentation_id: string }>();
@@ -34,14 +38,24 @@ export function usePresentationAnalytics(presentationId?: string) {
     const [dateRange, setDateRange]   = useState<{ start_date?: string; end_date?: string }>(getDefaultDateRange);
     const [sellerId, setSellerId]     = useState<string>(DEFAULT_SELLER_ID);
 
+    // id "aplicado": el que realmente dispara el fetch
+    const [appliedPresentationId, setAppliedPresentationId] = useState<string | undefined>(undefined);
+
+    // primera vez que llega un id (o cambia de producto sin selección previa), se autoaplica
+    useEffect(() => {
+        if (resolvedPresentationId && appliedPresentationId === undefined) {
+            setAppliedPresentationId(resolvedPresentationId);
+        }
+    }, [resolvedPresentationId, appliedPresentationId]);
+
     const fetchAnalytics = useCallback(async () => {
-        if (!resolvedPresentationId) { setIsLoading(false); return; }
+        if (!appliedPresentationId) { setIsLoading(false); return; }
 
         setIsLoading(true);
         setError(null);
         try {
             const data = await getPresentationAnalyticsRequest({
-                presentation_id: resolvedPresentationId,
+                presentation_id: appliedPresentationId,
                 start_date: dateRange.start_date,
                 end_date: dateRange.end_date,
                 seller_id: sellerId !== DEFAULT_SELLER_ID ? sellerId : undefined,
@@ -52,20 +66,24 @@ export function usePresentationAnalytics(presentationId?: string) {
         } finally {
             setIsLoading(false);
         }
-    }, [resolvedPresentationId, dateRange, sellerId]);
+    }, [appliedPresentationId, dateRange, sellerId]);
 
     useEffect(() => {
         fetchAnalytics();
     }, [fetchAnalytics]);
 
-    /** Adapta AnalyticsFilters (Dayjs) al shape de dateRange (string) que espera el fetch */
+    /** Adapta AnalyticsFilters (Dayjs) al shape de dateRange (string) que espera el fetch.
+     *  También confirma acá el cambio de presentación pendiente en el selector. */
     const applyFilters = useCallback(({ startDate, endDate, sellerId }: AnalyticsFiltersInterface) => {
         setDateRange({
             start_date: startDate?.format("YYYY-MM-DD"),
             end_date: endDate?.format("YYYY-MM-DD"),
         });
         setSellerId(sellerId ?? DEFAULT_SELLER_ID);
-    }, []);
+        if (resolvedPresentationId) {
+            setAppliedPresentationId(resolvedPresentationId);
+        }
+    }, [resolvedPresentationId]);
 
     return {
         analytics,

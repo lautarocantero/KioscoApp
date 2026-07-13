@@ -10,9 +10,8 @@ sidebar:
 ---
 Productos:
 - [ ] modificar visualmente los botones de los filtros.
-- [ ] funcionan raros ls filtros, no espera a que le de al boton, el borrar filtros no resetea la presentacion
 - [ ] hacer que la card de unidades por dia funcione (hardcodeado).
-- [ ] eliminar la card de abajo (por semana) innecesaria.
+- [ ] eliminar la card de abajo (por semana) innecesaria, poner card de stock de producto.
 - [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc.
 - [ ] Agregar a la card de estadisticas el nombre de la presentacion vista de forma mas clara.
 - [ ] Agregar tema claro a todo.

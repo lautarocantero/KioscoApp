@@ -25,6 +25,7 @@ const AnalyticsFiltersComponent = ({ presentations, onPresentationChange, select
     return (
         <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
             <PresentationFilter
+                label="Presentación"
                 presentations={presentations}
                 onPresentationChange={onPresentationChange}
                 selectedPresentationId={selectedPresentationId}
@@ -48,7 +49,7 @@ const AnalyticsFiltersComponent = ({ presentations, onPresentationChange, select
                 disableFuture
             />
 
-            <SellerFilter sellerId={sellerId} onChange={handleSellerChange} />
+            <SellerFilter label="Vendedor" sellerId={sellerId} onChange={handleSellerChange} />
 
             <AnalyticsFiltersButtons
                 onApply={handleApplyFilters}

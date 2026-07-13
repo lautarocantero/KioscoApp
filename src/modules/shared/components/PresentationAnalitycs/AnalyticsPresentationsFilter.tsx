@@ -6,6 +6,7 @@ import type { PresentationFilterProps } from "@typings/ui/analytics.types";
 
 
 export const PresentationFilter = ({
+    label,
     presentations,
     onPresentationChange,
     selectedPresentationId,
@@ -19,7 +20,7 @@ export const PresentationFilter = ({
 
     return (
         <Box>
-            <Typography sx={fieldLabelSx}>Presentación</Typography>
+            <Typography sx={fieldLabelSx}>{label}</Typography>
             <PresentationSelector
                 presentations={presentations}
                 selectedPresentationId={selectedPresentationId}
