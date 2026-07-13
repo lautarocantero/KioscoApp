@@ -6,6 +6,7 @@ import type {
     DeleteDialogState,
 } from "./productTypes";
 import type { PresentationAnalyticsData } from "@typings/ui/analytics.types";
+import type { Dayjs } from "dayjs";
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -131,13 +132,19 @@ export interface ProductAnalyticsSectionProps {
 
 export interface PresentationAnalyticsProps {
     data: PresentationAnalyticsData;
-    onDateRangeClick?: () => void;
-    /** Presentaciones disponibles para el selector. Si no se pasan presentations + onPresentationChange, el selector no se muestra. */
     presentations?: Presentation[];
     selectedPresentationId?: string;
     onPresentationChange?: (presentationId: string) => void;
     isPresentationSelectorDisabled?: boolean;
+    onApplyFilters?: (filters: AnalyticsFilters) => void;
 }
+
+export interface AnalyticsFilters {
+    startDate: Dayjs | null;
+    endDate: Dayjs | null;
+    sellerId: string;
+}
+
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🏴‍☠️ BANNER  🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️                       ║

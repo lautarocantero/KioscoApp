@@ -3,8 +3,8 @@ import { useProductPresentations } from "../../../../../hooks/products/useProduc
 import { usePresentationAnalytics } from "../../../../../hooks/presentation/usePresentationAnalytics";
 import LoadingSpinnerComponent from "../../../../shared/components/LoadingSpinner";
 import { mapPresentationAnalytics } from "../../../../../modules/presentations/pages/PresentationDetail/components/mapPresentationAnalytics";
-import PresentationAnalytics from "../../../../../modules/presentations/pages/PresentationDetail/components/PresentationAnalitycs";
 import type { ProductAnalyticsSectionProps } from "@typings/product/productComponentTypes";
+import PresentationAnalytics from "../../../../../modules/shared/components/PresentationAnalitycs/PresentationAnalitycs";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 📊 ProductAnalyticsSection                                            ║
