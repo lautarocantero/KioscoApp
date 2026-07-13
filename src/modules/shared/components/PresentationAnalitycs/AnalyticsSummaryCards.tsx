@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import TopSellingDaysCard from "../Analytics/TopSellingDaysCard";
-import PeriodSummaryCard from "../Analytics/PeriodSumatyCard";
+import PeriodSummaryCard from "../Analytics/PeriodSumaryCard";
 import type { AnalyticsSummaryCardsProps } from "@typings/ui/analytics.types";
 
 

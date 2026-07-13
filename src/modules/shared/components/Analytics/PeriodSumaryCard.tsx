@@ -1,10 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import NoisyCard from "../Cards/NoisyCard";
-import type { PeriodSummaryItem } from "@typings/ui/analytics.types";
+import type { PeriodSummaryCardProps } from "@typings/ui/analytics.types";
 
-interface PeriodSummaryCardProps {
-    items: PeriodSummaryItem[];
-}
 
 const PeriodSummaryCard = ({ items }: PeriodSummaryCardProps): React.ReactNode => (
     <NoisyCard sx={{ p: 2.5 }}>

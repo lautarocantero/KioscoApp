@@ -1,18 +1,15 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, type Theme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import type { AnalyticsKpi } from "@typings/ui/analytics.types";
-
-interface KpiCardProps {
-    kpi: AnalyticsKpi;
-}
+import type { KpiCardProps } from "@typings/ui/analytics.types";
 
 const KpiCard = ({ kpi }: KpiCardProps): React.ReactNode => {
     const isPositive = kpi.deltaPct >= 0;
 
     return (
         <Box
-            sx={{
+            sx={(theme: Theme) => ({
                 display: "flex",
                 alignItems: "flex-start",
                 justifyContent: "space-between",
@@ -20,25 +17,31 @@ const KpiCard = ({ kpi }: KpiCardProps): React.ReactNode => {
                 p: 2,
                 borderRadius: "14px",
                 border: "0.5px solid",
-                borderColor: "rgba(255,255,255,0.08)",
-                bgcolor: "rgba(255,255,255,0.02)",
+                borderColor: theme?.custom?.darkGray,
+                bgcolor: theme?.custom?.darkGray,
                 height: "100%",
-            }}
+            })}
         >
             <Box sx={{ minWidth: 0 }}>
                 <Typography variant="caption" sx={{ color: "text.secondary", display: "block", mb: 1 }}>
                     {kpi.label}
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "baseline", gap: 1, flexWrap: "wrap" }}>
-                    <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                    <Typography
+                        variant="h5"
+                        sx={(theme: Theme) => ({
+                            fontWeight: 700,
+                            color: theme?.custom?.fontColor,
+                        })}
+                    >
                         {kpi.value}
                     </Typography>
                     <Box
-                        sx={{
+                        sx={(theme: Theme) => ({
                             display: "flex",
                             alignItems: "center",
-                            color: isPositive ? "#4ADE80" : "#F87171",
-                        }}
+                            color: isPositive ? theme?.palette?.secondary?.main : theme?.palette?.error?.main,
+                        })}
                     >
                         {isPositive ? <ArrowDropUpIcon fontSize="small" /> : <ArrowDropDownIcon fontSize="small" />}
                         <Typography variant="caption" sx={{ fontWeight: 600 }}>
@@ -52,7 +55,7 @@ const KpiCard = ({ kpi }: KpiCardProps): React.ReactNode => {
             </Box>
 
             <Box
-                sx={{
+                sx={(theme: Theme) => ({
                     width: 36,
                     height: 36,
                     minWidth: 36,
@@ -60,9 +63,9 @@ const KpiCard = ({ kpi }: KpiCardProps): React.ReactNode => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    bgcolor: `${kpi.iconColor}22`,
+                    bgcolor: alpha(kpi.iconColor ?? theme?.palette?.primary?.main ?? "#8B5CF6", 0.13),
                     color: kpi.iconColor,
-                }}
+                })}
             >
                 {kpi.icon}
             </Box>

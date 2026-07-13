@@ -8,7 +8,7 @@ import DailySalesBarChart from "../../../../../modules/shared/components/Analyti
 import WeeklySalesLineChart from "../../../../shared/components/Analytics/StockEvolutionChart";
 import TopSellingDaysCard from "../../../../../modules/shared/components/Analytics/TopSellingDaysCard";
 // import SalesByChannelCard from "../../../../../modules/shared/components/Analytics/SalesByChannelCard";
-import PeriodSummaryCard from "../../../../../modules/shared/components/Analytics/PeriodSumatyCard";
+import PeriodSummaryCard from "../../../../shared/components/Analytics/PeriodSumaryCard";
 import PresentationSelector from "../../../../../modules/products/components/PresentationSelector";
 import type { PresentationAnalyticsProps } from "@typings/product/productComponentTypes";
 
