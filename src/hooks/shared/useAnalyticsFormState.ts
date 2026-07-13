@@ -1,16 +1,15 @@
-// useAnalytics.ts
 import { useState, useCallback } from "react";
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import type { SelectChangeEvent } from "@mui/material";
-import type { UseAnalyticsParams } from "@typings/shared/types/useAnalytics.types";
+import type { UseAnalyticsParams } from "@typings/shared/types/useAnalyticsFormState.types";
 
 
 const getDefaultStartDate = () => dayjs().subtract(1, "month");
 const getDefaultEndDate = () => dayjs();
 const DEFAULT_SELLER_ID = "all";
 
-export const useAnalytics = ({ onApplyFilters }: UseAnalyticsParams) => {
+export const useAnalyticsFormState = ({ onApplyFilters }: UseAnalyticsParams) => {
     const [startDate, setStartDateState] = useState<Dayjs | null>(getDefaultStartDate);
     const [endDate, setEndDateState] = useState<Dayjs | null>(getDefaultEndDate);
     const [sellerId, setSellerId] = useState(DEFAULT_SELLER_ID);

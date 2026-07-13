@@ -3,9 +3,9 @@ import NoisyCard from "../Cards/NoisyCard";
 import type { PresentationAnalyticsProps } from "@typings/product/productComponentTypes";
 import "dayjs/locale/es";
 import { AnalyticsHeader } from "./AnalyticsHeader";
-import { AnalyticsFilters } from "./AnalyticsFilters";
 import { AnalyticsKpis } from "./AnalyticsKpis";
 import { AnalyticsBody } from "./AnalyticsBody";
+import AnalyticsFiltersComponent from "./AnalyticsFiltersComponent";
 
 const PresentationAnalytics = ({
     data,
@@ -24,7 +24,7 @@ const PresentationAnalytics = ({
                 <AnalyticsHeader title={title} subtitle={subtitle} />
 
                 {/* ── Filters ─────────────────────────────────────────── */}
-                <AnalyticsFilters
+                <AnalyticsFiltersComponent
                     presentations={presentations}
                     onPresentationChange={onPresentationChange}
                     selectedPresentationId={selectedPresentationId}

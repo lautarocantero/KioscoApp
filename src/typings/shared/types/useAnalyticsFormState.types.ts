@@ -1,11 +1,11 @@
 import type { Dayjs } from "dayjs";
 
-export interface AnalyticsFilters {
+export interface AnalyticsFiltersInterface {
     startDate: Dayjs | null;
     endDate: Dayjs | null;
     sellerId: string;
 }
 
 export interface UseAnalyticsParams {
-    onApplyFilters?: (filters: AnalyticsFilters) => void;
+    onApplyFilters?: (filters: AnalyticsFiltersInterface) => void;
 }

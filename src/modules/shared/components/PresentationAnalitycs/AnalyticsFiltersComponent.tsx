@@ -3,10 +3,10 @@ import DateFilterPicker from "../DateFilterPicker/DateFilterPicker";
 import { PresentationFilter } from "./AnalyticsPresentationsFilter";
 import { SellerFilter } from "./AnalyticsSellerFilter";
 import type { AnalyticsFiltersProps } from "@typings/ui/analytics.types";
-import { useAnalytics } from "../../../../hooks/shared/useAnalitycs";
+import { useAnalyticsFormState } from "../../../../hooks/shared/useAnalyticsFormState";
 import { AnalyticsFiltersButtons } from "./AnalyticsButtons";
 
-export const AnalyticsFilters = ({ presentations, onPresentationChange, selectedPresentationId, isPresentationSelectorDisabled, onApplyFilters }: AnalyticsFiltersProps) => {
+const AnalyticsFiltersComponent = ({ presentations, onPresentationChange, selectedPresentationId, isPresentationSelectorDisabled, onApplyFilters }: AnalyticsFiltersProps) => {
 
     const {
         startDate,
@@ -20,7 +20,7 @@ export const AnalyticsFilters = ({ presentations, onPresentationChange, selected
         isStartDateActive,
         isEndDateActive,
         areFiltersActive,
-    } = useAnalytics({ onApplyFilters });
+    } = useAnalyticsFormState({ onApplyFilters });
 
     return (
         <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
@@ -58,3 +58,5 @@ export const AnalyticsFilters = ({ presentations, onPresentationChange, selected
         </Box>
     );
 };
+
+export default AnalyticsFiltersComponent;

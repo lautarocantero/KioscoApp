@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../../../config/api";
 import type { Presentation } from "@typings/presentation/presentationTypes";
+import type { PresentationAnalyticsRaw } from "@typings/ui/analytics.types";
 
 
 const baseUrl = axios.create({
@@ -136,12 +137,12 @@ export const searchPresentationsByProductIdRequest = async (
  * `GET /get-presentation-analytics/:presentation_id` — query: { start_date?, end_date? }
  */
 export const getPresentationAnalyticsRequest = async (
-    { presentation_id, start_date, end_date }:
-    { presentation_id: string; start_date?: string; end_date?: string }
+    { presentation_id, start_date, end_date, seller_id }:
+    { presentation_id: string; start_date?: string; end_date?: string; seller_id?: string }
 ): Promise<PresentationAnalyticsRaw> => {
     const response = await baseUrl.get<PresentationAnalyticsRaw>(
         `/get-presentation-analytics/${presentation_id}`,
-        { params: { start_date, end_date } }
+        { params: { start_date, end_date, seller_id } }
     );
     return response.data;
 };

@@ -10,7 +10,7 @@ sidebar:
 ---
 Productos:
 - [ ] modificar visualmente los botones de los filtros.
-- [ ] hacer que el filtro de vendedores funcione.
+- [ ] hacer que el filtro de vendedores traiga vendedores reales.
 - [ ] hacer que la card de unidades por dia funcione (hardcodeado).
 - [ ] eliminar la card de abajo (por semana) innecesaria.
 - [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc.
@@ -31,4 +31,8 @@ ventas:
 - [ ] Agregar la tabla de tipos, luego hacer crud, pero agregarla ya.
 - [ ] al darle a listado en ventas deberia de mostrar una mui table.
 - [ ] refactorizar todo el modulo.
+
+vendedores:
+- [ ] modificar datos para que no sean los mismos que auth, tambien los campos.
+
 

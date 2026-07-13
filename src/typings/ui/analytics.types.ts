@@ -1,7 +1,7 @@
 import type { SelectChangeEvent } from "@mui/material";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { PresentationAnalyticsProps } from "@typings/product/productComponentTypes";
-import type { AnalyticsFilters } from "@typings/shared/types/useAnalytics.types";
+import type { AnalyticsFiltersInterface } from "@typings/shared/types/useAnalyticsFormState.types";
 import type { ReactNode } from "react";
 
 //─── 📦 Datos crudos (raw) ───────────────────────────────────
@@ -118,7 +118,7 @@ export interface AnalyticsFiltersProps {
     onPresentationChange: ((presentationId: string) => void) | undefined;
     selectedPresentationId: string | undefined;
     isPresentationSelectorDisabled: boolean | undefined;
-    onApplyFilters: ((filters: AnalyticsFilters) => void) | undefined;
+    onApplyFilters: ((filters: AnalyticsFiltersInterface) => void) | undefined;
 }
 
 /** El filtro de presentación es un subconjunto de AnalyticsFiltersProps, no de PresentationAnalyticsProps directamente. */
