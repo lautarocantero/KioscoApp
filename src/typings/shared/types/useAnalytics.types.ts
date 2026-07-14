@@ -1,6 +1,13 @@
 import type { Dayjs } from "dayjs";
 import type { ReactNode } from "react";
 import type { PresentationAnalyticsProps } from "@typings/product/productComponentTypes";
+import type { Theme } from "@mui/material";
+
+export interface UsePresentationAnalyticsOptions {
+    title?: string;
+    subtitle?: string;
+    currentStock?: number;
+}
 
 export interface AnalyticsFiltersInterface {
     startDate: Dayjs | null;
@@ -101,6 +108,15 @@ export interface PresentationAnalyticsData {
 }
 
 //─── 🧮 Tipos internos de cálculo (mapper/helpers) ───────────
+
+export interface MapPresentationAnalyticsParams {
+    raw: PresentationAnalyticsRaw;
+    title: string;
+    subtitle: string;
+    currentStock: number;
+    theme: Theme;
+}
+
 export interface DailyBucket {
     date: string;
     units: number;

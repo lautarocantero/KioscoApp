@@ -2,7 +2,6 @@ import type { FormikErrors } from "formik";
 import type { NavigateFunction } from "react-router-dom";
 import type { Dispatch, SetStateAction, FormEvent } from "react";
 import type { GridColDef } from "@mui/x-data-grid";
-import type { Presentation } from "@typings/presentation/presentationTypes";
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -26,6 +25,9 @@ interface ProductEntity {
 
 // Derivado principal — evita exponer ProductEntity directamente
 export type Product = ProductEntity;
+
+// Solo los campos públicos (sin _id)
+export type ProductPublic = Omit<ProductEntity, "_id">;
 
 // Producto existente devuelto por GET /product/:id — presentations opcionales
 export type ExistingProductInterface = Omit<ProductEntity, "presentations"> & {
@@ -66,12 +68,17 @@ export type CreateProductBody = ProductBaseFormValues & {
     presentations:     unknown[];
 };
 
+// Cuerpo enviado al PATCH /product/:id
+export type UpdateProductBody = ProductBaseFormValues & {
+    updated_at: string;
+};
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface ProductState {
-    products:             ProductWithPresentations[];
+    products:             Product[];
     currentProduct:       Product | null;
     isLoading:            boolean;
     errorMessage:         string | null;
@@ -105,7 +112,7 @@ interface UseFormStepsBase {
 
 // Base reutilizable para hooks de carga async simple (dato + loading + error)
 interface UseAsyncLoadBase {
-    loading: boolean;
+    isLoading: boolean;
     error:     string | null;
 }
 
@@ -141,6 +148,13 @@ export interface UseProductsEditFormReturn
         onValidSubmit?: () => void,
     ) => Promise<void>;
     handleEdit: (values: ProductEditFormValues) => Promise<void>;
+}
+
+export interface UseProductsDetailFormReturn {
+    viewingEntity:    ExistingProductInterface | null;
+    isLoadingEntity:  boolean;
+    loadError:        string | null;
+    setViewingEntity: Dispatch<SetStateAction<ExistingProductInterface | null>>;
 }
 
 // Estado del diálogo de eliminación
@@ -210,6 +224,10 @@ export interface BuildColumnsArgs {
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🛞 UTILIDADES  🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞                 ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface NoProductLoadedComponentProps {
+    productError: string | null;
+}
 
 export interface PresentationSummary {
     sku:         string;

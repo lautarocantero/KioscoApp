@@ -2,7 +2,6 @@ import { Alert, Box } from "@mui/material";
 import { useProductPresentations } from "../../../../../hooks/products/useProductPresentations";
 import { usePresentationAnalytics } from "../../../../../hooks/presentation/usePresentationAnalytics";
 import LoadingSpinnerComponent from "../../../../shared/components/LoadingSpinner";
-import { mapPresentationAnalytics } from "../../../../../modules/presentations/pages/PresentationDetail/components/mapPresentationAnalytics";
 import type { ProductAnalyticsSectionProps } from "@typings/product/productComponentTypes";
 import PresentationAnalytics from "../../../../../modules/shared/components/PresentationAnalitycs/PresentationAnalitycs";
 
@@ -15,14 +14,20 @@ const ProductAnalyticsSection = ({ productId }: ProductAnalyticsSectionProps): R
         setSelectedPresentationId,
     } = useProductPresentations(productId);
 
+    // ⚠️ Asume que `presentations` trae un campo `_id` que matchea `selectedPresentationId`.
+    // Si en realidad viene `sku` (PresentationSummary), cambiar esta comparación.
+    const selectedPresentation = presentations.find((p) => p._id === selectedPresentationId);
+
     const {
-        analytics,
+        analyticsData,
         isLoading: isLoadingAnalytics,
         error: analyticsError,
         applyFilters,
-    } = usePresentationAnalytics(selectedPresentationId);
-
-    const analyticsData = analytics ? mapPresentationAnalytics(analytics, "analytics") : null;
+    } = usePresentationAnalytics(selectedPresentationId, {
+        title: selectedPresentation?.name ?? "Analíticas",
+        subtitle: "Rendimiento de ventas",
+        currentStock: selectedPresentation?.stock ?? 0,
+    });
 
     if (isLoadingPresentations) return <LoadingSpinnerComponent />;
 

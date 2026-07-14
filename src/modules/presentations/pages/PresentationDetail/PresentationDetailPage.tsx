@@ -5,14 +5,10 @@ import CardCarousel from "../../../shared/components/Cards/CardCarousel";
 import PresentationDetailFormComponent from "./components/PresentationDetailForm";
 import { usePresentationAnalytics } from "../../../../hooks/presentation/usePresentationAnalytics";
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
-import { mapPresentationAnalytics } from "./components/mapPresentationAnalytics";
 import PresentationAnalytics from "./components/PresentationAnalitycs";
 
 const PresentationDetailPage = (): React.ReactNode => {
-    const { analytics, isLoading, error } = usePresentationAnalytics();
-
-    const analyticsData = analytics ? mapPresentationAnalytics(analytics, 'analytics') : null;
-
+    const { analyticsData, isLoading, error } = usePresentationAnalytics();
 
     return (
         <AppLayout fullWidth noCenter>

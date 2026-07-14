@@ -1,33 +1,35 @@
 // mappers/presentationAnalytics.helpers.ts
-import type { DailyBucket, RangeResult, StockEvolutionPoint } from "@typings/shared/types/useAnalytics.types";
+import type { DailySalesPoint, StockEvolutionPoint } from "@typings/shared/types/useAnalytics.types";
 
-export const formatDayLabel = (isoDate: string): string => {
+export const formatDayLabel = (isoDate: string | undefined | null): string => {
+    if (!isoDate) return "—";
     const d = new Date(isoDate);
+    if (Number.isNaN(d.getTime())) return "—";
     return d.toLocaleDateString("es-AR", { day: "2-digit", month: "short" }).replace(".", "");
 };
 
-export const formatRangeLabel = (from: Date, to: Date): string => {
-    const fmt = (d: Date) => d.toLocaleDateString("es-AR", { day: "2-digit", month: "short", year: "numeric" });
-    return `${fmt(from)} - ${fmt(to)}`;
-};
+export const formatRangeLabel = (start: string | Date | undefined | null, end: string | Date | undefined | null): string => {
+    if (!start || !end) return "—";
+    const startDate = start instanceof Date ? start : new Date(start);
+    const endDate = end instanceof Date ? end : new Date(end);
+    if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) return "—";
 
-export const deltaPct = (current: number, previous: number): number => {
-    if (previous === 0) return current > 0 ? 100 : 0;
-    return Math.round(((current - previous) / previous) * 1000) / 10;
+    const fmt = (d: Date) => d.toLocaleDateString("es-AR", { day: "2-digit", month: "short", year: "numeric" });
+    return `${fmt(startDate)} - ${fmt(endDate)}`;
 };
 
 /**
  * Reconstruye la evolución de stock hacia atrás a partir del stock actual
  * y las unidades vendidas por día.
  * ⚠️ Aproximación: asume que `currentStock` corresponde al final del rango
- * (`to`) y que no hubo reposiciones/ajustes manuales de stock en el período.
+ * y que no hubo reposiciones/ajustes manuales de stock en el período.
  * Si hubo, esta curva se desvía de la realidad — para el dato exacto haría
  * falta un ledger de movimientos de stock en el backend.
  */
-export const buildStockEvolution = (dailyBuckets: DailyBucket[], currentStock: number): StockEvolutionPoint[] => {
+export const buildStockEvolution = (dailySales: DailySalesPoint[], currentStock: number): StockEvolutionPoint[] => {
     let runningStock = currentStock;
 
-    return [...dailyBuckets]
+    return [...dailySales]
         .reverse()
         .map((b) => {
             const point: StockEvolutionPoint = { date: formatDayLabel(b.date), stock: runningStock };
@@ -37,33 +39,13 @@ export const buildStockEvolution = (dailyBuckets: DailyBucket[], currentStock: n
         .reverse();
 };
 
-export const getTopSellingDays = (dailyBuckets: DailyBucket[], limit = 5) =>
-    [...dailyBuckets]
-        .sort((a, b) => b.units - a.units)
-        .slice(0, limit)
-        .map((b) => ({ date: formatDayLabel(b.date), units: b.units }));
-
-export interface PeriodStats {
-    maxDay: DailyBucket | null;
-    minDay: DailyBucket | null;
-    avgUnits: number;
-}
-
-export const getPeriodStats = (dailyBuckets: DailyBucket[]): PeriodStats => {
-    const unitsPerDay = dailyBuckets.filter((b) => b.units > 0);
-    const maxDay = unitsPerDay.length ? unitsPerDay.reduce((a, b) => (b.units > a.units ? b : a)) : null;
-    const minDay = unitsPerDay.length ? unitsPerDay.reduce((a, b) => (b.units < a.units ? b : a)) : null;
-    const avgUnits = unitsPerDay.length
-        ? Math.round(unitsPerDay.reduce((sum, b) => sum + b.units, 0) / unitsPerDay.length)
-        : 0;
-
-    return { maxDay, minDay, avgUnits };
-};
-
-export const getAvgTicket = (result: RangeResult): number =>
-    result.totalUnits > 0 ? result.totalRevenue / result.totalUnits : 0;
-
 export const getChartTitle = (startDate?: string, endDate?: string): string => {
     if (!startDate || !endDate) return "Unidades vendidas";
     return `Unidades vendidas entre ${startDate} y ${endDate}`;
 };
+
+export const currencyFmt = new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    maximumFractionDigits: 0,
+});

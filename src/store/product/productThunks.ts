@@ -1,6 +1,6 @@
 import type { Dispatch }     from "@reduxjs/toolkit";
 import type { NavigateFunction } from "react-router-dom";
-import type { CreateProductBody, Product, ProductWithPresentations }      from "../../typings/product/productTypes";
+import type { CreateProductBody, Product, ProductWithPresentations } from "../../typings/product/productTypes";
 import {
     checkingProducts,
     checkingCurrentProduct,
@@ -69,20 +69,20 @@ export const createProduct = (body: CreateProductBody, navigate?: NavigateFuncti
 ║     thunk debe reflejar eso — ver productSlice.ProductState.products. ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const getProducts = () => {
- 
+
     return async (dispatch: Dispatch): Promise<ProductWithPresentations[] | undefined> => {
         dispatch(checkingProducts());
         try {
             const products: ProductWithPresentations[] = await getProductsWithPresentationsRequest();
- 
+
             if (!products) {
                 dispatch(setError({ errorMessage: "No se ha encontrado ningun producto" }));
                 throw new Error("No se encontraron productos");
             }
- 
+
             dispatch(setProducts(products));
             return products;
- 
+
         } catch (error: unknown) {
             dispatch(setError({ errorMessage: "No se pudieron obtener los productos" }));
             handleError(error);
@@ -96,7 +96,7 @@ export const getProducts = () => {
 ║ ⚙️  Proceso:                                                           ║
 ║   1. GET /product/get-product-by-name?name=term                       ║
 ║   2. Guarda el resultado en store con setProducts                     ║
-║ 📤 Salida: Product[] o undefined en caso de error                     ║
+║ 📤 Salida: ProductWithPresentations[] o undefined en caso de error    ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const searchProducts = (term: string) => {
 
