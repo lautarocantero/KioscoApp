@@ -8,8 +8,12 @@ const FormNavButtons = ({ SubmitText, backPath = "/products", readOnly = false }
 
     return (
         <Box sx={(theme: Theme) => ({
-            display: "flex", gap: 2, justifyContent: readOnly ? "flex-start" : "space-between",
-            px: 3, py: 2.5,
+            display: "flex", 
+            flexDirection: { xs: 'column-reverse', sm: 'row' },
+            gap: 2, 
+            justifyContent: readOnly ? "flex-start" : "space-between",
+            px: 3,
+            py: 2.5,
             borderTop: `0.5px solid ${theme?.custom?.darkGray}`,
         })}>
             <Button onClick={handleBack} variant="outlined"

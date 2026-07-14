@@ -7,6 +7,7 @@
 ---
 sidebar:
 - [ ] Al darle click a un elemento del sidebar que tenga sub elementos abrir el navbar.
+- [ ] no funciona correctamente en sx.
 ---
 Productos:
 - [ ] Agregar disenos sx 

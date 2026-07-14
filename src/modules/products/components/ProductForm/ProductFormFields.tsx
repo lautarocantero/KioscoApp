@@ -13,7 +13,7 @@ const ProductFormFields = ({ readOnly = false, icons }: ProductFormFieldsProps):
     return (
         <Grid
             container
-            spacing={2.5}
+            spacing={{ xs: 1, sm: 2.5}}
             direction="column"
         >
             <Grid size={12}>

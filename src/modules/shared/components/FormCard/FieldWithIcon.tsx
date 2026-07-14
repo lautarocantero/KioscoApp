@@ -5,14 +5,14 @@ const FieldWithIcon = ({ iconConfig, children }: FieldWithIconProps): React.Reac
     if (!iconConfig) return <>{children}</>;
 
     return (
-        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+        <Box sx={{ display: "flex", gap: 2, alignItems: "start" }}>
             <Box
                 sx={{
                     width: 60,
                     height: 60,
                     borderRadius: "10px",
                     bgcolor: `${iconConfig.color}22`,
-                    display: "flex",
+                    display: { xs: "none", sm: "flex" },
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0,

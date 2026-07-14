@@ -36,7 +36,6 @@ const ProductFormFirstStep = (): React.ReactNode => {
             }
         >
             <ProductFormFields
-                mode={isDetail ? "detail" : isEdit ? "edit" : "create"}
                 readOnly={isDetail}
                 icons={{
                     name: { icon: <Inventory2OutlinedIcon fontSize="small" />, color: "#8B5CF6" },
