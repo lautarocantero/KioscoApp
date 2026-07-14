@@ -4,7 +4,7 @@ import type { BuildColumnsArgs, Presentation } from "@typings/presentation/prese
 import { STATUS_CONFIG } from "config/constants";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import { CellCenter } from "modules/shared/components/DataTable/CellCenter";
-import { formatPrice } from "../helpers/presentationHelpers";
+import { formatPrice } from "../../../../shared/helpers/formarPrice";
 import { centeredTextColumn, chipColumn, priceColumn, truncatedTextColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
 
 export const buildColumnsForPresentations = ({

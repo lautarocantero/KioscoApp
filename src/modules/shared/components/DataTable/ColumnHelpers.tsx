@@ -3,7 +3,7 @@ import { Chip, Tooltip, Typography } from "@mui/material";
 import type { GridColDef, GridRenderCellParams, GridValidRowModel } from "@mui/x-data-grid";
 import { CellCenter } from "./CellCenter";
 import { formatDate } from "../../../../utils/formatter/formatDate";
-import { truncate } from "modules/products/pages/ProductsList/helpers/productHelpers";
+import { truncate } from "modules/shared/helpers/truncate";
 
 /** Columna de texto simple, centrada vertical y horizontalmente */
 export const centeredTextColumn = <T extends GridValidRowModel>(

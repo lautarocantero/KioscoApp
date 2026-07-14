@@ -9,7 +9,7 @@ import getInitialProductDialogValues from "../../helpers/ProductDialog/Getters/g
 import ProductDialogValidationSchema from "../../helpers/ProductDialog/Getters/getProductDialogValidationSchema";
 import onSubmit from "../../helpers/ProductDialog/Handlers/handleProductDialogSubmit";
 import ProductDialogData from "./ProductDialogDataComponent";
-import usePresentations from "../../../../hooks/presentation/usePresentations";
+import useCartPresentationPicker from "../../../../hooks/sells/useCartPresentationPicker";
 import { getNoisyBackgroundSx } from "../../../../modules/shared/components/NoisyBackground/NoisyBackground";
 import type { AppDispatch } from "store/product/productSlice";
 
@@ -19,7 +19,7 @@ const ProductDialog = (): React.ReactNode => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const {productSelected, presentations} = usePresentations();
+  const {productSelected, presentations} = useCartPresentationPicker();
 
   const initialValues: DialogDataInterface = useMemo(() => 
     getInitialProductDialogValues(presentations)

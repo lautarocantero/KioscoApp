@@ -1,6 +1,6 @@
 import React from "react";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import { usePresentations } from "../PresentationList/hooks/usePresentations";
+import { usePresentations } from "../../../../hooks/presentation/usePresentations";
 import AppLayout from "../../../../modules/shared/layout/AppLayout";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 
