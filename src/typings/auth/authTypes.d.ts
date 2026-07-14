@@ -2,7 +2,7 @@
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-import type { AuthRoleEnum } from "./enums";
+import type { AuthRoleEnum } from "./authEnums";
 
 interface AuthEntity {
     _id: string | null,

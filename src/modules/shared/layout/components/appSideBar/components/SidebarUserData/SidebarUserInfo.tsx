@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Box, Typography, type Theme } from "@mui/material";
 import type { SidebarUserInfoProps } from "@typings/account/accountComponentTypes";
-import { AuthRoleEnum } from "../../../../../../../typings/auth/enums";
+import { AuthRoleEnum } from "../../../../../../../typings/auth/authEnums";
 
 const SidebarUserInfo = ({ name, role, isExpanded }: SidebarUserInfoProps): React.ReactNode => {
   if (!isExpanded) return null;

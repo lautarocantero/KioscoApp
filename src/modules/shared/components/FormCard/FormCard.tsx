@@ -53,7 +53,7 @@ const FormCard = ({
             <CardContent>
                 <Box sx={(theme: Theme) => ({
                     borderRadius: 2,
-                    px: 2,
+                    px: {xs: "none", sm: 2},
                     color: theme.custom?.darkWhite,
                 })}>
 
@@ -99,7 +99,7 @@ const FormCard = ({
                                 </Box>
                                 <Typography
                                     sx={(theme: Theme) => ({
-                                        fontSize: "0.95rem",
+                                        fontSize: { xs: "1em", sm: "0.95rem"},
                                         fontWeight: 600,
                                         color: theme.custom.fontColor,
                                     })}
@@ -111,7 +111,7 @@ const FormCard = ({
                                 sx={(theme: Theme) => ({
                                     pt: 0,
                                     pb: 2,
-                                    pl: "60px",
+                                    pl: { xs: "10px", sm: "60px"},
                                     pr: 2,
                                     color: theme.custom?.fontColor,
                                     display: "flex",
@@ -131,7 +131,7 @@ const FormCard = ({
                                             maxHeight: accordion.bannerImage.maxHeight ?? 220,
                                             maxWidth: "100%",
                                             objectFit: "contain",
-                                            alignSelf: "flex-start",
+                                            alignSelf: "center",
                                         }}
                                     />
                                 )}

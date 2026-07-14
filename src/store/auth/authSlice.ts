@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { store } from '../store';
-import { AuthRoleEnum, AuthStatus } from '../../typings/auth/enums';
+import { AuthRoleEnum, AuthStatus } from '../../typings/auth/authEnums';
 import type { AuthLoginSlicePayload, AuthSliceErrorPayload, AuthSliceState } from '../../typings/auth/authTypes';
 
 
