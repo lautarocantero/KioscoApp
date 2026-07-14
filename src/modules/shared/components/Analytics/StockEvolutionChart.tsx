@@ -66,7 +66,7 @@ const StockEvolutionChart = ({ data, isLoading }: StockEvolutionChartProps): Rea
                             <XAxis
                                 dataKey="date"
                                 tick={{ fill: theme?.custom?.translucidWhite, fontSize: 10 }}
-                                axisLine={{ stroke: alpha(theme?.custom?.white ?? "#fff", 0.1) }}
+                                axisLine={{ stroke: alpha(theme?.custom?.white, 0.1) }}
                                 tickLine={false}
                             />
                             <YAxis

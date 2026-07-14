@@ -1,4 +1,5 @@
 import { Box, Typography, type Theme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import type { ApiErrorComponentProps } from "@typings/shared/reactComponents";
 
 
@@ -11,7 +12,11 @@ const ApiErrorComponent = ({ submitError, stepErrors }: ApiErrorComponentProps):
     if (allErrors.length === 0) return null;
 
     return (
-        <Box sx={{ px: 3, py: 1.5, borderTop: "0.5px solid rgba(255,255,255,0.07)" }}>
+        <Box sx={(theme: Theme) => ({
+            px: 3, py: 1.5,
+            borderTop: "0.5px solid",
+            borderColor: alpha(theme.custom.white, 0.07),
+        })}>
             {allErrors.map((error, i) => (
                 <Typography key={i} sx={(theme: Theme) => ({
                     fontSize: "0.72rem",

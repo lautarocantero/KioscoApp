@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import PresentationStockFields from "./PresentationStockFields";
 import FormCard from "../../../shared/components/FormCard/FormCard";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
@@ -8,8 +8,9 @@ import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 
 const PresentationFormSecondStep = (): React.ReactNode => {
-    const { currentStep } = useFormNavigation(); 
-    
+    const { currentStep } = useFormNavigation();
+    const theme = useTheme();
+
     return (
     <Box 
         sx={{
@@ -19,9 +20,9 @@ const PresentationFormSecondStep = (): React.ReactNode => {
         <FormCard submitText="Crear" showButtons  multiStepHeader={{ stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS, currentStep }}>
             <PresentationStockFields
                 icons={{
-                    stock: { icon: <Inventory2OutlinedIcon fontSize="small" />, color: "#8B5CF6" },
-                    min_stock: { icon: <ReportProblemOutlinedIcon fontSize="small" />, color: "#F59E0B" },
-                    price: { icon: <AttachMoneyOutlinedIcon fontSize="small" />, color: "#22C55E" },
+                    stock: { icon: <Inventory2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
+                    min_stock: { icon: <ReportProblemOutlinedIcon fontSize="small" />, color: theme.palette.warning.main },
+                    price: { icon: <AttachMoneyOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
                 }}
             />
         </FormCard>

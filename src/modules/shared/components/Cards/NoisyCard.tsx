@@ -1,6 +1,7 @@
 import type { NoisyCardProps } from "@typings/ui/noisyCard.types";
 import { getNoisyBackgroundSx } from "../NoisyBackground/NoisyBackground";
 import { Card, type Theme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 
 
 const NoisyCard = ({
@@ -15,12 +16,12 @@ const NoisyCard = ({
                 width: "100%",
                 ...(maxWidth ? { maxWidth } : {}),
                 border: "0.5px solid",
-                borderColor: "rgba(255,255,255,0.08)",
+                borderColor: alpha(theme.custom.white, 0.08),
                 borderRadius,
                 boxShadow: `
-                    0 1px 3px rgba(0,0,0,0.06),
-                    4px 8px 16px rgba(0,0,0,0.10),
-                    8px 16px 28px rgba(0,0,0,0.08)
+                    0 1px 3px ${alpha(theme.custom.black, 0.06)},
+                    4px 8px 16px ${alpha(theme.custom.black, 0.10)},
+                    8px 16px 28px ${alpha(theme.custom.black, 0.08)}
                 `,
                 ...getNoisyBackgroundSx({theme}),
             }),

@@ -54,7 +54,7 @@ const FormCard = ({
                 <Box sx={(theme: Theme) => ({
                     borderRadius: 2,
                     px: {xs: "none", sm: 2},
-                    color: theme.custom?.darkWhite,
+                    color: theme.custom.darkWhite,
                 })}>
 
                     {accordion && (
@@ -65,15 +65,15 @@ const FormCard = ({
                             elevation={0}
                             sx={(theme: Theme) => ({
                                 mb: 3,
-                                backgroundColor: theme.custom?.darkBackground ?? "rgba(3,134,238,0.06)",
+                                backgroundColor: theme.custom.darkBackground,
                                 borderRadius: "12px !important",
-                                border: `1px solid ${theme.palette?.primary?.main}`,
+                                border: `1px solid ${theme.palette.primary.main}`,
                                 "&:before": { display: "none" },
                             })}
                         >
                             <AccordionSummary
                                 expandIcon={
-                                    <ExpandMoreIcon sx={(theme: Theme) => ({ color: theme.palette?.primary?.main ?? "#0386EE" })} />
+                                    <ExpandMoreIcon sx={(theme: Theme) => ({ color: theme.palette.primary.main })} />
                                 }
                                 sx={{
                                     minHeight: "60px",
@@ -86,7 +86,7 @@ const FormCard = ({
                                         width: 32,
                                         height: 32,
                                         borderRadius: "50%",
-                                        border: `1.5px solid ${theme.palette?.primary?.main ?? "#0386EE"}`,
+                                        border: `1.5px solid ${theme.palette.primary.main}`,
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
@@ -94,7 +94,7 @@ const FormCard = ({
                                     })}
                                 >
                                     <InfoOutlinedIcon
-                                        sx={(theme: Theme) => ({ fontSize: "1.1rem", color: theme.palette?.primary?.main ?? "#0386EE" })}
+                                        sx={(theme: Theme) => ({ fontSize: "1.1rem", color: theme.palette.primary.main })}
                                     />
                                 </Box>
                                 <Typography
@@ -113,7 +113,7 @@ const FormCard = ({
                                     pb: 2,
                                     pl: { xs: "10px", sm: "60px"},
                                     pr: 2,
-                                    color: theme.custom?.fontColor,
+                                    color: theme.custom.fontColor,
                                     display: "flex",
                                     flexDirection: "column",
                                     gap: 2,

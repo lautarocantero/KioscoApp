@@ -1,6 +1,5 @@
 import FormCard from "../../../shared/components/FormCard/FormCard";
 import PresentationFormFields from "./PresentationFormFields";
-import ImageUpload from "../../../shared/components/FormCard/ImageUpload";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import QrCode2OutlinedIcon from "@mui/icons-material/QrCode2Outlined";
@@ -8,8 +7,10 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import { useParams } from "react-router-dom";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import { useTheme } from "@mui/material";
 
 const PresentationFormFirstStep = (): React.ReactNode => {
+    const theme = useTheme();
     const { currentStep, actionTitle } = useFormNavigation(); 
     const { product_id } = useParams<{ product_id: string }>();
 
@@ -32,12 +33,11 @@ const PresentationFormFirstStep = (): React.ReactNode => {
         >
             <PresentationFormFields
                 icons={{
-                    sku: { icon: <QrCode2OutlinedIcon fontSize="small" />, color: "#8B5CF6" },
-                    model_type: { icon: <CategoryOutlinedIcon fontSize="small" />, color: "#EC4899" },
-                    model_size: { icon: <StraightenOutlinedIcon fontSize="small" />, color: "#22C55E" },
+                    sku: { icon: <QrCode2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
+                    model_type: { icon: <CategoryOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
+                    model_size: { icon: <StraightenOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
                 }}
             />
-            <ImageUpload />
         </FormCard>
     );};
 

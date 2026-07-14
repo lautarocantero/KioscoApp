@@ -63,7 +63,7 @@ const KpiCard = ({ kpi }: KpiCardProps): React.ReactNode => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    bgcolor: alpha(kpi.iconColor ?? theme?.palette?.primary?.main ?? "#8B5CF6", 0.13),
+                    bgcolor: alpha(kpi.iconColor ?? theme?.palette?.primary?.main, 0.13),
                     color: kpi.iconColor,
                 })}
             >

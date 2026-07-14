@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, type Theme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import type { SupplierErrorAlertProps } from "@typings/providers/providerComponentTypes";
 
 
@@ -7,13 +8,13 @@ const SupplierErrorAlert = ({ message }: SupplierErrorAlertProps): React.ReactNo
     if (!message) return null;
 
     return (
-    <Box sx={{
+    <Box sx={(theme: Theme) => ({
         mb: 2, p: 1.5,
-        backgroundColor: "rgba(244, 67, 54, 0.1)",
+        backgroundColor: theme.custom.errorLight,
         borderRadius: "8px",
-        border: "1px solid rgba(244, 67, 54, 0.3)",
-    }}>
-        <Typography variant="body2" sx={{ color: "#F44336" }}>
+        border: `1px solid ${alpha(theme.palette.error.main, 0.3)}`,
+    })}>
+        <Typography variant="body2" sx={(theme: Theme) => ({ color: theme.palette.error.main })}>
             {message}
         </Typography>
     </Box>

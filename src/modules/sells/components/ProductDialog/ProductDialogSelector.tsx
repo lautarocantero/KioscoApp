@@ -93,7 +93,7 @@ const ProductDialogSelectorComponent = ({ products }: DialogSelectorProps): Reac
                         backgroundColor: 'transparent',
                     },
                     '&::-webkit-scrollbar-thumb': {
-                        backgroundColor: theme?.custom?.darkBackground ?? 'rgba(255,255,255,0.15)',
+                        backgroundColor: theme?.custom?.darkBackground,
                         borderRadius: '1em',
                     },
                 })}

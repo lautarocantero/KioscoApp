@@ -72,7 +72,7 @@ export const CartButtonComponent = (): React.ReactNode => {
             position: 'absolute',
             right: '-1em',
             backgroundColor: theme?.custom?.darkSecondary,
-            color: '#fff',
+            color: theme?.custom?.white,
             borderRadius: '50%',
             width: '1.3em',
             height: '1.3em',

@@ -6,9 +6,9 @@ const CustomTooltip = ({ active, payload, label }: any): React.ReactNode => {
     return (
         <Box
             sx={(theme: Theme) => ({
-                bgcolor: alpha(theme?.custom?.darkBackground ?? "#000", 0.95),
+                bgcolor: alpha(theme.custom.darkBackground, 0.95),
                 border: "1px solid",
-                borderColor: alpha(theme?.palette?.primary?.main ?? "#8B5CF6", 0.4),
+                borderColor: alpha(theme.palette.primary.main, 0.4),
                 borderRadius: "8px",
                 px: 1.5,
                 py: 1,
@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload, label }: any): React.ReactNode => {
                 variant="caption"
                 sx={(theme: Theme) => ({
                     display: "block",
-                    color: theme?.palette?.text?.secondary,
+                    color: theme.palette.text.secondary,
                 })}
             >
                 {label}
@@ -27,8 +27,8 @@ const CustomTooltip = ({ active, payload, label }: any): React.ReactNode => {
                 variant="caption"
                 sx={(theme: Theme) => ({
                     fontWeight: 700,
-                    color: theme?.custom?.fontColor,
-                    fontSize: theme?.typography?.caption?.fontSize,
+                    color: theme.custom.fontColor,
+                    fontSize: theme.typography.caption.fontSize,
                 })}
             >
                 {payload[0].value} unidades en stock

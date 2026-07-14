@@ -1,3 +1,4 @@
+import { useTheme } from "@mui/material/styles";
 import ProductFormFields from "./ProductFormFields";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import FormCard from "../../../../modules/shared/components/FormCard/FormCard";
@@ -7,6 +8,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 
 const ProductFormFirstStep = (): React.ReactNode => {
+    const theme = useTheme();
     const { actionTitle, submitError, stepErrors } = useFormNavigation();
     const isEdit   = actionTitle === "edit";
     const isDetail = actionTitle === "detail";
@@ -38,10 +40,10 @@ const ProductFormFirstStep = (): React.ReactNode => {
             <ProductFormFields
                 readOnly={isDetail}
                 icons={{
-                    name: { icon: <Inventory2OutlinedIcon fontSize="small" />, color: "#8B5CF6" },
-                    brand: { icon: <LocalOfferOutlinedIcon fontSize="small" />, color: "#EC4899" },
-                    description: { icon: <DescriptionOutlinedIcon fontSize="small" />, color: "#8B5CF6" },
-                    image_url: { icon: <LinkOutlinedIcon fontSize="small" />, color: "#22C55E" },
+                    name: { icon: <Inventory2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
+                    brand: { icon: <LocalOfferOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
+                    description: { icon: <DescriptionOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
+                    image_url: { icon: <LinkOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
                 }}
             />
         </FormCard>

@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, Chip } from "@mui/material";
+import { Box, Grid, Typography, Chip, useTheme } from "@mui/material";
 import { Formik } from "formik";
 import { getPresentationDetailInitialValues } from "../../../schema/PresentationFormSchema";
 import LoadingSpinnerComponent from "../../../../shared/components/LoadingSpinner";
@@ -31,10 +31,9 @@ const SectionHeader = ({ icon, title, color }: SectionHeaderProps): React.ReactN
     </Box>
 );
 
-
 const DetailField = ({ icon, iconColor, label, value, badge }: DetailFieldProps): React.ReactNode => (
     <Box
-        sx={{
+        sx={(theme) => ({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -42,10 +41,10 @@ const DetailField = ({ icon, iconColor, label, value, badge }: DetailFieldProps)
             p: 1.75,
             borderRadius: "12px",
             border: "0.5px solid",
-            borderColor: "rgba(255,255,255,0.08)",
-            bgcolor: "rgba(255,255,255,0.02)",
+            borderColor: theme.custom.darkGray,
+            bgcolor: theme.custom.lightGray,
             height: "100%",
-        }}
+        })}
     >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minWidth: 0 }}>
             <Box
@@ -89,6 +88,7 @@ const DetailField = ({ icon, iconColor, label, value, badge }: DetailFieldProps)
 
 const PresentationDetailFormComponent = (): React.ReactNode => {
     const { product_id } = useParams<{ product_id: string }>();
+    const theme = useTheme();
     const {
         editingVariant: variant,
         isLoadingEntity,
@@ -97,7 +97,6 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
 
     if (isLoadingEntity) return <LoadingSpinnerComponent />;
 
-    // Guardar hasta tener el variant para que initialValues no sea vacío
     if (!variant) return (
         <Box sx={{ color: "white", p: 4 }}>
             <pre>isLoadingEntity: {String(isLoadingEntity)}</pre>
@@ -137,13 +136,13 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                                     <SectionHeader
                                         icon={<InfoOutlinedIcon fontSize="small" />}
                                         title="Información básica"
-                                        color="#A78BFA"
+                                        color={theme.custom.accents.violet}
                                     />
                                     <Grid container spacing={2}>
                                         <Grid size={{ xs: 12, sm: 4 }}>
                                             <DetailField
                                                 icon={<QrCode2OutlinedIcon fontSize="small" />}
-                                                iconColor="#8B5CF6"
+                                                iconColor={theme.custom.accents.violet}
                                                 label="SKU"
                                                 value={values.sku}
                                             />
@@ -151,7 +150,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                                         <Grid size={{ xs: 12, sm: 4 }}>
                                             <DetailField
                                                 icon={<CategoryOutlinedIcon fontSize="small" />}
-                                                iconColor="#8B5CF6"
+                                                iconColor={theme.custom.accents.violet}
                                                 label="Tipo de modelo"
                                                 value={values.model_type}
                                             />
@@ -159,7 +158,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                                         <Grid size={{ xs: 12, sm: 4 }}>
                                             <DetailField
                                                 icon={<StraightenOutlinedIcon fontSize="small" />}
-                                                iconColor="#8B5CF6"
+                                                iconColor={theme.custom.accents.violet}
                                                 label="Tamaño / Presentación"
                                                 value={values.model_size}
                                             />
@@ -190,13 +189,13 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                                     <SectionHeader
                                         icon={<BarChartOutlinedIcon fontSize="small" />}
                                         title="Inventario"
-                                        color="#4ADE80"
+                                        color={theme.custom.accents.green}
                                     />
                                     <Grid container spacing={2}>
                                         <Grid size={{ xs: 12, sm: 6 }}>
                                             <DetailField
                                                 icon={<ArrowCircleDownOutlinedIcon fontSize="small" />}
-                                                iconColor="#4ADE80"
+                                                iconColor={theme.custom.accents.green}
                                                 label="Stock mínimo"
                                                 value={values.min_stock}
                                             />
@@ -204,7 +203,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                                         <Grid size={{ xs: 12, sm: 6 }}>
                                             <DetailField
                                                 icon={<TrendingUpOutlinedIcon fontSize="small" />}
-                                                iconColor="#4ADE80"
+                                                iconColor={theme.custom.accents.green}
                                                 label="Stock actual"
                                                 value={values.stock}
                                                 badge={{
@@ -221,13 +220,13 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                                     <SectionHeader
                                         icon={<LocalOfferOutlinedIcon fontSize="small" />}
                                         title="Información comercial"
-                                        color="#C084FC"
+                                        color={theme.custom.accents.violet}
                                     />
                                     <Grid container spacing={2}>
                                         <Grid size={{ xs: 12, sm: 6 }}>
                                             <DetailField
                                                 icon={<AttachMoneyOutlinedIcon fontSize="small" />}
-                                                iconColor="#8B5CF6"
+                                                iconColor={theme.custom.accents.violet}
                                                 label="Precio"
                                                 value={`$ ${values.price}`}
                                             />
@@ -235,7 +234,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                                         <Grid size={{ xs: 12, sm: 6 }}>
                                             <DetailField
                                                 icon={<CalendarMonthOutlinedIcon fontSize="small" />}
-                                                iconColor="#8B5CF6"
+                                                iconColor={theme.custom.accents.violet}
                                                 label="Fecha de vencimiento"
                                                 value={
                                                     values.expiration_date

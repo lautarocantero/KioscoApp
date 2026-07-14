@@ -1,5 +1,5 @@
-
 import { Box, Chip, Stack, Typography, type Theme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import type { ProductDialogHeaderProps } from "@typings/sells/reactComponents"; // 🔎 crear este type
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
@@ -29,10 +29,11 @@ const ProductDialogHeaderComponent = ({
             flexDirection={'row'}
             alignItems={'flex-start'}
             gap={2}
-            sx={{
+            sx={(theme: Theme) => ({
                 position: 'relative',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-            }}
+                borderBottom: '1px solid',
+                borderColor: alpha(theme.custom.white, 0.1),
+            })}
         >
             <Box
                 component={'img'}
@@ -49,9 +50,9 @@ const ProductDialogHeaderComponent = ({
                 <Stack direction={'row'} alignItems={'center'} gap={1}>
                     <Typography
                         sx={(theme: Theme) => ({
-                            fontSize: theme?.typography?.h6?.fontSize,
+                            fontSize: theme.typography.h6?.fontSize,
                             fontWeight: 'bold',
-                            color: theme?.custom?.fontColor,
+                            color: theme.custom.fontColor,
                         })}
                     >
                         {name}
@@ -61,8 +62,8 @@ const ProductDialogHeaderComponent = ({
                             label={category}
                             size="small"
                             sx={(theme: Theme) => ({
-                                backgroundColor: theme?.custom?.primaryTransparent ?? theme?.palette?.primary?.main,
-                                color: theme?.palette?.primary?.light ?? theme?.palette?.primary?.main,
+                                backgroundColor: alpha(theme.palette.primary.main, 0.15),
+                                color: theme.palette.primary.light,
                                 fontWeight: 500,
                             })}
                         />
@@ -71,8 +72,8 @@ const ProductDialogHeaderComponent = ({
                 {description && (
                     <Typography
                         sx={(theme: Theme) => ({
-                            fontSize: theme?.typography?.body2?.fontSize,
-                            color: theme?.custom?.translucidWhite,
+                            fontSize: theme.typography.body2?.fontSize,
+                            color: theme.custom.translucidWhite,
                             mt: 0.5,
                         })}
                     >
@@ -82,12 +83,12 @@ const ProductDialogHeaderComponent = ({
                 <Stack direction={'row'} alignItems={'center'} gap={0.5} sx={{ mt: 2 }}>
                     <Inventory2OutlinedIcon
                         fontSize="small"
-                        sx={(theme: Theme) => ({ color: theme?.custom?.translucidWhite })}
+                        sx={(theme: Theme) => ({ color: theme.custom.translucidWhite })}
                     />
                     <Typography
                         sx={(theme: Theme) => ({
-                            fontSize: theme?.typography?.caption?.fontSize,
-                            color: theme?.custom?.translucidWhite,
+                            fontSize: theme.typography.caption?.fontSize,
+                            color: theme.custom.translucidWhite,
                         })}
                     >
                         Total en stock (todas las presentaciones)
@@ -95,9 +96,9 @@ const ProductDialogHeaderComponent = ({
                 </Stack>
                 <Typography
                     sx={(theme: Theme) => ({
-                        fontSize: theme?.typography?.h4?.fontSize,
+                        fontSize: theme.typography.h4?.fontSize,
                         fontWeight: 'bold',
-                        color: theme?.custom?.fontColor,
+                        color: theme.custom.fontColor,
                         mt: 0.5,
                     })}
                 >

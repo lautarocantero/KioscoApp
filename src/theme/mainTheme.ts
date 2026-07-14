@@ -37,6 +37,26 @@ declare module '@mui/material/styles' {
       black: string;
       darkblack: string;
       blackTranslucid: string;
+
+      //────────────── accents (metadata / íconos categóricos) ──────────────────//
+      accents: {
+        violet: string;
+        pink: string;
+        green: string;
+        blue: string;
+        orange: string;
+        gold: string;
+      };
+
+      //────────────── admin badge (gradiente + sombras) ──────────────────//
+      adminBadge: {
+        gradientStart: string;
+        gradientMid: string;
+        gradientEnd: string;
+        textColor: string;
+        shadowRing: string;
+        shadowGlow: string;
+      };
     };
   }
 
@@ -76,6 +96,26 @@ declare module '@mui/material/styles' {
       black?: string;
       darkblack?: string;
       blackTranslucid?: string;
+
+      //────────────── accents (metadata / íconos categóricos) ──────────────────//
+      accents?: {
+        violet?: string;
+        pink?: string;
+        green?: string;
+        blue?: string;
+        orange?: string;
+        gold?: string;
+      };
+
+      //────────────── admin badge (gradiente + sombras) ──────────────────//
+      adminBadge?: {
+        gradientStart?: string;
+        gradientMid?: string;
+        gradientEnd?: string;
+        textColor?: string;
+        shadowRing?: string;
+        shadowGlow?: string;
+      };
     };
 
     unstable_grid?: {
@@ -130,6 +170,26 @@ export const darkTheme = createTheme({
     black: '#333333',
     darkblack: '#1f2125',
     blackTranslucid: '#09090966',
+
+    //────────────── accents (metadata / íconos categóricos) ──────────────────//
+    accents: {
+      violet: '#A78BFA', // sku
+      pink:   '#F472B6', // model_type
+      green:  '#4ADE80', // model_size
+      blue:   '#60A5FA', // libre para futuros campos
+      orange: '#FB923C', // libre para futuros campos
+      gold:   '#F5A623', // roles / badges destacados
+    },
+
+    //────────────── admin badge (gradiente + sombras) ──────────────────//
+    adminBadge: {
+      gradientStart: '#FFD874',
+      gradientMid:   '#F5A623',
+      gradientEnd:   '#E8890C',
+      textColor:     '#3A2205',
+      shadowRing:    'rgba(255, 216, 116, 0.35)',
+      shadowGlow:    'rgba(232, 137, 12, 0.45)',
+    },
 
   },
   typography: {
@@ -191,6 +251,27 @@ export const lightTheme = createTheme({
     black: '#111827',
     darkblack: '#030712',
     blackTranslucid: '#00000033',
+
+    //────────────── accents (metadata / íconos categóricos) ──────────────────//
+    accents: {
+      violet: '#8B5CF6', // sku
+      pink:   '#EC4899', // model_type
+      green:  '#22C55E', // model_size
+      blue:   '#3B82F6', // libre para futuros campos
+      orange: '#F97316', // libre para futuros campos
+      gold:   '#E8890C', // roles / badges destacados
+    },
+
+    //────────────── admin badge (gradiente + sombras) ──────────────────//
+    adminBadge: {
+      gradientStart: '#FFD874',
+      gradientMid:   '#F5A623',
+      gradientEnd:   '#E8890C',
+      textColor:     '#3A2205',
+      shadowRing:    'rgba(255, 216, 116, 0.35)',
+      shadowGlow:    'rgba(232, 137, 12, 0.45)',
+    },
+
   },
 
   typography: {

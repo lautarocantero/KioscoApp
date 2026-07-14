@@ -1,4 +1,4 @@
-import { Box, Button, type Theme } from "@mui/material";
+import { alpha, Box, Button, type Theme } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import type { SuccessCardAction } from "./SuccessCard";
 
@@ -13,20 +13,20 @@ const SuccessCardActions = ({ actions }: SuccessCardActionsProps): React.ReactNo
                 <Button
                     key={label}
                     onClick={onClick}
-                    sx={{
+                    sx={(theme: Theme) => ({
                         textTransform: "none",
                         fontWeight: 700,
                         px: 4,
                         py: 1.3,
                         borderRadius: "12px",
                         fontSize: "1rem",
-                        color: "#fff",
-                        background: "linear-gradient(90deg, #7C3AED 0%, #8B5CF6 100%)",
-                        boxShadow: "0 4px 16px rgba(124,58,237,0.4)",
+                        color: theme.custom.white,
+                        background: `linear-gradient(90deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
+                        boxShadow: `0 4px 16px ${alpha(theme.palette.primary.main, 0.4)}`,
                         "&:hover": {
-                            background: "linear-gradient(90deg, #6D28D9 0%, #7C3AED 100%)",
+                            background: `linear-gradient(90deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.dark} 100%)`,
                         },
-                    }}
+                    })}
                 >
                     {label}
                 </Button>
@@ -34,12 +34,12 @@ const SuccessCardActions = ({ actions }: SuccessCardActionsProps): React.ReactNo
                 <Button
                     key={label}
                     onClick={onClick}
-                    startIcon={<ArrowBackIcon sx={(theme: Theme) => ({ fontSize: "1rem", color: theme.palette?.secondary?.main })} />}
+                    startIcon={<ArrowBackIcon sx={(theme: Theme) => ({ fontSize: "1rem", color: theme.palette.secondary.main })} />}
                     sx={(theme: Theme) => ({
                         textTransform: "none",
                         fontWeight: 500,
                         fontSize: "0.9rem",
-                        color: theme.custom?.white,
+                        color: theme.custom.white,
                         "&:hover": { backgroundColor: "transparent", opacity: 0.8 },
                     })}
                 >

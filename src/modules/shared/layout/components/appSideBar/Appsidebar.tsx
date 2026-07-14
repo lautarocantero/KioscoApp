@@ -1,5 +1,6 @@
 import type { Theme } from "@mui/material";
 import { Box } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import SidebarLogout from "./components/SidebarLogout";
 import { useAppSidebar } from "./hooks/useAppSidebar";
 import { COLLAPSED_WIDTH, EXPANDED_WIDTH } from "../../../../../config/constants";
@@ -69,7 +70,7 @@ const AppSidebar = (): React.ReactNode => {
           height: "100vh",
           transition: "width 0.22s cubic-bezier(.4,0,.2,1), min-width 0.22s cubic-bezier(.4,0,.2,1)",
           zIndex: 1200,
-          boxShadow: isExpanded ? "4px 0 24px rgba(0,0,0,0.25)" : "none",
+          boxShadow: isExpanded ? `4px 0 24px ${alpha(theme.custom.black, 0.25)}` : "none",
           ...getNoisyBackgroundSx({ theme, backgroundColor: theme.palette.primary.main }),
           position: "fixed",
           top: 0,

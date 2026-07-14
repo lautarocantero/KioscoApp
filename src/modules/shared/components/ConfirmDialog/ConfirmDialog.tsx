@@ -26,14 +26,14 @@ const ConfirmDialog = ({
             paper: {
                 sx: (theme: Theme) => ({
                     border: "0.5px solid",
-                    borderColor: theme.custom?.darkGray,
+                    borderColor: theme.custom.darkGray,
                     borderRadius: "16px",
                     minWidth: { xs: 200, sm: 480 },
                     width: { xs: 300, sm: 480 },
                     boxShadow: `
-                        0 1px 3px ${alpha(theme.custom?.black ?? "#000000", 0.06)},
-                        4px 8px 16px ${alpha(theme.custom?.black ?? "#000000", 0.1)},
-                        8px 16px 28px ${alpha(theme.custom?.black ?? "#000000", 0.08)}
+                        0 1px 3px ${alpha(theme.custom.black, 0.06)},
+                        4px 8px 16px ${alpha(theme.custom.black, 0.1)},
+                        8px 16px 28px ${alpha(theme.custom.black, 0.08)}
                     `,
                 }),
             },

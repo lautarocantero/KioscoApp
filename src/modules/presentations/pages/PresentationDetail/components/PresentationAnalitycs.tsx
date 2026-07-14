@@ -1,4 +1,5 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
@@ -29,23 +30,23 @@ const PresentationAnalytics = ({
                 {/* ── Header ─────────────────────────────────────────── */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                     <Box
-                        sx={{
+                        sx={(theme) => ({
                             width: 44,
                             height: 44,
                             borderRadius: "12px",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            bgcolor: "rgba(139,92,246,0.18)",
-                            color: "#A78BFA",
-                        }}
+                            bgcolor: alpha(theme.custom.accents.violet, 0.18),
+                            color: theme.custom.accents.violet,
+                        })}
                     >
                         <BarChartOutlinedIcon />
                     </Box>
                     <Box>
                         <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
                             {data.title} -{" "}
-                            <Typography component="span" variant="inherit" sx={(theme) => ({ color: theme.palette?.primary?.main })}>
+                            <Typography component="span" variant="inherit" sx={(theme) => ({ color: theme.palette.primary.main })}>
                                 Demo
                             </Typography>
                         </Typography>
@@ -74,13 +75,13 @@ const PresentationAnalytics = ({
                         variant="outlined"
                         startIcon={<CalendarMonthOutlinedIcon fontSize="small" />}
                         endIcon={<ExpandMoreIcon fontSize="small" />}
-                        sx={{
+                        sx={(theme) => ({
                             textTransform: "none",
-                            borderColor: "rgba(255,255,255,0.12)",
+                            borderColor: alpha(theme.custom.white, 0.12),
                             color: "text.primary",
                             fontSize: "0.8rem",
                             borderRadius: "10px",
-                        }}
+                        })}
                     >
                         {data.dateRangeLabel}
                     </Button>

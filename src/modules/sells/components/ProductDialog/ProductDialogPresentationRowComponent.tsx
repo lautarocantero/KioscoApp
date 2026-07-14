@@ -51,7 +51,7 @@ const ProductDialogPresentationRowComponent = ({
             gap={2}
             sx={(theme: Theme) => ({
                 p: 1.5,
-                borderBottom: `1px solid ${theme?.custom?.borderColor ?? 'rgba(255,255,255,0.08)'}`,
+                borderBottom: `1px solid ${theme?.custom?.darkGray}`,
             })}
         >
             <Box
@@ -102,7 +102,7 @@ const ProductDialogPresentationRowComponent = ({
                     onClick={() => onAddToCart(presentation, quantity)}
                     sx={(theme: Theme) => ({
                         backgroundColor: theme?.palette?.primary?.main,
-                        color: theme?.palette?.primary?.contrastText ?? '#fff',
+                        color: theme?.palette?.primary?.contrastText ?? theme?.custom?.white,
                         borderRadius: '0.4em',
                         width: '1.5em',
                         height: '1.5em',
