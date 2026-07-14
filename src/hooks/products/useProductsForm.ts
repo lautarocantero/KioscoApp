@@ -18,7 +18,9 @@ import { useErrorParser } from "../shared/useErrorParser";
 import { stepFieldsMap, editStepFieldsMap } from "../../modules/products/schema/ProductFormSchema";
 import { stepsConfig, editStepsConfig } from "../../config/constants";
 
-// ─── Modo CREAR ──────────────────────────────────────────────────────────────
+/*══════════════════════════════════════════════╗
+║ 🪝 useProductCreate                           ║
+╚══════════════════════════════════════════════*/
 
 export function useProductCreate(): UseProductsFormReturn {
     const dispatch = useDispatch<AppDispatch>();
@@ -111,7 +113,9 @@ export function useProductCreate(): UseProductsFormReturn {
     };
 }
 
-// ─── Modo EDITAR ─────────────────────────────────────────────────────────────
+/*══════════════════════════════════════════════╗
+║ 🪝 useProductEdit                             ║
+╚══════════════════════════════════════════════*/
 
 export function useProductEdit(): UseProductsEditFormReturn {
     const { productId } = useParams<{ productId: string }>();
@@ -119,7 +123,7 @@ export function useProductEdit(): UseProductsEditFormReturn {
 
     const {
         productData: editingEntity,
-        loading: isLoadingEntity,
+        isLoading: isLoadingEntity,
         error: loadError,
     } = useProductData(productId);
 

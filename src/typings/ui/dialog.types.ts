@@ -32,3 +32,9 @@ export type ConfirmDialogContentProps = Pick<ConfirmDialogProps, "description"> 
 
 export type ConfirmDialogActionsProps = Required<Pick<ConfirmDialogProps, "confirmColor" | "confirmLabel" | "cancelLabel">> &
     Pick<ConfirmDialogProps, "warningText" | "onConfirm" | "onCancel">;
+
+export interface DeleteDialogState {
+    open: boolean;
+    id: string;
+    name: string;
+}

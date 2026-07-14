@@ -3,7 +3,7 @@ import { Alert, Box } from "@mui/material";
 import AppLayout from "../../../shared/layout/AppLayout";
 import CardCarousel from "../../../shared/components/Cards/CardCarousel";
 import PresentationDetailFormComponent from "./components/PresentationDetailForm";
-import { usePresentationAnalytics } from "../../../../hooks/presentation/usePresentationAnalytics";
+import { usePresentationAnalytics } from "../../../../hooks/presentations/usePresentationAnalytics";
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import PresentationAnalytics from "./components/PresentationAnalitycs";
 

@@ -7,6 +7,7 @@ import QrCode2OutlinedIcon from "@mui/icons-material/QrCode2Outlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import { useParams } from "react-router-dom";
+import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 const PresentationFormFirstStep = (): React.ReactNode => {
     const { currentStep, actionTitle } = useFormNavigation(); 
@@ -14,9 +15,9 @@ const PresentationFormFirstStep = (): React.ReactNode => {
 
     return (
         <FormCard 
-            submitText={actionTitle === "create" ? "Crear" : "Actualizar"} 
+            submitText={actionTitle === FormModeComplexEnum.Create ? "Crear" : "Actualizar"} 
             showButtons 
-            header={{ title: actionTitle === "create" ? "Crear presentación" : "Editar presentación" }}
+            header={{ title: actionTitle === FormModeComplexEnum.Create ? "Crear presentación" : "Editar presentación" }}
             multiStepHeader={{ stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS, currentStep }}
             accordion={{
                 title: "¿Qué son las presentaciones?",

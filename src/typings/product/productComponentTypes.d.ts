@@ -3,11 +3,11 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 import type {
     CreatedProductInterface,
     UpdatedProductInterface,
-    DeleteDialogState,
 } from "./productTypes";
 import type { PresentationAnalyticsData } from "@typings/ui/analytics.types";
 import type { Dayjs } from "dayjs";
 import type { AnalyticsFiltersInterface } from "@typings/shared/types/useAnalytics.types";
+import type { FormModeEnum } from "@typings/shared/sharedEnums";
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -62,7 +62,7 @@ export interface ProductFormFieldsProps {
 }
 
 export interface ProductFormProps {
-    mode?: "create" | "edit" | "detail";
+    mode?: FormModeComplexEnum;
 }
 
 export  interface FieldWithIconProps {
@@ -106,10 +106,3 @@ export interface PresentationAnalyticsProps {
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🗑️ PRODUCTO — Eliminación  🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
-
-// Props del diálogo de confirmación de eliminación
-export interface ProductDeleteDialogProps {
-    deleteDialog: DeleteDialogState;
-    onConfirm:    () => void;
-    onCancel:     () => void;
-}

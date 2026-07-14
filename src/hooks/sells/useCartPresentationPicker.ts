@@ -1,38 +1,39 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import type { AppDispatch, RootState as PresentationState } from "../../store/presentation/presentationSlice";
-import { getPresentationsById } from "../../store/presentation/presentationThunks";
+import { fetchPresentationsByProductId } from "../../store/presentation/presentationThunks";
 import type { RootState as SellerRootState } from "../../store/seller/sellerSlice";
-import type { Presentation } from "@typings/presentation/presentationTypes";
+import type { UseCartPresentationPickerReturn } from "@typings/sells/types";
 
-interface usePresentationsInterface {
-    productSelected: Presentation | null;
-    presentations: Presentation[];
-}
 
-const useCartPresentationPicker = (): usePresentationsInterface =>  {
-  const dispatch = useDispatch<AppDispatch>();
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 useCartPresentationPicker                                          ║
+║                                                                       ║
+║ Trae las presentaciones del producto seleccionado en el flujo de     ║
+║ venta, para elegir cuál agregar al carrito. Sin búsqueda/debounce —  ║
+║ a diferencia de usePresentationsListData, acá solo se listan las     ║
+║ presentaciones del producto activo.                                  ║
+╚══════════════════════════════════════════════════════════════════════╝*/
 
-  const productSelected = useSelector(
-    (state: SellerRootState) => state.seller.productSelected
-  );
+const useCartPresentationPicker = (): UseCartPresentationPickerReturn => {
+    const dispatch = useDispatch<AppDispatch>();
 
-  const presentations = useSelector(
-    (state: PresentationState) => state.presentation.Presentations,
-    shallowEqual
-  );
+    const productSelected = useSelector(
+        (state: SellerRootState) => state.seller.productSelected
+    );
 
-  useEffect(() => {
-    const fetchVariants = async () => {
-      const _idResult: string | null | undefined = productSelected?._id;
-      if (!_idResult) return;
-      await dispatch(getPresentationsById(_idResult));
-    };
+    const presentations = useSelector(
+        (state: PresentationState) => state.presentation.presentations,
+        shallowEqual
+    );
 
-    fetchVariants();
-  }, [dispatch, productSelected]);
+    useEffect(() => {
+        const productId = productSelected?._id;
+        if (!productId) return;
+        void dispatch(fetchPresentationsByProductId(productId));
+    }, [dispatch, productSelected]);
 
-  return {productSelected, presentations};
-}
+    return { productSelected, presentations };
+};
 
 export default useCartPresentationPicker;

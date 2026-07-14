@@ -1,84 +1,155 @@
+// store/presentation/presentationThunks.ts
+import type { Dispatch } from "@reduxjs/toolkit";
+import type { CreatePresentationPayload, Presentation, PresentationFormValues } from "../../typings/presentation/presentationTypes";
+import type { PresentationAnalyticsRaw } from "@typings/shared/types/useAnalytics.types";
+import {
+    startLoadingPresentations,
+    setPresentations,
+    setSelectedPresentation,
+    removePresentationFromList,
+    setError,
+} from "./presentationSlice";
+import { handleError } from "../shared/handlerStoreError";
+import {
+    getPresentationsByProductIdRequest,
+    searchPresentationsByProductIdRequest,
+    getPresentationByIdRequest,
+    deletePresentationRequest,
+    createPresentationRequest,
+    editPresentationRequest,
+    getPresentationAnalyticsRequest,
+} from "../../modules/presentations/api/presentationsApi";
 
-// # Thunk: getPresentationsById  
-
-// ## Descripción 📦  
-// Thunk de Redux que obtiene las variantes de un producto específico desde la API.  
-// Se encarga de manejar el ciclo de carga, validar la respuesta y actualizar el estado global con las variantes encontradas.  
-
-// ## Flujo 🔧  
-// 1. **Inicio de petición**:  
-//    - Se despacha `checkingPresentations()` para indicar que la aplicación está en proceso de verificación.  
-// 2. **Petición a la API**:  
-//    - Llama a `getPresentationsByIdRequest({ product_id })` para obtener las variantes del producto.  
-// 3. **Validación de respuesta**:  
-//    - Si no se encuentran variantes (`!Presentations`):  
-//      - Se despacha `setError` con mensaje `"No se ha encontrado ninguna variante del producto"`.  
-//      - Se lanza un `Error`.  
-//    - Si se encuentran variantes:  
-//      - Se despacha `setProductsVariants(Presentations)` para actualizar el estado global.  
-//      - Se retorna el array de variantes.  
-// 4. **Manejo de errores**:  
-//    - Si ocurre una excepción, se delega a `handleError(error)` para centralizar la lógica de errores.  
-
-// ## Acciones usadas 🎭  
-// - `checkingPresentations`: marca el inicio de la verificación.  
-// - `setError`: guarda un mensaje de error en el estado.  
-// - `setProductsVariants`: actualiza el estado con las variantes obtenidas.  
-
-// ## Tipos 📑  
-// - `Presentation`: tipo que representa la estructura de una variante de producto.  
-// - Retorno: `Promise<Presentation[] | undefined>` (array de variantes o undefined en caso de error).  
-
-// ## Notas técnicas 💽  
-// - **Modularidad**: separa la lógica de API (`getPresentationsByIdRequest`) del manejo de estado.  
-// - **Escalabilidad**: se pueden añadir más validaciones (ej. stock mínimo, precios) antes de despachar.  
-// - **Consistencia**: asegura que siempre se despache una acción (`checking`, `error` o `setProductsVariants`) para mantener la UI sincronizada.  
-
-
-import type { Dispatch } from "@reduxjs/toolkit"
-import type { Presentation } from "../../typings/presentation/presentationTypes"
-import { checkingPresentations, setError, setProductsVariants, startLoadingPresentations } from "./presentationSlice"
-import { handleError } from "../shared/handlerStoreError"
-import { getPresentationByIdRequest, getPresentationsByProductIdRequest } from "../../modules/presentations/api/presentationsApi"
-
-
-export const getPresentationsById = (product_id: string) => {
-
+// ── listar por producto (tabla admin) ───────────────────────────────
+export const fetchPresentationsByProductId = (product_id: string) => {
     return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
         dispatch(startLoadingPresentations());
-        try{
-            const Presentations: Presentation[] = await getPresentationsByProductIdRequest({product_id});
-
-            if(!Presentations) {
-                dispatch(setError({errorMessage: "No se ha encontrado ninguna variante del producto" }));
-                throw new Error('No se encontraron productos que coincidan con el id ' + product_id);
-            }
-
-            dispatch(setProductsVariants(Presentations));
-            return Presentations as Presentation[];
-        } catch(error: unknown) {
+        try {
+            const presentations = await getPresentationsByProductIdRequest({ product_id });
+            dispatch(setPresentations(presentations));
+            return presentations;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudieron cargar las presentaciones" }));
             handleError(error);
         }
-    }
-}
+    };
+};
 
-export const getPresentationById = (product_variant_id: string) => {
+// ── búsqueda por producto (tabla admin) ─────────────────────────────
+export const searchPresentationsByProductId = (product_id: string, term: string) => {
     return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
-        dispatch(checkingPresentations());
+        dispatch(startLoadingPresentations());
+        try {
+            const presentations = await searchPresentationsByProductIdRequest({ product_id, term });
+            dispatch(setPresentations(presentations));
+            return presentations;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudo completar la búsqueda" }));
+            handleError(error);
+        }
+    };
+};
 
-        try{
-            {/*─────────────────── 🔎 Se usa un array, pero solo se tendra un elemento en el mismo 🔎 ───────────────────*/}
-            const Presentation: Presentation[] = await getPresentationByIdRequest({product_variant_id});
-
-            if(!Presentation) {
-                dispatch(setError({errorMessage: "No se ha encontrado el producto en la base de datos" }));
-                throw new Error('No se encontraron variantes del producto');
+// ── traer una presentación puntual (form de edición, stock de analytics) ──
+export const fetchPresentationById = (product_variant_id: string) => {
+    return async (dispatch: Dispatch): Promise<Presentation | undefined> => {
+        dispatch(startLoadingPresentations());
+        try {
+            const result = await getPresentationByIdRequest({ product_variant_id });
+            const presentation = Array.isArray(result) ? result[0] : result;
+            if (!presentation) {
+                dispatch(setError({ errorMessage: "No se ha encontrado la presentación" }));
+                return undefined;
             }
+            dispatch(setSelectedPresentation(presentation));
+            return presentation;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudo cargar la presentación" }));
+            handleError(error);
+        }
+    };
+};
 
-            dispatch(setProductsVariants(Presentation));
-            return Presentation as Presentation[];
+// ── presentaciones de un producto (flujo de venta / carrito) — se mantiene igual, lo usa el hook de seller ──
+export const getPresentationsById = (product_id: string) => {
+    return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
+        dispatch(startLoadingPresentations());
+        try {
+            const presentations = await getPresentationsByProductIdRequest({ product_id });
+            if (!presentations) {
+                dispatch(setError({ errorMessage: "No se ha encontrado ninguna variante del producto" }));
+                throw new Error("No se encontraron productos que coincidan con el id " + product_id);
+            }
+            dispatch(setPresentations(presentations));
+            return presentations;
         } catch (error: unknown) {
             handleError(error);
         }
-    }
-}
+    };
+};
+
+// ── crear ────────────────────────────────────────────────────────
+// Nota: el backend solo devuelve { _id, message }, no la entidad completa,
+// así que no la insertamos en la lista acá — el hook arma el "createdVariant"
+// localmente, igual que hacía antes.
+export const createPresentation = (data: CreatePresentationPayload) => {
+    return async (dispatch: Dispatch): Promise<{ _id: string; message: string } | undefined> => {
+        dispatch(startLoadingPresentations());
+        try {
+            return await createPresentationRequest(data);
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "Error al crear la presentación" }));
+            handleError(error);
+        }
+    };
+};
+
+// ── editar ───────────────────────────────────────────────────────
+export const editPresentation = (
+    _id: string,
+    values: Partial<PresentationFormValues>
+) => {
+    return async (dispatch: Dispatch): Promise<{ _id: string; message: string } | undefined> => {
+        dispatch(startLoadingPresentations());
+        try {
+            return await editPresentationRequest({ _id, ...values });
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "Error al actualizar la presentación" }));
+            handleError(error);
+        }
+    };
+};
+
+// ── eliminar ─────────────────────────────────────────────────────
+export const deletePresentation = (presentation_id: string) => {
+    return async (dispatch: Dispatch): Promise<boolean> => {
+        try {
+            await deletePresentationRequest(presentation_id);
+            dispatch(removePresentationFromList(presentation_id));
+            return true;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "Error al eliminar la presentación" }));
+            handleError(error);
+            return false;
+        }
+    };
+};
+
+// ── analíticas ───────────────────────────────────────────────────
+// No toca el slice: es data transitoria propia de la página de analytics,
+// no pertenece al listado global de presentaciones. Igual pasa por el thunk
+// para centralizar manejo de errores (handleError) y ser consistente con el resto.
+export const fetchPresentationAnalytics = (params: {
+    presentation_id: string;
+    start_date?: string;
+    end_date?: string;
+    seller_id?: string;
+}) => {
+    return async (_dispatch: Dispatch): Promise<PresentationAnalyticsRaw | undefined> => {
+        try {
+            return await getPresentationAnalyticsRequest(params);
+        } catch (error: unknown) {
+            handleError(error);
+        }
+    };
+};

@@ -7,3 +7,11 @@ export enum confirmColorEnum {
     Warning = "warning",
     Success = "success",
 };
+
+{/*─────────────────── 🔎 Badge 🔎 ───────────────────*/}
+
+export enum BadgeColorEnum {
+    Error = "error",
+    Warning = "warning",
+    Success = "success",
+};

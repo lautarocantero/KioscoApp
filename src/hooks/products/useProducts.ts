@@ -1,67 +1,47 @@
-import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import type { DeleteDialogState, UseProductsReturn } from "@typings/product/productTypes";
-import type { AppDispatch, RootState } from "../../store/product/productSlice";
-import { getProducts, searchProducts, deleteProduct } from "../../store/product/productThunks";
+import { useDispatch } from "react-redux";
+import type { UseProductsReturn } from "@typings/product/productTypes";
+import type { AppDispatch } from "../../store/product/productSlice";
+import { deleteProduct } from "../../store/product/productThunks";
 import { buildColumnsForProducts } from "../../modules/products/pages/ProductsList/components/productColumns";
+import { useProductsListData } from "./useProductListData";
+import { useState } from "react";
+import type { DeleteDialogState } from "@typings/ui/dialog.types";
 
 const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
 export const useProducts = (): UseProductsReturn => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
-  const products    = useSelector((state: RootState) => state.product.products);
-  const loading     = useSelector((state: RootState) => state.product.isLoading);
-  const storeError  = useSelector((state: RootState) => state.product.errorMessage);
+    // ── data fetching delegado, mismo patrón que useProductEdit → useProductData ──
+    const { products, loading, error, searchTerm, setSearchTerm } = useProductsListData();
 
-  const [error, setError] = useState<string | null>(null);
-  const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
+    const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
 
-  useEffect(() => {
-    setError(storeError);
-  }, [storeError]);
+    const handleDeleteRequest = (id: string, name: string) =>
+        setDeleteDialog({ open: true, id, name });
 
-  // ── búsqueda con debounce ──────────────────────────────────────────
-  const [searchTerm, setSearchTerm] = useState("");
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+    const handleDeleteCancel = () => setDeleteDialog(CLOSED_DIALOG);
 
-  useEffect(() => {
-    clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      if (searchTerm.trim() === "") {
-        void dispatch(getProducts());
-      } else {
-        void dispatch(searchProducts(searchTerm));
-      }
-    }, 350);
-    return () => clearTimeout(debounceRef.current);
-  }, [searchTerm, dispatch]);
+    const handleDeleteConfirm = async () => {
+        await dispatch(deleteProduct(deleteDialog.id));
+        setDeleteDialog(CLOSED_DIALOG);
+    };
 
-  const handleDeleteRequest = (id: string, name: string) =>
-    setDeleteDialog({ open: true, id, name });
+    const columns = buildColumnsForProducts({ onDeleteRequest: handleDeleteRequest, navigate });
 
-  const handleDeleteCancel = () => setDeleteDialog(CLOSED_DIALOG);
-
-  const handleDeleteConfirm = async () => {
-    await dispatch(deleteProduct(deleteDialog.id));
-    setDeleteDialog(CLOSED_DIALOG);
-  };
-
-  const columns = buildColumnsForProducts({ onDeleteRequest: handleDeleteRequest, navigate });
-
-  return {
-    productsWithPresentations: products,
-    loading,
-    error,
-    deleteDialog,
-    clearError: () => setError(null),
-    handleDeleteRequest,
-    handleDeleteCancel,
-    handleDeleteConfirm,
-    searchTerm,
-    setSearchTerm,
-    columns,
-  };
+    return {
+        productsWithPresentations: products,
+        loading,
+        error,
+        deleteDialog,
+        clearError: () => {}, // ver nota abajo
+        handleDeleteRequest,
+        handleDeleteCancel,
+        handleDeleteConfirm,
+        searchTerm,
+        setSearchTerm,
+        columns,
+    };
 };

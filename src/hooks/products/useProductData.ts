@@ -15,12 +15,13 @@ import { API_URL } from "../../config/api";
 ║      despacha el thunk getProductById, que ya se encarga de           ║
 ║      fetchear y guardar en store                                      ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
+
 export const useProductData = (productId: string | undefined): UseProductDataResult => {
 
     const dispatch  = useDispatch<AppDispatch>();
 
     const productData = useSelector((state: RootState) => state.product?.currentProduct ?? null);
-    const loading    = useSelector((state: RootState) => state.product?.isLoadingCurrent ?? false);
+    const isLoading    = useSelector((state: RootState) => state.product?.isLoadingCurrent ?? false);
     const error        = useSelector((state: RootState) => state.product?.currentProductError ?? null);
 
     const storeHasIt = productData?._id === productId;
@@ -32,21 +33,21 @@ export const useProductData = (productId: string | undefined): UseProductDataRes
         void dispatch(getProductById(productId));
     }, [productId, storeHasIt, dispatch]);
 
-    return { productData, loading, error };
+    return { productData, isLoading, error };
 };
 
 
 export const useProductStats = (): UseProductStatsResult => {
     const [totalProducts, setTotalProducts]       = useState<number | null>(null);
     const [lowStockProducts, setLowStockProducts] = useState<number | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError]     = useState<string | null>(null);
 
     useEffect(() => {
         let isMounted = true;
 
         const fetchStats = async (): Promise<void> => {
-            setLoading(true);
+            setIsLoading(true);
             setError(null);
 
             try {
@@ -66,7 +67,7 @@ export const useProductStats = (): UseProductStatsResult => {
                 if (!isMounted) return;
                 setError("No se pudo obtener los datos de productos");
             } finally {
-                if (isMounted) setLoading(false);
+                if (isMounted) setIsLoading(false);
             }
         };
 
@@ -77,12 +78,12 @@ export const useProductStats = (): UseProductStatsResult => {
         };
     }, []);
 
-    return { totalProducts, lowStockProducts, loading, error };
+    return { totalProducts, lowStockProducts, isLoading, error };
 };
 
 // 👇 Adaptador para las cards de HomePageLinks / SidebarNavLinks
 export const useProductsLinkData = (): LinkDataResult => {
-    const { totalProducts, lowStockProducts, loading, error } = useProductStats();
+    const { totalProducts, lowStockProducts, isLoading, error } = useProductStats();
 
     const subtitle = error
         ? undefined
@@ -94,7 +95,7 @@ export const useProductsLinkData = (): LinkDataResult => {
 
     return {
         value: totalProducts,
-        loading,
+        isLoading,
         error,
         subtitle,
     };

@@ -40,10 +40,11 @@ export type PresentationPublic = Pick<PresentationEntity,
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 // tipo del slice
-interface PresentationState {
-    Presentations: Presentation[],
-    isLoading: boolean,
-    errorMessage: string | null,
+export interface PresentationState {
+    presentations: Presentation[];
+    selectedPresentation: Presentation | null;
+    isLoading: boolean;
+    errorMessage: string | null;
 }
 
 export type PresentationStateError = Pick<PresentationState, 'errorMessage'>;
@@ -51,6 +52,25 @@ export type PresentationStateError = Pick<PresentationState, 'errorMessage'>;
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🪝 Hooks  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface UsePresentationDataResult {
+    presentationData: Presentation | null;
+    isLoading: boolean;
+    error: string | null;
+}
+
+export interface UsePresentationsListDataResult {
+    presentations: Presentation[];
+    loading: boolean;
+    error: string | null;
+    searchTerm: string;
+    setSearchTerm: (term: string) => void;
+}
+
+type CreatePresentationPayload = Omit<PresentationEntity, "_id" | "created_at" | "updated_at"> & {
+    image_file?: File | null;
+};
+
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🗂️ COLUMNAS  🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️           ║
@@ -85,9 +105,9 @@ export interface PresentationFormValues {
     model_size:      string;
     image_file?: File | null;
     image_url:       string;
-    min_stock:       number | "";
-    stock:           number | "";
-    price:           number | "";
+    min_stock:       number;
+    stock:           number;
+    price:           number;
     expiration_date: string;
 }
 

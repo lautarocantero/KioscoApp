@@ -2,6 +2,8 @@ import type { FormikErrors } from "formik";
 import type { NavigateFunction } from "react-router-dom";
 import type { Dispatch, SetStateAction, FormEvent } from "react";
 import type { GridColDef } from "@mui/x-data-grid";
+import type { DeleteDialogState } from "@typings/ui/dialog.types";
+import type { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -157,12 +159,6 @@ export interface UseProductsDetailFormReturn {
     setViewingEntity: Dispatch<SetStateAction<ExistingProductInterface | null>>;
 }
 
-// Estado del diálogo de eliminación
-export interface DeleteDialogState {
-    open: boolean;
-    id:   string;
-    name: string;
-}
 
 // Hook de listado y eliminación de productos
 export interface UseProductsReturn {
@@ -191,6 +187,14 @@ export type UseProductStatsResult = {
     [K in keyof ProductStats]: ProductStats[K] | null;
 } & UseAsyncLoadBase;
 
+export interface UseProductsListDataResult {
+    products: Product[];
+    loading: boolean;
+    error: string | null;
+    searchTerm: string;
+    setSearchTerm: (term: string) => void;
+}
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 💱 CONTEXT  💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -208,7 +212,7 @@ export interface FormNavigationContextType {
     onPrev:        () => void;
     onSubmit:      (e?: FormEvent<HTMLFormElement>) => void;
     validateForm?: () => Promise<FormikErrors<ProductFormValues>>;
-    actionTitle?:  "create" | "edit" | "detail";
+    actionTitle?:  FormModeComplexEnum;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

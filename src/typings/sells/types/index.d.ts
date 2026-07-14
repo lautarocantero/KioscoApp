@@ -93,6 +93,11 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         error: string | null;
     }
 
+    export interface UseCartPresentationPickerReturn {
+        productSelected: Presentation | null;
+        presentations: Presentation[];
+    }
+
    //────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
 
     export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>

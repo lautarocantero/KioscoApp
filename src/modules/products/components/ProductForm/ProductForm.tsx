@@ -15,6 +15,7 @@ import ProductCreated from "../../pages/ProductCreate/components/ProductCreated"
 import ProductEdited from "../../pages/ProductEdit/components/ProductEdited";
 import type { ProductFormProps } from "@typings/product/productComponentTypes";
 import ActualStepComponent from "../../../../modules/shared/components/FormCard/ActualStep";
+import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 const STEP_COMPONENTS = [ProductFormFirstStep];
 
@@ -45,7 +46,7 @@ const ProductCreateForm = (): React.ReactNode => {
                         validateForm,
                         submitError:  form.submitError,
                         stepErrors:   form.stepErrors,
-                        actionTitle:  "create",
+                        actionTitle:  FormModeComplexEnum.Create,
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
@@ -88,7 +89,7 @@ const ProductEditForm = (): React.ReactNode => {
                         validateForm,
                         submitError:  form.submitError,
                         stepErrors:   form.stepErrors,
-                        actionTitle:  "edit",
+                        actionTitle:  FormModeComplexEnum.Edit,
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
@@ -132,7 +133,7 @@ const ProductDetailForm = (): React.ReactNode => {
                         validateForm: async () => ({}),
                         submitError:  loadError,
                         stepErrors:   [],
-                        actionTitle:  "detail",
+                        actionTitle:  FormModeComplexEnum.Detail,
                     }}
                 >
                     <Grid container sx={{ width: "100%" }}>
@@ -150,7 +151,7 @@ const ProductDetailForm = (): React.ReactNode => {
 };
 
 // ── Export público ────────────────────────────────────────────────────────────
-const ProductForm = ({ mode = "create" }: ProductFormProps): React.ReactNode => {
+const ProductForm = ({ mode = FormModeComplexEnum.Create }: ProductFormProps): React.ReactNode => {
     if (mode === "edit") return <ProductEditForm />;
     if (mode === "detail") return <ProductDetailForm />;
     return <ProductCreateForm />;

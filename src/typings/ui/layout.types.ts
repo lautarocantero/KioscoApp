@@ -15,7 +15,7 @@ export interface AppLayoutProps {
 
 export interface LinkDataResult {
   value?: string | number | null;
-  loading?: boolean;
+  isLoading?: boolean;
   error?: string | null;
   subtitle?: string | number | null;
 }

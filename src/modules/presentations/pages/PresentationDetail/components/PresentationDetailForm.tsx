@@ -1,6 +1,5 @@
 import { Box, Grid, Typography, Chip } from "@mui/material";
 import { Formik } from "formik";
-import { usePresentationEdit } from "../../../../../hooks/presentation/usePresentationForm";
 import { getPresentationDetailInitialValues } from "../../../schema/PresentationFormSchema";
 import LoadingSpinnerComponent from "../../../../shared/components/LoadingSpinner";
 import FormCard from "../../../../shared/components/FormCard/FormCard";
@@ -17,14 +16,11 @@ import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { useParams } from "react-router-dom";
+import { usePresentationEdit } from "../../../../../hooks/presentations/usePresentationForm";
+import type { DetailFieldProps, SectionHeaderProps } from "@typings/presentation/presentationComponentTypes";
+import { BadgeColorEnum } from "@typings/ui/uiEnums";
 
 // ── Sub-componentes de presentación ──────────────────────────────────
-
-interface SectionHeaderProps {
-    icon: React.ReactNode;
-    title: string;
-    color: string;
-}
 
 const SectionHeader = ({ icon, title, color }: SectionHeaderProps): React.ReactNode => (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
@@ -35,13 +31,6 @@ const SectionHeader = ({ icon, title, color }: SectionHeaderProps): React.ReactN
     </Box>
 );
 
-interface DetailFieldProps {
-    icon: React.ReactNode;
-    iconColor: string;
-    label: string;
-    value: React.ReactNode;
-    badge?: { label: string; color: "success" | "error" | "warning" };
-}
 
 const DetailField = ({ icon, iconColor, label, value, badge }: DetailFieldProps): React.ReactNode => (
     <Box
@@ -220,7 +209,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                                                 value={values.stock}
                                                 badge={{
                                                     label: stockOk ? "Stock OK" : "Stock bajo",
-                                                    color: stockOk ? "success" : "error",
+                                                    color: stockOk ? BadgeColorEnum.Success : BadgeColorEnum.Error,
                                                 }}
                                             />
                                         </Grid>
@@ -255,7 +244,7 @@ const PresentationDetailFormComponent = (): React.ReactNode => {
                                                 }
                                                 badge={{
                                                     label: isVigente ? "Vigente" : "Vencido",
-                                                    color: isVigente ? "success" : "error",
+                                                    color: isVigente ? BadgeColorEnum.Success : BadgeColorEnum.Error,
                                                 }}
                                             />
                                         </Grid>

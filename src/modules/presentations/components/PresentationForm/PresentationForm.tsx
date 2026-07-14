@@ -10,12 +10,14 @@ import {
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
-import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentation/usePresentationForm";
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep";
 import PresentationFormThirdStep from "./PresentationFormThirdStep";
 import PresentationCreated from "../../pages/PresentationCreate/components/PresentationCreated";
 import PresentationUpdated from "../../pages/PresentationEdit/components/PresentationUpdated";
+import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentations/usePresentationForm";
+import type { PresentationFormProps } from "@typings/presentation/presentationComponentTypes";
+import { FormModeComplexEnum, FormModeSimpleEnum } from "@typings/shared/sharedEnums";
 
 const STEP_COMPONENTS = [
     PresentationFormFirstStep,
@@ -23,9 +25,6 @@ const STEP_COMPONENTS = [
     PresentationFormThirdStep,
 ];
 
-interface PresentationFormProps {
-    mode: "create" | "edit",
-}
 
 // ── Modo CREAR ────────────────────────────────────────────────────────────────
 const PresentationCreateForm = (): React.ReactNode => {
@@ -61,7 +60,7 @@ const PresentationCreateForm = (): React.ReactNode => {
                             validateForm,
                             submitError:  form.submitError,
                             stepErrors:   [],
-                            actionTitle:  "create",
+                            actionTitle:  FormModeComplexEnum.Create,
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
@@ -107,7 +106,7 @@ const PresentationEditForm = (): React.ReactNode => {
                             validateForm,
                             submitError:  form.submitError,
                             stepErrors:   form.stepErrors,
-                            actionTitle:  "edit",
+                            actionTitle:  FormModeComplexEnum.Edit,
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
@@ -124,7 +123,7 @@ const PresentationEditForm = (): React.ReactNode => {
 };
 
 // ── Export público ────────────────────────────────────────────────────────────
-const PresentationForm = ({ mode = "create" }: PresentationFormProps): React.ReactNode =>
+const PresentationForm = ({ mode = FormModeSimpleEnum.Create }: PresentationFormProps): React.ReactNode =>
     mode === "edit" ? <PresentationEditForm /> : <PresentationCreateForm />;
 
 export default PresentationForm;

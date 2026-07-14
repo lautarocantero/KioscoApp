@@ -1,6 +1,6 @@
 import { Alert, Box } from "@mui/material";
 import { useProductPresentations } from "../../../../../hooks/products/useProductPresentations";
-import { usePresentationAnalytics } from "../../../../../hooks/presentation/usePresentationAnalytics";
+import { usePresentationAnalytics } from "../../../../../hooks/presentations/usePresentationAnalytics";
 import LoadingSpinnerComponent from "../../../../shared/components/LoadingSpinner";
 import type { ProductAnalyticsSectionProps } from "@typings/product/productComponentTypes";
 import PresentationAnalytics from "../../../../../modules/shared/components/PresentationAnalitycs/PresentationAnalitycs";

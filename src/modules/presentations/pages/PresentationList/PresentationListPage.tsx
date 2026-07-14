@@ -1,6 +1,6 @@
 import React from "react";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import { usePresentations } from "../../../../hooks/presentation/usePresentations";
+import { usePresentationsAdmin } from "../../../../hooks/presentations/usePresentations";
 import AppLayout from "../../../../modules/shared/layout/AppLayout";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 
@@ -19,7 +19,7 @@ const PresentationListPage = (): React.ReactNode => {
         searchTerm,
         setSearchTerm,
         columns,
-    } = usePresentations();
+    } = usePresentationsAdmin();
     
 
     return (

@@ -1,28 +1,3 @@
-
-//─────────────────── Componente 🧩: BarcodeButtonComponent ───────────────────//
-//
-//─────────────────── Descripción 📝 ───────────────────//
-// Botón flotante que activa un campo de entrada para escanear códigos de barras.
-// Permite agregar productos al carrito mediante el ID escaneado.
-// Incluye ícono de pistola lectora y animaciones de entrada.
-//
-//──────────────────── Funciones 🔧 ─────────────────────//
-// • `useEffect`: enfoca el input al mostrarse.
-// • `getPresentation({id})`: obtiene variante de producto desde el store.
-// • `handleAddToCart()`: agrega producto al carrito, incrementa unidades si ya existe.
-// • `handleKeyDown(e)`: ejecuta `handleAddToCart` al presionar Enter.
-// • `showSnackBar()`: muestra notificación de éxito al agregar producto.
-//
-//─────────────────── Notas técnicas 💽 ───────────────────//
-// - Solo se renderiza en rutas `/new-sell` y `/cart`.
-// - Usa Redux Thunks: `getPresentationById`, `selectProductThunk`, `addOneUnitThunk`, `addToCartThunk`.
-// - El nombre del producto se recorta a 25 caracteres para mensajes de SnackBar.
-// - Animación con `animate.css` (`animate__backInRight`).
-// - Contexto: `SnackBarContext` para notificaciones globales.
-//
-//-----------------------------------------------------------------------------//
-
-
 import BarcodeReaderIcon from '@mui/icons-material/BarcodeReader';
 import { Grid, TextField, Tooltip, Typography, type Theme } from "@mui/material";
 import "animate.css";
@@ -36,7 +11,7 @@ import type { Presentation } from '../../../../../../typings/presentation/presen
 import type { ProductTicketType } from '../../../../../../typings/seller/sellerTypes';
 import { AlertColor } from '../../../../../../typings/ui/ui';
 import { SnackBarContext } from '../../../../../../modules/shared/components/SnackBar/SnackBarContext';
-import { getPresentationById } from '../../../../../../store/presentation/presentationThunks';
+import { getPresentationsById } from 'store/presentation/presentationThunks';
 
 export const BarcodeButtonComponent = (): React.ReactNode => {
   const location = useLocation();
@@ -61,7 +36,7 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
   if (location.pathname !== "/new-sell" && location.pathname !== "/cart") return null;
 
   const getPresentation = async ({id}:{id: string}): Promise<Presentation> => {
-    const prod: Presentation[] | undefined = await dispatch(getPresentationById(id));
+    const prod: Presentation[] | undefined = await dispatch(getPresentationsById(id));
 
     if(!prod) {
       showSnackBar(`Código de barras inexistente`, AlertColor.Error);
@@ -155,7 +130,7 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
       >
         <BarcodeReaderIcon
           sx={(theme: Theme) => ({
-            color: theme?.custom?.accentProviders,
+            color: theme?.palette.primary.main,
             fontSize: theme?.typography?.body1?.fontSize,
             transition: 'color 0.3s ease',
           })}
@@ -164,7 +139,7 @@ export const BarcodeButtonComponent = (): React.ReactNode => {
           <Typography
             className="barcode-label"
             sx={(theme: Theme) => ({
-              color: theme?.custom?.accentProviders,
+              color: theme?.palette.primary.main,
               fontSize: '0.85em',
               whiteSpace: 'nowrap',
             })}

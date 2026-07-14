@@ -1,18 +1,7 @@
-// ─── Componente 🧩: PresentationDeleteDialog ─────────────────────────────────
 import React from "react";
-
 import ConfirmDialog from "../../../../../modules/shared/components/ConfirmDialog/ConfirmDialog";
-import type { DeleteDialogState } from "@typings/product/productTypes";
+import type { PresentationDeleteDialogProps } from "@typings/presentation/presentationComponentTypes";
 
-// ─── props ────────────────────────────────────────────────────────────────────
-
-interface PresentationDeleteDialogProps {
-    deleteDialog: DeleteDialogState;
-    onConfirm: () => void;
-    onCancel: () => void;
-}
-
-// ─── componente ───────────────────────────────────────────────────────────────
 
 const PresentationDeleteDialog = ({
     deleteDialog,
