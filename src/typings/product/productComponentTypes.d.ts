@@ -42,22 +42,16 @@ export interface ProductCreatedProps {
     createdProduct: CreatedProductInterface;
 }
 
-// Props del cuerpo informativo (nombre del producto recién creado)
-export interface ProductCreatedBodyProps extends ProductNameBase {}
-
-// Props del bloque de acciones (botones de navegación post-creación)
-export interface ProductCreatedActionsProps extends ProductIdBase {}
-
-export interface ProductCreatedNameProps {
-    name: string;
-}
-
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📋 FORMULARIO — Campos  📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋           ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
+interface FieldIconConfig {
+    icon: React.ReactNode;
+    color: string;
+}
+
 export interface ProductFormFieldsProps {
-    mode?: "create" | "edit" | "detail";
     readOnly?: boolean;
     icons?: {
         name?: FieldIconConfig;
@@ -71,11 +65,6 @@ export interface ProductFormProps {
     mode?: "create" | "edit" | "detail";
 }
 
-export interface FieldIconConfig {
-    icon: React.ReactNode;
-    color: string;
-}
-
 export  interface FieldWithIconProps {
     iconConfig?: FieldIconConfig;
     children: React.ReactNode;
@@ -84,33 +73,6 @@ export  interface FieldWithIconProps {
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ ✏️ PRODUCTO — Edición  ✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️✏️            ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
-
-// Props del contenedor de éxito post-edición
-export interface ProductEditSuccessProps {
-    updatedProduct: UpdatedProductInterface;
-}
-
-// Props del cuerpo informativo (nombre del producto recién editado)
-export interface ProductEditSuccessBodyProps extends ProductNameBase {}
-
-// Props del bloque de acciones post-edición (ver / seguir editando)
-export interface ProductEditSuccessActionsProps extends ProductFeedbackBase {}
-
-export interface ProductEditedActionsProps {
-    productId: string;
-}
-
-export interface ProductEditedBodyProps {
-    name: string;
-}
-
-export interface ProductEditedCardProps {
-    updatedProduct: UpdatedProductInterface;
-}
-
-export interface ProductEditedNameProps {
-    name: string;
-}
 
 export interface ProductEditedProps {
     updatedProduct: UpdatedProductInterface;
@@ -140,16 +102,6 @@ export interface PresentationAnalyticsProps {
     onApplyFilters?: (filters: AnalyticsFiltersInterface) => void;
 }
 
-
-// /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🏴‍☠️ BANNER  🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️                       ║
-// ╚══════════════════════════════════════════════════════════════════════╝*/
-
-export interface ProductBannerComponentProps {
-    currentStep:  number;
-    banner:       React.ReactNode;
-    banner_text?: string;
-}
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🗑️ PRODUCTO — Eliminación  🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️       ║

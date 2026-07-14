@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { store } from "../store";
-import type { Product, ProductState, ProductStateError } from "../../typings/product/productTypes";
+import type { Product, ProductState, ProductStateError, ProductWithPresentations } from "../../typings/product/productTypes";
 
 const initialState: ProductState = {
     products:            [],
@@ -16,7 +16,7 @@ export const productSlice = createSlice({
     initialState,
     reducers: {
 
-        setProducts: (state: ProductState, action: PayloadAction<Product[]>) => {
+        setProducts: (state: ProductState, action: PayloadAction<ProductWithPresentations[]>) => {
             state.products     = action.payload;
             state.isLoading    = false;
             state.errorMessage = null;

@@ -20,7 +20,7 @@ export const useProductData = (productId: string | undefined): UseProductDataRes
     const dispatch  = useDispatch<AppDispatch>();
 
     const productData = useSelector((state: RootState) => state.product?.currentProduct ?? null);
-    const isLoading    = useSelector((state: RootState) => state.product?.isLoadingCurrent ?? false);
+    const loading    = useSelector((state: RootState) => state.product?.isLoadingCurrent ?? false);
     const error        = useSelector((state: RootState) => state.product?.currentProductError ?? null);
 
     const storeHasIt = productData?._id === productId;
@@ -32,10 +32,8 @@ export const useProductData = (productId: string | undefined): UseProductDataRes
         void dispatch(getProductById(productId));
     }, [productId, storeHasIt, dispatch]);
 
-    return { productData, isLoading, error };
+    return { productData, loading, error };
 };
-
-
 
 
 export const useProductStats = (): UseProductStatsResult => {

@@ -119,7 +119,7 @@ export function useProductEdit(): UseProductsEditFormReturn {
 
     const {
         productData: editingEntity,
-        isLoading: isLoadingEntity,
+        loading: isLoadingEntity,
         error: loadError,
     } = useProductData(productId);
 

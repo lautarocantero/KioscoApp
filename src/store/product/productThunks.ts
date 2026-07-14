@@ -1,6 +1,6 @@
 import type { Dispatch }     from "@reduxjs/toolkit";
 import type { NavigateFunction } from "react-router-dom";
-import type { CreateProductBody, Product }      from "../../typings/product/productTypes";
+import type { CreateProductBody, Product, ProductWithPresentations }      from "../../typings/product/productTypes";
 import {
     checkingProducts,
     checkingCurrentProduct,
@@ -64,22 +64,25 @@ export const createProduct = (body: CreateProductBody, navigate?: NavigateFuncti
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🚀 getProducts                                                        ║
+║ ⚠️  Nota: /get-products-with-presentations devuelve ProductWithPresentations[]║
+║     (presentations resumidas), NO Product[] completos. El tipo del    ║
+║     thunk debe reflejar eso — ver productSlice.ProductState.products. ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const getProducts = () => {
-
-    return async (dispatch: Dispatch): Promise<Product[] | undefined> => {
+ 
+    return async (dispatch: Dispatch): Promise<ProductWithPresentations[] | undefined> => {
         dispatch(checkingProducts());
         try {
-            const products: Product[] = await getProductsWithPresentationsRequest();
-
+            const products: ProductWithPresentations[] = await getProductsWithPresentationsRequest();
+ 
             if (!products) {
                 dispatch(setError({ errorMessage: "No se ha encontrado ningun producto" }));
                 throw new Error("No se encontraron productos");
             }
-
+ 
             dispatch(setProducts(products));
             return products;
-
+ 
         } catch (error: unknown) {
             dispatch(setError({ errorMessage: "No se pudieron obtener los productos" }));
             handleError(error);
@@ -97,7 +100,7 @@ export const getProducts = () => {
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const searchProducts = (term: string) => {
 
-    return async (dispatch: Dispatch): Promise<Product[] | undefined> => {
+    return async (dispatch: Dispatch): Promise<ProductWithPresentations[] | undefined> => {
         dispatch(checkingProducts());
 
         try {

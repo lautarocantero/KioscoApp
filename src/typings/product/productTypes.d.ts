@@ -1,5 +1,8 @@
 import type { FormikErrors } from "formik";
 import type { NavigateFunction } from "react-router-dom";
+import type { Dispatch, SetStateAction, FormEvent } from "react";
+import type { GridColDef } from "@mui/x-data-grid";
+import type { Presentation } from "@typings/presentation/presentationTypes";
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -23,9 +26,6 @@ interface ProductEntity {
 
 // Derivado principal — evita exponer ProductEntity directamente
 export type Product = ProductEntity;
-
-// Solo los campos públicos (sin _id)
-export type ProductPublic = Omit<ProductEntity, "_id">;
 
 // Producto existente devuelto por GET /product/:id — presentations opcionales
 export type ExistingProductInterface = Omit<ProductEntity, "presentations"> & {
@@ -53,8 +53,8 @@ interface ProductBaseFormValues {
     image_url:    string;
 }
 
-// Formulario de CREACIÓN — agrega campos de variante y stock
-export type ProductFormValues = ProductBaseFormValues & {};
+// Formulario de CREACIÓN — idéntico a la base por ahora (sin campos extra de variante/stock)
+export type ProductFormValues = ProductBaseFormValues;
 
 // Formulario de EDICIÓN — solo los campos editables base
 export type ProductEditFormValues = ProductBaseFormValues;
@@ -66,17 +66,12 @@ export type CreateProductBody = ProductBaseFormValues & {
     presentations:     unknown[];
 };
 
-// Cuerpo enviado al PATCH /product/:id
-export type UpdateProductBody = ProductBaseFormValues & {
-    updated_at: string;
-};
-
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface ProductState {
-    products:             Product[];
+    products:             ProductWithPresentations[];
     currentProduct:       Product | null;
     isLoading:            boolean;
     errorMessage:         string | null;
@@ -96,9 +91,9 @@ interface UseFormStateBase<TEntity> {
     isSubmitting:     boolean;
     submitError:      string | null;
     stepErrors:       string[];
-    setCreatedEntity: React.Dispatch<React.SetStateAction<TEntity | null>>;
-    setIsSubmitting:  React.Dispatch<React.SetStateAction<boolean>>;
-    setSubmitError:   React.Dispatch<React.SetStateAction<string | null>>;
+    setCreatedEntity: Dispatch<SetStateAction<TEntity | null>>;
+    setIsSubmitting:  Dispatch<SetStateAction<boolean>>;
+    setSubmitError:   Dispatch<SetStateAction<string | null>>;
 }
 
 // Base reutilizable para hooks de formulario multi-paso
@@ -108,11 +103,15 @@ interface UseFormStepsBase {
     handlePrevStep: () => void;
 }
 
+// Base reutilizable para hooks de carga async simple (dato + loading + error)
+interface UseAsyncLoadBase {
+    loading: boolean;
+    error:     string | null;
+}
+
 // Hook de datos de un producto individual
-export interface UseProductDataResult {
+export interface UseProductDataResult extends UseAsyncLoadBase {
     productData: Product | null;
-    isLoading:   boolean;
-    error:       string | null;
 }
 
 // Hook de formulario de CREACIÓN
@@ -127,29 +126,21 @@ export interface UseProductsFormReturn
 }
 
 // Hook de formulario de EDICIÓN
-export interface UseProductsEditFormReturn extends UseFormStepsBase {
+// Reutiliza el subconjunto común de UseFormStateBase (submit state) y solo
+// redefine lo que es propio de edición (entidad existente vs. entidad creada).
+export interface UseProductsEditFormReturn
+    extends Omit<UseFormStateBase<UpdatedProductInterface>, "createdEntity" | "setCreatedEntity">,
+            UseFormStepsBase {
     editingEntity:    ExistingProductInterface | null;
     updatedEntity:    UpdatedProductInterface | null;
     isLoadingEntity:  boolean;
-    isSubmitting:     boolean;
-    submitError:      string | null;
-    stepErrors:       string[];
-    setEditingEntity: React.Dispatch<React.SetStateAction<ExistingProductInterface | null>>;
-    setUpdatedEntity: React.Dispatch<React.SetStateAction<UpdatedProductInterface | null>>;
-    setIsSubmitting:  React.Dispatch<React.SetStateAction<boolean>>;
-    setSubmitError:   React.Dispatch<React.SetStateAction<string | null>>;
+    setEditingEntity: Dispatch<SetStateAction<ExistingProductInterface | null>>;
+    setUpdatedEntity: Dispatch<SetStateAction<UpdatedProductInterface | null>>;
     handleNextStep: (
         validateForm: () => Promise<FormikErrors<ProductEditFormValues>>,
         onValidSubmit?: () => void,
     ) => Promise<void>;
     handleEdit: (values: ProductEditFormValues) => Promise<void>;
-}
-
-export interface UseProductsDetailFormReturn {
-    viewingEntity: ExistingProductInterface | null;
-    isLoadingEntity: boolean;
-    loadError: string | null;
-    setViewingEntity: React.Dispatch<React.SetStateAction<ExistingProductInterface | null>>;
 }
 
 // Estado del diálogo de eliminación
@@ -161,32 +152,30 @@ export interface DeleteDialogState {
 
 // Hook de listado y eliminación de productos
 export interface UseProductsReturn {
-  productsWithPresentations: ProductWithPresentations[]; // viene de state.product.products
-  loading: boolean;
-  error: string | null;
-  deleteDialog: DeleteDialogState;
-  clearError: () => void;
-  handleDeleteRequest: (id: string, name: string) => void;
-  handleDeleteCancel: () => void;
-  handleDeleteConfirm: () => Promise<void>;
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  columns: GridColDef[];
+    productsWithPresentations: ProductWithPresentations[]; // viene de state.product.products
+    loading:              boolean;
+    error:                string | null;
+    deleteDialog:         DeleteDialogState;
+    clearError:           () => void;
+    handleDeleteRequest:  (id: string, name: string) => void;
+    handleDeleteCancel:   () => void;
+    handleDeleteConfirm:  () => Promise<void>;
+    searchTerm:           string;
+    setSearchTerm:        (term: string) => void;
+    columns:              GridColDef[];
 }
 
-// useProductData
+// useProductStats
 
-export  interface ProductStats {
-    totalProducts: number;
+export interface ProductStats {
+    totalProducts:    number;
     lowStockProducts: number;
 }
 
-export  interface UseProductStatsResult {
-    totalProducts: number | null;
-    lowStockProducts: number | null;
-    loading: boolean;
-    error: string | null;
-}
+// Mismos campos que ProductStats pero nullables (aún no cargados) + estado async
+export type UseProductStatsResult = {
+    [K in keyof ProductStats]: ProductStats[K] | null;
+} & UseAsyncLoadBase;
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 💱 CONTEXT  💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱                       ║
@@ -202,10 +191,10 @@ export interface FormNavigationContextType {
         validateForm: () => Promise<FormikErrors<ProductFormValues>>,
         onValidSubmit?: () => void,
     ) => Promise<void>;
-    onPrev:       () => void;
-    onSubmit:     (e?: React.FormEvent<HTMLFormElement>) => void;
+    onPrev:        () => void;
+    onSubmit:      (e?: FormEvent<HTMLFormElement>) => void;
     validateForm?: () => Promise<FormikErrors<ProductFormValues>>;
-    actionTitle?: "create" | "edit" | "detail" ;
+    actionTitle?:  "create" | "edit" | "detail";
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -222,19 +211,15 @@ export interface BuildColumnsArgs {
 // ║ 🛞 UTILIDADES  🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞                 ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface NoProductLoadedComponentProps {
-    productError: string | null;
-}
-
 export interface PresentationSummary {
-  sku: string;
-  name: string;
-  description: string;
-  model_type: string;
-  model_size: string;
-  stock: number;
+    sku:         string;
+    name:        string;
+    description: string;
+    model_type:  string;
+    model_size:  string;
+    stock:       number;
 }
 
 export interface ProductWithPresentations extends Omit<Product, "presentations"> {
-  presentations: PresentationSummary[];
+    presentations: PresentationSummary[];
 }

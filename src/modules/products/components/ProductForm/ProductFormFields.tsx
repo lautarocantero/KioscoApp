@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useFormikContext } from "formik";
 import type { ProductFormValues, ProductEditFormValues } from "@typings/product/productTypes";
 import ProductImagePreview from "../../../shared/components/Image/ProductImagePreview";
@@ -7,7 +7,7 @@ import type { ProductFormFieldsProps } from "@typings/product/productComponentTy
 import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
 
 
-const ProductFormFields = ({ mode = "create", readOnly = false, icons }: ProductFormFieldsProps): React.ReactNode => {
+const ProductFormFields = ({ readOnly = false, icons }: ProductFormFieldsProps): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<ProductFormValues & ProductEditFormValues>();
 
     return (

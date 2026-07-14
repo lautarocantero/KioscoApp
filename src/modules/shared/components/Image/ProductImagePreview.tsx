@@ -4,7 +4,7 @@ import type { ProductImagePreviewProps } from "@typings/product/productComponent
 
 const ProductImagePreview = ({ imageUrl }: ProductImagePreviewProps): React.ReactNode => (
     <Box sx={(theme: Theme) => ({
-        border: `0.5px dashed", borderColor: "rgba(255,255,255,0.12)`,
+        border: `0.5px dashed", borderColor: ${theme.custom.darkGray}`,
         borderRadius: "10px", p: 1.5,
         display: "flex", alignItems: "center", gap: 2,
         background: `${theme.custom.darkGray}`,
