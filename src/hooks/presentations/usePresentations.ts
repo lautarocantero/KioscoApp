@@ -11,7 +11,7 @@ import type { DeleteDialogState } from "@typings/ui/dialog.types";
 
 const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
-export const usePresentationsAdmin = () => {
+export const usePresentations = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { product_id } = useParams<{ product_id: string }>();
