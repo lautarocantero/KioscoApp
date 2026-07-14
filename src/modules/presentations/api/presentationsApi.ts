@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../../../config/api";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { PresentationAnalyticsRaw } from "@typings/ui/analytics.types";
+import type { PresentationAnalyticsRaw } from "@typings/shared/types/useAnalytics.types";
 
 
 const baseUrl = axios.create({
