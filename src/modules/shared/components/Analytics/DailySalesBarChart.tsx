@@ -36,12 +36,12 @@ const DailySalesBarChart = ({
                         <XAxis
                             dataKey="date"
                             interval={4}
-                            tick={{ fill: theme.custom.lightMain, fontSize: 11 }}
+                            tick={{ fill: theme.custom.fontColor, fontSize: 11 }}
                             axisLine={{ stroke: theme.palette.primary.main }}
                             tickLine={false}
                         />
                         <YAxis
-                            tick={{ fill: theme.palette.primary.main, fontSize: 11 }}
+                            tick={{ fill: theme.custom.fontColor, fontSize: 11 }}
                             axisLine={false}
                             tickLine={false}
                         />

@@ -24,10 +24,7 @@ export const AnalyticsHeader = ({title, subtitle}: AnalyticsHeaderProps ) => {
             </Box>
             <Box>
                 <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
-                    {title} -{" "}
-                    <Typography component="span" variant="inherit" sx={(theme: Theme) => ({ color: theme.palette.primary.main })}>
-                        Demo
-                    </Typography>
+                    {title}
                 </Typography>
 
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>

@@ -9,11 +9,10 @@ sidebar:
 - [ ] Al darle click a un elemento del sidebar que tenga sub elementos abrir el navbar.
 ---
 Productos:
-- [ ] hacer que la card de stock funcione, implementar cambios en backend.
-- [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc.
 - [ ] Agregar a la card de estadisticas el nombre de la presentacion vista de forma mas clara.
-- [ ] Agregar tema claro a todo.
 - [ ] Agregar disenos sx 
+- [ ] hacer que la card de stock funcione, implementar cambios en backend. (pausado por ahora)
+- [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc.
 
 ---
 Presentaciones:
