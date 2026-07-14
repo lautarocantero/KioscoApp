@@ -1,17 +1,20 @@
+import type { PresentationStatus } from "@typings/presentation/presentationEnum";
+import { PresentationStatusColors } from "@typings/presentation/presentationEnum";
+
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🟥 APP 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥                       ║
+// ║ 🚀 APP  🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const REACT_APP_API_URL='https://kioscoappbackend.onrender.com'
 
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🟥 NEGOCIO  🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥              ║
+// ║ 🏪 NEGOCIO  🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪                  ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const iva = 0;
 
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🟥 LAYOUT  🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥              ║
+// ║ 🧱 LAYOUT  🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱                   ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const COLLAPSED_WIDTH = "72px";
@@ -22,7 +25,7 @@ export const SIDEBAR_STORAGE_KEY = "sidebar-expanded";
 export const DRAG_THRESHOLD_PX = 80;
 
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🟥 FORMULARIOS  🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥              ║
+// ║ 📝 FORMULARIOS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝              ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const PRODUCTS_STEPS_LABELS = [
@@ -48,3 +51,34 @@ export const editStepsConfig = PRODUCTS_EDIT_STEPS_LABELS.map((label) => ({
     title: label,
     content: null,
 }));
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📦 PRODUCTOS  📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦             ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🏷️ PRECIOS Y STOCK  🏷️💰📊🏷️💰📊🏷️💰📊🏷️💰📊🏷️💰📊🏷️            ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🛒 CATÁLOGO  🛒🛍️🛒🛍️🛒🛍️🛒🛍️🛒🛍️🛒🛍️🛒🛍️🛒🛍️🛒🛍️🛒               ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ ✅ DISPONIBILIDAD  ✅❌✅❌✅❌✅❌✅❌✅❌✅❌✅❌✅❌✅❌✅❌            ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🎨 PRESENTACIÓN  🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️        ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// usado para mostrar el estado de una presentacion
+
+export const STATUS_CONFIG: Record<
+    PresentationStatus,
+    { label: string; color: PresentationStatusColors }
+> = {
+    available:    { label: "Disponible",    color: PresentationStatusColors.Success },
+    out_of_stock: { label: "Sin stock",     color: PresentationStatusColors.Error   },
+    unavailable:  { label: "No disponible", color: PresentationStatusColors.Default },
+};

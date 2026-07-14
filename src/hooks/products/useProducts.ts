@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { DeleteDialogState, UseProductsReturn } from "@typings/product/productTypes";
 import type { AppDispatch, RootState } from "../../store/product/productSlice";
 import { getProducts, searchProducts, deleteProduct } from "../../store/product/productThunks";
-import { buildColumns } from "../../modules/products/pages/ProductsList/components/productColumns";
+import { buildColumnsForProducts } from "../../modules/products/pages/ProductsList/components/productColumns";
 
 const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
@@ -49,7 +49,7 @@ export const useProducts = (): UseProductsReturn => {
     setDeleteDialog(CLOSED_DIALOG);
   };
 
-  const columns = buildColumns({ onDeleteRequest: handleDeleteRequest, navigate });
+  const columns = buildColumnsForProducts({ onDeleteRequest: handleDeleteRequest, navigate });
 
   return {
     productsWithPresentations: products,

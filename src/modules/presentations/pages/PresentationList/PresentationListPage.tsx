@@ -1,15 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import ViewListIcon from "@mui/icons-material/ViewList";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { usePresentations } from "../PresentationList/hooks/usePresentations";
-import { buildColumns } from "./components/presentationColumns";
 import AppLayout from "../../../../modules/shared/layout/AppLayout";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 
 
 const PresentationListPage = (): React.ReactNode => {
-    const navigate = useNavigate();
 
     const {
         productId,
@@ -18,21 +14,16 @@ const PresentationListPage = (): React.ReactNode => {
         error,
         deleteDialog,
         clearError,
-        handleDeleteRequest,
         handleDeleteCancel,
         handleDeleteConfirm,
         searchTerm,
         setSearchTerm,
+        columns,
     } = usePresentations();
-
-    const columns = buildColumns({
-        productId,
-        onDeleteRequest: handleDeleteRequest,
-        navigate,
-    });
+    
 
     return (
-        <AppLayout fullWidth title="Presentaciones" icon={<ViewListIcon />}>
+        <AppLayout fullWidth >
             <DataTable<Presentation>
                 title={"Presentaciones"}
                 rows={presentations}
@@ -41,6 +32,7 @@ const PresentationListPage = (): React.ReactNode => {
                 error={error}
                 onClearError={clearError}
                 emptyMessage="Este producto no tiene presentaciones registradas"
+                height={"35em"}
                 search={{
                     value: searchTerm,
                     onChange: setSearchTerm,
@@ -59,6 +51,7 @@ const PresentationListPage = (): React.ReactNode => {
                             <strong>{deleteDialog.name}</strong>? Esta acción no se puede deshacer.
                         </>
                     ),
+                    warningText: "Esta acción eliminará la presentación de forma permanente.",
                     confirmLabel: "Eliminar",
                     onConfirm: () => void handleDeleteConfirm(),
                     onCancel: handleDeleteCancel,

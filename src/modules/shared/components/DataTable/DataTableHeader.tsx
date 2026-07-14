@@ -18,7 +18,7 @@ const DataTableHeader = ({ title, search, newItem }: DataTableHeaderProps): Reac
                         fontSize: theme.typography.h2.fontSize,
                         fontWeight: 700,
                         color: theme.custom.fontColor,
-                        maxWidth: { xs: "100%", sm: 200 },
+                        maxWidth: { xs: "100%", sm: 300 },
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
