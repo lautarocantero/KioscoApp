@@ -1,87 +1,80 @@
-import { Tooltip } from "@mui/material";
-import { type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
+import { type GridColDef } from "@mui/x-data-grid";
 import type { BuildColumnsArgs, PresentationSummary, Product } from "@typings/product/productTypes";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
-import { truncate } from "../helpers/productHelpers";
 import GenericListCell from "../../../../shared/components/DataTable/GenericCell";
-import { formatDate } from "../../../../../utils/formatter/formatDate";
+import { CellCenter } from "modules/shared/components/DataTable/CellCenter";
+import { dateColumn, truncatedTextColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
 
-export const buildColumns = ({
-  onDeleteRequest,
-  navigate,
-}: BuildColumnsArgs): GridColDef[] => [
-  {
-    field: "name",
-    headerName: "Nombre",
-    flex: 1.5,
-    minWidth: 150,
-    maxWidth: 150,
-  },
-  {
-    field: "brand",
-    headerName: "Marca",
-    flex: 1,
-    minWidth: 200,
-    maxWidth: 200,
-  },
-  {
-    field: "description",
-    headerName: "Descripción",
-    flex: 2,
-    minWidth: 250,
-    maxWidth: 250,
-    renderCell: (params: GridRenderCellParams<Product, string>) => (
-      <Tooltip title={params.value ?? ""}>
-        <span>{truncate(params.value ?? "", 60)}</span>
-      </Tooltip>
+export const buildColumnsForProducts = ({
+    onDeleteRequest,
+    navigate,
+}: BuildColumnsArgs): GridColDef<Product>[] => [
+    {
+        field: "name",
+        headerName: "Nombre",
+        flex: 1.5,
+        minWidth: 150,
+        maxWidth: 150,
+    },
+    {
+        field: "brand",
+        headerName: "Marca",
+        flex: 1,
+        minWidth: 200,
+        maxWidth: 200,
+    },
+    truncatedTextColumn<Product>(
+        {
+            field: "description",
+            headerName: "Descripción",
+            flex: 2,
+            minWidth: 250,
+            maxWidth: 250,
+        },
+        60
     ),
-  },
-  {
-    field: "presentations",
-    headerName: "Presentaciones",
-    flex: 1,
-    minWidth: 200,
-    renderCell: (params) => (
-      <GenericListCell<PresentationSummary>
-        items={params.value ?? []}
-        emptyLabel="Sin presentaciones"
-        getLabel={(p) => `${p.model_type} ${p.model_size}`}
-        getTooltipLine={(p) => `${p.model_type} ${p.model_size} · ${p.stock} u. · ${p.sku}`}
-        getKey={(p, i) => `${p.sku}-${i}`}
-      />
-    ),
-  },
-  {
-    field: "created_at",
-    headerName: "Creado",
-    width: 110,
-    renderCell: (params: GridRenderCellParams<Product, string>) =>
-      formatDate(params.value ?? ""),
-  },
-  {
-    field: "updated_at",
-    headerName: "Actualizado",
-    width: 120,
-    renderCell: (params: GridRenderCellParams<Product, string>) =>
-      formatDate(params.value ?? ""),
-  },
-  {
-    field: "actions",
-    headerName: "Acciones",
-    width: 160,
-    sortable: false,
-    filterable: false,
-    align: "center",
-    headerAlign: "center",
-    renderCell: (params: GridRenderCellParams<Product>) => (
-      <RowActionsCell
-        onPresentations={() =>
-          navigate(`/products/${params.row._id}/presentations`)
-        }
-        onView={() => navigate(`/product/${params.row._id}`)}
-        onEdit={() => navigate(`/products/${params.row._id}/edit`)}
-        onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
-      />
-    ),
-  },
+    {
+        field: "presentations",
+        headerName: "Presentaciones",
+        flex: 1,
+        minWidth: 200,
+        renderCell: (params) => (
+            <GenericListCell<PresentationSummary>
+                items={params.value ?? []}
+                emptyLabel="Sin presentaciones"
+                getLabel={(p) => `${p.model_type} ${p.model_size}`}
+                getTooltipLine={(p) => `${p.model_type} ${p.model_size} · ${p.stock} u. · ${p.sku}`}
+                getKey={(p, i) => `${p.sku}-${i}`}
+            />
+        ),
+    },
+    dateColumn<Product>({
+        field: "created_at",
+        headerName: "Creado",
+        width: 110,
+    }),
+    dateColumn<Product>({
+        field: "updated_at",
+        headerName: "Actualizado",
+        width: 120,
+    }),
+    {
+        field: "actions",
+        headerName: "Acciones",
+        width: 160,
+        sortable: false,
+        filterable: false,
+        align: "center",
+        headerAlign: "center",
+        renderCell: (params) => (
+            <CellCenter>
+                <RowActionsCell
+                    onPresentations={() => navigate(`/products/${params.row._id}/presentations`)}
+                    onView={() => navigate(`/product/${params.row._id}`)}
+                    onEdit={() => navigate(`/products/${params.row._id}/edit`)}
+                    onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
+                />
+            </CellCenter>
+        ),
+    },
 ];

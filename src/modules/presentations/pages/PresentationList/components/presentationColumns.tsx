@@ -1,156 +1,108 @@
-// ─── Columnas 📋: presentationColumns ────────────────────────────────────────
-import { Chip, Tooltip, Typography } from "@mui/material";
-import { type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
-
-import type { Presentation } from "@typings/presentation/presentationTypes";
+import { type GridColDef } from "@mui/x-data-grid";
+import type { PresentationStatus } from "@typings/presentation/presentationEnum";
+import type { BuildColumnsArgs, Presentation } from "@typings/presentation/presentationTypes";
+import { STATUS_CONFIG } from "config/constants";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
+import { CellCenter } from "modules/shared/components/DataTable/CellCenter";
 import { formatPrice } from "../helpers/presentationHelpers";
+import { centeredTextColumn, chipColumn, priceColumn, truncatedTextColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
 
-// ─── tipos ────────────────────────────────────────────────────────────────────
-
-type PresentationStatus = "available" | "out_of_stock" | "unavailable";
-
-export type BuildColumnsArgs = {
-    productId: string;
-    onDeleteRequest: (id: string, name: string) => void;
-    navigate: ReturnType<typeof useNavigate>;
-};
-
-// ─── config de estado ─────────────────────────────────────────────────────────
-
-const STATUS_CONFIG: Record<
-    PresentationStatus,
-    { label: string; color: "success" | "error" | "default" }
-> = {
-    available:    { label: "Disponible",    color: "success" },
-    out_of_stock: { label: "Sin stock",     color: "error"   },
-    unavailable:  { label: "No disponible", color: "default" },
-};
-
-// ─── builder ──────────────────────────────────────────────────────────────────
-
-export const buildColumns = ({
+export const buildColumnsForPresentations = ({
     productId,
     onDeleteRequest,
     navigate,
-}: BuildColumnsArgs): GridColDef[] => [
-    {
+}: BuildColumnsArgs): GridColDef<Presentation>[] => [
+    centeredTextColumn<Presentation>({
         field: "sku",
         headerName: "SKU",
-        width: 120,
-    },
-    {
+        width: 200,
+        minWidth: 200,
+        maxWidth: 200,
+    }),
+    centeredTextColumn<Presentation>({
         field: "name",
         headerName: "Nombre",
         flex: 1.5,
-        minWidth: 160,
-    },
-    {
-        field: "description",
-        headerName: "Descripción",
-        flex: 2,
-        minWidth: 200,
-        renderCell: (params: GridRenderCellParams<Presentation, string>) => (
-            <Tooltip title={params.value ?? ""}>
-                <span>
-                    {(params.value ?? "").length > 60
-                        ? `${params.value!.slice(0, 59)}…`
-                        : (params.value || "—")}
-                </span>
-            </Tooltip>
-        ),
-    },
-    {
-        field: "model_size",
-        headerName: "Contenido",
-        width: 110,
-        align: "center",
-        headerAlign: "center",
-        renderCell: (params: GridRenderCellParams<Presentation, string>) => (
-            <Chip
-                label={params.value ?? "—"}
-                size="small"
-                variant="outlined"
-                sx={{ fontSize: "0.72rem" }}
-            />
-        ),
-    },
-    {
-        field: "stock",
-        headerName: "Stock",
-        width: 100,
-        type: "number",
-        align: "center",
-        headerAlign: "center",
-        renderCell: (params: GridRenderCellParams<Presentation, number>) => {
-            const stock = params.value ?? 0;
-            const isLow = stock <= (params?.row?.min_stock ?? 0);
-            return (
-                <Chip
-                    label={stock}
-                    size="small"
-                    color={isLow ? "error" : "success"}
-                    variant={isLow ? "filled" : "outlined"}
-                    sx={{ fontSize: "0.72rem", minWidth: 40 }}
-                />
-            );
+        minWidth: 170,
+        maxWidth: 170,
+    }),
+    truncatedTextColumn<Presentation>(
+        {
+            field: "description",
+            headerName: "Descripción",
+            flex: 2,
+            minWidth: 200,
+            maxWidth: 250,
         },
-    },
-    {
-        field: "status",
-        headerName: "Estado",
-        width: 140,
-        align: "center",
-        headerAlign: "center",
-        renderCell: (
-            params: GridRenderCellParams<Presentation, PresentationStatus>
-        ) => {
-            const cfg = STATUS_CONFIG[params.value ?? "unavailable"];
-            return (
-                <Chip
-                    label={cfg.label}
-                    size="small"
-                    color={cfg.color}
-                    variant="filled"
-                    sx={{ fontSize: "0.72rem" }}
-                />
-            );
+        60
+    ),
+    chipColumn<Presentation>(
+        {
+            field: "model_size",
+            headerName: "Contenido",
+            width: 200,
+            minWidth: 200,
+            maxWidth: 200,
         },
-    },
-    {
-        field: "price",
-        headerName: "Precio",
-        width: 130,
-        type: "number",
-        renderCell: (params: GridRenderCellParams<Presentation, number>) => (
-            <Typography variant="body2" fontWeight={500}>
-                {formatPrice(params.value ?? 0)}
-            </Typography>
-        ),
-    },
+        (value) => (value as string) ?? "—"
+    ),
+    chipColumn<Presentation>(
+        {
+            field: "stock",
+            headerName: "Stock",
+            width: 200,
+            minWidth: 200,
+            maxWidth: 200,
+            type: "number",
+        },
+        (value) => String(value ?? 0),
+        (value, row) => ((value as number) <= (row.min_stock ?? 0) ? "error" : "success"),
+        "filled"
+    ),
+    chipColumn<Presentation>(
+        {
+            field: "status",
+            headerName: "Estado",
+            width: 250,
+            minWidth: 250,
+            maxWidth: 250,
+        },
+        (value) => STATUS_CONFIG[(value as PresentationStatus) ?? "unavailable"].label,
+        (value) => STATUS_CONFIG[(value as PresentationStatus) ?? "unavailable"].color,
+        "filled"
+    ),
+    priceColumn<Presentation>(
+        {
+            field: "price",
+            headerName: "Precio",
+            width: 230,
+            minWidth: 230,
+            maxWidth: 230,
+        },
+        formatPrice
+    ),
     {
         field: "actions",
         headerName: "Acciones",
-        width: 130,
+        width: 230,
+        minWidth: 230,
+        maxWidth: 230,
         sortable: false,
         filterable: false,
         align: "center",
         headerAlign: "center",
-        renderCell: (params: GridRenderCellParams<Presentation>) => (
-            <RowActionsCell
-                onView={() =>
-                    navigate(
-                        `/products/${productId}/presentations/${params.row._id}`
-                    )
-                }
-                onEdit={() =>
-                    navigate(
-                        `/products/${productId}/presentations/${params.row._id}/edit`
-                    )
-                }
-                onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
-            />
+        renderCell: (params) => (
+            <CellCenter>
+                <RowActionsCell
+                    onView={() =>
+                        navigate(`/products/${productId}/presentations/${params.row._id}`)
+                    }
+                    onEdit={() =>
+                        navigate(`/products/${productId}/presentations/${params.row._id}/edit`)
+                    }
+                    onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
+                />
+            </CellCenter>
         ),
     },
 ];
