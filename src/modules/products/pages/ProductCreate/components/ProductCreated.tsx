@@ -7,8 +7,6 @@ import type { ProductCreatedComponentProps } from "@typings/product/productCompo
 const ProductCreated = ({ createdProduct, onCreateAnother }: ProductCreatedComponentProps): React.ReactNode => {
     const navigate = useNavigate();
 
-    // to do hacer un componente generico + light mode
-
     return (
         <SuccessCard
             name={createdProduct.name}

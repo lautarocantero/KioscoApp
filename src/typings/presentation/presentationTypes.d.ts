@@ -39,6 +39,42 @@ export type PresentationPublic = Pick<PresentationEntity,
     'stock'|'price'|'expiration_date'>
 
 // /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📋 FORMULARIOS 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋         ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+interface PresentationBaseFormValues {
+    brand: string;
+    description: string;
+    expiration_date: string;
+    image_url: string;
+    min_stock: number;
+    model_size: string;
+    model_type: string;
+    name: string;
+    price: number;
+    product_id: string;
+    sku: string;
+    stock: number;
+}
+
+// Formulario de CREACIÓN — idéntico a la base por ahora (sin campos extra de variante/stock)
+export type PresentationFormValues = PresentationBaseFormValues;
+
+// Formulario de EDICIÓN — solo los campos editables base
+export type PresentationEditFormValues = PresentationBaseFormValues;
+
+// Cuerpo enviado al POST /product/create-product
+export type CreatePresentationBody = PresentationBaseFormValues & {
+    created_at:   string;
+    updated_at:   string;
+};
+
+// Cuerpo enviado al PATCH /product/:id
+export type UpdatePresentationBody = PresentationBaseFormValues & {
+    updated_at: string;
+};
+
+// /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 

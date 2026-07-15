@@ -186,7 +186,7 @@ export const editPresentationRequest = async (
     variant: Partial<Presentation> & Pick<Presentation, "_id">
 ): Promise<{ _id: string; message: string }> => {
     const response = await baseUrl.put<{ _id: string; message: string }>(
-        "/edit-presentation/:variant_id",
+        `/edit-presentation/${variant._id}`,
         variant
     );
     return response.data;

@@ -5,8 +5,6 @@ import type { VariantCreatedComponentProps } from "@typings/presentation/present
 const PresentationCreated = ({ createdVariant, onCreateAnother }: VariantCreatedComponentProps): React.ReactNode => {
     const navigate = useNavigate();
 
-    // to do hacer un componente generico + light mode
-
     return (
         <SuccessCard
             name={createdVariant.name}
@@ -28,7 +26,6 @@ const PresentationCreated = ({ createdVariant, onCreateAnother }: VariantCreated
                     variant: "outlined",
                     onClick: () => navigate("/products"),
                 },
-                // to do, poner opcion para volver al listado de presentaciones
             ]}
         />
     );
