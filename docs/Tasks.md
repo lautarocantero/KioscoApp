@@ -1,5 +1,8 @@
 ## 🗂️ To-Do / Roadmap
 
+---
+general: 
+- [ ] Agregar componente para las situaciones donde algo no carga, llega sin datos, early return. 
 - [ ] Refactorizar todo. 
 - [ ] Agregar disenos sx 
 - [ ] Leer la documentacion y dejarla presentable
@@ -10,17 +13,13 @@ sidebar:
 - [ ] no funciona correctamente en sx.
 ---
 Productos:
-- [ ] Hacer componente generico productCreate/edited  y ponerle light mode
 - [ ] Agregar disenos sx a analytics
 - [ ] hacer que la card de stock funcione, implementar cambios en backend. (pausado por ahora)
 - [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc. (pausado por ahora)
 
 ---
 Presentaciones:
-- [ ] Hacer componente generico presentationCreate/edited y ponerle light mode
 - [ ] Presentation created devuelve mal a el listado.
-- [ ] detail no deja claro de quien es hija la presentacion.
-- [ ] Terminar la demo de analytics en presentatino detail.
 ---
 ventas:
 - [ ] quitar desplazamiento de iconos del searchbar.
