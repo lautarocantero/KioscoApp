@@ -2,9 +2,6 @@ import { Grid } from "@mui/material";
 import type { PresentationFormProps } from "@typings/presentation/presentationComponentTypes";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { usePresentationData } from "../../../../hooks/presentations/usePresentationData";
 import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentations/usePresentationForm";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
@@ -21,12 +18,15 @@ import {
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep";
 import PresentationFormThirdStep from "./PresentationFormThirdStep";
+import PresentationDetailFormComponent from "./PresentationDetailForm";
 
 const STEP_COMPONENTS = [
     PresentationFormFirstStep,
     PresentationFormSecondStep,
     PresentationFormThirdStep,
 ];
+
+const DETAIL_COMPONENTS = [PresentationDetailFormComponent];
 
 
 // ── Modo CREAR ────────────────────────────────────────────────────────────────
@@ -144,54 +144,41 @@ const PresentationEditForm = (): React.ReactNode => {
 
 // ── Modo DETALLE ─────────────────────────────────────────────────────────────
 const PresentationDetailForm = (): React.ReactNode => {
-    const { presentation_id: presentationId } = useParams<{ presentation_id: string }>();
     const {
-        presentationData: viewingEntity,
-        isLoading: isLoadingEntity,
-        error: loadError,
-    } = usePresentationData(presentationId);
+        editingVariant: variant,
+        isLoadingEntity,
+        submitError,
+    } = usePresentationEdit();
 
-    const [currentStep, setCurrentStep] = useState(0);
-    const totalSteps = STEP_COMPONENTS.length;
-
-    const handleNextStep = async () => {
-        setCurrentStep((step) => Math.min(step + 1, totalSteps - 1));
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    const handlePrevStep = () => {
-        setCurrentStep((step) => Math.max(step - 1, 0));
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
+    if (isLoadingEntity) return <LoadingSpinnerComponent />;
+    if (!variant) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar la presentación" />;
 
     return (
         <Formik
-            initialValues={getPresentationEditInitialValues(viewingEntity)}
+            initialValues={getPresentationEditInitialValues(variant)}
             onSubmit={() => {}}
             enableReinitialize
         >
             {() => (
                 <FormNavigationContext.Provider
                     value={{
-                        currentStep,
-                        totalSteps,
-                        onNext:       handleNextStep,
-                        onPrev:       handlePrevStep,
+                        currentStep:  0,
+                        totalSteps:   1,
+                        onNext:       async () => {},
+                        onPrev:       () => {},
                         onSubmit:     () => {},
                         isSubmitting: false,
                         validateForm: async () => ({}),
-                        submitError:  loadError,
+                        submitError:  submitError,
                         stepErrors:   [],
                         actionTitle:  FormModeComplexEnum.Detail,
                     }}
                 >
                     <Grid container sx={{ width: "100%" }}>
-                        {!isLoadingEntity && (
-                            <ActualStepComponent
-                                currentStep={currentStep}
-                                stepComponents={STEP_COMPONENTS}
-                            />
-                        )}
+                        <ActualStepComponent
+                            currentStep={0}
+                            stepComponents={DETAIL_COMPONENTS}
+                        />
                     </Grid>
                 </FormNavigationContext.Provider>
             )}

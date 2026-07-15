@@ -4,6 +4,7 @@ import AppLayout from "../../../shared/layout/AppLayout";
 import CardCarousel from "../../../shared/components/Cards/CardCarousel";
 import ProductForm from "../../components/ProductForm/ProductForm";
 import ProductAnalyticsSection from "./components/ProductAnalyticsSection";
+import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 const ProductDetailPage = (): React.ReactNode => {
     const { productId } = useParams<{ productId: string }>();
@@ -18,8 +19,15 @@ const ProductDetailPage = (): React.ReactNode => {
                         index < total - 1 ? "Desliza hacia la derecha para ver las estadísticas de venta" : undefined
                     }
                     items={[
-                        { id: "detail", content: <ProductForm mode="detail" />, width: 820 },
-                        { id: "analytics", content: <ProductAnalyticsSection productId={productId} />, width: 960 },
+                        { id: "detail", content: <ProductForm mode={FormModeComplexEnum.Detail} />, width: 820 },
+                        { 
+                            id: "analytics",
+                            content: (
+                            <ProductAnalyticsSection 
+                                productId={productId} 
+                            />)
+                            , width: 960 
+                        },
                     ]}
                 />
             </Box>

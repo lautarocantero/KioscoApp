@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/presentation/presentationSlice";
 import { fetchPresentationById } from "../../store/presentation/presentationThunks";
-import type { UsePresentationDataResult } from "@typings/presentation/presentationTypes";
+import type { UsePresentationDataResult, UsePresentationDetailStatusReturn } from "@typings/presentation/presentationTypes";
+import type { getPresentationEditInitialValues } from "../../modules/presentations/schema/PresentationFormSchema";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -36,4 +37,26 @@ export const usePresentationData = (
     }, [presentationId, storeHasIt, dispatch]);
 
     return { presentationData, isLoading, error };
+};
+
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 usePresentationDetailStatus                                        ║
+║                                                                       ║
+║ NO consume el store/slice: recibe los `values` ya presentes en el    ║
+║ Formik del form de detalle (props) y deriva los badges de estado.    ║
+║ Se agrupa acá porque también es una forma de "obtener información"   ║
+║ de una presentación, aunque no dependa de Redux.                     ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+
+export const usePresentationDetailStatus = (
+    values: ReturnType<typeof getPresentationEditInitialValues>
+): UsePresentationDetailStatusReturn => {
+    const hasSufficientStock = Number(values.stock) > Number(values.min_stock);
+
+    const isNotExpired = values.expiration_date
+        ? new Date(values.expiration_date) > new Date()
+        : true;
+
+    return { hasSufficientStock, isNotExpired };
 };

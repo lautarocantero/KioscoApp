@@ -18,12 +18,31 @@ export interface SectionHeaderProps {
     color: string;
 }
 
-interface DetailFieldProps {
+export interface DetailFieldProps {
     icon: ReactNode;
     iconColor: string;
     label: string;
     value: ReactNode;
     badge?: { label: string; color: BadgeColorEnum };
+}
+
+export interface GroupBasicInfoProps {
+    sku: string;
+    modelType: string;
+    modelSize: string;
+    imageUrl?: string;
+}
+
+export interface GroupCommercialInfoProps {
+    price: number | string;
+    expirationDate?: string | Date | null;
+    isNotExpired: boolean;
+}
+
+export interface GroupStockProps {
+    minStock: number | string;
+    stock: number | string;
+    hasSufficientStock: boolean;
 }
 
 

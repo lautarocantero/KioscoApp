@@ -1,14 +1,16 @@
-import React from "react";
-import { Alert, Box } from "@mui/material";
+import { Box } from "@mui/material";
+import { useParams } from "react-router-dom";
 import AppLayout from "../../../shared/layout/AppLayout";
 import CardCarousel from "../../../shared/components/Cards/CardCarousel";
-import PresentationDetailFormComponent from "./components/PresentationDetailForm";
-import { usePresentationAnalytics } from "../../../../hooks/presentations/usePresentationAnalytics";
-import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
-import PresentationAnalytics from "./components/PresentationAnalitycs";
+import ProductAnalyticsSection from "../../../products/pages/ProductDetail/components/ProductAnalyticsSection";
+import PresentationForm from "modules/presentations/components/PresentationForm/PresentationForm";
+import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 const PresentationDetailPage = (): React.ReactNode => {
-    const { analyticsData, isLoading, error } = usePresentationAnalytics();
+    const { product_id, presentation_id } = useParams<{
+        product_id: string;
+        presentation_id: string;
+    }>();
 
     return (
         <AppLayout fullWidth noCenter>
@@ -17,18 +19,17 @@ const PresentationDetailPage = (): React.ReactNode => {
                     gap={24}
                     maxViewportWidth={1500}
                     hintText={(index, total) =>
-                        index < total - 1 ? "Desliza hacia la derecha para ver el análisis completo" : undefined
+                        index < total - 1 ? "Desliza hacia la derecha para ver las estadísticas de venta" : undefined
                     }
                     items={[
-                        { id: "detail", content: <PresentationDetailFormComponent />, width: 820 },
+                        { id: "detail", content: <PresentationForm mode={FormModeComplexEnum.Detail} />, width: 820 },
                         {
                             id: "analytics",
                             content: (
-                                <Box sx={{ p: 1 }}>
-                                    {isLoading && <LoadingSpinnerComponent />}
-                                    {error && <Alert severity="error">{error}</Alert>}
-                                    {analyticsData && <PresentationAnalytics data={analyticsData} />}
-                                </Box>
+                                <ProductAnalyticsSection
+                                    productId={product_id}
+                                    initialPresentationId={presentation_id}
+                                />
                             ),
                             width: 960,
                         },

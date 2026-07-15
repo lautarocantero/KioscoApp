@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Alert, Box } from "@mui/material";
 import { useProductPresentations } from "../../../../../hooks/products/useProductPresentations";
 import { usePresentationAnalytics } from "../../../../../hooks/presentations/usePresentationAnalytics";
@@ -5,7 +6,10 @@ import LoadingSpinnerComponent from "../../../../shared/components/LoadingSpinne
 import type { ProductAnalyticsSectionProps } from "@typings/product/productComponentTypes";
 import PresentationAnalytics from "../../../../../modules/shared/components/PresentationAnalitycs/PresentationAnalitycs";
 
-const ProductAnalyticsSection = ({ productId }: ProductAnalyticsSectionProps): React.ReactNode => {
+const ProductAnalyticsSection = ({
+    productId,
+    initialPresentationId,
+}: ProductAnalyticsSectionProps): React.ReactNode => {
     const {
         presentations,
         isLoading: isLoadingPresentations,
@@ -14,8 +18,19 @@ const ProductAnalyticsSection = ({ productId }: ProductAnalyticsSectionProps): R
         setSelectedPresentationId,
     } = useProductPresentations(productId);
 
-    // ⚠️ Asume que `presentations` trae un campo `_id` que matchea `selectedPresentationId`.
-    // Si en realidad viene `sku` (PresentationSummary), cambiar esta comparación.
+    // Si entramos desde el detalle de una presentación puntual, la preseleccionamos
+    // apenas tengamos la lista de presentaciones del producto cargada.
+    useEffect(() => {
+        if (
+            initialPresentationId &&
+            presentations.length > 0 &&
+            selectedPresentationId !== initialPresentationId
+        ) {
+            setSelectedPresentationId(initialPresentationId);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialPresentationId, presentations]);
+
     const selectedPresentation = presentations.find((p) => p._id === selectedPresentationId);
 
     const {
@@ -30,7 +45,6 @@ const ProductAnalyticsSection = ({ productId }: ProductAnalyticsSectionProps): R
     });
 
     if (isLoadingPresentations) return <LoadingSpinnerComponent />;
-
     if (presentationsError) return <Alert severity="error">{presentationsError}</Alert>;
 
     if (presentations.length === 0) {

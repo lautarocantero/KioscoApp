@@ -152,6 +152,10 @@ export interface UsePresentationEditFormReturn
     handleEdit: (values: PresentationFormValues) => Promise<void>;
 }
 
+export interface UsePresentationDetailStatusReturn {
+    hasSufficientStock: boolean;
+    isNotExpired: boolean;
+}
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🗂️ COLUMNAS  🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️           ║

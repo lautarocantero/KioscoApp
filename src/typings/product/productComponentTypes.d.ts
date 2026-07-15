@@ -92,6 +92,7 @@ export interface PresentationSelectorProps {
 
 export interface ProductAnalyticsSectionProps {
     productId: string | undefined;
+    initialPresentationId?: string;
 }
 
 export interface PresentationAnalyticsProps {
@@ -103,7 +104,3 @@ export interface PresentationAnalyticsProps {
     onApplyFilters?: (filters: AnalyticsFiltersInterface) => void;
 }
 
-
-// /*══════════════════════════════════════════════════════════════════════╗
-// ║ 🗑️ PRODUCTO — Eliminación  🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️       ║
-// ╚══════════════════════════════════════════════════════════════════════╝*/
