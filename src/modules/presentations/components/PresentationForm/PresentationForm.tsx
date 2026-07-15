@@ -195,8 +195,8 @@ const PresentationDetailForm = (): React.ReactNode => {
 
 // ── Export público ────────────────────────────────────────────────────────────
 const PresentationForm = ({ mode = FormModeComplexEnum.Create }: PresentationFormProps): React.ReactNode => {
-    if (mode === "edit")   return <PresentationEditForm />;
-    if (mode === "detail") return <PresentationDetailForm />;
+    if (mode === FormModeComplexEnum.Edit)   return <PresentationEditForm />;
+    if (mode === FormModeComplexEnum.Detail) return <PresentationDetailForm />;
     return <PresentationCreateForm />;
 };
 
