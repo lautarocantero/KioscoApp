@@ -4,7 +4,7 @@ import { useProductPresentations } from "../../../../hooks/products/useProductPr
 import { usePresentationAnalytics } from "../../../../hooks/presentations/usePresentationAnalytics";
 import LoadingSpinnerComponent from "../LoadingSpinner";
 import type { ProductAnalyticsSectionProps } from "@typings/product/productComponentTypes";
-import PresentationAnalytics from "../PresentationAnalitycs/PresentationAnalitycs";
+import PresentationAnalytics from "./PresentationAnalitycs";
 
 const ProductAnalyticsSection = ({
     productId,

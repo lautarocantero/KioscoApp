@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 import AppLayout from "../../../shared/layout/AppLayout";
 import CardCarousel from "../../../shared/components/Cards/CardCarousel";
-import ProductAnalyticsSection from "../../../shared/components/Analytics/ProductAnalyticsSection";
+import PresentationAnalyticsSection from "../../../shared/components/PresentationAnalitycs/PresentationAnalyticsSection";
 import PresentationForm from "modules/presentations/components/PresentationForm/PresentationForm";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
@@ -26,7 +26,7 @@ const PresentationDetailPage = (): React.ReactNode => {
                         {
                             id: "analytics",
                             content: (
-                                <ProductAnalyticsSection
+                                <PresentationAnalyticsSection
                                     productId={product_id}
                                     initialPresentationId={presentation_id}
                                 />
