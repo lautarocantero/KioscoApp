@@ -128,7 +128,7 @@ export interface UsePresentationFormReturn
     productData:         Product | null;
     loadingProduct:      boolean;
     productError:        string | null;
-    createdVariant:      CreatedVariantInterface | null;
+    createdVariant:      CreatedPresentationInterface | null;
     handleNextStep: (
         validateForm: () => Promise<FormikErrors<PresentationFormValues>>,
         onValidSubmit?: () => void,
@@ -167,10 +167,10 @@ export type BuildColumnsArgs = {
 // ║ 🛞 Utilidades  🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞                 
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type CreatedVariantInterface = Pick<CreatedProductInterface, '_id' | 'name'>;
+export type CreatedPresentationInterface = Pick<CreatedProductInterface, '_id' | 'name'>;
 
-export interface VariantCreatedComponentProps {
-    createdVariant: CreatedVariantInterface;
+export interface PresentationCreatedComponentProps {
+    createdVariant: CreatedPresentationInterface;
     onCreateAnother: () => void;
 }
 

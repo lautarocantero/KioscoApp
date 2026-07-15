@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { FormikErrors } from "formik";
 import type {
-    CreatedVariantInterface,
+    CreatedPresentationInterface,
     UpdatedPresentationInterface,
     PresentationFormValues,
     PresentationEditFormValues,
@@ -30,7 +30,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
     const { productData, isLoading: loadingProduct, error: productError } = useProductData(productId);
     const dispatch = useDispatch<AppDispatch>();
 
-    const [createdVariant, setCreatedVariant] = useState<CreatedVariantInterface | null>(null);
+    const [createdVariant, setCreatedVariant] = useState<CreatedPresentationInterface | null>(null);
     const [isSubmitting, setIsSubmitting]     = useState(false);
     const [submitError, setSubmitError]       = useState<string | null>(null);
     const [stepErrors, setStepErrors]         = useState<string[]>([]);
