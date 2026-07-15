@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 import AppLayout from "../../../shared/layout/AppLayout";
 import CardCarousel from "../../../shared/components/Cards/CardCarousel";
-import ProductAnalyticsSection from "../../../products/pages/ProductDetail/components/ProductAnalyticsSection";
+import ProductAnalyticsSection from "../../../shared/components/Analytics/ProductAnalyticsSection";
 import PresentationForm from "modules/presentations/components/PresentationForm/PresentationForm";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 

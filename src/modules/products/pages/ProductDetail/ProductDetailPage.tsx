@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import AppLayout from "../../../shared/layout/AppLayout";
 import CardCarousel from "../../../shared/components/Cards/CardCarousel";
 import ProductForm from "../../components/ProductForm/ProductForm";
-import ProductAnalyticsSection from "./components/ProductAnalyticsSection";
+import ProductAnalyticsSection from "../../../shared/components/Analytics/ProductAnalyticsSection";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 const ProductDetailPage = (): React.ReactNode => {
