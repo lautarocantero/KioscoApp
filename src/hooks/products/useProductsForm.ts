@@ -25,7 +25,7 @@ import { stepsConfig, editStepsConfig } from "../../config/constants";
 export function useProductCreate(): UseProductsFormReturn {
     const dispatch = useDispatch<AppDispatch>();
 
-    const [createdEntity, setCreatedEntity] = useState<CreatedProductInterface | null>(null);
+    const [createdProduct, setCreatedProduct] = useState<CreatedProductInterface | null>(null);
     const [isSubmitting, setIsSubmitting]   = useState(false);
     const [submitError, setSubmitError]     = useState<string | null>(null);
     const [stepErrors, setStepErrors]       = useState<string[]>([]);
@@ -88,7 +88,7 @@ export function useProductCreate(): UseProductsFormReturn {
                 throw new Error("Error al crear el producto");
             }
 
-            setCreatedEntity({ _id: created._id, name: created.name });
+            setCreatedProduct({ _id: created._id, name: created.name });
         } catch (error) {
             const message = await parseError(error, "Error inesperado al crear el producto");
             setSubmitError(message);
@@ -97,12 +97,17 @@ export function useProductCreate(): UseProductsFormReturn {
         }
     };
 
+    const handleCreateAnother = () => {
+        setCreatedProduct(null);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     return {
-        createdEntity,
+        createdProduct,
         isSubmitting,
         submitError,
         stepErrors,
-        setCreatedEntity,
+        setCreatedProduct,
         setIsSubmitting,
         setSubmitError,
         currentStep: stepState.currentStep,
@@ -110,6 +115,7 @@ export function useProductCreate(): UseProductsFormReturn {
         handleNextStep,
         handlePrevStep,
         handleSubmit,
+        handleCreateAnother
     };
 }
 
@@ -122,12 +128,12 @@ export function useProductEdit(): UseProductsEditFormReturn {
     const dispatch = useDispatch<AppDispatch>();
 
     const {
-        productData: editingEntity,
-        isLoading: isLoadingEntity,
+        productData: editingProduct,
+        isLoading: isLoadingProduct,
         error: loadError,
     } = useProductData(productId);
 
-    const [updatedEntity, setUpdatedEntity]     = useState<UpdatedProductInterface | null>(null);
+    const [updatedProduct, setUpdatedProduct]     = useState<UpdatedProductInterface | null>(null);
     const [isSubmitting, setIsSubmitting]       = useState(false);
     const [submitError, setSubmitError]         = useState<string | null>(loadError);
     const [stepErrors, setStepErrors]           = useState<string[]>([]);
@@ -190,7 +196,7 @@ export function useProductEdit(): UseProductsEditFormReturn {
                 throw new Error("Error al actualizar el producto");
             }
 
-            setUpdatedEntity({ _id: updated._id, name: updated.name });
+            setUpdatedProduct({ _id: updated._id, name: updated.name });
         } catch (error) {
             const message = await parseError(error, "Error inesperado al actualizar el producto");
             setSubmitError(message);
@@ -200,14 +206,14 @@ export function useProductEdit(): UseProductsEditFormReturn {
     };
 
     return {
-        editingEntity,
-        updatedEntity,
-        isLoadingEntity,
+        editingProduct,
+        updatedProduct,
+        isLoadingProduct,
         isSubmitting,
         submitError,
         stepErrors,
-        setEditingEntity: () => {  },
-        setUpdatedEntity,
+        setEditingProduct: () => {  },
+        setUpdatedProduct,
         setIsSubmitting,
         setSubmitError,
         currentStep: stepState.currentStep,

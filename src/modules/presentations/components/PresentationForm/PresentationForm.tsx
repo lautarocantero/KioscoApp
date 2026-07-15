@@ -31,11 +31,7 @@ const STEP_COMPONENTS = [
 
 // ── Modo CREAR ────────────────────────────────────────────────────────────────
 const PresentationCreateForm = (): React.ReactNode => {
-    const form = usePresentationCreate();
     const {
-        loadingProduct, 
-        productData, 
-        productError, 
         createdVariant, 
         handleCreateAnother, 
         handleSubmit, 
@@ -46,10 +42,8 @@ const PresentationCreateForm = (): React.ReactNode => {
         isSubmitting,
         submitError,
         stepErrors,
-    } = form;
+    } = usePresentationCreate();
 
-    if (loadingProduct) return <LoadingSpinnerComponent />;
-    if (!productData)   return <NotEntityLoaded error={productError} />;
     if (createdVariant) return (
         <PresentationCreated
             createdVariant={createdVariant}
@@ -94,17 +88,29 @@ const PresentationCreateForm = (): React.ReactNode => {
 
 // ── Modo EDITAR ───────────────────────────────────────────────────────────────
 const PresentationEditForm = (): React.ReactNode => {
-    const form = usePresentationEdit();
+    const {
+        isLoadingEntity,
+        editingVariant,
+        updatedVariant,
+        submitError,
+        stepErrors,
+        currentStep,
+        totalSteps,
+        handleNextStep,
+        handlePrevStep,
+        handleEdit,
+        isSubmitting,
+    } = usePresentationEdit();
 
-    if (form.isLoadingEntity) return <LoadingSpinnerComponent />;
-    if (!form.editingVariant) return <NotEntityLoaded error={form.submitError} fallbackText="No se pudo cargar la presentación" />;
-    if (form.updatedVariant)  return <PresentationUpdated updatedVariant={form.updatedVariant} />;
+    if (isLoadingEntity) return <LoadingSpinnerComponent />;
+    if (!editingVariant) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar la presentación" />;
+    if (updatedVariant)  return <PresentationUpdated updatedVariant={updatedVariant} />;
 
     return (
         <Formik
-            initialValues={getPresentationEditInitialValues(form.editingVariant)}
+            initialValues={getPresentationEditInitialValues(editingVariant)}
             validationSchema={presentationEditFormSchema}
-            onSubmit={form.handleEdit}
+            onSubmit={handleEdit}
             validateOnBlur={false}
             validateOnChange={false}
             enableReinitialize
@@ -112,21 +118,21 @@ const PresentationEditForm = (): React.ReactNode => {
             {({ handleSubmit: formikSubmit, validateForm }) => (
                 <FormNavigationContext.Provider
                     value={{
-                        currentStep:  form.currentStep,
-                        totalSteps:   form.totalSteps,
-                        onNext:       form.handleNextStep,
-                        onPrev:       form.handlePrevStep,
+                        currentStep,
+                        totalSteps,
+                        onNext:       handleNextStep,
+                        onPrev:       handlePrevStep,
                         onSubmit:     formikSubmit,
-                        isSubmitting: form.isSubmitting,
+                        isSubmitting,
                         validateForm,
-                        submitError:  form.submitError,
-                        stepErrors:   form.stepErrors,
+                        submitError,
+                        stepErrors,
                         actionTitle:  FormModeComplexEnum.Edit,
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
                         <ActualStepComponent
-                            currentStep={form.currentStep}
+                            currentStep={currentStep}
                             stepComponents={STEP_COMPONENTS}
                         />
                     </Grid>

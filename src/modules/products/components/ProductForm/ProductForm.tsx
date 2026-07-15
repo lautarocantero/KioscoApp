@@ -16,14 +16,15 @@ import {
     productFormSchema,
 } from "../../schema/ProductFormSchema";
 import ProductFormFirstStep from "./ProductFormFirstStep";
+import LoadingSpinnerComponent from "modules/shared/components/LoadingSpinner";
+import NotEntityLoaded from "modules/shared/components/NotEntityLoaded";
 
 const STEP_COMPONENTS = [ProductFormFirstStep];
 
 // ── Modo CREAR ────────────────────────────────────────────────────────────────
 const ProductCreateForm = (): React.ReactNode => {
-    const form = useProductCreate();
     const {
-        createdEntity, 
+        createdProduct, 
         handleSubmit, 
         currentStep,
         totalSteps,
@@ -32,10 +33,16 @@ const ProductCreateForm = (): React.ReactNode => {
         isSubmitting,
         submitError,
         stepErrors,
-    } = form;
+        handleCreateAnother,
+    } = useProductCreate();
 
-    if (createdEntity)
-        return <ProductCreated createdProduct={createdEntity} />;
+    if (createdProduct) return (
+        <ProductCreated 
+            createdProduct={createdProduct} 
+            onCreateAnother={handleCreateAnother}
+        />
+    );
+        
 
     return (
         <Formik
@@ -74,16 +81,29 @@ const ProductCreateForm = (): React.ReactNode => {
 
 // ── Modo EDITAR ───────────────────────────────────────────────────────────────
 const ProductEditForm = (): React.ReactNode => {
-    const form = useProductEdit();
+    const {
+        updatedProduct,
+        editingProduct,
+        handleEdit,
+        currentStep,
+        totalSteps,
+        handleNextStep,
+        handlePrevStep,
+        isSubmitting,
+        submitError,
+        stepErrors,
+        isLoadingProduct,
+    } = useProductEdit();
 
-    if (form.updatedEntity)
-        return <ProductEdited updatedProduct={form.updatedEntity} />;
+    if (isLoadingProduct) return <LoadingSpinnerComponent />;
+    if (!editingProduct) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar el producto" />;
+    if (updatedProduct) return <ProductEdited updatedProduct={updatedProduct} />;
 
     return (
         <Formik
-            initialValues={getProductEditInitialValues(form.editingEntity)}
+            initialValues={getProductEditInitialValues(editingProduct)}
             validationSchema={productEditFormSchema}
-            onSubmit={form.handleEdit}
+            onSubmit={handleEdit}
             validateOnBlur={false}
             validateOnChange={false}
             enableReinitialize
@@ -91,25 +111,23 @@ const ProductEditForm = (): React.ReactNode => {
             {({ handleSubmit: formikSubmit, validateForm }) => (
                 <FormNavigationContext.Provider
                     value={{
-                        currentStep:  form.currentStep,
-                        totalSteps:   form.totalSteps,
-                        onNext:       form.handleNextStep,
-                        onPrev:       form.handlePrevStep,
+                        currentStep,
+                        totalSteps,
+                        onNext:       handleNextStep,
+                        onPrev:       handlePrevStep,
                         onSubmit:     formikSubmit,
-                        isSubmitting: form.isSubmitting,
+                        isSubmitting,
                         validateForm,
-                        submitError:  form.submitError,
-                        stepErrors:   form.stepErrors,
+                        submitError,
+                        stepErrors,
                         actionTitle:  FormModeComplexEnum.Edit,
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
-                        {!form.isLoadingEntity && (
-                            <ActualStepComponent
-                                currentStep={form.currentStep}
-                                stepComponents={STEP_COMPONENTS}
-                            />
-                        )}
+                        <ActualStepComponent
+                            currentStep={currentStep}
+                            stepComponents={STEP_COMPONENTS}
+                        />
                     </Grid>
                 </FormNavigationContext.Provider>
             )}
@@ -163,8 +181,8 @@ const ProductDetailForm = (): React.ReactNode => {
 
 // ── Export público ────────────────────────────────────────────────────────────
 const ProductForm = ({ mode = FormModeComplexEnum.Create }: ProductFormProps): React.ReactNode => {
-    if (mode === "edit") return <ProductEditForm />;
-    if (mode === "detail") return <ProductDetailForm />;
+    if (mode === FormModeComplexEnum.Edit) return <ProductEditForm />;
+    if (mode === FormModeComplexEnum.Detail) return <ProductDetailForm />;
     return <ProductCreateForm />;
 };
 

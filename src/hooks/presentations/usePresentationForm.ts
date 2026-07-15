@@ -8,6 +8,8 @@ import { usePresentationData } from "./usePresentationData";
 import type {
     PresentationFormValues,
     CreatedVariantInterface,
+    UsePresentationFormReturn,
+    UsePresentationEditFormReturn,
 } from "@typings/presentation/presentationTypes";
 import type { AppDispatch, RootState } from "../../store/presentation/presentationSlice";
 import { createPresentation, editPresentation } from "../../store/presentation/presentationThunks";
@@ -20,7 +22,7 @@ const buildStepsConfig = () => STEPS_LABELS.map((label) => ({ title: label, cont
 ║ 🪝 usePresentationCreate                       ║
 ╚══════════════════════════════════════════════*/
 
-export function usePresentationCreate() {
+export function usePresentationCreate(): UsePresentationFormReturn {
     const { product_id: productId } = useParams<{ product_id: string }>();
     const { productData, isLoading: loadingProduct, error: productError } = useProductData(productId);
     const dispatch = useDispatch<AppDispatch>();
@@ -116,7 +118,7 @@ export function usePresentationCreate() {
 ║ 🪝 usePresentationEdit                         ║
 ╚══════════════════════════════════════════════*/
 
-export function usePresentationEdit() {
+export function usePresentationEdit(): UsePresentationEditFormReturn {
     const { presentation_id: variantId } = useParams<{ presentation_id: string }>();
     const dispatch = useDispatch<AppDispatch>();
 

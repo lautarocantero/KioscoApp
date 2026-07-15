@@ -96,11 +96,11 @@ export type ProductStateError = Pick<ProductState, "errorMessage">;
 
 // Base reutilizable para hooks de formulario con entidad genérica
 interface UseFormStateBase<TEntity> {
-    createdEntity:    TEntity | null;
+    createdProduct:    TEntity | null;
     isSubmitting:     boolean;
     submitError:      string | null;
     stepErrors:       string[];
-    setCreatedEntity: Dispatch<SetStateAction<TEntity | null>>;
+    setCreatedProduct: Dispatch<SetStateAction<TEntity | null>>;
     setIsSubmitting:  Dispatch<SetStateAction<boolean>>;
     setSubmitError:   Dispatch<SetStateAction<string | null>>;
 }
@@ -132,19 +132,20 @@ export interface UseProductsFormReturn
         onValidSubmit?: () => void,
     ) => Promise<void>;
     handleSubmit: (values: ProductFormValues) => Promise<void>;
+    handleCreateAnother: () => void
 }
 
 // Hook de formulario de EDICIÓN
 // Reutiliza el subconjunto común de UseFormStateBase (submit state) y solo
 // redefine lo que es propio de edición (entidad existente vs. entidad creada).
 export interface UseProductsEditFormReturn
-    extends Omit<UseFormStateBase<UpdatedProductInterface>, "createdEntity" | "setCreatedEntity">,
+    extends Omit<UseFormStateBase<UpdatedProductInterface>, "createdProduct" | "setCreatedProduct">,
             UseFormStepsBase {
-    editingEntity:    ExistingProductInterface | null;
-    updatedEntity:    UpdatedProductInterface | null;
-    isLoadingEntity:  boolean;
-    setEditingEntity: Dispatch<SetStateAction<ExistingProductInterface | null>>;
-    setUpdatedEntity: Dispatch<SetStateAction<UpdatedProductInterface | null>>;
+    editingProduct:    ExistingProductInterface | null;
+    updatedProduct:    UpdatedProductInterface | null;
+    isLoadingProduct:  boolean;
+    setEditingProduct: Dispatch<SetStateAction<ExistingProductInterface | null>>;
+    setUpdatedProduct: Dispatch<SetStateAction<UpdatedProductInterface | null>>;
     handleNextStep: (
         validateForm: () => Promise<FormikErrors<ProductEditFormValues>>,
         onValidSubmit?: () => void,

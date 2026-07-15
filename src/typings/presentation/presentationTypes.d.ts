@@ -70,7 +70,51 @@ export interface UsePresentationsListDataResult {
     setSearchTerm: (term: string) => void;
 }
 
-type CreatePresentationPayload = Omit<PresentationEntity, "_id" | "created_at" | "updated_at">
+// Base reutilizable para hooks de formulario de presentación (submit state)
+interface UsePresentationFormStateBase {
+    isSubmitting: boolean;
+    submitError:  string | null;
+    stepErrors:   string[];
+}
+
+// Base reutilizable para hooks de formulario multi-paso
+interface UsePresentationFormStepsBase {
+    currentStep: number;
+    totalSteps:  number;
+    handlePrevStep: () => void;
+}
+
+// Hook de formulario de CREACIÓN
+export interface UsePresentationFormReturn
+    extends UsePresentationFormStateBase,
+            UsePresentationFormStepsBase {
+    productId:           string | undefined;
+    productData:         Product | null;
+    loadingProduct:      boolean;
+    productError:        string | null;
+    createdVariant:      CreatedVariantInterface | null;
+    handleNextStep: (
+        validateForm: () => Promise<FormikErrors<PresentationFormValues>>,
+        onValidSubmit?: () => void,
+    ) => Promise<void>;
+    handleSubmit:        (values: PresentationFormValues) => Promise<void>;
+    handleCreateAnother: () => void;
+}
+
+// Hook de formulario de EDICIÓN
+export interface UsePresentationEditFormReturn
+    extends UsePresentationFormStateBase,
+            UsePresentationFormStepsBase {
+    variantId:       string | undefined;
+    editingVariant:  Presentation | null;
+    updatedVariant:  UpdatedPresentationInterface | null;
+    isLoadingEntity: boolean;
+    handleNextStep: (
+        validateForm: () => Promise<FormikErrors<PresentationFormValues>>,
+        onValidSubmit?: () => void,
+    ) => Promise<void>;
+    handleEdit: (values: PresentationFormValues) => Promise<void>;
+}
 
 
 // /*══════════════════════════════════════════════════════════════════════╗

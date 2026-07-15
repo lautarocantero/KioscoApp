@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import SuccessCard from "../../../../shared/components/SuccessCard";
 import ProductCreatedTimeline from "./ProductCreatedTimeline";
-import type { ProductCreatedProps } from "@typings/product/productComponentTypes";
+import type { ProductCreatedComponentProps } from "@typings/product/productComponentTypes";
 
 
-const ProductCreated = ({ createdProduct }: ProductCreatedProps): React.ReactNode => {
+const ProductCreated = ({ createdProduct, onCreateAnother }: ProductCreatedComponentProps): React.ReactNode => {
     const navigate = useNavigate();
+
+    // to do hacer un componente generico + light mode
 
     return (
         <SuccessCard
@@ -17,7 +19,7 @@ const ProductCreated = ({ createdProduct }: ProductCreatedProps): React.ReactNod
                 {
                     label:   "Crear presentación",
                     variant: "contained",
-                    onClick: () => navigate(`/products/${createdProduct._id}/presentations/new`),
+                    onClick: onCreateAnother,
                 },
                 {
                     label:   "Volver a productos",

@@ -38,8 +38,9 @@ export interface ProductImagePreviewProps {
 }
 
 // Props del contenedor de éxito post-creación
-export interface ProductCreatedProps {
+export interface ProductCreatedComponentProps {
     createdProduct: CreatedProductInterface;
+    onCreateAnother: () => void;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
