@@ -119,10 +119,12 @@ export type PresentationTicketType = PresentationPublic;
 type IconConfig = FieldWithIconProps["iconConfig"];
 
 export interface PresentationFormFieldsProps {
+    readOnly?: boolean;
     icons?: {
         sku?: IconConfig;
         model_type?: IconConfig;
         model_size?: IconConfig;
+        image_url?: FieldIconConfig;
     };
 }
 

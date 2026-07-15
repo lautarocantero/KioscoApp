@@ -3,8 +3,9 @@ import type { PresentationFormFieldsProps, PresentationFormValues } from "@typin
 import { useFormikContext } from "formik";
 import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
 import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
+import ProductImagePreview from "modules/shared/components/Image/ProductImagePreview";
 
-const PresentationFormFields = ({ icons }: PresentationFormFieldsProps): React.ReactNode => {
+const PresentationFormFields = ({ readOnly = false, icons }: PresentationFormFieldsProps): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();
 
     return (
@@ -52,6 +53,25 @@ const PresentationFormFields = ({ icons }: PresentationFormFieldsProps): React.R
                     />
                 </FieldWithIcon>
             </Grid>
+
+                        <Grid size={12}>
+                <FieldWithIcon iconConfig={icons?.image_url}>
+                    <TextField fullWidth label="URL de imagen" variant="outlined"
+                        disabled={readOnly}
+                        placeholder="/images/productExample/mi-producto.png"
+                        value={values.image_url} onChange={(e) => setFieldValue("image_url", e.target.value)}
+                        error={!!errors.image_url}
+                        helperText={errors.image_url ?? "Opcional — ruta relativa o URL externa"}
+                        sx={sharedSx}
+                    />
+                </FieldWithIcon>
+            </Grid>
+
+            {values.image_url && (
+                <Grid size={12}>
+                    <ProductImagePreview imageUrl={values.image_url} />
+                </Grid>
+            )}
         </Grid>
     );
 };

@@ -5,6 +5,7 @@ import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import QrCode2OutlinedIcon from "@mui/icons-material/QrCode2Outlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
+import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import { useParams } from "react-router-dom";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { useTheme } from "@mui/material";
@@ -36,6 +37,7 @@ const PresentationFormFirstStep = (): React.ReactNode => {
                     sku: { icon: <QrCode2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
                     model_type: { icon: <CategoryOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
                     model_size: { icon: <StraightenOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
+                    image_url: { icon: <LinkOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
                 }}
             />
         </FormCard>
