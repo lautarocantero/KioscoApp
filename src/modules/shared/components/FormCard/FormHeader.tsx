@@ -60,7 +60,7 @@ const FormHeader = ({
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
                         <Box sx={{ position: "relative", width: 36, height: 36 }}>
                             <svg width="36" height="36" viewBox="0 0 36 36" style={{ transform: "rotate(-90deg)" }}>
-                                <circle cx="18" cy="18" r="15" fill="none" stroke={alpha(theme.custom.white, 0.1)} strokeWidth="2" />
+                                <circle cx="18" cy="18" r="15" fill="none" stroke={alpha(theme.custom.darkGray, 0.1)} strokeWidth="2" />
                                 <circle
                                     cx="18" cy="18" r="15"
                                     fill="none"
@@ -79,7 +79,7 @@ const FormHeader = ({
                             </Box>
                         </Box>
                         <Typography sx={(theme: Theme) => ({
-                            fontSize: "0.6rem", color: theme.custom.translucidWhite, mt: "2px",
+                            fontSize: "0.6rem", color: theme.custom.translucidFontColor, mt: "2px",
                         })}>
                             Completado
                         </Typography>
@@ -95,20 +95,20 @@ const FormHeader = ({
                                 width: 28, height: 28, borderRadius: "50%",
                                 display: "flex", alignItems: "center", justifyContent: "center",
                                 flexShrink: 0,
-                                bgcolor: index <= currentStep ? theme.custom.darkSecondary : alpha(theme.custom.white, 0.08),
-                                outline: `1px solid ${index <= currentStep ? theme.palette.primary.main : alpha(theme.custom.white, 0.15)}`,
+                                bgcolor: index <= currentStep ? theme.palette.primary.light : alpha(theme.palette.primary.light, 0.08),
+                                outline: `1px solid ${index <= currentStep ? theme.palette.primary.main : alpha(theme.custom.fontColor, 0.15)}`,
                                 outlineOffset: "2px",
                             })}>
                                 <Typography sx={(theme: Theme) => ({
                                     fontSize: "0.7rem", fontWeight: 700,
-                                    color: index <= currentStep ? theme.custom.white : alpha(theme.custom.white, 0.5),
+                                    color: index <= currentStep ? theme.custom.white : alpha(theme.custom.fontColor, 0.5),
                                 })}>
                                     {index + 1}
                                 </Typography>
                             </Box>
                             <Typography sx={(theme: Theme) => ({
                                 fontSize: "0.72rem", ml: 1, whiteSpace: "nowrap",
-                                color: index === currentStep ? theme.palette.primary.main : alpha(theme.custom.white, 0.45),
+                                color: index === currentStep ? theme.palette.primary.main : alpha(theme.custom.fontColor, 0.45),
                                 fontWeight: index === currentStep ? 500 : 400,
                             })}>
                                 {label}
@@ -116,7 +116,7 @@ const FormHeader = ({
                             {index < stepsLabels.length - 1 && (
                                 <Box sx={(theme: Theme) => ({
                                     flex: 1, height: "1px", mx: 1,
-                                    bgcolor: index < currentStep ? theme.palette.primary.main : alpha(theme.custom.white, 0.12),
+                                    bgcolor: index < currentStep ? theme.palette.primary.main : alpha(theme.custom.fontColor, 0.12),
                                 })} />
                             )}
                         </Box>

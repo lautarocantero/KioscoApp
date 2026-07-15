@@ -7,27 +7,35 @@ import type {
 // ── Initial values ────────────────────────────────────────────────────────────
 
 export const getPresentationFormInitialValues = (): PresentationFormValues => ({
-    sku:             "",
-    model_type:      "",
-    model_size:      "",
+    brand:             "",
+    description:     "",
+    expiration_date: "",
     image_url:       "",
     min_stock:       0,
-    stock:           0,
+    model_size:      "",
+    model_type:      "",
+    name:      "",
     price:           0,
-    expiration_date: "",
+    product_id:           "",
+    sku:             "",
+    stock:           0,
 });
 
 export const getPresentationEditInitialValues = (
     presentation: ExistingPresentationInterface | null
 ): PresentationFormValues => ({
-    sku:             presentation?.sku         ?? "",
-    model_type:      presentation?.model_type         ?? "",
-    model_size:      presentation?.model_size         ?? "",
-    image_url:       presentation?.image_url       ?? "",
-    min_stock:       presentation?.min_stock         ?? 0,
-    stock:           presentation?.stock         ?? 0,
-    price:           presentation?.price         ?? 0,
-    expiration_date: presentation?.expiration_date ?? "",
+    sku:             presentation?.sku             ?? "",
+    name:            presentation?.name             ?? "",
+    brand:           presentation?.brand            ?? "",
+    description:     presentation?.description      ?? "",
+    model_type:      presentation?.model_type       ?? "",
+    model_size:      presentation?.model_size       ?? "",
+    image_url:       presentation?.image_url        ?? "",
+    product_id:      presentation?.product_id       ?? "",
+    min_stock:       presentation?.min_stock        ?? 0,
+    stock:           presentation?.stock             ?? 0,
+    price:           presentation?.price             ?? 0,
+    expiration_date: presentation?.expiration_date  ?? "",
 });
 
 // alias para compatibilidad con PresentationDetailForm
