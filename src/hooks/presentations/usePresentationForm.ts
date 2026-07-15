@@ -30,7 +30,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
     const { productData, isLoading: loadingProduct, error: productError } = useProductData(productId);
     const dispatch = useDispatch<AppDispatch>();
 
-    const [createdVariant, setCreatedVariant] = useState<CreatedPresentationInterface | null>(null);
+    const [createdPresentation, setCreatedPresentation] = useState<CreatedPresentationInterface | null>(null);
     const [isSubmitting, setIsSubmitting]     = useState(false);
     const [submitError, setSubmitError]       = useState<string | null>(null);
     const [stepErrors, setStepErrors]         = useState<string[]>([]);
@@ -102,7 +102,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
                 throw new Error("Error al crear la presentación");
             }
 
-            setCreatedVariant({ _id: created._id, name: `${productData.name} - ${values.model_size}` });
+            setCreatedPresentation({ _id: created._id, name: `${productData.name} - ${values.model_size}` });
         } catch (error) {
             const message = await parseError(error, "Error inesperado al crear la presentación");
             setSubmitError(message);
@@ -112,7 +112,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
     };
 
     const handleCreateAnother = () => {
-        setCreatedVariant(null);
+        setCreatedPresentation(null);
         goToStep(0);
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
@@ -122,7 +122,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
         productData,
         loadingProduct,
         productError,
-        createdVariant,
+        createdPresentation,
         isSubmitting,
         submitError,
         stepErrors,

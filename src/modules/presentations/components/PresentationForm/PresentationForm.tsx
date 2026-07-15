@@ -32,7 +32,7 @@ const STEP_COMPONENTS = [
 // ── Modo CREAR ────────────────────────────────────────────────────────────────
 const PresentationCreateForm = (): React.ReactNode => {
     const {
-        createdVariant, 
+        createdPresentation, 
         handleCreateAnother, 
         handleSubmit, 
         currentStep,
@@ -44,9 +44,9 @@ const PresentationCreateForm = (): React.ReactNode => {
         stepErrors,
     } = usePresentationCreate();
 
-    if (createdVariant) return (
+    if (createdPresentation) return (
         <PresentationCreated
-            createdVariant={createdVariant}
+            createdPresentation={createdPresentation}
             onCreateAnother={handleCreateAnother}
         />
     );

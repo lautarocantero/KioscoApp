@@ -3,12 +3,12 @@ import SuccessCard from "../../../../shared/components/SuccessCard";
 import type { PresentationCreatedComponentProps } from "@typings/presentation/presentationTypes";
 
 
-const PresentationCreated = ({ createdVariant, onCreateAnother }: PresentationCreatedComponentProps): React.ReactNode => {
+const PresentationCreated = ({ createdPresentation, onCreateAnother }: PresentationCreatedComponentProps): React.ReactNode => {
     const navigate = useNavigate();
 
     return (
         <SuccessCard
-            name={createdVariant.name}
+            name={createdPresentation.name}
             title="Presentación creada correctamente"
             subtitle="¿Querés agregar otra presentación para este producto?"
             actions={[
