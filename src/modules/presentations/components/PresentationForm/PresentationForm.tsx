@@ -1,23 +1,26 @@
 import { Grid } from "@mui/material";
+import type { PresentationFormProps } from "@typings/presentation/presentationComponentTypes";
+import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
-import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
-import {
-    getPresentationFormInitialValues,
-    getPresentationEditInitialValues,
-    presentationFormSchema,
-    presentationEditFormSchema,
-} from "../../schema/PresentationFormSchema";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { usePresentationData } from "../../../../hooks/presentations/usePresentationData";
+import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentations/usePresentationForm";
+import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
-import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
+import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
+import PresentationCreated from "../../pages/PresentationCreate/components/PresentationCreated";
+import PresentationUpdated from "../../pages/PresentationEdit/components/PresentationUpdated";
+import {
+    getPresentationEditInitialValues,
+    getPresentationFormInitialValues,
+    presentationEditFormSchema,
+    presentationFormSchema,
+} from "../../schema/PresentationFormSchema";
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep";
 import PresentationFormThirdStep from "./PresentationFormThirdStep";
-import PresentationCreated from "../../pages/PresentationCreate/components/PresentationCreated";
-import PresentationUpdated from "../../pages/PresentationEdit/components/PresentationUpdated";
-import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentations/usePresentationForm";
-import type { PresentationFormProps } from "@typings/presentation/presentationComponentTypes";
-import { FormModeComplexEnum, FormModeSimpleEnum } from "@typings/shared/sharedEnums";
 
 const STEP_COMPONENTS = [
     PresentationFormFirstStep,
@@ -29,13 +32,28 @@ const STEP_COMPONENTS = [
 // ── Modo CREAR ────────────────────────────────────────────────────────────────
 const PresentationCreateForm = (): React.ReactNode => {
     const form = usePresentationCreate();
+    const {
+        loadingProduct, 
+        productData, 
+        productError, 
+        createdVariant, 
+        handleCreateAnother, 
+        handleSubmit, 
+        currentStep,
+        totalSteps,
+        handleNextStep,
+        handlePrevStep,
+        isSubmitting,
+        submitError,
+        stepErrors,
+    } = form;
 
-    if (form.loadingProduct) return <LoadingSpinnerComponent />;
-    if (!form.productData)   return <NotEntityLoaded error={form.productError} />;
-    if (form.createdVariant) return (
+    if (loadingProduct) return <LoadingSpinnerComponent />;
+    if (!productData)   return <NotEntityLoaded error={productError} />;
+    if (createdVariant) return (
         <PresentationCreated
-            createdVariant={form.createdVariant}
-            onCreateAnother={form.handleCreateAnother}
+            createdVariant={createdVariant}
+            onCreateAnother={handleCreateAnother}
         />
     );
 
@@ -43,28 +61,28 @@ const PresentationCreateForm = (): React.ReactNode => {
             <Formik
                 initialValues={getPresentationFormInitialValues()}
                 validationSchema={presentationFormSchema}
-                onSubmit={form.handleSubmit}
+                onSubmit={handleSubmit}
                 validateOnBlur={false}
                 validateOnChange={false}
             >
                 {({ handleSubmit: formikSubmit, validateForm }) => (
                     <FormNavigationContext.Provider
                         value={{
-                            currentStep:  form.currentStep,
-                            totalSteps:   form.totalSteps,
-                            onNext:       form.handleNextStep,
-                            onPrev:       form.handlePrevStep,
+                            currentStep:  currentStep,
+                            totalSteps:   totalSteps,
+                            onNext:       handleNextStep,
+                            onPrev:       handlePrevStep,
                             onSubmit:     formikSubmit,
-                            isSubmitting: form.isSubmitting,
+                            isSubmitting: isSubmitting,
                             validateForm,
-                            submitError:  form.submitError,
-                            stepErrors:   form.stepErrors,
+                            submitError:  submitError,
+                            stepErrors:   stepErrors,
                             actionTitle:  FormModeComplexEnum.Create,
                         }}
                     >
                         <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
                             <ActualStepComponent
-                                currentStep={form.currentStep}
+                                currentStep={currentStep}
                                 stepComponents={STEP_COMPONENTS}
                             />
                         </Grid>
@@ -81,9 +99,6 @@ const PresentationEditForm = (): React.ReactNode => {
     if (form.isLoadingEntity) return <LoadingSpinnerComponent />;
     if (!form.editingVariant) return <NotEntityLoaded error={form.submitError} fallbackText="No se pudo cargar la presentación" />;
     if (form.updatedVariant)  return <PresentationUpdated updatedVariant={form.updatedVariant} />;
-
-    console.log(form.stepErrors)
-    console.log(form.stepErrors)
 
     return (
         <Formik
@@ -121,8 +136,68 @@ const PresentationEditForm = (): React.ReactNode => {
     );
 };
 
+// ── Modo DETALLE ─────────────────────────────────────────────────────────────
+const PresentationDetailForm = (): React.ReactNode => {
+    const { presentation_id: presentationId } = useParams<{ presentation_id: string }>();
+    const {
+        presentationData: viewingEntity,
+        isLoading: isLoadingEntity,
+        error: loadError,
+    } = usePresentationData(presentationId);
+
+    const [currentStep, setCurrentStep] = useState(0);
+    const totalSteps = STEP_COMPONENTS.length;
+
+    const handleNextStep = async () => {
+        setCurrentStep((step) => Math.min(step + 1, totalSteps - 1));
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const handlePrevStep = () => {
+        setCurrentStep((step) => Math.max(step - 1, 0));
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    return (
+        <Formik
+            initialValues={getPresentationEditInitialValues(viewingEntity)}
+            onSubmit={() => {}}
+            enableReinitialize
+        >
+            {() => (
+                <FormNavigationContext.Provider
+                    value={{
+                        currentStep,
+                        totalSteps,
+                        onNext:       handleNextStep,
+                        onPrev:       handlePrevStep,
+                        onSubmit:     () => {},
+                        isSubmitting: false,
+                        validateForm: async () => ({}),
+                        submitError:  loadError,
+                        stepErrors:   [],
+                        actionTitle:  FormModeComplexEnum.Detail,
+                    }}
+                >
+                    <Grid container sx={{ width: "100%" }}>
+                        {!isLoadingEntity && (
+                            <ActualStepComponent
+                                currentStep={currentStep}
+                                stepComponents={STEP_COMPONENTS}
+                            />
+                        )}
+                    </Grid>
+                </FormNavigationContext.Provider>
+            )}
+        </Formik>
+    );
+};
+
 // ── Export público ────────────────────────────────────────────────────────────
-const PresentationForm = ({ mode = FormModeSimpleEnum.Create }: PresentationFormProps): React.ReactNode =>
-    mode === "edit" ? <PresentationEditForm /> : <PresentationCreateForm />;
+const PresentationForm = ({ mode = FormModeComplexEnum.Create }: PresentationFormProps): React.ReactNode => {
+    if (mode === "edit")   return <PresentationEditForm />;
+    if (mode === "detail") return <PresentationDetailForm />;
+    return <PresentationCreateForm />;
+};
 
 export default PresentationForm;

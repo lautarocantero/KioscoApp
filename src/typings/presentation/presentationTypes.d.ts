@@ -29,6 +29,9 @@ interface PresentationEntity {
 // // derivado para no utilizar directamente el PresentationEntity
 export type Presentation = PresentationEntity;
 
+export interface ExistingPresentationInterface extends PresentationEntity {}
+
+
 // // derivado para los datos publicos
 export type PresentationPublic = Pick<PresentationEntity, 
     '_id' |'name'| 'description'|'image_url'|

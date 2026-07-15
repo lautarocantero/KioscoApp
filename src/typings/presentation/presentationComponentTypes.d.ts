@@ -1,4 +1,4 @@
-import type { FormModeSimpleEnum } from "@typings/shared/sharedEnums";
+import type { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { BadgeColorEnum } from "@typings/ui/uiEnums";
 import type React from "react";
@@ -8,7 +8,7 @@ import type React from "react";
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface PresentationFormProps {
-    mode: FormModeSimpleEnum,
+    mode?: FormModeComplexEnum,
 }
 
 export interface SectionHeaderProps {

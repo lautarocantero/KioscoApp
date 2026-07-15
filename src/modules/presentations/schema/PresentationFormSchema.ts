@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import type {
+    ExistingPresentationInterface,
     PresentationFormValues,
 } from "@typings/presentation/presentationTypes";
 
@@ -17,16 +18,16 @@ export const getPresentationFormInitialValues = (): PresentationFormValues => ({
 });
 
 export const getPresentationEditInitialValues = (
-    presentation: PresentationFormValues
+    presentation: ExistingPresentationInterface | null
 ): PresentationFormValues => ({
-    sku:             presentation.sku,
-    model_type:      presentation.model_type,
-    model_size:      presentation.model_size,
-    image_url:       presentation.image_url       ?? "",
-    min_stock:       presentation.min_stock,
-    stock:           presentation.stock,
-    price:           presentation.price,
-    expiration_date: presentation.expiration_date ?? "",
+    sku:             presentation?.sku         ?? "",
+    model_type:      presentation?.model_type         ?? "",
+    model_size:      presentation?.model_size         ?? "",
+    image_url:       presentation?.image_url       ?? "",
+    min_stock:       presentation?.min_stock         ?? 0,
+    stock:           presentation?.stock         ?? 0,
+    price:           presentation?.price         ?? 0,
+    expiration_date: presentation?.expiration_date ?? "",
 });
 
 // alias para compatibilidad con PresentationDetailForm

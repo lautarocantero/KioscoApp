@@ -6,23 +6,22 @@ import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
+import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 const ProductFormFirstStep = (): React.ReactNode => {
     const theme = useTheme();
     const { actionTitle, submitError, stepErrors } = useFormNavigation();
-    const isEdit   = actionTitle === "edit";
-    const isDetail = actionTitle === "detail";
+    const isDetail = actionTitle === FormModeComplexEnum.Detail;
 
-    const title = isDetail ? "Detalle del Producto" : isEdit ? "Editar Producto" : "Crear Producto";
 
     return (
         <FormCard
-            submitText={isEdit ? "Guardar" : "Crear"}
+            submitText={actionTitle === FormModeComplexEnum.Create ? "Crear" : "Actualizar"}
             showButtons={!isDetail}
-            readOnly={isDetail}
-            header={{ title }}
+            header={{ title: actionTitle === FormModeComplexEnum.Create ? "Crear producto" : "Editar producto" }}
             submitError={submitError}
             stepErrors={stepErrors}
+            readOnly={isDetail}
             accordion={
                 isDetail
                     ? undefined
@@ -36,6 +35,7 @@ const ProductFormFirstStep = (): React.ReactNode => {
                           },
                       }
             }
+            backPath={`/products`}
         >
             <ProductFormFields
                 readOnly={isDetail}

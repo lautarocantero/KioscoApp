@@ -12,7 +12,7 @@ import { useTheme } from "@mui/material";
 
 const PresentationFormFirstStep = (): React.ReactNode => {
     const theme = useTheme();
-    const { currentStep, actionTitle } = useFormNavigation(); 
+    const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
     const { product_id } = useParams<{ product_id: string }>();
 
     return (
@@ -20,7 +20,12 @@ const PresentationFormFirstStep = (): React.ReactNode => {
             submitText={actionTitle === FormModeComplexEnum.Create ? "Crear" : "Actualizar"} 
             showButtons 
             header={{ title: actionTitle === FormModeComplexEnum.Create ? "Crear presentación" : "Editar presentación" }}
-            multiStepHeader={{ stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS, currentStep }}
+            submitError={submitError}
+            stepErrors={stepErrors}
+            multiStepHeader={{ 
+                stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS, 
+                currentStep 
+            }}
             accordion={{
                 title: "¿Qué son las presentaciones?",
                 content:

@@ -1,57 +1,68 @@
 import { Box, Grid } from "@mui/material";
-import { useParams } from "react-router-dom";
+import type { ProductFormProps } from "@typings/product/productComponentTypes";
+import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
-import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
-import {
-    getProductFormInitialValues,
-    getProductEditInitialValues,
-    productFormSchema,
-    productEditFormSchema,
-} from "../../schema/ProductFormSchema";
-import ProductFormFirstStep from "./ProductFormFirstStep";
-import { useProductCreate, useProductEdit } from "../../../../hooks/products/useProductsForm";
+import { useParams } from "react-router-dom";
 import { useProductData } from "../../../../hooks/products/useProductData";
+import { useProductCreate, useProductEdit } from "../../../../hooks/products/useProductsForm";
+import ActualStepComponent from "../../../../modules/shared/components/FormCard/ActualStep";
+import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import ProductCreated from "../../pages/ProductCreate/components/ProductCreated";
 import ProductEdited from "../../pages/ProductEdit/components/ProductEdited";
-import type { ProductFormProps } from "@typings/product/productComponentTypes";
-import ActualStepComponent from "../../../../modules/shared/components/FormCard/ActualStep";
-import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import {
+    getProductEditInitialValues,
+    getProductFormInitialValues,
+    productEditFormSchema,
+    productFormSchema,
+} from "../../schema/ProductFormSchema";
+import ProductFormFirstStep from "./ProductFormFirstStep";
 
 const STEP_COMPONENTS = [ProductFormFirstStep];
 
 // ── Modo CREAR ────────────────────────────────────────────────────────────────
 const ProductCreateForm = (): React.ReactNode => {
     const form = useProductCreate();
+    const {
+        createdEntity, 
+        handleSubmit, 
+        currentStep,
+        totalSteps,
+        handleNextStep,
+        handlePrevStep,
+        isSubmitting,
+        submitError,
+        stepErrors,
+    } = form;
 
-    if (form.createdEntity)
-        return <ProductCreated createdProduct={form.createdEntity} />;
+    if (createdEntity)
+        return <ProductCreated createdProduct={createdEntity} />;
 
     return (
         <Formik
             initialValues={getProductFormInitialValues()}
             validationSchema={productFormSchema}
-            onSubmit={form.handleSubmit}
+            onSubmit={handleSubmit}
             validateOnBlur={false}
             validateOnChange={false}
         >
             {({ handleSubmit: formikSubmit, validateForm }) => (
                 <FormNavigationContext.Provider
                     value={{
-                        currentStep:  form.currentStep,
-                        totalSteps:   form.totalSteps,
-                        onNext:       form.handleNextStep,
-                        onPrev:       form.handlePrevStep,
+                        currentStep:  currentStep,
+                        totalSteps:   totalSteps,
+                        onNext:       handleNextStep,
+                        onPrev:       handlePrevStep,
                         onSubmit:     formikSubmit,
-                        isSubmitting: form.isSubmitting,
+                        isSubmitting: isSubmitting,
                         validateForm,
-                        submitError:  form.submitError,
-                        stepErrors:   form.stepErrors,
+                        submitError:  submitError,
+                        stepErrors:   stepErrors,
                         actionTitle:  FormModeComplexEnum.Create,
                     }}
                 >
                     <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
                         <ActualStepComponent
-                            currentStep={form.currentStep}
+                            currentStep={currentStep}
                             stepComponents={STEP_COMPONENTS}
                         />
                     </Grid>
