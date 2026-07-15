@@ -24,6 +24,7 @@ export function usePresentationCreate() {
     const { product_id: productId } = useParams<{ product_id: string }>();
     const { productData, isLoading: loadingProduct, error: productError } = useProductData(productId);
     const dispatch = useDispatch<AppDispatch>();
+    const [stepErrors, setStepErrors]       = useState<string[]>([]);
 
     const isSubmitting = useSelector((state: RootState) => state.presentation.isLoading);
     const submitError = useSelector((state: RootState) => state.presentation.errorMessage);
@@ -37,19 +38,34 @@ export function usePresentationCreate() {
     ) => {
         const errors = await validateForm();
         const currentStepFields = stepFieldsMap[stepState.currentStep];
-        const hasErrors = currentStepFields.some((field) => errors[field as keyof PresentationFormValues]);
-        if (hasErrors) return;
-        if (onValidSubmit) { onValidSubmit(); return; }
+        const currentErrors = currentStepFields
+            .filter((field) => errors[field])
+            .map((field) => errors[field] as string);
+
+        if (currentErrors.length > 0) {
+            setStepErrors(currentErrors);
+            return;
+        }
+
+        setStepErrors([]);
+
+        if (onValidSubmit) { 
+            onValidSubmit(); 
+            return; 
+        }
+
         goToNext();
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     const handlePrevStep = () => {
+        setStepErrors([]);
         goToPrev();
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     const handleSubmit = async (values: PresentationFormValues) => {
+        console.log(values)
         if (!productData) return;
 
         const result = await dispatch(createPresentation({
@@ -65,7 +81,6 @@ export function usePresentationCreate() {
             stock: values.stock,
             price: values.price,
             expiration_date: values.expiration_date,
-            image_file: values.image_file,
         }));
 
         if (result) {
@@ -87,6 +102,7 @@ export function usePresentationCreate() {
         createdVariant,
         isSubmitting,
         submitError,
+        stepErrors,
         currentStep: stepState.currentStep,
         totalSteps,
         handleNextStep,
@@ -123,6 +139,7 @@ export function usePresentationEdit() {
         onValidSubmit?: () => void,
     ) => {
         const errors = await validateForm();
+        console.log("TODOS los errores del form:", errors);
         const currentStepFields = stepFieldsMap[stepState.currentStep];
         const hasErrors = currentStepFields.some((field) => errors[field as keyof PresentationFormValues]);
 
@@ -141,6 +158,7 @@ export function usePresentationEdit() {
     };
 
     const handleEdit = async (values: PresentationFormValues) => {
+        console.log(values)
         if (!variantId) return;
         setIsSubmitting(true);
         setSubmitError(null);

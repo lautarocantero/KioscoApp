@@ -40,7 +40,6 @@ const PresentationCreateForm = (): React.ReactNode => {
     );
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
             <Formik
                 initialValues={getPresentationFormInitialValues()}
                 validationSchema={presentationFormSchema}
@@ -59,7 +58,7 @@ const PresentationCreateForm = (): React.ReactNode => {
                             isSubmitting: form.isSubmitting,
                             validateForm,
                             submitError:  form.submitError,
-                            stepErrors:   [],
+                            stepErrors:   form.stepErrors,
                             actionTitle:  FormModeComplexEnum.Create,
                         }}
                     >
@@ -72,7 +71,6 @@ const PresentationCreateForm = (): React.ReactNode => {
                     </FormNavigationContext.Provider>
                 )}
             </Formik>
-        </Box>
     );
 };
 
@@ -84,41 +82,42 @@ const PresentationEditForm = (): React.ReactNode => {
     if (!form.editingVariant) return <NotEntityLoaded error={form.submitError} fallbackText="No se pudo cargar la presentación" />;
     if (form.updatedVariant)  return <PresentationUpdated updatedVariant={form.updatedVariant} />;
 
+    console.log(form.stepErrors)
+    console.log(form.stepErrors)
+
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
-            <Formik
-                initialValues={getPresentationEditInitialValues(form.editingVariant)}
-                validationSchema={presentationEditFormSchema}
-                onSubmit={form.handleEdit}
-                validateOnBlur={false}
-                validateOnChange={false}
-                enableReinitialize
-            >
-                {({ handleSubmit: formikSubmit, validateForm }) => (
-                    <FormNavigationContext.Provider
-                        value={{
-                            currentStep:  form.currentStep,
-                            totalSteps:   form.totalSteps,
-                            onNext:       form.handleNextStep,
-                            onPrev:       form.handlePrevStep,
-                            onSubmit:     formikSubmit,
-                            isSubmitting: form.isSubmitting,
-                            validateForm,
-                            submitError:  form.submitError,
-                            stepErrors:   form.stepErrors,
-                            actionTitle:  FormModeComplexEnum.Edit,
-                        }}
-                    >
-                        <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
-                            <ActualStepComponent
-                                currentStep={form.currentStep}
-                                stepComponents={STEP_COMPONENTS}
-                            />
-                        </Grid>
-                    </FormNavigationContext.Provider>
-                )}
-            </Formik>
-        </Box>
+        <Formik
+            initialValues={getPresentationEditInitialValues(form.editingVariant)}
+            validationSchema={presentationEditFormSchema}
+            onSubmit={form.handleEdit}
+            validateOnBlur={false}
+            validateOnChange={false}
+            enableReinitialize
+        >
+            {({ handleSubmit: formikSubmit, validateForm }) => (
+                <FormNavigationContext.Provider
+                    value={{
+                        currentStep:  form.currentStep,
+                        totalSteps:   form.totalSteps,
+                        onNext:       form.handleNextStep,
+                        onPrev:       form.handlePrevStep,
+                        onSubmit:     formikSubmit,
+                        isSubmitting: form.isSubmitting,
+                        validateForm,
+                        submitError:  form.submitError,
+                        stepErrors:   form.stepErrors,
+                        actionTitle:  FormModeComplexEnum.Edit,
+                    }}
+                >
+                    <Grid container component="form" onSubmit={formikSubmit} sx={{ width: "100%" }}>
+                        <ActualStepComponent
+                            currentStep={form.currentStep}
+                            stepComponents={STEP_COMPONENTS}
+                        />
+                    </Grid>
+                </FormNavigationContext.Provider>
+            )}
+        </Formik>
     );
 };
 

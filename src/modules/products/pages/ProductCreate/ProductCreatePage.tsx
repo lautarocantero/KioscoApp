@@ -5,7 +5,7 @@ import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 const ProductCreatePage = ():React.ReactNode => {
     return (
-        <AppLayout title='Crear producto'>
+        <AppLayout>
             <ProductForm mode={FormModeComplexEnum.Create} />
         </AppLayout>
     )

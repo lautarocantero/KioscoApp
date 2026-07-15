@@ -67,9 +67,7 @@ export interface UsePresentationsListDataResult {
     setSearchTerm: (term: string) => void;
 }
 
-type CreatePresentationPayload = Omit<PresentationEntity, "_id" | "created_at" | "updated_at"> & {
-    image_file?: File | null;
-};
+type CreatePresentationPayload = Omit<PresentationEntity, "_id" | "created_at" | "updated_at">
 
 
 // /*══════════════════════════════════════════════════════════════════════╗

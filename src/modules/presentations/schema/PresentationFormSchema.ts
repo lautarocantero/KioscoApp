@@ -9,11 +9,10 @@ export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     sku:             "",
     model_type:      "",
     model_size:      "",
-    image_file:      null,
     image_url:       "",
-    min_stock:       "",
-    stock:           "",
-    price:           "",
+    min_stock:       0,
+    stock:           0,
+    price:           0,
     expiration_date: "",
 });
 
@@ -23,7 +22,6 @@ export const getPresentationEditInitialValues = (
     sku:             presentation.sku,
     model_type:      presentation.model_type,
     model_size:      presentation.model_size,
-    image_file:      null,
     image_url:       presentation.image_url       ?? "",
     min_stock:       presentation.min_stock,
     stock:           presentation.stock,
@@ -40,9 +38,6 @@ export const presentationFormSchema = Yup.object({
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
-    image_file: Yup.mixed<File>()
-        .required("Imagen de envase requerida")
-        .test("is-file", "Imagen de envase requerida", (value) => value instanceof File),
     image_url:       Yup.string(),
     min_stock:       Yup.number().min(0).required("Stock mínimo requerido").typeError("Debe ser un número"),
     stock:           Yup.number().min(0).required("Stock requerido").typeError("Debe ser un número"),
@@ -54,7 +49,6 @@ export const presentationEditFormSchema = Yup.object({
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
-    image_file: Yup.mixed<File>().nullable().optional(),
     image_url:  Yup.string(),
     min_stock:  Yup.number().min(0).required("Stock mínimo requerido").typeError("Debe ser un número"),
     stock:      Yup.number().min(0).required("Stock requerido").typeError("Debe ser un número"),

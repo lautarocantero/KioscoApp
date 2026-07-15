@@ -152,14 +152,11 @@ export const getPresentationAnalyticsRequest = async (
  * Crea una nueva variante.
  * `POST /create-presentation` — multipart/form-data (multer en el backend).
  *
- * Si se provee `image_file`, se sube como archivo; de lo contrario se envía `image_url` como string.
  */
 export const createPresentationRequest = async (
-    data: Omit<Presentation, "_id" | "created_at" | "updated_at"> & {
-        image_file?: File | null;
-    }
+    data: Omit<Presentation, "_id" | "created_at" | "updated_at">
 ): Promise<{ _id: string; message: string }> => {
-    const { image_file, ...rest } = data;
+    const { ...rest } = data;
 
     const formData = new FormData();
 
@@ -170,10 +167,6 @@ export const createPresentationRequest = async (
         }
     });
 
-    // imagen como archivo o URL
-    if (image_file) {
-        formData.append("image", image_file);
-    }
 
     const response = await baseUrl.post<{ _id: string; message: string }>(
         "/create-presentation",
