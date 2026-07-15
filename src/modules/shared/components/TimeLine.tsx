@@ -1,23 +1,12 @@
 import CheckIcon from "@mui/icons-material/Check";
 import { Box, Typography } from "@mui/material";
+import type { CreationTimelineProps } from "@typings/ui/timeLine.types";
 
-export interface TimelineStepConfig {
-    icon:  React.ReactNode;
-    label: string;
-}
-
-export interface CreationTimelineProps {
-    /** Paso anterior, ya completado — ícono neutro a la izquierda */
-    previousStep: TimelineStepConfig;
-    /** Paso siguiente, pendiente — ícono neutro a la derecha */
-    nextStep: TimelineStepConfig;
-    maxWidth?: number | string;
-}
 
 const Timeline = ({ previousStep, nextStep, maxWidth = 520 }: CreationTimelineProps): React.ReactNode => (
     <Box sx={{ width: "100%", maxWidth, display: "grid", gridTemplateColumns: "80px 1fr 80px", alignItems: "start", mb: 4 }}>
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1.5 }}>
-            <Box sx={theme => ({ width: 58, height: 58, borderRadius: "50%", border: `0.1em solid ${theme.custom.posAccent}`, backgroundColor: `${theme.custom.darkWhite}15`, display: "flex", alignItems: "center", justifyContent: "center", color: theme.custom.posAccent })}>
+            <Box sx={theme => ({ width: 58, height: 58, borderRadius: "50%", border: `0.1em solid ${theme.palette.secondary.light}`, backgroundColor: `${theme.custom.darkWhite}15`, display: "flex", alignItems: "center", justifyContent: "center", color: theme.palette.secondary.light })}>
                 {previousStep.icon}
             </Box>
             <Typography variant="caption" sx={{ textAlign: "center" }}>{previousStep.label}</Typography>
@@ -32,7 +21,7 @@ const Timeline = ({ previousStep, nextStep, maxWidth = 520 }: CreationTimelinePr
         </Box>
 
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1.5 }}>
-            <Box sx={theme => ({ width: 58, height: 58, borderRadius: "50%", border: `0.2em dotted ${theme.custom.lightGray}`, backgroundColor: `${theme.custom.darkWhite}15`, display: "flex", alignItems: "center", justifyContent: "center", color: theme.custom.darkWhite })}>
+            <Box sx={theme => ({ width: 58, height: 58, borderRadius: "50%", border: `0.2em dotted ${theme.custom.darkSecondary}`, backgroundColor: `${theme.custom.darkWhite}15`, display: "flex", alignItems: "center", justifyContent: "center", color: theme.custom.darkWhite })}>
                 {nextStep.icon}
             </Box>
             <Typography variant="caption" sx={{ textAlign: "center" }}>{nextStep.label}</Typography>

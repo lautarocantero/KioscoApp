@@ -2,14 +2,8 @@ import { Box, Typography, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import CheckIcon from "@mui/icons-material/Check";
 import SuccessCardName from "./SuccessCardName";
+import type { SuccessCardBodyProps } from "@typings/ui/successCard.types";
 
-interface SuccessCardBodyProps {
-    name:      string;
-    title:     string;
-    subtitle:  string;
-    timeline?: React.ReactNode;
-    showSuccessIcon?: boolean;
-}
 
 const SuccessCardBody = ({ name, title, subtitle, timeline, showSuccessIcon = true }: SuccessCardBodyProps): React.ReactNode => (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", py: 4, px: 3 }}>
@@ -38,7 +32,7 @@ const SuccessCardBody = ({ name, title, subtitle, timeline, showSuccessIcon = tr
         <Typography sx={(theme: Theme) => ({
             fontSize: theme.typography.h6?.fontSize,
             fontWeight: 700,
-            color: theme.custom.white,
+            color: theme.custom.fontColor,
             textAlign: "center",
             mb: 2,
         })}>
@@ -50,7 +44,7 @@ const SuccessCardBody = ({ name, title, subtitle, timeline, showSuccessIcon = tr
         <Typography sx={(theme: Theme) => ({
             maxWidth: 420,
             textAlign: "center",
-            color: theme.custom.translucidWhite,
+            color: theme.custom.translucidFontColor,
             fontSize: "1rem",
             lineHeight: 1.6,
         })}>

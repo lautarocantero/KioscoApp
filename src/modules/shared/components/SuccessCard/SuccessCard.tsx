@@ -2,20 +2,8 @@ import { Box, CardContent } from "@mui/material";
 import SuccessCardBody from "./SuccessCardBody";
 import SuccessCardActions from "./SuccessCardActions";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
+import type { SuccessCardProps } from "@typings/ui/successCard.types";
 
-export interface SuccessCardAction {
-    label:   string;
-    onClick: () => void;
-    variant: "contained" | "outlined";
-}
-
-export interface SuccessCardProps {
-    name:      string;
-    title:     string;
-    subtitle:  string;
-    actions:   SuccessCardAction[];
-    timeline?: React.ReactNode;
-}
 
 const SuccessCard = ({ name, title, subtitle, actions, timeline }: SuccessCardProps): React.ReactNode => (
     <Box sx={{

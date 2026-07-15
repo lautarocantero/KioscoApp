@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import SuccessCard from "../../../../shared/components/SuccessCard";
-import type { UpdatedPresentationInterface } from "@typings/presentation/presentationTypes";
+import type { PresentationEditedProps } from "@typings/presentation/presentationComponentTypes";
+import type { ReactNode } from "react";
 
-interface Props { updatedVariant: UpdatedPresentationInterface; }
 
-const PresentationUpdated = ({ updatedVariant }: Props): React.ReactNode => {
+const PresentationEdited = ({ updatedVariant }: PresentationEditedProps): ReactNode => {
     const navigate = useNavigate();
     const { productId } = useParams<{ productId: string }>();
 
@@ -34,4 +34,4 @@ const PresentationUpdated = ({ updatedVariant }: Props): React.ReactNode => {
     );
 };
 
-export default PresentationUpdated;
+export default PresentationEdited;

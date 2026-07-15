@@ -1,10 +1,7 @@
 import { alpha, Box, Button, type Theme } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import type { SuccessCardAction } from "./SuccessCard";
+import type { SuccessCardActionsProps } from "@typings/ui/successCard.types";
 
-interface SuccessCardActionsProps {
-    actions: SuccessCardAction[];
-}
 
 const SuccessCardActions = ({ actions }: SuccessCardActionsProps): React.ReactNode => (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, px: 3, pb: 4, pt: 1 }}>
@@ -39,7 +36,7 @@ const SuccessCardActions = ({ actions }: SuccessCardActionsProps): React.ReactNo
                         textTransform: "none",
                         fontWeight: 500,
                         fontSize: "0.9rem",
-                        color: theme.custom.white,
+                        color: theme.custom.translucidFontColor,
                         "&:hover": { backgroundColor: "transparent", opacity: 0.8 },
                     })}
                 >

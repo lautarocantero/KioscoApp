@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import SuccessCard from "../../../../shared/components/SuccessCard";
 import type { VariantCreatedComponentProps } from "@typings/presentation/presentationTypes";
 
+
 const PresentationCreated = ({ createdVariant, onCreateAnother }: VariantCreatedComponentProps): React.ReactNode => {
     const navigate = useNavigate();
 

@@ -11,7 +11,7 @@ import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import PresentationCreated from "../../pages/PresentationCreate/components/PresentationCreated";
-import PresentationUpdated from "../../pages/PresentationEdit/components/PresentationUpdated";
+import PresentationEdited from "../../pages/PresentationEdit/components/PresentationEdited";
 import {
     getPresentationEditInitialValues,
     getPresentationFormInitialValues,
@@ -104,7 +104,7 @@ const PresentationEditForm = (): React.ReactNode => {
 
     if (isLoadingEntity) return <LoadingSpinnerComponent />;
     if (!editingVariant) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar la presentación" />;
-    if (updatedVariant)  return <PresentationUpdated updatedVariant={updatedVariant} />;
+    if (updatedVariant)  return <PresentationEdited updatedVariant={updatedVariant} />;
 
     return (
         <Formik
