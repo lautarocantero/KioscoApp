@@ -38,3 +38,9 @@ export interface DeleteDialogState {
     id: string;
     name: string;
 }
+
+export interface DeleteDialogProps {
+    deleteDialog: DeleteDialogState;
+    onConfirm: () => void;
+    onCancel: () => void;
+}

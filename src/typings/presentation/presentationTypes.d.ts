@@ -159,7 +159,6 @@ export interface UsePresentationEditFormReturn
 
 // Argumentos para construir las columnas del grid de presentations
 export type BuildColumnsArgs = {
-    productId: string;
     onDeleteRequest: (id: string, name: string) => void;
     navigate: ReturnType<typeof useNavigate>;
 };

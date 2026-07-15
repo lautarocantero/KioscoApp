@@ -37,14 +37,3 @@ export interface VariantCreatedActionsProps {
 export interface VariantCreatedBodyProps {
     name: string;
 }
-
-
-// /*══════════════════════════════════════════════════════════════════════╗
-// ║ ✅ Presentation Delete  ✅✅✅✅✅✅✅✅✅✅✅✅✅✅                       ║
-// ╚══════════════════════════════════════════════════════════════════════╝*/
-
-export interface PresentationDeleteDialogProps {
-    deleteDialog: DeleteDialogState;
-    onConfirm: () => void;
-    onCancel: () => void;
-}

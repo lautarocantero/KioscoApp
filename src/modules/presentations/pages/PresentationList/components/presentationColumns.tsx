@@ -8,7 +8,6 @@ import { formatPrice } from "../../../../shared/helpers/formarPrice";
 import { centeredTextColumn, chipColumn, priceColumn, truncatedTextColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
 
 export const buildColumnsForPresentations = ({
-    productId,
     onDeleteRequest,
     navigate,
 }: BuildColumnsArgs): GridColDef<Presentation>[] => [
@@ -91,18 +90,19 @@ export const buildColumnsForPresentations = ({
         filterable: false,
         align: "center",
         headerAlign: "center",
-        renderCell: (params) => (
-            <CellCenter>
-                <RowActionsCell
-                    onView={() =>
-                        navigate(`/products/${productId}/presentations/${params.row._id}`)
-                    }
-                    onEdit={() =>
-                        navigate(`/products/${productId}/presentations/${params.row._id}/edit`)
-                    }
-                    onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
-                />
-            </CellCenter>
+        renderCell: (params) => 
+            (
+                    <CellCenter>
+                        <RowActionsCell
+                            onView={() =>
+                                navigate(`/products/${params.row.product_id}/presentations/${params.row._id}`)
+                            }
+                            onEdit={() =>
+                                navigate(`/products/${params.row.product_id}/presentations/${params.row._id}/edit`)
+                            }
+                            onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
+                        />
+                    </CellCenter>
         ),
     },
 ];

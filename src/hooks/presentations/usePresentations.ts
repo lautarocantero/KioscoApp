@@ -33,7 +33,6 @@ export const usePresentations = () => {
     };
 
     const columns = buildColumnsForPresentations({
-        productId: product_id as string,
         onDeleteRequest: handleDeleteRequest,
         navigate,
     });
