@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Alert, Box } from "@mui/material";
 import { useProductPresentations } from "../../../../hooks/products/useProductPresentations";
 import { usePresentationAnalytics } from "../../../../hooks/presentations/usePresentationAnalytics";
@@ -6,7 +5,7 @@ import LoadingSpinnerComponent from "../LoadingSpinner";
 import type { ProductAnalyticsSectionProps } from "@typings/product/productComponentTypes";
 import PresentationAnalytics from "./PresentationAnalitycs";
 
-const ProductAnalyticsSection = ({
+const PresentationAnalyticsSection = ({
     productId,
     initialPresentationId,
 }: ProductAnalyticsSectionProps): React.ReactNode => {
@@ -16,22 +15,8 @@ const ProductAnalyticsSection = ({
         error: presentationsError,
         selectedPresentationId,
         setSelectedPresentationId,
-    } = useProductPresentations(productId);
-
-    // Si entramos desde el detalle de una presentación puntual, la preseleccionamos
-    // apenas tengamos la lista de presentaciones del producto cargada.
-    useEffect(() => {
-        if (
-            initialPresentationId &&
-            presentations.length > 0 &&
-            selectedPresentationId !== initialPresentationId
-        ) {
-            setSelectedPresentationId(initialPresentationId);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [initialPresentationId, presentations]);
-
-    const selectedPresentation = presentations.find((p) => p._id === selectedPresentationId);
+        selectedPresentation,
+    } = useProductPresentations(productId, initialPresentationId);
 
     const {
         analyticsData,
@@ -55,19 +40,18 @@ const ProductAnalyticsSection = ({
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 1 }}>
-            {analyticsError && <Alert severity="error">{analyticsError}</Alert>}
-            {analyticsData && (
-                <PresentationAnalytics
-                    data={analyticsData}
-                    presentations={presentations}
-                    selectedPresentationId={selectedPresentationId}
-                    onPresentationChange={setSelectedPresentationId}
-                    isPresentationSelectorDisabled={isLoadingAnalytics}
-                    onApplyFilters={applyFilters}
-                />
-            )}
+            <PresentationAnalytics
+                data={analyticsData}
+                error={analyticsError}
+                presentations={presentations}
+                selectedPresentationId={selectedPresentationId}
+                onPresentationChange={setSelectedPresentationId}
+                isPresentationSelectorDisabled={isLoadingAnalytics}
+                onApplyFilters={applyFilters}
+                hidePresentationFilter={Boolean(initialPresentationId)}
+            />
         </Box>
     );
 };
 
-export default ProductAnalyticsSection;
+export default PresentationAnalyticsSection;

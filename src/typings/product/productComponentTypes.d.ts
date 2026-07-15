@@ -97,10 +97,12 @@ export interface ProductAnalyticsSectionProps {
 
 export interface PresentationAnalyticsProps {
     data: PresentationAnalyticsData;
+    error: strin | null;
     presentations?: Presentation[];
     selectedPresentationId?: string;
     onPresentationChange?: (presentationId: string) => void;
     isPresentationSelectorDisabled?: boolean;
     onApplyFilters?: (filters: AnalyticsFiltersInterface) => void;
+    hidePresentationFilter: boolean;
 }
 

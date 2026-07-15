@@ -11,12 +11,15 @@ export const PresentationFilter = ({
     onPresentationChange,
     selectedPresentationId,
     isPresentationSelectorDisabled,
+    hidePresentationFilter
 }: PresentationFilterProps) => {
     const showPresentationSelector = Boolean(presentations && onPresentationChange);
 
     if (!showPresentationSelector || !presentations || !onPresentationChange) {
         return null;
     }
+
+    if (hidePresentationFilter) return null;
 
     return (
         <Box>

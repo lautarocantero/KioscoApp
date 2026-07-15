@@ -6,7 +6,14 @@ import type { AnalyticsFiltersProps } from "@typings/ui/analytics.types";
 import { AnalyticsFiltersButtons } from "./AnalyticsButtons";
 import { useAnalyticsFormState } from "../../../../hooks/shared/useAnalyticsFormState";
 
-const AnalyticsFiltersComponent = ({ presentations, onPresentationChange, selectedPresentationId, isPresentationSelectorDisabled, onApplyFilters }: AnalyticsFiltersProps) => {
+const AnalyticsFiltersComponent = ({
+    presentations,
+    onPresentationChange,
+    selectedPresentationId,
+    isPresentationSelectorDisabled,
+    onApplyFilters,
+    hidePresentationFilter,
+}: AnalyticsFiltersProps) => {
 
     const {
         startDate,
@@ -30,6 +37,7 @@ const AnalyticsFiltersComponent = ({ presentations, onPresentationChange, select
                 onPresentationChange={onPresentationChange}
                 selectedPresentationId={selectedPresentationId}
                 isPresentationSelectorDisabled={isPresentationSelectorDisabled}
+                hidePresentationFilter={hidePresentationFilter}
             />
 
             <DateFilterPicker
