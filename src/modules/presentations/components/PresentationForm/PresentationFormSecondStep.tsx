@@ -7,8 +7,10 @@ import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import type { ReactNode } from "react";
 
-const PresentationFormSecondStep = (): React.ReactNode => {
+
+const PresentationFormSecondStep = (): ReactNode => {
     const theme = useTheme();
     const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
 

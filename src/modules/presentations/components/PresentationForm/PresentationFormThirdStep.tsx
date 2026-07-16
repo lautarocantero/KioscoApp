@@ -5,8 +5,10 @@ import { useFormNavigation } from "../../../shared/context/FormNavigationContext
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import type { ReactNode } from "react";
 
-const PresentationFormThirdStep = (): React.ReactNode => {
+
+const PresentationFormThirdStep = (): ReactNode => {
     const theme = useTheme();
     const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
 

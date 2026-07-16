@@ -9,8 +9,10 @@ import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import { useParams } from "react-router-dom";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { useTheme } from "@mui/material";
+import type { ReactNode } from "react";
 
-const PresentationFormFirstStep = (): React.ReactNode => {
+
+const PresentationFormFirstStep = (): ReactNode => {
     const theme = useTheme();
     const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
     const { product_id } = useParams<{ product_id: string }>();

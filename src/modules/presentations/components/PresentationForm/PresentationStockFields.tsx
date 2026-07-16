@@ -3,8 +3,10 @@ import { useFormikContext } from "formik";
 import type { PresentationFormValues, PresentationStockFieldsProps } from "@typings/presentation/presentationTypes";
 import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
 import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
+import type { ReactNode } from "react";
 
-const PresentationStockFields = ({ icons }: PresentationStockFieldsProps): React.ReactNode => {
+
+const PresentationStockFields = ({ icons }: PresentationStockFieldsProps): ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();
 
     return (

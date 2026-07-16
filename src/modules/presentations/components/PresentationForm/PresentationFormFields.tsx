@@ -5,6 +5,7 @@ import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
 import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
 import ProductImagePreview from "modules/shared/components/Image/ProductImagePreview";
 
+
 const PresentationFormFields = ({ readOnly = false, icons }: PresentationFormFieldsProps): React.ReactNode => {
     const { values, errors, setFieldValue } = useFormikContext<PresentationFormValues>();
 

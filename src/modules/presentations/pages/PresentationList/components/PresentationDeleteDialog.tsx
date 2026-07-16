@@ -1,4 +1,4 @@
-import React from "react";
+import { type ReactNode } from "react";
 import ConfirmDialog from "../../../../../modules/shared/components/ConfirmDialog/ConfirmDialog";
 import type { DeleteDialogProps } from "@typings/ui/dialog.types";
 
@@ -7,7 +7,7 @@ const PresentationDeleteDialog = ({
     deleteDialog,
     onConfirm,
     onCancel,
-}: DeleteDialogProps): React.ReactNode => (
+}: DeleteDialogProps): ReactNode => (
     <ConfirmDialog
         open={deleteDialog.open}
         title="Confirmar eliminación"
