@@ -2,37 +2,36 @@
 
 ---
 general: 
-- [ ] Agregar componente para las situaciones donde algo no carga, llega sin datos, early return. 
-- [ ] Refactorizar todo. 
-- [ ] Agregar disenos sx 
-- [ ] Leer la documentacion y dejarla presentable
+- [ xxx ] Refactorizar todo. 
+- [ xxx ] Agregar disenos sx.
+- [ xx ] Leer la documentacion y dejarla presentable.
+- [ x ] Agregar componente para las situaciones donde algo no carga, llega sin datos, early return. 
 
 ---
 sidebar:
-- [ ] Al darle click a un elemento del sidebar que tenga sub elementos abrir el navbar.
-- [ ] no funciona correctamente en sx.
+- [ xxx ] Al darle click a un elemento del sidebar que tenga sub elementos abrir el navbar.
+- [ xxx ] no funciona correctamente en sx.
 ---
 Productos:
-- [ ] Agregar disenos sx a analytics
-- [ ] hacer que la card de stock funcione, implementar cambios en backend. (pausado por ahora)
-- [ ] comprobar si se puede incluir alguna forma para comparar periodos, etc. (pausado por ahora)
-
+- [ xxx ] Agregar disenos sx a analytics.
+- [ x ] hacer que la card de stock funcione, implementar cambios en backend. (pausado por ahora)
+- [ x ] comprobar si se puede incluir alguna forma para comparar periodos, etc. (pausado por ahora)
 ---
 Presentaciones:
-- [ ] Presentation created devuelve mal a el listado.
+- [ xxx ] Presentation created devuelve mal a el listado.
 ---
 ventas:
-- [ ] quitar desplazamiento de iconos del searchbar.
-- [ ] refactor visual.
-- [ ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar
-- [ ] comprar productos no baja el stock.
-- [ ] solo mostrar productos con stock.
-- [ ] Agregar la tabla de tipos, luego hacer crud, pero agregarla ya.
-- [ ] al darle a listado en ventas deberia de mostrar una mui table.
-- [ ] refactorizar todo el modulo.
-
+- [ x ] quitar desplazamiento de iconos del searchbar.
+- [ x ] refactor visual.
+- [ x ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.
+- [ x ] comprar productos no baja el stock.
+- [ x ] solo mostrar productos con stock.
+- [ x ] Agregar la tabla de tipos, luego hacer crud, pero agregarla ya.
+- [ x ] al darle a listado en ventas deberia de mostrar una mui table.
+- [ x ] refactorizar todo el modulo.
+---
 vendedores:
-- [ ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar
-- [ ] modificar datos para que no sean los mismos que auth, tambien los campos.
+- [ x ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.
+- [ x ] modificar datos para que no sean los mismos que auth, tambien los campos.
 
 

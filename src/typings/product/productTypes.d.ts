@@ -46,6 +46,21 @@ export interface CreatedProductInterface {
 export type UpdatedProductInterface = CreatedProductInterface;
 
 // /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📋 API 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋               ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// Respuesta de POST /product/create-product.
+// El backend no devuelve el Product completo, solo `{ _id, message }`;
+// la reconstrucción del objeto completo queda a cargo del thunk.
+export type CreateProductResponse = {
+    _id:     string;
+    message: string;
+};
+
+// Cuerpo enviado al PUT /product/edit-product
+export type EditProductBody = Partial<Product> & Pick<Product, "_id">;
+
+// /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📋 FORMULARIOS 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋               ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 

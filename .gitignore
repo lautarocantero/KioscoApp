@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 
+Tasks.md
+
 .env.development
 .env.production
 .env

@@ -11,21 +11,31 @@ const baseUrl = axios.create({
     withCredentials: true,
 });
 
-//──────────────────────────────────────────── GET ────────────────────────────────────────────//
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 📥 GET                                                                    ║
+║                                                                          ║
+║ Endpoints de lectura: listados completos, filtros por producto,          ║
+║ marca, stock, precio, tamaño y presentación, búsqueda por término        ║
+║ y analíticas de ventas.                                                  ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 
-/**
- * Obtiene todas las variantes.
- * `GET /get-presentations`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationsRequest                                                ║
+║                                                                          ║
+║ Obtiene todas las variantes.                                             ║
+║ GET /get-product-presentations                                           ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getPresentationsRequest = async (): Promise<Presentation[]> => {
     const response = await baseUrl.get<Presentation[]>("/get-product-presentations");
     return response.data;
 };
 
-/**
- * Obtiene una variante por su ID.
- * `GET /get-presentation-by-id/:product_variant_id`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationByIdRequest                                             ║
+║                                                                          ║
+║ Obtiene una variante por su ID.                                          ║
+║ GET /get-presentation-by-id/:product_variant_id                          ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getPresentationByIdRequest = async (
     { product_variant_id }: { product_variant_id: string }
 ): Promise<Presentation[]> => {
@@ -35,10 +45,12 @@ export const getPresentationByIdRequest = async (
     return response.data;
 };
 
-/**
- * Obtiene todas las variantes de un producto por su ID.
- * `GET /get-presentation-by-product-id/:product_id`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationsByProductIdRequest                                     ║
+║                                                                          ║
+║ Obtiene todas las variantes de un producto por su ID.                    ║
+║ GET /get-presentation-by-product-id/:product_id                          ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getPresentationsByProductIdRequest = async (
     { product_id }: { product_id: string }
 ): Promise<Presentation[]> => {
@@ -48,10 +60,12 @@ export const getPresentationsByProductIdRequest = async (
     return response.data;
 };
 
-/**
- * Filtra variantes por marca.
- * `GET /get-presentation-by-brand` — body: { brand }
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationByBrandRequest                                          ║
+║                                                                          ║
+║ Filtra variantes por marca.                                              ║
+║ GET /get-presentation-by-brand — body: { brand }                         ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getPresentationByBrandRequest = async (
     brand: string
 ): Promise<Presentation[]> => {
@@ -62,10 +76,12 @@ export const getPresentationByBrandRequest = async (
     return response.data;
 };
 
-/**
- * Filtra variantes por stock.
- * `GET /get-presentation-by-stock` — body: { stock }
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationByStockRequest                                          ║
+║                                                                          ║
+║ Filtra variantes por stock.                                              ║
+║ GET /get-presentation-by-stock — body: { stock }                         ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getPresentationByStockRequest = async (
     stock: number
 ): Promise<Presentation[]> => {
@@ -76,10 +92,12 @@ export const getPresentationByStockRequest = async (
     return response.data;
 };
 
-/**
- * Filtra variantes por precio.
- * `GET /get-presentation-by-price` — body: { price }
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationByPriceRequest                                          ║
+║                                                                          ║
+║ Filtra variantes por precio.                                             ║
+║ GET /get-presentation-by-price — body: { price }                         ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getPresentationByPriceRequest = async (
     price: number
 ): Promise<Presentation[]> => {
@@ -90,10 +108,12 @@ export const getPresentationByPriceRequest = async (
     return response.data;
 };
 
-/**
- * Filtra variantes por tamaño de modelo.
- * `GET /get-presentation-by-size` — body: { model_size }
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationBySizeRequest                                           ║
+║                                                                          ║
+║ Filtra variantes por tamaño de modelo.                                   ║
+║ GET /get-presentation-by-model-size — body: { model_size }               ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getPresentationBySizeRequest = async (
     model_size: string
 ): Promise<Presentation[]> => {
@@ -104,10 +124,12 @@ export const getPresentationBySizeRequest = async (
     return response.data;
 };
 
-/**
- * Filtra variantes por presentación (model_type).
- * `GET /get-presentation-by-presentation` — body: { model_type }
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationByPresentationRequest                                   ║
+║                                                                          ║
+║ Filtra variantes por presentación (model_type).                          ║
+║ GET /get-presentation-by-presentation — body: { model_type }             ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getPresentationByPresentationRequest = async (
     model_type: string
 ): Promise<Presentation[]> => {
@@ -118,10 +140,13 @@ export const getPresentationByPresentationRequest = async (
     return response.data;
 };
 
-/**
- * Busca presentaciones de un producto por término (name, sku, model_type, model_size).
- * `GET /get-presentation-by-product-id/:product_id/search` — query: { term }
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔎 searchPresentationsByProductIdRequest                                  ║
+║                                                                          ║
+║ Busca presentaciones de un producto por término                          ║
+║ (name, sku, model_type, model_size).                                     ║
+║ GET /get-presentation-by-product-id/:product_id/search — query: { term } ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const searchPresentationsByProductIdRequest = async (
     { product_id, term }: { product_id: string; term: string }
 ): Promise<Presentation[]> => {
@@ -132,10 +157,13 @@ export const searchPresentationsByProductIdRequest = async (
     return response.data;
 };
 
-/**
- * Obtiene las analíticas de ventas de una presentación puntual.
- * `GET /get-presentation-analytics/:presentation_id` — query: { start_date?, end_date? }
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 📊 getPresentationAnalyticsRequest                                        ║
+║                                                                          ║
+║ Obtiene las analíticas de ventas de una presentación puntual.            ║
+║ GET /get-presentation-analytics/:presentation_id                         ║
+║ query: { start_date?, end_date?, seller_id? }                            ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getPresentationAnalyticsRequest = async (
     { presentation_id, start_date, end_date, seller_id }:
     { presentation_id: string; start_date?: string; end_date?: string; seller_id?: string }
@@ -146,13 +174,19 @@ export const getPresentationAnalyticsRequest = async (
     );
     return response.data;
 };
-//──────────────────────────────────────────── POST ───────────────────────────────────────────//
 
-/**
- * Crea una nueva variante.
- * `POST /create-presentation` — multipart/form-data (multer en el backend).
- *
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 📤 POST                                                                   ║
+║                                                                          ║
+║ Endpoint de creación de variantes.                                       ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+
+/*══════════════════════════════════════════════════════════════════════════╗
+║ ➕ createPresentationRequest                                              ║
+║                                                                          ║
+║ Crea una nueva variante.                                                 ║
+║ POST /create-presentation — multipart/form-data (multer en el backend).  ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const createPresentationRequest = async (
     data: Omit<Presentation, "_id" | "created_at" | "updated_at">
 ): Promise<{ _id: string; message: string }> => {
@@ -176,12 +210,18 @@ export const createPresentationRequest = async (
     return response.data;
 };
 
-//──────────────────────────────────────────── PUT ────────────────────────────────────────────//
+/*══════════════════════════════════════════════════════════════════════════╗
+║ ✏️ PUT                                                                   ║
+║                                                                          ║
+║ Endpoint de edición de variantes.                                        ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 
-/**
- * Edita una variante existente.
- * `PUT /edit-presentation` — body: { ...campos }
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ ✏️ editPresentationRequest                                               ║
+║                                                                          ║
+║ Edita una variante existente.                                            ║
+║ PUT /edit-presentation/:_id — body: { ...campos }                        ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const editPresentationRequest = async (
     variant: Partial<Presentation> & Pick<Presentation, "_id">
 ): Promise<{ _id: string; message: string }> => {
@@ -192,12 +232,18 @@ export const editPresentationRequest = async (
     return response.data;
 };
 
-//──────────────────────────────────────────── DELETE ─────────────────────────────────────────//
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🗑️ DELETE                                                                ║
+║                                                                          ║
+║ Endpoint de eliminación de variantes.                                    ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 
-/**
- * Elimina una variante por su ID.
- * `DELETE /delete-presentation` — body: { _id }
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🗑️ deletePresentationRequest                                             ║
+║                                                                          ║
+║ Elimina una variante por su ID.                                          ║
+║ DELETE /delete-presentation — body: { _id }                              ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const deletePresentationRequest = async (_id: string): Promise<void> => {
     await baseUrl.delete("/delete-presentation", { data: { _id } });
 };

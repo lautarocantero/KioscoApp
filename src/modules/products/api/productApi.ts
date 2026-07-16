@@ -1,12 +1,12 @@
 import axios from "axios";
 import { API_URL } from "../../../config/api";
-import type { CreateProductBody, Product, ProductWithPresentations } from "@typings/product/productTypes";
-
-// ─── Respuesta de POST /product/create-product ────────────────────────────────
-export type CreateProductResponse = {
-  _id:     string;
-  message: string;
-};
+import type {
+  CreateProductBody,
+  CreateProductResponse,
+  EditProductBody,
+  Product,
+  ProductWithPresentations,
+} from "@typings/product/productTypes";
 
 const baseUrl = axios.create({
   baseURL: `${API_URL}/product`,
@@ -15,30 +15,42 @@ const baseUrl = axios.create({
   withCredentials: true,
 });
 
-//──────────────────────────────────────────── GET ────────────────────────────────────────────//
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 📥 GET                                                                    ║
+║                                                                          ║
+║ Endpoints de lectura: listado completo, búsqueda por ID/nombre/marca     ║
+║ y consultas combinadas de productos con sus presentaciones.              ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 
-/**
- * Obtiene el listado completo de productos.
- * `GET /get-products`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getProductsRequest                                                     ║
+║                                                                          ║
+║ Obtiene el listado completo de productos.                                ║
+║ GET /get-products                                                        ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getProductsRequest = async (): Promise<Product[]> => {
   const response = await baseUrl.get<Product[]>("/get-products");
   return response.data;
 };
 
-/**
- * Obtiene un producto por su ID.
- * `GET /get-product-by-id/:_id`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getProductByIdRequest                                                  ║
+║                                                                          ║
+║ Obtiene un producto por su ID.                                           ║
+║ GET /get-product-by-id/:_id                                              ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getProductByIdRequest = async (_id: string): Promise<Product> => {
   const response = await baseUrl.get<Product>(`/get-product-by-id/${_id}`);
   return response.data;
 };
 
-/**
- * Busca productos por nombre (búsqueda parcial según implementación del backend).
- * `GET /get-product-by-name?name=<value>`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔎 getProductByNameRequest                                                ║
+║                                                                          ║
+║ Busca productos por nombre (búsqueda parcial según                       ║
+║ implementación del backend).                                             ║
+║ GET /get-product-by-name?name=<value>                                    ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getProductByNameRequest = async (
   name: string
 ): Promise<Product[]> => {
@@ -48,10 +60,12 @@ export const getProductByNameRequest = async (
   return response.data;
 };
 
-/**
- * Filtra productos por marca.
- * `GET /get-product-by-brand?brand=<value>`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getProductByBrandRequest                                               ║
+║                                                                          ║
+║ Filtra productos por marca.                                              ║
+║ GET /get-product-by-brand?brand=<value>                                  ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getProductByBrandRequest = async (
   brand: string
 ): Promise<Product[]> => {
@@ -61,10 +75,12 @@ export const getProductByBrandRequest = async (
   return response.data;
 };
 
-/**
- * Obtiene todos los productos con sus presentaciones resumidas.
- * `GET /get-products-with-presentations`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getProductsWithPresentationsRequest                                    ║
+║                                                                          ║
+║ Obtiene todos los productos con sus presentaciones resumidas.            ║
+║ GET /get-products-with-presentations                                     ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const getProductsWithPresentationsRequest = async (): Promise<ProductWithPresentations[]> => {
   const response = await baseUrl.get<ProductWithPresentations[]>(
     "/get-products-with-presentations"
@@ -72,10 +88,12 @@ export const getProductsWithPresentationsRequest = async (): Promise<ProductWith
   return response.data;
 };
 
-/**
- * Busca productos por nombre de producto O nombre de presentación.
- * `GET /search-products-with-presentations?term=<value>`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔎 searchProductsWithPresentationsRequest                                 ║
+║                                                                          ║
+║ Busca productos por nombre de producto O nombre de presentación.         ║
+║ GET /search-products-with-presentations?term=<value>                     ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const searchProductsWithPresentationsRequest = async (
   term: string
 ): Promise<ProductWithPresentations[]> => {
@@ -86,16 +104,21 @@ export const searchProductsWithPresentationsRequest = async (
   return response.data;
 };
 
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 📤 POST                                                                   ║
+║                                                                          ║
+║ Endpoint de creación de productos.                                       ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 
-//──────────────────────────────────────────── POST ───────────────────────────────────────────//
-
-/**
- * Crea un nuevo producto.
- * `POST /create-product`
- *
- * El backend no devuelve el Product completo, solo `{ _id, message }`.
- * La reconstrucción del objeto completo queda a cargo del thunk.
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ ➕ createProductRequest                                                   ║
+║                                                                          ║
+║ Crea un nuevo producto.                                                  ║
+║ POST /create-product                                                     ║
+║                                                                          ║
+║ El backend no devuelve el Product completo, solo { _id, message }.       ║
+║ La reconstrucción del objeto completo queda a cargo del thunk.           ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const createProductRequest = async (
   product: CreateProductBody
 ): Promise<CreateProductResponse> => {
@@ -103,27 +126,39 @@ export const createProductRequest = async (
   return response.data;
 };
 
-//──────────────────────────────────────────── PUT ────────────────────────────────────────────//
+/*══════════════════════════════════════════════════════════════════════════╗
+║ ✏️ PUT                                                                   ║
+║                                                                          ║
+║ Endpoint de edición de productos.                                        ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 
-/**
- * Edita un producto existente.
- * `PUT /edit-product`
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ ✏️ editProductRequest                                                    ║
+║                                                                          ║
+║ Edita un producto existente.                                             ║
+║ PUT /edit-product                                                        ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const editProductRequest = async (
-  product: Partial<Product> & Pick<Product, "_id">
+  product: EditProductBody
 ): Promise<Product> => {
   const response = await baseUrl.put<Product>("/edit-product", product);
   return response.data;
 };
 
-//──────────────────────────────────────────── DELETE ─────────────────────────────────────────//
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🗑️ DELETE                                                                ║
+║                                                                          ║
+║ Endpoint de eliminación de productos.                                    ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 
-/**
- * Elimina un producto por su ID.
- * `DELETE /delete-product`
- *
- * Se envía el `_id` en el body ya que el router no define param en la URL.
- */
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🗑️ deleteProductRequest                                                  ║
+║                                                                          ║
+║ Elimina un producto por su ID.                                           ║
+║ DELETE /delete-product                                                   ║
+║                                                                          ║
+║ Se envía el _id en el body ya que el router no define param en la URL.   ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
 export const deleteProductRequest = async (_id: string): Promise<void> => {
   await baseUrl.delete("/delete-product", { data: { _id } });
 };
