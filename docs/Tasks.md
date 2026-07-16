@@ -18,7 +18,8 @@ Productos:
 - [ x ] comprobar si se puede incluir alguna forma para comparar periodos, etc. (pausado por ahora)
 ---
 Presentaciones:
-- [ xxx ] Presentation created devuelve mal a el listado.
+- [ xxx ] Presentation debe de tener su propia descripcion o titulo porque ahora usa las del padre.
+- [ xx ] Presentation created devuelve mal a el listado.
 ---
 ventas:
 - [ x ] quitar desplazamiento de iconos del searchbar.
