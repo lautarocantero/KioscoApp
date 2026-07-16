@@ -4,6 +4,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SwipeOutlinedIcon from "@mui/icons-material/SwipeOutlined";
 import type { CardCarouselProps } from "@typings/ui/cardCarousel";
 import { useCardCarousel } from "../../../../hooks/ui/useCardCarousel";
+import { useBreakpoint } from "../../../../hooks/ui/useBreakpoint";
 
 const CardCarousel = ({
     items,
@@ -17,6 +18,9 @@ const CardCarousel = ({
     showArrows = true,
     sx,
 }: CardCarouselProps): React.ReactNode => {
+    const bp = useBreakpoint();
+    const isMobile = bp === "xs";
+
     const {
         activeIndex,
         total,
@@ -32,6 +36,12 @@ const CardCarousel = ({
     } = useCardCarousel({ items, defaultCardWidth, gap, activeIndex: controlledIndex, onIndexChange, hintText });
 
     if (total === 0) return null;
+
+    // En xs el swipe es la interacción principal (ver hint más abajo). Las
+    // flechas se posicionan con left: -20 / activeWidth - 20, y con la card
+    // ocupando casi todo el viewport quedan a medias afuera de la pantalla,
+    // generando overflow horizontal. Se ocultan en mobile.
+    const arrowsVisible = showArrows && !isMobile;
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", ...sx }}>
@@ -66,7 +76,7 @@ const CardCarousel = ({
                     </Box>
                 </Box>
 
-                {showArrows && activeIndex < total - 1 && (
+                {arrowsVisible && activeIndex < total - 1 && (
                     <IconButton
                         onClick={() => goTo(activeIndex + 1)}
                         aria-label="Ver siguiente"
@@ -91,7 +101,7 @@ const CardCarousel = ({
                     </IconButton>
                 )}
 
-                {showArrows && activeIndex > 0 && (
+                {arrowsVisible && activeIndex > 0 && (
                     <IconButton
                         onClick={() => goTo(activeIndex - 1)}
                         aria-label="Ver anterior"
@@ -118,7 +128,7 @@ const CardCarousel = ({
             </Box>
 
             {showDots && total > 1 && (
-                <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
+                <Box sx={{ display: "flex", gap: isMobile ? 1.5 : 1, mt: isMobile ? 2 : 3 }}>
                     {items.map((item, i) => (
                         <Box
                             key={item.id}
@@ -126,8 +136,10 @@ const CardCarousel = ({
                             onClick={() => goTo(i)}
                             aria-label={`Ir a la card ${i + 1}`}
                             sx={(theme: Theme) => ({
-                                width: 8,
-                                height: 8,
+                                // En mobile se agranda un poco el botón para que el área
+                                // táctil sea cómoda, sin agrandar demasiado el punto visual.
+                                width: isMobile ? 10 : 8,
+                                height: isMobile ? 10 : 8,
                                 borderRadius: "50%",
                                 border: "none",
                                 p: 0,
@@ -141,7 +153,7 @@ const CardCarousel = ({
             )}
 
             {resolvedHint && (
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 2 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: isMobile ? 1.5 : 2, px: 2, textAlign: "center" }}>
                     <Typography variant="caption" sx={{ color: "text.secondary" }}>
                         {resolvedHint}
                     </Typography>
