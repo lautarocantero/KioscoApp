@@ -165,7 +165,11 @@ const ProductDetailForm = (): React.ReactNode => {
                         actionTitle:  FormModeComplexEnum.Detail,
                     }}
                 >
-                    <Grid container sx={{ width: "100%" }}>
+                    <Grid container 
+                        sx={{ 
+                            width: { xs: "100%", sm: "80%", md: "100%" }, //xs 100 no sidebar, sm en cuenta el sidebar, en md en cuenta el sidebar
+                            m: { xs: "3em auto", sm: "3em 1em" } 
+                        }}>
                         {!isLoadingEntity && (
                             <ActualStepComponent
                                 currentStep={0}
