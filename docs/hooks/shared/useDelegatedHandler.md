@@ -1,21 +1,24 @@
-# 📄 Documentación: `useDelegatedHandler`
+# 🪝 `useDelegatedHandler`
 
-## Descripción
-`useDelegatedHandler` es un **custom hook de React** que permite **delegar funciones y memorizarlas** utilizando `useCallback`.  
-Su propósito es evitar recreaciones innecesarias de funciones en cada renderizado, garantizando estabilidad en las referencias y mejorando el rendimiento de componentes que dependen de callbacks.
+> Hook de React para memorizar funciones con `useCallback`, evitando recrearlas en cada render.
 
----
+## 🎯 ¿Para qué sirve?
 
-## Firma
+Cuando pasas funciones como props a componentes hijos, React las recrea en cada render — aunque no cambien. Esto puede provocar renders innecesarios.
+
+`useDelegatedHandler` resuelve esto envolviendo tu función en `useCallback` de forma simple y semántica.
+
+## 📦 Firma
 
 ```ts
-function useDelegatedHandler<Args extends unknown[], Return>(
-  fn: (...args: Args) => Return,
-  deps: React.DependencyList
-): (...args: Args) => Return
+useDelegatedHandler(fn, deps): fn
 ```
 
-## Ejemplo de uso
+- **`fn`** — la función que querés memorizar
+- **`deps`** — dependencias; si cambian, la función se regenera
+- Devuelve la misma función, pero memorizada (referencia estable)
+
+## 💡 Ejemplo
 
 ```tsx
 import React, { useState } from "react";
@@ -24,7 +27,6 @@ import { useDelegatedHandler } from "./useDelegatedHandler";
 function Counter() {
   const [count, setCount] = useState(0);
 
-  // Delegamos y memorizamos el handler
   const increment = useDelegatedHandler(() => {
     setCount((prev) => prev + 1);
   }, [setCount]);
@@ -38,10 +40,8 @@ function Counter() {
 }
 ```
 
-Beneficios ✨
+## ✨ Beneficios
 
-Estabilidad de referencias: evita renders innecesarios en componentes hijos que reciben callbacks como props.
-
-Legibilidad: encapsula la lógica de useCallback en un hook semántico.
-
-Reutilización: facilita delegar funciones en múltiples componentes con un patrón consistente.
+- ⚡ **Referencias estables** — evita renders innecesarios en hijos que reciben callbacks como props.
+- 📖 **Más legible** — encapsula `useCallback` en un hook con nombre claro y semántico.
+- ♻️ **Reutilizable** — mismo patrón para delegar funciones en cualquier componente.

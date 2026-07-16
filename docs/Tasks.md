@@ -13,7 +13,6 @@ sidebar:
 - [ xxx ] no funciona correctamente en sx.
 ---
 Productos:
-- [ xxx ] Agregar accesibilidad.
 - [ xxx ] Agregar documentacion.
 - [ x ] hacer que la card de stock funcione, implementar cambios en backend. (pausado por ahora)
 - [ x ] comprobar si se puede incluir alguna forma para comparar periodos, etc. (pausado por ahora)
