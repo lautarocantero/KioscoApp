@@ -44,6 +44,12 @@ export interface AnalyticsKpisProps {
     kpis: AnalyticsData["kpis"];
 }
 
+export interface FilterGroupProps {
+    icon: React.ReactNode;
+    title: string;
+    children: React.ReactNode;
+}
+
 export interface AnalyticsFiltersProps {
     presentations: Presentation[] | undefined;
     onPresentationChange: ((presentationId: string) => void) | undefined;
