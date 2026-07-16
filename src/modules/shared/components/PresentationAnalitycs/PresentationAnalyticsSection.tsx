@@ -4,11 +4,15 @@ import { usePresentationAnalytics } from "../../../../hooks/presentations/usePre
 import LoadingSpinnerComponent from "../LoadingSpinner";
 import type { ProductAnalyticsSectionProps } from "@typings/product/productComponentTypes";
 import PresentationAnalytics from "./PresentationAnalitycs";
+import { useBreakpoint } from "../../../../hooks/ui/useBreakpoint";
 
 const PresentationAnalyticsSection = ({
     productId,
     initialPresentationId,
 }: ProductAnalyticsSectionProps): React.ReactNode => {
+    const bp = useBreakpoint();
+    const isMobile = bp === "xs";
+
     const {
         presentations,
         isLoading: isLoadingPresentations,
@@ -39,7 +43,15 @@ const PresentationAnalyticsSection = ({
     if (isLoadingAnalytics && !analyticsData) return <LoadingSpinnerComponent />;
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 1 }}>
+        <Box 
+            sx={{ 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: isMobile ? 1 : 2, 
+                width: { xs: "100%", sm: "70%", md: "90%" },
+                m: { xs: "3em auto", sm: "3em 1em" } 
+            }}
+        >
             <PresentationAnalytics
                 data={analyticsData}
                 error={analyticsError}
