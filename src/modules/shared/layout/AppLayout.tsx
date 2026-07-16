@@ -8,6 +8,7 @@ const AppLayout = ({
     isOptions,
     fullWidth,
     noCenter,
+    noPadding,
     title,
     greetings,
     icon,
@@ -22,7 +23,7 @@ const AppLayout = ({
                 alignItems: "center",
                 marginTop: noCenter ? 0 : "3em",
                 justifyContent: noCenter || fullWidth ? "flex-start" : "center",
-                p: { xs: 2, sm: 3 },
+                p: noPadding ? 0 : { xs: 2, sm: 3 },
                 gap: { xs: "1.5em", sm: "2em" },
             }}
         >

@@ -6,6 +6,7 @@ export interface AppLayoutProps {
   isOptions?: boolean;
   fullWidth?: boolean;
   noCenter?: boolean;
+  noPadding?: boolean;
   title?: string;
   icon?: ReactNode;
   greetings?: string;
