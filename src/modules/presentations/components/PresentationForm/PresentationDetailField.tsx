@@ -21,6 +21,7 @@ const PresentationDetailField = ({ icon, iconColor, label, value, badge }: Detai
         >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minWidth: 0 }}>
                 <Box
+                    aria-hidden="true"
                     sx={{
                         width: 36,
                         height: 36,

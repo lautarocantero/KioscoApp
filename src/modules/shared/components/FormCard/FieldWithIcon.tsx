@@ -7,6 +7,7 @@ const FieldWithIcon = ({ iconConfig, children }: FieldWithIconProps): React.Reac
     return (
         <Box sx={{ display: "flex", gap: 2, alignItems: "start" }}>
             <Box
+                aria-hidden="true"
                 sx={{
                     width: 60,
                     height: 60,

@@ -32,6 +32,7 @@ export const SearchBar = ({
 
   return (
     <Box
+      role="search"
       sx={[
         (theme: Theme) => ({
           flex: 1,
@@ -51,6 +52,7 @@ export const SearchBar = ({
       ]}
     >
       <SearchIcon
+        aria-hidden="true"
         sx={(theme: Theme) => ({
           fontSize: "1.1rem",
           color: theme.palette?.primary?.main ?? theme.custom?.translucidWhite,
@@ -59,11 +61,12 @@ export const SearchBar = ({
       />
 
       <InputBase
+        type="search"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        sx={(theme: Theme) => ({
-          flex: 1,
+        inputProps={{ "aria-label": placeholder }}
+        sx={ (theme: Theme) => ({
           fontSize: "0.9rem",
           color: theme.custom?.fontColor,
           "& input::placeholder": {

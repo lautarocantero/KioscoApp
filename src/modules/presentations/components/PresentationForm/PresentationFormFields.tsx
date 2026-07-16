@@ -19,6 +19,8 @@ const PresentationFormFields = ({ readOnly = false, icons }: PresentationFormFie
             <Grid spacing={{ xs: 12, sm: 12 }}>
                 <FieldWithIcon iconConfig={icons?.sku}>
                     <TextField
+                        id="presentation-sku"
+                        name="sku"
                         fullWidth required label="SKU"
                         placeholder="Ej: COK-500ML-BLACK"
                         value={values.sku}
@@ -32,6 +34,8 @@ const PresentationFormFields = ({ readOnly = false, icons }: PresentationFormFie
             <Grid spacing={{ xs: 12, sm: 12 }}>
                 <FieldWithIcon iconConfig={icons?.model_type}>
                     <TextField
+                        id="presentation-model-type"
+                        name="model_type"
                         fullWidth required label="Tipo de modelo"
                         placeholder="Ej: Lata, Botella, Tetra Pack"
                         value={values.model_type}
@@ -45,6 +49,8 @@ const PresentationFormFields = ({ readOnly = false, icons }: PresentationFormFie
             <Grid spacing={{ xs: 12, sm: 12 }}>
                 <FieldWithIcon iconConfig={icons?.model_size}>
                     <TextField
+                        id="presentation-model-size"
+                        name="model_size"
                         fullWidth required label="Tamaño/Presentación"
                         placeholder="Ej: 500ml, 1L, 2L"
                         value={values.model_size}
@@ -57,7 +63,10 @@ const PresentationFormFields = ({ readOnly = false, icons }: PresentationFormFie
 
                         <Grid size={12}>
                 <FieldWithIcon iconConfig={icons?.image_url}>
-                    <TextField fullWidth label="URL de imagen" variant="outlined"
+                    <TextField
+                        id="presentation-image-url"
+                        name="image_url"
+                        fullWidth label="URL de imagen" variant="outlined"
                         disabled={readOnly}
                         placeholder="/images/productExample/mi-producto.png"
                         value={values.image_url} onChange={(e) => setFieldValue("image_url", e.target.value)}

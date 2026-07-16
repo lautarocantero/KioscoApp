@@ -14,6 +14,8 @@ const PresentationStockFields = ({ icons }: PresentationStockFieldsProps): React
             <Grid spacing={{ xs: 12, sm: 12 }}>
                 <FieldWithIcon iconConfig={icons?.stock}>
                     <TextField
+                        id="presentation-stock"
+                        name="stock"
                         fullWidth required label="Stock" type="number"
                         placeholder="Ej: 100"
                         value={values.stock}
@@ -27,6 +29,8 @@ const PresentationStockFields = ({ icons }: PresentationStockFieldsProps): React
             <Grid spacing={{ xs: 12, sm: 12 }}>
                 <FieldWithIcon iconConfig={icons?.min_stock}>
                     <TextField
+                        id="presentation-min-stock"
+                        name="min_stock"
                         fullWidth required label="Stock mínimo" type="number"
                         placeholder="Ej: 10"
                         value={values.min_stock}
@@ -40,6 +44,8 @@ const PresentationStockFields = ({ icons }: PresentationStockFieldsProps): React
             <Grid spacing={{ xs: 12, sm: 12 }}>
                 <FieldWithIcon iconConfig={icons?.price}>
                     <TextField
+                        id="presentation-price"
+                        name="price"
                         fullWidth required label="Precio" type="number"
                         placeholder="Ej: 1.50"
                         value={values.price}
