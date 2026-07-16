@@ -20,7 +20,7 @@ const PresentationDetailForm = (): React.ReactNode => {
             readOnly
             backPath={`/products/${product_id}/presentations`}
             header={{
-                title: "Detalles del producto",
+                title: "Detalles de la presentacion",
                 subtitle: "Información completa del producto (solo lectura)",
                 icon: <Inventory2OutlinedIcon />,
             }}

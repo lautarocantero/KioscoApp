@@ -18,7 +18,12 @@ const ProductFormFirstStep = (): React.ReactNode => {
         <FormCard
             submitText={actionTitle === FormModeComplexEnum.Create ? "Crear" : "Actualizar"}
             showButtons={!isDetail}
-            header={{ title: actionTitle === FormModeComplexEnum.Create ? "Crear producto" : "Editar producto" }}
+            header={{
+                title:
+                    actionTitle === FormModeComplexEnum.Create ? "Crear producto" :
+                    actionTitle === FormModeComplexEnum.Edit ? "Editar producto" :
+                    "Detalle del producto",
+            }}
             submitError={submitError}
             stepErrors={stepErrors}
             readOnly={isDetail}
