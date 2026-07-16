@@ -40,16 +40,18 @@ const AnalyticsFiltersComponent = ({
                 icon={<GroupsOutlinedIcon sx={{ fontSize: "1.1rem", color: "primary.main" }} />}
                 title="Segmentación"
             >
-                <Box sx={{ flex: 1, minWidth: FILTER_MIN_WIDTH }}>
-                    <PresentationFilter
-                        label="Presentación"
-                        presentations={presentations}
-                        onPresentationChange={onPresentationChange}
-                        selectedPresentationId={selectedPresentationId}
-                        isPresentationSelectorDisabled={isPresentationSelectorDisabled}
-                        hidePresentationFilter={hidePresentationFilter}
-                    />
-                </Box>
+                {!hidePresentationFilter && (
+                    <Box sx={{ flex: 1, minWidth: FILTER_MIN_WIDTH }}>
+                        <PresentationFilter
+                            label="Presentación"
+                            presentations={presentations}
+                            onPresentationChange={onPresentationChange}
+                            selectedPresentationId={selectedPresentationId}
+                            isPresentationSelectorDisabled={isPresentationSelectorDisabled}
+                            hidePresentationFilter={hidePresentationFilter}
+                        />
+                    </Box>
+                )}
 
                 <Box sx={{ flex: 1, minWidth: FILTER_MIN_WIDTH }}>
                     <SellerFilter label="Vendedor" sellerId={sellerId} onChange={handleSellerChange} />
