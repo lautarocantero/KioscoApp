@@ -5,6 +5,7 @@ import CardCarousel from "../../../shared/components/Cards/CardCarousel";
 import PresentationAnalyticsSection from "../../../shared/components/PresentationAnalitycs/PresentationAnalyticsSection";
 import PresentationForm from "modules/presentations/components/PresentationForm/PresentationForm";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import { useDetailCarouselLayout } from "../../../../hooks/ui/useCardCarousel";
 
 const PresentationDetailPage = (): React.ReactNode => {
     const { product_id, presentation_id } = useParams<{
@@ -12,17 +13,17 @@ const PresentationDetailPage = (): React.ReactNode => {
         presentation_id: string;
     }>();
 
+    const { gap, boxPaddingX, detailWidth, analyticsWidth, hintText } = useDetailCarouselLayout(820, 960);
+
     return (
-        <AppLayout fullWidth noCenter>
-            <Box sx={{ width: "100%", display: "flex", justifyContent: "center", pt: 1 }}>
+        <AppLayout fullWidth noCenter noPadding>
+            <Box sx={{ width: "100%", display: "flex", justifyContent: "center", pt: 1, px: boxPaddingX }}>
                 <CardCarousel
-                    gap={24}
+                    gap={gap}
                     maxViewportWidth={1500}
-                    hintText={(index, total) =>
-                        index < total - 1 ? "Desliza hacia la derecha para ver las estadísticas de venta" : undefined
-                    }
+                    hintText={hintText}
                     items={[
-                        { id: "detail", content: <PresentationForm mode={FormModeComplexEnum.Detail} />, width: 820 },
+                        { id: "detail", content: <PresentationForm mode={FormModeComplexEnum.Detail} />, width: detailWidth },
                         {
                             id: "analytics",
                             content: (
@@ -31,7 +32,7 @@ const PresentationDetailPage = (): React.ReactNode => {
                                     initialPresentationId={presentation_id}
                                 />
                             ),
-                            width: 960,
+                            width: analyticsWidth,
                         },
                     ]}
                 />

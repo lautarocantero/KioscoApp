@@ -24,6 +24,9 @@ export const SIDEBAR_STORAGE_KEY = "sidebar-expanded";
 
 export const DRAG_THRESHOLD_PX = 80;
 
+export const MOBILE_SIDE_PADDING = 32;
+export const MIN_MOBILE_CARD_WIDTH = 260;
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📝 FORMULARIOS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝              ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/

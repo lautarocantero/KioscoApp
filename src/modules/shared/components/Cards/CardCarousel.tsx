@@ -4,7 +4,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SwipeOutlinedIcon from "@mui/icons-material/SwipeOutlined";
 import type { CardCarouselProps } from "@typings/ui/cardCarousel";
 import { useCardCarousel } from "../../../../hooks/ui/useCardCarousel";
-import { useBreakpoint } from "../../../../hooks/ui/useBreakpoint";
 
 const CardCarousel = ({
     items,
@@ -18,9 +17,6 @@ const CardCarousel = ({
     showArrows = true,
     sx,
 }: CardCarouselProps): React.ReactNode => {
-    const bp = useBreakpoint();
-    const isMobile = bp === "xs";
-
     const {
         activeIndex,
         total,
@@ -29,19 +25,15 @@ const CardCarousel = ({
         activeWidth,
         isDragging,
         resolvedHint,
+        isMobile,
+        arrowsVisible,
         goTo,
         handlePointerDown,
         handlePointerMove,
         handlePointerUp,
-    } = useCardCarousel({ items, defaultCardWidth, gap, activeIndex: controlledIndex, onIndexChange, hintText });
+    } = useCardCarousel({ items, defaultCardWidth, gap, activeIndex: controlledIndex, onIndexChange, hintText, showArrows });
 
     if (total === 0) return null;
-
-    // En xs el swipe es la interacción principal (ver hint más abajo). Las
-    // flechas se posicionan con left: -20 / activeWidth - 20, y con la card
-    // ocupando casi todo el viewport quedan a medias afuera de la pantalla,
-    // generando overflow horizontal. Se ocultan en mobile.
-    const arrowsVisible = showArrows && !isMobile;
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", ...sx }}>

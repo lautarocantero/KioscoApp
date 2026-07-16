@@ -26,5 +26,19 @@ export interface CardCarouselProps {
 
 export type UseCardCarouselParams = Pick<
     CardCarouselProps,
-    "items" | "defaultCardWidth" | "gap" | "activeIndex" | "onIndexChange" | "hintText"
+    "items" | "defaultCardWidth" | "gap" | "activeIndex" | "onIndexChange" | "hintText" | "showArrows" 
 >;
+
+export interface DetailCarouselLayout {
+    isMobile: boolean;
+    /** Gap entre cards del CardCarousel. */
+    gap: number;
+    /** Padding horizontal para el Box que envuelve al CardCarousel. */
+    boxPaddingX: number;
+    /** Ancho de la card de detalle (form). */
+    detailWidth: number;
+    /** Ancho de la card de analíticas. */
+    analyticsWidth: number;
+    /** Listo para pasar directo al prop `hintText` de CardCarousel. */
+    hintText: (index: number, total: number) => string | undefined;
+}
