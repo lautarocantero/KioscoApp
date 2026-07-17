@@ -9,17 +9,20 @@ function GenericListCell<T>({
   getLabel,
   getTooltipLine,
   getKey,
-}: GenericCellProps<T>): React.ReactNode {
+  maxVisible = 1,
+}: GenericCellProps<T> & { maxVisible?: number }): React.ReactNode {
   if (!items.length) {
     return (
-      <Typography variant="body2" color="text.disabled">
-        {emptyLabel}
-      </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", height: "100%" }}>
+        <Typography variant="body2" color="text.disabled">
+          {emptyLabel}
+        </Typography>
+      </Box>
     );
   }
 
-  const [first, ...rest] = items;
-  const label = getLabel(first);
+  const visible = items.slice(0, maxVisible);
+  const rest = items.slice(maxVisible);
   const fullListLabel = items.map((item) => getTooltipLine(item)).join(", ");
 
   return (
@@ -43,7 +46,7 @@ function GenericListCell<T>({
         sx={{ cursor: "default", display: "inline-block", "&:focus-visible": { outline: (theme) => `2px solid ${theme.palette.primary.main}`, outlineOffset: 2 } }}
       >
         <Typography variant="body2">
-          {label}
+          {visible.map((item, i) => getLabel(item)).join(", ")}
           {rest.length > 0 && (
             <Typography
               component="span"

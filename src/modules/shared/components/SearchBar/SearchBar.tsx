@@ -1,18 +1,8 @@
-// src/.../components/SearchBar/SearchBar.tsx
-import { Box, IconButton, InputBase, Typography, type Theme, type SxProps } from "@mui/material";
+import { Box, IconButton, InputBase, Typography, type Theme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
+import type { SearchBarProps } from "@typings/shared/reactComponents";
 
-export interface SearchBarProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  onClear?: () => void;
-  showShortcutHint?: boolean;
-  shortcutHint?: string;
-  sx?: SxProps<Theme>;
-  fullWidth?: boolean;
-}
 
 export const SearchBar = ({
   value,
@@ -40,6 +30,7 @@ export const SearchBar = ({
           minWidth: "200px",
           maxWidth: fullWidth ? "100%" : "480px",
           display: "flex",
+          justifyContent: 'space-between',
           alignItems: "center",
           gap: 1,
           px: 1.5,
@@ -51,56 +42,69 @@ export const SearchBar = ({
         ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
       ]}
     >
-      <SearchIcon
-        aria-hidden="true"
-        sx={(theme: Theme) => ({
-          fontSize: "1.1rem",
-          color: theme.palette?.primary?.main ?? theme.custom?.translucidWhite,
-          flexShrink: 0,
-        })}
-      />
-
-      <InputBase
-        type="search"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        inputProps={{ "aria-label": placeholder }}
-        sx={ (theme: Theme) => ({
-          fontSize: "0.9rem",
-          color: theme.custom?.fontColor,
-          "& input::placeholder": {
-            color: theme.custom?.fontColor,
-            opacity: 1,
-          },
-        })}
-      />
-
-      {value ? (
-        <IconButton
-          size="small"
-          onClick={handleClear}
-          aria-label="Limpiar búsqueda"
-          sx={{ p: 0.25, flexShrink: 0 }}
-        >
-          <DeleteIcon
-            sx={(theme: Theme) => ({
-              fontSize: "1.1rem",
-              color: theme.palette?.primary?.main ?? theme.custom?.translucidWhite,
-            })}
-          />
-        </IconButton>
-      ) : showShortcutHint ? (
-        <Typography
-          variant="caption"
+      <Box 
+        sx={({
+            display: "flex",
+            justifyContent: 'flex-start',
+            alignItems: "center",
+            gap: 1,
+            width: '90%'
+          })}
+      >
+        <SearchIcon
+          aria-hidden="true"
           sx={(theme: Theme) => ({
-            color: theme.custom?.lightGray ?? theme.custom?.translucidWhite,
+            fontSize: "1.1rem",
+            color: theme.palette?.primary?.main ?? theme.custom?.translucidWhite,
             flexShrink: 0,
           })}
-        >
-          {shortcutHint}
-        </Typography>
-      ) : null}
+        />
+
+        <InputBase
+          type="search"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          inputProps={{ "aria-label": placeholder }}
+          sx={ (theme: Theme) => ({
+            fontSize: "0.9rem",
+            color: theme.custom?.fontColor,
+            minWidth: "100%",
+            "& input::placeholder": {
+              color: theme.custom?.fontColor,
+              opacity: 1,
+            },
+          })}
+        />
+      </Box>
+
+      <Box>
+        {value ? (
+          <IconButton
+            size="small"
+            onClick={handleClear}
+            aria-label="Limpiar búsqueda"
+            sx={{ p: 0.25, flexShrink: 0 }}
+          >
+            <DeleteIcon
+              sx={(theme: Theme) => ({
+                fontSize: "1.1rem",
+                color: theme.palette?.primary?.main ?? theme.custom?.translucidWhite,
+              })}
+            />
+          </IconButton>
+        ) : showShortcutHint ? (
+          <Typography
+            variant="caption"
+            sx={(theme: Theme) => ({
+              color: theme.custom?.lightGray ?? theme.custom?.translucidWhite,
+              flexShrink: 0,
+            })}
+          >
+            {shortcutHint}
+          </Typography>
+        ) : null}
+      </Box>
     </Box>
   );
 };

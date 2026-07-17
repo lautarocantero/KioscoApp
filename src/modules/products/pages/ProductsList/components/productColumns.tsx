@@ -1,7 +1,7 @@
 import { type GridColDef } from "@mui/x-data-grid";
 import type { BuildColumnsArgs, PresentationSummary, Product } from "@typings/product/productTypes";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
-import GenericListCell from "../../../../shared/components/DataTable/GenericCell";
+import GenericListCell from "../../../../shared/components/DataTable/GenericListCell";
 import { CellCenter } from "modules/shared/components/DataTable/CellCenter";
 import { dateColumn, truncatedTextColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
 
@@ -42,7 +42,11 @@ export const buildColumnsForProducts = ({
             <GenericListCell<PresentationSummary>
                 items={params.value ?? []}
                 emptyLabel="Sin presentaciones"
-                getLabel={(p) => `${p.model_type} ${p.model_size}`}
+                maxVisible={2}
+                getLabel={(p) => {
+                    const label = `${p.model_type} ${p.model_size}`;
+                    return label.length > 20 ? `${label.slice(0, 20)}…` : label;
+                }}
                 getTooltipLine={(p) => `${p.model_type} ${p.model_size} · ${p.stock} u. · ${p.sku}`}
                 getKey={(p, i) => `${p.sku}-${i}`}
             />

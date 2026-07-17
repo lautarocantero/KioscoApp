@@ -2,9 +2,6 @@
 
 ---
 Productos:
-- [ xxx ] La barra de busqueda tiene mal el logito. 
-- [ xxx ] Una sola presentacion puede ocupar mucho espacio en la tabla si el nombre es grande, poner limite de caracteres. 
-- [ xxx ] Centrar palabra de sin presentaciones al no tener presentaciones en una tabla.
 - [ xxx ] Al ver el detalle de un producto sin presentaciones el mensaje de que no hay presentaciones es feo, modificarlo. 
 - [ xx ] Poner una comprobacion mas estricta a la creacion de productos y presentaciones.
 ---
