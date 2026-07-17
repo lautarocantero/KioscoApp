@@ -17,6 +17,7 @@ import { usePresentationData } from "./usePresentationData";
 import { useFormSteps } from "../shared/useFormSteps";
 import { useErrorParser } from "../shared/useErrorParser";
 import { stepFieldsMap } from "../../modules/presentations/schema/PresentationFormSchema";
+import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 const STEPS_LABELS = ["Datos del producto", "Datos de la presentación", "Stock y operación"];
 const buildStepsConfig = () => STEPS_LABELS.map((label) => ({ title: label, content: null }));
@@ -232,3 +233,25 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
         handleEdit,
     };
 }
+
+/*══════════════════════════════════════════════╗
+║ 🪝 usePresentationFormHeader                         ║
+╚══════════════════════════════════════════════*/
+
+export const usePresentationFormHeader = (actionTitle: FormModeComplexEnum | undefined) => {
+    const { product_id } = useParams<{ product_id: string }>();
+    const { productData } = useProductData(product_id);
+
+    const isCreate = actionTitle === FormModeComplexEnum.Create;
+    const truncatedName = productData?.name
+    ? productData.name.length > 20
+        ? `${productData.name.slice(0, 20)}…`
+        : productData.name
+    : null;
+
+    const headerTitle = isCreate
+        ? `Crear presentación${truncatedName ? ` de ${truncatedName}` : ""}`
+        : "Editar presentación";
+
+    return { isCreate, headerTitle, productId: product_id };
+};

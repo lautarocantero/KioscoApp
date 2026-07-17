@@ -28,67 +28,88 @@ const FormHeader = ({
         ? Math.round(((currentStep + 1) / stepsLabels.length) * 100)
         : 0;
 
+    const iconBox = (
+        <Box sx={(theme: Theme) => ({
+            width: 34, height: 34, borderRadius: "8px",
+            background: theme.custom.darkBackground,
+            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+        })}>
+            {icon ?? getDefaultIcon(theme.palette.primary.main)}
+        </Box>
+    );
+
+    const titleBlock = (
+        <Box>
+            <Typography sx={(theme: Theme) => ({
+                fontSize: "1.3rem", fontWeight: 500, lineHeight: 1.3,
+                color: theme.custom.fontColor,
+            })}>
+                {title}
+            </Typography>
+            {subtitle && (
+                <Typography sx={(theme: Theme) => ({
+                    fontSize: "0.75rem", color: theme.custom.translucidWhite, mt: "2px",
+                })}>
+                    {subtitle}
+                </Typography>
+            )}
+        </Box>
+    );
+
+    const progressCircle = isMultiStep && stepsLabels.length > 0 && (
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
+            <Box sx={{ position: "relative", width: 36, height: 36 }}>
+                <svg width="36" height="36" viewBox="0 0 36 36" style={{ transform: "rotate(-90deg)" }}>
+                    <circle cx="18" cy="18" r="15" fill="none" stroke={alpha(theme.custom.darkGray, 0.1)} strokeWidth="2" />
+                    <circle
+                        cx="18" cy="18" r="15"
+                        fill="none"
+                        stroke={theme.palette.primary.main}
+                        strokeWidth="2"
+                        strokeDasharray={2 * Math.PI * 15}
+                        strokeDashoffset={2 * Math.PI * 15 * (1 - (currentStep + 1) / stepsLabels.length)}
+                        strokeLinecap="round"
+                        style={{ transition: "stroke-dashoffset 0.5s ease" }}
+                    />
+                </svg>
+                <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                    <Typography sx={{ fontSize: "0.65rem", fontWeight: 700, color: theme.palette.primary.main }}>
+                        {progress}%
+                    </Typography>
+                </Box>
+            </Box>
+            <Typography sx={(theme: Theme) => ({
+                fontSize: "0.6rem", color: theme.custom.translucidFontColor, mt: "2px",
+            })}>
+                Completado
+            </Typography>
+        </Box>
+    );
+
     return (
         <Box sx={{
             display: "flex", flexDirection: "column",
             px: 3, py: 2,
         }}>
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                    <Box sx={(theme: Theme) => ({
-                        width: 34, height: 34, borderRadius: "8px",
-                        background: theme.custom.darkBackground,
-                        display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-                    })}>
-                        {icon ?? getDefaultIcon(theme.palette.primary.main)}
+            {isMobile ? (
+                <>
+                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        {iconBox}
+                        {progressCircle}
                     </Box>
-                    <Box>
-                        <Typography sx={(theme: Theme) => ({
-                            fontSize: "1.3rem", fontWeight: 500, lineHeight: 1.3,
-                            color: theme.custom.fontColor,
-                        })}>
-                            {title}
-                        </Typography>
-                        {subtitle && (
-                            <Typography sx={(theme: Theme) => ({
-                                fontSize: "0.75rem", color: theme.custom.translucidWhite, mt: "2px",
-                            })}>
-                                {subtitle}
-                            </Typography>
-                        )}
+                    <Box sx={{ mt: 1.5 }}>
+                        {titleBlock}
                     </Box>
+                </>
+            ) : (
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                        {iconBox}
+                        {titleBlock}
+                    </Box>
+                    {progressCircle}
                 </Box>
-
-                {isMultiStep && stepsLabels.length > 0 && (
-                    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
-                        <Box sx={{ position: "relative", width: 36, height: 36 }}>
-                            <svg width="36" height="36" viewBox="0 0 36 36" style={{ transform: "rotate(-90deg)" }}>
-                                <circle cx="18" cy="18" r="15" fill="none" stroke={alpha(theme.custom.darkGray, 0.1)} strokeWidth="2" />
-                                <circle
-                                    cx="18" cy="18" r="15"
-                                    fill="none"
-                                    stroke={theme.palette.primary.main}
-                                    strokeWidth="2"
-                                    strokeDasharray={2 * Math.PI * 15}
-                                    strokeDashoffset={2 * Math.PI * 15 * (1 - (currentStep + 1) / stepsLabels.length)}
-                                    strokeLinecap="round"
-                                    style={{ transition: "stroke-dashoffset 0.5s ease" }}
-                                />
-                            </svg>
-                            <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                                <Typography sx={{ fontSize: "0.65rem", fontWeight: 700, color: theme.palette.primary.main }}>
-                                    {progress}%
-                                </Typography>
-                            </Box>
-                        </Box>
-                        <Typography sx={(theme: Theme) => ({
-                            fontSize: "0.6rem", color: theme.custom.translucidFontColor, mt: "2px",
-                        })}>
-                            Completado
-                        </Typography>
-                    </Box>
-                )}
-            </Box>
+            )}
 
             {isMultiStep && stepsLabels.length > 0 && (
                 isMobile ? (

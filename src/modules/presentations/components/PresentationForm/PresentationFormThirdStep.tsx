@@ -4,19 +4,20 @@ import ExpirationField from "../../../shared/components/FormCard/ExpirationField
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
-import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import type { ReactNode } from "react";
+import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
 
 
 const PresentationFormThirdStep = (): ReactNode => {
     const theme = useTheme();
     const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
+    const { isCreate, headerTitle } = usePresentationFormHeader(actionTitle);
 
     return (
         <FormCard 
-            submitText={actionTitle === FormModeComplexEnum.Create ? "Crear" : "Actualizar"} 
+            submitText={isCreate ? "Crear" : "Actualizar"} 
             showButtons  
-            header={{ title: actionTitle === FormModeComplexEnum.Create ? "Crear presentación" : "Editar presentación" }}
+            header={{ title: headerTitle }}
             submitError={submitError}
             stepErrors={stepErrors}
             multiStepHeader={{ 

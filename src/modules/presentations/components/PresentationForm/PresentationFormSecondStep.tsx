@@ -6,19 +6,20 @@ import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
-import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import type { ReactNode } from "react";
+import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
 
 
 const PresentationFormSecondStep = (): ReactNode => {
     const theme = useTheme();
     const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
+    const { isCreate, headerTitle } = usePresentationFormHeader(actionTitle);
 
     return (
         <FormCard 
-            submitText={actionTitle === FormModeComplexEnum.Create ? "Crear" : "Actualizar"} 
+            submitText={isCreate ? "Crear" : "Actualizar"} 
             showButtons  
-            header={{ title: actionTitle === FormModeComplexEnum.Create ? "Crear presentación" : "Editar presentación" }}
+            header={{ title: headerTitle }}
             submitError={submitError}
             stepErrors={stepErrors}
             multiStepHeader={{ 

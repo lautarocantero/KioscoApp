@@ -7,22 +7,22 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import { useParams } from "react-router-dom";
-import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { useTheme } from "@mui/material";
 import type { ReactNode } from "react";
+import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
 
 
 const PresentationFormFirstStep = (): ReactNode => {
     const theme = useTheme();
     const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
     const { product_id } = useParams<{ product_id: string }>();
+    const { isCreate, headerTitle } = usePresentationFormHeader(actionTitle);
 
-    
     return (
         <FormCard 
-            submitText={actionTitle === FormModeComplexEnum.Create ? "Crear" : "Actualizar"} 
+            submitText={isCreate ? "Crear" : "Actualizar"} 
             showButtons 
-            header={{ title: actionTitle === FormModeComplexEnum.Create ? "Crear presentación" : "Editar presentación" }}
+            header={{ title: headerTitle }}
             submitError={submitError}
             stepErrors={stepErrors}
             multiStepHeader={{ 

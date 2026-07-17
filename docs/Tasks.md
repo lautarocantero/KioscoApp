@@ -1,12 +1,6 @@
 ## 🗂️ To-Do / Roadmap
 
 ---
-Productos:
-- [ xx ] Poner una comprobacion mas estricta a la creacion de productos y presentaciones.
----
-general: 
-- [ xxx ] Los formularios validan antes de terminar, validan on blur. 
----
 Presentaciones:
 - [ xxx ] Presentation debe de tener su propia descripcion o titulo porque ahora usa las del padre.
 - [ xxx ] Poner tooltips a los campos de presentation, por ejemplo el sku o codigo de barras un boton de copiar, ademas el subtitulo de detail no se ve en claro.
