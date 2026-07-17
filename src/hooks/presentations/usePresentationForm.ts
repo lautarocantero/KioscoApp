@@ -81,8 +81,8 @@ export function usePresentationCreate(): UsePresentationFormReturn {
         try {
             const now = new Date().toISOString();
             const body = {
-                name:            productData.name,
-                description:     productData.description,
+                name:            values.name,
+                description:     values.description,
                 brand:           productData.brand,
                 image_url:       values.image_url || productData.image_url,
                 product_id:      productId ?? "",

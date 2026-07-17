@@ -44,6 +44,8 @@ export const getPresentationDetailInitialValues = getPresentationEditInitialValu
 // ── Schemas ───────────────────────────────────────────────────────────────────
 
 export const presentationFormSchema = Yup.object({
+    name:       Yup.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100).required("Nombre requerido"),
+    description:       Yup.string().trim().min(2, "La descripcion debe tener al menos 2 caracteres").max(100).required("Descripcion requerida"),
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
@@ -55,6 +57,8 @@ export const presentationFormSchema = Yup.object({
 });
 
 export const presentationEditFormSchema = Yup.object({
+    name:       Yup.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100).required("Nombre requerido"),
+    description:       Yup.string().trim().min(2, "La descripcion debe tener al menos 2 caracteres").max(100).required("Descripcion requerida"),
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
@@ -68,7 +72,7 @@ export const presentationEditFormSchema = Yup.object({
 // ── Step fields map ───────────────────────────────────────────────────────────
 
 export const stepFieldsMap: Record<number, (keyof PresentationFormValues)[]> = {
-    0: ["sku", "model_type", "model_size", "image_url"],
+    0: ["name","description", "sku", "model_type", "model_size", "image_url"],
     1: ["min_stock", "stock", "price"],
     2: ["expiration_date"],
 };

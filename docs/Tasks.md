@@ -1,12 +1,14 @@
 ## 🗂️ To-Do / Roadmap
 
 ---
+general:
+- [ xxx ] Al entrar en el listado de una presentacion o cambiar de listado, aparece por un segundo el listado anterior. 
+---
 Presentaciones:
-- [ xxx ] Presentation debe de tener su propia descripcion o titulo porque ahora usa las del padre.
-- [ xxx ] Poner tooltips a los campos de presentation, por ejemplo el sku o codigo de barras un boton de copiar, ademas el subtitulo de detail no se ve en claro.
 - [ xxx ] Al modificar un Presentation y darle a ver presentaciones devuelve a http://localhost:5173/products/undefined/presentations. 
 - [ xxx ] Al crear un Presentation y darle a ver presentaciones devuelve a  http://localhost:5173/products/undefined/presentations.
-
+- [ xxx ] Al crear una presentacion poner opcion de ver listado de presentaciones
+- [ xxx ] Poner reglas mas estrictas en el formulario, poner fechas de vencimiento superiores a la fecha actual. 
 
 
 

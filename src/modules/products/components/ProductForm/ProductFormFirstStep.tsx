@@ -1,18 +1,16 @@
-import { useTheme } from "@mui/material/styles";
-import ProductFormFields from "./ProductFormFields";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import FormCard from "../../../../modules/shared/components/FormCard/FormCard";
-import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
+import type { ProductEditFormValues, ProductFormValues } from "@typings/product/productTypes";
+import ProductImagePreview from "modules/shared/components/Image/ProductImagePreview";
+import { PRODUCT_FIELD_REGISTRY } from "./ProductFieldRegistry";
+import { useFormikContext } from "formik";
 
 const ProductFormFirstStep = (): React.ReactNode => {
-    const theme = useTheme();
     const { actionTitle, submitError, stepErrors } = useFormNavigation();
     const isDetail = actionTitle === FormModeComplexEnum.Detail;
-
+    const { values } = useFormikContext<ProductFormValues>();
 
     return (
         <FormCard
@@ -42,14 +40,15 @@ const ProductFormFirstStep = (): React.ReactNode => {
             }
             backPath={`/products`}
         >
-            <ProductFormFields
-                readOnly={isDetail}
-                icons={{
-                    name: { icon: <Inventory2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
-                    brand: { icon: <LocalOfferOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
-                    description: { icon: <DescriptionOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
-                    image_url: { icon: <LinkOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
-                }}
+            <FormFieldsRenderer<ProductFormValues & ProductEditFormValues>
+                idPrefix="product"
+                sectionLabel="Datos del producto"
+                registry={PRODUCT_FIELD_REGISTRY}
+                fields={["name", "brand", "description", "image_url"]}
+                icons={{ /* tus iconos actuales */ }}
+                renderAfterField={
+                    values.image_url ? { image_url: <ProductImagePreview imageUrl={values.image_url} /> } : undefined
+                }
             />
         </FormCard>
     );

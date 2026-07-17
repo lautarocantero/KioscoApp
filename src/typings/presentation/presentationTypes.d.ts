@@ -203,25 +203,3 @@ export type PresentationTicketType = PresentationPublic;
 
 
 type IconConfig = FieldWithIconProps["iconConfig"];
-
-export interface PresentationFormFieldsProps {
-    readOnly?: boolean;
-    icons?: {
-        sku?: IconConfig;
-        model_type?: IconConfig;
-        model_size?: IconConfig;
-        image_url?: FieldIconConfig;
-    };
-}
-
-export interface PresentationStockFieldsProps {
-    icons?: {
-        stock?: IconConfig;
-        min_stock?: IconConfig;
-        price?: IconConfig;
-    };
-}
-
-export interface ExpirationFieldProps {
-    icon?: IconConfig;
-}

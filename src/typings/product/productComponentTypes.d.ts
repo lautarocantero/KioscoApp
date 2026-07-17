@@ -52,16 +52,6 @@ interface FieldIconConfig {
     color: string;
 }
 
-export interface ProductFormFieldsProps {
-    readOnly?: boolean;
-    icons?: {
-        name?: FieldIconConfig;
-        brand?: FieldIconConfig;
-        description?: FieldIconConfig;
-        image_url?: FieldIconConfig;
-    };
-}
-
 export interface ProductFormProps {
     mode?: FormModeComplexEnum;
 }
