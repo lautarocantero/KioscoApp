@@ -1,9 +1,6 @@
 ## 🗂️ To-Do / Roadmap
 
 ---
-general:
-- [ xxx ] Al entrar en el listado de una presentacion o cambiar de listado, aparece por un segundo el listado anterior. 
----
 Presentaciones:
 - [ xxx ] Al modificar un Presentation y darle a ver presentaciones devuelve a http://localhost:5173/products/undefined/presentations. 
 - [ xxx ] Al crear un Presentation y darle a ver presentaciones devuelve a  http://localhost:5173/products/undefined/presentations.
