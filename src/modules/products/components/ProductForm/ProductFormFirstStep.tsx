@@ -6,8 +6,14 @@ import type { ProductEditFormValues, ProductFormValues } from "@typings/product/
 import ProductImagePreview from "modules/shared/components/Image/ProductImagePreview";
 import { PRODUCT_FIELD_REGISTRY } from "./ProductFieldRegistry";
 import { useFormikContext } from "formik";
+import { useTheme } from "@mui/material";
+import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
+import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 
 const ProductFormFirstStep = (): React.ReactNode => {
+    const theme = useTheme();
     const { actionTitle, submitError, stepErrors } = useFormNavigation();
     const isDetail = actionTitle === FormModeComplexEnum.Detail;
     const { values } = useFormikContext<ProductFormValues>();
@@ -45,7 +51,12 @@ const ProductFormFirstStep = (): React.ReactNode => {
                 sectionLabel="Datos del producto"
                 registry={PRODUCT_FIELD_REGISTRY}
                 fields={["name", "brand", "description", "image_url"]}
-                icons={{ /* tus iconos actuales */ }}
+                icons={{
+                    name: { icon: <BookmarkBorderOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
+                    brand: { icon: <LocalOfferOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
+                    description: { icon: <DescriptionOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
+                    image_url: { icon: <LinkOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
+                }}
                 renderAfterField={
                     values.image_url ? { image_url: <ProductImagePreview imageUrl={values.image_url} /> } : undefined
                 }
