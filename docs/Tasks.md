@@ -1,25 +1,38 @@
 ## 🗂️ To-Do / Roadmap
 
 ---
-general: 
-- [ xxx ] Refactorizar todo. 
-- [ xxx ] Agregar disenos sx.
-- [ xx ] Leer la documentacion y dejarla presentable.
-- [ x ] Agregar componente para las situaciones donde algo no carga, llega sin datos, early return. 
-
----
-sidebar:
-- [ xxx ] Al darle click a un elemento del sidebar que tenga sub elementos abrir el navbar.
-- [ xxx ] no funciona correctamente en sx.
----
 Productos:
-- [ xxx ] Agregar documentacion.
-- [ x ] hacer que la card de stock funcione, implementar cambios en backend. (pausado por ahora)
-- [ x ] comprobar si se puede incluir alguna forma para comparar periodos, etc. (pausado por ahora)
+- [ xxx ] La barra de busqueda tiene mal el logito. 
+- [ xxx ] Una sola presentacion puede ocupar mucho espacio en la tabla si el nombre es grande, poner limite de caracteres. 
+- [ xxx ] Centrar palabra de sin presentaciones al no tener presentaciones en una tabla.
+- [ xxx ] Al ver el detalle de un producto sin presentaciones el mensaje de que no hay presentaciones es feo, modificarlo. 
+- [ xx ] Poner una comprobacion mas estricta a la creacion de productos y presentaciones.
+---
+general: 
+- [ xxx ] Los formularios validan antes de terminar, validan on blur. 
 ---
 Presentaciones:
 - [ xxx ] Presentation debe de tener su propia descripcion o titulo porque ahora usa las del padre.
-- [ xx ] Presentation created devuelve mal a el listado.
+- [ xxx ] Poner tooltips a los campos de presentation, por ejemplo el sku o codigo de barras un boton de copiar, ademas el subtitulo de detail no se ve en claro.
+- [ xxx ] Al modificar un Presentation y darle a ver presentaciones devuelve a http://localhost:5173/products/undefined/presentations. 
+- [ xxx ] Al crear un Presentation y darle a ver presentaciones devuelve a  http://localhost:5173/products/undefined/presentations.
+
+
+
+
+---
+general: 
+- [ x ] Refactorizar todo. 
+- [ x ] Leer la documentacion y dejarla presentable.
+- [ x ] Agregar componente para las situaciones donde algo no carga, llega sin datos, early return. 
+---
+sidebar:
+- [ x ] Implementar colores para los menues y color picker.
+---
+Productos:
+- [ x ] hacer que la card de stock funcione, implementar cambios en backend. (pausado por ahora)
+- [ x ] comprobar si se puede incluir alguna forma para comparar periodos, etc. (pausado por ahora)
+
 ---
 ventas:
 - [ x ] quitar desplazamiento de iconos del searchbar.

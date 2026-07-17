@@ -42,9 +42,20 @@ export const useAppSidebar = () => {
   const handleNavClick = useCallback((link: NavLinkInterface) => {
     const hasSubGroups = !!NAV_SUBGROUPS[link.url]?.length;
 
-    if (!hasSubGroups) navigate(link.url);
-    if (hasSubGroups) toggleSection(link.url);
-  }, [navigate, toggleSection]);
+    if (!hasSubGroups) {
+      navigate(link.url);
+      return;
+    }
+
+    if (!isExpanded) {
+      setIsExpanded(true);
+      localStorage.setItem(SIDEBAR_STORAGE_KEY, "true");
+      setOpenSection(link.url);
+      return;
+    }
+
+    toggleSection(link.url);
+  }, [navigate, toggleSection, isExpanded]);
 
   const handleLogout = useCallback(() => dispatch(startLogout()), [dispatch]);
  

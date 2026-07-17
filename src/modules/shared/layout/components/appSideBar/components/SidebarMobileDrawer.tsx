@@ -45,9 +45,10 @@ const SidebarMobileDrawer = ({
         <SidebarLinksList
             isExpanded
             navLinks={navLinks}
-            handleNavClick={(...args) => {
-                handleNavClick(...args);
-                onClose();
+            handleNavClick={(link) => {
+                handleNavClick(link);
+                const { hasSubGroups } = getLinkMeta(link);
+                if (!hasSubGroups) onClose();
             }}
             getLinkMeta={getLinkMeta}
             isSubLinkActive={isSubLinkActive}
