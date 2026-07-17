@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import type { NoContentLoadedProps } from '@typings/ui/no-content.types';
+import type { NoContentLoadedProps } from '@typings/ui/noContent.types';
 import React, { type PropsWithChildren } from 'react';
 
 

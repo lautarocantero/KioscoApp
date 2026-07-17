@@ -2,7 +2,6 @@
 
 ---
 Productos:
-- [ xxx ] Al ver el detalle de un producto sin presentaciones el mensaje de que no hay presentaciones es feo, modificarlo. 
 - [ xx ] Poner una comprobacion mas estricta a la creacion de productos y presentaciones.
 ---
 general: 
