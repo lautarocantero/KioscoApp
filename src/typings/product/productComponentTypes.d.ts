@@ -41,6 +41,7 @@ export interface ProductImagePreviewProps {
 export interface ProductCreatedComponentProps {
     createdProduct: CreatedProductInterface;
     onCreateAnother: () => void;
+    handleBackToProducts: () => void;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

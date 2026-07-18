@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import SuccessCard from "../../../../shared/components/SuccessCard";
 import ProductCreatedTimeline from "./ProductCreatedTimeline";
 import type { ProductCreatedComponentProps } from "@typings/product/productComponentTypes";
 
 
-const ProductCreated = ({ createdProduct, onCreateAnother }: ProductCreatedComponentProps): React.ReactNode => {
-    const navigate = useNavigate();
+const ProductCreated = ({ createdProduct, onCreateAnother, handleBackToProducts }: ProductCreatedComponentProps): React.ReactNode => {
 
     return (
         <SuccessCard
@@ -22,7 +20,7 @@ const ProductCreated = ({ createdProduct, onCreateAnother }: ProductCreatedCompo
                 {
                     label:   "Volver a productos",
                     variant: "outlined",
-                    onClick: () => navigate("/products"),
+                    onClick: handleBackToProducts,
                 },
             ]}
         />

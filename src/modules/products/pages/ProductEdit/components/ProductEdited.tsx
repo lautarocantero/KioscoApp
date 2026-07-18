@@ -13,11 +13,6 @@ const ProductEdited = ({ updatedProduct }: ProductEditedProps): React.ReactNode 
             subtitle="Los cambios fueron guardados. Podés seguir editando o volver a la lista."
             actions={[
                 {
-                    label:   "Seguir editando",
-                    variant: "contained",
-                    onClick: () => navigate(`/products/edit/${updatedProduct._id}`),
-                },
-                {
                     label:   "Ver productos",
                     variant: "outlined",
                     onClick: () => navigate("/products"),

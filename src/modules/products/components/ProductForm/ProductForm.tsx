@@ -34,12 +34,14 @@ const ProductCreateForm = (): React.ReactNode => {
         submitError,
         stepErrors,
         handleCreateAnother,
+        handleBackToProducts,
     } = useProductCreate();
 
     if (createdProduct) return (
         <ProductCreated 
             createdProduct={createdProduct} 
             onCreateAnother={handleCreateAnother}
+            handleBackToProducts={handleBackToProducts}
         />
     );
         

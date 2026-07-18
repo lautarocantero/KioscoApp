@@ -147,7 +147,8 @@ export interface UseProductsFormReturn
         onValidSubmit?: () => void,
     ) => Promise<void>;
     handleSubmit: (values: ProductFormValues) => Promise<void>;
-    handleCreateAnother: () => void
+    handleCreateAnother: () => void;
+    handleBackToProducts: () => void;
 }
 
 // Hook de formulario de EDICIÓN

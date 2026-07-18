@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { FormikErrors } from "formik";
 import type {
@@ -24,6 +24,7 @@ import { stepsConfig, editStepsConfig } from "../../config/constants";
 
 export function useProductCreate(): UseProductsFormReturn {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     const [createdProduct, setCreatedProduct] = useState<CreatedProductInterface | null>(null);
     const [isSubmitting, setIsSubmitting]   = useState(false);
@@ -98,8 +99,15 @@ export function useProductCreate(): UseProductsFormReturn {
     };
 
     const handleCreateAnother = () => {
+        if(!createdProduct) return null;
+        const { _id } = createdProduct;
         setCreatedProduct(null);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        navigate(`/products/${_id}/presentations/new`);
+    };
+
+    const handleBackToProducts= () => {
+        setCreatedProduct(null);
+        navigate(`/products`);
     };
 
     return {
@@ -115,7 +123,8 @@ export function useProductCreate(): UseProductsFormReturn {
         handleNextStep,
         handlePrevStep,
         handleSubmit,
-        handleCreateAnother
+        handleCreateAnother,
+        handleBackToProducts,
     };
 }
 

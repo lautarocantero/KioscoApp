@@ -6,7 +6,9 @@ Presentaciones:
 - [ xxx ] Al crear un Presentation y darle a ver presentaciones devuelve a  http://localhost:5173/products/undefined/presentations.
 - [ xxx ] Al crear una presentacion poner opcion de ver listado de presentaciones
 - [ xxx ] Poner reglas mas estrictas en el formulario, poner fechas de vencimiento superiores a la fecha actual. 
-
+- [ xxx ] las rutas no son consistentes, crear productos tiene: "/products-create" . y crear presentaciones tiene: "products/id/presentations/new". 
+Comprobar si pasa lo mismo con otras rutas.
+- [ xxx ] Agregar campo codigo de barras.
 
 
 ---
