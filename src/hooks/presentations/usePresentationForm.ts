@@ -125,7 +125,8 @@ export function usePresentationCreate(): UsePresentationFormReturn {
         if(!createdPresentation) return null;
         const { _id } = createdPresentation;
         setCreatedPresentation(null);
-        navigate(`/products/${productId}/presentations/${_id}`);
+        navigate(`/products/${productId}/presentation/${_id}`)
+
     };
 
             
@@ -244,7 +245,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
                 throw new Error("Error al actualizar la presentación");
             }
 
-            setUpdatedVariant({ _id: variantId, name: `${values.model_type} - ${values.model_size}` });
+            setUpdatedVariant({ _id: variantId, name: values.name });
         } catch (error) {
             const message = await parseError(error, "Error inesperado al actualizar la presentación");
             setSubmitError(message);
@@ -256,7 +257,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
     const handleSeeDetail = () => {
         if(!updatedVariant) return null;
         setUpdatedVariant(null);
-        navigate(`/products/${productId}/presentations/${variantId}`)
+        navigate(`/products/${productId}/presentation/${variantId}`);
     };
 
     const handleBackToPresentations = () => {
