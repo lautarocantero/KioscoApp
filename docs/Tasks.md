@@ -2,12 +2,6 @@
 
 ---
 Presentaciones:
-- [ xxx ] Agregar campo codigo de barras.
-- [ xxx ] Poner reglas mas estrictas en el formulario, poner fechas de vencimiento superiores a la fecha actual. 
-          Poner el foco en los primeros campos del formulario, que se pase automaticamente al siguiente input, 
-          Poner vacio el input numerico porque empieza en o
-          Poner fecha por defecto la actual.
-
 
 ---
 general: 

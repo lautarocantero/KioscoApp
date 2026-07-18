@@ -1,6 +1,8 @@
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import type { FieldRegistry } from "@typings/shared/types/formCard.types";
 
+const todayISODate = new Date().toISOString().slice(0, 10);
+
 export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> = {
     name: {
         label: "Nombre",
@@ -17,8 +19,8 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
     barcode: {
         label: "Código de barras",
         placeholder: "Ej: 7791234567890",
-        tooltip: "Código de barras del producto, si lo tiene",
-        helperTextWhenEmpty: "Opcional — código de barras físico",
+        tooltip: "Código de barras del producto (EAN-8, UPC-A o EAN-13), si lo tiene",
+        helperTextWhenEmpty: "Opcional — 8 a 13 dígitos numéricos",
     },
     sku: {
         label: "SKU",
@@ -34,8 +36,8 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
     },
     model_size: {
         label: "Tamaño/Presentación",
-        placeholder: "Ej: 500ml, 1L, 2L",
-        tooltip: "Tamaño, volumen o cantidad de esta presentación",
+        placeholder: "Ej: 500ml, 1l, 2kg",
+        tooltip: "Tamaño, volumen o cantidad de esta presentación (número + unidad: ml, l, g, kg, oz, lb, cc)",
         required: true,
     },
     image_url: {
@@ -50,6 +52,7 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         tooltip: "Cantidad de unidades disponibles actualmente en inventario",
         type: "number",
         required: true,
+        min: "0",
     },
     min_stock: {
         label: "Stock mínimo",
@@ -57,6 +60,7 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         tooltip: "Umbral mínimo de unidades a partir del cual se avisa que el stock es bajo",
         type: "number",
         required: true,
+        min: "0",
     },
     price: {
         label: "Precio",
@@ -65,11 +69,13 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         type: "number",
         required: true,
         step: "0.01",
+        min: "0.01",
     },
     expiration_date: {
         label: "Fecha de vencimiento",
         tooltip: "Fecha límite hasta la cual esta presentación puede venderse",
         type: "date",
         required: true,
+        min: todayISODate,
     },
 };

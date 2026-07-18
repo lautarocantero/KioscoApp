@@ -1,7 +1,9 @@
 import { Grid, TextField, Tooltip } from "@mui/material";
-import { useFormikContext, getIn } from "formik";
+import { useFormikContext } from "formik";
 import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
 import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
+import { useFocusFirstField } from "../../../../hooks/shared/useFocusFirstField";
+import { useFieldDisplayState } from "../../../../hooks/shared/useFieldDisplayState";
 import type { FieldConfig, FormFieldsRendererProps } from "@typings/shared/types/formCard.types";
 
 
@@ -14,18 +16,17 @@ function FormFieldsRenderer<T extends object>({
     idPrefix,
     renderAfterField,
 }: FormFieldsRendererProps<T>): React.ReactNode {
-    const { values, errors, setFieldValue } = useFormikContext<T>();
+    const { setFieldValue, setFieldTouched } = useFormikContext<T>();
+    const firstFieldRef = useFocusFirstField(fields[0] as string | undefined, readOnly);
 
     return (
         <Grid component="section" aria-label={sectionLabel} container spacing={2.5} display="flex" flexDirection="column">
-            {fields.map((fieldKey) => {
+            {fields.map((fieldKey, index) => {
                 const config: FieldConfig | undefined = registry[fieldKey];
                 if (!config) return null;
 
-                const fieldError = getIn(errors, fieldKey as string) as string | undefined;
-                const fieldValue = getIn(values, fieldKey as string);
-                const helperId = `${idPrefix}-${String(fieldKey)}-helper`;
-                const inputId = `${idPrefix}-${String(fieldKey)}`;
+                const { fieldError, fieldValue, helperId, inputId, isFirstField } =
+                    useFieldDisplayState<T>(fieldKey, index, idPrefix);
 
                 return (
                     <Grid key={String(fieldKey)} spacing={{ xs: 12, sm: 12 }}>
@@ -34,6 +35,7 @@ function FormFieldsRenderer<T extends object>({
                                 <TextField
                                     id={inputId}
                                     name={String(fieldKey)}
+                                    inputRef={isFirstField ? firstFieldRef : undefined}
                                     fullWidth
                                     required={config.required}
                                     multiline={config.multiline}
@@ -43,18 +45,28 @@ function FormFieldsRenderer<T extends object>({
                                     placeholder={config.placeholder}
                                     disabled={readOnly}
                                     value={fieldValue ?? ""}
-                                    onChange={(e) => setFieldValue(fieldKey as string, e.target.value)}
+                                    onChange={(e) => {
+                                        const raw = e.target.value;
+                                        const parsed = config.type === "number"
+                                            ? (raw === "" ? "" : Number(raw))
+                                            : raw;
+                                        setFieldValue(fieldKey as string, parsed);
+                                    }}
+                                    onBlur={() => setFieldTouched(fieldKey as string, true)}
                                     error={!!fieldError}
                                     helperText={fieldError ?? config.helperTextWhenEmpty}
-                                    FormHelperTextProps={{ id: helperId }}
-                                    inputProps={{
-                                        step: config.step,
-                                        "aria-required": !!config.required,
-                                        "aria-invalid": !!fieldError,
-                                        "aria-describedby": helperId,
-                                    }}
                                     variant="outlined"
                                     sx={sharedSx}
+                                    slotProps={{
+                                        formHelperText: { id: helperId },
+                                        htmlInput: {
+                                            step: config.step,
+                                            min: config.min,
+                                            "aria-required": !!config.required,
+                                            "aria-invalid": !!fieldError,
+                                            "aria-describedby": helperId,
+                                        },
+                                    }}
                                 />
                             </Tooltip>
                         </FieldWithIcon>

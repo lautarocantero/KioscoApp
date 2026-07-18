@@ -23,6 +23,7 @@ export interface FieldConfig {
     rows?: number;
     step?: string;
     helperTextWhenEmpty?: string;
+    min?: string;
 }
 
 export type FieldRegistry<T> = Partial<Record<keyof T, FieldConfig>>;
@@ -35,4 +36,12 @@ export interface FormFieldsRendererProps<T extends object> {
     sectionLabel: string;
     idPrefix: string;
     renderAfterField?: Partial<Record<keyof T, ReactNode>>;
+}
+
+export interface FieldDisplayState {
+    fieldError: string | undefined;
+    fieldValue: unknown;
+    helperId: string;
+    inputId: string;
+    isFirstField: boolean;
 }
