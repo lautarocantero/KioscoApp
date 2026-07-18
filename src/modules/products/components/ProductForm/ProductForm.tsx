@@ -33,14 +33,20 @@ const ProductCreateForm = (): React.ReactNode => {
         isSubmitting,
         submitError,
         stepErrors,
-        handleCreateAnother,
+        handleCreatePresentation,
+        handleSeeDetail,
+        handleCreateAnotherProduct,
         handleBackToProducts,
     } = useProductCreate();
+
+
 
     if (createdProduct) return (
         <ProductCreated 
             createdProduct={createdProduct} 
-            onCreateAnother={handleCreateAnother}
+            handleCreatePresentation={handleCreatePresentation}
+            handleSeeDetail={handleSeeDetail}
+            handleCreateAnotherProduct={handleCreateAnotherProduct}
             handleBackToProducts={handleBackToProducts}
         />
     );
@@ -95,11 +101,14 @@ const ProductEditForm = (): React.ReactNode => {
         submitError,
         stepErrors,
         isLoadingProduct,
+        handleSeeDetail,
+        handleBackToProducts,
     } = useProductEdit();
 
     if (isLoadingProduct) return <LoadingSpinnerComponent />;
     if (!editingProduct) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar el producto" />;
-    if (updatedProduct) return <ProductEdited updatedProduct={updatedProduct} />;
+    if (updatedProduct) return (
+        <ProductEdited updatedProduct={updatedProduct} handleSeeDetail={handleSeeDetail}  handleBackToProducts={handleBackToProducts} />)
 
     return (
         <Formik
@@ -139,7 +148,7 @@ const ProductEditForm = (): React.ReactNode => {
 
 // ── Modo DETALLE ─────────────────────────────────────────────────────────────
 const ProductDetailForm = (): React.ReactNode => {
-    const { productId } = useParams<{ productId: string }>();
+    const { product_id: productId } = useParams<{ product_id: string }>();
     const {
         productData: viewingEntity,
         isLoading: isLoadingEntity,

@@ -8,7 +8,7 @@ import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { useDetailCarouselLayout } from "../../../../hooks/ui/useCardCarousel";
 
 const ProductDetailPage = (): React.ReactNode => {
-    const { productId } = useParams<{ productId: string }>();
+    const { product_id: productId } = useParams<{ product_id: string }>();
 
     const { gap, boxPaddingX, detailWidth, analyticsWidth, hintText } = useDetailCarouselLayout(820, 960);
 

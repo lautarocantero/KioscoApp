@@ -36,7 +36,7 @@ const ProductsListPage = (): React.ReactNode => {
                 }}
                 newItem={{
                     label: "Nuevo producto",
-                    href: "/products-create",
+                    href: "/product-create",
                 }}
                 deleteDialog={{
                     open: deleteDialog.open,

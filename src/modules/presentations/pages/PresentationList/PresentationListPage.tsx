@@ -40,7 +40,7 @@ const PresentationListPage = (): React.ReactNode => {
                 }}
                 newItem={{
                     label: "Nueva presentación",
-                    href: `/products/${productId}/presentations/new`,
+                    href: `/products/${productId}/presentation-create`,
                 }}
                 deleteDialog={{
                     open: deleteDialog.open,

@@ -51,6 +51,7 @@ const ProductFormFirstStep = (): React.ReactNode => {
                 sectionLabel="Datos del producto"
                 registry={PRODUCT_FIELD_REGISTRY}
                 fields={["name", "brand", "description", "image_url"]}
+                readOnly={isDetail}
                 icons={{
                     name: { icon: <BookmarkBorderOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
                     brand: { icon: <LocalOfferOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },

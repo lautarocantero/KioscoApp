@@ -62,4 +62,9 @@ export interface VariantCreatedBodyProps {
 // ║ ✅ Presentation Edited  ✅✅✅✅✅✅✅✅✅✅✅✅✅✅                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-interface PresentationEditedProps { updatedVariant: UpdatedPresentationInterface; }
+interface PresentationEditedProps { 
+    updatedVariant: UpdatedPresentationInterface;
+    handleSeeDetail:() => void;
+    handleBackToPresentations:() => void;
+    handleBackToProducts:() => void;
+}

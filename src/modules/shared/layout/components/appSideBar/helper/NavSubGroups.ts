@@ -7,13 +7,7 @@ export const NAV_SUBGROUPS: Record<string, SubGroup[]> = {
       groupLabel: "Productos",
       links: [
         { label: "Listado",  url: "/products" },
-        { label: "Crear",    url: "/products-create" },
-      ],
-    },
-    {
-      groupLabel: "Presentaciones",
-      links: [
-        { label: "Crear",    url: "/products-create" },
+        { label: "Crear",    url: "/product-create" },
       ],
     },
   ],

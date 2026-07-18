@@ -1,10 +1,9 @@
 import type { ProductEditedProps } from "@typings/product/productComponentTypes";
 import SuccessCard from "../../../../shared/components/SuccessCard";
-import { useNavigate } from "react-router-dom";
 
 
-const ProductEdited = ({ updatedProduct }: ProductEditedProps): React.ReactNode => {
-    const navigate = useNavigate();
+const ProductEdited = ({ updatedProduct, handleSeeDetail, handleBackToProducts }: ProductEditedProps): React.ReactNode => {
+    
 
     return (
         <SuccessCard
@@ -13,9 +12,14 @@ const ProductEdited = ({ updatedProduct }: ProductEditedProps): React.ReactNode 
             subtitle="Los cambios fueron guardados. Podés seguir editando o volver a la lista."
             actions={[
                 {
-                    label:   "Ver productos",
+                    label:   "Ver detalle de Producto",
+                    variant: "contained",
+                    onClick: handleSeeDetail,
+                },
+                {
+                    label:   "Ver Productos",
                     variant: "outlined",
-                    onClick: () => navigate("/products"),
+                    onClick: handleBackToProducts,
                 },
             ]}
         />

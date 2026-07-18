@@ -38,6 +38,9 @@ export type PresentationPublic = Pick<PresentationEntity,
     'brand'| 'sku'|'model_type'|'model_size'|
     'stock'|'price'|'expiration_date'>
 
+export type CreatedPresentationInterface = Pick<PresentationEntity, '_id' |'name'>
+
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📋 FORMULARIOS 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋         ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -134,7 +137,11 @@ export interface UsePresentationFormReturn
         onValidSubmit?: () => void,
     ) => Promise<void>;
     handleSubmit:        (values: PresentationFormValues) => Promise<void>;
-    handleCreateAnother: () => void;
+    handleCreateAnotherPresentation: () => void;
+    handleSeeDetail: () => void;
+    handleBackToPresentations: () => void;
+    handleCreateAnotherProduct: () => void;
+    handleBackToProducts: () => void;
 }
 
 // Hook de formulario de EDICIÓN
@@ -150,6 +157,9 @@ export interface UsePresentationEditFormReturn
         onValidSubmit?: () => void,
     ) => Promise<void>;
     handleEdit: (values: PresentationFormValues) => Promise<void>;
+    handleSeeDetail: () => void;
+    handleBackToPresentations: () => void;
+    handleBackToProducts: () => void;
 }
 
 export interface UsePresentationDetailStatusReturn {
@@ -171,11 +181,15 @@ export type BuildColumnsArgs = {
 // ║ 🛞 Utilidades  🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞                 
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type CreatedPresentationInterface = Pick<CreatedProductInterface, '_id' | 'name'>;
+export type CreatedPresentationInterface = Pick<CreatedPresentationInterface, '_id' | 'name'>;
 
 export interface PresentationCreatedComponentProps {
     createdPresentation: CreatedPresentationInterface;
-    onCreateAnother: () => void;
+    handleCreateAnotherPresentation: () => void;
+    handleSeeDetail: () => void;
+    handleBackToPresentations: () => void;
+    handleCreateAnotherProduct: () => void;
+    handleBackToProducts: () => void;
 }
 
 export interface UpdatedPresentationInterface {

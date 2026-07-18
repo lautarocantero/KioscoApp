@@ -1,10 +1,15 @@
-import { useNavigate } from "react-router-dom";
 import SuccessCard from "../../../../shared/components/SuccessCard";
 import type { PresentationCreatedComponentProps } from "@typings/presentation/presentationTypes";
 
 
-const PresentationCreated = ({ createdPresentation, onCreateAnother }: PresentationCreatedComponentProps): React.ReactNode => {
-    const navigate = useNavigate();
+const PresentationCreated = ({ 
+    createdPresentation, 
+    handleCreateAnotherPresentation,
+    handleSeeDetail,
+    handleBackToPresentations,
+    handleCreateAnotherProduct,
+    handleBackToProducts,
+}: PresentationCreatedComponentProps): React.ReactNode => {
 
     return (
         <SuccessCard
@@ -13,19 +18,29 @@ const PresentationCreated = ({ createdPresentation, onCreateAnother }: Presentat
             subtitle="¿Querés agregar otra presentación para este producto?"
             actions={[
                 {
-                    label:   "+ Crear otra presentación",
+                    label:   "Crear otra Presentación",
                     variant: "contained",
-                    onClick: onCreateAnother,
+                    onClick: handleCreateAnotherPresentation,
                 },
                 {
-                    label:   "Crear otro producto",
+                    label:   "Ver detalle de Presentación",
                     variant: "outlined",
-                    onClick: () => navigate("/products/new"),
+                    onClick: handleSeeDetail,
                 },
                 {
-                    label:   "Ver listado de productos",
+                    label:   "Ver Presentaciónes",
                     variant: "outlined",
-                    onClick: () => navigate("/products"),
+                    onClick: handleBackToPresentations,
+                },
+                {
+                    label:   "Crear otro Producto",
+                    variant: "outlined",
+                    onClick: handleCreateAnotherProduct,
+                },
+                {
+                    label:   "Ver Productos",
+                    variant: "outlined",
+                    onClick: handleBackToProducts,
                 },
             ]}
         />

@@ -147,7 +147,9 @@ export interface UseProductsFormReturn
         onValidSubmit?: () => void,
     ) => Promise<void>;
     handleSubmit: (values: ProductFormValues) => Promise<void>;
-    handleCreateAnother: () => void;
+    handleCreatePresentation: () => void;
+    handleSeeDetail: () => void;
+    handleCreateAnotherProduct: () => void;
     handleBackToProducts: () => void;
 }
 
@@ -167,6 +169,8 @@ export interface UseProductsEditFormReturn
         onValidSubmit?: () => void,
     ) => Promise<void>;
     handleEdit: (values: ProductEditFormValues) => Promise<void>;
+    handleSeeDetail: () => void;
+    handleBackToProducts: () => void;
 }
 
 export interface UseProductsDetailFormReturn {

@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import EmptyStateCard from "../EmptyStateCard/EmptyStateCard";
 
 const EmptyPresentationAnalytics = (): React.ReactNode => {
-    const { productId: productIdFromUrl } = useParams<{ productId: string }>();
+    const { product_id: productIdFromUrl } = useParams<{ product_id: string }>();
     const navigate = useNavigate();
 
     return (
         <EmptyStateCard
-            imageSrc="/images/kiosco_images/empty_box_3.png"
+            imageSrc="/images/kiosco_images/empty_box.png"
             imageAlt="Vista previa de la imagen"
             title="No hay presentaciones disponibles"
             description={
@@ -18,7 +18,7 @@ const EmptyPresentationAnalytics = (): React.ReactNode => {
                 </>
             }
             buttonText="Crear presentación"
-            onButtonClick={() => navigate(`/products/${productIdFromUrl}/presentations/new`)}
+            onButtonClick={() => navigate(`/products/${productIdFromUrl}/presentation-create`)}
         />
     );
 };

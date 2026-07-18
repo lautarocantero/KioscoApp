@@ -33,7 +33,6 @@ const DETAIL_COMPONENTS = [PresentationDetailFormComponent];
 const PresentationCreateForm = (): React.ReactNode => {
     const {
         createdPresentation, 
-        handleCreateAnother, 
         handleSubmit, 
         currentStep,
         totalSteps,
@@ -42,12 +41,21 @@ const PresentationCreateForm = (): React.ReactNode => {
         isSubmitting,
         submitError,
         stepErrors,
+        handleCreateAnotherPresentation,
+        handleSeeDetail,
+        handleBackToPresentations,
+        handleCreateAnotherProduct,
+        handleBackToProducts,
     } = usePresentationCreate();
 
     if (createdPresentation) return (
         <PresentationCreated
             createdPresentation={createdPresentation}
-            onCreateAnother={handleCreateAnother}
+            handleCreateAnotherPresentation={handleCreateAnotherPresentation}
+            handleSeeDetail={handleSeeDetail}
+            handleBackToPresentations={handleBackToPresentations}
+            handleCreateAnotherProduct={handleCreateAnotherProduct}
+            handleBackToProducts={handleBackToProducts}
         />
     );
 
@@ -100,11 +108,14 @@ const PresentationEditForm = (): React.ReactNode => {
         handlePrevStep,
         handleEdit,
         isSubmitting,
+        handleSeeDetail,
+        handleBackToPresentations,
+        handleBackToProducts,
     } = usePresentationEdit();
 
     if (isLoadingEntity) return <LoadingSpinnerComponent />;
     if (!editingVariant) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar la presentación" />;
-    if (updatedVariant)  return <PresentationEdited updatedVariant={updatedVariant} />;
+    if (updatedVariant)  return <PresentationEdited updatedVariant={updatedVariant} handleSeeDetail={handleSeeDetail} handleBackToPresentations={handleBackToPresentations} handleBackToProducts={handleBackToProducts} />;
 
     return (
         <Formik

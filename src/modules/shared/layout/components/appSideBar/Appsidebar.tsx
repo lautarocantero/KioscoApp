@@ -26,7 +26,6 @@ const AppSidebar = (): React.ReactNode => {
     isMobileOpen, 
     setIsMobileOpen
   } = useAppSidebar();
-
   
 
   return (

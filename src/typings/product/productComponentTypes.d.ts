@@ -40,7 +40,9 @@ export interface ProductImagePreviewProps {
 // Props del contenedor de éxito post-creación
 export interface ProductCreatedComponentProps {
     createdProduct: CreatedProductInterface;
-    onCreateAnother: () => void;
+    handleCreatePresentation: () => void;
+    handleSeeDetail: () => void;
+    handleCreateAnotherProduct: () => void;
     handleBackToProducts: () => void;
 }
 
@@ -68,6 +70,8 @@ export  interface FieldWithIconProps {
 
 export interface ProductEditedProps {
     updatedProduct: UpdatedProductInterface;
+    handleSeeDetail: () => void;
+    handleBackToProducts: () => void;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

@@ -95,10 +95,10 @@ export const buildColumnsForPresentations = ({
                     <CellCenter>
                         <RowActionsCell
                             onView={() =>
-                                navigate(`/products/${params.row.product_id}/presentations/${params.row._id}`)
+                                navigate(`/products/${params.row.product_id}/presentation/${params.row._id}`)
                             }
                             onEdit={() =>
-                                navigate(`/products/${params.row.product_id}/presentations/${params.row._id}/edit`)
+                                navigate(`/products/${params.row.product_id}/presentation/${params.row._id}/presentation-edit`)
                             }
                             onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
                         />

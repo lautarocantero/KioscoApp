@@ -98,11 +98,24 @@ export function useProductCreate(): UseProductsFormReturn {
         }
     };
 
-    const handleCreateAnother = () => {
+    const handleCreatePresentation = () => {
         if(!createdProduct) return null;
         const { _id } = createdProduct;
         setCreatedProduct(null);
-        navigate(`/products/${_id}/presentations/new`);
+        navigate(`/products/${_id}/presentation-create`);
+    };
+
+    const handleCreateAnotherProduct = () => {
+        if(!createdProduct) return null;
+        setCreatedProduct(null);
+        navigate(`/product-create`);
+    };
+
+    const handleSeeDetail= () => {
+        if(!createdProduct) return null;
+        const { _id } = createdProduct;
+        setCreatedProduct(null);
+        navigate(`/product/${_id}`);
     };
 
     const handleBackToProducts= () => {
@@ -123,7 +136,9 @@ export function useProductCreate(): UseProductsFormReturn {
         handleNextStep,
         handlePrevStep,
         handleSubmit,
-        handleCreateAnother,
+        handleSeeDetail,
+        handleCreatePresentation,
+        handleCreateAnotherProduct,
         handleBackToProducts,
     };
 }
@@ -133,7 +148,8 @@ export function useProductCreate(): UseProductsFormReturn {
 ╚══════════════════════════════════════════════*/
 
 export function useProductEdit(): UseProductsEditFormReturn {
-    const { productId } = useParams<{ productId: string }>();
+    const navigate = useNavigate();
+    const { product_id: productId } = useParams<{ product_id: string }>();
     const dispatch = useDispatch<AppDispatch>();
 
     const {
@@ -214,6 +230,16 @@ export function useProductEdit(): UseProductsEditFormReturn {
         }
     };
 
+    const handleSeeDetail= () => {
+        setUpdatedProduct(null);
+        navigate(`/product/${productId}`);
+    };
+
+    const handleBackToProducts= () => {
+        setUpdatedProduct(null);
+        navigate(`/products`);
+    };
+
     return {
         editingProduct,
         updatedProduct,
@@ -230,5 +256,7 @@ export function useProductEdit(): UseProductsEditFormReturn {
         handleNextStep,
         handlePrevStep,
         handleEdit,
+        handleSeeDetail,
+        handleBackToProducts,
     };
 }

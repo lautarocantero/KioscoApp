@@ -1,12 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
 import SuccessCard from "../../../../shared/components/SuccessCard";
 import type { PresentationEditedProps } from "@typings/presentation/presentationComponentTypes";
 import type { ReactNode } from "react";
 
 
-const PresentationEdited = ({ updatedVariant }: PresentationEditedProps): ReactNode => {
-    const navigate = useNavigate();
-    const { productId } = useParams<{ productId: string }>();
+const PresentationEdited = ({ updatedVariant, handleSeeDetail, handleBackToPresentations, handleBackToProducts }: PresentationEditedProps): ReactNode => {
+    
 
     return (
         <SuccessCard
@@ -15,19 +13,19 @@ const PresentationEdited = ({ updatedVariant }: PresentationEditedProps): ReactN
             subtitle="Los cambios fueron guardados. Podés seguir editando o volver al listado."
             actions={[
                 {
-                    label:   "Ver detalle",
+                    label:   "Ver detalle de Presentación",
                     variant: "contained",
-                    onClick: () => navigate(`/products/${productId}/presentations/${updatedVariant._id}`),
+                    onClick: handleSeeDetail,
                 },
                 {
-                    label:   "Ver presentaciones del producto",
+                    label:   "Ver Presentaciónes",
                     variant: "outlined",
-                    onClick: () => navigate(`/products/${productId}/presentations`),
+                    onClick: handleBackToPresentations,
                 },
                 {
-                    label:   "Ver listado de productos",
+                    label:   "Ver Productos",
                     variant: "outlined",
-                    onClick: () => navigate("/products"),
+                    onClick: handleBackToProducts,
                 },
             ]}
         />

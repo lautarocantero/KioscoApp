@@ -3,7 +3,7 @@ import ProductCreatedTimeline from "./ProductCreatedTimeline";
 import type { ProductCreatedComponentProps } from "@typings/product/productComponentTypes";
 
 
-const ProductCreated = ({ createdProduct, onCreateAnother, handleBackToProducts }: ProductCreatedComponentProps): React.ReactNode => {
+const ProductCreated = ({ createdProduct, handleCreatePresentation, handleSeeDetail, handleCreateAnotherProduct, handleBackToProducts }: ProductCreatedComponentProps): React.ReactNode => {
 
     return (
         <SuccessCard
@@ -13,12 +13,22 @@ const ProductCreated = ({ createdProduct, onCreateAnother, handleBackToProducts 
             timeline={<ProductCreatedTimeline />}
             actions={[
                 {
-                    label:   "Crear presentación",
+                    label:   "Crear Presentación",
                     variant: "contained",
-                    onClick: onCreateAnother,
+                    onClick: handleCreatePresentation,
                 },
                 {
-                    label:   "Volver a productos",
+                    label:   "Ver detalle de Producto",
+                    variant: "outlined",
+                    onClick: handleSeeDetail,
+                },
+                {
+                    label:   "Crear otro Producto",
+                    variant: "outlined",
+                    onClick: handleCreateAnotherProduct,
+                },
+                {
+                    label:   "Ver Productos",
                     variant: "outlined",
                     onClick: handleBackToProducts,
                 },

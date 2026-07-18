@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { FormikErrors } from "formik";
 import type {
@@ -27,6 +27,7 @@ const buildStepsConfig = () => STEPS_LABELS.map((label) => ({ title: label, cont
 ╚══════════════════════════════════════════════*/
 
 export function usePresentationCreate(): UsePresentationFormReturn {
+    const navigate = useNavigate();
     const { product_id: productId } = useParams<{ product_id: string }>();
     const { productData, isLoading: loadingProduct, error: productError } = useProductData(productId);
     const dispatch = useDispatch<AppDispatch>();
@@ -103,7 +104,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
                 throw new Error("Error al crear la presentación");
             }
 
-            setCreatedPresentation({ _id: created._id, name: `${productData.name} - ${values.model_size}` });
+            setCreatedPresentation({ _id: created._id, name: values.name});
         } catch (error) {
             const message = await parseError(error, "Error inesperado al crear la presentación");
             setSubmitError(message);
@@ -112,10 +113,37 @@ export function usePresentationCreate(): UsePresentationFormReturn {
         }
     };
 
-    const handleCreateAnother = () => {
+
+    const handleCreateAnotherPresentation = () => {
         setCreatedPresentation(null);
         goToStep(0);
         window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const handleSeeDetail= () => {
+        if(!createdPresentation) return null;
+        const { _id } = createdPresentation;
+        setCreatedPresentation(null);
+        navigate(`/products/${productId}/presentations/${_id}`);
+    };
+
+            
+    const handleBackToPresentations= () => {
+        if(!createdPresentation) return null;
+        setCreatedPresentation(null);
+        navigate(`/products/${productId}/presentations`);
+    };
+
+
+    const handleCreateAnotherProduct = () => {
+        setCreatedPresentation(null);
+        navigate(`/product-create`);
+    };
+
+
+    const handleBackToProducts= () => {
+        setCreatedPresentation(null);
+        navigate(`/products`);
     };
 
     return {
@@ -132,7 +160,11 @@ export function usePresentationCreate(): UsePresentationFormReturn {
         handleNextStep,
         handlePrevStep,
         handleSubmit,
-        handleCreateAnother,
+        handleCreateAnotherPresentation,
+        handleSeeDetail,
+        handleBackToPresentations,
+        handleCreateAnotherProduct,
+        handleBackToProducts,
     };
 }
 
@@ -141,7 +173,9 @@ export function usePresentationCreate(): UsePresentationFormReturn {
 ╚══════════════════════════════════════════════*/
 
 export function usePresentationEdit(): UsePresentationEditFormReturn {
+    const navigate = useNavigate();
     const { presentation_id: variantId } = useParams<{ presentation_id: string }>();
+    const { product_id: productId } = useParams<{ product_id: string }>();
     const dispatch = useDispatch<AppDispatch>();
 
     const {
@@ -218,6 +252,22 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
         }
     };
 
+    const handleSeeDetail = () => {
+        if(!updatedVariant) return null;
+        setUpdatedVariant(null);
+        navigate(`/products/${productId}/presentations/${variantId}`)
+    };
+
+    const handleBackToPresentations = () => {
+        setUpdatedVariant(null);
+        navigate(`/products/${productId}/presentations`)
+    }  
+
+    const handleBackToProducts = () => {
+        setUpdatedVariant(null);
+        navigate("/products")
+    }  
+
     return {
         variantId,
         editingVariant,
@@ -231,6 +281,9 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
         handleNextStep,
         handlePrevStep,
         handleEdit,
+        handleSeeDetail,
+        handleBackToPresentations,
+        handleBackToProducts,
     };
 }
 
