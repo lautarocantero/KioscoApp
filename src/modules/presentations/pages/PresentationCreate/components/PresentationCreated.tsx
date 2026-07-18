@@ -1,50 +1,39 @@
 import SuccessCard from "../../../../shared/components/SuccessCard";
-import type { PresentationCreatedComponentProps } from "@typings/presentation/presentationTypes";
+import type { PresentationEditedProps } from "@typings/presentation/presentationComponentTypes";
+import type { ReactNode } from "react";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 
-const PresentationCreated = ({ 
-    createdPresentation, 
-    handleCreateAnotherPresentation,
-    handleSeeDetail,
-    handleBackToPresentations,
-    handleCreateAnotherProduct,
-    handleBackToProducts,
-}: PresentationCreatedComponentProps): React.ReactNode => {
+const PresentationEdited = ({ updatedVariant, handleSeeDetail, handleBackToPresentations, handleBackToProducts }: PresentationEditedProps): ReactNode => {
+    
 
     return (
         <SuccessCard
-            name={createdPresentation.name}
-            title="Presentación creada correctamente"
-            subtitle="¿Querés agregar otra presentación para este producto?"
+            name={updatedVariant.name}
+            title="Presentación actualizada correctamente"
+            subtitle="Los cambios fueron guardados. Podés seguir editando o volver al listado."
             actions={[
                 {
-                    label:   "Crear otra Presentación",
-                    variant: "contained",
-                    onClick: handleCreateAnotherPresentation,
-                },
-                {
                     label:   "Ver detalle de Presentación",
-                    variant: "outlined",
+                    variant: "contained",
                     onClick: handleSeeDetail,
+                    icon:    <VisibilityOutlinedIcon fontSize="small" />,
                 },
                 {
                     label:   "Ver Presentaciónes",
                     variant: "outlined",
                     onClick: handleBackToPresentations,
-                },
-                {
-                    label:   "Crear otro Producto",
-                    variant: "outlined",
-                    onClick: handleCreateAnotherProduct,
+                    icon:    <VisibilityOutlinedIcon fontSize="small" />,
                 },
                 {
                     label:   "Ver Productos",
                     variant: "outlined",
                     onClick: handleBackToProducts,
+                    icon:    <VisibilityOutlinedIcon fontSize="small" />,
                 },
             ]}
         />
     );
 };
 
-export default PresentationCreated;
+export default PresentationEdited;

@@ -1,14 +1,17 @@
+import type { ReactNode } from "react";
+
 export interface SuccessCardContent {
     name:      string;
     title:     string;
     subtitle:  string;
-    timeline?: React.ReactNode;
+    timeline?: ReactNode;
 }
 
 export interface SuccessCardAction {
     label:   string;
     onClick: () => void;
     variant: "contained" | "outlined";
+    icon: ReactNode;
 }
 
 export interface SuccessCardProps extends SuccessCardContent {

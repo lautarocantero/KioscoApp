@@ -1,4 +1,5 @@
 import SuccessCard from "../../../../shared/components/SuccessCard";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import type { PresentationEditedProps } from "@typings/presentation/presentationComponentTypes";
 import type { ReactNode } from "react";
 
@@ -16,16 +17,19 @@ const PresentationEdited = ({ updatedVariant, handleSeeDetail, handleBackToPrese
                     label:   "Ver detalle de Presentación",
                     variant: "contained",
                     onClick: handleSeeDetail,
+                    icon:    <VisibilityOutlinedIcon fontSize="small" />,
                 },
                 {
                     label:   "Ver Presentaciónes",
                     variant: "outlined",
                     onClick: handleBackToPresentations,
+                    icon:    <VisibilityOutlinedIcon fontSize="small" />,
                 },
                 {
                     label:   "Ver Productos",
                     variant: "outlined",
                     onClick: handleBackToProducts,
+                    icon:    <VisibilityOutlinedIcon fontSize="small" />,
                 },
             ]}
         />

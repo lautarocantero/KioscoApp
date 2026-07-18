@@ -1,5 +1,6 @@
 import type { ProductEditedProps } from "@typings/product/productComponentTypes";
 import SuccessCard from "../../../../shared/components/SuccessCard";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 
 const ProductEdited = ({ updatedProduct, handleSeeDetail, handleBackToProducts }: ProductEditedProps): React.ReactNode => {
@@ -15,11 +16,13 @@ const ProductEdited = ({ updatedProduct, handleSeeDetail, handleBackToProducts }
                     label:   "Ver detalle de Producto",
                     variant: "contained",
                     onClick: handleSeeDetail,
+                    icon:    <VisibilityOutlinedIcon fontSize="small" />,
                 },
                 {
                     label:   "Ver Productos",
                     variant: "outlined",
                     onClick: handleBackToProducts,
+                    icon:    <VisibilityOutlinedIcon fontSize="small" />,
                 },
             ]}
         />
