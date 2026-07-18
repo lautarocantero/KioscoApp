@@ -3,9 +3,7 @@ import type {
     ExistingPresentationInterface,
     PresentationFormValues,
 } from "@typings/presentation/presentationTypes";
-
-const BARCODE_REGEX = /^\d{8,14}$/;
-const MODEL_SIZE_REGEX = /^\d+([.,]\d+)?\s?(ml|l|g|kg|oz|lb|cc)$/i;
+import { BARCODE_REGEX, MODEL_SIZE_REGEX, RELATIVE_OR_URL_REGEX } from "../../../config/constants";
 
 const getTodayISODate = () => new Date().toISOString().slice(0, 10);
 const getStartOfToday = () => {
@@ -69,7 +67,13 @@ const baseShape = {
     model_size: Yup.string()
         .required("Tamaño/Presentación requerido")
         .matches(MODEL_SIZE_REGEX, "Formato inválido. Ej: 500ml, 1l, 2kg"),
-    image_url:       Yup.string(),
+    image_url:       Yup.string()
+        .trim()
+        .test(
+            "valid-image-path",
+            "Debe ser una ruta relativa (ej: /images/foto.png) o una URL válida (https://...)",
+            (value) => !value || RELATIVE_OR_URL_REGEX.test(value),
+        ),
     min_stock:       Yup.number().integer("Debe ser un número entero").min(0, "No puede ser negativo").required("Stock mínimo requerido").typeError("Debe ser un número"),
     stock:           Yup.number().integer("Debe ser un número entero").min(0, "No puede ser negativo").required("Stock requerido").typeError("Debe ser un número"),
     price:           Yup.number().moreThan(0, "El precio debe ser mayor a 0").required("Precio requerido").typeError("Debe ser un número"),
