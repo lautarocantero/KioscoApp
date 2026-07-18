@@ -17,6 +17,7 @@ interface PresentationEntity {
     name: string;
     price: number;
     product_id: string;
+    barcode: string;
     sku: string;
     stock: number;
     updated_at: string;
@@ -56,6 +57,7 @@ interface PresentationBaseFormValues {
     name: string;
     price: number;
     product_id: string;
+    barcode: string;
     sku: string;
     stock: number;
 }

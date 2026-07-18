@@ -2,25 +2,30 @@ import { useTheme } from "@mui/material";
 import FormCard from "../../../shared/components/FormCard/FormCard";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
-import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined";
-import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
+import QrCodeScannerOutlinedIcon from "@mui/icons-material/QrCodeScannerOutlined";
+import QrCode2OutlinedIcon from "@mui/icons-material/QrCode2Outlined";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
+import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
+import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import type { ReactNode } from "react";
+import { useFormikContext } from "formik";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
 import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
-import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
+import ProductImagePreview from "modules/shared/components/Image/ProductImagePreview";
+import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 
 
 const PresentationFormSecondStep = (): ReactNode => {
     const theme = useTheme();
     const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
     const { isCreate, headerTitle } = usePresentationFormHeader(actionTitle);
+    const { values } = useFormikContext<PresentationFormValues>();
 
     return (
         <FormCard 
             submitText={isCreate ? "Crear" : "Actualizar"} 
-            showButtons  
+            showButtons 
             header={{ title: headerTitle }}
             submitError={submitError}
             stepErrors={stepErrors}
@@ -31,16 +36,21 @@ const PresentationFormSecondStep = (): ReactNode => {
         >
             <FormFieldsRenderer<PresentationFormValues>
                 idPrefix="presentation"
-                sectionLabel="Stock y operación de la presentación"
+                sectionLabel="Datos de catálogo de la presentación"
                 registry={PRESENTATION_FIELD_REGISTRY}
-                fields={["stock", "min_stock", "price"]}
+                fields={["sku", "barcode", "model_type", "model_size", "image_url"]}
                 icons={{
-                    stock: { icon: <Inventory2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
-                    min_stock: { icon: <ReportProblemOutlinedIcon fontSize="small" />, color: theme.palette.warning.main },
-                    price: { icon: <AttachMoneyOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
+                    sku: { icon: <QrCode2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
+                    barcode: { icon: <QrCodeScannerOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
+                    model_type: { icon: <CategoryOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
+                    model_size: { icon: <StraightenOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
+                    image_url: { icon: <LinkOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
                 }}
+                renderAfterField={
+                    values.image_url ? { image_url: <ProductImagePreview imageUrl={values.image_url} /> } : undefined
+                }
             />
         </FormCard>
-)};
+    );};
 
 export default PresentationFormSecondStep;

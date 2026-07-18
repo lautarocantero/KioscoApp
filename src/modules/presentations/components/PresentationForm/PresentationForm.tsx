@@ -19,11 +19,13 @@ import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep";
 import PresentationFormThirdStep from "./PresentationFormThirdStep";
 import PresentationDetailFormComponent from "./PresentationDetailForm";
+import PresentationFormFourthStep from "./PresentationFormFourthStep";
 
 const STEP_COMPONENTS = [
     PresentationFormFirstStep,
     PresentationFormSecondStep,
     PresentationFormThirdStep,
+    PresentationFormFourthStep,
 ];
 
 const DETAIL_COMPONENTS = [PresentationDetailFormComponent];

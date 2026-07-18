@@ -18,9 +18,9 @@ import { useFormSteps } from "../shared/useFormSteps";
 import { useErrorParser } from "../shared/useErrorParser";
 import { stepFieldsMap } from "../../modules/presentations/schema/PresentationFormSchema";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import { PRODUCTS_VARIANT_STEPS_LABELS } from "config/constants";
 
-const STEPS_LABELS = ["Datos del producto", "Datos de la presentación", "Stock y operación"];
-const buildStepsConfig = () => STEPS_LABELS.map((label) => ({ title: label, content: null }));
+const buildStepsConfig = () => PRODUCTS_VARIANT_STEPS_LABELS.map((label) => ({ title: label, content: null }));
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 usePresentationCreate                       ║
@@ -88,6 +88,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
                 image_url:       values.image_url || productData.image_url,
                 product_id:      productId ?? "",
                 sku:             values.sku,
+                barcode:             values.barcode,
                 model_type:      values.model_type,
                 model_size:      values.model_size,
                 min_stock:       values.min_stock,

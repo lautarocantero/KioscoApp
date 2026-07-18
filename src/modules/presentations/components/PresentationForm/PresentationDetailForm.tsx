@@ -28,6 +28,7 @@ const PresentationDetailForm = (): React.ReactNode => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
                 <GroupBasicInfo
                     sku={values.sku}
+                    barcode={values.barcode}
                     modelType={values.model_type}
                     modelSize={values.model_size}
                     imageUrl={values.image_url}

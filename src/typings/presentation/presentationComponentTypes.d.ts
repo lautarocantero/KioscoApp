@@ -28,6 +28,7 @@ export interface DetailFieldProps {
 
 export interface GroupBasicInfoProps {
     sku: string;
+    barcode: string;
     modelType: string;
     modelSize: string;
     imageUrl?: string;

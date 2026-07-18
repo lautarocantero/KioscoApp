@@ -42,9 +42,10 @@ export const PRODUCTS_EDIT_STEPS_LABELS = [
 ];
 
 export const PRODUCTS_VARIANT_STEPS_LABELS = [
-    "Datos de la presentacion",
-    "Stock y operación",
-    "Caducidad",
+    "Identidad",
+    "Datos de catálogo",
+    "Stock",
+    "Datos comerciales",
 ];
 
 export const stepsConfig = PRODUCTS_STEPS_LABELS.map((label) => ({

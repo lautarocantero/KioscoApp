@@ -1,9 +1,9 @@
-import { useTheme } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import FormCard from "../../../shared/components/FormCard/FormCard";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
-import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined";
+import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
+import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
 import type { ReactNode } from "react";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
 import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
@@ -11,7 +11,7 @@ import type { PresentationFormValues } from "@typings/presentation/presentationT
 import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
 
 
-const PresentationFormThirdStep = (): ReactNode => {
+const PresentationFormFourthStep = (): ReactNode => {
     const theme = useTheme();
     const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
     const { isCreate, headerTitle } = usePresentationFormHeader(actionTitle);
@@ -30,15 +30,15 @@ const PresentationFormThirdStep = (): ReactNode => {
         >
             <FormFieldsRenderer<PresentationFormValues>
                 idPrefix="presentation"
-                sectionLabel="Stock de la presentación"
+                sectionLabel="Datos comerciales de la presentación"
                 registry={PRESENTATION_FIELD_REGISTRY}
-                fields={["stock", "min_stock"]}
+                fields={["price", "expiration_date"]}
                 icons={{
-                    stock: { icon: <Inventory2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
-                    min_stock: { icon: <ReportProblemOutlinedIcon fontSize="small" />, color: theme.palette.warning.main },
+                    price: { icon: <AttachMoneyOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
+                    expiration_date: { icon: <EventBusyOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
                 }}
             />
         </FormCard>
 )};
 
-export default PresentationFormThirdStep;
+export default PresentationFormFourthStep;

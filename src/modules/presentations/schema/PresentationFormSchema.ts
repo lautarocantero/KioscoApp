@@ -17,6 +17,7 @@ export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     name:      "",
     price:           0,
     product_id:           "",
+    barcode:        "",
     sku:             "",
     stock:           0,
 });
@@ -25,6 +26,7 @@ export const getPresentationEditInitialValues = (
     presentation: ExistingPresentationInterface | null
 ): PresentationFormValues => ({
     sku:             presentation?.sku             ?? "",
+    barcode:             presentation?.barcode             ?? "",
     name:            presentation?.name             ?? "",
     brand:           presentation?.brand            ?? "",
     description:     presentation?.description      ?? "",
@@ -47,6 +49,7 @@ export const presentationFormSchema = Yup.object({
     name:       Yup.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100).required("Nombre requerido"),
     description:       Yup.string().trim().min(2, "La descripcion debe tener al menos 2 caracteres").max(100).required("Descripcion requerida"),
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
+    barcode:    Yup.string().max(50, "El código de barras no puede superar los 50 caracteres"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
     image_url:       Yup.string(),
@@ -60,6 +63,7 @@ export const presentationEditFormSchema = Yup.object({
     name:       Yup.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100).required("Nombre requerido"),
     description:       Yup.string().trim().min(2, "La descripcion debe tener al menos 2 caracteres").max(100).required("Descripcion requerida"),
     sku:        Yup.string().min(2).max(50).required("SKU requerido"),
+    barcode:    Yup.string().max(50, "El código de barras no puede superar los 50 caracteres"),
     model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
     model_size: Yup.string().min(2).required("Tamaño/Presentación requerido"),
     image_url:  Yup.string(),
@@ -72,7 +76,8 @@ export const presentationEditFormSchema = Yup.object({
 // ── Step fields map ───────────────────────────────────────────────────────────
 
 export const stepFieldsMap: Record<number, (keyof PresentationFormValues)[]> = {
-    0: ["name","description", "sku", "model_type", "model_size", "image_url"],
-    1: ["min_stock", "stock", "price"],
-    2: ["expiration_date"],
+    0: ["name", "description"],
+    1: ["sku", "barcode", "model_type", "model_size", "image_url"],
+    2: ["stock", "min_stock"],
+    3: ["price", "expiration_date"],
 };

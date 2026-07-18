@@ -14,6 +14,12 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         tooltip: "Detalle o aclaración adicional sobre esta presentación",
         required: true,
     },
+    barcode: {
+        label: "Código de barras",
+        placeholder: "Ej: 7791234567890",
+        tooltip: "Código de barras del producto, si lo tiene",
+        helperTextWhenEmpty: "Opcional — código de barras físico",
+    },
     sku: {
         label: "SKU",
         placeholder: "Ej: COK-500ML-BLACK",

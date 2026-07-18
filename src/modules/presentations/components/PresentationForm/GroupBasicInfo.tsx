@@ -4,6 +4,7 @@ import PresentationDetailField from "./PresentationDetailField";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import QrCode2OutlinedIcon from "@mui/icons-material/QrCode2Outlined";
+import QrCodeScannerOutlinedIcon from "@mui/icons-material/QrCodeScannerOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import type { GroupBasicInfoProps } from "@typings/presentation/presentationComponentTypes";
@@ -11,6 +12,7 @@ import type { GroupBasicInfoProps } from "@typings/presentation/presentationComp
 
 const GroupBasicInfo = ({
     sku,
+    barcode,
     modelType,
     modelSize,
     imageUrl,
@@ -25,31 +27,39 @@ const GroupBasicInfo = ({
                 color={theme.custom.accents.violet}
             />
             <Grid container spacing={2}>
-                <Grid size={{ xs: 12, sm: 4 }}>
-                    <PresentationDetailField
-                        icon={<QrCode2OutlinedIcon fontSize="small" />}
-                        iconColor={theme.custom.accents.violet}
-                        label="SKU"
-                        value={sku}
-                    />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 4 }}>
-                    <PresentationDetailField
-                        icon={<CategoryOutlinedIcon fontSize="small" />}
-                        iconColor={theme.custom.accents.violet}
-                        label="Tipo de modelo"
-                        value={modelType}
-                    />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 4 }}>
-                    <PresentationDetailField
-                        icon={<StraightenOutlinedIcon fontSize="small" />}
-                        iconColor={theme.custom.accents.violet}
-                        label="Tamaño / Presentación"
-                        value={modelSize}
-                    />
-                </Grid>
+            <Grid size={{ xs: 12, sm: 3 }}>
+                <PresentationDetailField
+                    icon={<QrCode2OutlinedIcon fontSize="small" />}
+                    iconColor={theme.custom.accents.violet}
+                    label="SKU"
+                    value={sku}
+                />
             </Grid>
+            <Grid size={{ xs: 12, sm: 3 }}>
+                <PresentationDetailField
+                    icon={<QrCodeScannerOutlinedIcon fontSize="small" />}
+                    iconColor={theme.custom.accents.violet}
+                    label="Código de barras"
+                    value={barcode || "—"}
+                />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 3 }}>
+                <PresentationDetailField
+                    icon={<CategoryOutlinedIcon fontSize="small" />}
+                    iconColor={theme.custom.accents.violet}
+                    label="Tipo de modelo"
+                    value={modelType}
+                />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 3 }}>
+                <PresentationDetailField
+                    icon={<StraightenOutlinedIcon fontSize="small" />}
+                    iconColor={theme.custom.accents.violet}
+                    label="Tamaño / Presentación"
+                    value={modelSize}
+                />
+            </Grid>
+        </Grid>
 
             {imageUrl && (
                 <Box
