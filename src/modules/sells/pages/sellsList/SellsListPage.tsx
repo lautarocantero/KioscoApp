@@ -20,6 +20,10 @@ const SellsListPage = (): React.ReactNode => {
                 emptyMessage="No hay ventas registradas"
                 height={"35em"}
                 search={{ value: searchTerm, onChange: setSearchTerm, placeholder: "Ticket o vendedor..." }}
+                newItem={{
+                    label: "Nueva venta",
+                    href: "/new-sell",
+                }}
                 deleteDialog={{
                     open: deleteDialog.open,
                     title: "Confirmar eliminación",
