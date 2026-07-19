@@ -50,7 +50,7 @@ const SellFormFirstStep = (): React.ReactNode => {
                 }}
             />
             {values.products.length > 0 && (
-                <SellCartProductsComponent sellSelected={{ ...values }} />
+                <SellCartProductsComponent currentSell={{ ...values }} />
             )}
         </FormCard>
     );

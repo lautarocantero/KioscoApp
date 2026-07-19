@@ -31,8 +31,9 @@ export const buildColumnsForSells = ({
         renderCell: (params) => (
             <CellCenter>
                 <RowActionsCell 
-                    onDelete={() => onDeleteRequest(params.row._id, params.row._id)} 
                     onView={() => navigate(`/sell/${params.row._id}`)}
+                    onEdit={() => navigate(`/sell/${params.row._id}/sell-edit`)}
+                    onDelete={() => onDeleteRequest(params.row._id, params.row._id)} 
                 />
             </CellCenter>
         ),

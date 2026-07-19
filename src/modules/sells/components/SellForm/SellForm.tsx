@@ -2,7 +2,7 @@
 import { Grid } from "@mui/material";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
-import { useSellEdit, useSellDetail } from "../../../../hooks/sells/useSellsForm";
+import { useSellEdit } from "../../../../hooks/sells/useSellsForm";
 import ActualStepComponent from "../../../../modules/shared/components/FormCard/ActualStep";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import { getSellEditInitialValues, sellEditFormSchema } from "../../schema/SellFormSchema";
@@ -12,6 +12,7 @@ import NotEntityLoaded from "modules/shared/components/NotEntityLoaded";
 import { useParams } from "react-router-dom";
 import type { SellFormProps } from "@typings/sells/SellComponentTypes";
 import SellEdited from "modules/sells/pages/SellEdit/components/SellEdited";
+import { useSellData } from "hooks/sells/useSellData";
 
 const STEP_COMPONENTS = [SellFormFirstStep];
 
@@ -77,11 +78,15 @@ const SellEditForm = (): React.ReactNode => {
 // ── Modo DETALLE ─────────────────────────────────────────────────────────────
 const SellDetailForm = (): React.ReactNode => {
     const { sell_id: sellId } = useParams<{ sell_id: string }>();
-    const { viewingSell, isLoadingSell: isLoadingEntity, error } = useSellDetail(sellId);
+    const { 
+        sellData, 
+        isLoading, 
+        error,
+    } = useSellData(sellId);
 
     return (
         <Formik
-            initialValues={getSellEditInitialValues(viewingSell)}
+            initialValues={getSellEditInitialValues(sellData)}
             onSubmit={() => {}}
             enableReinitialize
         >
@@ -105,7 +110,7 @@ const SellDetailForm = (): React.ReactNode => {
                             width: { xs: "100%", sm: "80%", md: "100%" },
                             m: { xs: "3em auto", sm: "3em 1em" },
                         }}>
-                        {!isLoadingEntity && (
+                        {!isLoading && (
                             <ActualStepComponent
                                 currentStep={0}
                                 stepComponents={STEP_COMPONENTS}

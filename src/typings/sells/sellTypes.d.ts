@@ -7,7 +7,7 @@ import type { EspecificationsLeftProps } from "./SellComponentTypes";
 
 {/*─────────────────── 🔎 tipos usados en sell 🔎 ───────────────────*/}
 
-    //────────────────────────────────────────── 🔖 SellType 🔖 ─────────────────────────────────────────//
+    //────────────────────────────────────────── 🔖 Sell 🔖 ─────────────────────────────────────────//
 
     interface SellEntityInterface {
         currency: string;   
@@ -37,7 +37,7 @@ import type { EspecificationsLeftProps } from "./SellComponentTypes";
         'total_amount'  
         >;
 
-    export type SellType = SellEntityInterface;
+    export type Sell = SellEntityInterface;
 
     // /*══════════════════════════════════════════════════════════════════════╗
     // ║ 📋 FORMULARIOS 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋         ║
@@ -63,7 +63,9 @@ import type { EspecificationsLeftProps } from "./SellComponentTypes";
         errorMessage: string | null,
         isLoading: boolean,
         sells: SellTicketType[],
-        sellSelected: SellTicketType | null,
+        currentSell: SellTicketType | null,
+        isLoadingCurrent: boolean,
+        currentSellError: string | null,
     }
 
     export type SellStateErrorType = Pick <SellStateInterface, 'errorMessage'>
@@ -94,7 +96,7 @@ import type { EspecificationsLeftProps } from "./SellComponentTypes";
         _id: string;
     }
 
-    export type EditSellRequestPayloadType = Pick<SellType,
+    export type EditSellRequestPayloadType = Pick<Sell,
         '_id' |
         'currency' |
         'iva' |
@@ -114,11 +116,11 @@ import type { EspecificationsLeftProps } from "./SellComponentTypes";
     
     //────────────────────────────────────────── 🔗 API 🔗 ─────────────────────────────────────────//
 
-    export type GetSellApiPayloadType = Pick<SellType, '_id'>;
+    export type GetSellApiPayloadType = Pick<Sell, '_id'>;
 
-    export type CreateSellApiPayloadType = Omit<SellType, '_id' | 'modification_date'>;
+    export type CreateSellApiPayloadType = Omit<Sell, '_id' | 'modification_date'>;
 
-    export type DeleteSellApiPayloadType = Pick<SellType, '_id'>;
+    export type DeleteSellApiPayloadType = Pick<Sell, '_id'>;
 
     export type EditSellApiPayloadType = EditSellRequestPayloadType;
 

@@ -14,7 +14,7 @@ export const useProducts = (): UseProductsReturn => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-    // ── data fetching delegado, mismo patrón que useProductEdit → useProductData ──
+
     const { products, loading, error, searchTerm, setSearchTerm } = useProductsListData();
 
     const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
@@ -36,7 +36,7 @@ export const useProducts = (): UseProductsReturn => {
         loading,
         error,
         deleteDialog,
-        clearError: () => {}, // ver nota abajo
+        clearError: () => {},
         handleDeleteRequest,
         handleDeleteCancel,
         handleDeleteConfirm,

@@ -12,16 +12,16 @@
 import { CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, type Theme } from "@mui/material";
 import type { SellDataProps } from "@typings/sells/SellComponentTypes";
 
-const SellDataComponent = ({sellSelected}: SellDataProps): React.ReactNode => {
+const SellDataComponent = ({currentSell}: SellDataProps): React.ReactNode => {
 
-  if(!sellSelected) {
+  if(!currentSell) {
     return <CircularProgress />
   }
 
   const {
     purchase_date,modification_date,seller_name,payment_method,
     sub_total,iva,total_amount,currency
-  } = sellSelected;
+  } = currentSell;
 
   return (
     <>

@@ -2,9 +2,9 @@ import { CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, T
 import type { SellCartDataProps } from "@typings/sells/SellComponentTypes";
 import SellCartProductsComponent from "./SellCartProductsComponent";
 
-const SellCartDataComponent = ({sellSelected}: SellCartDataProps ): React.ReactNode => {
+const SellCartDataComponent = ({currentSell}: SellCartDataProps ): React.ReactNode => {
 
-  if(!sellSelected) {
+  if(!currentSell) {
     return <CircularProgress />
   }
 
@@ -31,7 +31,7 @@ const SellCartDataComponent = ({sellSelected}: SellCartDataProps ): React.ReactN
             </TableRow>
           </TableHead>
           <TableBody>
-            <SellCartProductsComponent sellSelected={sellSelected} />
+            <SellCartProductsComponent currentSell={currentSell} />
           </TableBody>
         </Table>
       </TableContainer>

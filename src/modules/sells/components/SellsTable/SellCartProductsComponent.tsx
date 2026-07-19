@@ -12,12 +12,12 @@ import { CircularProgress, TableCell, TableRow } from "@mui/material";
 import type { ProductTicketType } from "@typings/seller/sellerTypes";
 import type { SellCartProductsProps } from "@typings/sells/SellComponentTypes";
 
-const SellCartProductsComponent = ({sellSelected}: SellCartProductsProps): React.ReactNode => {
-  if(!sellSelected) {
+const SellCartProductsComponent = ({currentSell}: SellCartProductsProps): React.ReactNode => {
+  if(!currentSell) {
     return <CircularProgress />
   }
 
-  sellSelected.products?.map((product: Partial<ProductTicketType>, index: number) => {
+  currentSell.products?.map((product: Partial<ProductTicketType>, index: number) => {
     const {
       _id,name,price,stock_required
     } = product;

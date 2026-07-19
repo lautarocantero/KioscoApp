@@ -9,7 +9,7 @@ import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
    //────────────────────────────────────────── 📑 Sells List 📑 ───────────────────────────────────────────//
 
     export interface SellFormProps {
-        mode?: FormModeComplexEnum.Edit | FormModeComplexEnum.Detail;
+        mode?: FormModeComplexEnum;
     }
 
    //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
@@ -21,12 +21,12 @@ import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
     }
 
     export interface SellDataProps {
-        sellSelected: SellTicketType | null;
+        currentSell: SellTicketType | null;
     }
 
-    export type SellCartDataProps = Pick<SellDataProps, 'sellSelected'>;
+    export type SellCartDataProps = Pick<SellDataProps, 'currentSell'>;
 
-    export type SellCartProductsProps = Pick<SellDataProps, 'sellSelected'>;
+    export type SellCartProductsProps = Pick<SellDataProps, 'currentSell'>;
 
     //──────────────────────────────────────────── 📋 Product Exhibitor 📋───────────────────────────────────────────//
 

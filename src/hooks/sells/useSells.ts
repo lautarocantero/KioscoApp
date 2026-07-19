@@ -15,6 +15,7 @@ export const useSells = (): UseSellsReturn => {
     const dispatch = useDispatch<AppDispatch>();
 
     const { sells, loading, error, searchTerm, setSearchTerm } = useSellsListData();
+    
     const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
 
     const handleDeleteRequest = (id: string, name: string) => setDeleteDialog({ open: true, id, name });

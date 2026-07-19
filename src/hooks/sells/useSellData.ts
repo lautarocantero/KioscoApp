@@ -1,31 +1,36 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getSellByIdThunk } from "../../store/sell/sellsThunks";
-import type { SellTicketType, UseSellDataResult } from "@typings/sells/sellTypes";
-import type { AppDispatch } from "store/sell/sellSlice";
+import type { UseSellDataResult } from "@typings/sells/sellTypes";
+import type { AppDispatch, RootState } from "store/sell/sellSlice";
 
-export const useSellData = (sellId?: string): UseSellDataResult => {
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 useSellData                                                        ║
+║                                                                       ║
+║ Consume el store en lugar de fetch manual:                           ║
+║   1. Lee currentSell/isLoadingCurrent/currentSellError del store      ║
+║   2. Si el store no tiene esta venta (refresh, URL directa, etc.),    ║
+║      despacha el thunk getSellById, que ya se encarga de              ║
+║      fetchear y guardar en store                                      ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+
+
+export const useSellData = (sellId: string | undefined): UseSellDataResult => {
+
     const dispatch = useDispatch<AppDispatch>();
-    const [sellData, setSellData] = useState<SellTicketType | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+
+    const sellData = useSelector((state: RootState) => state.sell?.currentSell ?? null);
+    const isLoading = useSelector((state: RootState) => state.sell?.isLoadingCurrent ?? false);
+    const error     = useSelector((state: RootState) => state.sell?.currentSellError ?? null);
+
+    const storeHasIt = sellData?._id === sellId;
 
     useEffect(() => {
-        if (!sellId) {
-            setIsLoading(false);
-            setError("No se especificó un id de venta");
-            return;
-        }
+        if (!sellId) return;
+        if (storeHasIt) return;
 
-        setIsLoading(true);
-        dispatch(getSellByIdThunk({ _id: sellId }))
-            .then((sell) => {
-                if (sell) setSellData(sell as unknown as SellTicketType);
-                else setError("No se encontró la venta");
-            })
-            .catch(() => setError("Error al cargar la venta"))
-            .finally(() => setIsLoading(false));
-    }, [sellId, dispatch]);
+        void dispatch(getSellByIdThunk({ _id: sellId }));
+    }, [sellId, storeHasIt, dispatch]);
 
     return { sellData, isLoading, error };
 };

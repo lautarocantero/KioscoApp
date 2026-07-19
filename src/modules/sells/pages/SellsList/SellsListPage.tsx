@@ -2,14 +2,25 @@ import React from "react";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useSells } from "../../../../hooks/sells/useSells";
-import type { SellType } from "@typings/sells/sellTypes";
+import type { Sell } from "@typings/sells/sellTypes";
 
 const SellsListPage = (): React.ReactNode => {
-    const { sells, loading, error, deleteDialog, clearError, handleDeleteCancel, handleDeleteConfirm, searchTerm, setSearchTerm, columns } = useSells();
+    const { 
+        sells, 
+        loading, 
+        error, 
+        deleteDialog, 
+        clearError, 
+        handleDeleteCancel, 
+        handleDeleteConfirm, 
+        searchTerm, 
+        setSearchTerm, 
+        columns 
+    } = useSells();
 
     return (
         <AppLayout fullWidth>
-            <DataTable<SellType>
+            <DataTable<Sell>
                 title={"Ventas"}
                 rows={sells}
                 columns={columns}

@@ -1,16 +1,16 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, EditSellSanitizedPayloadInterface, GetSellByIdThunkInterface, SellType } from "@typings/sells/sellTypes";
+import type { CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, EditSellSanitizedPayloadInterface, GetSellByIdThunkInterface, Sell } from "@typings/sells/sellTypes";
 import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest, putSellRequest, searchSellsRequest } from "../../modules/sells/api/sellApi";
 import { handleError } from "../shared/handlerStoreError";
-import { checkingSells, removeSell, setError, setSells, setSellSelected } from "./sellSlice";
+import { checkingSells, removeSell, setError, setSells, setCurrentSell } from "./sellSlice";
 
 //──────────────────────────────────────────── Get ───────────────────────────────────────────//
 
 export const getSellsThunk = () => {
-    return async (dispatch: Dispatch): Promise<SellType[] | undefined> => {
+    return async (dispatch: Dispatch): Promise<Sell[] | undefined> => {
         dispatch(checkingSells());
         try {
-            const sells: SellType[] = await getSellsRequest();
+            const sells: Sell[] = await getSellsRequest();
 
             if (!sells) {
                 dispatch(setError({ errorMessage: "No se ha encontrado ninguna venta" }));
@@ -27,19 +27,19 @@ export const getSellsThunk = () => {
 
 export const getSellByIdThunk = ({_id}: GetSellByIdThunkInterface) => {
 
-    return async (dispatch: Dispatch) : Promise<SellType | undefined> => {
+    return async (dispatch: Dispatch) : Promise<Sell | undefined> => {
         dispatch(checkingSells());
 
         try {
-            const sell: SellType[] = await getSellByIdRequest({_id});
+            const sell: Sell[] = await getSellByIdRequest({_id});
 
             if(!sell) {
                 dispatch(setError({ errorMessage: "No se ha encontrado la venta"}))
                 throw new Error('No se encontraron ventas que concuerden con este ticket');
             }
 
-            dispatch(setSellSelected(sell[0]));
-            return sell[0] as SellType;
+            dispatch(setCurrentSell(sell[0]));
+            return sell[0] as Sell;
 
         } catch (error: unknown) {
             handleError(error);
@@ -48,10 +48,10 @@ export const getSellByIdThunk = ({_id}: GetSellByIdThunkInterface) => {
 }
 
 export const searchSellsThunk = (term: string) => {
-    return async (dispatch: Dispatch): Promise<SellType[] | undefined> => {
+    return async (dispatch: Dispatch): Promise<Sell[] | undefined> => {
         dispatch(checkingSells());
         try {
-            const sells: SellType[] = await searchSellsRequest(term);
+            const sells: Sell[] = await searchSellsRequest(term);
             dispatch(setSells(sells));
             return sells;
         } catch (error: unknown) {
@@ -109,7 +109,7 @@ export const editSellThunk = ({ data }: EditSellSanitizedPayloadInterface) => {
                 throw new Error('Error durante la edición de la venta');
             }
 
-            dispatch(setSellSelected(data as unknown as SellType));
+            dispatch(setCurrentSell(data as unknown as Sell));
             dispatch(setError({ errorMessage: null }));
             return response._id as string;
         } catch (error: unknown) {
