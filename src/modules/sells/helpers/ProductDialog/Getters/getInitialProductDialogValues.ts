@@ -14,7 +14,7 @@
 //-----------------------------------------------------------------------------//
 
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { DialogDataInterface } from "@typings/sells/types";
+import type { DialogDataInterface } from "@typings/sells/sellTypes";
 
 const emptyPresentation: Presentation = {
   _id: "",

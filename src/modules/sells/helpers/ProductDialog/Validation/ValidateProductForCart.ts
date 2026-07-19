@@ -20,7 +20,7 @@ Se encarga de validar que el producto seleccionado pueda agregarse al carrito.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 */
 
-import type { validateProductSubmissionInterface, ValidationResultType } from "@typings/sells/types";
+import type { validateProductSubmissionInterface, ValidationResultType } from "@typings/sells/sellTypes";
 
 const validateProductForCart = ( {Presentation, requiredStock}: validateProductSubmissionInterface): ValidationResultType => {
     if (!Presentation) {

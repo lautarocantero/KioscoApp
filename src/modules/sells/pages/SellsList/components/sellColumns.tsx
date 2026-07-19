@@ -1,9 +1,8 @@
 import { type GridColDef } from "@mui/x-data-grid";
-import type { BuildColumnsForSellsArgs, SellTicketType } from "@typings/sells/types";
+import type { BuildColumnsForSellsArgs, SellTicketType } from "@typings/sells/sellTypes";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import { CellCenter } from "modules/shared/components/DataTable/CellCenter";
 import { dateColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
-
 
 
 export const buildColumnsForSells = ({
@@ -31,7 +30,10 @@ export const buildColumnsForSells = ({
         headerAlign: "center",
         renderCell: (params) => (
             <CellCenter>
-                <RowActionsCell onDelete={() => onDeleteRequest(params.row._id, params.row._id)} />
+                <RowActionsCell 
+                    onDelete={() => onDeleteRequest(params.row._id, params.row._id)} 
+                    onView={() => navigate(`/sell/${params.row._id}`)}
+                />
             </CellCenter>
         ),
     },

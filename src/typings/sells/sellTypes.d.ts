@@ -2,8 +2,8 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";
-import type { PaymentMethod } from "../enums/sells";
-import type { EspecificationsLeftProps } from "../reactComponents";
+import type { PaymentMethod } from "./sellsEnum";
+import type { EspecificationsLeftProps } from "./SellComponentTypes";
 
 {/*─────────────────── 🔎 tipos usados en sell 🔎 ───────────────────*/}
 
@@ -38,6 +38,24 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         >;
 
     export type SellType = SellEntityInterface;
+
+    // /*══════════════════════════════════════════════════════════════════════╗
+    // ║ 📋 FORMULARIOS 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋         ║
+    // ╚══════════════════════════════════════════════════════════════════════╝*/
+
+    export interface SellEditFormValues {
+        _id: string;
+        purchase_date: string;
+        modification_date: string | null;
+        seller_id: string;
+        seller_name: string;
+        payment_method: PaymentMethod;
+        products: Presentation[];
+        sub_total: number;
+        iva: number;
+        total_amount: number;
+        currency: string;
+    }
 
     //────────────────────────────────────────── 🍕 SLICE 🍕 ─────────────────────────────────────────//
 
@@ -75,6 +93,24 @@ import type { EspecificationsLeftProps } from "../reactComponents";
     export interface DeleteSellByIdThunkInterface {
         _id: string;
     }
+
+    export type EditSellRequestPayloadType = Pick<SellType,
+        '_id' |
+        'currency' |
+        'iva' |
+        'modification_date' |
+        'payment_method' |
+        'products' |
+        'purchase_date' |
+        'seller_id' |
+        'seller_name' |
+        'sub_total' |
+        'total_amount'
+    >;
+
+    export interface EditSellSanitizedPayloadInterface {
+        data: EditSellRequestPayloadType;
+    }
     
     //────────────────────────────────────────── 🔗 API 🔗 ─────────────────────────────────────────//
 
@@ -83,6 +119,8 @@ import type { EspecificationsLeftProps } from "../reactComponents";
     export type CreateSellApiPayloadType = Omit<SellType, '_id' | 'modification_date'>;
 
     export type DeleteSellApiPayloadType = Pick<SellType, '_id'>;
+
+    export type EditSellApiPayloadType = EditSellRequestPayloadType;
 
     //────────────────────────────────────────── 🔗 HOOKS 🔗 ─────────────────────────────────────────//
 
@@ -113,6 +151,12 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         handleDeleteCancel: () => void;
         handleDeleteConfirm: () => Promise<void>;
         columns: GridColDef<SellTicketType>[];
+    }
+
+    export interface UseSellDataResult {
+        sellData: SellTicketType | null;
+        isLoading: boolean;
+        error: string | null;
     }
 
    //────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//

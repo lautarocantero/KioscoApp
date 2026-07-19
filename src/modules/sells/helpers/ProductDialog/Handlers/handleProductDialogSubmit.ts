@@ -18,7 +18,7 @@
 
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { ProductTicketType } from "@typings/seller/sellerTypes";
-import type { DialogOnSubmitType, ValidationResultType } from "@typings/sells/types";
+import type { DialogOnSubmitType, ValidationResultType } from "@typings/sells/sellTypes";
 import { addToCartThunk } from "../../../../../store/seller/sellerThunks";
 import { AlertColor } from "../../../../../typings/ui/ui";
 import validateProductForCart from "../Validation/ValidateProductForCart";

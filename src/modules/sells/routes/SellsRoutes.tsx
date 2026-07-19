@@ -1,9 +1,9 @@
 
 import { Route } from "react-router-dom";
 import { DialogProvider } from "../context/Product/ProductDialogProvider";
-import NewSellPage from "../pages/newSell/NewSellPage";
-// import SellDetailPage from "../pages/sellDetail/SellDetail";
-import SellsListPage from "../pages/sellsList/SellsListPage";
+import NewSellPage from "../pages/NewSell/NewSellPage";
+import SellsListPage from "../pages/SellsList/SellsListPage";
+import SellDetailPage from "../pages/SellDetail/SellDetailPage";
 
 const SellsRoutes = ():React.ReactNode => {
 
@@ -11,7 +11,7 @@ const SellsRoutes = ():React.ReactNode => {
         <>
             <Route path="/sells" element={<SellsListPage />} />
             <Route path="/new-sell" element={<DialogProvider><NewSellPage /></DialogProvider>} />
-            {/* <Route path="/sells-history/:_id" element={<SellDetailPage />} /> */}
+            <Route path="/sell/:sell_id" element={<SellDetailPage />} />
         </>
     )
 }

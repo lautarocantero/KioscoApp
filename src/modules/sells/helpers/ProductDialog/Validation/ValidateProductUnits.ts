@@ -20,7 +20,7 @@ Ajusta el valor a los límites permitidos (mínimo 1, máximo stock).
 */
 
 
-import type { HandleProductDialogUnitsChangeInterface, ValidationResultType } from "@typings/sells/types";
+import type { HandleProductDialogUnitsChangeInterface, ValidationResultType } from "@typings/sells/sellTypes";
 
 const validateProductUnits = ({
   incomingValue,

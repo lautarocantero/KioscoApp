@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, GetSellByIdThunkInterface, SellType } from "@typings/sells/types";
-import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest, searchSellsRequest } from "../../modules/sells/api/sellApi";
+import type { CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, EditSellSanitizedPayloadInterface, GetSellByIdThunkInterface, SellType } from "@typings/sells/sellTypes";
+import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest, putSellRequest, searchSellsRequest } from "../../modules/sells/api/sellApi";
 import { handleError } from "../shared/handlerStoreError";
 import { checkingSells, removeSell, setError, setSells, setSellSelected } from "./sellSlice";
 
@@ -97,6 +97,26 @@ export const createSellThunk = ({data}: CreateSellSanitizedPayloadInterface) => 
         }
     }
 }
+
+//──────────────────────────────────────────── Put ───────────────────────────────────────────//
+
+export const editSellThunk = ({ data }: EditSellSanitizedPayloadInterface) => {
+    return async (dispatch: Dispatch): Promise<string | undefined> => {
+        try {
+            const response = await putSellRequest(data);
+
+            if (!response?._id) {
+                throw new Error('Error durante la edición de la venta');
+            }
+
+            dispatch(setSellSelected(data as unknown as SellType));
+            dispatch(setError({ errorMessage: null }));
+            return response._id as string;
+        } catch (error: unknown) {
+            handleError(error);
+        }
+    };
+};
     
 //──────────────────────────────────────────── Delete ───────────────────────────────────────────//
 

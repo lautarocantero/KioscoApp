@@ -14,7 +14,7 @@
 //-----------------------------------------------------------------------------//
 
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/types";
+import type { HandleProductDialogSelectorChangeInterface } from "@typings/sells/sellTypes";
 import validateProductSelection from "../Validation/ValidateProductSelection";
  
 const handleChangeProductDialogSelector = ({event, products, setFieldValue} : HandleProductDialogSelectorChangeInterface ) => {

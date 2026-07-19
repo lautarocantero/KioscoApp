@@ -1,13 +1,18 @@
-import type { Product } from "../../product/productTypes";
-import type { Presentation } from "../../presentation/presentationTypes";
-import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from "../types";
+import type { Product } from "../product/productTypes";
+import type { Presentation } from "../presentation/presentationTypes";
+import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from "./sellTypes";
 import type { ViewMode } from "modules/sells/components/ProductList/ProductToolbar";
+import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}
 
+   //────────────────────────────────────────── 📑 Sells List 📑 ───────────────────────────────────────────//
+
+    export interface SellFormProps {
+        mode?: FormModeComplexEnum.Edit | FormModeComplexEnum.Detail;
+    }
+
    //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
-
-
    
 
     export interface SellsTableProps {

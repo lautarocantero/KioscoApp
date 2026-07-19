@@ -11,7 +11,7 @@
 
 //-----------------------------------------------------------------------------//
 
-import type { HandleProductDialogUnitsChangeInterface, ValidationResultType } from "@typings/sells/types";
+import type { HandleProductDialogUnitsChangeInterface, ValidationResultType } from "@typings/sells/sellTypes";
 import validateProductUnits from "../Validation/ValidateProductUnits";
 
 const handleChangeUnits = ({incomingValue, Presentation, setFieldValue}: HandleProductDialogUnitsChangeInterface) => {

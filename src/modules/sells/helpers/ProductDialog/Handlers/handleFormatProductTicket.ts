@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------//
 
 import type { ProductTicketType } from "@typings/seller/sellerTypes";
-import type { FormatProductTicketInterface } from "@typings/sells/types";
+import type { FormatProductTicketInterface } from "@typings/sells/sellTypes";
 
   const formatProductTicket = ({Presentation, requiredStock } : FormatProductTicketInterface): ProductTicketType | undefined => {
     

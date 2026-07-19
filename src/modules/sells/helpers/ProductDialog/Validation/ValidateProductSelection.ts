@@ -19,7 +19,7 @@ Se encarga de validar que el producto seleccionado sea válido antes de agregarl
 */
 
 
-import type { validateProductSelectionType, ValidationResultType } from "@typings/sells/types";
+import type { validateProductSelectionType, ValidationResultType } from "@typings/sells/sellTypes";
 
 const validateProductSelection = ( {event, products, productId }: validateProductSelectionType): ValidationResultType => {
     
