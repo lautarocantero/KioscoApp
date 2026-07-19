@@ -13,13 +13,11 @@ import PercentOutlinedIcon from "@mui/icons-material/PercentOutlined";
 import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 import type { SellEditFormValues } from "@typings/sells/sellTypes";
-import SellCartProductsComponent from "../SellsTable/SellCartProductsComponent";
 
 const SellFormFirstStep = (): React.ReactNode => {
     const theme = useTheme();
     const { actionTitle, submitError, stepErrors } = useFormNavigation();
     const isDetail = actionTitle === FormModeComplexEnum.Detail;
-    const { values } = useFormikContext<SellEditFormValues>();
 
     return (
         <FormCard
@@ -49,9 +47,6 @@ const SellFormFirstStep = (): React.ReactNode => {
                     currency:       { icon: <CurrencyExchangeOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
                 }}
             />
-            {values.products.length > 0 && (
-                <SellCartProductsComponent currentSell={{ ...values }} />
-            )}
         </FormCard>
     );
 };
