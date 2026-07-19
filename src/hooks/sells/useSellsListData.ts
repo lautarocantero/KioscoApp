@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/sell/sellSlice";
 import { getSellsThunk, searchSellsThunk } from "../../store/sell/sellsThunks";
-import type { UseSellsListDataResult } from "@typings/sells/types";
+import type { UseSellsListDataResult } from "@typings/sells/sellTypes";
 
 export const useSellsListData = (): UseSellsListDataResult => {
     const dispatch = useDispatch<AppDispatch>();

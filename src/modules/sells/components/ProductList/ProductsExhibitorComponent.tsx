@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { ProductsExhibitorProps } from "@typings/sells/reactComponents";
+import type { ProductsExhibitorProps } from "@typings/sells/SellComponentTypes";
 import type { Product } from "../../../../typings/product/productTypes";
 import ProductsNotFound from "./ProductNotFound";
 import ProductsList from "./ProductsList";

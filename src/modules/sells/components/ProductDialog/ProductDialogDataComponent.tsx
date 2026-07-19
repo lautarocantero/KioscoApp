@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import type { DialogDataProps } from "@typings/sells/reactComponents"; // 🔎 agregar name/category/description/image_url
+import type { DialogDataProps } from "@typings/sells/SellComponentTypes"; // 🔎 agregar name/category/description/image_url
 import React from "react";
 import ProductDialogHeaderComponent from "./ProductDialogHeaderComponent";
 import ProductDialogSelector from "./ProductDialogSelector";

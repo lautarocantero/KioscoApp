@@ -1,8 +1,9 @@
 import type {
     CreateSellApiPayloadType,
     DeleteSellApiPayloadType,
+    EditSellApiPayloadType,
     GetSellApiPayloadType
-} from "@typings/sells/types";
+} from "@typings/sells/sellTypes";
 import axios from "axios";
 import { API_URL } from "../../../config/api";
 
@@ -45,6 +46,13 @@ export const searchSellsRequest = async (term: string) => {
 export const postSellRequest = async (data: CreateSellApiPayloadType) => {
 
     const response = await baseUrl.post('/create-sell', data);
+    return response.data;
+}
+
+//──────────────────────────────────────────── 📤 PUT 📤 ───────────────────────────────────────────//
+
+export const putSellRequest = async (data: EditSellApiPayloadType) => {
+    const response = await baseUrl.put('/edit-sell', data);
     return response.data;
 }
 

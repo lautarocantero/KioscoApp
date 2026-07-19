@@ -1,5 +1,5 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, type Theme } from "@mui/material";
-import type { DialogDataInterface } from "@typings/sells/types";
+import type { DialogDataInterface } from "@typings/sells/sellTypes";
 import { useFormik } from "formik";
 import { useCallback, useContext, useMemo } from "react";
 import { useDispatch } from "react-redux";

@@ -1,5 +1,5 @@
 import { Box, Stack, Typography, type Theme } from "@mui/material";
-import type { DialogSelectorProps } from "@typings/sells/reactComponents";
+import type { DialogSelectorProps } from "@typings/sells/SellComponentTypes";
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";

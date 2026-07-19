@@ -1,27 +1,7 @@
-//─────────────────── Componente 🧩: CartPaymentMethod ───────────────────//
-//
-//─────────────────── Descripción 📝 ───────────────────//
-// Componente de selección de método de pago dentro del carrito.
-// para almacenar el valor seleccionado sin necesidad de formularios.
-//
-//──────────────────── Funciones 🔧 ─────────────────────//
-// - Renderiza un grupo de opciones de pago (Transferencia, Efectivo, Débito, Crédito).
-// - Usa `useRef` (inyectado como prop) para guardar el método seleccionado.
-// - `handleChange`: actualiza el ref con el valor elegido.
-// - Alinea todos los elementos a la izquierda, en columna, con ícono junto al título.
-//
-//─────────────────── Notas técnicas 💽 ───────────────────//
-// - Los hijos del RadioGroup heredan color blanco (texto) y el radio 
-//   seleccionado usa el color primario (púrpura).
-// - Se define un valor por defecto: `PaymentMethod.Transfer`.
-//
-//-----------------------------------------------------------------------------//
-
-
 import React from "react";
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Typography, type Theme } from "@mui/material";
-import { PaymentMethod } from "../../../typings/sells/enums/sells";
+import { PaymentMethod } from "../../../typings/sells/sellsEnum";
 
 const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObject<string>}): React.ReactNode => {
 

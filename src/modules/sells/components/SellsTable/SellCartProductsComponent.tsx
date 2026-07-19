@@ -10,7 +10,7 @@
 
 import { CircularProgress, TableCell, TableRow } from "@mui/material";
 import type { ProductTicketType } from "@typings/seller/sellerTypes";
-import type { SellCartProductsProps } from "@typings/sells/reactComponents";
+import type { SellCartProductsProps } from "@typings/sells/SellComponentTypes";
 
 const SellCartProductsComponent = ({sellSelected}: SellCartProductsProps): React.ReactNode => {
   if(!sellSelected) {

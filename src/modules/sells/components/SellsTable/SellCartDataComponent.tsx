@@ -1,23 +1,5 @@
-
-//─────────────────── Componente 🧩: SellCartDataComponent ───────────────────//
-//
-//─────────────────── Descripción 📝 ───────────────────//
-// Este componente renderiza la tabla principal de productos vendidos dentro
-// de un carrito de venta. Sirve como contenedor y delega la renderización
-// de las filas a `SellCartProductsComponent`.
-//
-//──────────────────── Funciones 🔧 ─────────────────────//
-//
-// SellCartDataComponent:
-//   • Renderiza el título y la tabla contenedora.
-// SellCartProductsComponent:
-//   • Renderiza los productos vendidos en filas dentro de la tabla.
-//
-//-----------------------------------------------------------------------------
-
-
 import { CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type Theme } from "@mui/material";
-import type { SellCartDataProps } from "@typings/sells/reactComponents";
+import type { SellCartDataProps } from "@typings/sells/SellComponentTypes";
 import SellCartProductsComponent from "./SellCartProductsComponent";
 
 const SellCartDataComponent = ({sellSelected}: SellCartDataProps ): React.ReactNode => {

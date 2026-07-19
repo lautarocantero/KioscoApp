@@ -3,7 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import type { AppDispatch, RootState as PresentationState } from "../../store/presentation/presentationSlice";
 import { fetchPresentationsByProductId } from "../../store/presentation/presentationThunks";
 import type { RootState as SellerRootState } from "../../store/seller/sellerSlice";
-import type { UseCartPresentationPickerReturn } from "@typings/sells/types";
+import type { UseCartPresentationPickerReturn } from "@typings/sells/sellTypes";
 
 
 /*══════════════════════════════════════════════════════════════════════╗

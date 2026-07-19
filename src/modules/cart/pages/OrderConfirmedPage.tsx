@@ -27,7 +27,7 @@ import { Box, Button, Grid, Typography, type Theme } from "@mui/material";
 import SimpleGrid from "../../shared/components/SimpleGrid/SimpleGridComponent";
 import AppLayout from "../../shared/layout/AppLayout";
 import { createPdfTicket } from "../helpers/createPdfTicket";
-import type { SellTicketType } from '@typings/sells/types';
+import type { SellTicketType } from '@typings/sells/sellTypes';
 
 //──────────────────── Types 🧾 ─────────────────────//
 type TicketSummaryType = {

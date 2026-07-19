@@ -11,7 +11,7 @@
 //-----------------------------------------------------------------------------//
 
 import { Box } from "@mui/material";
-import type { ProductDialogImageProps } from "@typings/sells/reactComponents";
+import type { ProductDialogImageProps } from "@typings/sells/SellComponentTypes";
 import React from "react";
 
 const ProductDialogImageComponent = ({image_url = '/images/productExample/cocaCola.png', name = 'Product'}: ProductDialogImageProps):React.ReactNode => {

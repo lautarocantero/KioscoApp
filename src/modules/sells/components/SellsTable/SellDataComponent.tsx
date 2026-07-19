@@ -10,7 +10,7 @@
 
 
 import { CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, type Theme } from "@mui/material";
-import type { SellDataProps } from "@typings/sells/reactComponents";
+import type { SellDataProps } from "@typings/sells/SellComponentTypes";
 
 const SellDataComponent = ({sellSelected}: SellDataProps): React.ReactNode => {
 

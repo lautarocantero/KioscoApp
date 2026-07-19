@@ -1,6 +1,6 @@
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { Box, Typography, type Theme } from "@mui/material";
-import type { ItemDataProps } from '@typings/sells/reactComponents';
+import type { ItemDataProps } from '@typings/sells/SellComponentTypes';
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 
 const ProductItemData = ({ name = "product", presentations = [] }: ItemDataProps): React.ReactNode => {

@@ -1,7 +1,7 @@
 import { Box, CircularProgress } from "@mui/material";
 import type { Product } from "../../../../typings/product/productTypes";
 import ProductItemComponent from "../ProductItem/ProductItemComponent";
-import type { ProductListProps } from "@typings/sells/reactComponents";
+import type { ProductListProps } from "@typings/sells/SellComponentTypes";
 
 
 const ProductsList = ({ products, viewMode = "grid" }: ProductListProps): React.ReactNode => {

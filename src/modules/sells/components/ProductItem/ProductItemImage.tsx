@@ -1,6 +1,6 @@
 import { Box, type Theme } from "@mui/material";
 import ImageNotSupportedOutlinedIcon from "@mui/icons-material/ImageNotSupportedOutlined";
-import type { ProductItemImageProps } from "@typings/sells/reactComponents";
+import type { ProductItemImageProps } from "@typings/sells/SellComponentTypes";
 
 interface Props extends ProductItemImageProps {
   onClick?: () => void;

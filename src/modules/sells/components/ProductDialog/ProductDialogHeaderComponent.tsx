@@ -1,7 +1,7 @@
 import { Box, Chip, Stack, Typography, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import type { ProductDialogHeaderProps } from "@typings/sells/reactComponents"; // 🔎 crear este type
+import type { ProductDialogHeaderProps } from "@typings/sells/SellComponentTypes"; // 🔎 crear este type
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
 import React, { useMemo } from "react";
 

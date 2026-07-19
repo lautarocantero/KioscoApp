@@ -11,7 +11,7 @@
 
 import { Divider, Grid, Typography, type Theme } from "@mui/material";
 import { formatCurrency } from "../helpers/formatCurrency";
-import type { CartPriceProps } from "@typings/sells/reactComponents";
+import type { CartPriceProps } from "@typings/sells/SellComponentTypes";
 
 const CartPriceRow = (
     { label, value, valueColor, bold = false }

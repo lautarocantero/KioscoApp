@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import type { UseSellsReturn } from "@typings/sells/types";
+import type { UseSellsReturn } from "@typings/sells/sellTypes";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { AppDispatch } from "../../store/sell/sellSlice";
 import { deleteSellThunk } from "../../store/sell/sellsThunks";
-import { buildColumnsForSells } from "../../modules/sells/pages/sellsList/components/sellColumns";
 import { useSellsListData } from "./useSellsListData";
 import { CLOSED_DIALOG } from "config/constants";
+import { buildColumnsForSells } from "../../modules/sells/pages/SellsList/components/sellColumns";
 
 
 export const useSells = (): UseSellsReturn => {

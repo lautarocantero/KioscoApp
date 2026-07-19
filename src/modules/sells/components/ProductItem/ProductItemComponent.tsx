@@ -1,5 +1,5 @@
 import { Grid, Tooltip, type Theme } from "@mui/material";
-import type { ProductItemProps } from "@typings/sells/reactComponents";
+import type { ProductItemProps } from "@typings/sells/SellComponentTypes";
 import { useContext } from "react";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../../store/auth/authSlice";
