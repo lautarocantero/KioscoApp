@@ -16,22 +16,27 @@ const baseUrl = axios.create({
 //──────────────────────────────────────────── 📥 GET 📥 ───────────────────────────────────────────//
 
 export const getSellsRequest = async () => {
-
     const response = await baseUrl.get('/get-sells');
-    return response.data;
+    return response.data.data;
 }
 
 export const getSellByIdRequest = async (data: GetSellApiPayloadType) => {
     
-    const { ticket_id } : { ticket_id: string }  = data;
+    const { _id } : { _id: string }  = data;
 
-    const response = await baseUrl.get(`/get-sell-by-id/${ticket_id}`);
+    const response = await baseUrl.get(`/get-sell-by-id/${_id}`);
     return response.data;
 }
 
 export const getTodaySellsCountRequest = async (): Promise<{ count: number, lastSaleAt: string | null }> => {
 
     const response = await baseUrl.get('/get-today-sells-count');
+    return response.data;
+}
+
+export const searchSellsRequest = async (term: string) => {
+
+    const response = await baseUrl.get('/search-sells', { params: { term } });
     return response.data;
 }
 
@@ -46,8 +51,8 @@ export const postSellRequest = async (data: CreateSellApiPayloadType) => {
 //──────────────────────────────────────────── 🗑️ DELETE 🗑️ ───────────────────────────────────────────//
 
 export const deleteSellRequest = async (data: DeleteSellApiPayloadType) => {
-    const { ticket_id } : { ticket_id: string }  = data;
+    const { _id } : { _id: string }  = data;
 
-    const response = await baseUrl.delete(`/delete-sell/${ticket_id}`);
+    const response = await baseUrl.delete(`/delete-sell/${_id}`);
     return response.data;
 }

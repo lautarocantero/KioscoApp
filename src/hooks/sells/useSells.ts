@@ -1,54 +1,43 @@
-import { getTodaySellsCountRequest } from "../../modules/sells/api/sellApi";
-import { useEffect, useState } from "react";
-import type { LinkDataResult } from "@typings/ui/layout.types";
-import type { UseSellsResult } from "@typings/sells/types";
-import { formatRelativeSaleSubtitle } from "../../modules/sells/helpers/ProductDialog/Formatter/formatRelativeSale";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import type { UseSellsReturn } from "@typings/sells/types";
+import type { DeleteDialogState } from "@typings/ui/dialog.types";
+import type { AppDispatch } from "../../store/sell/sellSlice";
+import { deleteSellThunk } from "../../store/sell/sellsThunks";
+import { buildColumnsForSells } from "../../modules/sells/pages/sellsList/components/sellColumns";
+import { useSellsListData } from "./useSellsListData";
+import { CLOSED_DIALOG } from "config/constants";
 
 
-export const useSells = (): UseSellsResult => {
-    const [count, setCount] = useState<number | null>(null);
-    const [lastSaleAt, setLastSaleAt] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+export const useSells = (): UseSellsReturn => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => {
-        let isMounted = true;
+    const { sells, loading, error, searchTerm, setSearchTerm } = useSellsListData();
+    const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
 
-        const fetchSells = async (): Promise<void> => {
-            setLoading(true);
-            setError(null);
+    const handleDeleteRequest = (id: string, name: string) => setDeleteDialog({ open: true, id, name });
+    const handleDeleteCancel = () => setDeleteDialog(CLOSED_DIALOG);
 
-            try {
-                const { count: todayCount, lastSaleAt: lastSale } = await getTodaySellsCountRequest();
-                if (!isMounted) return;
-                setCount(todayCount);
-                setLastSaleAt(lastSale ?? null);
-            } catch {
-                if (!isMounted) return;
-                setError("No se pudo obtener el número de ventas de hoy");
-            } finally {
-                if (isMounted) setLoading(false);
-            }
-        };
+    const handleDeleteConfirm = async () => {
+        await dispatch(deleteSellThunk({ _id: deleteDialog.id }));
+        setDeleteDialog(CLOSED_DIALOG);
+    };
 
-        void fetchSells();
-
-        return () => {
-            isMounted = false;
-        };
-    }, []);
-
-    return { count, lastSaleAt, loading, error };
-};
-
-// Adaptador para las cards de HomePageLinks
-export const useSellsLinkData = (): LinkDataResult => {
-    const { count, lastSaleAt, loading, error } = useSells();
+    const columns = buildColumnsForSells({ onDeleteRequest: handleDeleteRequest, navigate });
 
     return {
-        value: count,
+        sells,
         loading,
         error,
-        subtitle: error ? undefined : formatRelativeSaleSubtitle(lastSaleAt),
+        deleteDialog,
+        clearError: () => {},
+        handleDeleteRequest,
+        handleDeleteCancel,
+        handleDeleteConfirm,
+        searchTerm,
+        setSearchTerm,
+        columns,
     };
 };

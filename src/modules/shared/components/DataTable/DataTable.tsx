@@ -6,7 +6,7 @@ import DataTableDeleteDialog from "./DataTableDeleteDialog";
 import type { DataTableProps } from "@typings/ui/dataTable.types";
 import DataTableHeader from "./DataTableHeader";
 
-function DataTable<T extends { _id: string }>({
+function DataTable<T extends object>({
     rows,
     columns,
     loading,
@@ -18,23 +18,22 @@ function DataTable<T extends { _id: string }>({
     search,
     newItem,
     deleteDialog,
+    getRowId,
     ...rest
 }: DataTableProps<T>): React.ReactNode {
     return (
         <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2 }}>
             <DataTableHeader title={title} search={search} newItem={newItem} />
-
             <DataTableErrorAlert error={error} onClose={onClearError} />
-
             <GenericDataGrid<T>
                 rows={rows}
                 columns={columns}
                 loading={loading}
                 emptyMessage={emptyMessage}
                 height={height}
+                getRowId={getRowId}
                 {...rest}
             />
-
             <DataTableDeleteDialog config={deleteDialog} />
         </Box>
     );

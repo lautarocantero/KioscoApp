@@ -1,71 +1,37 @@
-
-//─────────────────── Thunk ✳️: getSells & createSell ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Conjunto de thunks de Redux para manejar la obtención y creación de ventas.  
-// `getSells`: se encarga de traer todas las ventas desde la API y actualizar el estado global.  
-// `createSell`: registra una nueva venta en el backend y devuelve el identificador del ticket generado.  
-
-//──────────────────── Flujo ✴️ ─────────────────────//
-// ➡️ Entrada:  
-//   - `getSells`: no requiere parámetros, solo el `dispatch`.  
-//   - `createSell`: recibe un objeto `CreateSellSanitizedPayloadInterface` con los datos de la venta.  
-// ❌ Validación inicial:  
-//   - `getSells`: si no se encuentran ventas → `setError`.  
-//   - `createSell`: si no se genera `ticket_id` → lanza error.  
-// ✅ Acción principal:  
-//   - `getSells`: despacha `checkingSells` → realiza request → despacha `setSells`.  
-//   - `createSell`: realiza request → limpia errores con `setError`.  
-// ⬅️ Salida:  
-//   - `getSells`: actualiza el estado con la lista de ventas.  
-//   - `createSell`: devuelve el `ticket_id` de la venta creada.  
-// ⚠️ Manejo de errores:  
-//   - Ambos thunks usan `handleError` para centralizar la gestión de errores.  
-
-//─────────────────── Notas técnicas 💽 ───────────────────//
-// - Errores: centralizados mediante `handleError` para consistencia en el store.  
-// - Acciones usadas: `checkingSells`, `setSells`, `setError`.  
-//-----------------------------------------------------------------------------
-
-
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, GetSellByIdThunkInterface, SellType } from "@typings/sells/types";
-import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest } from "../../modules/sells/api/sellApi";
+import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest, searchSellsRequest } from "../../modules/sells/api/sellApi";
 import { handleError } from "../shared/handlerStoreError";
-import { checkingSells, setError, setSells, setSellSelected } from "./sellSlice";
+import { checkingSells, removeSell, setError, setSells, setSellSelected } from "./sellSlice";
 
 //──────────────────────────────────────────── Get ───────────────────────────────────────────//
 
 export const getSellsThunk = () => {
-
-    return async (dispatch: Dispatch) : Promise<SellType[] | undefined> => {
+    return async (dispatch: Dispatch): Promise<SellType[] | undefined> => {
         dispatch(checkingSells());
+        try {
+            const sells: SellType[] = await getSellsRequest();
 
-        try{
-            const response = await getSellsRequest();
-            const sells: SellType[] = response.data;
-
-            if(!sells) {
-                dispatch(setError({ errorMessage: "No se ha encontrado ninguna venta"}))
+            if (!sells) {
+                dispatch(setError({ errorMessage: "No se ha encontrado ninguna venta" }));
                 throw new Error('No se encontraron ventas');
             }
 
             dispatch(setSells(sells));
-            return sells as SellType[];
-
-        } catch(error: unknown) {
+            return sells;
+        } catch (error: unknown) {
             handleError(error);
         }
-    }
-}
+    };
+};
 
-export const getSellByIdThunk = ({ticket_id}: GetSellByIdThunkInterface) => {
+export const getSellByIdThunk = ({_id}: GetSellByIdThunkInterface) => {
 
     return async (dispatch: Dispatch) : Promise<SellType | undefined> => {
         dispatch(checkingSells());
 
         try {
-            const sell: SellType[] = await getSellByIdRequest({ticket_id});
+            const sell: SellType[] = await getSellByIdRequest({_id});
 
             if(!sell) {
                 dispatch(setError({ errorMessage: "No se ha encontrado la venta"}))
@@ -81,6 +47,20 @@ export const getSellByIdThunk = ({ticket_id}: GetSellByIdThunkInterface) => {
     }
 }
 
+export const searchSellsThunk = (term: string) => {
+    return async (dispatch: Dispatch): Promise<SellType[] | undefined> => {
+        dispatch(checkingSells());
+        try {
+            const sells: SellType[] = await searchSellsRequest(term);
+            dispatch(setSells(sells));
+            return sells;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudieron buscar ventas" }));
+            handleError(error);
+        }
+    };
+};
+
 //──────────────────────────────────────────── Post ───────────────────────────────────────────//
 
 export const createSellThunk = ({data}: CreateSellSanitizedPayloadInterface) => {
@@ -93,7 +73,7 @@ export const createSellThunk = ({data}: CreateSellSanitizedPayloadInterface) => 
     
     return async (dispatch: Dispatch) : Promise<string | undefined> => {
         try{
-            const ticket_id : string = await postSellRequest({
+            const _id : string = await postSellRequest({
                 purchase_date,
                 seller_id,
                 seller_name,
@@ -105,12 +85,12 @@ export const createSellThunk = ({data}: CreateSellSanitizedPayloadInterface) => 
                 currency
             })
 
-            if(!ticket_id) {
+            if(!_id) {
                 throw new Error('Error durante el registro de la venta');
             }
 
             dispatch(setError({errorMessage: null}));
-            return ticket_id as string;
+            return _id as string;
 
         } catch (error: unknown) {
             handleError(error);
@@ -120,23 +100,18 @@ export const createSellThunk = ({data}: CreateSellSanitizedPayloadInterface) => 
     
 //──────────────────────────────────────────── Delete ───────────────────────────────────────────//
 
-export const deleteSellThunk = ({ticket_id}: DeleteSellByIdThunkInterface) => {
+export const deleteSellThunk = ({ _id }: DeleteSellByIdThunkInterface) => {
+    return async (dispatch: Dispatch): Promise<void | string> => {
+        try {
+            const response = await deleteSellRequest({ _id });
+            if (!response) throw new Error('Error durante la eliminacion de la venta');
 
-    return async (dispatch: Dispatch) : Promise<void | string> => {
-        try{
-            const response = await deleteSellRequest({ticket_id});
-
-            if(!response) {
-                throw new Error('Error durante la eliminacion de la venta');
-            }
-
-            dispatch(setError({errorMessage: null}));
+            dispatch(removeSell(_id));
+            dispatch(setError({ errorMessage: null }));
             return response;
-            
         } catch (error: unknown) {
             handleError(error);
         }
-    }
-   
-}
+    };
+};
     

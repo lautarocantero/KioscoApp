@@ -38,7 +38,7 @@ export interface DataTableErrorAlertProps {
     onClose?: () => void;
 }
 
-export interface DataTableProps<T extends { _id: string }>
+export interface DataTableProps<T extends object>
     extends Omit<DataGridProps, "rows" | "columns" | "getRowId" | "loading"> {
     rows: T[];
     columns: GridColDef[];
@@ -51,6 +51,7 @@ export interface DataTableProps<T extends { _id: string }>
     search?: DataTableSearchConfig;
     newItem?: DataTableNewItemConfig;
     deleteDialog?: DataTableDeleteDialogConfig;
+    getRowId?: (row: T) => string;
 }
 
 export interface DataTableHeaderProps {
@@ -67,12 +68,13 @@ export interface GenericCellProps<T> {
   getKey: (item: T, index: number) => string;
 }
 
-export interface GenericDataGridProps<T extends { _id: string }>
+export interface GenericDataGridProps<T extends object>
   extends Omit<DataGridProps, "rows" | "columns" | "getRowId"> {
   rows: T[];
   columns: GridColDef[];
   height?: number | string;
   emptyMessage?: string;
+  getRowId?: (row: T) => string;
 }
 
 export interface PageHeaderProps {

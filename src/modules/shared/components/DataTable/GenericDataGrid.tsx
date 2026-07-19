@@ -10,12 +10,13 @@ import {
 import type { GenericDataGridProps } from "@typings/ui/dataTable.types";
 
 
-function GenericDataGrid<T extends { _id: string }>({
+function GenericDataGrid<T extends object>({
   rows,
   columns,
   height = 720,
   emptyMessage = "No hay registros",
   loading,
+  getRowId,
   ...rest
 }: GenericDataGridProps<T>): React.ReactNode {
   return (
@@ -23,7 +24,7 @@ function GenericDataGrid<T extends { _id: string }>({
       <DataGrid
         rows={rows}
         columns={columns}
-        getRowId={(row) => (row as T)._id}
+        getRowId={getRowId ?? ((row) => (row as unknown as { _id: string })._id)}
         loading={loading}
         pageSizeOptions={[10, 25, 50]}
         initialState={{

@@ -19,7 +19,7 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         seller_id: string;
         seller_name: string;
         sub_total: number;
-        ticket_id: string;
+        _id: string;
         total_amount: number;
     }
 
@@ -33,7 +33,7 @@ import type { EspecificationsLeftProps } from "../reactComponents";
         'seller_id' | 
         'seller_name' | 
         'sub_total' | 
-        'ticket_id' | 
+        '_id' | 
         'total_amount'  
         >;
 
@@ -69,20 +69,20 @@ import type { EspecificationsLeftProps } from "../reactComponents";
     }
 
     export interface GetSellByIdThunkInterface {
-        ticket_id: string;
+        _id: string;
     }
 
     export interface DeleteSellByIdThunkInterface {
-        ticket_id: string;
+        _id: string;
     }
     
     //────────────────────────────────────────── 🔗 API 🔗 ─────────────────────────────────────────//
 
-    export type GetSellApiPayloadType = Pick<SellType, 'ticket_id'>;
+    export type GetSellApiPayloadType = Pick<SellType, '_id'>;
 
-    export type CreateSellApiPayloadType = Omit<SellType, 'ticket_id' | 'modification_date'>;
+    export type CreateSellApiPayloadType = Omit<SellType, '_id' | 'modification_date'>;
 
-    export type DeleteSellApiPayloadType = Pick<SellType, 'ticket_id'>;
+    export type DeleteSellApiPayloadType = Pick<SellType, '_id'>;
 
     //────────────────────────────────────────── 🔗 HOOKS 🔗 ─────────────────────────────────────────//
 
@@ -96,6 +96,23 @@ import type { EspecificationsLeftProps } from "../reactComponents";
     export interface UseCartPresentationPickerReturn {
         productSelected: Presentation | null;
         presentations: Presentation[];
+    }
+
+    export interface UseSellsListDataResult {
+        sells: SellTicketType[];
+        loading: boolean;
+        error: string | null;
+        searchTerm: string;
+        setSearchTerm: (term: string) => void;
+    }
+
+    export interface UseSellsReturn extends UseSellsListDataResult {
+        deleteDialog: DeleteDialogState;
+        clearError: () => void;
+        handleDeleteRequest: (id: string, name: string) => void;
+        handleDeleteCancel: () => void;
+        handleDeleteConfirm: () => Promise<void>;
+        columns: GridColDef<SellTicketType>[];
     }
 
    //────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
@@ -149,11 +166,16 @@ import type { EspecificationsLeftProps } from "../reactComponents";
 
    //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
 
-   export type SellsHandleDetailType = Pick <SellEntityInterface, 'ticket_id'> & {
-        navigate: NavigateFunction,
-  }
+    export type SellsHandleDetailType = Pick <SellEntityInterface, '_id'> & {
+            navigate: NavigateFunction,
+    }
 
-   export type HandleDeleteSellType =  Pick <SellEntityInterface, 'ticket_id'> & {
-        dispatch: AppDispatch,
-        showSnackBar: (message: string, color: AlertColor) => void,
+    export type HandleDeleteSellType =  Pick <SellEntityInterface, '_id'> & {
+            dispatch: AppDispatch,
+            showSnackBar: (message: string, color: AlertColor) => void,
+    }
+
+   export interface BuildColumnsForSellsArgs {
+    onDeleteRequest: (id: string, name: string) => void;
+    navigate: (path: string) => void;
    }

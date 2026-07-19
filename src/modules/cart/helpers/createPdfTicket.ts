@@ -44,7 +44,7 @@ export const createPdfTicket = (ticket: SellTicketType): void => {
   doc.setFontSize(16);
   doc.text("Comprobante de Venta", 14, 20);
   doc.setFontSize(10);
-  doc.text(`Ticket Nº: ${ticket.ticket_id}`, 14, 28);
+  doc.text(`Ticket Nº: ${ticket._id}`, 14, 28);
   doc.text(`Fecha: ${new Date().toLocaleString("es-AR")}hs`, 14, 34);
   doc.text(`Cajero: ${ticket.seller_name}`, 14, 40);
   doc.text(`Método de pago: ${ticket.payment_method}`, 14, 46);
@@ -85,5 +85,5 @@ export const createPdfTicket = (ticket: SellTicketType): void => {
     doc.text(`Total: ${formatCurrency(ticket.total_amount)}`, 14, finalY + 12);
 
   //──────────────────────────────────────────── Descargar PDF ───────────────────────────────────────────//
-  doc.save(`ticket_${ticket.ticket_id}.pdf`);
+  doc.save(`ticket_${ticket._id}.pdf`);
 };

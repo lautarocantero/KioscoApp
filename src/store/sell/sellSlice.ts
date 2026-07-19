@@ -48,6 +48,9 @@ export const sellSlice = createSlice({
         setSellSelected: (state: SellStateInterface, action: PayloadAction<SellType>) => {
             state.sellSelected = action.payload;
         },
+        removeSell: (state: SellStateInterface, action: PayloadAction<string>) => {
+            state.sells = state.sells.filter((s) => s._id !== action.payload);
+        },
         setError: (state: SellStateInterface, action: PayloadAction<SellStateErrorType>) => {
             const { payload } = action;
             const { errorMessage } = payload;
@@ -61,7 +64,7 @@ export const sellSlice = createSlice({
     }
 });
 
-export const {setSells,setSellSelected, setError,checkingSells} = sellSlice.actions;
+export const { setSells, setSellSelected, setError, checkingSells, removeSell } = sellSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;

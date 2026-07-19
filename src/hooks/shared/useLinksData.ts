@@ -1,11 +1,10 @@
 import type { LinkDataResult, OptionLink } from "@typings/ui/layout.types";
 import { SidebarNavLinks } from "../../config/Links";
-import { useSellsLinkData } from "../sells/useSells";
 import { useProductsLinkData } from "../products/useProductData";
 import { useProvidersLinkData } from "../suppliers/useSupplier";
 
 const dataHooksByUrl: Record<string, () => LinkDataResult> = {
-  "/sells": useSellsLinkData,
+  // "/sells": useSellsLinkData,
   "/products": useProductsLinkData,
   "/providers": useProvidersLinkData,
 };

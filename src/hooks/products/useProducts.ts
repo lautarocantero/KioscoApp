@@ -7,8 +7,8 @@ import { buildColumnsForProducts } from "../../modules/products/pages/ProductsLi
 import { useProductsListData } from "./useProductListData";
 import { useState } from "react";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
+import { CLOSED_DIALOG } from "config/constants";
 
-const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
 export const useProducts = (): UseProductsReturn => {
     const navigate = useNavigate();

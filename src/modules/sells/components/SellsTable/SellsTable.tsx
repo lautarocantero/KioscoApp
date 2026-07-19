@@ -47,12 +47,12 @@ import type { ProductTicketType } from '../../../../typings/seller/sellerTypes';
 import { AlertColor } from '../../../../typings/ui/ui';
 import { SnackBarContext } from '../../../shared/components/SnackBar/SnackBarContext';
 
-const handleDetail = ({ ticket_id, navigate} : SellsHandleDetailType) => { 
-  navigate(`/sells-history/${ticket_id}`);
+const handleDetail = ({ _id, navigate} : SellsHandleDetailType) => { 
+  navigate(`/sells-history/${_id}`);
 };
 
-const handleDeleteSell = async({ticket_id, dispatch, showSnackBar }: HandleDeleteSellType ) => {
-  const response: string | void = await dispatch(deleteSellThunk({ticket_id}));
+const handleDeleteSell = async({_id, dispatch, showSnackBar }: HandleDeleteSellType ) => {
+  const response: string | void = await dispatch(deleteSellThunk({_id}));
 
   if(!response) {
     showSnackBar(`Ocurrio un error al eliminar el producto. Intenta de nuevo.`, AlertColor.Error);
@@ -109,7 +109,7 @@ const SellsTable = ({isLoading, sells }: SellsTableProps ): React.ReactNode => {
       <>
         <Tooltip title="Ver detalles">
           <IconButton
-            onClick={() => handleDetail({ ticket_id: params.row.ticket_id, navigate })}  
+            onClick={() => handleDetail({ _id: params.row._id, navigate })}  
             aria-label="ver"
           > 
             <RemoveRedEyeIcon /> 
@@ -117,7 +117,7 @@ const SellsTable = ({isLoading, sells }: SellsTableProps ): React.ReactNode => {
         </Tooltip>
         <Tooltip title="Borrar">
           <IconButton
-            onClick={() => handleDeleteSell({ticket_id: params.row.ticket_id, dispatch, showSnackBar})}  
+            onClick={() => handleDeleteSell({_id: params.row._id, dispatch, showSnackBar})}  
             aria-label="ver"
           > 
             <DeleteIcon /> 

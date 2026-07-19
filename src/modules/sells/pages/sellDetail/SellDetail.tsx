@@ -11,19 +11,19 @@ import SellCartDataComponent from "../../components/SellsTable/SellCartDataCompo
 const SellDetailPage = ():React.ReactNode => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const { ticket_id } = useParams<{ ticket_id: string }>();
+    const { _id } = useParams<{ _id: string }>();
     const { sell } = useSelector((state: SellStateInterface) => state);
     const { sellSelected } = sell;
     
 
     useEffect(() => {
-        if(!ticket_id) return;
+        if(!_id) return;
 
         const getSellByIdFunction = async () => {
-            await dispatch(getSellByIdThunk({ticket_id}));
+            await dispatch(getSellByIdThunk({_id}));
         };
         getSellByIdFunction();
-    }, [ticket_id])
+    }, [_id])
 
     if(!sellSelected) {
         return <CircularProgress />
