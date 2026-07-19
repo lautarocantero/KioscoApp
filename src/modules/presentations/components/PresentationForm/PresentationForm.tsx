@@ -101,7 +101,7 @@ const PresentationEditForm = (): React.ReactNode => {
     const {
         isLoadingEntity,
         editingVariant,
-        updatedVariant,
+        updatedPresentation,
         submitError,
         stepErrors,
         currentStep,
@@ -117,7 +117,7 @@ const PresentationEditForm = (): React.ReactNode => {
 
     if (isLoadingEntity) return <LoadingSpinnerComponent />;
     if (!editingVariant) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar la presentación" />;
-    if (updatedVariant)  return <PresentationEdited updatedVariant={updatedVariant} handleSeeDetail={handleSeeDetail} handleBackToPresentations={handleBackToPresentations} handleBackToProducts={handleBackToProducts} />;
+    if (updatedPresentation)  return <PresentationEdited updatedPresentation={updatedPresentation} handleSeeDetail={handleSeeDetail} handleBackToPresentations={handleBackToPresentations} handleBackToProducts={handleBackToProducts} />;
 
     return (
         <Formik

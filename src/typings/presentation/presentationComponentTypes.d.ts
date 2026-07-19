@@ -48,24 +48,37 @@ export interface GroupStockProps {
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ ✅ Presentation Created  ✅✅✅✅✅✅✅✅✅✅✅✅✅✅                       ║
+// ║ 🧩 Presentation — Shared navigation props                             ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface VariantCreatedActionsProps {
-    onCreateAnother: () => void;
-}
-
-export interface VariantCreatedBodyProps {
-    name: string;
+interface PresentationNavigationProps {
+    handleSeeDetail: () => void;
+    handleBackToPresentations: () => void;
+    handleBackToProducts: () => void;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ ✅ Presentation Edited  ✅✅✅✅✅✅✅✅✅✅✅✅✅✅                       ║
+// ║ ✅ Presentation Created ✅✅✅✅✅✅✅✅✅✅✅✅✅✅                      ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-interface PresentationEditedProps { 
-    updatedVariant: UpdatedPresentationInterface;
-    handleSeeDetail:() => void;
-    handleBackToPresentations:() => void;
-    handleBackToProducts:() => void;
+export interface PresentationCreatedActionsProps {
+    onCreateAnother: () => void;
+}
+
+export interface PresentationCreatedBodyProps {
+    name: string;
+}
+
+interface PresentationCreatedProps extends PresentationNavigationProps {
+    createdPresentation: CreatedPresentationInterface;
+    handleCreateAnotherPresentation: () => void;
+    handleCreateAnotherProduct: () => void;
+}
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ ✅ Presentation Edited ✅✅✅✅✅✅✅✅✅✅✅✅✅✅                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+interface PresentationEditedProps extends PresentationNavigationProps {
+    updatedPresentation: UpdatedPresentationInterface;
 }

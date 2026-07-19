@@ -1,15 +1,20 @@
 import SuccessCard from "../../../../shared/components/SuccessCard";
-import type { PresentationEditedProps } from "@typings/presentation/presentationComponentTypes";
+import type { PresentationCreatedProps } from "@typings/presentation/presentationComponentTypes";
 import type { ReactNode } from "react";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 
-const PresentationEdited = ({ updatedVariant, handleSeeDetail, handleBackToPresentations, handleBackToProducts }: PresentationEditedProps): ReactNode => {
+const PresentationCreated = ({ 
+        createdPresentation, 
+        handleSeeDetail, 
+        handleBackToPresentations, 
+        handleBackToProducts 
+    }: PresentationCreatedProps): ReactNode => {
     
 
     return (
         <SuccessCard
-            name={updatedVariant.name}
+            name={createdPresentation.name}
             title="Presentación actualizada correctamente"
             subtitle="Los cambios fueron guardados. Podés seguir editando o volver al listado."
             actions={[
@@ -36,4 +41,4 @@ const PresentationEdited = ({ updatedVariant, handleSeeDetail, handleBackToPrese
     );
 };
 
-export default PresentationEdited;
+export default PresentationCreated;

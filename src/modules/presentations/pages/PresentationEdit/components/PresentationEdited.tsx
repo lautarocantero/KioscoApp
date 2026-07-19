@@ -4,12 +4,17 @@ import type { PresentationEditedProps } from "@typings/presentation/presentation
 import type { ReactNode } from "react";
 
 
-const PresentationEdited = ({ updatedVariant, handleSeeDetail, handleBackToPresentations, handleBackToProducts }: PresentationEditedProps): ReactNode => {
+const PresentationEdited = ({ 
+    updatedPresentation, 
+    handleSeeDetail, 
+    handleBackToPresentations, 
+    handleBackToProducts 
+}: PresentationEditedProps): ReactNode => {
     
 
     return (
         <SuccessCard
-            name={updatedVariant.name}
+            name={updatedPresentation.name}
             title="Presentación actualizada correctamente"
             subtitle="Los cambios fueron guardados. Podés seguir editando o volver al listado."
             actions={[

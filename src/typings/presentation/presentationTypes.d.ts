@@ -152,7 +152,7 @@ export interface UsePresentationEditFormReturn
             UsePresentationFormStepsBase {
     variantId:       string | undefined;
     editingVariant:  Presentation | null;
-    updatedVariant:  UpdatedPresentationInterface | null;
+    updatedPresentation:  UpdatedPresentationInterface | null;
     isLoadingEntity: boolean;
     handleNextStep: (
         validateForm: () => Promise<FormikErrors<PresentationFormValues>>,

@@ -186,7 +186,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
         error: loadError,
     } = usePresentationData(variantId);
 
-    const [updatedVariant, setUpdatedVariant] = useState<UpdatedPresentationInterface | null>(null);
+    const [updatedPresentation, setUpdatedVariant] = useState<UpdatedPresentationInterface | null>(null);
     const [isSubmitting, setIsSubmitting]     = useState(false);
     const [submitError, setSubmitError]       = useState<string | null>(loadError);
     const [stepErrors, setStepErrors]         = useState<string[]>([]);
@@ -255,7 +255,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
     };
 
     const handleSeeDetail = () => {
-        if(!updatedVariant) return null;
+        if(!updatedPresentation) return null;
         setUpdatedVariant(null);
         navigate(`/products/${productId}/presentation/${variantId}`);
     };
@@ -273,7 +273,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
     return {
         variantId,
         editingVariant,
-        updatedVariant,
+        updatedPresentation,
         isLoadingEntity,
         isSubmitting,
         submitError,
