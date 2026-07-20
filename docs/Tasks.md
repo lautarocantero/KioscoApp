@@ -3,16 +3,18 @@
 ||--- xxx ---------------------------------------------------------------||
 
 ventas:
-    - [ xxx ] agregar campo de abono total y desharcodear lo del detalle de ventas.
-    - [ xxx ] agregar status a las ventas y al header
-    - [ xxx ] quitar desplazamiento de iconos del searchbar.
     - [ xxx ] refactor visual.
+    - [ xxx ] eliminar grids innecesarios de sellbar y ponerle otro nombre.
+    - [ xxx ] modificar el hover de las acciones del sellbar.
+
     - [ xxx ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.
     - [ xxx ] comprar productos no baja el stock.
     - [ xxx ] solo mostrar productos con stock.
     - [ xxx ] Agregar la tabla de tipos, luego hacer crud, pero agregarla ya.
     - [ xxx ] al darle a listado en ventas deberia de mostrar una mui table.
     - [ xxx ] refactorizar todo el modulo.
+    - [ xx ] agregar status a las ventas y al header
+    - [ xx ] agregar campo de abono total y desharcodear lo del detalle de ventas.
 
 ---
 vendedores:
