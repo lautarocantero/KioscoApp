@@ -8,6 +8,10 @@ export interface SharedAppBarInterface {
 
 export type SharedAppBarContentType = Pick<SharedAppBarInterface, 'showFilters'>
 
+export interface SellBarContentInterface {
+  title: string;
+}
+
 export interface LinkInterface {
   label: string;
   to: string;

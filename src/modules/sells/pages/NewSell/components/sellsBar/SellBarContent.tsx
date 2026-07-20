@@ -1,12 +1,12 @@
-import { Grid, Typography, type Theme } from "@mui/material";
-import { useNavigate, type NavigateFunction } from "react-router-dom";
+import { Grid, type Theme } from "@mui/material";
 import type { SharedAppBarContentType } from "../../../../../../typings/ui/appbar.types";
 import { SellbarSearch } from "./SellBarSearch";
 import SellBarActions from "./SellBarActions";
+import SellBarTitle from "./SellBarTitle";
+
 
 const SellBarContent = ({showFilters}: SharedAppBarContentType): React.ReactNode => {
-  const navigate: NavigateFunction = useNavigate();
-
+  
   return (
     <Grid
       container
@@ -21,19 +21,8 @@ const SellBarContent = ({showFilters}: SharedAppBarContentType): React.ReactNode
         padding: '0.3em 0',
       })}
     >
-      {/* Título */}
-      <Typography
-        onClick={() => navigate('/home')}
-        sx={(theme: Theme) => ({
-          color: theme?.custom?.fontColor,
-          fontSize: theme?.typography?.body1?.fontSize,
-          whiteSpace: 'nowrap',
-          cursor: 'pointer',
-          flexShrink: 0,
-        })}
-      >
-        Buscar productos
-      </Typography>
+
+      <SellBarTitle title={"Buscar productos"} />
 
       {/* Buscador — ocupa el espacio disponible */}
       {showFilters && (

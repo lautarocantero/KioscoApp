@@ -13,12 +13,12 @@ export const SellBarActions = ({ showFilters }: SellBarActionsProps): React.Reac
   return (
     <Grid
       display={"flex"}
-      flexDirection={"row"}
+      flexDirection={{ xs: "column", sm: "row" }}
       alignItems={"center"}
       sx={(theme: Theme) => ({
         flexWrap: 'nowrap',
         flexShrink: 0,
-        height: '2em',
+        height: { xs: "5em", sm: "2em"},
         width: "100%",
         borderTop: `0.1em solid ${theme?.custom?.darkBackground}`,
         marginTop: "0.5em",
