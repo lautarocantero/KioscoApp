@@ -3,6 +3,23 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export const SellbarFilter = (): React.ReactNode => {
     return (
+      <Grid
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        sx={(theme: Theme) => ({
+          flex: 1,
+          position: 'relative',
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            right: 0,
+            height: '50%',
+            width: '0.1em',
+            backgroundColor: theme?.custom?.darkBackground,
+          },
+        })}
+      >
         <Grid
             sx={(theme: Theme) => ({
                 alignItems: 'center',
@@ -17,10 +34,10 @@ export const SellbarFilter = (): React.ReactNode => {
                 transition: 'all 0.3s ease',
                 '&:hover': {
                   backgroundColor: theme?.custom?.white,
-                  color: theme?.custom?.accentShop,
+                  color: theme?.palette.secondary.main,
                 },
                 '&:hover .MuiSvgIcon-root': {
-                  color: theme?.custom?.accentShop,
+                  color: theme?.palette.secondary.main,
                 },
             })}
         >
@@ -36,5 +53,6 @@ export const SellbarFilter = (): React.ReactNode => {
               color: theme?.palette?.secondary?.main,
             })}/>
         </Grid>
+      </Grid>
     )
 }

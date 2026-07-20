@@ -5,6 +5,7 @@ export interface DataTableSearchConfig {
     value: string;
     onChange: (value: string) => void;
     placeholder?: string;
+    onClear?: () => void;
 }
 
 export interface DataTableNewItemConfig {

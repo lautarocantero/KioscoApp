@@ -2,12 +2,10 @@ import { Grid, type Theme } from "@mui/material";
 import BarcodeButtonComponent from "./BarcodeButtonComponent";
 import { SellbarFilter } from "./SellBarFilter";
 import CartButtonComponent from "./CartButtonComponent";
+import type { SellbarActionsInterface } from "@typings/ui/appbar.types";
 
-interface SellBarActionsProps {
-  showFilters: boolean;
-}
 
-export const SellBarActions = ({ showFilters }: SellBarActionsProps): React.ReactNode => {
+export const SellBarActions = ({ showFilters }: SellbarActionsInterface): React.ReactNode => {
   if (!showFilters) return null;
 
   return (
@@ -24,54 +22,13 @@ export const SellBarActions = ({ showFilters }: SellBarActionsProps): React.Reac
         marginTop: "0.5em",
       })}
     >
-      <Grid
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        sx={(theme: Theme) => ({
-          flex: 1,
-          position: 'relative',
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            right: 0,
-            height: '50%',
-            width: '0.1em',
-            backgroundColor: theme?.custom?.darkBackground,
-          },
-        })}
-      >
-        <BarcodeButtonComponent />
-      </Grid>
 
-      <Grid
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        sx={(theme: Theme) => ({
-          flex: 1,
-          position: 'relative',
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            right: 0,
-            height: '50%',
-            width: '0.1em',
-            backgroundColor: theme?.custom?.darkBackground,
-          },
-        })}
-      >
-        <SellbarFilter />
-      </Grid>
+      <BarcodeButtonComponent />
 
-      <Grid
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        sx={{ flex: 1 }}
-      >
-        <CartButtonComponent />
-      </Grid>
+      <SellbarFilter />
+
+      <CartButtonComponent />
+      
 </Grid>
   );
 };

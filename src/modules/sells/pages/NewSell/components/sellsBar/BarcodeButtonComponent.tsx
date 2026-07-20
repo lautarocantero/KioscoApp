@@ -1,171 +1,98 @@
 import BarcodeReaderIcon from '@mui/icons-material/BarcodeReader';
 import { Grid, TextField, Tooltip, Typography, type Theme } from "@mui/material";
-import "animate.css";
-import { useContext, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import type { AppDispatch } from '../../../../../../store/auth/authSlice';
-import type { RootState as SellerRootState } from "../../../../../../store/seller/sellerSlice";
-import { addOneUnitThunk, addToCartThunk, selectProductThunk } from '../../../../../../store/seller/sellerThunks';
-import type { Presentation } from '../../../../../../typings/presentation/presentationTypes';
-import type { ProductTicketType } from '../../../../../../typings/seller/sellerTypes';
-import { AlertColor } from '../../../../../../typings/ui/ui';
-import { SnackBarContext } from '../../../../../../modules/shared/components/SnackBar/SnackBarContext';
-import { getPresentationsById } from 'store/presentation/presentationThunks';
+import { useSellbar } from 'hooks/sells/useSellBar';
 
 export const BarcodeButtonComponent = (): React.ReactNode => {
-  const location = useLocation();
+  const { barcode } = useSellbar();
+  const { 
+    shouldShow, 
+    toggleShowInput, 
+    showInput, 
+    inputRef, 
+    value, 
+    onChange, 
+    onKeyDown 
+  } = barcode;
 
-  const { showSnackBar } = useContext(SnackBarContext)!;
-
-  const { seller } = useSelector((state: SellerRootState ) => state);
-  const { cart } : { cart: ProductTicketType[]} = seller;
-
-  const [showInput, setShowInput] = useState(false);
-  const [barcode, setBarcode] = useState<string>("");
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    if(!showInput) return;
-    inputRef.current?.focus();
-  }, [showInput]);
-
-  if (location.pathname !== "/new-sell" && location.pathname !== "/cart") return null;
-
-  const getPresentation = async ({id}:{id: string}): Promise<Presentation> => {
-    const prod: Presentation[] | undefined = await dispatch(getPresentationsById(id));
-
-    if(!prod) {
-      showSnackBar(`Código de barras inexistente`, AlertColor.Error);
-      throw new Error('No se ha seleccionado un producto');
-    }
-
-    await dispatch(selectProductThunk({productData: prod[0] }));
-    return prod[0];
-  }
-
-  const handleAddToCart = async () => {
-    if(barcode === '') return;
-
-    const product: Presentation = await getPresentation({id: barcode});
-    
-    if(!product) {
-      showSnackBar(`Código de barras inexistente`, AlertColor.Error);
-      return;
-    }
-
-    const productObject: ProductTicketType | undefined = cart?.find((prod) => prod._id === barcode);
-
-    {/*─────────────────── 🔎 Si el producto ya se encuentra en el carrito 🔎 ───────────────────*/}
-
-    if(productObject) {
-      await dispatch(addOneUnitThunk({_id: productObject?._id}));
-      setBarcode('');
-      const nameEdited: string = productObject?.name.length > 25 ? `${productObject?.name.slice(0, 25)}...` : productObject?.name;
-      showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
-      return;
-    }
-
-    {/*─────────────────── 🔎 Si el producto no se escaneo o agrego antes 🔎 ───────────────────*/}
-
-    const 
-    { 
-      _id, name, description,image_url,
-      brand,product_id,sku,model_type,
-      model_size,price,expiration_date 
-    } = product;
-
-    const productTicket: ProductTicketType = {
-      _id,
-      name,
-      description,
-      image_url,
-      brand,
-      product_id,
-      sku,
-      model_type,
-      model_size,
-      price,
-      expiration_date,
-      stock_required: 1,
-    }
-
-    await dispatch(addToCartThunk({productData: productTicket}));
-
-    const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
-
-    setBarcode('');
-    showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleAddToCart();
-    }
-  };
+  if (!shouldShow) return null;
 
   return (
-    <Tooltip title="Usar lectora de código de barras">
-      <Grid
-        className="animate__animated animate__backInRight"
-        onClick={() => setShowInput(prev => !prev)}
-        sx={(theme: Theme) => ({
-          borderRadius: '1em',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.4em',
-          flexShrink: 0,
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          '&:hover': {
-            backgroundColor: theme?.custom?.white,
-          },
-          '&:hover .MuiSvgIcon-root, &:hover .barcode-label': {
-            color: theme?.palette?.primary?.main,
-          },
-        })}
-      >
-        <BarcodeReaderIcon
+    <Grid
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      sx={(theme: Theme) => ({
+        flex: 1,
+        position: 'relative',
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          right: 0,
+          height: '50%',
+          width: '0.1em',
+          backgroundColor: theme?.custom?.darkBackground,
+        },
+      })}
+    >
+      <Tooltip title="Usar lectora de código de barras">
+        <Grid
+          onClick={toggleShowInput}
           sx={(theme: Theme) => ({
-            color: theme?.palette.primary.main,
-            fontSize: theme?.typography?.body1?.fontSize,
-            transition: 'color 0.3s ease',
+            borderRadius: '1em',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4em',
+            flexShrink: 0,
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            height: "2em",
+            '&:hover': {
+              backgroundColor: theme?.custom?.white,
+            },
+            '&:hover .MuiSvgIcon-root, &:hover .barcode-label': {
+              color: theme?.palette?.primary?.main,
+            },
           })}
-        />
-        {!showInput && (
-          <Typography
-            className="barcode-label"
+        >
+          <BarcodeReaderIcon
             sx={(theme: Theme) => ({
               color: theme?.palette.primary.main,
-              fontSize: '0.85em',
-              whiteSpace: 'nowrap',
+              fontSize: theme?.typography?.h6?.fontSize,
+              transition: 'color 0.3s ease',
             })}
-          >
-            Escanear
-          </Typography>
-        )}
-        {showInput && (
-          <TextField
-            inputRef={inputRef}
-            value={barcode}
-            onChange={(e) => setBarcode(e.target.value)}
-            variant="outlined"
-            size="small"
-            onKeyDown={handleKeyDown}
-            onClick={(e) => e.stopPropagation()}
-            placeholder="Escanee aquí"
-            focused={true}
-            sx={{
-              width: '10em',
-              '& .MuiInputBase-root': { height: '2em' },
-            }}
           />
-        )}
-      </Grid>
-    </Tooltip>
+          {!showInput && (
+            <Typography
+              className="barcode-label"
+              sx={(theme: Theme) => ({
+                color: theme?.palette.primary.main,
+                fontSize: theme?.typography?.body1?.fontSize,
+                whiteSpace: 'nowrap',
+              })}
+            >
+              Escanear
+            </Typography>
+          )}
+          {showInput && (
+            <TextField
+              inputRef={inputRef}
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              variant="outlined"
+              size="small"
+              onKeyDown={onKeyDown}
+              onClick={(e) => e.stopPropagation()}
+              placeholder="Escanee aquí"
+              focused={true}
+              sx={{
+                width: '10em',
+                '& .MuiInputBase-root': { height: '2em' },
+              }}
+            />
+          )}
+        </Grid>
+      </Tooltip>
+    </Grid>
   );
 };
 

@@ -1,8 +1,8 @@
 import { Typography, type Theme } from "@mui/material";
-import type { SellBarContentInterface } from "@typings/ui/appbar.types";
+import type { SellBarTitleInterface } from "@typings/ui/appbar.types";
 
 
-const SellBarTitle = ({title}: SellBarContentInterface): React.ReactNode => {
+const SellBarTitleComponent = ({title}: SellBarTitleInterface): React.ReactNode => {
 
   return (
       <Typography
@@ -20,4 +20,4 @@ const SellBarTitle = ({title}: SellBarContentInterface): React.ReactNode => {
   );
 };
 
-export default SellBarTitle;
+export default SellBarTitleComponent;

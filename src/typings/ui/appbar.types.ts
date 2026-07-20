@@ -8,9 +8,13 @@ export interface SharedAppBarInterface {
 
 export type SharedAppBarContentType = Pick<SharedAppBarInterface, 'showFilters'>
 
-export interface SellBarContentInterface {
+export interface SellBarTitleInterface {
   title: string;
 }
+
+export type SellbarSearchInterface = Pick<SharedAppBarInterface, "showFilters">
+
+export type SellbarActionsInterface = Pick<SharedAppBarInterface, "showFilters">
 
 export interface LinkInterface {
   label: string;

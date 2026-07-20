@@ -2,8 +2,10 @@ import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SearchBar from "../SearchBar/SearchBar";
 import type { DataTableToolbarProps } from "@typings/ui/dataTable.types";
+import type { ReactNode } from "react";
 
-const DataTableToolbar = ({ search, newItem }: DataTableToolbarProps): React.ReactNode => {
+
+const DataTableToolbar = ({ search, newItem }: DataTableToolbarProps): ReactNode => {
     if (!search && !newItem) return null;
 
     return (
@@ -12,6 +14,7 @@ const DataTableToolbar = ({ search, newItem }: DataTableToolbarProps): React.Rea
                 <SearchBar
                     value={search.value}
                     onChange={search.onChange}
+                    onClear={search.onClear}
                     placeholder={search.placeholder}
                 />
             )}

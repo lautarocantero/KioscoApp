@@ -15,11 +15,6 @@ export const SearchBar = ({
   fullWidth,
 }: SearchBarProps): React.ReactNode => {
 
-  const handleClear = () => {
-    onChange("");
-    onClear?.();
-  };
-
   return (
     <Box
       role="search"
@@ -61,7 +56,7 @@ export const SearchBar = ({
         />
 
         <InputBase
-          type="search"
+          type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
@@ -82,7 +77,7 @@ export const SearchBar = ({
         {value ? (
           <IconButton
             size="small"
-            onClick={handleClear}
+            onClick={onClear}
             aria-label="Limpiar búsqueda"
             sx={{ p: 0.25, flexShrink: 0 }}
           >

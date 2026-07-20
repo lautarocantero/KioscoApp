@@ -1,10 +1,10 @@
-import React from "react";
+import { type ReactNode } from "react";
 import type { Product } from "@typings/product/productTypes";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useProducts } from "../../../../hooks/products/useProducts";
 
-const ProductsListPage = (): React.ReactNode => {
+const ProductsListPage = (): ReactNode => {
     const {
         productsWithPresentations,
         loading,

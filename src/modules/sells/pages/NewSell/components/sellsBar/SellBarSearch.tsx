@@ -1,30 +1,21 @@
-import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getProducts, searchProducts } from "../../../../../../store/product/productThunks";
-import type { AppDispatch } from "../../../../../../store/product/productSlice";
+import type { ReactNode } from "react";
 import SearchBar from "../../../../../shared/components/SearchBar/SearchBar";
+import type { SellbarSearchInterface } from "@typings/ui/appbar.types";
+import { useSellbar } from "hooks/sells/useSellBar";
 
-export const SellbarSearch = (): React.ReactNode => {
-  const dispatch = useDispatch<AppDispatch>();
-  const [value, setValue] = useState("");
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+export const SellbarSearch = ({ showFilters }: SellbarSearchInterface): ReactNode => {
+  const { search } = useSellbar();
+  const { value, onChange, onClear  } = search;
 
-  useEffect(() => {
-    clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      if (value.trim() === "") {
-        dispatch(getProducts());
-      } else {
-        dispatch(searchProducts(value));
-      }
-    }, 350);
-    return () => clearTimeout(debounceRef.current);
-  }, [value]);
+  if (!showFilters) {
+    return null;
+  }
 
   return (
     <SearchBar
       value={value}
-      onChange={setValue}
+      onChange={onChange}
+      onClear={onClear}
       placeholder="Buscar..."
       fullWidth
     />

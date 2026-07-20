@@ -2,7 +2,7 @@ import { Grid, type Theme } from "@mui/material";
 import type { SharedAppBarContentType } from "../../../../../../typings/ui/appbar.types";
 import { SellbarSearch } from "./SellBarSearch";
 import SellBarActions from "./SellBarActions";
-import SellBarTitle from "./SellBarTitle";
+import SellBarTitleComponent from "./SellBarTitle";
 
 
 const SellBarContent = ({showFilters}: SharedAppBarContentType): React.ReactNode => {
@@ -22,14 +22,11 @@ const SellBarContent = ({showFilters}: SharedAppBarContentType): React.ReactNode
       })}
     >
 
-      <SellBarTitle title={"Buscar productos"} />
+      <SellBarTitleComponent title={"Buscar productos"} />
 
-      {/* Buscador — ocupa el espacio disponible */}
-      {showFilters && (
-        <SellbarSearch />
-      )}
+      <SellbarSearch showFilters={showFilters}/>
       
-        <SellBarActions showFilters={showFilters} />
+      <SellBarActions showFilters={showFilters} />
     </Grid>
   );
 };
