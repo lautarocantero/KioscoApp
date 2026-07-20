@@ -16,7 +16,7 @@ import AppLayout from "../../shared/layout/AppLayout";
 import CartPaymentMethod from "../components/CartPaymentMethod";
 import CartPrice from "../components/CartPriceComponent";
 import CartProductsList from "../components/CartProductsListComponent";
-import { createPdfTicket } from "../helpers/createPdfTicket";
+import { createPdfTicket } from "../../shared/helpers/createPdfTicket";
 import { SnackBarContext } from '../../shared/components/SnackBar/SnackBarContext';
 import { AlertColor } from '../../../typings/ui/ui';
 import CartHeaderComponent from '../components/CartHeaderComponent';

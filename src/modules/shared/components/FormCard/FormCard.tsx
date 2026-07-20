@@ -38,6 +38,7 @@ const FormCard = ({
                     title={header.title}
                     subtitle={header.subtitle}
                     icon={header.icon}
+                    status={header?.status}
                 />
             )}
 

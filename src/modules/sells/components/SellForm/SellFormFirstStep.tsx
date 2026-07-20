@@ -3,7 +3,6 @@ import FormCard from "../../../../modules/shared/components/FormCard/FormCard";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
 import { SELL_FIELD_REGISTRY } from "./SellFieldRegistry";
-import { useFormikContext } from "formik";
 import { useTheme } from "@mui/material";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";

@@ -4,6 +4,7 @@ import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";
 import type { PaymentMethod } from "./sellsEnum";
 import type { EspecificationsLeftProps } from "./SellComponentTypes";
+import type { ReactNode } from "react";
 
 {/*─────────────────── 🔎 tipos usados en sell 🔎 ───────────────────*/}
 
@@ -50,11 +51,43 @@ import type { EspecificationsLeftProps } from "./SellComponentTypes";
         seller_id: string;
         seller_name: string;
         payment_method: PaymentMethod;
-        products: Presentation[];
+        products: ProductTicketType[];
         sub_total: number;
         iva: number;
         total_amount: number;
         currency: string;
+    }
+
+    export interface SoldProductRow {
+        id: string;
+        name: string;
+        sku: string;
+        imageUrl?: string;
+        quantity: number;
+        unitPrice: number;
+        subtotal: number;
+    }
+
+    export interface PaymentDetail {
+        methodLabel: string;
+        approved: boolean;
+        reference: string;
+        paymentDate: string;
+    }
+
+    export interface InfoItem {
+        icon: ReactNode;
+        color: string;
+        label: string;
+        value: string;
+        hint?: string;
+        badge?: string;
+    }
+
+    export interface PurchaseDateParts {
+        date: string;
+        time: string;
+        timezone: string;
     }
 
     //────────────────────────────────────────── 🍕 SLICE 🍕 ─────────────────────────────────────────//

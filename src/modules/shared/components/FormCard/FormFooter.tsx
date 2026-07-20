@@ -16,7 +16,12 @@ const FormFooter = ({
             <ApiErrorComponent submitError={submitError} stepErrors={stepErrors} />
 
             {showButtons && <FormNavButtons SubmitText={submitText ?? ""} backPath={backPath} />}
-            {readOnly    && <FormNavButtons readOnly backPath={backPath} />}
+            {readOnly && (
+                <FormNavButtons
+                    readOnly
+                    backPath={backPath}
+                />
+            )}
         </>
     );
 };

@@ -1,3 +1,4 @@
+import type { FormCardExtraActionProps } from "@typings/shared/reactComponents";
 import type { ReactNode } from "react";
 
 

@@ -1,3 +1,5 @@
+import type { SellStatusEnum } from "@typings/sells/sellsEnum";
+import type { ReactNode } from "react";
 import type React from "react";
 
 
@@ -28,6 +30,7 @@ export interface FormCardHeaderProps {
     isMultiStep?: boolean;
     stepsLabels?: string[];
     currentStep?: number;
+    status?: SellStatusEnum;
 }
 
 
@@ -51,8 +54,14 @@ export interface AccordionConfig {
     bannerImage?: BannerImageConfig;
 }
 
+export interface FormCardExtraActionProps {
+    label: string;
+    icon?: React.ReactNode;
+    onClick: () => void;
+}
 
-export interface FormCardFooterProps extends FormNavActionsProps, FormErrorsProps {}
+export interface FormCardFooterProps extends FormNavActionsProps, FormErrorsProps {
+}
 
 export type ApiErrorComponentProps = FormErrorsProps;
 
@@ -60,7 +69,7 @@ export type ApiErrorComponentProps = FormErrorsProps;
 export interface FormCardProps extends FormNavActionsProps, FormErrorsProps {
     children: React.ReactNode;
     maxWidth?: number | string;
-    header?: Pick<FormCardHeaderProps, "title" | "subtitle" | "icon">;
+    header?: Pick<FormCardHeaderProps, "title" | "subtitle" | "icon" | "status">;
     multiStepHeader?: MultiStepHeaderConfig;
     accordion?: AccordionConfig;
 }

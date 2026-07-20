@@ -1,8 +1,8 @@
 // SellForm.tsx
 import { Grid } from "@mui/material";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
-import { Formik } from "formik";
-import { useSellEdit } from "../../../../hooks/sells/useSellsForm";
+import { Formik, type FormikErrors } from "formik";
+import { useSellDetail, useSellEdit } from "../../../../hooks/sells/useSellsForm";
 import ActualStepComponent from "../../../../modules/shared/components/FormCard/ActualStep";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import { getSellEditInitialValues, sellEditFormSchema } from "../../schema/SellFormSchema";
@@ -12,9 +12,11 @@ import NotEntityLoaded from "modules/shared/components/NotEntityLoaded";
 import { useParams } from "react-router-dom";
 import type { SellFormProps } from "@typings/sells/SellComponentTypes";
 import SellEdited from "modules/sells/pages/SellEdit/components/SellEdited";
-import { useSellData } from "hooks/sells/useSellData";
+import SellDetailFormComponent from "./SellDetailForm";
 
 const STEP_COMPONENTS = [SellFormFirstStep];
+
+const DETAIL_COMPONENTS = [SellDetailFormComponent];
 
 // ── Modo EDITAR ───────────────────────────────────────────────────────────────
 const SellEditForm = (): React.ReactNode => {
@@ -78,15 +80,14 @@ const SellEditForm = (): React.ReactNode => {
 // ── Modo DETALLE ─────────────────────────────────────────────────────────────
 const SellDetailForm = (): React.ReactNode => {
     const { sell_id: sellId } = useParams<{ sell_id: string }>();
-    const { 
-        sellData, 
-        isLoading, 
-        error,
-    } = useSellData(sellId);
+    const { viewingSell, isLoadingSell, error, handleSubmit } = useSellDetail(sellId);
+
+    if (isLoadingSell) return <LoadingSpinnerComponent />;
+    if (!viewingSell) return <NotEntityLoaded error={error} fallbackText="No se pudo cargar la venta" />;
 
     return (
         <Formik
-            initialValues={getSellEditInitialValues(sellData)}
+            initialValues={getSellEditInitialValues(viewingSell)}
             onSubmit={() => {}}
             enableReinitialize
         >
@@ -95,9 +96,11 @@ const SellDetailForm = (): React.ReactNode => {
                     value={{
                         currentStep:  0,
                         totalSteps:   1,
-                        onNext:       async () => {},
+                        onNext: async (_validateForm, onValidSubmit) => {
+                            if (onValidSubmit) onValidSubmit();
+                        },
                         onPrev:       () => {},
-                        onSubmit:     () => {},
+                        onSubmit:     handleSubmit,
                         isSubmitting: false,
                         validateForm: async () => ({}),
                         submitError:  error,
@@ -105,17 +108,17 @@ const SellDetailForm = (): React.ReactNode => {
                         actionTitle:  FormModeComplexEnum.Detail,
                     }}
                 >
-                    <Grid container
+                    <Grid
+                        container
                         sx={{
                             width: { xs: "100%", sm: "80%", md: "100%" },
                             m: { xs: "3em auto", sm: "3em 1em" },
-                        }}>
-                        {!isLoading && (
-                            <ActualStepComponent
-                                currentStep={0}
-                                stepComponents={STEP_COMPONENTS}
-                            />
-                        )}
+                        }}
+                    >
+                        <ActualStepComponent
+                            currentStep={0}
+                            stepComponents={DETAIL_COMPONENTS}
+                        />
                     </Grid>
                 </FormNavigationContext.Provider>
             )}

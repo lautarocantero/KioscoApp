@@ -1,7 +1,11 @@
-import { Box, Typography, useTheme, type Theme } from "@mui/material";
+import { Box, Chip, Typography, useTheme, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import HourglassEmptyOutlinedIcon from "@mui/icons-material/HourglassEmptyOutlined";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import type { FormCardHeaderProps } from "@typings/shared/reactComponents";
 import { useBreakpoint } from "../../../../hooks/ui/useBreakpoint"
+import { SellStatusEnum } from "@typings/sells/sellsEnum";
 
 const getDefaultIcon = (color: string) => (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -12,6 +16,12 @@ const getDefaultIcon = (color: string) => (
     </svg>
 );
 
+const STATUS_CONFIG: Record<SellStatusEnum, { label: string; icon: React.ReactElement; accent: "green" | "violet" | "pink" }> = {
+    [SellStatusEnum.Completada]: { label: "Completada", icon: <CheckCircleOutlineIcon fontSize="small" />, accent: "green" },
+    [SellStatusEnum.Pendiente]:  { label: "Pendiente",  icon: <HourglassEmptyOutlinedIcon fontSize="small" />, accent: "violet" },
+    [SellStatusEnum.Cancelada]:  { label: "Cancelada",  icon: <CancelOutlinedIcon fontSize="small" />, accent: "pink" },
+};
+
 const FormHeader = ({
     title,
     subtitle,
@@ -19,6 +29,7 @@ const FormHeader = ({
     isMultiStep = false,
     stepsLabels = [],
     currentStep = 0,
+    status
 }: FormCardHeaderProps): React.ReactNode => {
     const theme = useTheme();
     const bp = useBreakpoint();
@@ -86,6 +97,23 @@ const FormHeader = ({
         </Box>
     );
 
+    const statusChip = status && (
+        <Chip
+            size="small"
+            icon={STATUS_CONFIG[status].icon}
+            label={STATUS_CONFIG[status].label}
+            sx={(theme: Theme) => ({
+                bgcolor: alpha(theme.custom.accents[STATUS_CONFIG[status].accent], 0.15),
+                color: theme.custom.accents[STATUS_CONFIG[status].accent],
+                fontWeight: 600,
+                flexShrink: 0,
+                "& .MuiChip-icon": {
+                    color: theme.custom.accents[STATUS_CONFIG[status].accent],
+                },
+            })}
+        />
+    );
+
     return (
         <Box sx={{
             display: "flex", flexDirection: "column",
@@ -96,6 +124,7 @@ const FormHeader = ({
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                         {iconBox}
                         {progressCircle}
+                        {statusChip}
                     </Box>
                     <Box sx={{ mt: 1.5 }}>
                         {titleBlock}
@@ -108,6 +137,7 @@ const FormHeader = ({
                         {titleBlock}
                     </Box>
                     {progressCircle}
+                    {statusChip}
                 </Box>
             )}
 

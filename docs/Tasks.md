@@ -3,6 +3,8 @@
 ||--- xxx ---------------------------------------------------------------||
 
 ventas:
+    - [ xxx ] agregar campo de abono total y desharcodear lo del detalle de ventas.
+    - [ xxx ] agregar status a las ventas y al header
     - [ xxx ] quitar desplazamiento de iconos del searchbar.
     - [ xxx ] refactor visual.
     - [ xxx ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.

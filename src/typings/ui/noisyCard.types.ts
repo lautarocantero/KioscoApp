@@ -1,4 +1,5 @@
 import { type SxProps, type Theme } from "@mui/material";
+import type { ElementType } from "react";
 
 export interface NoisyCardProps {
     children: React.ReactNode;
@@ -6,6 +7,7 @@ export interface NoisyCardProps {
     borderRadius?: number | string;
     noiseOpacity?: number;
     sx?: SxProps<Theme>;
+    component?: ElementType;
 }
 
 export type NoisyBackgroundOptions = {

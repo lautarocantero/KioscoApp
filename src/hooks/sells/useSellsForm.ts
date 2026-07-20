@@ -5,6 +5,7 @@ import { editSellThunk } from "../../store/sell/sellsThunks";
 import { useSellData } from "./useSellData";
 import type { AppDispatch } from "store/sell/sellSlice";
 import type { SellEditFormValues } from "@typings/sells/sellTypes";
+import { usePrintSellTicket } from "./usePrintSellTicket";
 
 
 /*══════════════════════════════════════════════╗
@@ -75,6 +76,12 @@ export const useSellEdit = () => {
 export const useSellDetail = (sellId?: string) => {
     const navigate = useNavigate();
     const { sellData: viewingSell, isLoading: isLoadingSell, error } = useSellData(sellId);
+    const { printTicket } = usePrintSellTicket();
+
+    const handleSubmit = () => {
+        if (!viewingSell) return;
+        printTicket(viewingSell);
+    };
 
     const handleBackToSells = () => navigate("/sells");
 
@@ -82,6 +89,7 @@ export const useSellDetail = (sellId?: string) => {
         viewingSell,
         isLoadingSell,
         error,
+        handleSubmit,
         handleBackToSells,
     };
 };

@@ -1,32 +1,7 @@
-//─────────────────── Helper 🧩: createPdfTicket ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Se encarga de generar un archivo PDF con toda la información del ticket de compra,
-// incluyendo encabezado, tabla de productos y totales. Está pensado para ser utilizado
-// en el flujo de ventas del sistema y permitir la descarga inmediata del comprobante.
-
-//──────────────────── Funciones 🔧 ─────────────────────//
-// - createPdfTicket utiliza la librería jsPDF para crear y manipular el documento PDF.
-// - Emplea jspdf-autotable (via applyPlugin) para generar automáticamente la tabla de productos.
-// - Usa la función formatCurrency para formatear valores monetarios según la configuración local.
-// - Implementa una función interna "truncate" para evitar desbordes de texto en la tabla.
-// - Calcula dinámicamente la posición final de la tabla para ubicar correctamente los totales.
-// - Genera el archivo final y lo descarga automáticamente con un nombre basado en el ID del ticket.
-
-//─────────────────── Notas técnicas 💽 ───────────────────//
-// - Se usa `applyPlugin(jsPDF)` en vez del import default de autoTable porque en este
-//   proyecto (Vite) el default export de "jspdf-autotable" v3 se resuelve como el módulo
-//   completo en lugar de la función, rompiendo `autoTable(doc, options)`.
-//   `applyPlugin` registra `autoTable` como método en el prototipo de jsPDF de forma segura.
-// - El augment de tipos de abajo declara `doc.autoTable` y `doc.lastAutoTable`, que no
-//   vienen tipados en el paquete base de jsPDF.
-
-//-----------------------------------------------------------------------------//
-
 import jsPDF from "jspdf";
 import { applyPlugin } from "jspdf-autotable";
-import { formatCurrency } from "./formatCurrency";
-import type { SellTicketType } from "../../../typings/sells/types/sellsTypes";
+import { formatCurrency } from "../../cart/helpers/formatCurrency";
+import type { SellTicketType } from "@typings/sells/sellTypes";
 
 declare module "jspdf" {
   interface jsPDF {

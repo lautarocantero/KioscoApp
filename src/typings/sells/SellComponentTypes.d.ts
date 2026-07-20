@@ -1,6 +1,6 @@
 import type { Product } from "../product/productTypes";
 import type { Presentation } from "../presentation/presentationTypes";
-import type { DialogDataInterface, DialogVariantDataType, SellTicketType } from "./sellTypes";
+import type { DialogDataInterface, DialogVariantDataType, PaymentDetail, SellTicketType, SoldProductRow } from "./sellTypes";
 import type { ViewMode } from "modules/sells/components/ProductList/ProductToolbar";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
@@ -10,6 +10,55 @@ import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
     export interface SellFormProps {
         mode?: FormModeComplexEnum;
+    }
+
+   //────────────────────────────────────────── 📑 Sells Detail 📑 ───────────────────────────────────────────//
+
+   export interface SellDetailHeaderProps {
+    ticketNumber: string;
+    status: SellStatus;
+    }
+
+    export interface SellDetailInfoBarProps {
+        purchaseDate: string;
+        purchaseTime: string;
+        timezone: string;
+        sellerName: string;
+        paymentMethodLabel: string;
+        currency: string;
+    }
+
+    export interface SellDetailProductsSoldProps {
+        products: SoldProductRow[];
+    }
+
+    export interface SellDetailPaymentDataProps {
+        payment: PaymentDetail;
+    }
+
+    export interface SellDetailSoldDataProps {
+        subTotal: number;
+        iva: number;
+        ivaPercentage: number;
+        total: number;
+    }
+
+    export interface SellDetailAditionalDataProps {
+        subTotal: number;
+        iva: number;
+        ivaPercentage: number;
+        total: number;
+        currency: string;
+        sellId: string;
+    }
+
+    export interface SellDetailPendingBalanceProps {
+        pendingBalance: number;
+    }
+
+    export interface SellDetailActionsProps {
+        onBack: () => void;
+        onPrintReceipt: () => void;
     }
 
    //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//

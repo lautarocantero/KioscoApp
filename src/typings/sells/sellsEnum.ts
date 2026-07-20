@@ -11,3 +11,9 @@ export enum Currency {
   Ars = 'ars',
   Usd = 'usd',
 }
+
+export enum SellStatusEnum {
+  Completada = 'completada',
+  Pendiente = 'pendiente',
+  Cancelada = 'cancelada',
+}

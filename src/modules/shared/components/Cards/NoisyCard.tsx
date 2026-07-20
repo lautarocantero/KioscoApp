@@ -8,9 +8,11 @@ const NoisyCard = ({
     children,
     maxWidth,
     borderRadius = "16px",
+    component,
     sx,
 }: NoisyCardProps): React.ReactNode => (
     <Card
+        {...(component ? { component } : {})}
         sx={[
             (theme: Theme) => ({
                 width: "100%",

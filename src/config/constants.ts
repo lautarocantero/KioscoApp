@@ -32,6 +32,8 @@ export const FILTER_MIN_WIDTH = 220;
 
 export const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
+export const MONTHS_ES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🧪 VALIDACIÓN — REGEX  🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪         ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
