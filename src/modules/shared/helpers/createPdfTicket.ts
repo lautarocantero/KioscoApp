@@ -60,5 +60,8 @@ export const createPdfTicket = (ticket: SellTicketType): void => {
     doc.text(`Total: ${formatCurrency(ticket.total_amount)}`, 14, finalY + 12);
 
   //──────────────────────────────────────────── Descargar PDF ───────────────────────────────────────────//
-  doc.save(`ticket_${ticket._id}.pdf`);
+  const seller = ticket.seller_name.replace(/\s+/g, "_").toLowerCase();
+  const time = new Date().toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" }).replace(":", "h");
+
+  doc.save(`comprobante_venta_${seller}_${time}_id:${ticket._id}.pdf`);
 };
