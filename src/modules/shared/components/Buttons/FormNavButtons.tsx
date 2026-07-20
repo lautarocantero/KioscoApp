@@ -3,8 +3,8 @@ import type { FormNavButtonsProps } from "@typings/ui/buttons.types";
 import { useFormNavButtons } from "../../../../hooks/shared/useFormNavButtons";
 
 
-const FormNavButtons = ({ SubmitText, backPath = "/products", readOnly = false }: FormNavButtonsProps): React.ReactNode => {
-    const { isFirstStep, isLastStep, handleNext, handleBack } = useFormNavButtons({ backPath, readOnly });
+const FormNavButtons = ({ SubmitText, defaultBack = "/products", readOnly = false }: FormNavButtonsProps): React.ReactNode => {
+    const { isFirstStep, isLastStep, handleNext, handleBack } = useFormNavButtons({ defaultBack, readOnly });
 
     return (
         <Box sx={(theme: Theme) => ({

@@ -42,7 +42,9 @@ export const parsePurchaseDate = (rawDate: string): PurchaseDateParts => {
 ╚═══════════════════════════════════════════════╝*/
 export const mapProductsToSoldRows = (products: ProductTicketType[]): SoldProductRow[] => {
     return products.map((product) => ({
-        id: product.product_id,
+        id: product._id,
+        productId: product.product_id,
+        presentationId: product._id,
         name: product.name,
         sku: product.sku,
         imageUrl: product.image_url || undefined,

@@ -58,15 +58,17 @@ import type { ReactNode } from "react";
         currency: string;
     }
 
-    export interface SoldProductRow {
+    export type SoldProductRow = {
         id: string;
+        productId: string;
+        presentationId: string;
         name: string;
         sku: string;
         imageUrl?: string;
         quantity: number;
         unitPrice: number;
         subtotal: number;
-    }
+    };
 
     export interface PaymentDetail {
         methodLabel: string;

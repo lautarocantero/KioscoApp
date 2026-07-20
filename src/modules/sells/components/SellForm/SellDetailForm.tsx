@@ -20,7 +20,7 @@ const SellDetailFormComponent = (): React.ReactNode => {
                 title: "Detalles de la venta",
                 subtitle: values._id,
                 icon: <Inventory2OutlinedIcon />,
-                status: SellStatusEnum.Completada, // 🔶 hardcodeado: el backend no informa estado de la venta
+                status: SellStatusEnum.Parcial, // 🔶 hardcodeado: el backend no informa estado de la venta
             }}
             showButtons
             submitText="Imprimir ticket"

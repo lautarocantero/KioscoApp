@@ -1,8 +1,7 @@
 import { Box, Chip, Typography, useTheme, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import HourglassEmptyOutlinedIcon from "@mui/icons-material/HourglassEmptyOutlined";
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import IncompleteCircleOutlinedIcon from "@mui/icons-material/IncompleteCircleOutlined";
 import type { FormCardHeaderProps } from "@typings/shared/reactComponents";
 import { useBreakpoint } from "../../../../hooks/ui/useBreakpoint"
 import { SellStatusEnum } from "@typings/sells/sellsEnum";
@@ -16,10 +15,9 @@ const getDefaultIcon = (color: string) => (
     </svg>
 );
 
-const STATUS_CONFIG: Record<SellStatusEnum, { label: string; icon: React.ReactElement; accent: "green" | "violet" | "pink" }> = {
+const STATUS_CONFIG: Record<SellStatusEnum, { label: string; icon: React.ReactElement; accent: "green" | "gold" }> = {
     [SellStatusEnum.Completada]: { label: "Completada", icon: <CheckCircleOutlineIcon fontSize="small" />, accent: "green" },
-    [SellStatusEnum.Pendiente]:  { label: "Pendiente",  icon: <HourglassEmptyOutlinedIcon fontSize="small" />, accent: "violet" },
-    [SellStatusEnum.Cancelada]:  { label: "Cancelada",  icon: <CancelOutlinedIcon fontSize="small" />, accent: "pink" },
+    [SellStatusEnum.Parcial]: { label: "Parcial", icon: <IncompleteCircleOutlinedIcon fontSize="small" />, accent: "gold" },
 };
 
 const FormHeader = ({

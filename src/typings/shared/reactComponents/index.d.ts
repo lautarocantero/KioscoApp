@@ -19,7 +19,7 @@ export interface FormNavActionsProps {
     submitText?:  string;
     showButtons?: boolean;
     readOnly?:    boolean;
-    backPath?:    string;
+    defaultBack?:    string;
 }
 
 
@@ -72,6 +72,10 @@ export interface FormCardProps extends FormNavActionsProps, FormErrorsProps {
     header?: Pick<FormCardHeaderProps, "title" | "subtitle" | "icon" | "status">;
     multiStepHeader?: MultiStepHeaderConfig;
     accordion?: AccordionConfig;
+}
+
+export interface BackPathProps extends Omit<IconButtonProps, "onClick"> {
+    defaultBack: string;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

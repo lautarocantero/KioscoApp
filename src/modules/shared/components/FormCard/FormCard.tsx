@@ -21,7 +21,7 @@ const FormCard = ({
     submitText,
     showButtons,
     readOnly,
-    backPath,
+    defaultBack,
     maxWidth,
     header,
     multiStepHeader,
@@ -150,7 +150,7 @@ const FormCard = ({
                 showButtons={showButtons}
                 readOnly={readOnly}
                 submitText={submitText}
-                backPath={backPath}
+                defaultBack={defaultBack}
             />
         </NoisyCard>
     );

@@ -1,7 +1,7 @@
 // SellForm.tsx
 import { Grid } from "@mui/material";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
-import { Formik, type FormikErrors } from "formik";
+import { Formik } from "formik";
 import { useSellDetail, useSellEdit } from "../../../../hooks/sells/useSellsForm";
 import ActualStepComponent from "../../../../modules/shared/components/FormCard/ActualStep";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";

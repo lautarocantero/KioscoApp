@@ -18,7 +18,7 @@ const PresentationDetailForm = (): React.ReactNode => {
     return (
         <FormCard
             readOnly
-            backPath={`/products/${product_id}/presentations`}
+            defaultBack={`/products/${product_id}/presentations`}
             header={{
                 title: "Detalles de la presentacion",
                 subtitle: "Información completa del producto (solo lectura)",

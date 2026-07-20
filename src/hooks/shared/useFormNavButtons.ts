@@ -1,12 +1,12 @@
 import type { UseFormNavButtonsParams } from "@typings/ui/buttons.types";
 import { FormNavigationContext } from "../../modules/shared/context/FormNavigationContext";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useBackPath } from "./useBackPath";
 
 
-export const useFormNavButtons = ({ backPath, readOnly }: UseFormNavButtonsParams) => {
-    const context  = useContext(FormNavigationContext);
-    const navigate = useNavigate();
+export const useFormNavButtons = ({ defaultBack, readOnly }: UseFormNavButtonsParams) => {
+    const context = useContext(FormNavigationContext);
+    const goBack = useBackPath(defaultBack);
 
     const currentStep = context?.currentStep ?? 0;
     const totalSteps  = context?.totalSteps  ?? 1;
@@ -20,7 +20,7 @@ export const useFormNavButtons = ({ backPath, readOnly }: UseFormNavButtonsParam
     };
 
     const handleBack = () => {
-        if (isFirstStep || readOnly) { navigate(backPath); return; }
+        if (isFirstStep || readOnly) { goBack(); return; }
         context?.onPrev();
     };
 

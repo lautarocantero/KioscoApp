@@ -14,6 +14,5 @@ export enum Currency {
 
 export enum SellStatusEnum {
   Completada = 'completada',
-  Pendiente = 'pendiente',
-  Cancelada = 'cancelada',
+  Parcial = 'parcial',
 }

@@ -8,18 +8,18 @@ const FormFooter = ({
     showButtons,
     readOnly,
     submitText,
-    backPath,
+    defaultBack,
 }: FormCardFooterProps): React.ReactNode => {
 
     return (
         <>
             <ApiErrorComponent submitError={submitError} stepErrors={stepErrors} />
 
-            {showButtons && <FormNavButtons SubmitText={submitText ?? ""} backPath={backPath} />}
+            {showButtons && <FormNavButtons SubmitText={submitText ?? ""} defaultBack={defaultBack} />}
             {readOnly && (
                 <FormNavButtons
                     readOnly
-                    backPath={backPath}
+                    defaultBack={defaultBack}
                 />
             )}
         </>

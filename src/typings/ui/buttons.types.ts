@@ -1,4 +1,3 @@
-import type { FormCardExtraActionProps } from "@typings/shared/reactComponents";
 import type { ReactNode } from "react";
 
 
@@ -24,11 +23,11 @@ export interface EmptyButtonProps {
 
 export interface FormNavButtonsProps {
     SubmitText?:  string;
-    backPath?:    string;
+    defaultBack?:    string;
     readOnly?:    boolean;
 }
 
 export type UseFormNavButtonsParams = {
-    backPath: string;
-    readOnly: boolean;
+    defaultBack: string;
+    readOnly?: boolean;
 };
