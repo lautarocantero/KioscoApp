@@ -211,7 +211,7 @@ export interface UseSellbarResult {
     barcode: {
         showBarcodeInput: boolean;
         value: string;
-        inputRef: RefObject<HTMLInputElement>;
+        inputRef: RefObject<HTMLInputElement | null>;
         toggleShowInput: () => void;
         onChange: (value: string) => void;
         onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;

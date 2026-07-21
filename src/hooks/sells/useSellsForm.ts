@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { editSellThunk } from "../../store/sell/sellsThunks";
 import { useSellData } from "./useSellData";
-import type { AppDispatch } from "store/sell/sellSlice";
 import type { SellEditFormValues } from "@typings/sells/sellTypes";
 import { usePrintSellTicket } from "./usePrintSellTicket";
+import type { AppDispatch } from "../../store/sell/sellSlice";
 
 
 /*══════════════════════════════════════════════╗

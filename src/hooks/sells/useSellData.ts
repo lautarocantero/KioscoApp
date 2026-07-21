@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSellByIdThunk } from "../../store/sell/sellsThunks";
 import type { UseSellDataResult } from "@typings/sells/sellTypes";
-import type { AppDispatch, RootState } from "store/sell/sellSlice";
+import type { AppDispatch, RootState } from "../../store/sell/sellSlice";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🪝 useSellData                                                        ║
