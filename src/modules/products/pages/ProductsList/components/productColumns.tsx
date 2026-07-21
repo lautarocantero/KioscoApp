@@ -2,8 +2,8 @@ import { type GridColDef } from "@mui/x-data-grid";
 import type { BuildColumnsArgs, PresentationSummary, Product } from "@typings/product/productTypes";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import GenericListCell from "../../../../shared/components/DataTable/GenericListCell";
-import { CellCenter } from "modules/shared/components/DataTable/CellCenter";
 import { dateColumn, truncatedTextColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
+import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
 
 export const buildColumnsForProducts = ({
     onDeleteRequest,

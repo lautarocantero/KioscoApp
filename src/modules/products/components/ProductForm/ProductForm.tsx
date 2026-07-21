@@ -16,8 +16,8 @@ import {
     productFormSchema,
 } from "../../schema/ProductFormSchema";
 import ProductFormFirstStep from "./ProductFormFirstStep";
-import LoadingSpinnerComponent from "modules/shared/components/LoadingSpinner";
-import NotEntityLoaded from "modules/shared/components/NotEntityLoaded";
+import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
+import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
 
 const STEP_COMPONENTS = [ProductFormFirstStep];
 

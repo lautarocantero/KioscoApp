@@ -6,9 +6,9 @@ import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
 import type { ReactNode } from "react";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
-import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
+import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
 
 
 const PresentationFormFourthStep = (): ReactNode => {

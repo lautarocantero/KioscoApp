@@ -1,8 +1,8 @@
 import { Box, Chip, Grid, Typography, useTheme } from "@mui/material";
 import type { SellDetailInfoBarProps } from "@typings/sells/SellComponentTypes";
-import { useSellInfoItems } from "hooks/sells/useSellInfoItems";
-import NoisyCard from "modules/shared/components/Cards/NoisyCard";
 import type { ReactNode } from "react";
+import NoisyCard from "../../../shared/components/Cards/NoisyCard";
+import { useSellInfoItems } from "../../../../hooks/sells/useSellInfoItems";
 
 const SellDetailInfoBar = (props: SellDetailInfoBarProps): ReactNode => {
     const theme = useTheme();

@@ -19,6 +19,7 @@ import {
     editProductRequest,
     deleteProductRequest,
 } from "../../modules/products/api/productApi";
+import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🚀 createProduct                                                      ║
@@ -98,13 +99,13 @@ export const getProducts = () => {
 ║   2. Guarda el resultado en store con setProducts                     ║
 ║ 📤 Salida: ProductWithPresentations[] o undefined en caso de error    ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-export const searchProducts = (term: string) => {
+export const searchProducts = (term: string, category?: PresentationCategory) => {
 
     return async (dispatch: Dispatch): Promise<ProductWithPresentations[] | undefined> => {
         dispatch(checkingProducts());
 
         try {
-            const products = await searchProductsWithPresentationsRequest(term);
+            const products = await searchProductsWithPresentationsRequest(term, category);
             dispatch(setProducts(products));
             return products;
 

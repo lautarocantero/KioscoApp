@@ -1,9 +1,7 @@
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import FormCard from "../../../../modules/shared/components/FormCard/FormCard";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
-import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
 import type { ProductEditFormValues, ProductFormValues } from "@typings/product/productTypes";
-import ProductImagePreview from "modules/shared/components/Image/ProductImagePreview";
 import { PRODUCT_FIELD_REGISTRY } from "./ProductFieldRegistry";
 import { useFormikContext } from "formik";
 import { useTheme } from "@mui/material";
@@ -11,6 +9,8 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
+import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
+import ProductImagePreview from "../../../shared/components/Image/ProductImagePreview";
 
 const ProductFormFirstStep = (): React.ReactNode => {
     const theme = useTheme();
@@ -44,7 +44,7 @@ const ProductFormFirstStep = (): React.ReactNode => {
                           },
                       }
             }
-            backPath={`/products`}
+            defaultBack={`/products`}
         >
             <FormFieldsRenderer<ProductFormValues & ProductEditFormValues>
                 idPrefix="product"

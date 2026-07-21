@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import AppLayout from "../../../shared/layout/AppLayout";
 import CardCarousel from "../../../shared/components/Cards/CardCarousel";
 import PresentationAnalyticsSection from "../../../shared/components/PresentationAnalitycs/PresentationAnalyticsSection";
-import PresentationForm from "modules/presentations/components/PresentationForm/PresentationForm";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { useDetailCarouselLayout } from "../../../../hooks/ui/useCardCarousel";
+import PresentationForm from "../../components/PresentationForm/PresentationForm";
 
 const PresentationDetailPage = (): React.ReactNode => {
     const { product_id, presentation_id } = useParams<{

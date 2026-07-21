@@ -1,9 +1,9 @@
 import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import type { SellDetailAditionalDataProps } from "@typings/sells/SellComponentTypes";
-import { formatAmount } from "modules/sells/helpers/ProductDialog/Formatter/formatDetail";
 import SellDetailPendingBalance from "./SellDetailPendingBalance";
-import NoisyCard from "modules/shared/components/Cards/NoisyCard";
+import NoisyCard from "../../../shared/components/Cards/NoisyCard";
+import { formatAmount } from "../../helpers/ProductDialog/Formatter/formatDetail";
 
 // 🔧 Hardcodeado temporalmente — luego vendrá del backend (pagos parciales / saldo pendiente)
 const MOCK_PENDING_BALANCE = 450;

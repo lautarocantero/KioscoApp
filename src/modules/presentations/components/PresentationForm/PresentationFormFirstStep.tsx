@@ -7,9 +7,9 @@ import { useParams } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import type { ReactNode } from "react";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
-import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
 import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
+import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
 
 
 const PresentationFormFirstStep = (): ReactNode => {
@@ -38,7 +38,7 @@ const PresentationFormFirstStep = (): ReactNode => {
                     alt: "Producto y presentaciones",
                 },
             }}
-            backPath={`/products/${product_id}/presentations`}
+            defaultBack={`/products/${product_id}/presentations`}
         >
             <FormFieldsRenderer<PresentationFormValues>
                 idPrefix="presentation"

@@ -7,6 +7,7 @@ import type {
   Product,
   ProductWithPresentations,
 } from "@typings/product/productTypes";
+import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 
 const baseUrl = axios.create({
   baseURL: `${API_URL}/product`,
@@ -95,11 +96,12 @@ export const getProductsWithPresentationsRequest = async (): Promise<ProductWith
 ║ GET /search-products-with-presentations?term=<value>                     ║
 ╚══════════════════════════════════════════════════════════════════════════╝*/
 export const searchProductsWithPresentationsRequest = async (
-  term: string
+  term: string,
+  category?: PresentationCategory
 ): Promise<ProductWithPresentations[]> => {
   const response = await baseUrl.get<ProductWithPresentations[]>(
     "/search-products-with-presentations",
-    { params: { term } }
+    { params: { term, category } }
   );
   return response.data;
 };

@@ -1,6 +1,5 @@
 import { Grid } from "@mui/material";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import FormCard from "modules/shared/components/FormCard/FormCard";
 import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import SellDetailInfoBar from "./SellDetailInfoBar";
@@ -8,7 +7,8 @@ import SellDetailProductsSold from "./SellDetailProductsSold";
 import SellDetailSoldData from "./SellDetailSoldData";
 import SellDetailPaymentData from "./SellDetailPaymentData";
 import SellDetailAditionalData from "./SellDetailAditionalData";
-import { useSellDetailForm } from "hooks/sells/useSellDetailForm";
+import { useSellDetailForm } from "../../../../hooks/sells/useSellDetailForm";
+import FormCard from "../../../shared/components/FormCard/FormCard";
 
 const SellDetailFormComponent = (): React.ReactNode => {
     const { values, date, time, timezone, products, payment, ivaPercentage, currency } = useSellDetailForm();
@@ -26,7 +26,7 @@ const SellDetailFormComponent = (): React.ReactNode => {
             submitText="Imprimir ticket"
             submitError={submitError}
             stepErrors={stepErrors}
-            backPath="/sells"
+            defaultBack="/sells"
         >
             <Grid container spacing={3}>
                 <SellDetailInfoBar

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import SearchBar from "../../../../../shared/components/SearchBar/SearchBar";
 import type { SellbarSearchInterface } from "@typings/ui/appbar.types";
-import { useSellbar } from "hooks/sells/useSellBar";
+import { useSellbar } from "../../../../../../hooks/sells/useSellBar";
 
 export const SellbarSearch = ({ showFilters }: SellbarSearchInterface): ReactNode => {
   const { search } = useSellbar();

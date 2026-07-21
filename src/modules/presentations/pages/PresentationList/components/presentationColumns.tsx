@@ -1,11 +1,11 @@
 import { type GridColDef } from "@mui/x-data-grid";
 import type { PresentationStatus } from "@typings/presentation/presentationEnum";
 import type { BuildColumnsArgs, Presentation } from "@typings/presentation/presentationTypes";
-import { STATUS_CONFIG } from "config/constants";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
-import { CellCenter } from "modules/shared/components/DataTable/CellCenter";
 import { formatPrice } from "../../../../shared/helpers/formarPrice";
 import { centeredTextColumn, chipColumn, priceColumn, truncatedTextColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
+import { STATUS_CONFIG } from "../../../../../config/constants";
+import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
 
 export const buildColumnsForPresentations = ({
     onDeleteRequest,

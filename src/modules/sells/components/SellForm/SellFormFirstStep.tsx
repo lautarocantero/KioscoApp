@@ -1,7 +1,6 @@
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import FormCard from "../../../../modules/shared/components/FormCard/FormCard";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
-import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
 import { SELL_FIELD_REGISTRY } from "./SellFieldRegistry";
 import { useTheme } from "@mui/material";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
@@ -12,6 +11,7 @@ import PercentOutlinedIcon from "@mui/icons-material/PercentOutlined";
 import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 import type { SellEditFormValues } from "@typings/sells/sellTypes";
+import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
 
 const SellFormFirstStep = (): React.ReactNode => {
     const theme = useTheme();
@@ -28,7 +28,7 @@ const SellFormFirstStep = (): React.ReactNode => {
             submitError={submitError}
             stepErrors={stepErrors}
             readOnly={isDetail}
-            backPath={`/sells`}
+            defaultBack={`/sells`}
         >
             <FormFieldsRenderer<SellEditFormValues>
                 idPrefix="sell"

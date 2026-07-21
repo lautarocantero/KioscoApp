@@ -10,10 +10,10 @@ import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import type { ReactNode } from "react";
 import { useFormikContext } from "formik";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
-import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
 import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
-import ProductImagePreview from "modules/shared/components/Image/ProductImagePreview";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
+import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
+import ProductImagePreview from "../../../shared/components/Image/ProductImagePreview";
 
 
 const PresentationFormSecondStep = (): ReactNode => {

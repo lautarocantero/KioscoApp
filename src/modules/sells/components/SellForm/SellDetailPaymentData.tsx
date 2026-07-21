@@ -3,8 +3,8 @@ import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import type { SellDetailPaymentDataProps } from "@typings/sells/SellComponentTypes";
-import NoisyCard from "modules/shared/components/Cards/NoisyCard";
 import type { ReactNode } from "react";
+import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 
 
 const SellDetailPaymentData = ({ payment }: SellDetailPaymentDataProps): ReactNode => {

@@ -1,9 +1,9 @@
-// hooks/products/useProductsListData.ts
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/product/productSlice";
 import { getProducts, searchProducts } from "../../store/product/productThunks";
 import type { UseProductsListDataResult } from "@typings/product/productTypes";
+import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -12,10 +12,12 @@ import type { UseProductsListDataResult } from "@typings/product/productTypes";
 ║ Encapsula el fetch/búsqueda de la lista de productos contra el store: ║
 ║   1. Lee products/isLoading/errorMessage del store                   ║
 ║   2. Debouncea el término de búsqueda y despacha getProducts /        ║
-║      searchProducts según corresponda                                ║
+║      searchProducts (con categoría opcional) según corresponda       ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export const useProductsListData = (): UseProductsListDataResult => {
+export const useProductsListData = (
+    selectedCategory: PresentationCategory | null = null,
+): UseProductsListDataResult => {
     const dispatch = useDispatch<AppDispatch>();
 
     const products = useSelector((state: RootState) => state.product.products);
@@ -28,14 +30,14 @@ export const useProductsListData = (): UseProductsListDataResult => {
     useEffect(() => {
         clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
-            if (searchTerm.trim() === "") {
+            if (searchTerm.trim() === "" && !selectedCategory) {
                 void dispatch(getProducts());
             } else {
-                void dispatch(searchProducts(searchTerm));
+                void dispatch(searchProducts(searchTerm, selectedCategory ?? undefined));
             }
         }, 350);
         return () => clearTimeout(debounceRef.current);
-    }, [searchTerm, dispatch]);
+    }, [searchTerm, selectedCategory, dispatch]);
 
     return { products, loading, error, searchTerm, setSearchTerm };
 };

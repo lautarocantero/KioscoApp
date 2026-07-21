@@ -7,8 +7,8 @@ import { SellerFilter } from "./AnalyticsSellerFilter";
 import type { AnalyticsFiltersProps } from "@typings/ui/analytics.types";
 import { AnalyticsFiltersButtons } from "./AnalyticsButtons";
 import { useAnalyticsFormState } from "../../../../hooks/shared/useAnalyticsFormState";
-import { FILTER_MIN_WIDTH } from "config/constants";
 import FilterGroup from "./AnalyticsFilterGroup";
+import { FILTER_MIN_WIDTH } from "../../../../config/constants";
 
 
 const AnalyticsFiltersComponent = ({

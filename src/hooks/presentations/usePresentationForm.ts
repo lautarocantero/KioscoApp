@@ -18,7 +18,7 @@ import { useFormSteps } from "../shared/useFormSteps";
 import { useErrorParser } from "../shared/useErrorParser";
 import { stepFieldsMap } from "../../modules/presentations/schema/PresentationFormSchema";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
-import { PRODUCTS_VARIANT_STEPS_LABELS } from "config/constants";
+import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../config/constants";
 
 const buildStepsConfig = () => PRODUCTS_VARIANT_STEPS_LABELS.map((label) => ({ title: label, content: null }));
 

@@ -1,9 +1,9 @@
 import { alpha, Avatar, Box, Grid, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography, type Theme } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import type { SellDetailProductsSoldProps } from "@typings/sells/SellComponentTypes";
-import { formatAmount } from "modules/sells/helpers/ProductDialog/Formatter/formatDetail";
-import NoisyCard from "modules/shared/components/Cards/NoisyCard";
 import { useSellDetailForm } from "../../../../hooks/sells/useSellDetailForm";
+import NoisyCard from "../../../shared/components/Cards/NoisyCard";
+import { formatAmount } from "../../helpers/ProductDialog/Formatter/formatDetail";
 
 const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): React.ReactNode => {
      const { goToPresentation } = useSellDetailForm();

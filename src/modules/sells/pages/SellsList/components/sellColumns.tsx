@@ -1,8 +1,8 @@
 import { type GridColDef } from "@mui/x-data-grid";
 import type { BuildColumnsForSellsArgs, SellTicketType } from "@typings/sells/sellTypes";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
-import { CellCenter } from "modules/shared/components/DataTable/CellCenter";
 import { dateColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
+import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
 
 
 export const buildColumnsForSells = ({

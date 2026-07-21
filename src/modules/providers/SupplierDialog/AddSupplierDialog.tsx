@@ -1,10 +1,10 @@
 import { Dialog, DialogContent } from "@mui/material";
 import type { AddSupplierDialogProps } from "@typings/providers/providerTypes";
-import { useSupplierForm } from "hooks/suppliers/useSupplierForm";
 import SupplierDialogTitle from "./SupplierDialogTitle";
 import SupplierErrorAlert from "./SupplierErrorAlert";
 import SupplierFormFields from "./SupplierFormFields";
 import SupplierDialogActions from "./SupplierDialogActions";
+import { useSupplierForm } from "../../../hooks/suppliers/useSupplierForm";
 
 
 const AddSupplierDialog = ({open, onClose, onSupplierCreated }: AddSupplierDialogProps): React.ReactNode => {

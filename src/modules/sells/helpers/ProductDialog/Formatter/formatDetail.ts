@@ -1,7 +1,7 @@
 // modules/sells/utils/sellDetailMappers.ts
 import type { ProductTicketType } from "@typings/seller/sellerTypes";
 import type { PaymentDetail, PurchaseDateParts, SellEditFormValues, SoldProductRow } from "@typings/sells/sellTypes";
-import { MONTHS_ES } from "config/constants";
+import { MONTHS_ES } from "../../../../../config/constants";
 
 
 /*══════════ 📅 parsePurchaseDate ══════════╗

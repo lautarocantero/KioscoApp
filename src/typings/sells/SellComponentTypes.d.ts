@@ -1,8 +1,8 @@
 import type { Product } from "../product/productTypes";
 import type { Presentation } from "../presentation/presentationTypes";
 import type { DialogDataInterface, DialogVariantDataType, PaymentDetail, SellTicketType, SoldProductRow } from "./sellTypes";
-import type { ViewMode } from "modules/sells/components/ProductList/ProductToolbar";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import type { ViewMode } from "../../modules/sells/components/ProductList/ProductToolbar";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}
 

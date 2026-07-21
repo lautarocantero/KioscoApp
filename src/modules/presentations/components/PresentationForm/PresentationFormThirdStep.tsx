@@ -6,9 +6,9 @@ import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined";
 import type { ReactNode } from "react";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
-import FormFieldsRenderer from "modules/shared/components/FormCard/FormFieldsRenderer";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
+import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
 
 
 const PresentationFormThirdStep = (): ReactNode => {

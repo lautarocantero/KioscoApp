@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { REACT_APP_API_URL } from "config/constants";
 import type { SupplierFormState, UseSupplierFormParams, UseSupplierFormReturn } from "@typings/providers/providerTypes";
+import { REACT_APP_API_URL } from "../../config/constants";
 
 
 const INITIAL_STATE: SupplierFormState = {

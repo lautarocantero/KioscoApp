@@ -157,6 +157,20 @@ export const searchPresentationsByProductIdRequest = async (
     return response.data;
 };
 
+
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🏷️ getAvailableCategoriesRequest                                          ║
+║                                                                          ║
+║ Obtiene el listado de categorías disponibles para presentaciones          ║
+║ (enum fijo del backend, no depende de datos en base).                    ║
+║ GET /get-available-categories                                            ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+export const getAvailableCategoriesRequest = async () => {
+    const response = await baseUrl.get('/get-available-categories');
+    return response.data;
+}
+
+
 /*══════════════════════════════════════════════════════════════════════════╗
 ║ 📊 getPresentationAnalyticsRequest                                        ║
 ║                                                                          ║

@@ -4,7 +4,7 @@ import AppLayout from "../../../shared/layout/AppLayout";
 import ProductDialog from "../../components/ProductDialog/ProductDialog";
 import ProductsExhibitor from "../../components/ProductList/ProductsExhibitorComponent";
 import CatalogHeader from "./components/sellsBar/CatalogHeader";
-import { useProductsListData } from "hooks/products/useProductListData";
+import { useProductsListData } from "../../../../hooks/products/useProductListData";
 
 const NewSellPage = (): ReactNode => {
   const { products } = useProductsListData();

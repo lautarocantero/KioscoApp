@@ -7,7 +7,7 @@ import { deletePresentation } from "../../store/presentation/presentationThunks"
 import { buildColumnsForPresentations } from "../../modules/presentations/pages/PresentationList/components/presentationColumns";
 import { usePresentationsListData } from "./usePresentationsListData";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
-import { CLOSED_DIALOG } from "config/constants";
+import { CLOSED_DIALOG } from "../../config/constants";
 
 
 export const usePresentations = () => {

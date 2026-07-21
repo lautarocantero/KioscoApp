@@ -1,7 +1,7 @@
 import { Box, Stack, Typography, type Theme } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import type {  SellDetailPendingBalanceProps } from "@typings/sells/SellComponentTypes";
-import { formatAmount } from "modules/sells/helpers/ProductDialog/Formatter/formatDetail";
+import { formatAmount } from "../../helpers/ProductDialog/Formatter/formatDetail";
 
 
 const SellDetailPendingBalance = ({

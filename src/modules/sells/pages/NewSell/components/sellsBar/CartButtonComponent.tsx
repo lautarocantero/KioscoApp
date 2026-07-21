@@ -1,7 +1,7 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Tooltip, Typography, type Theme } from "@mui/material";
 import "animate.css";
-import { useSellbar } from 'hooks/sells/useSellBar';
+import { useSellbar } from '../../../../../../hooks/sells/useSellBar';
 
 export const CartButtonComponent = (): React.ReactNode => {
     const { cart } = useSellbar();

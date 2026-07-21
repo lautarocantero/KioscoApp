@@ -3,11 +3,11 @@ import { useFormikContext } from "formik";
 import { useParams } from "react-router-dom";
 import FormCard from "../../../shared/components/FormCard/FormCard";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import type { getPresentationEditInitialValues } from "modules/presentations/schema/PresentationFormSchema";
 import { usePresentationDetailStatus } from "../../../../hooks/presentations/usePresentationData";
 import GroupBasicInfo from "./GroupBasicInfo";
 import GroupStock from "./GroupStock";
 import GroupCommercialInfo from "./GroupComercialInfo";
+import type { getPresentationEditInitialValues } from "../../schema/PresentationFormSchema";
 
 const PresentationDetailForm = (): React.ReactNode => {
     const { product_id } = useParams<{ product_id: string }>();

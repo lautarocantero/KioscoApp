@@ -1,7 +1,8 @@
 import BarcodeReaderIcon from '@mui/icons-material/BarcodeReader';
 import { Box, TextField, Tooltip, Typography, type Theme } from "@mui/material";
-import { useSellbar } from 'hooks/sells/useSellBar';
 import type { ReactNode } from 'react';
+import { useSellbar } from '../../../../../../hooks/sells/useSellBar';
+
 
 export const BarcodeButtonComponent = (): ReactNode => {
   const { barcode } = useSellbar();

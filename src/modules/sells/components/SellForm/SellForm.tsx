@@ -7,12 +7,12 @@ import ActualStepComponent from "../../../../modules/shared/components/FormCard/
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import { getSellEditInitialValues, sellEditFormSchema } from "../../schema/SellFormSchema";
 import SellFormFirstStep from "./SellFormFirstStep";
-import LoadingSpinnerComponent from "modules/shared/components/LoadingSpinner";
-import NotEntityLoaded from "modules/shared/components/NotEntityLoaded";
 import { useParams } from "react-router-dom";
 import type { SellFormProps } from "@typings/sells/SellComponentTypes";
-import SellEdited from "modules/sells/pages/SellEdit/components/SellEdited";
 import SellDetailFormComponent from "./SellDetailForm";
+import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
+import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
+import SellEdited from "../../pages/SellEdit/components/SellEdited";
 
 const STEP_COMPONENTS = [SellFormFirstStep];
 
