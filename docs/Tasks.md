@@ -2,10 +2,13 @@
 
 ||--- xxx ---------------------------------------------------------------||
 
+---
+Presentaciones:
+- [ xxx ] agregar categorias a los formularios y front.
+---
 ventas:
     - [ xxx ] refactor visual.
-    - [ xxx ] eliminar grids innecesarios de sellbar y ponerle otro nombre.
-    - [ xxx ] modificar el hover de las acciones del sellbar.
+
 
     - [ xxx ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.
     - [ xxx ] comprar productos no baja el stock.
