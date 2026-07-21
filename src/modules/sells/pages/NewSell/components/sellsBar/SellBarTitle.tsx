@@ -1,9 +1,11 @@
 import { Typography, type Theme } from "@mui/material";
 import type { SellBarTitleInterface } from "@typings/ui/appbar.types";
+import type { ReactNode } from "react";
 
 
-const SellBarTitleComponent = ({title}: SellBarTitleInterface): React.ReactNode => {
+const SellBarTitleComponent = ({title}: SellBarTitleInterface): ReactNode => {
 
+  
   return (
       <Typography
         sx={(theme: Theme) => ({

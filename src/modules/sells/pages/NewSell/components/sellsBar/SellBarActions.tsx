@@ -1,15 +1,17 @@
-import { Grid, type Theme } from "@mui/material";
+import { Box, type Theme } from "@mui/material";
 import BarcodeButtonComponent from "./BarcodeButtonComponent";
 import { SellbarFilter } from "./SellBarFilter";
 import CartButtonComponent from "./CartButtonComponent";
 import type { SellbarActionsInterface } from "@typings/ui/appbar.types";
+import type { ReactNode } from "react";
 
 
-export const SellBarActions = ({ showFilters }: SellbarActionsInterface): React.ReactNode => {
+export const SellBarActions = ({ showFilters }: SellbarActionsInterface): ReactNode => {
   if (!showFilters) return null;
 
+
   return (
-    <Grid
+    <Box
       display={"flex"}
       flexDirection={{ xs: "column", sm: "row" }}
       alignItems={"center"}
@@ -29,7 +31,7 @@ export const SellBarActions = ({ showFilters }: SellbarActionsInterface): React.
 
       <CartButtonComponent />
       
-</Grid>
+    </Box>
   );
 };
 

@@ -4,7 +4,10 @@ import type { SharedAppBarInterface } from "../../../../../../typings/ui/appbar.
 import SellBarContent from "./SellBarContent";
 import { getNoisyBackgroundSx } from "../../../../../shared/components/NoisyBackground/NoisyBackground";
 
-const SellBar = ({showFilters}: SharedAppBarInterface): ReactNode => {
+
+const CatalogHeader = ({showFilters}: SharedAppBarInterface): ReactNode => {
+
+  
   return (
     <AppBar
       component={"nav"}
@@ -26,4 +29,4 @@ const SellBar = ({showFilters}: SharedAppBarInterface): ReactNode => {
   );
 };
 
-export default React.memo(SellBar);
+export default React.memo(CatalogHeader);

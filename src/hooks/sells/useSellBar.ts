@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import type { RootState as SellerRootState } from "../../store/seller/sellerSlice";
 import { addOneUnitThunk, addToCartThunk, selectProductThunk } from "../../store/seller/sellerThunks";
 import { getPresentationsById } from "store/presentation/presentationThunks";
@@ -12,29 +12,26 @@ import { useProductsListData } from "../products/useProductListData";
 import type { AppDispatch } from "store/sell/sellSlice";
 
 export const useSellbar = () => {
-    const location = useLocation();
-    const { showSnackBar } = useContext(SnackBarContext)!;
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { seller } = useSelector((state: SellerRootState) => state);
-    const { cart }: { cart: ProductTicketType[] } = seller;
+    const { showSnackBar } = useContext(SnackBarContext)!;
+    const { cart } = useSelector((state: SellerRootState) => state.seller);
 
     /*──────────────── 🔎 Search ────────────────*/
     const { searchTerm, setSearchTerm } = useProductsListData();
-
     const handleClearSearch = () => setSearchTerm("");
 
     /*──────────────── 📷 Barcode ────────────────*/
-    const [showInput, setShowInput] = useState(false);
+    const [showBarcodeInput, setShowInput] = useState(false);
     const [barcode, setBarcode] = useState<string>("");
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (!showInput) return;
+        if (!showBarcodeInput) return;
         inputRef.current?.focus();
-    }, [showInput]);
+    }, [showBarcodeInput]);
 
-    const shouldShowBarcode = location.pathname === "/new-sell" || location.pathname === "/cart";
 
     const getPresentation = async ({ id }: { id: string }): Promise<Presentation> => {
         const prod: Presentation[] | undefined = await dispatch(getPresentationsById(id));
@@ -109,6 +106,9 @@ export const useSellbar = () => {
 
     const toggleShowInput = () => setShowInput((prev) => !prev);
 
+    /*──────────────── 🛒 Cart ────────────────*/
+    const goToCart = () => navigate('/cart');
+
     return {
         search: {
             value: searchTerm,
@@ -116,13 +116,16 @@ export const useSellbar = () => {
             onClear: handleClearSearch,
         },
         barcode: {
-            shouldShow: shouldShowBarcode,
-            showInput,
+            showBarcodeInput,
             value: barcode,
             inputRef,
             toggleShowInput,
             onChange: setBarcode,
             onKeyDown: handleKeyDown,
+        },
+        cart: {
+            count: cart?.length,
+            goToCart,
         },
     };
 };

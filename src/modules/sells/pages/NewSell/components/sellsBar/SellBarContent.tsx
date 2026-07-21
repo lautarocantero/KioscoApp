@@ -1,15 +1,16 @@
-import { Grid, type Theme } from "@mui/material";
+import { Box, type Theme } from "@mui/material";
 import type { SharedAppBarContentType } from "../../../../../../typings/ui/appbar.types";
 import { SellbarSearch } from "./SellBarSearch";
 import SellBarActions from "./SellBarActions";
 import SellBarTitleComponent from "./SellBarTitle";
+import type { ReactNode } from "react";
 
 
-const SellBarContent = ({showFilters}: SharedAppBarContentType): React.ReactNode => {
+const SellBarContent = ({showFilters}: SharedAppBarContentType): ReactNode => {
   
+
   return (
-    <Grid
-      container
+    <Box
       display={"flex"}
       flexDirection={"column"}
       alignItems={"start"}
@@ -27,7 +28,7 @@ const SellBarContent = ({showFilters}: SharedAppBarContentType): React.ReactNode
       <SellbarSearch showFilters={showFilters}/>
       
       <SellBarActions showFilters={showFilters} />
-    </Grid>
+    </Box>
   );
 };
 

@@ -3,7 +3,7 @@ import SimpleSnackbar from "../../../shared/components/SnackBar/SnackBarComponen
 import AppLayout from "../../../shared/layout/AppLayout";
 import ProductDialog from "../../components/ProductDialog/ProductDialog";
 import ProductsExhibitor from "../../components/ProductList/ProductsExhibitorComponent";
-import SellBar from "./components/sellsBar/SellBar";
+import CatalogHeader from "./components/sellsBar/CatalogHeader";
 import { useProductsListData } from "hooks/products/useProductListData";
 
 const NewSellPage = (): ReactNode => {
@@ -11,7 +11,7 @@ const NewSellPage = (): ReactNode => {
     
   return (
       <AppLayout noCenter fullWidth>
-          <SellBar showFilters/>
+          <CatalogHeader showFilters/>
           <ProductsExhibitor products={products} title={'Más vendido'} />
           <ProductDialog />
           <SimpleSnackbar  />

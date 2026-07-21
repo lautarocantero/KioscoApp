@@ -1,83 +1,76 @@
-
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Grid, Tooltip, Typography, type Theme } from "@mui/material";
+import { Box, Tooltip, Typography, type Theme } from "@mui/material";
 import "animate.css";
-import { useSelector } from "react-redux";
-import { useLocation, useNavigate, type NavigateFunction } from 'react-router-dom';
-import type { RootState as SellerState } from "../../../../../../store/seller/sellerSlice";
-import type { ProductTicketType } from "../../../../../../typings/seller/sellerTypes";
-
+import { useSellbar } from 'hooks/sells/useSellBar';
 
 export const CartButtonComponent = (): React.ReactNode => {
-    const { seller } = useSelector((state: SellerState) => state);
-    const { cart } : {cart: ProductTicketType[]} = seller;
-
-    const navigate: NavigateFunction = useNavigate();
-    const location = useLocation();
-
-    // if(!cart) return null;
-    // if(cart?.length === 0) return null;
-    // if (location.pathname !== "/new-sell") return null;
+    const { cart } = useSellbar();
+    const { goToCart, count } = cart;
 
     return (
-      <Grid
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        sx={{ flex: 1 }}
-      >
       <Tooltip title="Ver Carrito">
-        <Grid
-          onClick={() => navigate('/cart')}
-          sx={(theme: Theme) => ({
-            borderRadius: '50%',
-            width: '2em',
-            height: '2em',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-            cursor: 'pointer',
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          onClick={goToCart}
+          sx={(theme: Theme) => ({ 
+            flex: 1,
             position: 'relative',
-            transition: 'all 0.3s ease',
-            '&:hover': { backgroundColor: theme?.custom?.white },
-            '&:hover .MuiSvgIcon-root': { color: theme?.palette?.primary?.main },
-            '&:hover .cart-badge': { backgroundColor: theme?.palette?.primary?.main },
+            cursor: 'pointer',
+            '&:hover': {
+              backgroundColor: theme?.custom?.darkBackground,
+            }
           })}
-                >
-          <ShoppingCartIcon
+        >
+        
+          <Box
             sx={(theme: Theme) => ({
-              color: theme?.palette?.secondary?.main,
-              fontSize: theme?.typography?.body1?.fontSize,
-              transition: 'color 0.3s ease',
-            })}
-          />
-          {/* Badge con cantidad */}
-          <Typography
-            className="cart-badge"
-            sx={(theme: Theme) => ({
-              position: 'absolute',
-              right: '-1em',
-              backgroundColor: theme?.custom?.darkSecondary,
-              color: theme?.custom?.white,
               borderRadius: '50%',
-              width: '1.3em',
-              height: '1.3em',
+              width: '2em',
+              height: '2em',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '0.7em',
-              fontWeight: 'bold',
-              lineHeight: 1,
-              transition: 'background-color 0.3s ease',
+              flexShrink: 0,
+              position: 'relative',
+              transition: 'all 0.3s ease',
+              '&:hover .MuiSvgIcon-root': { color: theme?.palette?.primary?.main },
+              '&:hover .cart-badge': { backgroundColor: theme?.palette?.primary?.main },
             })}
-          >
-            {cart?.length}
-          </Typography>
-        </Grid>
-      </Tooltip>
-    </Grid>
+                  >
+            <ShoppingCartIcon
+              sx={(theme: Theme) => ({
+                color: theme?.palette?.secondary?.main,
+                fontSize: theme?.typography?.body1?.fontSize,
+                transition: 'color 0.3s ease',
+              })}
+            />
+            <Typography
+              className="cart-badge"
+              sx={(theme: Theme) => ({
+                position: 'absolute',
+                right: '-1em',
+                backgroundColor: theme?.custom?.darkSecondary,
+                color: theme?.custom?.white,
+                borderRadius: '50%',
+                width: '1.3em',
+                height: '1.3em',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.7em',
+                fontWeight: 'bold',
+                lineHeight: 1,
+                transition: 'background-color 0.3s ease',
+              })}
+            >
+              {count}
+            </Typography>
+          </Box>
+      </Box>
+    </Tooltip>
   );
 };
 
-export default  CartButtonComponent;
+export default CartButtonComponent;
