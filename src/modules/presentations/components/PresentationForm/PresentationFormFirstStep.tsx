@@ -8,8 +8,9 @@ import { useTheme } from "@mui/material";
 import type { ReactNode } from "react";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
 import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
-import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
+import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 
 
 const PresentationFormFirstStep = (): ReactNode => {
@@ -44,10 +45,11 @@ const PresentationFormFirstStep = (): ReactNode => {
                 idPrefix="presentation"
                 sectionLabel="Identidad de la presentación"
                 registry={PRESENTATION_FIELD_REGISTRY}
-                fields={["name", "description"]}
+                fields={["name", "description", "category"]}
                 icons={{
                     name: { icon: <BookmarkBorderOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
                     description: { icon: <DescriptionOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
+                    category: { icon: <CategoryOutlinedIcon fontSize="small" />, color: theme.custom.accents.blue },
                 }}
             />
         </FormCard>

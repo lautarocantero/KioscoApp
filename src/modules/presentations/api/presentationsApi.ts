@@ -210,11 +210,15 @@ export const createPresentationRequest = async (
 
     // campos escalares
     (Object.entries(rest) as [string, unknown][]).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-            formData.append(key, String(value));
-        }
-    });
+        if (value === undefined || value === null) return;
 
+        if (Array.isArray(value)) {
+            value.forEach((item) => formData.append(key, String(item)));
+            return;
+        }
+
+        formData.append(key, String(value));
+    });
 
     const response = await baseUrl.post<{ _id: string; message: string }>(
         "/create-presentation",

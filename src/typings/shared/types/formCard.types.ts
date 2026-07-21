@@ -17,7 +17,7 @@ export interface FieldConfig {
     label: string;
     placeholder?: string;
     tooltip: string;
-    type?: "text" | "number" | "date";
+    type?: "text" | "number" | "date"| "category";
     required?: boolean;
     multiline?: boolean;
     rows?: number;

@@ -1,4 +1,5 @@
 import type { CreatedProductInterface } from "@typings/product/productTypes";
+import type { PresentationCategory } from "./presentationEnum";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
@@ -7,6 +8,7 @@ import type { CreatedProductInterface } from "@typings/product/productTypes";
 interface PresentationEntity { 
     _id: string;
     brand: string;
+    category: PresentationCategory[];
     created_at: string;
     description: string;
     expiration_date: string;
@@ -49,6 +51,7 @@ export type CreatedPresentationInterface = Pick<PresentationEntity, '_id' |'name
 interface PresentationBaseFormValues {
     brand: string;
     description: string;
+    category: PresentationCategory[];
     expiration_date: string;
     image_url: string;
     min_stock: number;

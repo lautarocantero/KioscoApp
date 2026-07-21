@@ -78,4 +78,10 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         required: true,
         min: todayISODate,
     },
+        category: {
+        label: "Categoría",
+        tooltip: "Categoría a la que pertenece esta presentación",
+        type: "category",
+        required: true,
+    },
 };

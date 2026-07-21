@@ -95,6 +95,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
                 stock:           values.stock,
                 price:           values.price,
                 expiration_date: values.expiration_date,
+                category:        values.category,
                 created_at:      now,
                 updated_at:      now,
             };

@@ -46,6 +46,11 @@ export interface GroupStockProps {
     hasSufficientStock: boolean;
 }
 
+export interface CategorySelectorProps<T> {
+    name: keyof T & string;
+    label?: string;
+}
+
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🧩 Presentation — Shared navigation props                             ║

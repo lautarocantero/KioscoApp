@@ -3,6 +3,7 @@ import type {
     ExistingPresentationInterface,
     PresentationFormValues,
 } from "@typings/presentation/presentationTypes";
+import { PresentationCategory } from "@typings/presentation/presentationEnum";
 import { BARCODE_REGEX, MODEL_SIZE_REGEX, RELATIVE_OR_URL_REGEX } from "../../../config/constants";
 
 const getTodayISODate = () => new Date().toISOString().slice(0, 10);
@@ -28,6 +29,7 @@ export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     barcode:        "",
     sku:             "",
     stock:           0,
+    category:        [],
 });
 
 export const getPresentationEditInitialValues = (
@@ -46,6 +48,7 @@ export const getPresentationEditInitialValues = (
     stock:           presentation?.stock             ?? 0,
     price:           presentation?.price             ?? 0,
     expiration_date: presentation?.expiration_date  ?? getTodayISODate(),
+    category:        presentation?.category         ?? [],
 });
 
 // alias para compatibilidad con PresentationDetailForm
@@ -81,6 +84,7 @@ const baseShape = {
         .min(getStartOfToday(), "La fecha no puede ser anterior a hoy")
         .required("Fecha de vencimiento requerida")
         .typeError("Fecha inválida"),
+    category: Yup.array().of(Yup.mixed<PresentationCategory>().oneOf(Object.values(PresentationCategory))),
 };
 
 export const presentationFormSchema = Yup.object(baseShape);
@@ -89,7 +93,7 @@ export const presentationEditFormSchema = Yup.object(baseShape);
 // ── Step fields map ───────────────────────────────────────────────────────────
 
 export const stepFieldsMap: Record<number, (keyof PresentationFormValues)[]> = {
-    0: ["name", "description"],
+    0: ["name", "description", "category"],
     1: ["sku", "barcode", "model_type", "model_size", "image_url"],
     2: ["stock", "min_stock"],
     3: ["price", "expiration_date"],
