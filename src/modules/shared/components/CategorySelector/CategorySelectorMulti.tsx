@@ -13,7 +13,7 @@ function CategorySelectorMulti<C extends string>({
     value: selected,
     onChange,
 }: CategorySelectorMultiProps<C>): React.ReactNode {
-    const { availableOptions, handleSelect, handleRemove } = useCategorySelectorMulti(categories, selected, onChange);
+    const { availableOptions, handleSelect, handleRemove } = useCategorySelectorMulti({categories, selected, onChange});
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: selected.length > 0 ? 1 : 0 }}>

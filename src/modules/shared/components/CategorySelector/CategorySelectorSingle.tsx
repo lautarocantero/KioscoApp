@@ -15,7 +15,7 @@ function CategorySelectorSingle<C extends string>({
     clearLabel = "Todas",
 }: CategorySelectorSingleProps<C>): React.ReactNode {
     const { anchorEl, isMenuOpen, onOpenMenu, onCloseMenu, handleSelect, selectedLabel } =
-        useCategorySelector(value, onChange, getLabel, disabled);
+        useCategorySelector({value, onChange, getLabel, disabled});
 
     return (
         <>
