@@ -52,7 +52,7 @@ export const useProvidersLinkData = (): LinkDataResult => {
 
     return {
         value: totalProviders,
-        loading,
+        isLoading: loading,
         error,
         subtitle: undefined, // no hay data real de "activos" ni "próxima entrega" todavía
     };

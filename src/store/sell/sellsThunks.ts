@@ -1,8 +1,8 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, EditSellSanitizedPayloadInterface, GetSellByIdThunkInterface, Sell } from "@typings/sells/sellTypes";
-import { deleteSellRequest, getSellByIdRequest, getSellsRequest, postSellRequest, putSellRequest, searchSellsRequest } from "../../modules/sells/api/sellApi";
+import { deleteSellRequest, getSellByIdRequest, getSellsRequest, getTodaySellsCountRequest, postSellRequest, putSellRequest, searchSellsRequest } from "../../modules/sells/api/sellApi";
 import { handleError } from "../shared/handlerStoreError";
-import { checkingSells, removeSell, setError, setSells, setCurrentSell } from "./sellSlice";
+import { checkingSells, removeSell, setError, setSells, setCurrentSell, checkingTodaySells, setTodaySellsCount, setTodaySellsError } from "./sellSlice";
 
 //──────────────────────────────────────────── Get ───────────────────────────────────────────//
 
@@ -56,6 +56,21 @@ export const searchSellsThunk = (term: string) => {
             return sells;
         } catch (error: unknown) {
             dispatch(setError({ errorMessage: "No se pudieron buscar ventas" }));
+            handleError(error);
+        }
+    };
+};
+
+export const getTodaySellsCountThunk = () => {
+    return async (dispatch: Dispatch): Promise<{ count: number; lastSaleAt: string | null } | undefined> => {
+        dispatch(checkingTodaySells());
+        try {
+            const stats = await getTodaySellsCountRequest();
+
+            dispatch(setTodaySellsCount(stats));
+            return stats;
+        } catch (error: unknown) {
+            dispatch(setTodaySellsError("No se pudo obtener los datos de ventas"));
             handleError(error);
         }
     };

@@ -26,7 +26,7 @@ export interface OptionLink {
   icon: React.ReactNode;
   url: string;
   value?: string;
-  loading?: boolean;
+  isLoading?: boolean;
   subtitle?: string;
   useData?: () => LinkDataResult;
   formatValue?: (value: string | number | null | undefined) => string;

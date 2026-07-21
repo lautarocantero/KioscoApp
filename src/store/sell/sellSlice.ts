@@ -3,12 +3,16 @@ import type { store } from '../store';
 import type { SellStateErrorType, SellStateInterface, SellTicketType } from '@typings/sells/sellTypes';
 
 const initialState: SellStateInterface = {
-    sells:             [],
-    currentSell:       null,
-    isLoading:         false,
-    errorMessage:      null,
-    isLoadingCurrent:  false,
-    currentSellError:  null,
+    sells:               [],
+    currentSell:         null,
+    isLoading:           false,
+    errorMessage:        null,
+    isLoadingCurrent:    false,
+    currentSellError:    null,
+    todaySellsCount:     null,
+    lastSaleAt:          null,
+    isLoadingTodaySells: false,
+    todaySellsError:     null,
 }
 
 export const sellSlice = createSlice({
@@ -56,6 +60,23 @@ export const sellSlice = createSlice({
         removeSell: (state: SellStateInterface, action: PayloadAction<string>) => {
             state.sells = state.sells.filter((s) => s._id !== action.payload);
         },
+
+        checkingTodaySells: (state: SellStateInterface) => {
+            state.isLoadingTodaySells = true;
+            state.todaySellsError     = null;
+        },
+
+        setTodaySellsCount: (state: SellStateInterface, action: PayloadAction<{ count: number; lastSaleAt: string | null }>) => {
+            state.todaySellsCount     = action.payload.count;
+            state.lastSaleAt          = action.payload.lastSaleAt;
+            state.isLoadingTodaySells = false;
+            state.todaySellsError     = null;
+        },
+
+        setTodaySellsError: (state: SellStateInterface, action: PayloadAction<string>) => {
+            state.isLoadingTodaySells = false;
+            state.todaySellsError     = action.payload;
+        },
     }
 });
 
@@ -68,6 +89,9 @@ export const {
     checkingCurrentSell,
     setCurrentSellError,
     removeSell,
+    checkingTodaySells,
+    setTodaySellsCount,
+    setTodaySellsError,
 } = sellSlice.actions;
 
 export type RootState   = ReturnType<typeof store.getState>;

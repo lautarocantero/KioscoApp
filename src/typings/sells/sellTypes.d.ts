@@ -26,6 +26,7 @@ interface SellEntityInterface {
     total_amount: number;
 }
 
+
 export type SellTicketType = Pick<SellEntityInterface,
     'currency' |
     'iva' |
@@ -41,6 +42,20 @@ export type SellTicketType = Pick<SellEntityInterface,
     >;
 
 export type Sell = SellEntityInterface;
+
+export interface ProductTicketType {
+  product_id: string;        
+  sku: string;               
+  name: string;              
+  description: string;     
+  brand: string;          
+  model_type: string;      
+  model_size: string;       
+  price: number;         
+  expiration_date: string;   
+  image_url: string;        
+  stock_required: number;   
+}
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📋 FORMULARIOS 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋         ║
@@ -97,12 +112,16 @@ export interface PurchaseDateParts {
 //────────────────────────────────────────── 🍕 SLICE 🍕 ─────────────────────────────────────────//
 
 export interface SellStateInterface {
-    errorMessage: string | null,
-    isLoading: boolean,
-    sells: SellTicketType[],
-    currentSell: SellTicketType | null,
-    isLoadingCurrent: boolean,
-    currentSellError: string | null,
+    sells:               SellTicketType[];
+    currentSell:         SellTicketType | null;
+    isLoading:           boolean;
+    errorMessage:        string | null;
+    isLoadingCurrent:    boolean;
+    currentSellError:    string | null;
+    todaySellsCount:     number | null;
+    lastSaleAt:          string | null;
+    isLoadingTodaySells: boolean;
+    todaySellsError:     string | null;
 }
 
 export type SellStateErrorType = Pick<SellStateInterface, 'errorMessage'>
@@ -262,6 +281,12 @@ export interface UseSellbarCategoriesParams {
 export type UseSellbarCategoriesResult = UseSellbarResult['categories'] & {
     selectedCategory: PresentationCategory | null;
 };
+
+export interface UseSellStatsResult {
+    todaySells: number | null;
+    isLoading:  boolean;
+    error:      string | null;
+}
 
 //────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
 

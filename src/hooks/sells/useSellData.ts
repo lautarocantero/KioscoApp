@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSellByIdThunk } from "../../store/sell/sellsThunks";
-import type { UseSellDataResult } from "@typings/sells/sellTypes";
+import { getSellByIdThunk, getTodaySellsCountThunk } from "../../store/sell/sellsThunks";
+import type { UseSellDataResult, UseSellStatsResult } from "@typings/sells/sellTypes";
+import type { LinkDataResult } from "@typings/ui/layout.types";
 import type { AppDispatch, RootState } from "../../store/sell/sellSlice";
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -33,4 +34,31 @@ export const useSellData = (sellId: string | undefined): UseSellDataResult => {
     }, [sellId, storeHasIt, dispatch]);
 
     return { sellData, isLoading, error };
+};
+
+
+export const useSellStats = (): UseSellStatsResult => {
+    const dispatch = useDispatch<AppDispatch>();
+
+    const todaySells = useSelector((state: RootState) => state.sell?.todaySellsCount ?? null);
+    const isLoading  = useSelector((state: RootState) => state.sell?.isLoadingTodaySells ?? false);
+    const error      = useSelector((state: RootState) => state.sell?.todaySellsError ?? null);
+
+    useEffect(() => {
+        void dispatch(getTodaySellsCountThunk());
+    }, [dispatch]);
+
+    return { todaySells, isLoading, error };
+};
+
+// Adaptador para las cards de HomePageLinks / SidebarNavLinks
+export const useSellsLinkData = (): LinkDataResult => {
+    const { todaySells, isLoading, error } = useSellStats();
+
+    return {
+        value: todaySells,
+        isLoading,
+        error,
+        subtitle: todaySells === 0 ? "Sin ventas hoy" : undefined,
+    };
 };

@@ -3,20 +3,13 @@
 ||--- xxx ---------------------------------------------------------------||
 
 ---
-Presentaciones:
-- [ xxx ] arreglar bug de no volver a listado en primeros pasos de formualarios de crear
----
 ventas:
     - [ xxx ] refactor visual.
-    - [ xxx ] agregar campo productos a tabla de sells.
     - [ xxx ] hacer que funcione el barcode, creo que funciona usando el id y no el barcode.
-    - [ xxx ] el navbuton de ventas no carga las ventas reales (home).
 
     - [ xxx ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.
     - [ xxx ] comprar productos no baja el stock.
     - [ xxx ] solo mostrar productos con stock.
-    - [ xxx ] Agregar la tabla de tipos, luego hacer crud, pero agregarla ya.
-    - [ xxx ] al darle a listado en ventas deberia de mostrar una mui table.
     - [ xxx ] refactorizar todo el modulo.
     - [ xx ] agregar status a las ventas y al header
     - [ xx ] agregar campo de abono total y desharcodear lo del detalle de ventas.
