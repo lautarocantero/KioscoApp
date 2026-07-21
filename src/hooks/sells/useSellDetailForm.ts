@@ -14,8 +14,11 @@ export const useSellDetailForm = () => {
     const currency = values.currency.toUpperCase();
 
     const goToPresentation = (productId: string, presentationId: string) => {
-        navigate(`/products/${productId}/presentation/${presentationId}`);
+        navigate(`/products/${productId}/presentation/${presentationId}`, {
+            state: { from: `/sell/${values._id}` },
+        });
     };
 
     return { values, date, time, timezone, products, payment, ivaPercentage, currency, goToPresentation };
 };
+

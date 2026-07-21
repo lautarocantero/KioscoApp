@@ -4,11 +4,13 @@
 
 ---
 Presentaciones:
-- [ xxx ] agregar categorias a los formularios y front.
+- [ xxx ] arreglar bug de no volver a listado en primeros pasos de formualarios de crear
 ---
 ventas:
     - [ xxx ] refactor visual.
-
+    - [ xxx ] agregar campo productos a tabla de sells.
+    - [ xxx ] hacer que funcione el barcode, creo que funciona usando el id y no el barcode.
+    - [ xxx ] el navbuton de ventas no carga las ventas reales (home).
 
     - [ xxx ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.
     - [ xxx ] comprar productos no baja el stock.
@@ -34,6 +36,7 @@ general:
     - [ x ] Refactorizar todo. 
     - [ x ] Leer la documentacion y dejarla presentable.
     - [ x ] Agregar componente para las situaciones donde algo no carga, llega sin datos, early return. 
+    - [ x ] Agregar skeletons.    
 ---
 sidebar:
     - [ x ] Implementar colores para los menues y color picker.

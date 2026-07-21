@@ -3,7 +3,7 @@ import type { FormNavButtonsProps } from "@typings/ui/buttons.types";
 import { useFormNavButtons } from "../../../../hooks/shared/useFormNavButtons";
 
 
-const FormNavButtons = ({ SubmitText, defaultBack = "/products", readOnly = false }: FormNavButtonsProps): React.ReactNode => {
+const FormNavButtons = ({ SubmitText, defaultBack = "/", readOnly = false }: FormNavButtonsProps): React.ReactNode => {
     const { isFirstStep, isLastStep, handleNext, handleBack } = useFormNavButtons({ defaultBack, readOnly });
 
     return (
@@ -16,7 +16,7 @@ const FormNavButtons = ({ SubmitText, defaultBack = "/products", readOnly = fals
             py: 2.5,
             borderTop: `0.5px solid ${theme?.custom?.darkGray}`,
         })}>
-            <Button onClick={handleBack} variant="outlined"
+            <Button type="button" onClick={handleBack} variant="outlined"
                 sx={(theme: Theme) => ({
                     textTransform: "none", fontWeight: 600, minWidth: 120,
                     borderColor: theme?.custom?.translucidFontColor,
@@ -27,7 +27,7 @@ const FormNavButtons = ({ SubmitText, defaultBack = "/products", readOnly = fals
             </Button>
 
             {!readOnly && (
-                <Button onClick={handleNext} variant="contained"
+                <Button type="button" onClick={handleNext} variant="contained"
                     sx={(theme: Theme) => ({
                         textTransform: "none", fontWeight: 600, minWidth: 120,
                         backgroundColor: theme?.palette?.primary?.main,
