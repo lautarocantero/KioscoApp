@@ -46,9 +46,40 @@ export interface GroupStockProps {
     hasSufficientStock: boolean;
 }
 
-export interface CategorySelectorProps<T> {
+export type CategorySelectorBaseProps<C extends string> = {
+    id?: string;
+    label?: string;
+    categories: readonly C[];
+    getLabel: (category: C) => string;
+    disabled?: boolean;
+};
+
+export type CategorySelectorSingleProps<C extends string> = CategorySelectorBaseProps<C> & {
+    mode: "single";
+    value: C | null;
+    onChange: (value: C | null) => void;
+    allowClear?: boolean;
+    clearLabel?: string;
+};
+
+export type CategorySelectorMultiProps<C extends string> = CategorySelectorBaseProps<C> & {
+    mode: "multi";
+    value: C[];
+    onChange: (value: C[]) => void;
+};
+
+export type CategorySelectorProps<C extends string> =
+    | CategorySelectorSingleProps<C>
+    | CategorySelectorMultiProps<C>;
+
+export interface PresentationCategoryFieldProps<T> {
     name: keyof T & string;
     label?: string;
+}
+
+export interface UseFormikCategorySelectorMultiResult<C extends string> {
+    value: C[];
+    onChange: (next: C[]) => void;
 }
 
 

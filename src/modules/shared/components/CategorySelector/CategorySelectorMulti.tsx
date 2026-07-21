@@ -1,23 +1,27 @@
+// modules/shared/components/CategorySelector/CategorySelectorMulti.tsx
 import { Box, Chip, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
-import { PRESENTATION_CATEGORY_LABELS } from "@typings/presentation/presentationCategoryLabels";
-import type { CategorySelectorProps } from "@typings/presentation/presentationComponentTypes";
-import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
-import { useCategorySelector } from "../../../../hooks/shared/useCategorySelector";
+import { sharedSx } from "../sharedSx/sharedSx";
+import { useCategorySelectorMulti } from "../../../../hooks/shared/useCategorySelectorMulti";
+import type { CategorySelectorMultiProps } from "@typings/presentation/presentationComponentTypes";
 
-
-function CategorySelector<T extends object>({
-    name,
-    label = "Categorías",
-}: CategorySelectorProps<T>): React.ReactNode {
-    const { selected, availableOptions, handleSelect, handleRemove } = useCategorySelector<T>(name);
+function CategorySelectorMulti<C extends string>({
+    label = "Categoría",
+    categories,
+    getLabel,
+    disabled,
+    id = "category-selector",
+    value: selected,
+    onChange,
+}: CategorySelectorMultiProps<C>): React.ReactNode {
+    const { availableOptions, handleSelect, handleRemove } = useCategorySelectorMulti(categories, selected, onChange);
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: selected.length > 0 ? 1 : 0 }}>
-            <FormControl fullWidth disabled={availableOptions.length === 0} variant="outlined" sx={sharedSx}>
-                <InputLabel id={`${name}-label`}>{label}</InputLabel>
+            <FormControl fullWidth disabled={disabled || availableOptions.length === 0} variant="outlined" sx={sharedSx}>
+                <InputLabel id={`${id}-label`}>{label}</InputLabel>
                 <Select
-                    labelId={`${name}-label`}
-                    id={name}
+                    labelId={`${id}-label`}
+                    id={id}
                     value=""
                     label={label}
                     onChange={handleSelect}
@@ -30,7 +34,7 @@ function CategorySelector<T extends object>({
                     ) : (
                         availableOptions.map((category) => (
                             <MenuItem key={category} value={category}>
-                                {PRESENTATION_CATEGORY_LABELS[category]}
+                                {getLabel(category)}
                             </MenuItem>
                         ))
                     )}
@@ -41,7 +45,7 @@ function CategorySelector<T extends object>({
                     {selected.map((category) => (
                         <Chip
                             key={category}
-                            label={PRESENTATION_CATEGORY_LABELS[category]}
+                            label={getLabel(category)}
                             onDelete={() => handleRemove(category)}
                             size="small"
                             color="primary"
@@ -54,4 +58,4 @@ function CategorySelector<T extends object>({
     );
 }
 
-export default CategorySelector;
+export default CategorySelectorMulti;

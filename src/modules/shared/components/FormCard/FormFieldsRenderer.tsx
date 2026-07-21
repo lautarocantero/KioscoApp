@@ -5,7 +5,7 @@ import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
 import { useFocusFirstField } from "../../../../hooks/shared/useFocusFirstField";
 import { useFieldDisplayState } from "../../../../hooks/shared/useFieldDisplayState";
 import type { FieldConfig, FormFieldsRendererProps } from "@typings/shared/types/formCard.types";
-import CategorySelector from "../../../presentations/components/PresentationForm/CategorySelector";
+import PresentationCategoryField from "../../../presentations/components/PresentationForm/PresentationCategoryField";
 
 
 function FormFieldsRenderer<T extends object>({
@@ -33,7 +33,7 @@ function FormFieldsRenderer<T extends object>({
                     return (
                         <Grid key={String(fieldKey)} spacing={{ xs: 12, sm: 12 }}>
                             <FieldWithIcon iconConfig={icons?.[fieldKey]}>
-                                <CategorySelector<T> name={fieldKey as keyof T & string} />
+                                <PresentationCategoryField<T> name={fieldKey as keyof T & string} label={config.label} />
                             </FieldWithIcon>
                             {renderAfterField?.[fieldKey]}
                         </Grid>

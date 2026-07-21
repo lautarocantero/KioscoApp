@@ -1,24 +1,27 @@
-import { useFormikContext } from "formik";
-import { PresentationCategory, PRESENTATION_CATEGORY_VALUES } from "@typings/presentation/presentationEnum";
-import type { SelectChangeEvent } from "@mui/material";
+import type { UseCategorySelectorParams, UseCategorySelectorResult } from "@typings/presentation/presentationTypes";
+import { useState } from "react";
 
-export function useCategorySelector<T extends object>(name: keyof T & string) {
-    const { values, setFieldValue } = useFormikContext<T>();
-    const selected = (values[name as keyof T] as unknown as PresentationCategory[] | undefined) ?? [];
+export function useCategorySelector<C extends string>({
+    value,
+    onChange,
+    getLabel,
+    disabled,
+}: UseCategorySelectorParams<C>): UseCategorySelectorResult<C> {
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const isMenuOpen = Boolean(anchorEl);
 
-    const availableOptions = (PRESENTATION_CATEGORY_VALUES as PresentationCategory[]).filter(
-        (category) => !selected.includes(category)
-    );
+    const onOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
+        if (disabled) return;
+        setAnchorEl(event.currentTarget);
+    };
+    const onCloseMenu = () => setAnchorEl(null);
 
-    const handleSelect = (event: SelectChangeEvent<string>) => {
-        const value = event.target.value as PresentationCategory;
-        if (!value) return;
-        void setFieldValue(name, [...selected, value]);
+    const handleSelect = (category: C | null) => {
+        onChange(category);
+        onCloseMenu();
     };
 
-    const handleRemove = (category: PresentationCategory) => {
-        void setFieldValue(name, selected.filter((c) => c !== category));
-    };
+    const selectedLabel = value ? getLabel(value) : null;
 
-    return { selected, availableOptions, handleSelect, handleRemove };
+    return { anchorEl, isMenuOpen, onOpenMenu, onCloseMenu, handleSelect, selectedLabel };
 }

@@ -172,6 +172,34 @@ export interface UsePresentationDetailStatusReturn {
     isNotExpired: boolean;
 }
 
+export interface UseCategorySelectorParams<C extends string> {
+    value: C | null;
+    onChange: (value: C | null) => void;
+    getLabel: (category: C) => string;
+    disabled?: boolean;
+}
+
+export interface UseCategorySelectorMultiParams<C extends string> {
+    categories: readonly C[];
+    selected: C[];
+    onChange: (next: C[]) => void;
+}
+
+export interface UseCategorySelectorResult<C extends string> {
+    anchorEl: HTMLElement | null;
+    isMenuOpen: boolean;
+    onOpenMenu: (event: React.MouseEvent<HTMLElement>) => void;
+    onCloseMenu: () => void;
+    handleSelect: (category: C | null) => void;
+    selectedLabel: string | null;
+}
+
+export interface UseCategorySelectorMultiResult<C extends string> {
+    availableOptions: C[];
+    handleSelect: (event: SelectChangeEvent<string>) => void;
+    handleRemove: (category: C) => void;
+}
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🗂️ COLUMNAS  🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️           ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/

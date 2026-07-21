@@ -49,4 +49,4 @@ export enum PresentationCategory {
   Deli = "deli",
 }
 
-export const PRESENTATION_CATEGORY_VALUES: string[] = Object.values(PresentationCategory);
+export const PRESENTATION_CATEGORY_VALUES = Object.values(PresentationCategory);
