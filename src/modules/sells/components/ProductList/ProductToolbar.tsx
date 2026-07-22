@@ -26,8 +26,6 @@ export interface ProductsToolbarProps {
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: "name-asc", label: "Nombre A-Z" },
   { value: "name-desc", label: "Nombre Z-A" },
-  { value: "stock-asc", label: "Stock: menor a mayor" },
-  { value: "stock-desc", label: "Stock: mayor a menor" },
 ];
 
 const ProductsToolbar = ({

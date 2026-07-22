@@ -27,14 +27,9 @@ export const BarcodeButtonComponent = (): ReactNode => {
           flex: 1,
           position: 'relative',
           cursor: 'pointer',
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            right: 0,
-            height: '50%',
-            width: '0.1em',
-            backgroundColor: theme?.custom?.darkBackground,
-          },
+          border: `1px solid ${theme?.custom?.darkGray}`,
+          borderRadius: "8px",
+          width: "100%",
           '&:hover': {
                 backgroundColor: theme?.custom?.darkBackground,
           }
@@ -51,13 +46,13 @@ export const BarcodeButtonComponent = (): ReactNode => {
               height: "2em",
             }}
           >
-            <BarcodeReaderIcon
-              sx={(theme: Theme) => ({
-                color: theme?.palette.primary.main,
-                fontSize: theme?.typography?.body1?.fontSize,
-                transition: 'color 0.3s ease',
-              })}
-            />
+              <BarcodeReaderIcon
+                sx={(theme: Theme) => ({
+                  color: theme?.palette.primary.main,
+                  fontSize: theme?.typography?.body1?.fontSize,
+                  transition: 'color 0.3s ease',
+                })}
+              />
             {!showBarcodeInput && (
               <Typography
                 className="barcode-label"

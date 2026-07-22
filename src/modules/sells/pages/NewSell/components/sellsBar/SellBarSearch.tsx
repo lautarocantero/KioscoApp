@@ -7,9 +7,6 @@ export const SellbarSearch = ({ showFilters }: SellbarSearchInterface): ReactNod
   const { search } = useSellbar();
   const { value, onChange, onClear  } = search;
 
-  if (!showFilters) {
-    return null;
-  }
 
   return (
     <SearchBar

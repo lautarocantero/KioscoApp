@@ -81,7 +81,6 @@ import type { ViewMode } from "../../modules/sells/components/ProductList/Produc
 
     export interface ProductsExhibitorProps {
         title: string;
-        products: Product[];
     };
 
     export type ProductListProps  = Pick<ProductsExhibitorProps, 'products'> & {

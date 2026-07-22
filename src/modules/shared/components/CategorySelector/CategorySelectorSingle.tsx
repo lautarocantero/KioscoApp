@@ -31,14 +31,9 @@ function CategorySelectorSingle<C extends string>({
                         position: 'relative',
                         cursor: disabled ? 'default' : 'pointer',
                         opacity: disabled ? 0.5 : 1,
-                        '&::after': {
-                            content: '""',
-                            position: 'absolute',
-                            right: 0,
-                            height: '50%',
-                            width: '0.1em',
-                            backgroundColor: theme?.custom?.darkBackground,
-                        },
+                        width: "100%",
+                        border: `1px solid ${theme?.custom?.darkGray}`,
+                        borderRadius: "8px",
                         '&:hover': {
                             backgroundColor: disabled ? undefined : theme?.custom?.darkBackground,
                         }
@@ -60,6 +55,10 @@ function CategorySelectorSingle<C extends string>({
                             },
                         })}
                     >
+                        <KeyboardArrowDownIcon sx={(theme: Theme) => ({
+                            fontSize: '1em',
+                            color: theme?.palette?.secondary?.main,
+                        })}/>
                         <Typography sx={(theme: Theme) => ({
                             color: theme?.palette?.secondary?.main,
                             fontSize: theme?.typography?.body1?.fontSize,
@@ -68,10 +67,6 @@ function CategorySelectorSingle<C extends string>({
                         })}>
                             {selectedLabel ?? label}
                         </Typography>
-                        <KeyboardArrowDownIcon sx={(theme: Theme) => ({
-                            fontSize: '1em',
-                            color: theme?.palette?.secondary?.main,
-                        })}/>
                     </Box>
                 </Box>
             </Tooltip>

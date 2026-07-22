@@ -1,9 +1,10 @@
 import type { Breakpoint } from "@mui/system";
 import type { UnderlineVariant } from "./ui";
+import type { ReactNode } from "react";
 
 
 export interface SharedAppBarInterface {
-  showFilters: boolean,
+  showFilters?: boolean,
 }
 
 export type SharedAppBarContentType = Pick<SharedAppBarInterface, 'showFilters'>
@@ -26,3 +27,9 @@ export interface LinksComponentInterface {
   linksToShow: LinkInterface[];
 }
 
+export interface SellbarSectionProps {
+  gridArea: string;
+  title: string;
+  children: ReactNode;
+  flexContent?: boolean;
+}

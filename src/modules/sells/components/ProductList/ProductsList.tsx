@@ -14,8 +14,9 @@ const ProductsList = ({ products, viewMode = "grid" }: ProductListProps): React.
         display: viewMode === "grid" ? "grid" : "flex",
         flexDirection: viewMode === "list" ? "column" : undefined,
         gridTemplateColumns:
-          viewMode === "grid" ? "repeat(auto-fill, minmax(320px, 1fr))" : undefined,
-        gap: 2,
+          viewMode === "grid" ? "repeat(auto-fill, minmax(230px, 1fr))" : undefined,
+        rowGap: 2,         // solo espacio vertical
+        columnGap: 0,      // sin espacio horizontal
         width: "100%",
       }}
     >

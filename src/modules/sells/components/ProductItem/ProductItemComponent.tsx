@@ -1,4 +1,4 @@
-import { Grid, Tooltip, type Theme } from "@mui/material";
+import { Box, Tooltip, type Theme } from "@mui/material";
 import type { ProductItemProps } from "@typings/sells/SellComponentTypes";
 import { useContext } from "react";
 import { useDispatch } from "react-redux";
@@ -11,13 +11,14 @@ import ProductItemImage from "./ProductItemImage";
 import ProductItemData from "./ProductItemData";
 import ProductItemButton from "./ProductItemButton";
 import ProductItemBadge from "./ProductItemBadge";
-import { getNoisyBackgroundSx } from "../../../../modules/shared/components/NoisyBackground/NoisyBackground";
+import { CARD_HEIGHT } from "../../../../config/constants";
+
+
 
 const ProductItemComponent = ({ product }: ProductItemProps): React.ReactNode => {
   const { name, presentations, category }: { name: string; presentations: Presentation[]; category?: string } = product;
   const { setShowModal } = useContext(ProductDialogContext)!;
   const dispatch = useDispatch<AppDispatch>();
-
 
   const selectProduct = async ({ product }: Partial<getProductSelectedPayload>): Promise<void> => {
     if (!product) throw new Error("No se ha seleccionado un producto");
@@ -27,36 +28,47 @@ const ProductItemComponent = ({ product }: ProductItemProps): React.ReactNode =>
 
   return (
     <Tooltip title={name}>
-      <Grid
-        container
+      <Box
         sx={(theme: Theme) => ({
+          position: "relative",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
-          gap: "0.8em",
           border: `1px solid ${theme.custom?.blackTranslucid}`,
-          borderRadius: "0.5em",
+          borderRadius: "0.8em",
           color: theme?.custom?.fontColor,
-          padding: "1em",
           width: "100%",
-          maxWidth: "300px",
-          height: "12em",
-          ...getNoisyBackgroundSx({theme}),
+          maxWidth: "220px",
+          height: CARD_HEIGHT,
+          overflow: "hidden",
         })}
       >
         {category && <ProductItemBadge label={category} />}
 
-        <Grid sx={{ display: "flex", flexDirection: "row", gap: "0.8em", width: "100%" }}>
-          <ProductItemImage
-            source={product?.image_url}
-            name={name}
-            onClick={() => selectProduct({ product })}
-          />
-          <ProductItemData name={name} presentations={presentations} />
-        </Grid>
+        <ProductItemImage
+          source={product?.image_url}
+          name={name}
+          onClick={() => selectProduct({ product })}
+        />
 
-        <ProductItemButton onClick={() => selectProduct({ product })} />
-      </Grid>
+        <Box
+          sx={(theme: Theme) => ({
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.6em",
+            padding: "0.8em 1em",
+            backgroundColor: theme?.custom?.blackTranslucid,
+            backdropFilter: "blur(3px)",
+            WebkitBackdropFilter: "blur(3px)",
+          })}
+        >
+          <ProductItemData name={name} presentations={presentations} />
+          <ProductItemButton onClick={() => selectProduct({ product })} />
+        </Box>
+      </Box>
     </Tooltip>
   );
 };

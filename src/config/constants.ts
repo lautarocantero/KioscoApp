@@ -34,6 +34,8 @@ export const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" 
 
 export const MONTHS_ES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
+export const CARD_HEIGHT = "320px";
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🧪 VALIDACIÓN — REGEX  🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪         ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/

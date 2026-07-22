@@ -7,6 +7,7 @@ import type { EspecificationsLeftProps } from "./SellComponentTypes";
 import type { ReactNode, RefObject, MouseEvent, SetStateAction } from "react";
 import type { SelectChangeEvent } from "@mui/material";
 import type { GridColDef } from "@mui/x-data-grid";
+import type { SortOption, ViewMode } from "../../modules/sells/components/ProductList/ProductToolbar";
 
 {/*─────────────────── 🔎 tipos usados en sell 🔎 ───────────────────*/}
 
@@ -170,6 +171,22 @@ export interface EditSellSanitizedPayloadInterface {
     data: EditSellRequestPayloadType;
 }
 
+export interface UseProductsExhibitorResult {
+  isEmpty: boolean;
+  paginatedProducts: Product[];
+  totalCount: number;
+  page: number;
+  pageCount: number;
+  setPage: (page: number) => void;
+  sort: SortOption;
+  handleSortChange: (e: SelectChangeEvent) => void;
+  options: {
+    value: SortOption;
+    label: string;
+  }[];
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
+}
 //────────────────────────────────────────── 🔗 API 🔗 ─────────────────────────────────────────//
 
 export type GetSellApiPayloadType = Pick<Sell, '_id'>;

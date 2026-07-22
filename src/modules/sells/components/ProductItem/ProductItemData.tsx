@@ -1,4 +1,3 @@
-import InventoryIcon from '@mui/icons-material/Inventory';
 import { Box, Typography, type Theme } from "@mui/material";
 import type { ItemDataProps } from '@typings/sells/SellComponentTypes';
 import type { Presentation } from "../../../../typings/presentation/presentationTypes";
@@ -8,16 +7,19 @@ const ProductItemData = ({ name = "product", presentations = [] }: ItemDataProps
     (count: number, presentation: Presentation) => count + presentation.stock,
     0
   ) ?? 0;
+
   const subtitle: string | undefined = presentations?.[0]?.name;
+  const price: number | undefined = presentations?.[0]?.price;
 
   if (!name) return null;
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", flex: 1, minWidth: 0, gap: "0.2em" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: "0.1em" }}>
       <Typography
         sx={(theme: Theme) => ({
-          fontWeight: 600,
+          fontWeight: 700,
           fontSize: theme?.typography?.body1?.fontSize,
+          lineHeight: 1.2,
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
@@ -26,39 +28,31 @@ const ProductItemData = ({ name = "product", presentations = [] }: ItemDataProps
         {name}
       </Typography>
 
-      {subtitle && (
+      <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", mt: "0.15em" }}>
         <Typography
           sx={(theme: Theme) => ({
-            fontSize: theme?.typography?.caption?.fontSize,
-            color: theme.custom?.translucidWhite,
+            fontSize: "0.85em",
+            fontWeight: 600,
+            lineHeight: 1.2,
+            color: theme.custom.darkSecondary,
           })}
         >
-          {subtitle}
+          Stock: {totalStock}
         </Typography>
-      )}
 
-      <Typography
-        sx={(theme: Theme) => ({
-          fontSize: theme?.typography?.caption?.fontSize,
-          color: theme.custom?.translucidWhite,
-          mt: "0.4em",
-        })}
-      >
-        Stock actual
-      </Typography>
-
-      <Typography
-        sx={(theme: Theme) => ({
-          display: "flex",
-          alignItems: "center",
-          gap: "0.3em",
-          fontSize: theme?.typography?.body2?.fontSize,
-          fontWeight: 500,
-        })}
-      >
-        <InventoryIcon sx={{ fontSize: "1em" }} />
-        {totalStock}
-      </Typography>
+        {price !== undefined && (
+          <Typography
+            sx={(theme: Theme) => ({
+              fontSize: theme?.typography?.body1?.fontSize,
+              fontWeight: 700,
+              lineHeight: 1.2,
+              color: theme.custom?.fontColor,
+            })}
+          >
+            ${price}
+          </Typography>
+        )}
+      </Box>
     </Box>
   );
 };

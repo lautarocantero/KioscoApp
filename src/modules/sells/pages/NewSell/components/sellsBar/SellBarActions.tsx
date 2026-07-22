@@ -1,36 +1,62 @@
-import { Box, type Theme } from "@mui/material";
+// SellBarActions.tsx
+import { Box } from "@mui/material";
+import type { SellbarActionsInterface } from "@typings/ui/appbar.types";
+import type { ReactNode } from "react";
 import BarcodeButtonComponent from "./BarcodeButtonComponent";
 import { SellbarFilter } from "./SellBarFilter";
 import CartButtonComponent from "./CartButtonComponent";
-import type { SellbarActionsInterface } from "@typings/ui/appbar.types";
-import type { ReactNode } from "react";
+import SortByCatalogHeader from "./SortByCatalogHeader";
+import ViewModeToggle from "./ViewModeToggle";
+import { SellbarSearch } from "./SellBarSearch";
+import SellbarSection from "./SellBarSection";
 
-
-export const SellBarActions = ({ showFilters }: SellbarActionsInterface): ReactNode => {
-  if (!showFilters) return null;
-
-
+export const SellBarActions = ({}: SellbarActionsInterface): ReactNode => {
   return (
     <Box
-      display={"flex"}
-      flexDirection={{ xs: "column", sm: "row" }}
-      alignItems={"center"}
-      sx={(theme: Theme) => ({
-        flexWrap: 'nowrap',
-        flexShrink: 0,
-        height: { xs: "5em", sm: "2em"},
+      sx={{
+        display: "grid",
         width: "100%",
-        borderTop: `0.1em solid ${theme?.custom?.darkBackground}`,
-        marginTop: "0.5em",
-      })}
+        marginTop: "4px",
+        gap: "0.75em",
+        flexShrink: 0,
+
+        gridTemplateColumns: {
+          xs: "1fr",
+          sm: "repeat(3, 1fr)",
+          md: "repeat(4, 1fr)",
+        },
+        gridTemplateAreas: {
+          xs: `
+            "search"
+            "quickactions"
+            "sortview"
+          `,
+          sm: `
+            "search       search       search"
+            "quickactions quickactions quickactions"
+            "sortview     sortview     sortview"
+          `,
+          md: `
+            "search quickactions quickactions quickactions"
+            "sortview sortview sortview sortview"
+          `,
+        },
+      }}
     >
+      <SellbarSection gridArea="search" title="Búsqueda">
+        <SellbarSearch />
+      </SellbarSection>
 
-      <BarcodeButtonComponent />
+      <SellbarSection gridArea="quickactions" title="Acciones rápidas" flexContent>
+        <BarcodeButtonComponent />
+        <SellbarFilter />
+        <CartButtonComponent />
+      </SellbarSection>
 
-      <SellbarFilter />
-
-      <CartButtonComponent />
-      
+      <SellbarSection gridArea="sortview" title="Orden y vista" flexContent>
+        <SortByCatalogHeader />
+        <ViewModeToggle />
+      </SellbarSection>
     </Box>
   );
 };

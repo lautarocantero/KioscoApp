@@ -6,19 +6,14 @@ interface Props extends ProductItemImageProps {
   onClick?: () => void;
 }
 
-const IMAGE_SIZE = "110px";
-const IMAGE_HEIGHT = "120px";
-
 const ProductItemImage = ({ source, name, onClick }: Props): React.ReactNode => {
   if (!source) {
     return (
       <Box
         onClick={onClick}
         sx={(theme: Theme) => ({
-          width: IMAGE_SIZE,
-          height: IMAGE_HEIGHT,
-          flexShrink: 0,
-          borderRadius: "0.5em",
+          position: "absolute",
+          inset: 0,
           backgroundColor: theme.custom?.blackTranslucid,
           display: "flex",
           alignItems: "center",
@@ -28,7 +23,7 @@ const ProductItemImage = ({ source, name, onClick }: Props): React.ReactNode => 
       >
         <ImageNotSupportedOutlinedIcon
           sx={(theme: Theme) => ({
-            fontSize: "1.6rem",
+            fontSize: "2rem",
             color: theme.custom?.translucidWhite,
           })}
         />
@@ -43,12 +38,12 @@ const ProductItemImage = ({ source, name, onClick }: Props): React.ReactNode => 
       alt={name}
       onClick={onClick}
       sx={{
-        width: IMAGE_SIZE,
-        height: IMAGE_HEIGHT,
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
         objectFit: "cover",
-        borderRadius: "0.5em",
         cursor: onClick ? "pointer" : "default",
-        flexShrink: 0,
       }}
     />
   );

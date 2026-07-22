@@ -18,6 +18,9 @@ export const CartButtonComponent = (): React.ReactNode => {
             flex: 1,
             position: 'relative',
             cursor: 'pointer',
+            width: "100%",
+            border: `1px solid ${theme?.custom?.darkGray}`,
+            borderRadius: "8px",
             '&:hover': {
               backgroundColor: theme?.custom?.darkBackground,
             }

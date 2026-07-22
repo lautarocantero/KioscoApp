@@ -11,12 +11,12 @@ const CatalogHeader = ({showFilters}: SharedAppBarInterface): ReactNode => {
     <NoisyCard
       component="nav"
       sx={() => ({
-        width:  { xs: "98%", sm: "90%", md: "720px" },
+        width:  { xs: "98%", sm: "90%", md: "80%", lg: "50%" },
         mt: { xs: "3em", md: "0" },
         alignSelf: "center",
       })}
     >
-      <Toolbar style={{ minHeight: 'auto', padding: '0.4em 1em' }}>
+      <Toolbar sx={{ minHeight: 'auto', padding: { xs: "0.4em 0.5em", sm: "0.4em 1em" } }}>
         <SellBarContent showFilters={showFilters} />
       </Toolbar>
     </NoisyCard>
