@@ -11,6 +11,7 @@ const CatalogHeader = (): ReactNode => {
       component="nav"
       sx={() => ({
         width:  { xs: "98%", sm: "90%", md: "80%", lg: "60%" },
+        height: { xs: "21em", sm: "14em" },
         mt: { xs: "3em", md: "0" },
         alignSelf: "center",
       })}

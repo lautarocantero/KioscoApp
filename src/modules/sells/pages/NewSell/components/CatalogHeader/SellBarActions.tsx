@@ -22,7 +22,6 @@ export const SellBarActions = (): ReactNode => {
         gridTemplateColumns: {
           xs: "1fr",
           sm: "repeat(3, 1fr)",
-          md: "repeat(4, 1fr)",
         },
         gridTemplateAreas: {
           xs: `
@@ -34,10 +33,6 @@ export const SellBarActions = (): ReactNode => {
             "search       search       search"
             "quickactions quickactions quickactions"
             "sortview     sortview     sortview"
-          `,
-          md: `
-            "search quickactions quickactions quickactions"
-            "sortview sortview sortview sortview"
           `,
         },
       }}
