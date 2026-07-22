@@ -15,10 +15,7 @@ const ProductsExhibitorComponent = ({ title = "Productos" }: ProductsExhibitorPr
     page,
     pageCount,
     setPage,
-    sort,
-    handleSortChange,
     viewMode,
-    setViewMode,
   } = useProductsExhibitor();
 
   if (isEmpty) return <ProductsNotFound />;
@@ -27,10 +24,6 @@ const ProductsExhibitorComponent = ({ title = "Productos" }: ProductsExhibitorPr
     <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2, padding: 2 }}>
       <ProductsToolbar
         totalCount={totalCount}
-        sortValue={sort}
-        onSortChange={handleSortChange}
-        viewMode={viewMode}
-        onViewModeChange={setViewMode}
       />
       <ProductsList products={paginatedProducts} viewMode={viewMode} />
       <ProductsPagination page={page} count={pageCount} onChange={setPage} />

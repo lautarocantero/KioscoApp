@@ -1,9 +1,12 @@
-import { useMemo, useState } from "react";
+// useProductsExhibitor.ts
+import { useMemo } from "react";
 import type { SelectChangeEvent } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { useProductsListData } from "../products/useProductListData";
 import type { Product } from "@typings/product/productTypes";
-import type { SortOption, ViewMode } from "../../modules/sells/components/ProductList/ProductToolbar";
 import type { UseProductsExhibitorResult } from "@typings/sells/sellTypes";
+import { setSort, setViewMode, setPage, type RootState, type AppDispatch } from "../../store/seller/sellerSlice";
+import type { SortOption } from "@typings/seller/sellerTypes";
 
 const PAGE_SIZE = 20;
 
@@ -25,10 +28,12 @@ const sortProducts = (products: Product[], sort: SortOption): Product[] => {
 };
 
 export const useProductsExhibitor = (): UseProductsExhibitorResult => {
+  const dispatch = useDispatch<AppDispatch>();
   const { products } = useProductsListData();
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const [sort, setSort] = useState<SortOption>("name-asc");
-  const [page, setPage] = useState(1);
+
+  const sort = useSelector((state: RootState) => state.seller.sort);
+  const viewMode = useSelector((state: RootState) => state.seller.viewMode);
+  const page = useSelector((state: RootState) => state.seller.page);
 
   const safeProducts = Array.isArray(products) ? products : [];
 
@@ -42,8 +47,7 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
   }, [sortedProducts, page]);
 
   const handleSortChange = (e: SelectChangeEvent) => {
-    setSort(e.target.value as SortOption);
-    setPage(1);
+    dispatch(setSort(e.target.value as SortOption));
   };
 
   return {
@@ -52,11 +56,11 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
     totalCount: sortedProducts.length,
     page,
     pageCount,
-    setPage,
+    setPage: (p: number) => dispatch(setPage(p)),
     sort,
     handleSortChange,
     options: SORT_OPTIONS,
     viewMode,
-    setViewMode,
+    setViewMode: (v) => dispatch(setViewMode(v)),
   };
 };

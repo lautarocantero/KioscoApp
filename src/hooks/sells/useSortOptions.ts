@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import type { SelectChangeEvent } from "@mui/material";
-
-export type SortOption = "name-asc" | "name-desc" | "stock-asc" | "stock-desc";
+import type { SortOption } from "@typings/seller/sellerTypes";
 
 export const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: "name-asc", label: "Nombre A-Z" },

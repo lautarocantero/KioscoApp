@@ -5,6 +5,10 @@ import type { CartAmount } from "./seller";
 
 //──────────────────────────────────────────── 🍕 SLICE  🍕 ───────────────────────────────────────────//
 
+export type SortOption = 'name-asc' | 'name-desc';
+
+export type ViewMode = 'grid' | 'list';
+
 export interface SellerStateInterface {
     _id: string | null,
     name: string,
@@ -14,6 +18,9 @@ export interface SellerStateInterface {
     created_at: string,
     updated_at: string,
     errorMessage: string | null,
+    sort: SortOption,
+    viewMode: ViewMode,
+    page: number,
 };
 
 export interface getProductSelectedPayload {
@@ -33,6 +40,12 @@ export type SellerRemoveFromCartActionPayload = Pick<SellerStateInterface, '_id'
 export interface SellerSetProductSlicePayload {
     product: Presentation,
 };
+
+export type SellerSetSortPayload = Pick<SellerStateInterface, 'sort'>
+
+export type SellerSetViewModePayload = Pick<SellerStateInterface, 'viewMode'>
+
+export type SellerSetPagePayload = Pick<SellerStateInterface, 'page'>
 
 //──────────────────────────────────────────── 🌀 THUNK 🌀 ───────────────────────────────────────────//
 

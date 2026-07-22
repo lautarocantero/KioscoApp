@@ -1,30 +1,5 @@
-//─────────────────── Slice 🍕: sellerSlice ───────────────────//
-
-//─────────────────── Descripción 📝 ───────────────────//
-// Slice de Redux encargado de manejar el estado de vendedores y su interacción con productos y carrito.
-// Define estado inicial, reducers y acciones para selección de producto, carrito y errores.  
-
-//──────────────────── Estado inicial 🛌 ─────────────────────//
-// - _id: identificador único del vendedor (null).
-// - name: nombre del vendedor.
-// - cart: lista de productos en el carrito.
-// - productSelected: producto actualmente seleccionado.
-// - description: descripción del vendedor.
-// - created_at: fecha de creación.
-// - updated_at: fecha de última actualización.
-// - errorMessage: mensaje de error.  
-
-//──────────────────── Reducers 🧰 ─────────────────────//
-// - setProductSelected: asigna producto a productSelected.
-// - addToCartAction: agrega producto al carrito manteniendo los previos.
-// - setError: guarda mensaje de error en errorMessage.  
-
-//─────────────────── Notas técnicas 💽 ───────────────────//
-// - Exportado como sellerSlice.reducer para integrarse en el store global.
-//-----------------------------------------------------------------------------//
-
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { SellerAddToCartSlicePayload, SellerAddUnitActionPayload, SellerError, SellerRemoveFromCartActionPayload, SellerSetProductSlicePayload, SellerStateInterface } from '../../typings/seller/sellerTypes';
+import type { SellerAddToCartSlicePayload, SellerAddUnitActionPayload, SellerError, SellerRemoveFromCartActionPayload, SellerSetProductSlicePayload, SellerStateInterface, SortOption, ViewMode } from '../../typings/seller/sellerTypes';
 import type { store } from '../store';
 import { CartAmount } from '../../typings/seller/seller';
 
@@ -37,6 +12,9 @@ const initialState: SellerStateInterface = {
     created_at: '',
     updated_at: '',
     errorMessage: null,
+    sort: 'name-asc',
+    viewMode: 'grid',
+    page: 1,
 }
 
 export const sellerSlice = createSlice({
@@ -84,11 +62,31 @@ export const sellerSlice = createSlice({
             const { errorMessage } = payload;
 
             state.errorMessage = errorMessage;
-        }
+        },
+        setSort: (state: SellerStateInterface, action: PayloadAction<SortOption>) => {
+            state.sort = action.payload;
+            state.page = 1;
+        },
+        setViewMode: (state: SellerStateInterface, action: PayloadAction<ViewMode>) => {
+            state.viewMode = action.payload;
+        },
+        setPage: (state: SellerStateInterface, action: PayloadAction<number>) => {
+            state.page = action.payload;
+        },
     }
 });
 
-export const { setProductSelected, addToCartAction, addUnitAction, removeFromCart, cleanCart, setError } = sellerSlice.actions;
+export const {
+  setProductSelected,
+  addToCartAction,
+  addUnitAction,
+  removeFromCart,
+  cleanCart,
+  setError,
+  setSort,
+  setViewMode,
+  setPage,
+} = sellerSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;

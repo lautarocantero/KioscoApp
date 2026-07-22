@@ -10,7 +10,7 @@ const CatalogHeader = (): ReactNode => {
     <NoisyCard
       component="nav"
       sx={() => ({
-        width:  { xs: "98%", sm: "90%", md: "80%", lg: "50%" },
+        width:  { xs: "98%", sm: "90%", md: "80%", lg: "60%" },
         mt: { xs: "3em", md: "0" },
         alignSelf: "center",
       })}

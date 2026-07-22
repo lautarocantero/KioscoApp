@@ -6,7 +6,6 @@ import ProductsExhibitor from "../../components/ProductList/ProductsExhibitorCom
 import CatalogHeader from "./components/CatalogHeader/CatalogHeader";
 
 const NewSellPage = (): ReactNode => {
-  
     
   return (
       <AppLayout noCenter fullWidth>
