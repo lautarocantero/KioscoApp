@@ -12,7 +12,7 @@ const dataHooksByUrl: Record<string, () => LinkDataResult> = {
 
 export const useHomePageLinks = (): OptionLink[] =>
   SidebarNavLinks
-    .filter((link) => link.description !== "Stoko")
+    .filter((link) => link.description !== "Stocko")
     .map((link) => ({
       ...link,
       useData: dataHooksByUrl[link.url],
