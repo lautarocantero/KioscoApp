@@ -5,7 +5,7 @@
 ---
 ventas:
     - [ xxx ] refactor visual.
-    - [ xxx ] hacer que funcione el barcode, creo que funciona usando el id y no el barcode.
+
     - [ xxx ] solo mostrar productos con stock.
     - [ xxx ] comprar productos no baja el stock.
     - [ xxx ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.

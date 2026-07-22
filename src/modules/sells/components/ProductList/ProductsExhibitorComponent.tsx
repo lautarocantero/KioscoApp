@@ -21,7 +21,7 @@ const ProductsExhibitorComponent = ({ title = "Productos" }: ProductsExhibitorPr
   if (isEmpty) return <ProductsNotFound />;
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2, padding: 2 }}>
+    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2, padding: 2, mt: 10 }}>
       <ProductsToolbar
         totalCount={totalCount}
       />
