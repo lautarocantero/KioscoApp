@@ -1,14 +1,7 @@
+import type { ProductTicketType } from "@typings/sells/sellTypes";
 import type { Presentation } from "../presentation/presentationTypes";
 import type { CartAmount } from "./seller";
 
-//────────────────────────────────────────────♦️ PRODUCTS ♦️───────────────────────────────────────────//
-
-export type ProductTicketType = Pick<Presentation, 
-    '_id' | 'name' | 'description' | 'image_url' | 'brand' |
-    'product_id' | 'sku' | 'model_type' | 'model_size' | 'price' | 
-    'expiration_date'> &  {
-    stock_required: number,
-}
 
 //──────────────────────────────────────────── 🍕 SLICE  🍕 ───────────────────────────────────────────//
 

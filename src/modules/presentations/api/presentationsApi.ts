@@ -190,6 +190,21 @@ export const getPresentationAnalyticsRequest = async (
 };
 
 /*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationByBarcodeRequest                                        ║
+║                                                                          ║
+║ Obtiene una variante por su código de barras.                            ║
+║ GET /get-presentation-by-barcode/:barcode                                ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+export const getPresentationByBarcodeRequest = async (
+    { barcode }: { barcode: string }
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
+        `/get-presentation-by-barcode/${barcode}`
+    );
+    return response.data;
+};
+
+/*══════════════════════════════════════════════════════════════════════════╗
 ║ 📤 POST                                                                   ║
 ║                                                                          ║
 ║ Endpoint de creación de variantes.                                       ║

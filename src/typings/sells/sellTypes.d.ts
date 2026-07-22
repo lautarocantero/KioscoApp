@@ -44,7 +44,7 @@ export type SellTicketType = Pick<SellEntityInterface,
 export type Sell = SellEntityInterface;
 
 export interface ProductTicketType {
-  product_id: string;        
+  _id: string;        
   sku: string;               
   name: string;              
   description: string;     

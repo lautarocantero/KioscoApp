@@ -2,19 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addOneUnitThunk, addToCartThunk, selectProductThunk } from "../../store/seller/sellerThunks";
 import type { Presentation } from "../../typings/presentation/presentationTypes";
-import type { ProductTicketType } from "../../typings/seller/sellerTypes";
 import { AlertColor } from "../../typings/ui/ui";
-import type { UseSellbarBarcodeParams, UseSellbarResult } from "@typings/sells/sellTypes";
+import type { ProductTicketType, UseSellbarBarcodeParams, UseSellbarResult } from "@typings/sells/sellTypes";
 import type { AppDispatch } from "../../store/sell/sellSlice";
-import { getPresentationsById } from "../../store/presentation/presentationThunks";
+import { getPresentationByBarcode } from "../../store/presentation/presentationThunks";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 📷 useSellbarBarcode                                                  ║
 ║ Maneja el input de escaneo, la búsqueda de la presentation por        ║
 ║ código de barras, y su alta en el carrito.                            ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-
-
 
 export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellbarBarcodeParams): UseSellbarResult['barcode'] => {
     const dispatch = useDispatch<AppDispatch>();
@@ -28,36 +25,38 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellbarBarcodeParam
         inputRef.current?.focus();
     }, [showBarcodeInput]);
 
-    const getPresentation = async ({ id }: { id: string }): Promise<Presentation> => {
-        const prod: Presentation[] | undefined = await dispatch(getPresentationsById(id));
+    const getPresentation = async ({ barcode }: { barcode: string }): Promise<Presentation> => {
+        const product: Presentation = await getPresentation({ barcode });
 
-        if (!prod) {
-            showSnackBar(`Código de barras inexistente`, AlertColor.Error);
+        if (!product) {
+            showSnackBar(`No se encontró el código de barras`, AlertColor.Error);
             throw new Error("No se ha seleccionado un producto");
         }
 
-        await dispatch(selectProductThunk({ productData: prod[0] }));
-        return prod[0];
+        await dispatch(selectProductThunk({ productData: product }));
+        return product;
     };
 
     const handleAddToCart = async () => {
         if (barcode === "") return;
 
-        const product: Presentation = await getPresentation({ id: barcode });
+        let product: Presentation;
 
-        if (!product) {
-            showSnackBar(`Código de barras inexistente`, AlertColor.Error);
+        try {
+            product = await getPresentation({ barcode });
+        } catch {
+            setBarcode("");
             return;
         }
 
-        const productObject: ProductTicketType | undefined = cart?.find((prod) => prod._id === barcode);
+        const productObject: ProductTicketType | undefined = cart?.find((prod) => prod._id === product._id);
 
         {/*─────────────────── 🔎 Si el producto ya se encuentra en el carrito 🔎 ───────────────────*/}
 
         if (productObject) {
-            await dispatch(addOneUnitThunk({ _id: productObject?._id }));
+            await dispatch(addOneUnitThunk({ _id: productObject._id }));
             setBarcode("");
-            const nameEdited: string = productObject?.name.length > 25 ? `${productObject?.name.slice(0, 25)}...` : productObject?.name;
+            const nameEdited: string = productObject.name.length > 25 ? `${productObject.name.slice(0, 25)}...` : productObject.name;
             showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
             return;
         }
@@ -66,7 +65,7 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellbarBarcodeParam
 
         const {
             _id, name, description, image_url,
-            brand, product_id, sku, model_type,
+            brand, sku, model_type,
             model_size, price, expiration_date,
         } = product;
 
@@ -76,7 +75,6 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellbarBarcodeParam
             description,
             image_url,
             brand,
-            product_id,
             sku,
             model_type,
             model_size,

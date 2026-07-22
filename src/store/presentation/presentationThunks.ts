@@ -17,6 +17,7 @@ import {
     createPresentationRequest,
     editPresentationRequest,
     getPresentationAnalyticsRequest,
+    getPresentationByBarcodeRequest,
 } from "../../modules/presentations/api/presentationsApi";
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -64,6 +65,33 @@ export const searchPresentationsByProductId = (product_id: string, term: string)
         }
     };
 };
+
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 getPresentationByBarcode                                            ║
+║ ⚠️  Nota: análogo a getPresentationsById pero por barcode, usado por   ║
+║     el flujo de venta / carrito al escanear un código.                 ║
+║ 📥 Entrada: barcode                                                    ║
+║ 📤 Salida: Presentation o undefined en caso de error/no encontrado     ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const getPresentationByBarcode = (barcode: string) => {
+    return async (dispatch: Dispatch): Promise<Presentation | undefined> => {
+        dispatch(startLoadingPresentations());
+        try {
+            const result = await getPresentationByBarcodeRequest({ barcode });
+            const presentation = Array.isArray(result) ? result[0] : result;
+            if (!presentation) {
+                dispatch(setError({ errorMessage: "No se ha encontrado ninguna presentación con ese código de barras" }));
+                throw new Error("No se encontró presentación con barcode " + barcode);
+            }
+            dispatch(setPresentations(result));
+            return presentation;
+        } catch (error: unknown) {
+            handleError(error);
+        }
+    };
+};
+
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🚀 fetchPresentationById                                               ║

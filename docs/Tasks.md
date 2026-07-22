@@ -6,13 +6,12 @@
 ventas:
     - [ xxx ] refactor visual.
     - [ xxx ] hacer que funcione el barcode, creo que funciona usando el id y no el barcode.
-
-    - [ xxx ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.
-    - [ xxx ] comprar productos no baja el stock.
     - [ xxx ] solo mostrar productos con stock.
-    - [ xxx ] refactorizar todo el modulo.
+    - [ xxx ] comprar productos no baja el stock.
+    - [ xxx ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.
     - [ xx ] agregar status a las ventas y al header
     - [ xx ] agregar campo de abono total y desharcodear lo del detalle de ventas.
+    - [ xxx ] refactorizar todo el modulo.
 
 ---
 vendedores:
