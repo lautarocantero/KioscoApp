@@ -92,7 +92,7 @@ export const SearchBar = ({
           <Typography
             variant="caption"
             sx={(theme: Theme) => ({
-              color: theme.custom?.lightGray ?? theme.custom?.translucidWhite,
+              color: theme.custom?.translucidFontColor,
               flexShrink: 0,
             })}
           >
