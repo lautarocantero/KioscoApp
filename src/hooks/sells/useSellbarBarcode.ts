@@ -26,15 +26,15 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellbarBarcodeParam
     }, [showBarcodeInput]);
 
     const getPresentation = async ({ barcode }: { barcode: string }): Promise<Presentation> => {
-        const product: Presentation = await getPresentation({ barcode });
+        const prod: Presentation | undefined = await dispatch(getPresentationByBarcode(barcode));
 
-        if (!product) {
+        if (!prod) {
             showSnackBar(`No se encontró el código de barras`, AlertColor.Error);
             throw new Error("No se ha seleccionado un producto");
         }
 
-        await dispatch(selectProductThunk({ productData: product }));
-        return product;
+        await dispatch(selectProductThunk({ productData: prod }));
+        return prod;
     };
 
     const handleAddToCart = async () => {
@@ -83,7 +83,13 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellbarBarcodeParam
             stock_required: 1,
         };
 
-        await dispatch(addToCartThunk({ productData: productTicket }));
+        const wasAdded = await dispatch(addToCartThunk({ productData: productTicket }));
+
+        if (!wasAdded) {
+            setBarcode("");
+            showSnackBar(`No se pudo agregar el producto al carrito`, AlertColor.Error);
+            return;
+        }
 
         const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
 
