@@ -2,8 +2,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Tooltip, Typography, type Theme } from "@mui/material";
 import "animate.css";
 import { useSellbar } from '../../../../../../hooks/sells/useSellBar';
+import type { ReactNode } from 'react';
 
-export const CartButtonComponent = (): React.ReactNode => {
+export const CartButtonComponent = (): ReactNode => {
     const { cart } = useSellbar();
     const { goToCart, count } = cart;
 
@@ -41,7 +42,7 @@ export const CartButtonComponent = (): React.ReactNode => {
               '&:hover .MuiSvgIcon-root': { color: theme?.palette?.primary?.main },
               '&:hover .cart-badge': { backgroundColor: theme?.palette?.primary?.main },
             })}
-                  >
+          >
             <ShoppingCartIcon
               sx={(theme: Theme) => ({
                 color: theme?.palette?.secondary?.main,

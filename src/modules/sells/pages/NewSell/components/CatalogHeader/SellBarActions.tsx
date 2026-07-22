@@ -1,6 +1,5 @@
 // SellBarActions.tsx
 import { Box } from "@mui/material";
-import type { SellbarActionsInterface } from "@typings/ui/appbar.types";
 import type { ReactNode } from "react";
 import BarcodeButtonComponent from "./BarcodeButtonComponent";
 import { SellbarFilter } from "./SellBarFilter";
@@ -10,7 +9,7 @@ import ViewModeToggle from "./ViewModeToggle";
 import { SellbarSearch } from "./SellBarSearch";
 import SellbarSection from "./SellBarSection";
 
-export const SellBarActions = ({}: SellbarActionsInterface): ReactNode => {
+export const SellBarActions = (): ReactNode => {
   return (
     <Box
       sx={{

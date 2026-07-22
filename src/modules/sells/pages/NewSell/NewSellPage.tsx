@@ -3,7 +3,7 @@ import SimpleSnackbar from "../../../shared/components/SnackBar/SnackBarComponen
 import AppLayout from "../../../shared/layout/AppLayout";
 import ProductDialog from "../../components/ProductDialog/ProductDialog";
 import ProductsExhibitor from "../../components/ProductList/ProductsExhibitorComponent";
-import CatalogHeader from "./components/sellsBar/CatalogHeader";
+import CatalogHeader from "./components/CatalogHeader/CatalogHeader";
 
 const NewSellPage = (): ReactNode => {
   

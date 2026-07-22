@@ -5,6 +5,7 @@ import { useSellbar } from '../../../../../../hooks/sells/useSellBar';
 
 
 export const BarcodeButtonComponent = (): ReactNode => {
+  
   const { barcode } = useSellbar();
   const { 
     toggleShowInput, 

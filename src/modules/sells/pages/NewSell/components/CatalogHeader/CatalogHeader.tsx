@@ -1,11 +1,10 @@
 import { Toolbar } from "@mui/material";
 import React, { type ReactNode } from "react";
-import type { SharedAppBarInterface } from "../../../../../../typings/ui/appbar.types";
-import SellBarContent from "./SellBarContent";
 import NoisyCard from "../../../../../shared/components/Cards/NoisyCard";
+import SellBarActions from "./SellBarActions";
 
 
-const CatalogHeader = ({showFilters}: SharedAppBarInterface): ReactNode => {
+const CatalogHeader = (): ReactNode => {
 
   return (
     <NoisyCard
@@ -17,7 +16,7 @@ const CatalogHeader = ({showFilters}: SharedAppBarInterface): ReactNode => {
       })}
     >
       <Toolbar sx={{ minHeight: 'auto', padding: { xs: "0.4em 0.5em", sm: "0.4em 1em" } }}>
-        <SellBarContent showFilters={showFilters} />
+        <SellBarActions />
       </Toolbar>
     </NoisyCard>
   );
