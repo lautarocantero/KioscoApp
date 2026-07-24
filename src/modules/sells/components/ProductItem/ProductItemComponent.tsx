@@ -1,30 +1,14 @@
 import { Box, Tooltip, type Theme } from "@mui/material";
 import type { ProductItemProps } from "@typings/sells/SellComponentTypes";
-import { useContext } from "react";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../../../store/auth/authSlice";
-import { selectProductThunk } from "../../../../store/seller/sellerThunks";
-import type { Presentation } from "../../../../typings/presentation/presentationTypes";
-import type { getProductSelectedPayload } from "../../../../typings/seller/sellerTypes";
-import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
+import type { ReactNode } from "react";
 import ProductItemImage from "./ProductItemImage";
 import ProductItemData from "./ProductItemData";
 import ProductItemButton from "./ProductItemButton";
-import ProductItemBadge from "./ProductItemBadge";
-import { CARD_HEIGHT } from "../../../../config/constants";
+import { useProductItem } from "../../../../hooks/sells/useProductItem";
 
-
-
-const ProductItemComponent = ({ product }: ProductItemProps): React.ReactNode => {
-  const { name, presentations, category }: { name: string; presentations: Presentation[]; category?: string } = product;
-  const { setShowModal } = useContext(ProductDialogContext)!;
-  const dispatch = useDispatch<AppDispatch>();
-
-  const selectProduct = async ({ product }: Partial<getProductSelectedPayload>): Promise<void> => {
-    if (!product) throw new Error("No se ha seleccionado un producto");
-    await dispatch(selectProductThunk({ productData: product }));
-    setShowModal(true);
-  };
+const ProductItemComponent = ({ product }: ProductItemProps): ReactNode => {
+  const { name, presentations } = product;
+  const { handleSelect } = useProductItem(product);
 
   return (
     <Tooltip title={name}>
@@ -38,16 +22,15 @@ const ProductItemComponent = ({ product }: ProductItemProps): React.ReactNode =>
           color: theme?.custom?.fontColor,
           width: "100%",
           maxWidth: "220px",
-          height: CARD_HEIGHT,
+          height: { xs: "250px", md: "260px", lg: "280px" },
           overflow: "hidden",
+          m: "auto",
         })}
       >
-        {category && <ProductItemBadge label={category} />}
-
         <ProductItemImage
           source={product?.image_url}
           name={name}
-          onClick={() => selectProduct({ product })}
+          onClick={handleSelect}
         />
 
         <Box
@@ -66,7 +49,7 @@ const ProductItemComponent = ({ product }: ProductItemProps): React.ReactNode =>
           })}
         >
           <ProductItemData name={name} presentations={presentations} />
-          <ProductItemButton onClick={() => selectProduct({ product })} />
+          <ProductItemButton onClick={handleSelect} />
         </Box>
       </Box>
     </Tooltip>

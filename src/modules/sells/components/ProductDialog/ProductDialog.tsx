@@ -1,104 +1,65 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, type Theme } from "@mui/material";
-import type { DialogDataInterface } from "@typings/sells/sellTypes";
-import { useFormik } from "formik";
-import { useCallback, useContext, useMemo } from "react";
-import { useDispatch } from "react-redux";
-import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
-import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
-import getInitialProductDialogValues from "../../helpers/ProductDialog/Getters/getInitialProductDialogValues";
-import ProductDialogValidationSchema from "../../helpers/ProductDialog/Getters/getProductDialogValidationSchema";
-import onSubmit from "../../helpers/ProductDialog/Handlers/handleProductDialogSubmit";
-import ProductDialogData from "./ProductDialogDataComponent";
-import useCartPresentationPicker from "../../../../hooks/sells/useCartPresentationPicker";
+import { Button, Dialog, DialogActions, DialogContent, type Theme } from "@mui/material";
 import { getNoisyBackgroundSx } from "../../../../modules/shared/components/NoisyBackground/NoisyBackground";
-import type { AppDispatch } from "store/product/productSlice";
+import useProductDialog from "../../../../hooks/sells/useProductDialog";
+import ProductDialogContentComponent from "./ProductDialogContentComponent";
+import type { ReactNode } from "react";
 
-const ProductDialog = (): React.ReactNode => {
-  const { showModal, setShowModal } = useContext(ProductDialogContext)!;
-  const { showSnackBar } = useContext(SnackBarContext)!;
+const ProductDialog = (): ReactNode => {
+  const {
+    showModal,
+    setShowModal,
+    productSelected,
+    presentations,
+    handleSubmit,
+  } = useProductDialog();
 
-  const dispatch = useDispatch<AppDispatch>();
+  if (!productSelected) return null;
 
-  const {productSelected, presentations} = useCartPresentationPicker();
-
-  const initialValues: DialogDataInterface = useMemo(() => 
-    getInitialProductDialogValues(presentations)
-  , [presentations]);
-
-  const validationSchema = useMemo(() => ProductDialogValidationSchema, []);
-
-  const handleOnSubmit = useCallback(
-    (formValues: DialogDataInterface) => onSubmit(
-      { 
-        data: formValues, 
-        showSnackBar, 
-        dispatch
-      }),
-  [showSnackBar, dispatch]);
-
-  const { handleSubmit, values, setFieldValue } = useFormik({
-    initialValues: initialValues,
-    onSubmit: handleOnSubmit,
-    validateOnBlur: false,
-    validateOnChange: false,
-    validationSchema,
-    /*─── 🔎 reinicia si abro modal con otro producto 🔎 ───*/
-    enableReinitialize: true,
-  })
-
-  if(!productSelected) {
-    return null
-  };
+  const { name, description, image_url } = productSelected;
 
   return (
-    <Dialog 
-      open={showModal} 
+    <Dialog
+      open={showModal}
       onClose={() => setShowModal(false)}
       fullWidth
       maxWidth="md"
-      sx={({
-        width: '100%',
-      })}
     >
-      <Box
-        component={'form'}
-        onSubmit={handleSubmit}
+      <DialogContent
+        sx={(theme: Theme) => ({
+          color: theme?.custom?.fontColor,
+          border: `1px solid ${theme.custom.translucidWhite}`,
+          ...getNoisyBackgroundSx({ theme }),
+        })}
       >
-        <DialogContent
+        <ProductDialogContentComponent
+          product={{
+            name: name,
+            description: description,
+            image: image_url,
+          }}
+          products={presentations}
+          onSubmit={handleSubmit}
+        />
+      </DialogContent>
+      <DialogActions
+        sx={(theme: Theme) => ({
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          ...getNoisyBackgroundSx({ theme }),
+        })}
+      >
+        <Button
+          onClick={() => setShowModal(false)}
+          aria-label="Cerrar"
           sx={(theme: Theme) => ({
             color: theme?.custom?.fontColor,
-            width: '100%',
-            padding: { xs: '0.1em', sm: '2em', },
-            ...getNoisyBackgroundSx({theme})
+            fontSize: theme?.typography?.body2?.fontSize,
           })}
         >
-          <ProductDialogData 
-            name={productSelected.name}
-            products={presentations} 
-            values={values}
-            setFieldValue={setFieldValue}
-          />
-        </DialogContent>
-        <DialogActions
-          sx={(theme: Theme) => ({
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            ...getNoisyBackgroundSx({theme})
-          })}
-        >
-          <Button 
-            onClick={() => setShowModal(false)}
-            aria-label="Cerrar"
-            sx={(theme: Theme) => ({
-              color: theme?.custom?.fontColor,
-              fontSize: theme?.typography?.body2?.fontSize,
-            })}
-          >
-            Cerrar
-          </Button>
-        </DialogActions>
-      </Box>
+          Cerrar
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 };

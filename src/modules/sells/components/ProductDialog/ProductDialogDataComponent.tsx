@@ -1,27 +1,63 @@
-import { Box } from "@mui/material";
-import type { DialogDataProps } from "@typings/sells/SellComponentTypes"; // 🔎 agregar name/category/description/image_url
+import { Box, Typography, type Theme } from "@mui/material";
+import type { DialogDataProps } from "@typings/sells/SellComponentTypes";
 import React from "react";
-import ProductDialogHeaderComponent from "./ProductDialogHeaderComponent";
-import ProductDialogSelector from "./ProductDialogSelector";
+import { Stack } from "@mui/system";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import useProductDialog from "../../../../hooks/sells/useProductDialog";
 
-const ProductDialogDataComponent = ({ products, values, setFieldValue, name, category, description, image_url }: DialogDataProps): React.ReactNode => {
+const ProductDialogDataComponent = ({ product, description }: DialogDataProps): React.ReactNode => {
+  const { formattedTotalStock } = useProductDialog();
 
-    return (
-        <Box display={'flex'} flexDirection={'column'} gap={2}>
-            <ProductDialogHeaderComponent
-                name={name}
-                category={category}
-                description={description}
-                image_url={image_url}
-                products={products}
-            />
-            <ProductDialogSelector
-                products={products}
-                values={values}
-                setFieldValue={setFieldValue}
-            />
-        </Box>
-    );
+  const { name } = product;
+
+  return (
+      <Box display={'flex'} flexDirection={'column'}>
+        <Typography
+          sx={(theme: Theme) => ({
+            fontSize: theme.typography.h6?.fontSize,
+            fontWeight: 'bold',
+            color: theme.custom.fontColor,
+          })}
+        >
+          {name}
+        </Typography>
+        {description && (
+          <Typography
+            sx={(theme: Theme) => ({
+              fontSize: theme.typography.body2?.fontSize,
+              color: theme.custom.translucidWhite,
+              mt: 0.5,
+            })}
+          >
+            {description}
+          </Typography>
+        )}
+        <Stack direction={'row'} alignItems={'center'} gap={0.5} sx={{ mt: 2 }}>
+          <Inventory2OutlinedIcon
+            fontSize="small"
+            sx={(theme: Theme) => ({ color: theme.custom.translucidWhite })}
+          />
+          <Typography
+            sx={(theme: Theme) => ({
+              fontSize: theme.typography.caption?.fontSize,
+              color: theme.custom.translucidWhite,
+            })}
+          >
+            Total en stock (todas las presentaciones)
+          </Typography>
+        </Stack>
+        <Typography
+          sx={(theme: Theme) => ({
+            fontSize: theme.typography.h4?.fontSize,
+            fontWeight: 'bold',
+            color: theme.palette.primary.light,
+            mt: 0.5,
+          })}
+        >
+          {formattedTotalStock}
+        </Typography>
+      </Box>
+  );
 };
 
 export default React.memo(ProductDialogDataComponent);

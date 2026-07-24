@@ -1,7 +1,6 @@
 import type { Request } from "express";
 import { SellerRol, SellerStatus } from "./sellerEnums";
 
-//──────────────────────────────────────────── 🧑‍💼 Seller ────────────────────────────────────────────//
 
 export interface Seller {
     _id:          string;

@@ -32,9 +32,14 @@ export const FILTER_MIN_WIDTH = 220;
 
 export const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
+// formatea fecha
+
 export const MONTHS_ES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
-export const CARD_HEIGHT = "320px";
+// cantidad de elementos en el product exhibitor
+export const PAGE_SIZE_PRODUCT_EXHIBITOR = 20;
+// cantidad de elementos en el product exhibitor skeleton
+export const SKELETON_COUNT = 20;
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🧪 VALIDACIÓN — REGEX  🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪🧪         ║

@@ -1,13 +1,9 @@
-// src/.../components/ProductsPagination/ProductsPagination.tsx
 import { Pagination, type Theme } from "@mui/material";
+import type { ProductsPaginationProps } from "@typings/sells/SellComponentTypes";
+import type { ReactNode } from "react";
 
-export interface ProductsPaginationProps {
-  page: number;
-  count: number;
-  onChange: (page: number) => void;
-}
 
-const ProductsPagination = ({ page, count, onChange }: ProductsPaginationProps): React.ReactNode => {
+const ProductsPagination = ({ page, count, onChange }: ProductsPaginationProps): ReactNode => {
   if (count <= 1) return null;
 
   return (

@@ -3,6 +3,7 @@ import NoisyCard from "../Cards/NoisyCard";
 import PrimaryButtonComponent from "../Buttons/PrimaryButtonComponent";
 import { useBreakpoint } from "../../../../hooks/ui/useBreakpoint";
 import type { EmptyStateCardProps } from "@typings/ui/noContent.types";
+import type { ReactNode } from "react";
 
 
 const EmptyStateCard = ({
@@ -10,10 +11,11 @@ const EmptyStateCard = ({
     imageAlt,
     title,
     description,
-    buttonText,
-    onButtonClick,
+    button,
     height = "37em",
-}: EmptyStateCardProps): React.ReactNode => {
+    centered = false,
+}: EmptyStateCardProps): ReactNode => {
+    
     const bp = useBreakpoint();
     const isMobile = bp === "xs";
 
@@ -27,7 +29,7 @@ const EmptyStateCard = ({
                 gap: isMobile ? 1 : 2,
                 width: { xs: "100%", sm: "69%", md: "90%" },
                 height,
-                m: { xs: "3em auto", sm: "3em 1em" },
+                m: { xs: "3em auto", sm: centered ? "3em auto" : "3em 1em" },
             }}
         >
             <NoisyCard sx={{ height: "100%" }}>
@@ -86,13 +88,15 @@ const EmptyStateCard = ({
                                 {description}
                             </Typography>
                         </Box>
-                        <Box sx={{ userSelect: "auto" }}>
-                            <PrimaryButtonComponent
-                                buttonText={buttonText}
-                                buttonOnClick={onButtonClick}
-                                buttonWidth="200px"
-                            />
-                        </Box>
+                        {button && (
+                            <Box sx={{ userSelect: "auto" }}>
+                                <PrimaryButtonComponent
+                                    buttonText={button.buttonText}
+                                    buttonOnClick={button.onButtonClick}
+                                    buttonWidth="200px"
+                                />
+                            </Box>
+                        )}
                     </Box>
                 </Box>
             </NoisyCard>

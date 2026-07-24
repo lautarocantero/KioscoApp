@@ -1,11 +1,13 @@
-import React from "react";
-import { Dialog, type Theme } from "@mui/material";
+import { type ReactNode } from "react";
+import { Dialog, DialogContent, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import type { ConfirmDialogProps } from "@typings/ui/dialog.types";
 import ConfirmDialogHeader from "./ConfirmDialogHeader";
 import ConfirmDialogContent from "./ConfirmDialogContent";
 import ConfirmDialogActions from "./ConfirmDialogActions";
 import { confirmColorEnum } from "@typings/ui/uiEnums";
+import { getNoisyBackgroundSx } from "../NoisyBackground/NoisyBackground";
+
 
 const ConfirmDialog = ({
     open,
@@ -18,7 +20,8 @@ const ConfirmDialog = ({
     icon,
     onConfirm,
     onCancel,
-}: ConfirmDialogProps): React.ReactNode => (
+}: ConfirmDialogProps): ReactNode => (
+
     <Dialog
         open={open}
         onClose={onCancel}
@@ -39,26 +42,34 @@ const ConfirmDialog = ({
             },
         }}
     >
-        <ConfirmDialogHeader
-            title={title}
-            icon={icon}
-            confirmColor={confirmColor}
-            onCancel={onCancel}
-        />
+        <DialogContent
+            sx={(theme: Theme) => ({
+            color: theme?.custom?.fontColor,
+            width: '100%',
+            ...getNoisyBackgroundSx({theme})
+            })}
+            >
+            <ConfirmDialogHeader
+                title={title}
+                icon={icon}
+                confirmColor={confirmColor}
+                onCancel={onCancel}
+            />
 
-        <ConfirmDialogContent
-            description={description}
-            hasWarning={Boolean(warningText)}
-        />
+            <ConfirmDialogContent
+                description={description}
+                hasWarning={Boolean(warningText)}
+            />
 
-        <ConfirmDialogActions
-            warningText={warningText}
-            confirmColor={confirmColor}
-            confirmLabel={confirmLabel}
-            cancelLabel={cancelLabel}
-            onConfirm={onConfirm}
-            onCancel={onCancel}
-        />
+            <ConfirmDialogActions
+                warningText={warningText}
+                confirmColor={confirmColor}
+                confirmLabel={confirmLabel}
+                cancelLabel={cancelLabel}
+                onConfirm={onConfirm}
+                onCancel={onCancel}
+            />
+        </DialogContent>
     </Dialog>
 );
 

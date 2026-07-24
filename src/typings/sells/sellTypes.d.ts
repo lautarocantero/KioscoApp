@@ -7,11 +7,12 @@ import type { EspecificationsLeftProps } from "./SellComponentTypes";
 import type { ReactNode, RefObject, MouseEvent, SetStateAction } from "react";
 import type { SelectChangeEvent } from "@mui/material";
 import type { GridColDef } from "@mui/x-data-grid";
-import type { SortOption, ViewMode } from "../../modules/sells/components/ProductList/ProductToolbar";
+import type { SortOption, ViewMode } from "../../modules/sells/components/ProductsExhibitorList/ProductToolbar";
+import type { AppDispatch } from "../../store/presentation/presentationSlice";
 
-{/*─────────────────── 🔎 tipos usados en sell 🔎 ───────────────────*/}
-
-//────────────────────────────────────────── 🔖 Sell 🔖 ─────────────────────────────────────────//
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 interface SellEntityInterface {
     currency: string;
@@ -57,6 +58,18 @@ export interface ProductTicketType {
   image_url: string;        
   stock_required: number;   
 }
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🔗 API 🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗               ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export type GetSellApiPayloadType = Pick<Sell, '_id'>;
+
+export type CreateSellApiPayloadType = Omit<Sell, '_id' | 'modification_date'>;
+
+export type DeleteSellApiPayloadType = Pick<Sell, '_id'>;
+
+export type EditSellApiPayloadType = EditSellRequestPayloadType;
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📋 FORMULARIOS 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋         ║
@@ -110,7 +123,9 @@ export interface PurchaseDateParts {
     timezone: string;
 }
 
-//────────────────────────────────────────── 🍕 SLICE 🍕 ─────────────────────────────────────────//
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface SellStateInterface {
     sells:               SellTicketType[];
@@ -127,77 +142,10 @@ export interface SellStateInterface {
 
 export type SellStateErrorType = Pick<SellStateInterface, 'errorMessage'>
 
-//────────────────────────────────────────── 🕐 THUNKS 🕐 ─────────────────────────────────────────//
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🪝 HOOKS  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
-type CreateSellRequestPayloadType = Pick<SellTicketType,
-    'currency' |
-    'iva' |
-    'payment_method' |
-    'products' |
-    'purchase_date' |
-    'seller_id' |
-    'seller_name' |
-    'sub_total' |
-    'total_amount'
->
-
-export interface CreateSellSanitizedPayloadInterface {
-    data: CreateSellRequestPayloadType;
-}
-
-export interface GetSellByIdThunkInterface {
-    _id: string;
-}
-
-export interface DeleteSellByIdThunkInterface {
-    _id: string;
-}
-
-export type EditSellRequestPayloadType = Pick<Sell,
-    '_id' |
-    'currency' |
-    'iva' |
-    'modification_date' |
-    'payment_method' |
-    'products' |
-    'purchase_date' |
-    'seller_id' |
-    'seller_name' |
-    'sub_total' |
-    'total_amount'
->;
-
-export interface EditSellSanitizedPayloadInterface {
-    data: EditSellRequestPayloadType;
-}
-
-export interface UseProductsExhibitorResult {
-  isEmpty: boolean;
-  paginatedProducts: Product[];
-  totalCount: number;
-  page: number;
-  pageCount: number;
-  setPage: (page: number) => void;
-  sort: SortOption;
-  handleSortChange: (e: SelectChangeEvent) => void;
-  options: {
-    value: SortOption;
-    label: string;
-  }[];
-  viewMode: ViewMode;
-  setViewMode: (mode: ViewMode) => void;
-}
-//────────────────────────────────────────── 🔗 API 🔗 ─────────────────────────────────────────//
-
-export type GetSellApiPayloadType = Pick<Sell, '_id'>;
-
-export type CreateSellApiPayloadType = Omit<Sell, '_id' | 'modification_date'>;
-
-export type DeleteSellApiPayloadType = Pick<Sell, '_id'>;
-
-export type EditSellApiPayloadType = EditSellRequestPayloadType;
-
-//────────────────────────────────────────── 🔗 HOOKS 🔗 ─────────────────────────────────────────//
 
 export interface UseSellsResult {
     count: number | null;
@@ -270,6 +218,107 @@ export interface UseSellbarResult {
     };
 }
 
+export interface AddedItem {
+  presentationId: string;
+  price: number;
+  quantity: number;
+}
+
+export interface UseProductDialogSelectorReturn {
+  isEmpty: boolean;
+  getQuantity: (presentationId: string) => number;
+  handleQuantityChange: (presentationId: string, value: number | null) => void;
+  handleAddToCart: (args: { presentation: Presentation; quantity: number }) => void;
+  formatter: Intl.NumberFormat;
+  sessionTotal: number;
+  addedItems: AddedItem[];
+  columns: GridColDef<Presentation>[];
+}
+
+export interface HandleAddProductDialogItemToCartInterface {
+    presentation: Presentation;
+    quantity: number;
+    dispatch: AppDispatch;
+    showSnackBar: (message: string, color: AlertColor) => void;
+}
+
+//────────────────────────────────────────── 🕐 THUNKS 🕐 ─────────────────────────────────────────//
+
+type CreateSellRequestPayloadType = Pick<SellTicketType,
+    'currency' |
+    'iva' |
+    'payment_method' |
+    'products' |
+    'purchase_date' |
+    'seller_id' |
+    'seller_name' |
+    'sub_total' |
+    'total_amount'
+>
+
+export interface CreateSellSanitizedPayloadInterface {
+    data: CreateSellRequestPayloadType;
+}
+
+export interface GetSellByIdThunkInterface {
+    _id: string;
+}
+
+export interface DeleteSellByIdThunkInterface {
+    _id: string;
+}
+
+export type EditSellRequestPayloadType = Pick<Sell,
+    '_id' |
+    'currency' |
+    'iva' |
+    'modification_date' |
+    'payment_method' |
+    'products' |
+    'purchase_date' |
+    'seller_id' |
+    'seller_name' |
+    'sub_total' |
+    'total_amount'
+>;
+
+export interface EditSellSanitizedPayloadInterface {
+    data: EditSellRequestPayloadType;
+}
+
+export interface UseProductsExhibitorResult {
+  isEmpty: boolean;
+  loading: boolean;
+  paginatedProducts: Product[];
+  totalCount: number;
+  page: number;
+  pageCount: number;
+  setPage: (page: number) => void;
+  sort: SortOption;
+  handleSortChange: (e: SelectChangeEvent) => void;
+  options: {
+    value: SortOption;
+    label: string;
+  }[];
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
+  columns: GridColDef<ProductEntity>[];
+  gridSx: {
+        readonly display: "grid" | "flex";
+        readonly flexDirection: "column" | undefined;
+        readonly gridTemplateColumns: {
+            xs: string;
+            sm: string;
+            md: string;
+            lg: string;
+        } | undefined;
+        readonly rowGap: 2;
+        readonly columnGap: 2;
+        readonly width: "100%";
+    }
+}
+
+
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 📷 useSellbarBarcode                                                  ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -305,7 +354,22 @@ export interface UseSellStatsResult {
     error:      string | null;
 }
 
-//────────────────────────────────────────── 🪧 Dialog 🪧 ───────────────────────────────────────────//
+type FormikReturn = ReturnType<typeof useFormik<DialogDataInterface>>;
+type CartPickerReturn = ReturnType<typeof useCartPresentationPicker>;
+
+export interface UseProductDialogReturn {
+  showModal: boolean;
+  setShowModal: (value: boolean) => void;
+  productSelected: CartPickerReturn["productSelected"];
+  presentations: CartPickerReturn["presentations"];
+  handleSubmit: FormikReturn["handleSubmit"];
+  totalStock: number;
+  formattedTotalStock: string;
+}
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🪧 DIALOG  🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧🪧                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export type ProductDialogContextType = Pick<DialogContextType, 'showModal' | 'setShowModal'>
 
@@ -354,6 +418,12 @@ export interface HandleProductDialogUnitsChangeInterface {
     setFieldValue: SetFieldValue<DialogDataInterface>;
 }
 
+export interface BuildColumnsForProductDialogInterface {
+  getQuantity: (presentationId: string) => number;
+  handleQuantityChange: (presentationId: string, value: number | null) => void;
+  handleAddToCart: (args: { presentation: Presentation; quantity: number }) => void;
+}
+
 //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
 
 export type SellsHandleDetailType = Pick<SellEntityInterface, '_id'> & {
@@ -369,3 +439,4 @@ export interface BuildColumnsForSellsArgs {
     onDeleteRequest: (id: string, name: string) => void;
     navigate: (path: string) => void;
 }
+

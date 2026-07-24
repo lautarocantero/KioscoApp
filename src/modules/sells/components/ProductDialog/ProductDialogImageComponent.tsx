@@ -1,38 +1,41 @@
+import { Box, type Theme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
+import type { ProductDialogHeaderProps } from "@typings/sells/SellComponentTypes";
+import { memo, type ReactNode } from "react";
 
-//─────────────────── Componente 🧩: ProductDialogImageComponent ───────────────────//
 
-//─────────────────── Descripción 📝 ───────────────────//
-// Renderiza la imagen principal del producto en el diálogo.  
+const ProductDialogImageComponent = ({
+    product
+}: ProductDialogHeaderProps): ReactNode => {
 
-//──────────────────── Funciones 🔧 ─────────────────────//
-//   - Muestra imagen del producto seleccionada.  
-//   - Permite fallback si no hay imagen disponible.  
-
-//-----------------------------------------------------------------------------//
-
-import { Box } from "@mui/material";
-import type { ProductDialogImageProps } from "@typings/sells/SellComponentTypes";
-import React from "react";
-
-const ProductDialogImageComponent = ({image_url = '/images/productExample/cocaCola.png', name = 'Product'}: ProductDialogImageProps):React.ReactNode => {
+    const { name, image = '/images/stocko_images/empty_product_list.png' } = product;
 
     return (
         <Box
-            component={'img'}
-            src={image_url}
-            alt={`${name} Image`}
-            sx={{
-                minWidth: { xs: '10em', sm: '20em' },
-                width: { xs: '100%' },
-                minHeight: { xs: '15em' },
-                height: { xs: '100%' },
-                maxHeight: { xs: '20em' },
-                objectFit: "contain",
-                borderRadius: "0.3em",
-            }}
+            display={'flex'}
+            flexDirection={'row'}
+            alignItems={'flex-start'}
+            gap={2}
+            sx={(theme: Theme) => ({
+                position: 'relative',
+                borderColor: alpha(theme.custom.white, 0.1),
+                height: { xs: "15em", sm: "100%" },
+                width: { xs: "100%", sm: "8em" },
+            })}
         >
+            <Box
+                component={'img'}
+                src={image}
+                alt={`${name} Image`}
+                sx={{
+                    height: { xs: "15em", sm: "30em" },
+                    width: { xs: "100%", sm: "8em" },
+                    objectFit: 'cover',
+                    borderRadius: '0.5em',
+                }}
+            />
         </Box>
-    )
+    );
 };
 
-export default React.memo(ProductDialogImageComponent);
+export default memo(ProductDialogImageComponent);

@@ -1,13 +1,11 @@
 import type { ProductTicketType } from "@typings/sells/sellTypes";
 import type { Presentation } from "../presentation/presentationTypes";
 import type { CartAmount } from "./seller";
+import type { ViewMode } from "./sellerEnums";
 
 
 //──────────────────────────────────────────── 🍕 SLICE  🍕 ───────────────────────────────────────────//
 
-export type SortOption = 'name-asc' | 'name-desc';
-
-export type ViewMode = 'grid' | 'list';
 
 export interface SellerStateInterface {
     _id: string | null,

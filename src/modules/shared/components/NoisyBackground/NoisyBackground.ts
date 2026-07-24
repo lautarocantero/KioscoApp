@@ -10,7 +10,7 @@ export const getNoisyBackgroundSx = ({
 }: NoisyBackgroundOptions) => ({
     position: "relative" as const,
     backgroundColor,
-    overflow: "hidden" as const,
+    overflow: "auto",
     "&::before": {
         content: '""',
         position: "absolute" as const,

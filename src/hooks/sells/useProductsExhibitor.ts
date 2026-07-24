@@ -1,4 +1,3 @@
-// useProductsExhibitor.ts
 import { useMemo } from "react";
 import type { SelectChangeEvent } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,13 +5,15 @@ import { useProductsListData } from "../products/useProductListData";
 import type { Product } from "@typings/product/productTypes";
 import type { UseProductsExhibitorResult } from "@typings/sells/sellTypes";
 import { setSort, setViewMode, setPage, type RootState, type AppDispatch } from "../../store/seller/sellerSlice";
-import type { SortOption } from "@typings/seller/sellerTypes";
+import { SortOption, ViewMode } from "@typings/seller/sellerEnums";
+import type { SortOption as SortOptionType } from "@typings/seller/sellerEnums";
+import { PAGE_SIZE_PRODUCT_EXHIBITOR } from "../../config/constants";
+import { buildColumnsForProductExhibitor } from "../../modules/sells/components/ProductsExhibitorList/ProductExhibitorColumns";
 
-const PAGE_SIZE = 20;
 
-const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: "name-asc", label: "Nombre A-Z" },
-  { value: "name-desc", label: "Nombre Z-A" },
+const SORT_OPTIONS: { value: SortOptionType; label: string }[] = [
+  { value: SortOption.NameAsc, label: "Nombre A-Z" },
+  { value: SortOption.NameDesc, label: "Nombre Z-A" },
 ];
 
 const sortProducts = (products: Product[], sort: SortOption): Product[] => {
@@ -29,7 +30,7 @@ const sortProducts = (products: Product[], sort: SortOption): Product[] => {
 
 export const useProductsExhibitor = (): UseProductsExhibitorResult => {
   const dispatch = useDispatch<AppDispatch>();
-  const { products } = useProductsListData();
+  const { products, loading } = useProductsListData();
 
   const sort = useSelector((state: RootState) => state.seller.sort);
   const viewMode = useSelector((state: RootState) => state.seller.viewMode);
@@ -39,19 +40,40 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
 
   const sortedProducts = useMemo(() => sortProducts(safeProducts, sort), [safeProducts, sort]);
 
-  const pageCount = Math.max(1, Math.ceil(sortedProducts.length / PAGE_SIZE));
+  const pageCount = Math.max(1, Math.ceil(sortedProducts.length / PAGE_SIZE_PRODUCT_EXHIBITOR));
 
   const paginatedProducts = useMemo(() => {
-    const start = (page - 1) * PAGE_SIZE;
-    return sortedProducts.slice(start, start + PAGE_SIZE);
+    const start = (page - 1) * PAGE_SIZE_PRODUCT_EXHIBITOR;
+    return sortedProducts.slice(start, start + PAGE_SIZE_PRODUCT_EXHIBITOR);
   }, [sortedProducts, page]);
 
   const handleSortChange = (e: SelectChangeEvent) => {
     dispatch(setSort(e.target.value as SortOption));
   };
 
+  const gridSx = {
+    display: viewMode === ViewMode.Grid ? "grid" : "flex",
+    flexDirection: viewMode === ViewMode.List ? "column" : undefined,
+    gridTemplateColumns:
+      viewMode === ViewMode.Grid
+        ? {
+            xs: "repeat(1, 1fr)",
+            sm: "repeat(4, 1fr)",
+            md: "repeat(5, 1fr)",
+            lg: "repeat(8, 1fr)",
+          }
+        : undefined,
+    rowGap: 2,
+    columnGap: 2,
+    width: "100%",
+    padding: 2,
+  } as const;
+
+  const columns = useMemo(() => buildColumnsForProductExhibitor(), []);
+
   return {
     isEmpty: safeProducts.length === 0,
+    loading,
     paginatedProducts,
     totalCount: sortedProducts.length,
     page,
@@ -62,5 +84,7 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
     options: SORT_OPTIONS,
     viewMode,
     setViewMode: (v) => dispatch(setViewMode(v)),
+    gridSx,
+    columns,
   };
 };

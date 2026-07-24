@@ -5,7 +5,8 @@
 ---
 ventas:
     - [ xxx ] refactor visual.
-
+    - [ xxx ] agregar estado para cuando no se encuentra una venta.
+    
     - [ xxx ] solo mostrar productos con stock.
     - [ xxx ] comprar productos no baja el stock.
     - [ xxx ] Actualmente seller tiene por alguna razon la data de sells, modificar y desacoplar.
@@ -36,6 +37,7 @@ sidebar:
 Productos:
     - [ x ] hacer que la card de stock funcione, implementar cambios en backend. (pausado por ahora)
     - [ x ] comprobar si se puede incluir alguna forma para comparar periodos, etc. (pausado por ahora)
+---
 
 ||--- xx ---------------------------------------------------------------||
 

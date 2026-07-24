@@ -1,13 +1,13 @@
-// src/.../components/ProductsToolbar/ViewModeToggle.tsx
 import { Box, Tooltip, type Theme } from "@mui/material";
 import GridViewIcon from "@mui/icons-material/GridView";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import type { ReactNode } from "react";
-import { useProductsExhibitor } from "../../../../../../hooks/sells/useProductsExhibitor";
+import { ViewMode } from "@typings/seller/sellerEnums";
+import type { ViewModeToggleProps } from "@typings/sells/SellComponentTypes";
 
-const ViewModeToggle = (): ReactNode => {
-  const { viewMode, setViewMode } = useProductsExhibitor();
 
+const ViewModeToggle = ({viewMode, setViewMode}: ViewModeToggleProps): ReactNode => {
+  
   return (
     <Tooltip title="Cambiar vista">
       <Box
@@ -26,7 +26,7 @@ const ViewModeToggle = (): ReactNode => {
         })}
       >
         <Box
-          onClick={() => setViewMode("grid")}
+          onClick={() => setViewMode(ViewMode.Grid)}
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -36,23 +36,23 @@ const ViewModeToggle = (): ReactNode => {
             width: "1.8em",
             height: "1.5em",
             transition: "all 0.3s ease",
-            backgroundColor: viewMode === "grid" ? theme.palette?.secondary?.main : "transparent",
+            backgroundColor: viewMode === ViewMode.Grid ? theme.palette?.primary?.dark : "transparent",
             '&:hover': {
-              backgroundColor: viewMode === "grid" ? theme.palette?.secondary?.main : theme?.custom?.darkBackground,
+              backgroundColor: viewMode === ViewMode.Grid ? theme.palette?.primary?.dark : theme?.custom?.darkBackground,
             },
           })}
         >
           <GridViewIcon
             fontSize="small"
             sx={(theme: Theme) => ({
-              color: viewMode === "grid" ? theme.custom?.darkBackground : theme.custom?.translucidWhite,
+              color: viewMode === ViewMode.Grid ? theme.custom?.darkBackground : theme.custom?.translucidWhite,
               transition: "color 0.3s ease",
             })}
           />
         </Box>
 
         <Box
-          onClick={() => setViewMode("list")}
+          onClick={() => setViewMode(ViewMode.List)}
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -62,16 +62,16 @@ const ViewModeToggle = (): ReactNode => {
             width: "1.8em",
             height: "1.6em",
             transition: "all 0.3s ease",
-            backgroundColor: viewMode === "list" ? theme.palette?.secondary?.main : "transparent",
+            backgroundColor: viewMode === ViewMode.List ? theme.palette?.primary?.dark : "transparent",
             '&:hover': {
-              backgroundColor: viewMode === "list" ? theme.palette?.secondary?.main : theme?.custom?.darkBackground,
+              backgroundColor: viewMode === ViewMode.List ? theme.palette?.primary?.dark : theme?.custom?.darkBackground,
             },
           })}
         >
           <ViewListIcon
             fontSize="small"
             sx={(theme: Theme) => ({
-              color: viewMode === "list" ? theme.custom?.darkBackground : theme.custom?.translucidWhite,
+              color: viewMode === ViewMode.List ? theme.custom?.darkBackground : theme.custom?.translucidWhite,
               transition: "color 0.3s ease",
             })}
           />

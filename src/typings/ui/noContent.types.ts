@@ -17,7 +17,10 @@ export interface EmptyStateCardProps {
     imageAlt: string;
     title: string;
     description: React.ReactNode;
-    buttonText: string;
-    onButtonClick: () => void;
+    button?: {
+        buttonText: string;
+        onButtonClick: () => void;
+    };
     height?: string;
+    centered?: boolean;
 }

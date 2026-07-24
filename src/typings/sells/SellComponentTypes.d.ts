@@ -2,7 +2,7 @@ import type { Product } from "../product/productTypes";
 import type { Presentation } from "../presentation/presentationTypes";
 import type { DialogDataInterface, DialogVariantDataType, PaymentDetail, SellTicketType, SoldProductRow } from "./sellTypes";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
-import type { ViewMode } from "../../modules/sells/components/ProductList/ProductToolbar";
+import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorList/ProductToolbar";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}
 
@@ -10,6 +10,10 @@ import type { ViewMode } from "../../modules/sells/components/ProductList/Produc
 
     export interface SellFormProps {
         mode?: FormModeComplexEnum;
+    }
+
+    export interface EmptyProductListProps {
+        isEmpty: boolean
     }
 
    //────────────────────────────────────────── 📑 Sells Detail 📑 ───────────────────────────────────────────//
@@ -79,14 +83,62 @@ import type { ViewMode } from "../../modules/sells/components/ProductList/Produc
 
     //──────────────────────────────────────────── 📋 Product Exhibitor 📋───────────────────────────────────────────//
 
-    export interface ProductsExhibitorProps {
-        title: string;
-    };
+    export interface ProductsToolbarProps {
+        totalCount: number;
+    }
 
-    export type ProductListProps  = Pick<ProductsExhibitorProps, 'products'> & {
-        viewMode?: ViewMode;
-    };
+    export type ToolbarInfoProps = Pick<ProductsToolbarProps, 'totalCount'>
 
+    export interface ProductsExhibitorListProps {
+        products: Product[];
+        viewMode: ViewMode;
+        isLoading?: boolean;
+        isEmpty?: boolean;
+        columns: GridColDef<ProductEntity>[];
+        gridSx: {
+            readonly display: "flex" | "grid";
+            readonly flexDirection: "column" | undefined;
+            readonly gridTemplateColumns: {
+                xs: string;
+                sm: string;
+                md: string;
+                lg: string;
+            } | undefined;
+            readonly rowGap: 2;
+            readonly columnGap: 2;
+            readonly width: "100%";
+        }
+    }
+
+
+    export interface ProductsPaginationProps {
+        page: number;
+        count: number;
+        onChange: (page: number) => void;
+    }
+
+    export interface ProductExhibitorTableProps {
+        products: Product[];
+        isLoading?: boolean;
+        columns: GridColDef<ProductEntity>[];
+    }
+
+    export interface ProductRowActionCellProps {
+        product: Product;
+    }
+
+    export interface ProductsSkeletonsProps {
+        isLoading: boolean;
+    }
+
+    export interface SortByCatalogHeaderProps {
+        viewMode: ViewMode;
+    }
+
+    export interface ViewModeToggleProps {
+        viewMode: ViewMode, 
+        setViewMode: (mode: ViewMode) => void,
+    }
 
     //──────────────────────────────────────────── 🍫 Product Item 🧀 ───────────────────────────────────────────//
 
@@ -108,6 +160,10 @@ import type { ViewMode } from "../../modules/sells/components/ProductList/Produc
 
     export type ItemDataProps = Pick<EspecificationsLeftProps, 'name' | 'presentations'>;
 
+    export interface ProductItemChipProps {
+        totalStock: number;
+    }
+
     export type EspecificationsRightProps = Pick<ProductItemProps, 'product'>;
 
     export type AmountDataProps = Pick<EspecificationsLeftProps, 'presentations'>;
@@ -128,18 +184,39 @@ import type { ViewMode } from "../../modules/sells/components/ProductList/Produc
 
     export type ProductDialogImageProps = Pick<ProductDialogIlustrationProps, 'name' | 'image_url'>
 
-    export interface DialogDataProps {
-        name: string,
+    export interface ProductDialogContentProps {
+        product: {
+            name: string,
+            description: string,
+            image: string,
+        }
         products: Presentation[],
-        values: DialogDataInterface,
-        setFieldValue: SetFieldValue<DialogDataInterface>,
+        onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
+    }
+
+    export type ProductDialogMainContentProps = Pick< ProductDialogContentProps ,"product" | "products">
+
+    export type DialogDataProps = Pick< ProductDialogContentProps ,"product"> & {
+        description: string;
     };
 
-    export type DialogSelectorProps = Pick<DialogDataProps, 'products' | 'values' | 'setFieldValue'>;
+    export type ProductDialogHeaderProps = Pick< ProductDialogContentProps ,"product">
+
+    export type ProductDialogSelectorProps = Pick<ProductDialogContentProps, 'products'>;
+
+    export type ProductDialogTableProps = Pick<ProductDialogContentProps, 'products'>;
+
+    export type ProductDialogSelectorHeaderComponent = Pick<ProductDialogContentProps, 'products'>;
 
     export type DialogDataDisplayProps = Pick<DialogDataProps, 'setFieldValue'> & {
         values: DialogVariantDataType,
         label: string,
+    }
+
+    export interface ProductDialogTableTotalProps {
+      hasAddedItems: boolean;
+      sessionTotal: number;
+      formatter: Intl.NumberFormat;
     }
 
     export type DialogDataPriceProps = Pick <DialogDataProps, 'values'>

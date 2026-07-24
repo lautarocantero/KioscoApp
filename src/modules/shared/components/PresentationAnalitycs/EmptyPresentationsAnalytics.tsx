@@ -2,13 +2,15 @@ import "dayjs/locale/es";
 import { useNavigate, useParams } from "react-router-dom";
 import EmptyStateCard from "../EmptyStateCard/EmptyStateCard";
 
+
 const EmptyPresentationAnalytics = (): React.ReactNode => {
+    
     const { product_id: productIdFromUrl } = useParams<{ product_id: string }>();
     const navigate = useNavigate();
 
     return (
         <EmptyStateCard
-            imageSrc="/images/kiosco_images/empty_box.png"
+            imageSrc="/images/stocko_images/empty_box.png"
             imageAlt="Vista previa de la imagen"
             title="No hay presentaciones disponibles"
             description={
@@ -17,8 +19,10 @@ const EmptyPresentationAnalytics = (): React.ReactNode => {
                     Creá una nueva presentación para comenzar a ver tus métricas
                 </>
             }
-            buttonText="Crear presentación"
-            onButtonClick={() => navigate(`/products/${productIdFromUrl}/presentation-create`)}
+            button={{
+                buttonText: "Crear presentación",
+                onButtonClick: () => navigate(`/products/${productIdFromUrl}/presentation-create`),
+            }}
         />
     );
 };
