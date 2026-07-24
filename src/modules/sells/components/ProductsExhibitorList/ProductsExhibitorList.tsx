@@ -17,7 +17,7 @@ const ProductsExhibitorList = ({
   columns,
 }: ProductsExhibitorListProps): ReactNode => {
 
-  if (isLoading) return <ProductsSkeletons isLoading={isLoading} />;
+  if (isLoading) return <ProductsSkeletons isLoading={isLoading} gridSx={gridSx}/>;
 
   if (isEmpty) return <EmptyProductsList isEmpty={isEmpty}/>;
 

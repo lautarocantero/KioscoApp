@@ -4,11 +4,9 @@ import type { ReactNode } from "react";
 import ProductItemSkeleton from "./ProductsItemSkeleton";
 import { SKELETON_COUNT } from "../../../../config/constants";
 import type { ProductsSkeletonsProps } from "@typings/sells/SellComponentTypes";
-import { useProductsExhibitor } from "../../../../hooks/sells/useProductsExhibitor";
 
 
-const ProductsSkeletons = ({ isLoading = false }: ProductsSkeletonsProps): ReactNode => {
-  const { gridSx } = useProductsExhibitor();
+const ProductsSkeletons = ({ isLoading = false, gridSx }: ProductsSkeletonsProps): ReactNode => {
 
   if (!isLoading) return null;
 

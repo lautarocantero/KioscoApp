@@ -6,11 +6,10 @@ import {
 import type { ReactNode } from "react";
 import SortByCatalogHeader from "../../pages/NewSell/components/CatalogHeader/SortByCatalogHeader";
 import ViewModeToggle from "../../pages/NewSell/components/CatalogHeader/ViewModeToggle";
-import { useProductsExhibitor } from "../../../../hooks/sells/useProductsExhibitor";
+import type { ToolbarActionsProps } from "@typings/sells/SellComponentTypes";
 
 
-const ToolbarActions = (): ReactNode => {
-    const { viewMode, setViewMode } = useProductsExhibitor();
+const ToolbarActions = ({ viewMode,setViewMode }: ToolbarActionsProps): ReactNode => {
 
     return (
 

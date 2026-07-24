@@ -103,9 +103,13 @@ import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorL
 
     export interface ProductsToolbarProps {
         totalCount: number;
+        viewMode: ViewMode, 
+        setViewMode: (mode: ViewMode) => void,
     }
 
     export type ToolbarInfoProps = Pick<ProductsToolbarProps, 'totalCount'>
+
+    export type ToolbarActionsProps = Pick<ProductsToolbarProps, 'viewMode' | 'setViewMode'>
 
     export interface ProductsExhibitorListProps {
         products: Product[];
@@ -145,9 +149,7 @@ import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorL
         product: Product;
     }
 
-    export interface ProductsSkeletonsProps {
-        isLoading: boolean;
-    }
+    export type  ProductsSkeletonsProps = Pick<ProductsExhibitorListProps, 'isLoading' | 'gridSx'>;
 
     export interface SortByCatalogHeaderProps {
         viewMode: ViewMode;

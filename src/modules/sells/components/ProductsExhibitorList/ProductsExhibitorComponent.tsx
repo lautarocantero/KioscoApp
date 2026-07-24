@@ -16,6 +16,7 @@ const ProductsExhibitorComponent = (): ReactNode => {
     pageCount,
     setPage,
     viewMode,
+    setViewMode,
     gridSx,
     columns,
   } = useProductsExhibitor();
@@ -29,7 +30,7 @@ const ProductsExhibitorComponent = (): ReactNode => {
         mt: 10,
       }}
     >
-      <ProductsToolbar totalCount={totalCount} />
+      <ProductsToolbar totalCount={totalCount} viewMode={viewMode} setViewMode={setViewMode}/>
       <ProductsExhibitorList
         products={paginatedProducts}
         viewMode={viewMode}

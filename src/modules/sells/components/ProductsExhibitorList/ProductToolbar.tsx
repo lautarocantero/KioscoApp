@@ -9,7 +9,9 @@ import ToolbarActions from "./ToolBarActions";
 
 
 const ProductsToolbar = ({
-  totalCount,
+    totalCount,
+    viewMode,
+    setViewMode,
 }: ProductsToolbarProps): ReactNode => {
 
 
@@ -28,9 +30,9 @@ const ProductsToolbar = ({
         backgroundColor: theme.custom?.darkMain,
       })}
     >
-      <ToolbarInfo totalCount={totalCount} />
+      <ToolbarInfo totalCount={totalCount}  />
 
-      <ToolbarActions />
+      <ToolbarActions viewMode={viewMode} setViewMode={setViewMode}/>
 
     </Box>
   );
