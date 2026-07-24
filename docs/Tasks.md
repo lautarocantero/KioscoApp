@@ -26,6 +26,7 @@ vendedores:
 ||--- xx---------------------------------------------------------------||
 
 general: 
+    - [ xxx ] comprobar que delete dialogs no se ven bien en xs. 
     - [ x ] Refactorizar todo. 
     - [ x ] Leer la documentacion y dejarla presentable.
     - [ x ] Agregar componente para las situaciones donde algo no carga, llega sin datos, early return. 
