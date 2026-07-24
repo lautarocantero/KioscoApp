@@ -19,7 +19,7 @@ interface SellEntityInterface {
     iva: number;
     modification_date: string | null;
     payment_method: PaymentMethod;
-    products: Presentation[];
+    products: ProductTicketType[];
     purchase_date: string;
     seller_id: string;
     seller_name: string;
@@ -240,6 +240,20 @@ export interface HandleAddProductDialogItemToCartInterface {
     quantity: number;
     dispatch: AppDispatch;
     showSnackBar: (message: string, color: AlertColor) => void;
+}
+
+export interface UseCartReturn {
+    cart: ProductTicketType[];
+    productsTotalPrice: number;
+    ivaPercentage: number;
+    ivaAmount: number;
+    total: number;
+    totalUnits: number;
+    paymentMethodRef: React.RefObject<PaymentMethod>;
+    generateTicket: () => Promise<void>;
+    handleClearCart: () => void;
+    goBackToSell: () => void;
+    goToNewSell: () => void;
 }
 
 //────────────────────────────────────────── 🕐 THUNKS 🕐 ─────────────────────────────────────────//

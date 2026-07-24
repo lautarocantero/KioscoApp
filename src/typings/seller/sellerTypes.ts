@@ -1,7 +1,8 @@
 import type { ProductTicketType } from "@typings/sells/sellTypes";
 import type { Presentation } from "../presentation/presentationTypes";
 import type { CartAmount } from "./seller";
-import type { ViewMode } from "./sellerEnums";
+import type { SortOption, ViewMode } from "./sellerEnums";
+import type { Product } from "@typings/product/productTypes";
 
 
 //──────────────────────────────────────────── 🍕 SLICE  🍕 ───────────────────────────────────────────//

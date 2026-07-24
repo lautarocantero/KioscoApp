@@ -1,7 +1,15 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { SellerAddToCartSlicePayload, SellerAddUnitActionPayload, SellerError, SellerRemoveFromCartActionPayload, SellerSetProductSlicePayload, SellerStateInterface, SortOption, ViewMode } from '../../typings/seller/sellerTypes';
+import {
+    type SellerAddToCartSlicePayload,
+    type SellerAddUnitActionPayload,
+    type SellerError,
+    type SellerRemoveFromCartActionPayload,
+    type SellerSetProductSlicePayload,
+    type SellerStateInterface
+} from '../../typings/seller/sellerTypes';
 import type { store } from '../store';
 import { CartAmount } from '../../typings/seller/seller';
+import { SortOption, ViewMode } from '../../typings/seller/sellerEnums';
 
 const initialState: SellerStateInterface = {
     _id: null,
@@ -12,8 +20,8 @@ const initialState: SellerStateInterface = {
     created_at: '',
     updated_at: '',
     errorMessage: null,
-    sort: 'name-asc',
-    viewMode: 'grid',
+    sort: SortOption.NameDesc,
+    viewMode: ViewMode.Grid,
     page: 1,
 }
 
