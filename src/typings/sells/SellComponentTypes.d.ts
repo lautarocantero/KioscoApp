@@ -1,6 +1,6 @@
 import type { Product } from "../product/productTypes";
 import type { Presentation } from "../presentation/presentationTypes";
-import type { DialogDataInterface, DialogVariantDataType, PaymentDetail, SellTicketType, SoldProductRow } from "./sellTypes";
+import type { DialogDataInterface, DialogVariantDataType, PaymentDetail, SellTicketType, SoldProductRow, UseSellbarResult } from "./sellTypes";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorList/ProductToolbar";
 
@@ -80,6 +80,24 @@ import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorL
     export type SellCartDataProps = Pick<SellDataProps, 'currentSell'>;
 
     export type SellCartProductsProps = Pick<SellDataProps, 'currentSell'>;
+
+    //──────────────────────────────────────────── Catalog header ───────────────────────────────────────────//
+
+    export interface SellbarFilterProps {
+        categories: UseSellbarResult["categories"];
+    }
+
+    export interface SellbarSearchProps {
+      search: UseSellbarResult["search"];
+    }
+
+    export interface BarcodeButtonComponentProps {
+        barcode: UseSellbarResult["barcode"];
+    }
+
+    export interface CartButtonComponentProps {
+        cart: UseSellbarResult["cart"];
+    }
 
     //──────────────────────────────────────────── 📋 Product Exhibitor 📋───────────────────────────────────────────//
 

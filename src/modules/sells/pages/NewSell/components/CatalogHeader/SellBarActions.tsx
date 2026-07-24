@@ -5,8 +5,11 @@ import { SellbarFilter } from "./SellBarFilter";
 import CartButtonComponent from "./CartButtonComponent";
 import { SellbarSearch } from "./SellBarSearch";
 import SellbarSection from "./SellBarSection";
+import { useSellbar } from "../../../../../../hooks/sells/useSellBar";
 
 export const SellBarActions = (): ReactNode => {
+  const { search, barcode, cart, categories } = useSellbar();
+
   return (
     <Box
       sx={{
@@ -33,13 +36,13 @@ export const SellBarActions = (): ReactNode => {
       }}
     >
       <SellbarSection gridArea="search" title="Búsqueda">
-        <SellbarSearch />
+        <SellbarSearch search={search} />
       </SellbarSection>
 
       <SellbarSection gridArea="quickactions" title="Acciones rápidas" flexContent>
-        <BarcodeButtonComponent />
-        <SellbarFilter />
-        <CartButtonComponent />
+        <BarcodeButtonComponent barcode={barcode} />
+        <SellbarFilter categories={categories} />
+        <CartButtonComponent cart={cart} />
       </SellbarSection>
     </Box>
   );
