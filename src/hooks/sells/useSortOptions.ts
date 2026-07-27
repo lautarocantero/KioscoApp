@@ -1,10 +1,11 @@
 import { useCallback } from "react";
 import type { SelectChangeEvent } from "@mui/material";
-import type { SortOption } from "@typings/seller/sellerTypes";
+import { SortOption } from "@typings/seller/sellerEnums";
+import type { SortOption as SortOptionType } from "@typings/seller/sellerEnums";
 
-export const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: "name-asc", label: "Nombre A-Z" },
-  { value: "name-desc", label: "Nombre Z-A" },
+export const SORT_OPTIONS: { value: SortOptionType; label: string }[] = [
+  { value: SortOption.NameAsc, label: "Nombre A-Z" },
+  { value: SortOption.NameDesc, label: "Nombre Z-A" },
 ];
 
 export const useSortOptions = (onSortChange: (value: SortOption) => void) => {

@@ -1,5 +1,7 @@
 import type { PresentationStatus } from "@typings/presentation/presentationEnum";
 import { PresentationStatusColors } from "@typings/presentation/presentationEnum";
+import { PAYMENT_METHOD_LABELS } from "@typings/sells/SellMethodLabels";
+import { PAYMENT_METHOD_VALUES, PaymentMethod, PaymentStatusEnum } from "@typings/sells/sellsEnum";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -102,3 +104,18 @@ export const STATUS_CONFIG: Record<PresentationStatus,
     out_of_stock: { label: "Sin stock",     color: PresentationStatusColors.Error   },
     unavailable:  { label: "No disponible", color: PresentationStatusColors.Default },
 };
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🎨 CARRITO   🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️              ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export const PAYMENT_METHOD_OPTIONS: { value: PaymentMethod; label: string }[] =
+    PAYMENT_METHOD_VALUES.map((value) => ({
+        value,
+        label: PAYMENT_METHOD_LABELS[value],
+    }));
+
+export const PAYMENT_STATUS_OPTIONS = [
+    { value: PaymentStatusEnum.Total, label: 'Abono total' },
+    { value: PaymentStatusEnum.Parcial, label: 'Abono parcial' },
+];

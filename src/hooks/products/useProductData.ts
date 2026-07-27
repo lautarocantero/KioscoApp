@@ -1,10 +1,10 @@
-import type { ProductStats, UseProductDataResult, UseProductStatsResult } from "@typings/product/productTypes";
-import { useEffect, useState }   from "react";
+import type { UseProductDataResult, UseProductStatsResult } from "@typings/product/productTypes";
+import { useEffect }   from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../../store/product/productSlice";
-import { getProductById } from "../../store/product/productThunks";
+import { getProductById, getProductStats } from "../../store/product/productThunks";
 import type { LinkDataResult } from "@typings/ui/layout.types";
-import { API_URL } from "../../config/api";
+
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🪝 useProductData                                                     ║
@@ -28,7 +28,7 @@ export const useProductData = (productId: string | undefined): UseProductDataRes
 
     useEffect(() => {
         if (!productId) return;
-        if (storeHasIt) return; // ya está en store, no hace falta refetch
+        if (storeHasIt) return; 
 
         void dispatch(getProductById(productId));
     }, [productId, storeHasIt, dispatch]);
@@ -37,61 +37,58 @@ export const useProductData = (productId: string | undefined): UseProductDataRes
 };
 
 
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 useProductStats                                                    ║
+║                                                                       ║
+║   1. Lee stats/isLoadingStats/statsError del store                    ║
+║   2. Si todavía no hay stats cacheadas, despacha getProductStats      ║
+║      para traer totalProducts y lowStockPresentations                ║
+║   3. Devuelve los valores desestructurados con fallback a null        ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+
 export const useProductStats = (): UseProductStatsResult => {
-    const [totalProducts, setTotalProducts]       = useState<number | null>(null);
-    const [lowStockProducts, setLowStockProducts] = useState<number | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError]     = useState<string | null>(null);
+    const dispatch = useDispatch<AppDispatch>();
+
+    const stats     = useSelector((state: RootState) => state.product?.stats ?? null);
+    const isLoading = useSelector((state: RootState) => state.product?.isLoadingStats ?? false);
+    const error     = useSelector((state: RootState) => state.product?.statsError ?? null);
 
     useEffect(() => {
-        let isMounted = true;
+        if (stats) return;
 
-        const fetchStats = async (): Promise<void> => {
-            setIsLoading(true);
-            setError(null);
+        void dispatch(getProductStats());
+    }, [stats, dispatch]);
 
-            try {
-                const response = await fetch(
-                    `${API_URL}/product/get-product-stats`,
-                    { credentials: "include" }
-                );
-
-                if (!response.ok) throw new Error(`Error ${response.status}`);
-
-                const stats: ProductStats = await response.json();
-
-                if (!isMounted) return;
-                setTotalProducts(stats.totalProducts);
-                setLowStockProducts(stats.lowStockProducts);
-            } catch {
-                if (!isMounted) return;
-                setError("No se pudo obtener los datos de productos");
-            } finally {
-                if (isMounted) setIsLoading(false);
-            }
-        };
-
-        void fetchStats();
-
-        return () => {
-            isMounted = false;
-        };
-    }, []);
-
-    return { totalProducts, lowStockProducts, isLoading, error };
+    return {
+        totalProducts: stats?.totalProducts ?? null,
+        lowStockPresentations: stats?.lowStockPresentations ?? null,
+        isLoading,
+        error,
+    };
 };
 
-// 👇 Adaptador para las cards de HomePageLinks / SidebarNavLinks
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 useProductsLinkData                                                ║
+║                                                                       ║
+║   1. Consume useProductStats para traer totalProducts y               ║
+║      lowStockPresentations                                            ║
+║   2. Arma el subtitle según haya error, datos aún no cargados, o      ║
+║      cantidad de presentaciones con stock bajo                        ║
+║   3. Adapta la data al shape que esperan las cards de                 ║
+║      HomePageLinks / SidebarNavLinks                                  ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+
 export const useProductsLinkData = (): LinkDataResult => {
-    const { totalProducts, lowStockProducts, isLoading, error } = useProductStats();
+    const { totalProducts, lowStockPresentations, isLoading, error } = useProductStats();
 
     const subtitle = error
         ? undefined
-        : lowStockProducts === null
+        : lowStockPresentations === null
             ? undefined
-            : lowStockProducts === 0
+            : lowStockPresentations === 0
                 ? "Sin stock bajo"
-                : `${lowStockProducts} con stock bajo`;
+                : `${lowStockPresentations} con stock bajo`;
 
     return {
         value: totalProducts,

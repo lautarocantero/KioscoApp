@@ -4,17 +4,18 @@ import { getSellByIdThunk, getTodaySellsCountThunk } from "../../store/sell/sell
 import type { UseSellDataResult, UseSellStatsResult } from "@typings/sells/sellTypes";
 import type { LinkDataResult } from "@typings/ui/layout.types";
 import type { AppDispatch, RootState } from "../../store/sell/sellSlice";
+import { formatRelativeTime } from "../../utils/formatter/formatDate";
+
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🪝 useSellData                                                        ║
 ║                                                                       ║
-║ Consume el store en lugar de fetch manual:                           ║
+║                                                                       ║
 ║   1. Lee currentSell/isLoadingCurrent/currentSellError del store      ║
 ║   2. Si el store no tiene esta venta (refresh, URL directa, etc.),    ║
 ║      despacha el thunk getSellById, que ya se encarga de              ║
 ║      fetchear y guardar en store                                      ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-
 
 export const useSellData = (sellId: string | undefined): UseSellDataResult => {
 
@@ -37,10 +38,21 @@ export const useSellData = (sellId: string | undefined): UseSellDataResult => {
 };
 
 
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 useSellStats                                                       ║
+║                                                                       ║
+║                                                                       ║
+║   1. Lee todaySellsCount/lastSaleAt/isLoadingTodaySells/               ║
+║      todaySellsError del store                                        ║
+║   2. Al montar, despacha getTodaySellsCountThunk para traer            ║
+║      el conteo de ventas del día y la última venta registrada         ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+
 export const useSellStats = (): UseSellStatsResult => {
     const dispatch = useDispatch<AppDispatch>();
 
     const todaySells = useSelector((state: RootState) => state.sell?.todaySellsCount ?? null);
+    const lastSaleAt = useSelector((state: RootState) => state.sell?.lastSaleAt ?? null);
     const isLoading  = useSelector((state: RootState) => state.sell?.isLoadingTodaySells ?? false);
     const error      = useSelector((state: RootState) => state.sell?.todaySellsError ?? null);
 
@@ -48,17 +60,34 @@ export const useSellStats = (): UseSellStatsResult => {
         void dispatch(getTodaySellsCountThunk());
     }, [dispatch]);
 
-    return { todaySells, isLoading, error };
+    return { todaySells, lastSaleAt, isLoading, error };
 };
+
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 useSellsLinkData                                                   ║
+║                                                                       ║
+║                                                                       ║
+║   1. Consume useSellStats para obtener el conteo de ventas de hoy      ║
+║      y la fecha de la última venta                                    ║
+║   2. Formatea lastSaleAt a tiempo relativo (ej: "hace 5 min")         ║
+║   3. Arma el subtitle según haya o no ventas registradas hoy           ║
+║   4. Adapta la data al shape que esperan las cards de                 ║
+║      HomePageLinks / SidebarNavLinks                                  ║
+╚══════════════════════════════════════════════════════════════════════╝*/
 
 // Adaptador para las cards de HomePageLinks / SidebarNavLinks
 export const useSellsLinkData = (): LinkDataResult => {
-    const { todaySells, isLoading, error } = useSellStats();
+    const { todaySells, lastSaleAt, isLoading, error } = useSellStats();
+
+    const relativeTime = formatRelativeTime(lastSaleAt);
 
     return {
         value: todaySells,
         isLoading,
         error,
-        subtitle: todaySells === 0 ? "Sin ventas hoy" : undefined,
+        subtitle: todaySells === 0 || !relativeTime
+            ? "Sin ventas hoy"
+            : `Hoy · ${relativeTime}`,
     };
 };

@@ -1,51 +1,24 @@
-import { useCallback, useContext, useMemo } from "react";
-import { useDispatch } from "react-redux";
-import { useFormik } from "formik";
-import type { DialogDataInterface, UseProductDialogReturn } from "@typings/sells/sellTypes";
+import { useContext, useMemo } from "react";
+import type { UseProductDialogReturn } from "@typings/sells/sellTypes";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import useCartPresentationPicker from "./useCartPresentationPicker";
 import { ProductDialogContext } from "../../modules/sells/context/Product/ProductDialogContext";
-import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
-import type { AppDispatch } from "../../store/product/productSlice";
-import getInitialProductDialogValues from "../../modules/sells/helpers/ProductDialog/Getters/getInitialProductDialogValues";
-import ProductDialogValidationSchema from "../../modules/sells/helpers/ProductDialog/Getters/getProductDialogValidationSchema";
-import onSubmit from "../../modules/sells/helpers/ProductDialog/Handlers/handleProductDialogSubmit";
 
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🪝 useProductDialog                                                   ║
+║                                                                       ║
+║ Orquesta el estado general del ProductDialog:                        ║
+║   1. Consume el show/hide del modal desde ProductDialogContext        ║
+║   2. Delega en useCartPresentationPicker la elección de producto/     ║
+║      presentación seleccionada                                        ║
+║   3. Calcula el stock total sumando todas las presentaciones y lo     ║
+║      formatea para mostrar en UI                                      ║
+╚══════════════════════════════════════════════════════════════════════╝*/
 
 const useProductDialog = (): UseProductDialogReturn => {
   const { showModal, setShowModal } = useContext(ProductDialogContext)!;
-  const { showSnackBar } = useContext(SnackBarContext)!;
-
-  const dispatch = useDispatch<AppDispatch>();
 
   const { productSelected, presentations } = useCartPresentationPicker();
-
-  const initialValues: DialogDataInterface = useMemo(
-    () => getInitialProductDialogValues(presentations),
-    [presentations],
-  );
-
-  const validationSchema = useMemo(() => ProductDialogValidationSchema, []);
-
-  const handleOnSubmit = useCallback(
-    (formValues: DialogDataInterface) =>
-      onSubmit({
-        data: formValues,
-        showSnackBar,
-        dispatch,
-      }),
-    [showSnackBar, dispatch],
-  );
-
-  const { handleSubmit } = useFormik({
-    initialValues,
-    onSubmit: handleOnSubmit,
-    validateOnBlur: false,
-    validateOnChange: false,
-    validationSchema,
-    //─── 🔎 reinicia si abro modal con otro producto 🔎 ───
-    enableReinitialize: true,
-  });
 
   //─── 🔎 stock total de las presentaciones 🔎 ───
   const totalStock = useMemo(
@@ -63,7 +36,6 @@ const useProductDialog = (): UseProductDialogReturn => {
     setShowModal,
     productSelected,
     presentations,
-    handleSubmit,
     totalStock,
     formattedTotalStock,
   };
