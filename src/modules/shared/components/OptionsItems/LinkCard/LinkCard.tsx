@@ -4,8 +4,11 @@ import LinkCardIcon from './LinkCardIcon';
 import LinkCardContent from './LinkCardContent';
 import type { LinkCardProps } from '@typings/ui/layout.types';
 import { useLinkCard } from '../hooks/useLinkCard';
+import LinkCardArrow from './LinkCardArrow';
+import type { ReactNode } from 'react';
 
-const LinkCard = ({ link }: LinkCardProps): React.ReactNode => {
+
+const LinkCard = ({ link }: LinkCardProps): ReactNode => {
     const resolvedLink = useLinkCard({ link });
 
     return (
@@ -50,6 +53,7 @@ const LinkCard = ({ link }: LinkCardProps): React.ReactNode => {
         >
             <LinkCardIcon icon={link.icon} />
             <LinkCardContent link={resolvedLink} />
+            <LinkCardArrow />
         </Link>
     );
 };

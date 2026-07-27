@@ -1,14 +1,15 @@
 import { Box, Skeleton, type Theme } from '@mui/material';
 import type { LinkCardContentProps } from '@typings/ui/layout.types';
+import type { ReactNode } from 'react';
 
 
-const LinkCardContent = ({ link }: LinkCardContentProps): React.ReactNode => {
+const LinkCardContent = ({ link }: LinkCardContentProps): ReactNode => {
 
-    const { description, value, subtitle, loading } = link;
+    const { description, value, subtitle, isLoading } = link;
 
     return (
     <Box
-        sx={{
+        sx={(theme: Theme) => ({
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -16,7 +17,10 @@ const LinkCardContent = ({ link }: LinkCardContentProps): React.ReactNode => {
             flex: 1,
             px: 2,
             py: 1.5,
-        }}
+            "& .link-card-sparkline-line": {
+                stroke: theme.palette.primary.main,
+            },
+        })}
     >
         <Box
             className="link-card-description"
@@ -35,17 +39,17 @@ const LinkCardContent = ({ link }: LinkCardContentProps): React.ReactNode => {
 
         <Box
             className="link-card-value"
-            aria-hidden={!loading && !value}
+            aria-hidden={!isLoading && !value}
             sx={(t: Theme) => ({
                 fontSize: "1.8rem",
                 fontWeight: 700,
                 color: t.custom.darkWhite,
                 lineHeight: 1.1,
-                visibility: loading || value ? "visible" : "hidden",
+                visibility: isLoading || value ? "visible" : "hidden",
                 transition: "color 0.15s",
             })}
         >
-            {loading ? (
+            {isLoading ? (
                 <Skeleton
                     variant="text"
                     width={40}
