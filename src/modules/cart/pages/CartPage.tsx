@@ -1,13 +1,13 @@
+import { Formik } from "formik";
 import { Grid } from "@mui/material";
-import { useContext, type ReactNode } from "react";
 import AppLayout from "../../shared/layout/AppLayout";
-import CartPaymentMethod from "../components/CartPaymentMethod";
-import CartPrice from "../components/CartPriceComponent";
-import CartProductsList from "../components/CartProductsListComponent";
 import { SnackBarContext } from '../../shared/components/SnackBar/SnackBarContext';
-import CartHeaderComponent from '../components/CartHeaderComponent';
+import CartHeaderComponent from '../components/CartHeader/CartHeaderComponent';
 import CartSummaryCardComponent from '../components/CartSumaryCardComponent';
+import CartProductTable from "../components/CartProductTableComponent";
 import { useCart } from "../../../hooks/sells/useCart";
+import { useContext, type ReactNode } from "react";
+import { cartFormSchema, getCartFormInitialValues } from "../../sells/schema/CartFormSchema";
 
 const CartPage = (): ReactNode => {
     const { showSnackBar } = useContext(SnackBarContext)!;
@@ -18,44 +18,46 @@ const CartPage = (): ReactNode => {
         ivaPercentage,
         ivaAmount,
         total,
-        paymentMethodRef,
         generateTicket,
         handleClearCart,
         goBackToSell,
+        columns
     } = useCart(showSnackBar);
 
     return (
         <AppLayout fullWidth>
-          <Grid
-              container
-              columnSpacing={3}
-          >
-             { cart?.length > 0 && (
-                  <CartHeaderComponent
-                      itemsCount={cart?.length ?? 0}
-                      onClearCart={handleClearCart}
-                  />
-                )}
+            <Grid
+                container
+                columnSpacing={2}
+                rowSpacing={2}
+                sx={{ width: "100%" }}
+            >
+                <CartHeaderComponent
+                    itemsCount={cart?.length ?? 0}
+                    onClearCart={handleClearCart}
+                />
+                <CartProductTable cart={cart} columns={columns} />
 
-              {/* ─────────── Columna izquierda: header + listado ─────────── */}
-              <Grid size={{ xs: 12, md: 9 }} sx={theme => ({ display: 'flex', flexDirection: 'column', })}>
-                  <CartProductsList cart={cart} />
-                  {/* <CartAddMoreProductsComponent onClick={() => navigate('/new-sell')} /> */}
-              </Grid>
-
-              {/* ─────────── Columna derecha: resumen de venta ─────────── */}
-              <Grid size={{ xs: 12, md: 3 }}>
-                  <CartSummaryCardComponent onBack={goBackToSell} onGenerateTicket={generateTicket}>
-                      <CartPrice
-                          productsTotalPrice={productsTotalPrice}
-                          ivaPercentage={ivaPercentage}
-                          ivaAmount={ivaAmount}
-                          total={total}
-                      />
-                      <CartPaymentMethod paymentMethodRef={paymentMethodRef} />
-                  </CartSummaryCardComponent>
-              </Grid>
-          </Grid>
+                <Formik
+                    initialValues={getCartFormInitialValues()}
+                    validationSchema={cartFormSchema(total)}
+                    onSubmit={generateTicket}
+                    validateOnBlur={false}
+                    validateOnChange={false}
+                    enableReinitialize
+                >
+                    {({ handleSubmit: formikSubmit }) => (
+                        <CartSummaryCardComponent
+                            onBack={goBackToSell}
+                            onGenerateTicket={formikSubmit}
+                            productsTotalPrice={productsTotalPrice}
+                            ivaPercentage={ivaPercentage}
+                            ivaAmount={ivaAmount}
+                            total={total}
+                        />
+                    )}
+                </Formik>
+            </Grid>
         </AppLayout>
     )
 };

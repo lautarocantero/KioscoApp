@@ -1,5 +1,4 @@
 // OrderConfirmedIconComponent.tsx
-import ReceiptIcon from '@mui/icons-material/Receipt';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, type Theme } from "@mui/material";
 import type { ReactNode } from 'react';
@@ -24,15 +23,18 @@ const OrderConfirmedIconComponent = (): ReactNode => {
                     filter: `drop-shadow(0 0 2.5em ${theme?.palette?.primary?.main}55)`,
                 })}
             >
-                <ReceiptIcon
-                    sx={(theme: Theme) => ({
-                        color: theme?.palette?.primary?.main,
-                        fontSize: {
+                <Box
+                    component="img"
+                    src="/images/stocko_images/stocko_recipt.png"
+                    alt="Pedido confirmado"
+                    sx={{
+                        width: {
                             xs: '7em',
                             sm: '9em',
                             md: '10em',
                         },
-                    })}
+                        height: 'auto',
+                    }}
                 />
                 <CheckCircleIcon
                     sx={(theme: Theme) => ({
