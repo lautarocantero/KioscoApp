@@ -61,6 +61,21 @@ export const getPresentationsByProductIdRequest = async (
 };
 
 /*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getPresentationsWithStockByProductIdRequest                           ║
+║                                                                          ║
+║ Obtiene todas las variantes de un producto por su ID que tengan stock.   ║
+║ GET /get-presentation-by-product-id/:product_id                          ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+export const getPresentationsWithStockByProductIdRequest = async (
+    { product_id }: { product_id: string }
+): Promise<Presentation[]> => {
+    const response = await baseUrl.get<Presentation[]>(
+        `/get-presentations-with-stock-by-product-id/${product_id}`
+    );
+    return response.data;
+};
+
+/*══════════════════════════════════════════════════════════════════════════╗
 ║ 🔍 getPresentationByBrandRequest                                          ║
 ║                                                                          ║
 ║ Filtra variantes por marca.                                              ║

@@ -16,8 +16,8 @@ import {
     productFormSchema,
 } from "../../schema/ProductFormSchema";
 import ProductFormFirstStep from "./ProductFormFirstStep";
-import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
-import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
+import ProductSkeleton from "./ProductSkeleton";
+import EmptyProduct from "./EmptyProduct";
 
 const STEP_COMPONENTS = [ProductFormFirstStep];
 
@@ -105,8 +105,8 @@ const ProductEditForm = (): React.ReactNode => {
         handleBackToProducts,
     } = useProductEdit();
 
-    if (isLoadingProduct) return <LoadingSpinnerComponent />;
-    if (!editingProduct) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar el producto" />;
+    if (isLoadingProduct) return <ProductSkeleton />;
+    if (!editingProduct) return <EmptyProduct />;
     if (updatedProduct) return (
         <ProductEdited updatedProduct={updatedProduct} handleSeeDetail={handleSeeDetail}  handleBackToProducts={handleBackToProducts} />)
 
@@ -154,6 +154,9 @@ const ProductDetailForm = (): React.ReactNode => {
         isLoading: isLoadingEntity,
         error: loadError,
     } = useProductData(productId);
+
+    if (isLoadingEntity) return <ProductSkeleton />;
+    if (!viewingEntity) return <EmptyProduct />;
 
     return (
         <Formik

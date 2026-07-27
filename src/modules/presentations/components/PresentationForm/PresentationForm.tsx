@@ -4,8 +4,6 @@ import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
 import { usePresentationCreate, usePresentationEdit } from "../../../../hooks/presentations/usePresentationForm";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
-import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
-import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import PresentationCreated from "../../pages/PresentationCreate/components/PresentationCreated";
 import PresentationEdited from "../../pages/PresentationEdit/components/PresentationEdited";
@@ -20,6 +18,8 @@ import PresentationFormSecondStep from "./PresentationFormSecondStep";
 import PresentationFormThirdStep from "./PresentationFormThirdStep";
 import PresentationDetailFormComponent from "./PresentationDetailForm";
 import PresentationFormFourthStep from "./PresentationFormFourthStep";
+import PresentationSkeleton from "./PresentationSkeleton";
+import EmptyPresentation from "./EmptyPresentation";
 
 const STEP_COMPONENTS = [
     PresentationFormFirstStep,
@@ -115,8 +115,8 @@ const PresentationEditForm = (): React.ReactNode => {
         handleBackToProducts,
     } = usePresentationEdit();
 
-    if (isLoadingEntity) return <LoadingSpinnerComponent />;
-    if (!editingVariant) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar la presentación" />;
+    if (isLoadingEntity) return <PresentationSkeleton />;
+    if (!editingVariant) return <EmptyPresentation />;
     if (updatedPresentation)  return <PresentationEdited updatedPresentation={updatedPresentation} handleSeeDetail={handleSeeDetail} handleBackToPresentations={handleBackToPresentations} handleBackToProducts={handleBackToProducts} />;
 
     return (
@@ -163,8 +163,8 @@ const PresentationDetailForm = (): React.ReactNode => {
         submitError,
     } = usePresentationEdit();
 
-    if (isLoadingEntity) return <LoadingSpinnerComponent />;
-    if (!variant) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar la presentación" />;
+    if (isLoadingEntity) return <PresentationSkeleton />;
+    if (!variant) return <EmptyPresentation />;
 
     return (
         <Formik

@@ -5,6 +5,7 @@ import type {
   CreateProductResponse,
   EditProductBody,
   Product,
+  ProductStats,
   ProductWithPresentations,
 } from "@typings/product/productTypes";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
@@ -77,6 +78,20 @@ export const getProductByBrandRequest = async (
 };
 
 /*══════════════════════════════════════════════════════════════════════════╗
+║ 🔍 getProductsWithStockRequest                                            ║
+║                                                                          ║
+║ Obtiene productos con presentations resumidas, solo los que tienen       ║
+║ al menos una presentation con stock > 0.                                 ║
+║ GET /get-products-with-stock                                             ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+export const getProductsWithStockRequest = async (): Promise<ProductWithPresentations[]> => {
+  const response = await baseUrl.get<ProductWithPresentations[]>(
+    "/get-products-with-stock"
+  );
+  return response.data;
+};
+
+/*══════════════════════════════════════════════════════════════════════════╗
 ║ 🔍 getProductsWithPresentationsRequest                                    ║
 ║                                                                          ║
 ║ Obtiene todos los productos con sus presentaciones resumidas.            ║
@@ -104,6 +119,17 @@ export const searchProductsWithPresentationsRequest = async (
     { params: { term, category } }
   );
   return response.data;
+};
+
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔎 searchProductsWithPresentationsRequest                                 ║
+║                                                                          ║
+║ Busca el numero de presentaciones que tienen poco stock para los linkCard║
+║ GET /get-product-stats                     ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+export const getProductStatsRequest = async (): Promise<ProductStats> => {
+    const { data } = await baseUrl.get(`/get-product-stats`);
+    return data;
 };
 
 /*══════════════════════════════════════════════════════════════════════════╗

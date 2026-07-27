@@ -4,13 +4,13 @@ import useProductDialog from "../../../../hooks/sells/useProductDialog";
 import ProductDialogContentComponent from "./ProductDialogContentComponent";
 import type { ReactNode } from "react";
 
+
 const ProductDialog = (): ReactNode => {
   const {
     showModal,
     setShowModal,
     productSelected,
     presentations,
-    handleSubmit,
   } = useProductDialog();
 
   if (!productSelected) return null;
@@ -38,7 +38,6 @@ const ProductDialog = (): ReactNode => {
             image: image_url,
           }}
           products={presentations}
-          onSubmit={handleSubmit}
         />
       </DialogContent>
       <DialogActions
