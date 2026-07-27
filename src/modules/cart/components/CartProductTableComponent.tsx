@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import type { ProductTicketType } from "@typings/sells/sellTypes";
+import type { ProductTicketWithStockType } from "@typings/sells/sellTypes";
 import DataTable from "../../shared/components/DataTable/DataTable";
-import type { CartProductTableProps } from "@typings/sells/SellComponentTypes";
 import { Grid } from "@mui/system";
 import CartEmptyComponent from "./EmptyCartComponent";
+import type { CartProductTableProps } from "@typings/seller/sellerComponentTypes";
 
 
 const CartProductTable = ({ cart, columns }: CartProductTableProps): ReactNode => {
@@ -14,7 +14,7 @@ const CartProductTable = ({ cart, columns }: CartProductTableProps): ReactNode =
 
     return (
         <Grid size={{ xs: 12, md: 8 }}>
-            <DataTable<ProductTicketType>
+            <DataTable<ProductTicketWithStockType>
                 rows={cart}
                 columns={columns}
                 getRowId={(row) => row._id}

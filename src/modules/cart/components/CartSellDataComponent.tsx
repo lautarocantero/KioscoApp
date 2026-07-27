@@ -1,8 +1,8 @@
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import { Box, Grid, Typography, type Theme } from "@mui/material";
-import type { CartSellDataComponentProps } from '@typings/sells/SellComponentTypes';
 import type { ReactNode } from 'react';
 import CartPriceComponent from './CartPriceComponent';
+import type { CartSellDataComponentProps } from '@typings/seller/sellerComponentTypes';
 
 
 const CartSellDataComponent = ({ 

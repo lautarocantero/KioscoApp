@@ -1,4 +1,4 @@
-import type { CartFormValues, CreateSellResponse, ProductTicketType, SellTicketType, TicketSummaryType, UseCartReturn } from "@typings/sells/sellTypes";
+import type { CartFormValues, CreateSellResponse, ProductTicketType, ProductTicketWithStockType, SellTicketType, TicketSummaryType } from "@typings/sells/sellTypes";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
@@ -11,6 +11,7 @@ import { cleanCartThunk, removeFromCartThunk } from "../../store/seller/sellerTh
 import { CartAmount } from "../../typings/seller/seller";
 import { AlertColor } from "@typings/ui/ui";
 import { buildColumnsForCartProducts } from "../../modules/cart/components/cartColumns";
+import type { UseCartReturn } from "@typings/seller/sellerTypes";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -26,7 +27,7 @@ import { buildColumnsForCartProducts } from "../../modules/cart/components/cartC
 
 export const useCart = (showSnackBar: (message: string, severity: AlertColor) => void): UseCartReturn => {
     const { seller } = useSelector((state: RootState) => state);
-    const { cart }: { cart: ProductTicketType[] } = seller;
+    const { cart }: { cart: ProductTicketWithStockType[] } = seller;
 
 
     const dispatch = useDispatch<AppDispatch>();

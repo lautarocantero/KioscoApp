@@ -1,7 +1,7 @@
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import type { ReactNode } from 'react';
-import type { CartCleanActionProps } from '@typings/sells/SellComponentTypes';
 import PrimaryButtonComponent from '../../../shared/components/Buttons/PrimaryButtonComponent';
+import type { CartCleanActionProps } from '@typings/seller/sellerComponentTypes';
 
 
 const CartCleanAction = ({ itemsCount, onClearCart }: CartCleanActionProps): ReactNode => {

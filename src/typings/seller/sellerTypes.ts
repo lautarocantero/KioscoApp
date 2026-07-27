@@ -1,4 +1,4 @@
-import type { ProductTicketType } from "@typings/sells/sellTypes";
+import type { CartFormValues, ProductTicketType, ProductTicketWithStockType, TicketSummaryType } from "@typings/sells/sellTypes";
 import type { Presentation } from "../presentation/presentationTypes";
 import type { CartAmount } from "./seller";
 import type { SellerRol, SellerStatus, SortOption, ViewMode } from "./sellerEnums";
@@ -6,6 +6,10 @@ import type { Product, ProductWithPresentations } from "@typings/product/product
 import type { AlertColor } from "@typings/ui/ui";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 import type { RefObject, MouseEvent } from "react";
+import type { GridColDef } from "@mui/x-data-grid";
+import type { AppDispatch } from "../../store/seller/sellerSlice";
+import type { PaymentMethod } from "@typings/sells/sellsEnum";
+import type { FormikErrors, FormikTouched } from "formik";
 
 
 export interface Seller {
@@ -47,7 +51,7 @@ export interface DeleteSellerPayload {
 export interface SellerStateInterface {
     _id: string | null,
     name: string,
-    cart: ProductTicketType[],
+    cart: ProductTicketWithStockType[],
     productSelected: ProductWithPresentations | null,
     description: string,
     created_at: string,
@@ -63,7 +67,7 @@ export interface getProductSelectedPayload {
 };
 
 export interface SellerAddToCartSlicePayload {
-    product: ProductTicketType,
+    product: ProductTicketWithStockType,
 };
 
 export type SellerAddUnitActionPayload = Pick<SellerStateInterface, '_id'>
@@ -89,7 +93,7 @@ export interface SelectProductThunkInterface {
 }
 
 export interface AddToCartThunkInterface {
-    productData: ProductTicketType,
+    productData: ProductTicketWithStockType,
 }
 
 export type addOneUnitThunkInterface = Pick<SellerStateInterface, '_id'>
@@ -158,3 +162,80 @@ export interface UseSellerBarCategoriesParams {
 export type UseSellerBarCategoriesResult = UseSellerBarResult['categories'] & {
     selectedCategory: PresentationCategory | null;
 };
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🪝 HOOKS  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface UseCartPresentationPickerReturn {
+    productSelected: ProductWithPresentations | null;
+    presentations: Presentation[];
+}
+
+
+export interface AddedItem {
+  presentationId: string;
+  price: number;
+  quantity: number;
+}
+
+
+export interface UseProductDialogSelectorReturn {
+  isEmpty: boolean;
+  getQuantity: (presentationId: string) => number;
+  handleQuantityChange: (presentationId: string, value: number | null) => void;
+  handleAddToCart: (args: { presentation: Presentation; quantity: number }) => void;
+  formatter: Intl.NumberFormat;
+  sessionTotal: number;
+  addedItems: AddedItem[];
+  columns: GridColDef<Presentation>[];
+}
+
+
+export interface HandleAddProductDialogItemToCartInterface {
+    presentation: Presentation;
+    quantity: number;
+    dispatch: AppDispatch;
+    showSnackBar: (message: string, color: AlertColor) => void;
+}
+
+
+export interface UseCartReturn {
+    cart: ProductTicketWithStockType[];
+    productsTotalPrice: number;
+    ivaPercentage: number;
+    ivaAmount: number;
+    total: number;
+    totalUnits: number;
+    paymentMethodRef: React.RefObject<PaymentMethod>;
+    ticketSummary: TicketSummaryType | null;
+    generateTicket: (formValues: CartFormValues) => Promise<void>;
+    printTicket: () => void;
+    handleClearCart: () => void;
+    goBackToSell: () => void;
+    goToNewSell: () => void;
+    goToTicketDetail: () => void;
+    columns: GridColDef<ProductTicketWithStockType>[]
+}
+
+
+export interface useCartPaymentMethodFormReturn {
+    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    values: CartFormValues,
+}
+
+
+export interface useCartPaymentStatusFormReturn {
+    values: CartFormValues;
+    setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<CartFormValues>>;
+    errors: FormikErrors<CartFormValues>;
+    touched: FormikTouched<CartFormValues>;
+    isPartial: boolean;
+    maxAmountPaid: number;
+    handleStatusChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleAmountPaidChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleBlur: {
+        (e: React.FocusEvent<any, Element>): void;
+        <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
+    };
+}

@@ -1,5 +1,5 @@
 import { Grid, Typography, type Theme } from "@mui/material";
-import type { CartPriceRowProps } from "@typings/sells/SellComponentTypes";
+import type { CartPriceRowProps } from "@typings/seller/sellerComponentTypes";
 import type { ReactNode } from "react";
 
 

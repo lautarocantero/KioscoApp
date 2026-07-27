@@ -3,7 +3,7 @@ import type { ViewMode } from "./sellerEnums";
 import type { UseSellerBarResult } from "./sellerTypes";
 import type { GridColDef } from "@mui/x-data-grid";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { DialogVariantDataType, ProductTicketType, TicketSummaryType } from "@typings/sells/sellTypes";
+import type { DialogVariantDataType, ProductTicketType, ProductTicketWithStockType, TicketSummaryType } from "@typings/sells/sellTypes";
 import type { SvgIconProps, Theme } from "@mui/material";
 import type { CartSide } from "./seller";
 import type { ComponentType } from "react";
@@ -245,8 +245,8 @@ export type ToolbarInfoProps = Pick<ProductsToolbarProps, 'totalCount'>
     export type CartHeaderProps = CartCleanActionProps;
 
     export interface CartProductTableProps {
-        cart: ProductTicketType[], 
-        columns: GridColDef<ProductTicketType>[]
+        cart: ProductTicketWithStockType[], 
+        columns: GridColDef<ProductTicketWithStockType>[]
     }
 
     export type CartSummaryCardProps = {

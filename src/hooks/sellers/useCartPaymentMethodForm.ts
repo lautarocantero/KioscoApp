@@ -1,5 +1,6 @@
 import { useFormikContext } from "formik";
-import type { CartFormValues, useCartPaymentMethodFormReturn } from "@typings/sells/sellTypes";
+import type { CartFormValues } from "@typings/sells/sellTypes";
+import type { useCartPaymentMethodFormReturn } from "@typings/seller/sellerTypes";
 
 export const useCartPaymentMethodForm = ():useCartPaymentMethodFormReturn => {
     const { setFieldValue, values } = useFormikContext<CartFormValues>();

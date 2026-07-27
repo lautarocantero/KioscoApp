@@ -4,11 +4,11 @@ import { useDelegatedHandler } from "../shared/useDelegatedHandler";
 import type { AppDispatch } from "../../store/presentation/presentationSlice";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { AddedItem, UseProductDialogSelectorReturn } from "@typings/sells/sellTypes";
 import type { RootState } from "../../store/seller/sellerSlice";
 import { AlertColor } from "@typings/ui/ui";
 import handleAddProductDialogItemToCart from "../../modules/sellers/api/components/ProductDialog/handleAddProductItemToCart";
 import { buildColumnsForProductDialog } from "../../modules/sellers/api/components/ProductDialog/productDialogColumns";
+import type { AddedItem, UseProductDialogSelectorReturn } from "@typings/seller/sellerTypes";
 
 
 /*══════════════════════════════════════════════════════════════════════╗

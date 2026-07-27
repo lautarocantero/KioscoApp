@@ -4,8 +4,10 @@ import { SELL_STATUS_OPTIONS } from "../../../config/constants";
 import { sharedSx } from "../../shared/components/sharedSx/sharedSx";
 import { useCartPaymentStatusForm } from '../../../hooks/sellers/useCartPaymentStatusForm';
 import type { CartPaymentStatusProps } from '@typings/seller/sellerComponentTypes';
+import type { ReactNode } from 'react';
 
-const CartPaymentStatus = ({total}: CartPaymentStatusProps): React.ReactNode => {
+
+const CartPaymentStatus = ({total}: CartPaymentStatusProps): ReactNode => {
     const {
         values,
         errors,

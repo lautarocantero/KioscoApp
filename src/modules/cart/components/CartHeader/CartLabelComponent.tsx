@@ -1,6 +1,6 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Typography, type Theme } from "@mui/material";
-import type { CartLabelProps } from '@typings/sells/SellComponentTypes';
+import type { CartLabelProps } from '@typings/seller/sellerComponentTypes';
 import type { ReactNode } from 'react';
 
 

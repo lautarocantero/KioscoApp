@@ -178,10 +178,6 @@ export interface UseSellsResult {
     error: string | null;
 }
 
-export interface UseCartPresentationPickerReturn {
-    productSelected: Presentation | null;
-    presentations: Presentation[];
-}
 
 export interface UseSellsListDataResult {
     sells: SellTicketType[];
@@ -190,6 +186,7 @@ export interface UseSellsListDataResult {
     searchTerm: string;
     setSearchTerm: (term: string) => void;
 }
+
 
 export interface UseSellsReturn extends UseSellsListDataResult {
     deleteDialog: DeleteDialogState;
@@ -200,39 +197,18 @@ export interface UseSellsReturn extends UseSellsListDataResult {
     columns: GridColDef<SellTicketType>[];
 }
 
+
 export interface UseSellDataResult {
     sellData: SellTicketType | null;
     isLoading: boolean;
     error: string | null;
 }
 
+
 export interface UsePrintSellTicketReturn {
     printTicket: (ticket: SellTicketType) => void;
 }
 
-export interface AddedItem {
-  presentationId: string;
-  price: number;
-  quantity: number;
-}
-
-export interface UseProductDialogSelectorReturn {
-  isEmpty: boolean;
-  getQuantity: (presentationId: string) => number;
-  handleQuantityChange: (presentationId: string, value: number | null) => void;
-  handleAddToCart: (args: { presentation: Presentation; quantity: number }) => void;
-  formatter: Intl.NumberFormat;
-  sessionTotal: number;
-  addedItems: AddedItem[];
-  columns: GridColDef<Presentation>[];
-}
-
-export interface HandleAddProductDialogItemToCartInterface {
-    presentation: Presentation;
-    quantity: number;
-    dispatch: AppDispatch;
-    showSnackBar: (message: string, color: AlertColor) => void;
-}
 
 export type TicketSummaryType = {
     sellId: string;
@@ -243,45 +219,8 @@ export type TicketSummaryType = {
     paymentMethod: PaymentMethod;
 }
 
-export interface UseCartReturn {
-    cart: ProductTicketType[];
-    productsTotalPrice: number;
-    ivaPercentage: number;
-    ivaAmount: number;
-    total: number;
-    totalUnits: number;
-    paymentMethodRef: React.RefObject<PaymentMethod>;
-    ticketSummary: TicketSummaryTypel;
-    generateTicket: (formValues: CartFormValues) => Promise<void>;
-    printTicket: () => void;
-    handleClearCart: () => void;
-    goBackToSell: () => void;
-    goToNewSell: () => void;
-    goToTicketDetail: () => void;
-    columns: GridColDef<ProductTicketWithStockType>[]
-}
 
 export type CreateSellResponse = { _id: string; message: string };
-
-export interface useCartPaymentMethodFormReturn {
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    values: CartFormValues,
-}
-
-export interface useCartPaymentStatusFormReturn {
-    values: CartFormValues;
-    setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<CartFormValues>>;
-    errors: FormikErrors<CartFormValues>;
-    touched: FormikTouched<CartFormValues>;
-    isPartial: boolean;
-    maxAmountPaid: number;
-    handleStatusChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleAmountPaidChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleBlur: {
-        (e: React.FocusEvent<any, Element>): void;
-        <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
-    };
-}
 
 //────────────────────────────────────────── 🕐 THUNKS 🕐 ─────────────────────────────────────────//
 

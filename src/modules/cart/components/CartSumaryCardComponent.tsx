@@ -1,11 +1,11 @@
 import { alpha, Grid, type Theme } from "@mui/material";
-import type { CartSummaryCardProps } from '@typings/sells/SellComponentTypes';
 import type { ReactNode } from 'react';
 import CartPaymentMethod from './CartPaymentMethod';
 import CartSellDataComponent from './CartSellDataComponent';
 import CartSummaryFooterComponent from "./CartSummaryFooter";
 import { getNoisyBackgroundSx } from "../../shared/components/NoisyBackground/NoisyBackground";
 import CartPaymentStatus from "./CartPaymentStatus";
+import type { CartSummaryCardProps } from "@typings/seller/sellerComponentTypes";
 
 
 const CartSummaryCardComponent = ({ 

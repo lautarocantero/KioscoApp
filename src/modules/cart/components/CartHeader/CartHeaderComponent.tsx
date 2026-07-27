@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material";
-import type { CartHeaderProps } from '@typings/sells/SellComponentTypes';
 import type { ReactNode } from 'react';
 import CartLabel from "./CartLabelComponent";
 import CartCleanAction from "./CartCleanActionComponent";
+import type { CartHeaderProps } from "@typings/seller/sellerComponentTypes";
 
 
 const CartHeaderComponent = ({ itemsCount, onClearCart }: CartHeaderProps): ReactNode => {

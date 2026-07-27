@@ -4,7 +4,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { alpha, Box, Link, Typography, type Theme } from "@mui/material";
 import PrimaryButton from "../../shared/components/Buttons/PrimaryButtonComponent";
 import type { ReactNode } from 'react';
-import type { CartSummaryFooterProps } from '@typings/sells/SellComponentTypes';
+import type { CartSummaryFooterProps } from '@typings/seller/sellerComponentTypes';
 
 
 const CartSummaryFooterComponent = ({ total, onBack, onGenerateTicket }: CartSummaryFooterProps): ReactNode => {

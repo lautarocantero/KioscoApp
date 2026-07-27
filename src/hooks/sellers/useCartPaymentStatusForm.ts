@@ -1,8 +1,9 @@
 // hooks/sells/useCartPaymentStatusForm.ts
 import { useFormikContext } from "formik";
 import { SellStatusEnum } from "../../typings/sells/sellsEnum";
-import type { CartFormValues, useCartPaymentStatusFormReturn } from "@typings/sells/sellTypes";
 import { getStatusChangePatch, getClampedAmountPaid } from "../../modules/cart/helpers/cartPaymentStatus.helper";
+import type { useCartPaymentStatusFormReturn } from "@typings/seller/sellerTypes";
+import type { CartFormValues } from "@typings/sells/sellTypes";
 
 export const useCartPaymentStatusForm = (total: number): useCartPaymentStatusFormReturn => {
     const { values, errors, touched, setFieldValue, handleBlur } = useFormikContext<CartFormValues>();
