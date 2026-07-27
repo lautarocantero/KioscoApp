@@ -10,7 +10,6 @@
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
 |--------------------------------------------------------------------------------------------------|    
-| 🟢 En form header resolver el status config con 3 status posibles      |                            |
 | 🟢 Actualmente `seller` tiene por alguna razón la data de `sells` — modificar y desacoplar       |
 | 🔴 Refactorizar todo el módulo                                                                   |
 |____________________________________________________________________________________________________|

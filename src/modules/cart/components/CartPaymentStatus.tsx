@@ -6,10 +6,19 @@ import type { CartPaymentStatusProps } from '@typings/sells/SellComponentTypes';
 import { useCartPaymentStatusForm } from '../../../hooks/sells/useCartPaymentStatusForm';
 
 const CartPaymentStatus = ({total}: CartPaymentStatusProps): React.ReactNode => {
-    const { values, errors, touched, isPartial, setFieldValue,  handleStatusChange, handleBlur } = useCartPaymentStatusForm();
+    const {
+        values,
+        errors,
+        touched,
+        isPartial,
+        maxAmountPaid,
+        setFieldValue,
+        handleStatusChange,
+        handleAmountPaidChange,
+        handleBlur,
+    } = useCartPaymentStatusForm(total);
 
-    if(total <= 0) return null;
-
+    if (total <= 0) return null;
 
     return (
         <Grid
@@ -82,11 +91,12 @@ const CartPaymentStatus = ({total}: CartPaymentStatusProps): React.ReactNode => 
                         size="small"
                         sx={sharedSx}
                         value={values.amount_paid ?? ''}
-                        onChange={(e) => setFieldValue('amount_paid', e.target.value === '' ? null : Number(e.target.value))}
+                        onChange={handleAmountPaidChange}
                         onBlur={handleBlur}
                         name="amount_paid"
                         error={touched.amount_paid && !!errors.amount_paid}
-                        helperText={touched.amount_paid ? errors.amount_paid : ''}
+                        helperText={touched.amount_paid ? errors.amount_paid : `Máximo $${maxAmountPaid}`}
+                        slotProps={{ htmlInput: { max: maxAmountPaid, min: 0 } }}
                         fullWidth
                     />
                     <TextField

@@ -306,7 +306,9 @@ export interface useCartPaymentStatusFormReturn {
     errors: FormikErrors<CartFormValues>;
     touched: FormikTouched<CartFormValues>;
     isPartial: boolean;
+    maxAmountPaid: number;
     handleStatusChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleAmountPaidChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleBlur: {
         (e: React.FocusEvent<any, Element>): void;
         <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
