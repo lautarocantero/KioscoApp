@@ -1,30 +1,28 @@
-//─────────────────── Componente 🧩: CartSummaryCard ───────────────────//
-//
-//─────────────────── Descripción 📝 ───────────────────//
-// Card lateral del carrito: título "Resumen de venta", contenido (precio + 
-// método de pago pasados como children), botón "Hacer ticket", nota de 
-// seguridad y link para volver a productos.
-//
-//-----------------------------------------------------------------------------//
+import { alpha, Grid, type Theme } from "@mui/material";
+import type { CartSummaryCardProps } from '@typings/sells/SellComponentTypes';
+import type { ReactNode } from 'react';
+import CartPaymentMethod from './CartPaymentMethod';
+import CartSellDataComponent from './CartSellDataComponent';
+import CartSummaryFooterComponent from "./CartSummaryFooter";
+import { getNoisyBackgroundSx } from "../../shared/components/NoisyBackground/NoisyBackground";
+import CartPaymentStatus from "./CartPaymentStatus";
 
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { alpha, Box, Grid, Link, Typography, type Theme } from "@mui/material";
-import PrimaryButton from "../../shared/components/Buttons/PrimaryButtonComponent";
 
-type CartSummaryCardProps = {
-    children: React.ReactNode;
-    onGenerateTicket?: () => void;
-    onBack: () => void;
-}
+const CartSummaryCardComponent = ({ 
+    onBack,
+    onGenerateTicket, 
+    productsTotalPrice,
+    ivaPercentage,
+    ivaAmount,
+    total,
+}: CartSummaryCardProps): ReactNode => {
 
-const CartSummaryCardComponent = ({ children, onGenerateTicket, onBack }: CartSummaryCardProps): React.ReactNode => {
     return (
-        <Grid
+        <Grid 
             container
+            size={{ xs: 12, md: 4 }}
             sx={(theme: Theme) => ({
+                ...getNoisyBackgroundSx({theme}),
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
@@ -34,79 +32,26 @@ const CartSummaryCardComponent = ({ children, onGenerateTicket, onBack }: CartSu
                 padding: '1.5em',
                 position: { md: 'sticky' },
                 top: { md: '2em' },
+                
             })}
         >
-            <Typography
-                sx={(theme: Theme) => ({
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 1.2,
-                    color: theme?.custom?.fontColor,
-                    fontWeight: 700,
-                })}
-            >
-                <Box
-                    sx={(theme: Theme) => ({
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: theme?.palette?.primary?.main,
-                        color: theme?.custom?.fontColor,
-                        borderRadius: '0.5em',
-                        width: '1.7em',
-                        height: '1.7em',
-                    })}
-                >
-                    <DescriptionOutlinedIcon fontSize="smaller" />
-                </Box>
-                Resumen de venta
-            </Typography>
 
-            {children}
-
-            <PrimaryButton
-                buttonText="Hacer ticket"
-                buttonOnClick={() => onGenerateTicket?.()}
-                buttonWidth={{ xs: '100%' }}
-                marginTop="0"
-                icon={<ReceiptLongIcon fontSize="small"/>}
+            <CartSellDataComponent
+                productsTotalPrice={productsTotalPrice}
+                ivaPercentage={ivaPercentage}
+                ivaAmount={ivaAmount}
+                total={total}
             />
 
-            <Box
-                sx={(theme: Theme) => ({
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: 1,
-                    backgroundColor: alpha(theme?.palette?.primary?.main, 0.12),
-                    borderRadius: '0.8em',
-                    padding: '0.8em 1em',
-                })}
-            >
-                <ShieldOutlinedIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, mt: '0.1em' })} />
-                <Typography
-                    sx={(theme: Theme) => ({
-                        color: theme?.custom?.fontColor,
-                        fontSize: theme?.typography?.caption?.fontSize,
-                    })}
-                >
-                    Revisa los productos y confirma el método de pago antes de continuar.
-                </Typography>
-            </Box>
+            <CartPaymentMethod total={total} />
 
-            <Link
-                onClick={onBack}
-                underline="hover"
-                sx={(theme: Theme) => ({
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 0.5,
-                    color: theme?.palette?.primary?.main,
-                    cursor: 'pointer',
-                    fontSize: theme?.typography?.body2?.fontSize,
-                })}
-            >
-                <ArrowBackIcon fontSize="small" /> Volver a productos
-            </Link>
+            <CartPaymentStatus total={total}  />
+
+            <CartSummaryFooterComponent
+                total={total}
+                onBack={onBack}
+                onGenerateTicket={onGenerateTicket}
+            />
         </Grid>
     )
 }

@@ -1,79 +1,79 @@
-import React from "react";
 import CreditCardIcon from '@mui/icons-material/CreditCard';
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Typography, type Theme } from "@mui/material";
-import { PaymentMethod } from "../../../typings/sells/sellsEnum";
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, type Theme } from "@mui/material";
+import { PAYMENT_METHOD_OPTIONS } from "../../../config/constants";
+import type { CartPaymentMethodProps } from '@typings/sells/SellComponentTypes';
+import { useCartPaymentMethodForm } from '../../../hooks/sells/useCartPaymentMethodForm';
 
-const CartPaymentMethod = ({paymentMethodRef}: {paymentMethodRef: React.RefObject<string>}): React.ReactNode => {
+const CartPaymentMethod = ({total}: CartPaymentMethodProps): React.ReactNode => {
+    const { handleChange , values } = useCartPaymentMethodForm();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    paymentMethodRef.current = (event.target as HTMLInputElement).value;
-  };
+    if(total <= 0) return null;
 
 
-  return (
-    <Grid
-        container 
-        display="flex" 
-        flexDirection="column"
-        alignItems={'flex-start'} ///*─────────────────── 🔎 alinear todo a la izquierda 🔎 ───────────────────*
-        gap={0.5}
-        sx={(theme: Theme) => ({
-            borderTop: `1px solid ${theme?.custom?.translucidWhite}`,
-            marginTop: '1em',
-            paddingTop: '1em',
-            width: '100%',
-        })}
-    >
-        <FormControl component="fieldset" sx={{ width: '100%' }}>
-            <FormLabel 
-                component="legend" 
-                sx={(theme: Theme) => ({ 
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 0.8,
-                    textAlign: 'left', 
-                    color: theme?.custom?.fontColor,
-                    fontWeight: 600,
-                    marginBottom: '0.3em',
-                })}>
-                    <CreditCardIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
-                    Método de pago
-            </FormLabel>
-          <RadioGroup
-            defaultValue={PaymentMethod?.Transfer}
-            onChange={handleChange}
+    return (
+        <Grid
+            container
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            gap={0.5}
             sx={(theme: Theme) => ({
-                '& .MuiFormControlLabel-root': {
-                    color: theme?.custom?.fontColor,
-                    marginLeft: 0,
-                    marginBottom: '-0.4em', ///*─────────────────── 🔎 reduce espacio entre filas 🔎 ───────────────────*
-                },
-                '& .MuiFormControlLabel-label': {
-                    fontSize: theme?.typography?.body2?.fontSize,
-                },
-                '& .MuiRadio-root': {
-                    color: theme?.custom?.translucidWhite,
-                    padding: '0.4em',
-                },
-                '& .MuiSvgIcon-root': {
-                    fontSize: '1.1rem',
-                },
-                '& .MuiRadio-root.Mui-checked': {
-                    color: theme?.palette?.primary?.main,
-                },
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 0,
+                borderTop: `1px solid ${theme?.custom?.translucidWhite}`,
+                marginTop: '1em',
+                paddingTop: '1em',
+                width: '100%',
             })}
         >
-            <FormControlLabel value={PaymentMethod?.Transfer} control={<Radio />} label="Transferencia" />
-            <FormControlLabel value={PaymentMethod?.Cash} control={<Radio />} label="Efectivo" />
-            <FormControlLabel value={PaymentMethod?.Debit} control={<Radio />} label="Débito" />
-            <FormControlLabel value={PaymentMethod?.Credit} control={<Radio />} label="Crédito" />
-        </RadioGroup>
-        </FormControl>
-    </Grid>
-  );
+            <FormControl component="fieldset" sx={{ width: '100%' }}>
+                <FormLabel
+                    component="legend"
+                    sx={(theme: Theme) => ({
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 0.8,
+                        textAlign: 'left',
+                        color: theme?.custom?.fontColor,
+                        fontWeight: 600,
+                        marginBottom: '0.3em',
+                    })}
+                >
+                    <CreditCardIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.secondary?.main })} />
+                    Método de pago
+                </FormLabel>
+                <RadioGroup
+                    value={values.payment_method}
+                    onChange={handleChange}
+                    sx={(theme: Theme) => ({
+                        '& .MuiFormControlLabel-root': {
+                            color: theme?.custom?.fontColor,
+                            marginLeft: 0,
+                            marginBottom: '-0.4em',
+                        },
+                        '& .MuiFormControlLabel-label': {
+                            fontSize: theme?.typography?.body2?.fontSize,
+                        },
+                        '& .MuiRadio-root': {
+                            color: theme?.custom?.translucidWhite,
+                            padding: '0.4em',
+                        },
+                        '& .MuiSvgIcon-root': {
+                            fontSize: '1.1rem',
+                        },
+                        '& .MuiRadio-root.Mui-checked': {
+                            color: theme?.palette?.secondary?.main,
+                        },
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 0,
+                    })}
+                >
+                    {PAYMENT_METHOD_OPTIONS.map(({ value, label }) => (
+                        <FormControlLabel key={value} value={value} control={<Radio />} label={label} />
+                    ))}
+                </RadioGroup>
+            </FormControl>
+        </Grid>
+    );
 };
 
 export default CartPaymentMethod;
