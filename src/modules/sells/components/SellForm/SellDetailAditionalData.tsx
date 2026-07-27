@@ -4,9 +4,8 @@ import type { SellDetailAditionalDataProps } from "@typings/sells/SellComponentT
 import SellDetailPendingBalance from "./SellDetailPendingBalance";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 import { formatAmount } from "../../helpers/ProductDialog/Formatter/formatDetail";
+import type { ReactNode } from "react";
 
-// 🔧 Hardcodeado temporalmente — luego vendrá del backend (pagos parciales / saldo pendiente)
-const MOCK_PENDING_BALANCE = 450;
 
 const SellDetailAditionalData = ({
     subTotal,
@@ -15,7 +14,9 @@ const SellDetailAditionalData = ({
     total,
     currency,
     sellId,
-}: SellDetailAditionalDataProps): React.ReactNode => {
+    pendingBalance,
+    debtorName,
+}: SellDetailAditionalDataProps): ReactNode => {
 
     return (
         <Grid size={{ xs: 12, md: 6 }}>
@@ -94,7 +95,7 @@ const SellDetailAditionalData = ({
                         </Stack>
                     </Box>
 
-                    <SellDetailPendingBalance pendingBalance={MOCK_PENDING_BALANCE} />
+                    <SellDetailPendingBalance pendingBalance={pendingBalance} debtorName={debtorName}  />
                 </NoisyCard>
         </Grid>
     );

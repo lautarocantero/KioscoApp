@@ -1,6 +1,5 @@
 import { Grid } from "@mui/material";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import SellDetailInfoBar from "./SellDetailInfoBar";
 import SellDetailProductsSold from "./SellDetailProductsSold";
@@ -9,8 +8,10 @@ import SellDetailPaymentData from "./SellDetailPaymentData";
 import SellDetailAditionalData from "./SellDetailAditionalData";
 import { useSellDetailForm } from "../../../../hooks/sells/useSellDetailForm";
 import FormCard from "../../../shared/components/FormCard/FormCard";
+import type { ReactNode } from "react";
 
-const SellDetailFormComponent = (): React.ReactNode => {
+
+const SellDetailFormComponent = (): ReactNode => {
     const { values, date, time, timezone, products, payment, ivaPercentage, currency } = useSellDetailForm();
     const { submitError, stepErrors } = useFormNavigation();
 
@@ -20,10 +21,11 @@ const SellDetailFormComponent = (): React.ReactNode => {
                 title: "Detalles de la venta",
                 subtitle: values._id,
                 icon: <Inventory2OutlinedIcon />,
-                status: SellStatusEnum.Parcial, // 🔶 hardcodeado: el backend no informa estado de la venta
+                status: values.status,
             }}
             showButtons
             submitText="Imprimir ticket"
+            backText="Volver"
             submitError={submitError}
             stepErrors={stepErrors}
             defaultBack="/sells"
@@ -46,6 +48,8 @@ const SellDetailFormComponent = (): React.ReactNode => {
                     total={values.total_amount}
                     currency={currency}
                     sellId={values._id}
+                    pendingBalance={payment.pendingAmount}
+                    debtorName={payment.debtorName}
                 />
                 <SellDetailSoldData
                     subTotal={values.sub_total}

@@ -19,15 +19,18 @@ export interface EmptyButtonProps {
   buttonText: string;
   buttonOnClick: () => void;
   buttonWidth?: ResponsiveWidth;
+  color?: "default" | "main";
 }
 
 export interface FormNavButtonsProps {
     SubmitText?:  string;
+    backText?: string; 
     defaultBack?:    string;
     readOnly?:    boolean;
 }
 
 export type UseFormNavButtonsParams = {
     defaultBack: string;
+    backText?: string;
     readOnly?: boolean;
 };

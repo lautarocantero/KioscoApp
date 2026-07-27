@@ -1,6 +1,6 @@
-import type { Dispatch }     from "@reduxjs/toolkit";
+import type { Dispatch } from "@reduxjs/toolkit";
 import type { NavigateFunction } from "react-router-dom";
-import type { CreateProductBody, Product, ProductWithPresentations } from "../../typings/product/productTypes";
+import type { CreateProductBody, Product, ProductStats, ProductWithPresentations } from "../../typings/product/productTypes";
 import {
     checkingProducts,
     checkingCurrentProduct,
@@ -9,6 +9,9 @@ import {
     setError,
     setProducts,
     removeProduct,
+    checkingStats,
+    setStats,
+    setStatsError,
 } from "./productSlice";
 import { handleError }       from "../shared/handlerStoreError";
 import {
@@ -18,6 +21,8 @@ import {
     createProductRequest,
     editProductRequest,
     deleteProductRequest,
+    getProductStatsRequest,
+    getProductsWithStockRequest,
 } from "../../modules/products/api/productApi";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 
@@ -92,6 +97,33 @@ export const getProducts = () => {
 };
 
 /*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 getProductsWithStock                                               ║
+║ ⚠️  Idéntico a getProducts, pero contra /get-products-with-stock,     ║
+║     que ya viene filtrado en backend por presentations con stock > 0. ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const getProductsWithStock = () => {
+
+    return async (dispatch: Dispatch): Promise<ProductWithPresentations[] | undefined> => {
+        dispatch(checkingProducts());
+        try {
+            const products: ProductWithPresentations[] = await getProductsWithStockRequest();
+
+            if (!products) {
+                dispatch(setError({ errorMessage: "No se ha encontrado ningun producto" }));
+                throw new Error("No se encontraron productos");
+            }
+
+            dispatch(setProducts(products));
+            return products;
+
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudieron obtener los productos" }));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
 ║ 🚀 searchProducts                                                     ║
 ║ 📥 Entrada: term (texto a buscar en el nombre del producto)           ║
 ║ ⚙️  Proceso:                                                           ║
@@ -138,6 +170,30 @@ export const getProductById = (_id: string) => {
 
         } catch (error: unknown) {
             dispatch(setCurrentProductError("No se pudo cargar el producto"));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 getProductStats                                                     ║
+║ ⚙️  Proceso:                                                            ║
+║   1. GET /product/get-product-stats                                    ║
+║   2. Guarda el resultado en store con setStats                         ║
+║ 📤 Salida: ProductStats o undefined en caso de error                   ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const getProductStats = () => {
+
+    return async (dispatch: Dispatch): Promise<ProductStats | undefined> => {
+        dispatch(checkingStats());
+
+        try {
+            const stats = await getProductStatsRequest();
+            dispatch(setStats(stats));
+            return stats;
+
+        } catch (error: unknown) {
+            dispatch(setStatsError("No se pudo obtener los datos de productos"));
             handleError(error);
         }
     };

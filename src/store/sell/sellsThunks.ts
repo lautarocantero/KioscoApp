@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, EditSellSanitizedPayloadInterface, GetSellByIdThunkInterface, Sell } from "@typings/sells/sellTypes";
+import type { CreateSellResponse, CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, EditSellSanitizedPayloadInterface, GetSellByIdThunkInterface, Sell, SellTicketType } from "@typings/sells/sellTypes";
 import { deleteSellRequest, getSellByIdRequest, getSellsRequest, getTodaySellsCountRequest, postSellRequest, putSellRequest, searchSellsRequest } from "../../modules/sells/api/sellApi";
 import { handleError } from "../shared/handlerStoreError";
 import { checkingSells, removeSell, setError, setSells, setCurrentSell, checkingTodaySells, setTodaySellsCount, setTodaySellsError } from "./sellSlice";
@@ -10,7 +10,7 @@ export const getSellsThunk = () => {
     return async (dispatch: Dispatch): Promise<Sell[] | undefined> => {
         dispatch(checkingSells());
         try {
-            const sells: Sell[] = await getSellsRequest();
+            const sells: SellTicketType[] = await getSellsRequest();
 
             if (!sells) {
                 dispatch(setError({ errorMessage: "No se ha encontrado ninguna venta" }));
@@ -31,7 +31,7 @@ export const getSellByIdThunk = ({_id}: GetSellByIdThunkInterface) => {
         dispatch(checkingSells());
 
         try {
-            const sell: Sell[] = await getSellByIdRequest({_id});
+            const sell: SellTicketType[] = await getSellByIdRequest({_id});
 
             if(!sell) {
                 dispatch(setError({ errorMessage: "No se ha encontrado la venta"}))
@@ -51,7 +51,7 @@ export const searchSellsThunk = (term: string) => {
     return async (dispatch: Dispatch): Promise<Sell[] | undefined> => {
         dispatch(checkingSells());
         try {
-            const sells: Sell[] = await searchSellsRequest(term);
+            const sells: SellTicketType[] = await searchSellsRequest(term);
             dispatch(setSells(sells));
             return sells;
         } catch (error: unknown) {
@@ -81,14 +81,15 @@ export const getTodaySellsCountThunk = () => {
 export const createSellThunk = ({data}: CreateSellSanitizedPayloadInterface) => {
 
     const {
-        purchase_date,seller_id,seller_name,
-        payment_method,products,sub_total,
-        iva,total_amount,currency
+        purchase_date, seller_id, seller_name,
+        payment_method, products, sub_total,
+        iva, total_amount, currency,
+        status, amount_paid, debtor_name
     } = data;
     
-    return async (dispatch: Dispatch) : Promise<string | undefined> => {
-        try{
-            const _id : string = await postSellRequest({
+    return async (dispatch: Dispatch): Promise<CreateSellResponse | undefined> => {
+        try {
+            const response: CreateSellResponse = await postSellRequest({
                 purchase_date,
                 seller_id,
                 seller_name,
@@ -97,15 +98,18 @@ export const createSellThunk = ({data}: CreateSellSanitizedPayloadInterface) => 
                 sub_total,
                 iva,
                 total_amount,
-                currency
-            })
+                currency,
+                status,
+                amount_paid,
+                debtor_name
+            });
 
-            if(!_id) {
+            if (!response?._id) {
                 throw new Error('Error durante el registro de la venta');
             }
 
             dispatch(setError({errorMessage: null}));
-            return _id as string;
+            return response;
 
         } catch (error: unknown) {
             handleError(error);
@@ -124,7 +128,7 @@ export const editSellThunk = ({ data }: EditSellSanitizedPayloadInterface) => {
                 throw new Error('Error durante la edición de la venta');
             }
 
-            dispatch(setCurrentSell(data as unknown as Sell));
+            dispatch(setCurrentSell(data as unknown as SellTicketType));
             dispatch(setError({ errorMessage: null }));
             return response._id as string;
         } catch (error: unknown) {

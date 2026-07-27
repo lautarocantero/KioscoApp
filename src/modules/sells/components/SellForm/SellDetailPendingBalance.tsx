@@ -1,16 +1,18 @@
 import { Box, Stack, Typography, type Theme } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import type {  SellDetailPendingBalanceProps } from "@typings/sells/SellComponentTypes";
+import type { SellDetailPendingBalanceProps } from "@typings/sells/SellComponentTypes";
 import { formatAmount } from "../../helpers/ProductDialog/Formatter/formatDetail";
+import type { ReactNode } from "react";
 
 
 const SellDetailPendingBalance = ({
     pendingBalance,
-}: SellDetailPendingBalanceProps): React.ReactNode => {
+    debtorName,
+}: SellDetailPendingBalanceProps): ReactNode => {
 
-    if(pendingBalance < 0) {
-        return null;
-    }
+    if (pendingBalance === null) return null;
+    if (pendingBalance <= 0) return null;
+    
 
     return (
         <Box
@@ -58,7 +60,9 @@ const SellDetailPendingBalance = ({
                 color="text.secondary"
                 sx={{ mt: 0.5, display: "block" }}
             >
-                El cliente abonó parcialmente esta venta.
+                {debtorName
+                    ? `${debtorName} abonó parcialmente esta venta.`
+                    : "El cliente abonó parcialmente esta venta."}
             </Typography>
         </Box>
     );

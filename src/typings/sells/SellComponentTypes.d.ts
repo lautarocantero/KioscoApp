@@ -1,8 +1,11 @@
 import type { Product } from "../product/productTypes";
 import type { Presentation } from "../presentation/presentationTypes";
-import type { DialogDataInterface, DialogVariantDataType, PaymentDetail, SellTicketType, SoldProductRow, UseSellbarResult } from "./sellTypes";
+import type { DialogDataInterface, DialogVariantDataType, PaymentDetail, SellTicketType, SoldProductRow, TicketSummaryType, UseSellbarResult } from "./sellTypes";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorList/ProductToolbar";
+import type { ReactNode } from "react";
+import type { SvgIconProps } from "@mui/material";
+import type { PaymentMethod } from "./sellsEnum";
 
 {/*─────────────────── 🔎 tipos usados en sell referente a COMPONENTES TSX, (UI📳) 🔎 ───────────────────*/}
 
@@ -37,7 +40,13 @@ import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorL
     }
 
     export interface SellDetailPaymentDataProps {
-        payment: PaymentDetail;
+        payment: {
+            method: PaymentMethod;
+            status: SellStatusEnum;
+            amountPaid: number | null;
+            debtorName: string | null;
+            pendingAmount: number | null;
+        };
     }
 
     export interface SellDetailSoldDataProps {
@@ -54,10 +63,13 @@ import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorL
         total: number;
         currency: string;
         sellId: string;
+        pendingBalance: number | null;
+        debtorName: string | null;
     }
 
     export interface SellDetailPendingBalanceProps {
-        pendingBalance: number;
+        pendingBalance: number | null;
+        debtorName: string | null;
     }
 
     export interface SellDetailActionsProps {
@@ -211,7 +223,6 @@ import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorL
             image: string,
         }
         products: Presentation[],
-        onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
     }
 
     export type ProductDialogMainContentProps = Pick< ProductDialogContentProps ,"product" | "products">
@@ -288,4 +299,82 @@ import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorL
     }
     export interface CartButtonsComponentProps {
         generateTicket: () => void,
+    }
+
+    export type CartLabelProps = {
+        itemsCount: number;
+    }
+
+    export type CartCleanActionProps = CartLabelProps & {
+        onClearCart: () => void;
+    }
+
+    export type CartHeaderProps = CartCleanActionProps;
+
+    export interface CartProductTableProps {
+        cart: ProductTicketType[], 
+        columns: GridColDef<ProductTicketType>[]
+    }
+
+    export type CartSummaryCardProps = {
+        onGenerateTicket?: () => void;
+        onBack: () => void;
+        productsTotalPrice: number,
+        ivaPercentage: number,
+        ivaAmount: number,
+        total: number,
+    }
+
+    export interface CartPaymentMethodProps {
+        total: number;
+    }
+
+    export interface CartPaymentStatusProps extends CartPaymentMethodProps{};
+
+    export type CartSellDataComponentProps = Pick<CartSummaryCardProps, 
+        'productsTotalPrice'|
+        'ivaPercentage'|
+        'ivaAmount'|
+        'total'
+    >;
+
+    export interface CartSummaryFooterProps {
+        total: number,
+        onBack: CartSummaryCardProps['onBack'];
+        onGenerateTicket: CartSummaryCardProps['onGenerateTicket'];
+    }
+
+    export type CartProductRowActionCellProps = {
+        product: ProductTicketType;
+    }
+
+    export interface CartPriceRowProps {
+        label: string, 
+        value: string, 
+        valueColor?: (theme: Theme) => string, 
+        bold?: boolean,
+    }
+
+    //────────────────────────────────────────────  order confirmed  ───────────────────────────────────────────//
+
+    export type SummaryItem = {
+        id: string;
+        icon: ComponentType<SvgIconProps>;
+        iconColor: (theme: Theme) => string;
+        label: string;
+        value: string;
+    }
+
+    export interface TicketSummaryDetailsProps {
+        ticketSummary: TicketSummaryType | null;
+    }
+
+    export interface OrderConfirmedActionsProps {
+        onPrintTicket: () => void;
+        onNewSell: () => void;
+        goToTicketDetail: () => void;
+    }
+
+    export interface ManualDownloadNoticeProps {
+        onPrintTicket: () => void;
     }

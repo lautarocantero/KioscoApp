@@ -38,7 +38,17 @@ export const sellerSlice = createSlice({
         addToCartAction: (state: SellerStateInterface, action: PayloadAction<SellerAddToCartSlicePayload>) => {
             const { payload } = action;
             const { product } = payload;
-            
+
+            const existingItemIndex = state.cart.findIndex((item) => item._id === product._id);
+
+            if (existingItemIndex !== -1) {
+                state.cart[existingItemIndex] = {
+                    ...state.cart[existingItemIndex],
+                    stock_required: state.cart[existingItemIndex].stock_required + product.stock_required,
+                };
+                return;
+            }
+
             state.cart = [...state.cart, product];
         },
         addUnitAction: (state: SellerStateInterface, action: PayloadAction<SellerAddUnitActionPayload>) => {

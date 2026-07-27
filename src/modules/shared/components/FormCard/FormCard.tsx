@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ReactNode } from "react";
 import {
     Box,
     CardContent,
@@ -14,11 +14,13 @@ import FormFooter from "./FormFooter";
 import FormHeader from "./FormHeader";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 import type { FormCardProps } from "@typings/shared/reactComponents";
+import { useAccordionExpanded } from "../../../../hooks/shared/useAccordionExpanded";
 
 
 const FormCard = ({
     children,
     submitText,
+    backText,
     showButtons,
     readOnly,
     defaultBack,
@@ -28,8 +30,8 @@ const FormCard = ({
     accordion,
     submitError,
     stepErrors, 
-}: FormCardProps): React.ReactNode => {
-    const [expanded, setExpanded] = useState(accordion?.defaultExpanded ?? false);
+}: FormCardProps): ReactNode => {
+    const { expanded, handleExpandedChange } = useAccordionExpanded(accordion?.defaultExpanded ?? false);
 
     return (
         <NoisyCard maxWidth={maxWidth}>
@@ -61,7 +63,7 @@ const FormCard = ({
                     {accordion && (
                         <Accordion
                             expanded={expanded}
-                            onChange={(_, isExpanded) => setExpanded(isExpanded)}
+                            onChange={handleExpandedChange}
                             disableGutters
                             elevation={0}
                             sx={(theme: Theme) => ({
@@ -151,6 +153,7 @@ const FormCard = ({
                 readOnly={readOnly}
                 submitText={submitText}
                 defaultBack={defaultBack}
+                backText={backText}
             />
         </NoisyCard>
     );

@@ -1,18 +1,22 @@
-
 import { Button, type Theme } from "@mui/material";
 import type { EmptyButtonProps } from "@typings/ui/buttons.types";
+import type { ReactNode } from "react";
 
 
 const EmptyButton = ({
   buttonText,
   buttonOnClick,
   buttonWidth = "280px",
-}: EmptyButtonProps): React.ReactNode => {
+  color = "default",
+}: EmptyButtonProps): ReactNode => {
   return (
     <Button
       sx={{
         backgroundColor: "transparent",
-        color: (theme: Theme) => theme?.custom?.translucidWhite,
+        color: (theme: Theme) =>
+          color === "main"
+            ? theme?.palette?.primary?.main
+            : theme?.custom?.translucidWhite,
         width: buttonWidth,
         borderRadius: 35,
         padding: 1,

@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useBackPath } from "./useBackPath";
 
 
-export const useFormNavButtons = ({ defaultBack, readOnly }: UseFormNavButtonsParams) => {
+export const useFormNavButtons = ({ defaultBack, backText, readOnly }: UseFormNavButtonsParams) => {
     const context = useContext(FormNavigationContext);
     const goBack = useBackPath(defaultBack);
 
@@ -26,5 +26,12 @@ export const useFormNavButtons = ({ defaultBack, readOnly }: UseFormNavButtonsPa
         context?.onPrev();
     };
 
-    return { isFirstStep, isLastStep, handleNext, handleBack };
+    const getBackLabel = (): string => {
+        if (backText) return backText;
+        if (readOnly) return "Volver";
+        if (isFirstStep) return "Cancelar";
+        return "Volver";
+    };
+
+    return { isFirstStep, isLastStep, handleNext, handleBack, getBackLabel };
 };

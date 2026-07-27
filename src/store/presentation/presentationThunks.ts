@@ -18,6 +18,7 @@ import {
     editPresentationRequest,
     getPresentationAnalyticsRequest,
     getPresentationByBarcodeRequest,
+    getPresentationsWithStockByProductIdRequest,
 } from "../../modules/presentations/api/presentationsApi";
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -33,7 +34,7 @@ export const fetchPresentationsByProductId = (product_id: string) => {
     return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
         dispatch(startLoadingPresentations());
         try {
-            const presentations = await getPresentationsByProductIdRequest({ product_id });
+            const presentations = await getPresentationsWithStockByProductIdRequest({ product_id });
             dispatch(setPresentations(presentations));
             return presentations;
         } catch (error: unknown) {

@@ -101,6 +101,9 @@ export interface ProductState {
     errorMessage:         string | null;
     isLoadingCurrent:     boolean;
     currentProductError:  string | null;
+    stats: ProductStats | null,
+    isLoadingStats: boolean,
+    statsError: string | null,
 }
 
 export type ProductStateError = Pick<ProductState, "errorMessage">;
@@ -200,7 +203,7 @@ export interface UseProductsReturn {
 
 export interface ProductStats {
     totalProducts:    number;
-    lowStockProducts: number;
+    lowStockPresentations: number;
 }
 
 // Mismos campos que ProductStats pero nullables (aún no cargados) + estado async

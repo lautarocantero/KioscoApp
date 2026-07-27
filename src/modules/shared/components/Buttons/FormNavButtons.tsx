@@ -3,14 +3,21 @@ import type { FormNavButtonsProps } from "@typings/ui/buttons.types";
 import { useFormNavButtons } from "../../../../hooks/shared/useFormNavButtons";
 
 
-const FormNavButtons = ({ SubmitText, defaultBack = "/", readOnly = false }: FormNavButtonsProps): React.ReactNode => {
-    const { isFirstStep, isLastStep, handleNext, handleBack } = useFormNavButtons({ defaultBack, readOnly });
+const FormNavButtons = ({
+    SubmitText,
+    defaultBack = "/",
+    readOnly = false,
+    backText,
+}: FormNavButtonsProps): React.ReactNode => {
+    const { isLastStep, handleNext, handleBack, getBackLabel } = useFormNavButtons({ defaultBack, backText, readOnly });
+
+
 
     return (
         <Box sx={(theme: Theme) => ({
-            display: "flex", 
+            display: "flex",
             flexDirection: { xs: 'column-reverse', sm: 'row' },
-            gap: 2, 
+            gap: 2,
             justifyContent: readOnly ? "flex-start" : "space-between",
             px: 3,
             py: 2.5,
@@ -23,7 +30,7 @@ const FormNavButtons = ({ SubmitText, defaultBack = "/", readOnly = false }: For
                     color: theme?.custom?.translucidFontColor,
                 })}
             >
-                {readOnly ? "Volver" : isFirstStep ? "Cancelar" : "Atrás"}
+                {getBackLabel()}
             </Button>
 
             {!readOnly && (

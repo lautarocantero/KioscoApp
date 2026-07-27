@@ -2,6 +2,7 @@ import type { FormCardFooterProps } from "@typings/shared/reactComponents";
 import ApiErrorComponent from "./ApiError";
 import FormNavButtons from "../Buttons/FormNavButtons";
 
+
 const FormFooter = ({
     stepErrors,
     submitError,
@@ -9,21 +10,28 @@ const FormFooter = ({
     readOnly,
     submitText,
     defaultBack,
+    backText,
 }: FormCardFooterProps): React.ReactNode => {
 
-    return (
-        <>
-            <ApiErrorComponent submitError={submitError} stepErrors={stepErrors} />
+    if (readOnly) {
+        return (
+            <>
+                <ApiErrorComponent submitError={submitError} stepErrors={stepErrors} />
+                <FormNavButtons readOnly defaultBack={defaultBack} backText={backText} />
+            </>
+        );
+    }
 
-            {showButtons && <FormNavButtons SubmitText={submitText ?? ""} defaultBack={defaultBack} />}
-            {readOnly && (
-                <FormNavButtons
-                    readOnly
-                    defaultBack={defaultBack}
-                />
-            )}
-        </>
-    );
+    if (showButtons) {
+        return (
+            <>
+                <ApiErrorComponent submitError={submitError} stepErrors={stepErrors} />
+                <FormNavButtons SubmitText={submitText ?? ""} defaultBack={defaultBack} backText={backText} />
+            </>
+        );
+    }
+
+    return <ApiErrorComponent submitError={submitError} stepErrors={stepErrors} />;
 };
 
 export default FormFooter;

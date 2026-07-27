@@ -1,4 +1,3 @@
-// SellForm.tsx
 import { Grid } from "@mui/material";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
@@ -13,6 +12,8 @@ import SellDetailFormComponent from "./SellDetailForm";
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
 import SellEdited from "../../pages/SellEdit/components/SellEdited";
+import SellDetailSkeleton from "./SellDetailSkeleton";
+import EmptySellDetail from "./EmptySellDetail";
 
 const STEP_COMPONENTS = [SellFormFirstStep];
 
@@ -82,8 +83,8 @@ const SellDetailForm = (): React.ReactNode => {
     const { sell_id: sellId } = useParams<{ sell_id: string }>();
     const { viewingSell, isLoadingSell, error, handleSubmit } = useSellDetail(sellId);
 
-    if (isLoadingSell) return <LoadingSpinnerComponent />;
-    if (!viewingSell) return <NotEntityLoaded error={error} fallbackText="No se pudo cargar la venta" />;
+    if (isLoadingSell) return <SellDetailSkeleton />;
+    if (!viewingSell) return <EmptySellDetail />;
 
     return (
         <Formik

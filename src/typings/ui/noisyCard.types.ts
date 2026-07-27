@@ -6,7 +6,7 @@ export interface NoisyCardProps {
     maxWidth?: number | string;
     borderRadius?: number | string;
     noiseOpacity?: number;
-    sx?: SxProps<Theme>;
+    sx?: SxProps<Theme> | SxProps<Theme>[];
     component?: ElementType;
 }
 

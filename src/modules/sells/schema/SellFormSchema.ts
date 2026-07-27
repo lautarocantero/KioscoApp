@@ -1,4 +1,5 @@
 import type { SellEditFormValues, SellTicketType } from "@typings/sells/sellTypes";
+import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import * as Yup from "yup";
 
 export const getSellEditInitialValues = (sell?: SellTicketType | null): SellEditFormValues => ({
@@ -13,6 +14,9 @@ export const getSellEditInitialValues = (sell?: SellTicketType | null): SellEdit
     iva: sell?.iva ?? 0,
     total_amount: sell?.total_amount ?? 0,
     currency: sell?.currency ?? "",
+    status: sell?.status ?? SellStatusEnum.Completada,
+    amount_paid: sell?.amount_paid ?? 0,
+    debtor_name: sell?.debtor_name ?? "",
 });
 
 export const sellEditFormSchema = Yup.object({

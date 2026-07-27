@@ -1,7 +1,6 @@
-// modules/sells/utils/sellDetailMappers.ts
-import type { ProductTicketType } from "@typings/seller/sellerTypes";
-import type { PaymentDetail, PurchaseDateParts, SellEditFormValues, SoldProductRow } from "@typings/sells/sellTypes";
+import type { ProductTicketWithStockType, PurchaseDateParts, SellEditFormValues, SoldProductRow } from "@typings/sells/sellTypes";
 import { MONTHS_ES } from "../../../../../config/constants";
+import { SellStatusEnum } from "@typings/sells/sellsEnum";
 
 
 /*══════════ 📅 parsePurchaseDate ══════════╗
@@ -40,7 +39,7 @@ export const parsePurchaseDate = (rawDate: string): PurchaseDateParts => {
 ║ stock_required como la cantidad vendida en       ║
 ║ esa línea de venta.                              ║
 ╚═══════════════════════════════════════════════╝*/
-export const mapProductsToSoldRows = (products: ProductTicketType[]): SoldProductRow[] => {
+export const mapProductsToSoldRows = (products: ProductTicketWithStockType[]): SoldProductRow[] => {
     return products.map((product) => ({
         id: product._id,
         productId: product.product_id,
@@ -65,15 +64,14 @@ export const computeIvaPercentage = (iva: number, subTotal: number): number => {
 ║ payment_method. Se arma un PaymentDetail con   ║
 ║ lo disponible y placeholders para lo que falta.║
 ╚═══════════════════════════════════════════╝*/
-export const buildPaymentDetail = (sell: SellEditFormValues): PaymentDetail => {
-    const { date, time } = parsePurchaseDate(sell.purchase_date);
-
-    return {
-        methodLabel: sell.payment_method,
-        approved: true, // 🔶 hardcodeado: el backend no informa estado de aprobación
-        reference: "N/D", // 🔶 hardcodeado: el backend no informa comprobante/referencia
-        paymentDate: sell.modification_date || `${date} • ${time}`,
-    };
-};
+export const buildPaymentDetail = (values: SellEditFormValues) => ({
+    method: values.payment_method,
+    status: values.status,
+    amountPaid: values.status === SellStatusEnum.Parcial ? values.amount_paid : null,
+    debtorName: values.status === SellStatusEnum.Parcial ? values.debtor_name : null,
+    pendingAmount: values.status === SellStatusEnum.Parcial && values.amount_paid !== null
+        ? values.total_amount - values.amount_paid
+        : null,
+});
 
 export const formatAmount = (value: number): string => `$${value.toLocaleString("es-AR")}`;

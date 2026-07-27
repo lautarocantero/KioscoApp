@@ -1,24 +1,7 @@
+import type { FormatProductTicketInterface, ProductTicketWithStockType } from "@typings/sells/sellTypes";
 
-//────────── Helper 🦸: formatProductTicket ──────────//
 
-// Descripción 📝
-// Convierte una variante de producto (`Presentation`) en un objeto
-// `ProductTicketType` listo para despachar tickets al carrito.
-
-// Lógica 🔧
-// - Recibe `Presentation` y `requiredStock`.
-// - Extrae los campos principales de la variante.
-// - Devuelve un `ProductTicketType` con esos datos más `stock_required`.
-
-// Notas técnicas 💽
-// - Se usa en `ProductDialogSubmit`.
-
-//-----------------------------------------------------------------------------//
-
-import type { ProductTicketType } from "@typings/seller/sellerTypes";
-import type { FormatProductTicketInterface } from "@typings/sells/sellTypes";
-
-  const formatProductTicket = ({Presentation, requiredStock } : FormatProductTicketInterface): ProductTicketType | undefined => {
+const formatProductTicket = ({Presentation, requiredStock } : FormatProductTicketInterface): ProductTicketWithStockType | undefined => {
     
     if(!Presentation) {
       throw new Error('No se ha encontrado el producto');
@@ -37,6 +20,7 @@ import type { FormatProductTicketInterface } from "@typings/sells/sellTypes";
       price,
       product_id,
       sku,
+      stock,
     } = Presentation;
 
     return {
@@ -51,6 +35,7 @@ import type { FormatProductTicketInterface } from "@typings/sells/sellTypes";
       price,
       product_id,
       sku,
+      stock,
       stock_required: requiredStock,
     }
   }

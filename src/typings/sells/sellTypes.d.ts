@@ -2,7 +2,7 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";
-import type { PaymentMethod } from "./sellsEnum";
+import type { PaymentMethod, PaymentStatusEnum, SellStatusEnum } from "./sellsEnum";
 import type { EspecificationsLeftProps } from "./SellComponentTypes";
 import type { ReactNode, RefObject, MouseEvent, SetStateAction } from "react";
 import type { SelectChangeEvent } from "@mui/material";
@@ -41,7 +41,11 @@ export type SellTicketType = Pick<SellEntityInterface,
     'sub_total' |
     '_id' |
     'total_amount'
-    >;
+    > & {
+        status: SellStatusEnum,
+        amount_paid: number | null,
+        debtor_name: string | null,
+    };
 
 export type Sell = SellEntityInterface;
 
@@ -59,13 +63,22 @@ export interface ProductTicketType {
   stock_required: number;   
 }
 
+export type ProductTicketWithStockType = ProductTicketType & {
+    product_id: string;
+    stock: number;
+};
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔗 API 🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗               ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export type GetSellApiPayloadType = Pick<Sell, '_id'>;
 
-export type CreateSellApiPayloadType = Omit<Sell, '_id' | 'modification_date'>;
+export type CreateSellApiPayloadType = Omit<Sell, '_id' | 'modification_date'> & {
+    status: SellStatusEnum | PaymentStatusEnum | undefined;
+    amount_paid: number | null;
+    debtor_name: string | null;
+};
 
 export type DeleteSellApiPayloadType = Pick<Sell, '_id'>;
 
@@ -87,6 +100,10 @@ export interface SellEditFormValues {
     iva: number;
     total_amount: number;
     currency: string;
+    status: SellStatusEnum,
+    amount_paid: number;
+    debtor_name: string;
+    
 }
 
 export type SoldProductRow = {
@@ -121,6 +138,13 @@ export interface PurchaseDateParts {
     date: string;
     time: string;
     timezone: string;
+}
+
+export interface CartFormValues {
+    payment_method: PaymentMethod;
+    status: PaymentStatusEnum;
+    amount_paid: number | null;
+    debtor_name: string | null;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -242,6 +266,15 @@ export interface HandleAddProductDialogItemToCartInterface {
     showSnackBar: (message: string, color: AlertColor) => void;
 }
 
+export type TicketSummaryType = {
+    sellId: string;
+    ticketNumber: string;
+    date: string;
+    total: number;
+    productsCount: number;
+    paymentMethod: PaymentMethod;
+}
+
 export interface UseCartReturn {
     cart: ProductTicketType[];
     productsTotalPrice: number;
@@ -250,10 +283,34 @@ export interface UseCartReturn {
     total: number;
     totalUnits: number;
     paymentMethodRef: React.RefObject<PaymentMethod>;
-    generateTicket: () => Promise<void>;
+    ticketSummary: TicketSummaryTypel;
+    generateTicket: (formValues: CartFormValues) => Promise<void>;
+    printTicket: () => void;
     handleClearCart: () => void;
     goBackToSell: () => void;
     goToNewSell: () => void;
+    goToTicketDetail: () => void;
+    columns: GridColDef<ProductTicketWithStockType>[]
+}
+
+export type CreateSellResponse = { _id: string; message: string };
+
+export interface useCartPaymentMethodFormReturn {
+    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    values: CartFormValues,
+}
+
+export interface useCartPaymentStatusFormReturn {
+    values: CartFormValues;
+    setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<CartFormValues>>;
+    errors: FormikErrors<CartFormValues>;
+    touched: FormikTouched<CartFormValues>;
+    isPartial: boolean;
+    handleStatusChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleBlur: {
+        (e: React.FocusEvent<any, Element>): void;
+        <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
+    };
 }
 
 //────────────────────────────────────────── 🕐 THUNKS 🕐 ─────────────────────────────────────────//
@@ -268,7 +325,11 @@ type CreateSellRequestPayloadType = Pick<SellTicketType,
     'seller_name' |
     'sub_total' |
     'total_amount'
->
+> & {
+    status?: PaymentStatusEnum | SellStatusEnum;
+    amount_paid: number | null;
+    debtor_name: string | null;
+}
 
 export interface CreateSellSanitizedPayloadInterface {
     data: CreateSellRequestPayloadType;
@@ -364,6 +425,7 @@ export type UseSellbarCategoriesResult = UseSellbarResult['categories'] & {
 
 export interface UseSellStatsResult {
     todaySells: number | null;
+    lastSaleAt: string | null;
     isLoading:  boolean;
     error:      string | null;
 }
@@ -376,7 +438,6 @@ export interface UseProductDialogReturn {
   setShowModal: (value: boolean) => void;
   productSelected: CartPickerReturn["productSelected"];
   presentations: CartPickerReturn["presentations"];
-  handleSubmit: FormikReturn["handleSubmit"];
   totalStock: number;
   formattedTotalStock: string;
 }

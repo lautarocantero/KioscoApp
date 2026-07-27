@@ -32,6 +32,9 @@ export interface OptionLink {
   formatValue?: (value: string | number | null | undefined) => string;
 }
 
+export type LinkCardArrowProps = object;
+
+
 export interface DisplayOptionsInterface extends AppLayoutProps {
   links: OptionLink[],
   disconnect?: boolean,

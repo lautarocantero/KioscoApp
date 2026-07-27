@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { store } from "../store";
-import type { Product, ProductState, ProductStateError, ProductWithPresentations } from "../../typings/product/productTypes";
+import type { Product, ProductState, ProductStateError, ProductStats, ProductWithPresentations } from "../../typings/product/productTypes";
+
 
 const initialState: ProductState = {
     products:            [],
@@ -9,6 +10,9 @@ const initialState: ProductState = {
     errorMessage:        null,
     isLoadingCurrent:    false,
     currentProductError: null,
+    stats:               null,
+    isLoadingStats:      false,
+    statsError:          null,
 }
 
 export const productSlice = createSlice({
@@ -58,6 +62,18 @@ export const productSlice = createSlice({
         removeProduct: (state: ProductState, action: PayloadAction<string>) => {
             state.products = state.products.filter((p) => p._id !== action.payload);
         },
+        checkingStats: (state) => {
+            state.isLoadingStats = true;
+            state.statsError = null;
+        },
+        setStats: (state, action: PayloadAction<ProductStats>) => {
+            state.stats = action.payload;
+            state.isLoadingStats = false;
+        },
+        setStatsError: (state, action: PayloadAction<string>) => {
+            state.statsError = action.payload;
+            state.isLoadingStats = false;
+        },
     }
 });
 
@@ -70,6 +86,9 @@ export const {
     checkingCurrentProduct,
     setCurrentProductError,
     removeProduct,
+    checkingStats,
+    setStats,
+    setStatsError,
 } = productSlice.actions;
 
 export type RootState   = ReturnType<typeof store.getState>;
