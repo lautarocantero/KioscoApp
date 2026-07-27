@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import AppLayout from "../../shared/layout/AppLayout";
 import { useContext, type ReactNode } from 'react';
-import { useCart } from '../../../hooks/sells/useCart';
+import { useCart } from '../../../hooks/sellers/useCart';
 import { SnackBarContext } from '../../shared/components/SnackBar/SnackBarContext';
 import OrderConfirmedIconComponent from "../components/OrderConfirmedIconComponent";
 import OrderConfirmedTitleComponent from "../components/OrderConfirmedTitleComponent";

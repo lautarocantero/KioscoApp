@@ -2,7 +2,7 @@ import { Box, Grid, Typography, type Theme } from "@mui/material";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PrimaryButtonComponent from "../../../modules/shared/components/Buttons/PrimaryButtonComponent";
 import { getNoisyBackgroundSx } from "../../shared/components/NoisyBackground/NoisyBackground";
-import { useCart } from "../../../hooks/sells/useCart";
+import { useCart } from "../../../hooks/sellers/useCart";
 import { useContext, type ReactNode } from "react";
 import { SnackBarContext } from "../../shared/components/SnackBar/SnackBarContext";
 

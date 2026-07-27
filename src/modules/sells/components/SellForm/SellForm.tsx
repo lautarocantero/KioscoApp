@@ -1,19 +1,19 @@
 import { Grid } from "@mui/material";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
-import { useSellDetail, useSellEdit } from "../../../../hooks/sells/useSellsForm";
-import ActualStepComponent from "../../../../modules/shared/components/FormCard/ActualStep";
-import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
-import { getSellEditInitialValues, sellEditFormSchema } from "../../schema/SellFormSchema";
 import SellFormFirstStep from "./SellFormFirstStep";
 import { useParams } from "react-router-dom";
 import type { SellFormProps } from "@typings/sells/SellComponentTypes";
 import SellDetailFormComponent from "./SellDetailForm";
+import SellDetailSkeleton from "./SellDetailSkeleton";
+import EmptySellDetail from "./EmptySellDetail";
+import { getSellEditInitialValues, sellEditFormSchema } from "../../schema/SellFormSchema";
+import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
+import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
+import { useSellDetail, useSellEdit } from "../../../../hooks/sells/useSellsForm";
 import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
 import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
 import SellEdited from "../../pages/SellEdit/components/SellEdited";
-import SellDetailSkeleton from "./SellDetailSkeleton";
-import EmptySellDetail from "./EmptySellDetail";
 
 const STEP_COMPONENTS = [SellFormFirstStep];
 

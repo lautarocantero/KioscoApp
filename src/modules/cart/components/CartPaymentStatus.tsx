@@ -2,8 +2,8 @@ import PaidIcon from '@mui/icons-material/Paid';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, TextField, type Theme } from "@mui/material";
 import { SELL_STATUS_OPTIONS } from "../../../config/constants";
 import { sharedSx } from "../../shared/components/sharedSx/sharedSx";
-import type { CartPaymentStatusProps } from '@typings/sells/SellComponentTypes';
-import { useCartPaymentStatusForm } from '../../../hooks/sells/useCartPaymentStatusForm';
+import { useCartPaymentStatusForm } from '../../../hooks/sellers/useCartPaymentStatusForm';
+import type { CartPaymentStatusProps } from '@typings/seller/sellerComponentTypes';
 
 const CartPaymentStatus = ({total}: CartPaymentStatusProps): React.ReactNode => {
     const {

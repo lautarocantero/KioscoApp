@@ -5,7 +5,7 @@ import { SnackBarContext } from '../../shared/components/SnackBar/SnackBarContex
 import CartHeaderComponent from '../components/CartHeader/CartHeaderComponent';
 import CartSummaryCardComponent from '../components/CartSumaryCardComponent';
 import CartProductTable from "../components/CartProductTableComponent";
-import { useCart } from "../../../hooks/sells/useCart";
+import { useCart } from "../../../hooks/sellers/useCart";
 import { useContext, type ReactNode } from "react";
 import { cartFormSchema, getCartFormInitialValues } from "../../sells/schema/CartFormSchema";
 

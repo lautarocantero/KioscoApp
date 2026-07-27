@@ -2,7 +2,7 @@ import type { ProductTicketType } from "@typings/sells/sellTypes";
 import type { Presentation } from "../presentation/presentationTypes";
 import type { CartAmount } from "./seller";
 import type { SellerRol, SellerStatus, SortOption, ViewMode } from "./sellerEnums";
-import type { Product } from "@typings/product/productTypes";
+import type { Product, ProductWithPresentations } from "@typings/product/productTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 import type { RefObject, MouseEvent } from "react";
@@ -48,7 +48,7 @@ export interface SellerStateInterface {
     _id: string | null,
     name: string,
     cart: ProductTicketType[],
-    productSelected: Presentation | null,
+    productSelected: ProductWithPresentations | null,
     description: string,
     created_at: string,
     updated_at: string,
@@ -73,7 +73,7 @@ export type SellerRemoveFromCartActionPayload = Pick<SellerStateInterface, '_id'
 }
 
 export interface SellerSetProductSlicePayload {
-    product: Presentation,
+    product: ProductWithPresentations,
 };
 
 export type SellerSetSortPayload = Pick<SellerStateInterface, 'sort'>
@@ -85,7 +85,7 @@ export type SellerSetPagePayload = Pick<SellerStateInterface, 'page'>
 //──────────────────────────────────────────── 🌀 THUNK 🌀 ───────────────────────────────────────────//
 
 export interface SelectProductThunkInterface {
-    productData: Presentation,
+    productData: ProductWithPresentations,
 }
 
 export interface AddToCartThunkInterface {
