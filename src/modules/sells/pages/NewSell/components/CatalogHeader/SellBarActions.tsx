@@ -5,7 +5,7 @@ import { SellbarFilter } from "./SellBarFilter";
 import CartButtonComponent from "./CartButtonComponent";
 import { SellbarSearch } from "./SellBarSearch";
 import SellbarSection from "./SellBarSection";
-import { useSellbar } from "../../../../../../hooks/sells/useSellBar";
+import { useSellbar } from "../../../../../../hooks/sellers/useSellBar";
 
 export const SellBarActions = (): ReactNode => {
   const { search, barcode, cart, categories } = useSellbar();

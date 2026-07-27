@@ -4,7 +4,7 @@ import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";
 import type { PaymentMethod, SellStatusEnum } from "./sellsEnum";
 import type { EspecificationsLeftProps } from "./SellComponentTypes";
-import type { ReactNode, RefObject, MouseEvent, SetStateAction } from "react";
+import type { ReactNode, MouseEvent, SetStateAction } from "react";
 import type { SelectChangeEvent } from "@mui/material";
 import type { GridColDef } from "@mui/x-data-grid";
 import type { SortOption, ViewMode } from "../../modules/sells/components/ProductsExhibitorList/ProductToolbar";
@@ -210,38 +210,6 @@ export interface UsePrintSellTicketReturn {
     printTicket: (ticket: SellTicketType) => void;
 }
 
-export interface UseSellbarResult {
-    search: {
-        value: string;
-        onChange: (value: string) => void;
-        onClear: () => void;
-    };
-    barcode: {
-        showBarcodeInput: boolean;
-        value: string;
-        inputRef: RefObject<HTMLInputElement | null>;
-        toggleShowInput: () => void;
-        onChange: (value: string) => void;
-        onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    };
-    cart: {
-        count: number | undefined;
-        goToCart: () => void;
-    };
-    categories: {
-        list: PresentationCategory[];
-        isLoading: boolean;
-        selected: PresentationCategory | null;
-        selectedLabel: string | null;
-        getLabel: (category: PresentationCategory) => string;
-        anchorEl: HTMLElement | null;
-        isMenuOpen: boolean;
-        onOpenMenu: (event: MouseEvent<HTMLElement>) => void;
-        onCloseMenu: () => void;
-        onSelect: (category: PresentationCategory | null) => void;
-    };
-}
-
 export interface AddedItem {
   presentationId: string;
   price: number;
@@ -395,36 +363,6 @@ export interface UseProductsExhibitorResult {
     }
 }
 
-
-/*══════════════════════════════════════════════════════════════════════╗
-║ 📷 useSellbarBarcode                                                  ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
-export interface UseSellbarBarcodeParams {
-    cart: ProductTicketType[];
-    showSnackBar: (message: string, severity: AlertColor) => void;
-}
-
-export type UseSellbarBarcodeResult = UseSellbarResult['barcode'];
-
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🛒 useSellbarCart                                                     ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
-export type UseSellbarCartResult = UseSellbarResult['cart'];
-
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🏷️ useSellbarCategories                                               ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
-export interface UseSellbarCategoriesParams {
-    showSnackBar: (message: string, severity: AlertColor) => void;
-}
-
-export type UseSellbarCategoriesResult = UseSellbarResult['categories'] & {
-    selectedCategory: PresentationCategory | null;
-};
-
 export interface UseSellStatsResult {
     todaySells: number | null;
     lastSaleAt: string | null;
@@ -516,4 +454,3 @@ export interface BuildColumnsForSellsArgs {
     onDeleteRequest: (id: string, name: string) => void;
     navigate: (path: string) => void;
 }
-

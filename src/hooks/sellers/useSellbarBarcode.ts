@@ -3,9 +3,10 @@ import { useDispatch } from "react-redux";
 import { addOneUnitThunk, addToCartThunk, selectProductThunk } from "../../store/seller/sellerThunks";
 import type { Presentation } from "../../typings/presentation/presentationTypes";
 import { AlertColor } from "../../typings/ui/ui";
-import type { ProductTicketType, UseSellbarBarcodeParams, UseSellbarResult } from "@typings/sells/sellTypes";
 import type { AppDispatch } from "../../store/sell/sellSlice";
 import { getPresentationByBarcode } from "../../store/presentation/presentationThunks";
+import type { UseSellerBarBarcodeParams, UseSellerBarResult } from "@typings/seller/sellerTypes";
+import type { ProductTicketType } from "@typings/sells/sellTypes";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 📷 useSellbarBarcode                                                  ║
@@ -13,7 +14,7 @@ import { getPresentationByBarcode } from "../../store/presentation/presentationT
 ║ código de barras, y su alta en el carrito.                            ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellbarBarcodeParams): UseSellbarResult['barcode'] => {
+export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellerBarBarcodeParams): UseSellerBarResult['barcode'] => {
     const dispatch = useDispatch<AppDispatch>();
 
     const [showBarcodeInput, setShowInput] = useState(false);

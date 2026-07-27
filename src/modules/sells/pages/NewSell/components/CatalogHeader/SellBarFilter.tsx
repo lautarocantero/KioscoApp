@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import CategorySelector from "../../../../../shared/components/CategorySelector/CategorySelector";
-import type { SellbarFilterProps } from "@typings/sells/SellComponentTypes";
+import type { SellerBarFilterProps } from "@typings/seller/sellerComponentTypes";
 
 
-export const SellbarFilter = ({ categories }: SellbarFilterProps): ReactNode => {
+export const SellbarFilter = ({ categories }: SellerBarFilterProps): ReactNode => {
   const { list, selected, getLabel, onSelect } = categories;
 
   return (

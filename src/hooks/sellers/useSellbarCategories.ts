@@ -2,8 +2,8 @@ import { useEffect, useState, type MouseEvent } from "react";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 import { PRESENTATION_CATEGORY_LABELS } from "@typings/presentation/presentationCategoryLabels";
 import { AlertColor } from "../../typings/ui/ui";
-import type { UseSellbarCategoriesParams, UseSellbarCategoriesResult } from "@typings/sells/sellTypes";
 import { getAvailableCategoriesRequest } from "../../modules/presentations/api/presentationsApi";
+import type { UseSellerBarCategoriesParams, UseSellerBarCategoriesResult } from "@typings/seller/sellerTypes";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🏷️ useSellbarCategories                                               ║
@@ -12,7 +12,7 @@ import { getAvailableCategoriesRequest } from "../../modules/presentations/api/p
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 
-export const useSellbarCategories = ({ showSnackBar }: UseSellbarCategoriesParams): UseSellbarCategoriesResult => {
+export const useSellbarCategories = ({ showSnackBar }: UseSellerBarCategoriesParams): UseSellerBarCategoriesResult => {
     const [categoriesList, setCategoriesList] = useState<PresentationCategory[]>([]);
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<PresentationCategory | null>(null);

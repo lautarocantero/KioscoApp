@@ -6,9 +6,9 @@ import { useProductsListData } from "../products/useProductListData";
 import { useSellbarCart } from "./useSellbarCart";
 import { useSellbarBarcode } from "./useSellbarBarcode";
 import { useSellbarCategories } from "./useSellbarCategories";
-import type { UseSellbarResult } from "../../typings/sells/sellTypes";
+import type { UseSellerBarResult } from "@typings/seller/sellerTypes";
 
-export const useSellbar = (): UseSellbarResult => {
+export const useSellbar = (): UseSellerBarResult => {
     const { showSnackBar } = useContext(SnackBarContext)!;
     const { cart } = useSelector((state: SellerRootState) => state.seller);
 
