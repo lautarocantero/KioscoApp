@@ -8,10 +8,10 @@ import { iva } from "../../config/constants";
 import { createSellThunk } from "../../store/sell/sellsThunks";
 import { createPdfTicket } from "../../modules/shared/helpers/createPdfTicket";
 import { cleanCartThunk, removeFromCartThunk } from "../../store/seller/sellerThunks";
-import { CartAmount } from "../../typings/seller/seller";
 import { AlertColor } from "@typings/ui/ui";
 import { buildColumnsForCartProducts } from "../../modules/cart/components/cartColumns";
 import type { UseCartReturn } from "@typings/seller/sellerTypes";
+import { CartAmount } from "@typings/seller/sellerEnums";
 
 
 /*══════════════════════════════════════════════════════════════════════╗

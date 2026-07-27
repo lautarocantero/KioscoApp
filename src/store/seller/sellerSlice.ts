@@ -8,8 +8,7 @@ import {
     type SellerStateInterface
 } from '../../typings/seller/sellerTypes';
 import type { store } from '../store';
-import { CartAmount } from '../../typings/seller/seller';
-import { SortOption, ViewMode } from '../../typings/seller/sellerEnums';
+import { CartAmount, SortOption, ViewMode } from '../../typings/seller/sellerEnums';
 
 const initialState: SellerStateInterface = {
     _id: null,

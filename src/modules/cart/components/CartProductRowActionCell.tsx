@@ -3,9 +3,9 @@ import { Box, IconButton, Tooltip, type Theme } from "@mui/material";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from '../../../store/seller/sellerSlice';
 import { removeFromCartThunk } from '../../../store/seller/sellerThunks';
-import { CartAmount } from '@typings/seller/seller';
-import type { CartProductRowActionCellProps } from '@typings/sells/SellComponentTypes';
 import type { ReactNode } from 'react';
+import type { CartProductRowActionCellProps } from '@typings/seller/sellerComponentTypes';
+import { CartAmount } from '@typings/seller/sellerEnums';
 
 
 const CartProductRowActionCell = ({ product }: CartProductRowActionCellProps): ReactNode => {

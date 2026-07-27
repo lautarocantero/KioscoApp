@@ -10,8 +10,7 @@
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
 |--------------------------------------------------------------------------------------------------|    
-| 🟢 Actualmente `seller` tiene por alguna razón la data de `sells` — modificar y desacoplar       |
-| 🟢 Agregar campo status a ventas                                                                 |
+| 🟢 Agregar campo status a ventas list                                                               |
 | 🔴 Refactorizar todo el módulo                                                                   |
 |____________________________________________________________________________________________________|
 
