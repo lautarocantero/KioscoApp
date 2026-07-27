@@ -1,7 +1,7 @@
 import type { PresentationStatus } from "@typings/presentation/presentationEnum";
 import { PresentationStatusColors } from "@typings/presentation/presentationEnum";
 import { PAYMENT_METHOD_LABELS } from "@typings/sells/SellMethodLabels";
-import { PAYMENT_METHOD_VALUES, PaymentMethod, PaymentStatusEnum } from "@typings/sells/sellsEnum";
+import { PAYMENT_METHOD_VALUES, PaymentMethod, SellStatusEnum } from "@typings/sells/sellsEnum";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -115,7 +115,7 @@ export const PAYMENT_METHOD_OPTIONS: { value: PaymentMethod; label: string }[] =
         label: PAYMENT_METHOD_LABELS[value],
     }));
 
-export const PAYMENT_STATUS_OPTIONS = [
-    { value: PaymentStatusEnum.Total, label: 'Abono total' },
-    { value: PaymentStatusEnum.Parcial, label: 'Abono parcial' },
+export const SELL_STATUS_OPTIONS = [
+    { value: SellStatusEnum.Completada, label: 'Abono total' },
+    { value: SellStatusEnum.Parcial, label: 'Abono parcial' },
 ];

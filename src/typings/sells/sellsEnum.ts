@@ -14,11 +14,6 @@ export enum Currency {
   Usd = 'usd',
 }
 
-export enum PaymentStatusEnum {
-  Total = 'total',
-  Parcial = 'parcial',
-}
-
 export enum SellStatusEnum {
     Completada = 'completada',
     Parcial = 'parcial',

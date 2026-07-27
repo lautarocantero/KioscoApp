@@ -2,7 +2,7 @@ import type { CartFormValues, CreateSellResponse, ProductTicketType, SellTicketT
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
-import { Currency, PaymentMethod, PaymentStatusEnum, SellStatusEnum } from "../../typings/sells/sellsEnum";
+import { Currency, PaymentMethod, SellStatusEnum } from "../../typings/sells/sellsEnum";
 import type { AppDispatch, RootState } from "../../store/seller/sellerSlice";
 import { iva } from "../../config/constants";
 import { createSellThunk } from "../../store/sell/sellsThunks";
@@ -65,7 +65,7 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     //─── 🔎 Generación de ticket: arma el ticket (completo o parcial), lo persiste,
     //     genera el PDF, vacía el carrito y navega a la confirmación 🔎 ───
     const generateTicket = async (formValues: CartFormValues): Promise<void> => {
-        const isPartial = formValues.status === PaymentStatusEnum.Parcial;
+        const isPartial = formValues.status === SellStatusEnum.Parcial;
 
         const ticket: SellTicketType = {
             _id: crypto.randomUUID(),

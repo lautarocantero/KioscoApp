@@ -1,6 +1,6 @@
 import PaidIcon from '@mui/icons-material/Paid';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, TextField, type Theme } from "@mui/material";
-import { PAYMENT_STATUS_OPTIONS } from "../../../config/constants";
+import { SELL_STATUS_OPTIONS } from "../../../config/constants";
 import { sharedSx } from "../../shared/components/sharedSx/sharedSx";
 import type { CartPaymentStatusProps } from '@typings/sells/SellComponentTypes';
 import { useCartPaymentStatusForm } from '../../../hooks/sells/useCartPaymentStatusForm';
@@ -68,7 +68,7 @@ const CartPaymentStatus = ({total}: CartPaymentStatusProps): React.ReactNode => 
                         gap: 0,
                     })}
                 >
-                    {PAYMENT_STATUS_OPTIONS.map(({ value, label }) => (
+                    {SELL_STATUS_OPTIONS.map(({ value, label }) => (
                         <FormControlLabel key={value} value={value} control={<Radio />} label={label} />
                     ))}
                 </RadioGroup>

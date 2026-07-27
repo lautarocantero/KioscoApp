@@ -1,24 +1,13 @@
-import { Box, Chip, Typography, useTheme, type Theme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import IncompleteCircleOutlinedIcon from "@mui/icons-material/IncompleteCircleOutlined";
+import { Box } from "@mui/material";
 import type { FormCardHeaderProps } from "@typings/shared/reactComponents";
-import { useBreakpoint } from "../../../../hooks/ui/useBreakpoint"
-import { SellStatusEnum } from "@typings/sells/sellsEnum";
+import { useBreakpoint } from "../../../../hooks/ui/useBreakpoint";
+import FormHeaderIconBox from "./FormHeaderIconBox";
+import FormHeaderTitleBlock from "./FormHeaderTitleBlock";
+import FormHeaderProgressCircle from "./FormHeaderProgressCircle";
+import FormHeaderStatusChip from "./FormHeaderStatusChip";
+import FormHeaderStepsTimeline from "./FormHeaderStepsTimeline";
+import type { ReactNode } from "react";
 
-const getDefaultIcon = (color: string) => (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect x="2" y="2" width="6" height="6" rx="1.5" fill={color} />
-        <rect x="9" y="2" width="5" height="5" rx="1.5" fill={color} opacity="0.6" />
-        <rect x="9" y="8" width="5" height="6" rx="1.5" fill={color} opacity="0.6" />
-        <rect x="2" y="9" width="6" height="5" rx="1.5" fill={color} opacity="0.6" />
-    </svg>
-);
-
-const STATUS_CONFIG: Record<SellStatusEnum, { label: string; icon: React.ReactElement; accent: "green" | "gold" }> = {
-    [SellStatusEnum.Completada]: { label: "Completada", icon: <CheckCircleOutlineIcon fontSize="small" />, accent: "green" },
-    [SellStatusEnum.Parcial]: { label: "Parcial", icon: <IncompleteCircleOutlinedIcon fontSize="small" />, accent: "gold" },
-};
 
 const FormHeader = ({
     title,
@@ -28,89 +17,9 @@ const FormHeader = ({
     stepsLabels = [],
     currentStep = 0,
     status
-}: FormCardHeaderProps): React.ReactNode => {
-    const theme = useTheme();
+}: FormCardHeaderProps): ReactNode => {
     const bp = useBreakpoint();
     const isMobile = bp === "xs";
-
-    const progress = stepsLabels.length > 0
-        ? Math.round(((currentStep + 1) / stepsLabels.length) * 100)
-        : 0;
-
-    const iconBox = (
-        <Box sx={(theme: Theme) => ({
-            width: 34, height: 34, borderRadius: "8px",
-            background: theme.custom.darkBackground,
-            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-        })}>
-            {icon ?? getDefaultIcon(theme.palette.primary.main)}
-        </Box>
-    );
-
-    const titleBlock = (
-        <Box>
-            <Typography sx={(theme: Theme) => ({
-                fontSize: "1.3rem", fontWeight: 500, lineHeight: 1.3,
-                color: theme.custom.fontColor,
-            })}>
-                {title}
-            </Typography>
-            {subtitle && (
-                <Typography sx={(theme: Theme) => ({
-                    fontSize: "0.75rem", color: theme.custom.translucidWhite, mt: "2px",
-                })}>
-                    {subtitle}
-                </Typography>
-            )}
-        </Box>
-    );
-
-    const progressCircle = isMultiStep && stepsLabels.length > 0 && (
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
-            <Box sx={{ position: "relative", width: 36, height: 36 }}>
-                <svg width="36" height="36" viewBox="0 0 36 36" style={{ transform: "rotate(-90deg)" }}>
-                    <circle cx="18" cy="18" r="15" fill="none" stroke={alpha(theme.custom.darkGray, 0.1)} strokeWidth="2" />
-                    <circle
-                        cx="18" cy="18" r="15"
-                        fill="none"
-                        stroke={theme.palette.primary.main}
-                        strokeWidth="2"
-                        strokeDasharray={2 * Math.PI * 15}
-                        strokeDashoffset={2 * Math.PI * 15 * (1 - (currentStep + 1) / stepsLabels.length)}
-                        strokeLinecap="round"
-                        style={{ transition: "stroke-dashoffset 0.5s ease" }}
-                    />
-                </svg>
-                <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                    <Typography sx={{ fontSize: "0.65rem", fontWeight: 700, color: theme.palette.primary.main }}>
-                        {progress}%
-                    </Typography>
-                </Box>
-            </Box>
-            <Typography sx={(theme: Theme) => ({
-                fontSize: "0.6rem", color: theme.custom.translucidFontColor, mt: "2px",
-            })}>
-                Completado
-            </Typography>
-        </Box>
-    );
-
-    const statusChip = status && (
-        <Chip
-            size="small"
-            icon={STATUS_CONFIG[status].icon}
-            label={STATUS_CONFIG[status].label}
-            sx={(theme: Theme) => ({
-                bgcolor: alpha(theme.custom.accents[STATUS_CONFIG[status].accent], 0.15),
-                color: theme.custom.accents[STATUS_CONFIG[status].accent],
-                fontWeight: 600,
-                flexShrink: 0,
-                "& .MuiChip-icon": {
-                    color: theme.custom.accents[STATUS_CONFIG[status].accent],
-                },
-            })}
-        />
-    );
 
     return (
         <Box sx={{
@@ -120,96 +29,27 @@ const FormHeader = ({
             {isMobile ? (
                 <>
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        {iconBox}
-                        {progressCircle}
-                        {statusChip}
+                        <FormHeaderIconBox icon={icon} />
+                        {isMultiStep && <FormHeaderProgressCircle currentStep={currentStep} stepsLabels={stepsLabels} />}
+                        <FormHeaderStatusChip status={status} />
                     </Box>
                     <Box sx={{ mt: 1.5 }}>
-                        {titleBlock}
+                        <FormHeaderTitleBlock title={title} subtitle={subtitle} />
                     </Box>
                 </>
             ) : (
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                        {iconBox}
-                        {titleBlock}
+                        <FormHeaderIconBox icon={icon} />
+                        <FormHeaderTitleBlock title={title} subtitle={subtitle} />
                     </Box>
-                    {progressCircle}
-                    {statusChip}
+                    {isMultiStep && <FormHeaderProgressCircle currentStep={currentStep} stepsLabels={stepsLabels} />}
+                    <FormHeaderStatusChip status={status} />
                 </Box>
             )}
 
-            {isMultiStep && stepsLabels.length > 0 && (
-                isMobile ? (
-                    // Mobile: la línea de tiempo completa no entra en pantalla, así que
-                    // solo se muestra el paso actual (círculo + label + "X de N").
-                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 2 }}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: 0 }}>
-                            <Box sx={(theme: Theme) => ({
-                                width: 28, height: 28, borderRadius: "50%",
-                                display: "flex", alignItems: "center", justifyContent: "center",
-                                flexShrink: 0,
-                                bgcolor: theme.palette.primary.light,
-                                outline: `1px solid ${theme.palette.primary.main}`,
-                                outlineOffset: "2px",
-                            })}>
-                                <Typography sx={(theme: Theme) => ({
-                                    fontSize: "0.7rem", fontWeight: 700,
-                                    color: theme.custom.white,
-                                })}>
-                                    {currentStep + 1}
-                                </Typography>
-                            </Box>
-                            <Typography sx={(theme: Theme) => ({
-                                fontSize: "0.78rem", fontWeight: 500,
-                                color: theme.palette.primary.main,
-                                whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-                            })}>
-                                {stepsLabels[currentStep]}
-                            </Typography>
-                        </Box>
-                        <Typography sx={(theme: Theme) => ({
-                            fontSize: "0.7rem", color: theme.custom.translucidFontColor, flexShrink: 0, ml: 1,
-                        })}>
-                            {currentStep + 1} de {stepsLabels.length}
-                        </Typography>
-                    </Box>
-                ) : (
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 2 }}>
-                        {stepsLabels.map((label, index) => (
-                            <Box key={label} sx={{ display: "flex", alignItems: "center", flex: index < stepsLabels.length - 1 ? 1 : "0 0 auto" }}>
-                                <Box sx={(theme: Theme) => ({
-                                    width: 28, height: 28, borderRadius: "50%",
-                                    display: "flex", alignItems: "center", justifyContent: "center",
-                                    flexShrink: 0,
-                                    bgcolor: index <= currentStep ? theme.palette.primary.light : alpha(theme.palette.primary.light, 0.08),
-                                    outline: `1px solid ${index <= currentStep ? theme.palette.primary.main : alpha(theme.custom.fontColor, 0.15)}`,
-                                    outlineOffset: "2px",
-                                })}>
-                                    <Typography sx={(theme: Theme) => ({
-                                        fontSize: "0.7rem", fontWeight: 700,
-                                        color: index <= currentStep ? theme.custom.white : alpha(theme.custom.fontColor, 0.5),
-                                    })}>
-                                        {index + 1}
-                                    </Typography>
-                                </Box>
-                                <Typography sx={(theme: Theme) => ({
-                                    fontSize: "0.72rem", ml: 1, whiteSpace: "nowrap",
-                                    color: index === currentStep ? theme.palette.primary.main : alpha(theme.custom.fontColor, 0.45),
-                                    fontWeight: index === currentStep ? 500 : 400,
-                                })}>
-                                    {label}
-                                </Typography>
-                                {index < stepsLabels.length - 1 && (
-                                    <Box sx={(theme: Theme) => ({
-                                        flex: 1, height: "1px", mx: 1,
-                                        bgcolor: index < currentStep ? theme.palette.primary.main : alpha(theme.custom.fontColor, 0.12),
-                                    })} />
-                                )}
-                            </Box>
-                        ))}
-                    </Box>
-                )
+            {isMultiStep && (
+                <FormHeaderStepsTimeline stepsLabels={stepsLabels} currentStep={currentStep} isMobile={isMobile} />
             )}
         </Box>
     );

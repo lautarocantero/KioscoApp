@@ -2,7 +2,7 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";
-import type { PaymentMethod, PaymentStatusEnum, SellStatusEnum } from "./sellsEnum";
+import type { PaymentMethod, SellStatusEnum } from "./sellsEnum";
 import type { EspecificationsLeftProps } from "./SellComponentTypes";
 import type { ReactNode, RefObject, MouseEvent, SetStateAction } from "react";
 import type { SelectChangeEvent } from "@mui/material";
@@ -75,7 +75,7 @@ export type ProductTicketWithStockType = ProductTicketType & {
 export type GetSellApiPayloadType = Pick<Sell, '_id'>;
 
 export type CreateSellApiPayloadType = Omit<Sell, '_id' | 'modification_date'> & {
-    status: SellStatusEnum | PaymentStatusEnum | undefined;
+    status: SellStatusEnum | undefined;
     amount_paid: number | null;
     debtor_name: string | null;
 };
@@ -142,7 +142,7 @@ export interface PurchaseDateParts {
 
 export interface CartFormValues {
     payment_method: PaymentMethod;
-    status: PaymentStatusEnum;
+    status: SellStatusEnum;
     amount_paid: number | null;
     debtor_name: string | null;
 }
@@ -326,7 +326,7 @@ type CreateSellRequestPayloadType = Pick<SellTicketType,
     'sub_total' |
     'total_amount'
 > & {
-    status?: PaymentStatusEnum | SellStatusEnum;
+    status?: SellStatusEnum;
     amount_paid: number | null;
     debtor_name: string | null;
 }

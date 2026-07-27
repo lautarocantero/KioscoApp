@@ -15,3 +15,10 @@ export enum BadgeColorEnum {
     Warning = "warning",
     Success = "success",
 };
+
+{/*─────────────────── 🔎 Status 🔎 ───────────────────*/}
+
+export enum StatusColorEnum {
+    Green = "green",
+    Gold = "gold",
+};

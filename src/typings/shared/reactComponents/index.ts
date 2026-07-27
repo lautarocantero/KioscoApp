@@ -1,7 +1,8 @@
 import type { Theme } from "@emotion/react";
 import type { IconButtonProps, SxProps } from "@mui/material";
-import type { PaymentStatusEnum, SellStatusEnum } from "@typings/sells/sellsEnum";
-import type { ComponentType, ReactNode } from "react";
+import type { SellStatusEnum } from "@typings/sells/sellsEnum";
+import type { StatusColorEnum } from "@typings/ui/uiEnums";
+import type { ComponentType, JSXElementConstructor, ReactElement, ReactNode } from "react";
 
 
 export interface ActualStepComponentProps {
@@ -27,13 +28,56 @@ export interface FormNavActionsProps {
 export interface FormCardHeaderProps {
     title: string;
     subtitle?: string;
-    icon?: ReactNode;
+    icon?: ReactElement<unknown, string | JSXElementConstructor<any>> | undefined;
     isMultiStep?: boolean;
     stepsLabels?: string[];
     currentStep?: number;
-    status?: PaymentStatusEnum | SellStatusEnum;
+    status?: SellStatusEnum;
 }
 
+export interface FormHeaderDefaultIconProps {
+    color: string;
+}
+
+export interface FormHeaderIconBoxProps {
+    icon?: ReactElement<unknown, string | JSXElementConstructor<any>> | undefined;
+}
+
+export interface FormHeaderTitleBlockProps {
+    title: string;
+    subtitle?: string;
+}
+
+export interface FormHeaderStatusChipProps {
+    status?: SellStatusEnum;
+}
+
+export interface FormHeaderStepsTimelineMobileProps {
+    stepsLabels: string[];
+    currentStep: number;
+}
+
+export interface FormHeaderStepsTimelineProps {
+    stepsLabels: string[];
+    currentStep: number;
+    isMobile: boolean;
+}
+
+export interface FormHeaderStepsTimelineDesktopProps {
+    stepsLabels: string[];
+    currentStep: number;
+}
+
+export interface FormHeaderProgressCircleProps {
+    currentStep: number;
+    stepsLabels: string[];
+}
+
+export interface FormHeaderStatusConfigEntry {
+    label: string;
+    icon: ReactElement;
+    accent: StatusColorEnum;
+}
 
 export interface MultiStepHeaderConfig {
     stepsLabels: string[];
