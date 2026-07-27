@@ -170,7 +170,6 @@ export type SellStateErrorType = Pick<SellStateInterface, 'errorMessage'>
 // ║ 🪝 HOOKS  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-
 export interface UseSellsResult {
     count: number | null;
     lastSaleAt: string | null;
@@ -222,7 +221,9 @@ export type TicketSummaryType = {
 
 export type CreateSellResponse = { _id: string; message: string };
 
-//────────────────────────────────────────── 🕐 THUNKS 🕐 ─────────────────────────────────────────//
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🕐 THUNKS 🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐             ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 type CreateSellRequestPayloadType = Pick<SellTicketType,
     'currency' |
@@ -378,7 +379,9 @@ export interface BuildColumnsForProductDialogInterface {
   handleAddToCart: (args: { presentation: Presentation; quantity: number }) => void;
 }
 
-//────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📑 SELLS TABLE 📑📑📑📑📑📑📑📑📑📑📑📑📑📑📑                     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export type SellsHandleDetailType = Pick<SellEntityInterface, '_id'> & {
     navigate: NavigateFunction,

@@ -5,91 +5,93 @@ import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import type { ViewMode } from "../../modules/sells/components/ProductsExhibitorList/ProductToolbar";
 import type { ReactNode } from "react";
 import type { SvgIconProps } from "@mui/material";
-import type { PaymentMethod } from "./sellsEnum";
+import type { PaymentMethod, SellStatus, SellStatusEnum } from "./sellsEnum";
 
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📑 SELLS LIST 📑📑📑📑📑📑📑📑📑📑📑📑📑📑📑                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
-   //────────────────────────────────────────── 📑 Sells List 📑 ───────────────────────────────────────────//
+export interface SellFormProps {
+    mode?: FormModeComplexEnum;
+}
 
-    export interface SellFormProps {
-        mode?: FormModeComplexEnum;
-    }
+export interface EmptyProductListProps {
+    isEmpty: boolean
+}
 
-    export interface EmptyProductListProps {
-        isEmpty: boolean
-    }
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📑 SELLS DETAIL 📑📑📑📑📑📑📑📑📑📑📑📑📑📑📑                     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
-   //────────────────────────────────────────── 📑 Sells Detail 📑 ───────────────────────────────────────────//
-
-   export interface SellDetailHeaderProps {
+export interface SellDetailHeaderProps {
     ticketNumber: string;
     status: SellStatus;
-    }
+}
 
-    export interface SellDetailInfoBarProps {
-        purchaseDate: string;
-        purchaseTime: string;
-        timezone: string;
-        sellerName: string;
-        paymentMethodLabel: string;
-        currency: string;
-    }
+export interface SellDetailInfoBarProps {
+    purchaseDate: string;
+    purchaseTime: string;
+    timezone: string;
+    sellerName: string;
+    paymentMethodLabel: string;
+    currency: string;
+}
 
-    export interface SellDetailProductsSoldProps {
-        products: SoldProductRow[];
-    }
+export interface SellDetailProductsSoldProps {
+    products: SoldProductRow[];
+}
 
-    export interface SellDetailPaymentDataProps {
-        payment: {
-            method: PaymentMethod;
-            status: SellStatusEnum;
-            amountPaid: number | null;
-            debtorName: string | null;
-            pendingAmount: number | null;
-        };
-    }
-
-    export interface SellDetailSoldDataProps {
-        subTotal: number;
-        iva: number;
-        ivaPercentage: number;
-        total: number;
-    }
-
-    export interface SellDetailAditionalDataProps {
-        subTotal: number;
-        iva: number;
-        ivaPercentage: number;
-        total: number;
-        currency: string;
-        sellId: string;
-        pendingBalance: number | null;
+export interface SellDetailPaymentDataProps {
+    payment: {
+        method: PaymentMethod;
+        status: SellStatusEnum;
+        amountPaid: number | null;
         debtorName: string | null;
-    }
+        pendingAmount: number | null;
+    };
+}
 
-    export interface SellDetailPendingBalanceProps {
-        pendingBalance: number | null;
-        debtorName: string | null;
-    }
+export interface SellDetailSoldDataProps {
+    subTotal: number;
+    iva: number;
+    ivaPercentage: number;
+    total: number;
+}
 
-    export interface SellDetailActionsProps {
-        onBack: () => void;
-        onPrintReceipt: () => void;
-    }
+export interface SellDetailAditionalDataProps {
+    subTotal: number;
+    iva: number;
+    ivaPercentage: number;
+    total: number;
+    currency: string;
+    sellId: string;
+    pendingBalance: number | null;
+    debtorName: string | null;
+}
 
-   //────────────────────────────────────────── 📑 Sells Table 📑 ───────────────────────────────────────────//
-   
+export interface SellDetailPendingBalanceProps {
+    pendingBalance: number | null;
+    debtorName: string | null;
+}
 
-    export interface SellsTableProps {
-       isLoading: boolean;
-       sells: SellTicketType[];
-    }
+export interface SellDetailActionsProps {
+    onBack: () => void;
+    onPrintReceipt: () => void;
+}
 
-    export interface SellDataProps {
-        currentSell: SellTicketType | null;
-    }
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📑 SELLS TABLE 📑📑📑📑📑📑📑📑📑📑📑📑📑📑📑                     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
-    export type SellCartDataProps = Pick<SellDataProps, 'currentSell'>;
+export interface SellsTableProps {
+   isLoading: boolean;
+   sells: SellTicketType[];
+}
 
-    export type SellCartProductsProps = Pick<SellDataProps, 'currentSell'>;
+export interface SellDataProps {
+    currentSell: SellTicketType | null;
+}
 
- 
+export type SellCartDataProps = Pick<SellDataProps, 'currentSell'>;
+
+export type SellCartProductsProps = Pick<SellDataProps, 'currentSell'>;

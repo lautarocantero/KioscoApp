@@ -1,7 +1,6 @@
 import type { CartFormValues, ProductTicketType, ProductTicketWithStockType, TicketSummaryType } from "@typings/sells/sellTypes";
 import type { Presentation } from "../presentation/presentationTypes";
-import type { CartAmount } from "./seller";
-import type { SellerRol, SellerStatus, SortOption, ViewMode } from "./sellerEnums";
+import type { CartAmount, SellerRol, SellerStatus, SortOption, ViewMode } from "./sellerEnums";
 import type { Product, ProductWithPresentations } from "@typings/product/productTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
@@ -34,8 +33,9 @@ export interface SellerSliceState {
     errorMessage:  string | null;
 }
 
-
-//──────────────────────────────────────────── 📦 Payloads ────────────────────────────────────────────//
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📦 PAYLOADS 📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦                         ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export type CreateSellerPayload = Omit<Seller, "_id" | "__v">;
 
@@ -45,7 +45,9 @@ export interface DeleteSellerPayload {
     _id: string;
 }
 
-//──────────────────────────────────────────── 🍕 SLICE  🍕 ───────────────────────────────────────────//
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🍕 SLICE 🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 
 export interface SellerStateInterface {
@@ -86,7 +88,9 @@ export type SellerSetViewModePayload = Pick<SellerStateInterface, 'viewMode'>
 
 export type SellerSetPagePayload = Pick<SellerStateInterface, 'page'>
 
-//──────────────────────────────────────────── 🌀 THUNK 🌀 ───────────────────────────────────────────//
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🌀 THUNK 🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀               ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface SelectProductThunkInterface {
     productData: ProductWithPresentations,
@@ -104,9 +108,9 @@ export type removeFromCartInterface = Pick<SellerStateInterface, '_id'> & {
 
 export type SellerError = Pick<SellerStateInterface, 'errorMessage'>;
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 useSellerBar — armado de carrito / catálogo (ex "useSellbar")      ║
-╚══════════════════════════════════════════════════════════════════════╝*/
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🪝 USE SELLER BAR — armado de carrito / catálogo (ex "useSellbar")   ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface UseSellerBarResult {
     search: {
@@ -140,7 +144,9 @@ export interface UseSellerBarResult {
     };
 }
 
-/*──────────────── 📷 useSellerBarBarcode ────────────────*/
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📷 USE SELLER BAR BARCODE 📷📷📷📷📷📷📷📷📷📷📷📷📷📷📷           ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface UseSellerBarBarcodeParams {
     cart: ProductTicketType[];
@@ -149,11 +155,15 @@ export interface UseSellerBarBarcodeParams {
 
 export type UseSellerBarBarcodeResult = UseSellerBarResult['barcode'];
 
-/*──────────────── 🛒 useSellerBarCart ────────────────*/
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🛒 USE SELLER BAR CART 🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒         ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export type UseSellerBarCartResult = UseSellerBarResult['cart'];
 
-/*──────────────── 🏷️ useSellerBarCategories ────────────────*/
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🏷️ USE SELLER BAR CATEGORIES 🏷️🏷️🏷️🏷️🏷️🏷️🏷️🏷️🏷️🏷️🏷️🏷️🏷️     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface UseSellerBarCategoriesParams {
     showSnackBar: (message: string, severity: AlertColor) => void;
