@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addOneUnitThunk, addToCartThunk, selectProductThunk } from "../../store/seller/sellerThunks";
+import { addOneUnitThunk, addToCartThunk, selectPresentationThunk } from "../../store/seller/sellerThunks";
 import type { Presentation } from "../../typings/presentation/presentationTypes";
 import { AlertColor } from "../../typings/ui/ui";
 import type { AppDispatch } from "../../store/sell/sellSlice";
 import { getPresentationByBarcode } from "../../store/presentation/presentationThunks";
 import type { UseSellerBarBarcodeParams, UseSellerBarResult } from "@typings/seller/sellerTypes";
-import type { ProductTicketType } from "@typings/sells/sellTypes";
+import type { ProductTicketWithStockType } from "@typings/sells/sellTypes";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 📷 useSellbarBarcode                                                  ║
@@ -34,7 +34,7 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellerBarBarcodePar
             throw new Error("No se ha seleccionado un producto");
         }
 
-        await dispatch(selectProductThunk({ productData: prod }));
+        await dispatch(selectPresentationThunk({ presentationData: prod }));
         return prod;
     };
 
@@ -50,7 +50,15 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellerBarBarcodePar
             return;
         }
 
-        const productObject: ProductTicketType | undefined = cart?.find((prod) => prod._id === product._id);
+        {/*─────────────────── 🔎 Sin stock disponible 🔎 ───────────────────*/}
+
+        if (product.stock <= 0) {
+            setBarcode("");
+            showSnackBar(`Sin stock disponible`, AlertColor.Error);
+            return;
+        }
+
+        const productObject: ProductTicketWithStockType | undefined = cart?.find((prod) => prod._id === product._id);
 
         {/*─────────────────── 🔎 Si el producto ya se encuentra en el carrito 🔎 ───────────────────*/}
 
@@ -68,9 +76,10 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellerBarBarcodePar
             _id, name, description, image_url,
             brand, sku, model_type,
             model_size, price, expiration_date,
+            product_id, stock,
         } = product;
 
-        const productTicket: ProductTicketType = {
+        const productTicket: ProductTicketWithStockType = {
             _id,
             name,
             description,
@@ -82,6 +91,8 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellerBarBarcodePar
             price,
             expiration_date,
             stock_required: 1,
+            product_id,
+            stock,
         };
 
         const wasAdded = await dispatch(addToCartThunk({ productData: productTicket }));

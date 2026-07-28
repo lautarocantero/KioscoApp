@@ -55,6 +55,7 @@ export interface SellerStateInterface {
     name: string,
     cart: ProductTicketWithStockType[],
     productSelected: ProductWithPresentations | null,
+    presentationSelected: Presentation | null,
     description: string,
     created_at: string,
     updated_at: string,
@@ -82,6 +83,10 @@ export interface SellerSetProductSlicePayload {
     product: ProductWithPresentations,
 };
 
+export interface SellerSetPresentationSlicePayload {
+    presentation: Presentation,
+};
+
 export type SellerSetSortPayload = Pick<SellerStateInterface, 'sort'>
 
 export type SellerSetViewModePayload = Pick<SellerStateInterface, 'viewMode'>
@@ -94,6 +99,10 @@ export type SellerSetPagePayload = Pick<SellerStateInterface, 'page'>
 
 export interface SelectProductThunkInterface {
     productData: ProductWithPresentations,
+}
+
+export interface SelectPresentationThunkInterface {
+    presentationData: Presentation,
 }
 
 export interface AddToCartThunkInterface {
@@ -149,7 +158,7 @@ export interface UseSellerBarResult {
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface UseSellerBarBarcodeParams {
-    cart: ProductWithPresentations[];
+    cart: ProductTicketWithStockType[];
     showSnackBar: (message: string, severity: AlertColor) => void;
 }
 

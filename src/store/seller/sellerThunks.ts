@@ -1,8 +1,8 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { z } from "zod";
-import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
+import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectPresentationThunkInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
 import { handleError } from "../shared/handlerStoreError";
-import { addToCartAction, addUnitAction, cleanCart, removeFromCart, setError, setProductSelected } from "./sellerSlice";
+import { addToCartAction, addUnitAction, cleanCart, removeFromCart, setError, setPresentationSelected, setProductSelected } from "./sellerSlice";
 
 export const PresentationEntitySchema = z.object({
   _id: z.string().nullable(),
@@ -37,6 +37,22 @@ export const ProductTicketSchema = z.object({
 });
 
 export type PresentationEntity = z.infer<typeof PresentationEntitySchema>;
+
+export const selectPresentationThunk = ({ presentationData }: SelectPresentationThunkInterface) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+
+        if (!presentationData) {
+            dispatch(setError({ errorMessage: "No se ha proporcionado una presentación."}));
+            return;
+        }
+
+        try{
+            dispatch(setPresentationSelected({ presentation: presentationData }));
+        } catch(error: unknown) {
+            handleError(error);
+        }
+    }
+}
 
 export const selectProductThunk = ({ productData }: SelectProductThunkInterface) => {
     return async (dispatch: Dispatch): Promise<void> => {

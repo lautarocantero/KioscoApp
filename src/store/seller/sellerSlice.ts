@@ -4,6 +4,7 @@ import {
     type SellerAddUnitActionPayload,
     type SellerError,
     type SellerRemoveFromCartActionPayload,
+    type SellerSetPresentationSlicePayload,
     type SellerSetProductSlicePayload,
     type SellerStateInterface
 } from '../../typings/seller/sellerTypes';
@@ -15,6 +16,7 @@ const initialState: SellerStateInterface = {
     name: '',
     cart: [],
     productSelected: null,
+    presentationSelected: null,
     description: '',
     created_at: '',
     updated_at: '',
@@ -33,6 +35,12 @@ export const sellerSlice = createSlice({
             const { product } = payload;
 
             state.productSelected = product;
+        },
+        setPresentationSelected: (state: SellerStateInterface, action: PayloadAction<SellerSetPresentationSlicePayload>) => {
+            const { payload } = action;
+            const { presentation } = payload;
+
+            state.presentationSelected = presentation;
         },
         addToCartAction: (state: SellerStateInterface, action: PayloadAction<SellerAddToCartSlicePayload>) => {
             const { payload } = action;
@@ -95,6 +103,7 @@ export const sellerSlice = createSlice({
 
 export const {
   setProductSelected,
+  setPresentationSelected,
   addToCartAction,
   addUnitAction,
   removeFromCart,
