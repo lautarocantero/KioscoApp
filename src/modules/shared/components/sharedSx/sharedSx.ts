@@ -10,7 +10,7 @@ const fontSize = {
 };
 
 /** Genera el borde/outline estándar de un campo, con color y radio configurables */
-const outlinedBorderSx = (theme: Theme, borderColor: string, radius: string) => ({
+const outlinedBorderSx = (borderColor: string, radius: string) => ({
     "& .MuiOutlinedInput-root": { borderRadius: radius },
     "& .MuiOutlinedInput-notchedOutline": { borderColor },
     "&:hover .MuiOutlinedInput-notchedOutline": { borderColor },
@@ -50,7 +50,7 @@ export const filterInputSx = (theme: Theme) => ({
     color: theme.custom.fontColor,
     borderRadius: "10px",
     minWidth: 200,
-    ...outlinedBorderSx(theme, theme.custom.darkGray, "10px"),
+    ...outlinedBorderSx(theme.custom.darkGray, "10px"),
 });
 
 export const datePickerInputSx = (theme: Theme, isActive = false) => ({
@@ -59,7 +59,7 @@ export const datePickerInputSx = (theme: Theme, isActive = false) => ({
     "& .MuiPickersInputBase-sectionsContainer": {
         fontSize: fontSize.filterInput,
     },
-    ...outlinedBorderSx(theme, theme.custom.darkGray, "20px"),
+    ...outlinedBorderSx(theme.custom.darkGray, "20px"),
     "& .MuiOutlinedInput-notchedOutline": {
         border: `1px solid ${theme.custom.darkGray}`,
         borderRadius: "20px",
