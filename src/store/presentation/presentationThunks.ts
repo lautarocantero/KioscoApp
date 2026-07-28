@@ -34,6 +34,30 @@ export const fetchPresentationsByProductId = (product_id: string) => {
     return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
         dispatch(startLoadingPresentations());
         try {
+            const presentations = await getPresentationsByProductIdRequest({ product_id });
+            dispatch(setPresentations(presentations));
+            return presentations;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudieron cargar las presentaciones" }));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 fetchPresentationsWithStockByProductId                              ║
+║ ⚠️  Uso: new sell page — solo presentaciones con stock disponible      ║
+║     para vender (picker de carrito).                                   ║
+║ 📥 Entrada: product_id                                                 ║
+║ ⚙️  Proceso:                                                            ║
+║   1. GET /presentations-with-stock por product_id                      ║
+║   2. Guarda el resultado en store con setPresentations                 ║
+║ 📤 Salida: Presentation[] o undefined en caso de error                 ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const fetchPresentationsWithStockByProductId = (product_id: string) => {
+    return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
+        dispatch(startLoadingPresentations());
+        try {
             const presentations = await getPresentationsWithStockByProductIdRequest({ product_id });
             dispatch(setPresentations(presentations));
             return presentations;

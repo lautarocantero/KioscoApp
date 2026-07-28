@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import type { AppDispatch, RootState as PresentationState } from "../../store/presentation/presentationSlice";
-import { fetchPresentationsByProductId } from "../../store/presentation/presentationThunks";
+import { fetchPresentationsWithStockByProductId } from "../../store/presentation/presentationThunks";
 import type { RootState as SellerRootState } from "../../store/seller/sellerSlice";
 import type { UseCartPresentationPickerReturn } from "@typings/seller/sellerTypes";
 
@@ -11,7 +11,7 @@ import type { UseCartPresentationPickerReturn } from "@typings/seller/sellerType
 ║                                                                       ║
 ║ Trae las presentaciones del producto seleccionado en el flujo de     ║
 ║ venta, para elegir cuál agregar al carrito. Sin búsqueda/debounce —  ║
-║ a diferencia de usePresentationsListData, acá solo se listan las     ║
+║ acá solo se listan las                                               ║
 ║ presentaciones del producto activo.                                  ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
@@ -30,7 +30,7 @@ const useCartPresentationPicker = (): UseCartPresentationPickerReturn => {
     useEffect(() => {
         const productId = productSelected?._id;
         if (!productId) return;
-        void dispatch(fetchPresentationsByProductId(productId));
+        void dispatch(fetchPresentationsWithStockByProductId(productId));
     }, [dispatch, productSelected]);
 
     return { productSelected, presentations };
