@@ -5,6 +5,13 @@ import WarehouseIcon from "@mui/icons-material/Warehouse";
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import NewLabelIcon from '@mui/icons-material/NewLabel';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import StarPurple500Icon from '@mui/icons-material/StarPurple500';
+import GroupsIcon from '@mui/icons-material/Groups';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import type { OptionLink } from "@typings/ui/layout.types";
 import stocoLogo from "../../public/images/logo/StocoLogoalt.png";
 
@@ -72,4 +79,27 @@ export const ShopAdminNavLinks: OptionLink[] = [
     url: '/shop-administrators-edit', 
     subtitle: '' 
   },
+];
+
+export const CategoriesNavLinks: OptionLink[] = [
+  { description: 'Ver Categorias', icon: <CollectionsBookmarkIcon />, url: '/categories-list', subtitle: '' },
+  { description: 'Crear Categoria', icon: <NewLabelIcon />, url: '/categories-create', subtitle: '' },
+  { description: 'Editar Categoria', icon: <DriveFileRenameOutlineIcon />, url: '/categories-edit', subtitle: '' },
+];
+
+export const ProvidersNavLinks: OptionLink[] = [
+  { description: 'Ver Proveedores', icon: <RecentActorsIcon />, url: '/providers-list', subtitle: '' },
+  { description: 'Crear Proveedor', icon: <PersonAddAlt1Icon />, url: '/providers-create', subtitle: '' },
+  { description: 'Editar Proveedor', icon: <ManageAccountsIcon />, url: '/providers-edit', subtitle: '' },
+];
+
+export const AccountNavLinks: OptionLink[] = [
+  { description: 'Editar cuenta', icon: <ManageAccountsIcon />, url: '/account-edit', subtitle: '' },
+  { description: 'Plan de subscripcion', icon: <WorkspacePremiumIcon />, url: '/account-subscription', subtitle: '' },
+];
+
+export const ShopNavLinks: OptionLink[] = [
+  { description: 'Administradores', icon: <StarPurple500Icon />, url: '/shop-administrators', subtitle: '' },
+  { description: 'Vendedores', icon: <GroupsIcon />, url: '/shop-sellers', subtitle: '' },
+  { description: 'Estadisticas', icon: <QueryStatsIcon />, url: '/shop-stadistics', subtitle: '' },
 ];

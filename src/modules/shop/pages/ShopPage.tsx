@@ -1,22 +1,14 @@
-import StarPurple500Icon from '@mui/icons-material/StarPurple500';
-import GroupsIcon from '@mui/icons-material/Groups';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
+// ShopPage.tsx
 import StoreIcon from '@mui/icons-material/Store';
 import DisplayOptions from '../../shared/components/OptionsItems/DisplayOptions';
-import type { LinksType } from '../../../typings/account/accountComponentTypes';
+import { useShopLinks } from '../../../hooks/shop/useLinksData';
 
-const shopLinks: LinksType[] = [
-  { icon: <StarPurple500Icon />, description: 'Administradores', url: '/shop-administrators'},
-  { icon: <GroupsIcon />, description: 'Vendedores', url: '/shop-sellers'},
-  { icon: <QueryStatsIcon />, description: 'Estadisticas', url: '/shop-stadistics'},
-]
+const ShopPage = (): React.ReactNode => {
+  const links = useShopLinks();
 
-
-const ShopPage = ():React.ReactNode => {
-
-    return (
-      <DisplayOptions title='Tienda' icon={<StoreIcon />}  links={shopLinks}/>
-    )
-}
+  return (
+    <DisplayOptions title='Tienda' icon={<StoreIcon />} links={links} />
+  );
+};
 
 export default ShopPage;
