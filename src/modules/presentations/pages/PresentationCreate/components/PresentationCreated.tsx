@@ -1,7 +1,7 @@
-import SuccessCard from "../../../../shared/components/SuccessCard";
 import type { PresentationCreatedProps } from "@typings/presentation/presentationComponentTypes";
 import type { ReactNode } from "react";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import SuccessCard from "../../../../shared/components/SuccessCard/SuccessCard";
 
 
 const PresentationCreated = ({ 

@@ -1,8 +1,8 @@
-import SuccessCard from "../../../../shared/components/SuccessCard";
 import ProductCreatedTimeline from "./ProductCreatedTimeline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import type { ProductCreatedComponentProps } from "@typings/product/productComponentTypes";
+import SuccessCard from "../../../../shared/components/SuccessCard/SuccessCard";
 
 
 const ProductCreated = ({ createdProduct, handleCreatePresentation, handleSeeDetail, handleCreateAnotherProduct, handleBackToProducts }: ProductCreatedComponentProps): React.ReactNode => {

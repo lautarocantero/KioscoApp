@@ -1,6 +1,6 @@
 import type { ProductEditedProps } from "@typings/product/productComponentTypes";
-import SuccessCard from "../../../../shared/components/SuccessCard";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import SuccessCard from "../../../../shared/components/SuccessCard/SuccessCard";
 
 
 const ProductEdited = ({ updatedProduct, handleSeeDetail, handleBackToProducts }: ProductEditedProps): React.ReactNode => {
