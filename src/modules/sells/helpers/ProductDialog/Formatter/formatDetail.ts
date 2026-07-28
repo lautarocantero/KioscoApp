@@ -1,6 +1,7 @@
-import type { ProductTicketWithStockType, PurchaseDateParts, SellEditFormValues, SoldProductRow } from "@typings/sells/sellTypes";
+import type { PaymentDetail, ProductTicketWithStockType, PurchaseDateParts, SellEditFormValues, SoldProductRow } from "@typings/sells/sellTypes";
 import { MONTHS_ES } from "../../../../../config/constants";
 import { SellStatusEnum } from "@typings/sells/sellsEnum";
+import { PAYMENT_METHOD_LABELS } from "@typings/sells/SellMethodLabels";
 
 
 /*══════════ 📅 parsePurchaseDate ══════════╗
@@ -64,14 +65,22 @@ export const computeIvaPercentage = (iva: number, subTotal: number): number => {
 ║ payment_method. Se arma un PaymentDetail con   ║
 ║ lo disponible y placeholders para lo que falta.║
 ╚═══════════════════════════════════════════╝*/
-export const buildPaymentDetail = (values: SellEditFormValues) => ({
-    method: values.payment_method,
-    status: values.status,
-    amountPaid: values.status === SellStatusEnum.Parcial ? values.amount_paid : null,
-    debtorName: values.status === SellStatusEnum.Parcial ? values.debtor_name : null,
-    pendingAmount: values.status === SellStatusEnum.Parcial && values.amount_paid !== null
-        ? values.total_amount - values.amount_paid
-        : null,
-});
+export const buildPaymentDetail = (values: SellEditFormValues): PaymentDetail => {
+    const isPartial = values.status === SellStatusEnum.Parcial;
+    const paymentTimestamp = values.modification_date ?? values.purchase_date;
+    const { date, time } = parsePurchaseDate(paymentTimestamp);
+
+    return {
+        methodLabel: PAYMENT_METHOD_LABELS[values.payment_method],
+        approved: values.status === SellStatusEnum.Completada,
+        reference: values._id,
+        paymentDate: time ? `${date} ${time}` : date,
+        amountPaid: isPartial ? values.amount_paid : null,
+        debtorName: isPartial ? values.debtor_name : null,
+        pendingAmount: isPartial && values.amount_paid !== null
+            ? values.total_amount - values.amount_paid
+            : null,
+    };
+};
 
 export const formatAmount = (value: number): string => `$${value.toLocaleString("es-AR")}`;

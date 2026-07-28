@@ -123,6 +123,9 @@ export interface PaymentDetail {
     approved: boolean;
     reference: string;
     paymentDate: string;
+    amountPaid: number | null;
+    pendingAmount: number | null;
+    debtorName: string | null;
 }
 
 export interface InfoItem {

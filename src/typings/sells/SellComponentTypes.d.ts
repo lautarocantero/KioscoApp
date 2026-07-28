@@ -42,13 +42,7 @@ export interface SellDetailProductsSoldProps {
 }
 
 export interface SellDetailPaymentDataProps {
-    payment: {
-        method: PaymentMethod;
-        status: SellStatusEnum;
-        amountPaid: number | null;
-        debtorName: string | null;
-        pendingAmount: number | null;
-    };
+    payment: PaymentDetail;
 }
 
 export interface SellDetailSoldDataProps {
