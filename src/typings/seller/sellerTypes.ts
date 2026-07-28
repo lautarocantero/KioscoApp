@@ -149,7 +149,7 @@ export interface UseSellerBarResult {
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface UseSellerBarBarcodeParams {
-    cart: ProductTicketType[];
+    cart: ProductWithPresentations[];
     showSnackBar: (message: string, severity: AlertColor) => void;
 }
 

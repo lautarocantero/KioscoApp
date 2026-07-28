@@ -44,11 +44,21 @@ export async function parseApiError(
     fallbackMessage = "Ocurrió un error inesperado. Intentá nuevamente.",
 ): Promise<string> {
 
+    // ── Request cancelada a propósito (AbortController) — no es un error real ──
+    if (error instanceof DOMException && error.name === "AbortError") {
+        return "";
+    }
+
     // ── Response cruda sin .ok (por si en algún punto se pasa directo) ──
     if (error instanceof Response) {
         try {
             const body = await error.json();
-            if (body?.message) return body.message;
+            // 🔧 FIX: validar que message sea realmente un string antes de devolverlo.
+            // body es `any` (viene de .json()), así que sin este chequeo se podía
+            // devolver un objeto/array como si fuera el string que promete la firma.
+            if (typeof body?.message === "string" && body.message.trim().length > 0) {
+                return body.message;
+            }
         } catch {
             // body no era JSON válido, seguimos al mapeo por status
         }
