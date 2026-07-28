@@ -1,4 +1,4 @@
-import type { ProductTicketType, ValidationResultType } from "@typings/sells/sellTypes";
+import type { ProductTicketWithStockType, ValidationResultType } from "@typings/sells/sellTypes";
 import validateProductForCart from "../../../../sells/helpers/ProductDialog/Validation/ValidateProductForCart";
 import { AlertColor } from "@typings/ui/ui";
 import formatProductTicket from "../../../../sells/helpers/ProductDialog/Handlers/handleFormatProductTicket";
@@ -21,7 +21,7 @@ const handleAddProductDialogItemToCart = async ({
     }
 
     const { name }: { name: string } = presentation;
-    const productTicketObject: ProductTicketType | undefined = formatProductTicket({ Presentation: presentation, requiredStock: quantity });
+    const productTicketObject: ProductTicketWithStockType | undefined = formatProductTicket({ Presentation: presentation, requiredStock: quantity });
 
     if (!productTicketObject) {
         showSnackBar(`Error agregando el producto al carrito`, AlertColor.Error);

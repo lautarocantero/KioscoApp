@@ -46,7 +46,7 @@ function GenericListCell<T>({
         sx={{ cursor: "default", display: "inline-block", "&:focus-visible": { outline: (theme) => `2px solid ${theme.palette.primary.main}`, outlineOffset: 2 } }}
       >
         <Typography variant="body2">
-          {visible.map((item, i) => getLabel(item)).join(", ")}
+          {visible.map((item) => getLabel(item)).join(", ")}
           {rest.length > 0 && (
             <Typography
               component="span"

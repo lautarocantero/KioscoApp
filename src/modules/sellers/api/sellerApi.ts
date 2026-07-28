@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../../../config/api";
-import type { Seller } from "@typings/seller/sellerPersonTypes";
+import type { Seller } from "../../../typings/seller/sellerTypes";
 
 const baseUrl = axios.create({
     baseURL: `${API_URL}/seller`,

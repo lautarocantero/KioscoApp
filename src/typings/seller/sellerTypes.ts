@@ -1,4 +1,4 @@
-import type { CartFormValues, ProductTicketType, ProductTicketWithStockType, TicketSummaryType } from "@typings/sells/sellTypes";
+import type { CartFormValues, ProductTicketWithStockType, TicketSummaryType } from "@typings/sells/sellTypes";
 import type { Presentation } from "../presentation/presentationTypes";
 import type { CartAmount, SellerRol, SellerStatus, SortOption, ViewMode } from "./sellerEnums";
 import type { Product, ProductWithPresentations } from "@typings/product/productTypes";
