@@ -1,21 +1,14 @@
+// ShopAdminPage.tsx
 import StarPurple500Icon from '@mui/icons-material/StarPurple500';
-import RecentActorsIcon from '@mui/icons-material/RecentActors';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DisplayOptions from '../../shared/components/OptionsItems/DisplayOptions';
-import type { LinksType } from '../../../typings/account/accountComponentTypes';
+import { useShopAdminLinks } from '../../../hooks/shopAdmin/useLinksData';
 
-const shopAdminLinks: LinksType[] = [
-  { icon: <RecentActorsIcon />, description: 'Ver Administradores', url: '/shop-administrators-list'},
-  { icon: <PersonAddAlt1Icon />, description: 'Crear Administrador', url: '/shop-administrators-create'},
-  { icon: <ManageAccountsIcon />, description: 'Editar Administrador', url: '/shop-administrators-edit'},
-]
+const ShopAdminPage = (): React.ReactNode => {
+  const links = useShopAdminLinks();
 
-const ShopAdminPage = ():React.ReactNode => {
-
-        return (
-          <DisplayOptions title='Administradores' icon={<StarPurple500Icon />}  links={shopAdminLinks}/>
-        )       
-}
+  return (
+    <DisplayOptions title='Administradores' icon={<StarPurple500Icon />} links={links} />
+  );
+};
 
 export default ShopAdminPage;

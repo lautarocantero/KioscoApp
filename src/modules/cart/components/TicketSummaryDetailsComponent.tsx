@@ -1,7 +1,7 @@
 import { Box, Typography, type Theme } from "@mui/material";
 import type { ReactNode } from 'react';
-import type { TicketSummaryDetailsProps } from '@typings/sells/SellComponentTypes';
 import { getTicketSummaryItems } from "./SummaryItems";
+import type { TicketSummaryDetailsProps } from "@typings/seller/sellerComponentTypes";
 
 
 const TicketSummaryDetailsComponent = ({ ticketSummary }: TicketSummaryDetailsProps): ReactNode => {

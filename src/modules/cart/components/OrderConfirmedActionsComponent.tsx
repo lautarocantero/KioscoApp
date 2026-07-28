@@ -1,9 +1,9 @@
 import PrintIcon from '@mui/icons-material/Print';
 import { Box } from "@mui/material";
 import type { ReactNode } from 'react';
-import type { OrderConfirmedActionsProps } from '@typings/sells/SellComponentTypes';
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
 import EmptyButton from "../../shared/components/Buttons/EmptyButton";
+import type { OrderConfirmedActionsProps } from '@typings/seller/sellerComponentTypes';
 
 
 const OrderConfirmedActionsComponent = ({ onPrintTicket, onNewSell, goToTicketDetail }: OrderConfirmedActionsProps): ReactNode => {

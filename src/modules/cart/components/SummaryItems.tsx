@@ -2,10 +2,10 @@ import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import EventOutlinedIcon from '@mui/icons-material/EventOutlined';
-import type { SummaryItem } from '@typings/sells/SellComponentTypes';
 import { PAYMENT_METHOD_LABELS } from '@typings/sells/SellMethodLabels';
 import type { TicketSummaryType } from '@typings/sells/sellTypes';
 import { formatCurrency } from '../helpers/formatCurrency';
+import type { SummaryItem } from '@typings/seller/sellerComponentTypes';
 
 
 export const getTicketSummaryItems = (ticketSummary: TicketSummaryType): SummaryItem[] => [

@@ -6,6 +6,7 @@ import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOu
 import type { InfoItem } from "@typings/sells/sellTypes";
 import type { SellDetailInfoBarProps } from "@typings/sells/SellComponentTypes";
 
+
 // 🔧 Hardcodeado temporalmente — luego vendrá del backend (paid_amount < total_amount)
 const MOCK_IS_PARTIAL_PAYMENT = true;
 

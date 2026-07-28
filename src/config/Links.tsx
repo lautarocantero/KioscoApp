@@ -2,6 +2,9 @@ import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import CategoryIcon from "@mui/icons-material/Category";
 import StoreIcon from "@mui/icons-material/Store";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import type { OptionLink } from "@typings/ui/layout.types";
 import stocoLogo from "../../public/images/logo/StocoLogoalt.png";
 
@@ -47,5 +50,26 @@ export const SidebarNavLinks: OptionLink[] = [
     icon: <WarehouseIcon />,
     url: "/providers",
     subtitle: "",
+  },
+];
+
+export const ShopAdminNavLinks: OptionLink[] = [
+  { 
+    description: 'Ver Administradores', 
+    icon: <RecentActorsIcon />, 
+    url: '/shop-administrators-list', 
+    subtitle: '' 
+  },
+  { 
+    description: 'Crear Administrador', 
+    icon: <PersonAddAlt1Icon />, 
+    url: '/shop-administrators-create', 
+    subtitle: '' 
+  },
+  { 
+    description: 'Editar Administrador',
+    icon: <ManageAccountsIcon />, 
+    url: '/shop-administrators-edit', 
+    subtitle: '' 
   },
 ];

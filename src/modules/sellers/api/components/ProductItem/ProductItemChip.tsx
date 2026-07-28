@@ -1,7 +1,7 @@
 import { Box, Chip, type Theme } from "@mui/material";
 import CategoryIcon from "@mui/icons-material/Category";
 import type { ReactNode } from "react";
-import type { ProductItemChipProps } from "@typings/sells/SellComponentTypes";
+import type { ProductItemChipProps } from "@typings/seller/sellerComponentTypes";
 
 const ProductItemChip = ({totalStock}: ProductItemChipProps): ReactNode => {
 

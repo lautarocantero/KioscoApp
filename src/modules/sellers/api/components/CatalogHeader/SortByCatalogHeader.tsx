@@ -3,7 +3,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import type { ReactNode } from "react";
 import { useSortByCatalogHeader } from "../../../../../hooks/sellers/useSortByCatalogHeader";
 import { ViewMode } from "@typings/seller/sellerEnums";
-import type { SortByCatalogHeaderProps } from "@typings/sells/SellComponentTypes";
+import type { SortByCatalogHeaderProps } from "@typings/seller/sellerComponentTypes";
 
 const SortByCatalogHeader = ({viewMode}: SortByCatalogHeaderProps): ReactNode => {
   

@@ -4,9 +4,9 @@ import {
   type Theme,
 } from "@mui/material";
 import type { ReactNode } from "react";
-import type { ToolbarActionsProps } from "@typings/sells/SellComponentTypes";
 import SortByCatalogHeader from "../CatalogHeader/SortByCatalogHeader";
 import ViewModeToggle from "../CatalogHeader/ViewModeToggle";
+import type { ToolbarActionsProps } from "@typings/seller/sellerComponentTypes";
 
 
 const ToolbarActions = ({ viewMode,setViewMode }: ToolbarActionsProps): ReactNode => {

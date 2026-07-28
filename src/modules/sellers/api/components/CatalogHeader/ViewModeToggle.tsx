@@ -3,7 +3,7 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import type { ReactNode } from "react";
 import { ViewMode } from "@typings/seller/sellerEnums";
-import type { ViewModeToggleProps } from "@typings/sells/SellComponentTypes";
+import type { ViewModeToggleProps } from "@typings/seller/sellerComponentTypes";
 
 
 const ViewModeToggle = ({viewMode, setViewMode}: ViewModeToggleProps): ReactNode => {
