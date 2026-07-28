@@ -1,7 +1,7 @@
 import { type GridColDef } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
-import type { Product } from "../../../../typings/product/productTypes";
 import ProductRowActionCell from "./ProductRowActionCell";
+import type { Product } from "../../../../../typings/product/productTypes";
 
 export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
   {

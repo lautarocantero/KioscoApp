@@ -68,4 +68,22 @@ export const SELL_FIELD_REGISTRY: Record<keyof SellEditFormValues, FieldConfig> 
         tooltip: "Moneda utilizada en la transacción",
         required: true,
     },
+        status: {
+        label: "Estado",
+        tooltip: "Estado actual de la venta (completada o parcial)",
+        required: true,
+    },
+    amount_paid: {
+        label: "Monto abonado",
+        tooltip: "Monto pagado hasta el momento por el cliente",
+        required: false,
+        type: "number",
+        step: `0.01`,
+        min: `0`,
+    },
+    debtor_name: {
+        label: "Nombre del deudor",
+        tooltip: "Nombre de la persona que adeuda el saldo pendiente",
+        required: false,
+    },
 };
