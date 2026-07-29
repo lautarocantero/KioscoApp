@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/presentation/presentationSlice";
+import { resetPresentations } from "../../store/presentation/presentationSlice";
 import {
     fetchPresentationsByProductId,
     searchPresentationsByProductId,
@@ -14,8 +15,11 @@ import type { UsePresentationsListDataResult } from "@typings/presentation/prese
 ║                                                                       ║
 ║ Encapsula el fetch/búsqueda de presentaciones de un producto:        ║
 ║   1. Lee presentations/isLoading/errorMessage del store              ║
-║   2. Debouncea el término de búsqueda y despacha                     ║
-║      fetchPresentationsByProductId / searchPresentationsByProductId  ║
+║   2. Al cambiar de producto: limpia el store y hace fetch INMEDIATO  ║
+║      (sin debounce), para no mostrar el listado del producto         ║
+║      anterior mientras llega la respuesta.                           ║
+║   3. Al tipear en el buscador (mismo producto): debouncea y          ║
+║      despacha searchPresentationsByProductId.                        ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const usePresentationsListData = (
@@ -30,8 +34,29 @@ export const usePresentationsListData = (
     const [searchTerm, setSearchTerm] = useState("");
     const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
+    const skipNextSearchEffectRef = useRef(false);
+
     useEffect(() => {
         if (!productId) return;
+
+        clearTimeout(debounceRef.current);
+
+        dispatch(resetPresentations());
+
+        skipNextSearchEffectRef.current = true;
+        setSearchTerm("");
+
+        void dispatch(fetchPresentationsByProductId(productId));
+    }, [productId, dispatch]);
+
+    useEffect(() => {
+        if (!productId) return;
+
+        if (skipNextSearchEffectRef.current) {
+            skipNextSearchEffectRef.current = false;
+            return;
+        }
+
         clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
             if (searchTerm.trim() === "") {
@@ -40,8 +65,9 @@ export const usePresentationsListData = (
                 void dispatch(searchPresentationsByProductId(productId, searchTerm));
             }
         }, 350);
+
         return () => clearTimeout(debounceRef.current);
-    }, [searchTerm, productId, dispatch]);
+    }, [searchTerm]);
 
     return { presentations, loading, error, searchTerm, setSearchTerm };
 };
