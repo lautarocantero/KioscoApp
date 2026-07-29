@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, SetStateAction, Dispatch } from "react";
 
 //────────────────────────────────────────── 🔖Layout ─────────────────────────────────────────//
 
@@ -10,6 +10,13 @@ export interface AppLayoutProps {
   title?: string;
   icon?: ReactNode;
   greetings?: string;
+}
+
+//────────────────────────────────────────── LightMode ─────────────────────────────────────────//
+
+export interface ThemeContextType {
+  appTheme: boolean;
+  setAppTheme: Dispatch<SetStateAction<boolean>>;
 }
 
 //────────────────────────────────────────── 🔖 OptionsCards 🔖 ─────────────────────────────────────────//
