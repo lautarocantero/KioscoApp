@@ -1,3 +1,4 @@
+// hooks/products/useProductsListData.ts
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/product/productSlice";
@@ -5,16 +6,14 @@ import { getProducts, getProductsWithStock, searchProducts } from "../../store/p
 import type { UseProductsListDataResult } from "@typings/product/productTypes";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 
-
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🪝 useProductsListData                                                ║
 ║                                                                       ║
-║ Encapsula el fetch/búsqueda de la lista de productos contra el store: ║
-║   1. Lee products/isLoading/errorMessage del store                   ║
-║   2. Debouncea el término de búsqueda y despacha getProducts /        ║
-║      searchProducts (con categoría opcional) según corresponda       ║
-║   3. Si stockAvailable=true y no hay búsqueda activa, despacha        ║
-║      getProductsWithStock en lugar de getProducts                    ║
+║   1. Al montar / cambiar selectedCategory o stockAvailable: fetch    ║
+║      INMEDIATO (sin debounce), para que loading pase a true antes    ║
+║      de que se llegue a evaluar "vacío".                             ║
+║   2. Al tipear en el buscador (searchTerm): debouncea y despacha     ║
+║      searchProducts.                                                 ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const useProductsListData = (
@@ -29,19 +28,42 @@ export const useProductsListData = (
 
     const [searchTerm, setSearchTerm] = useState("");
     const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+    const skipNextSearchEffectRef = useRef(false);
 
     useEffect(() => {
+        clearTimeout(debounceRef.current);
+        skipNextSearchEffectRef.current = true;
+
+        const hasActiveSearch = searchTerm.trim() !== "" || !!selectedCategory;
+
+        if (hasActiveSearch) {
+            void dispatch(searchProducts(searchTerm, selectedCategory ?? undefined));
+            return;
+        }
+
+        if (stockAvailable) {
+            void dispatch(getProductsWithStock());
+            return;
+        }
+
+        void dispatch(getProducts());
+    }, [selectedCategory, stockAvailable, dispatch]);
+
+    useEffect(() => {
+        if (skipNextSearchEffectRef.current) {
+            skipNextSearchEffectRef.current = false;
+            return;
+        }
+
         clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
             const hasActiveSearch = searchTerm.trim() !== "" || !!selectedCategory;
 
-            //─── 🔎 búsqueda activa (texto y/o categoría) tiene prioridad sobre el resto 🔎 ───
             if (hasActiveSearch) {
                 void dispatch(searchProducts(searchTerm, selectedCategory ?? undefined));
                 return;
             }
 
-            //─── 🔎 sin búsqueda: si se pidió stockAvailable, traer solo productos con stock 🔎 ───
             if (stockAvailable) {
                 void dispatch(getProductsWithStock());
                 return;
@@ -49,8 +71,9 @@ export const useProductsListData = (
 
             void dispatch(getProducts());
         }, 350);
+
         return () => clearTimeout(debounceRef.current);
-    }, [searchTerm, selectedCategory, stockAvailable, dispatch]);
+    }, [searchTerm]);
 
     return { products, loading, error, searchTerm, setSearchTerm };
 };

@@ -74,6 +74,10 @@ export const productSlice = createSlice({
             state.statsError = action.payload;
             state.isLoadingStats = false;
         },
+        resetProducts: (state) => {
+            state.products = [];
+            state.errorMessage = null;
+        },
     }
 });
 
@@ -89,6 +93,7 @@ export const {
     checkingStats,
     setStats,
     setStatsError,
+    resetProducts,
 } = productSlice.actions;
 
 export type RootState   = ReturnType<typeof store.getState>;

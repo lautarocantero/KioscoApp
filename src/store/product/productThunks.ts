@@ -12,6 +12,7 @@ import {
     checkingStats,
     setStats,
     setStatsError,
+    resetProducts,
 } from "./productSlice";
 import { handleError }       from "../shared/handlerStoreError";
 import {
@@ -102,8 +103,8 @@ export const getProducts = () => {
 ║     que ya viene filtrado en backend por presentations con stock > 0. ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const getProductsWithStock = () => {
-
     return async (dispatch: Dispatch): Promise<ProductWithPresentations[] | undefined> => {
+        dispatch(resetProducts());
         dispatch(checkingProducts());
         try {
             const products: ProductWithPresentations[] = await getProductsWithStockRequest();
