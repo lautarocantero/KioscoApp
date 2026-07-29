@@ -14,10 +14,11 @@ import type { AppDispatch, RootState } from "../store/auth/authSlice";
 import { startCheckAuth } from "../store/auth/thunks";
 import RouteTracker from "./RouteTracker";
 import AppShell from "../modules/shared/layout/AppShell";
+import LoadingSpinnerComponent from "../modules/shared/components/LoadingSpinner";
 
-const AppRouter = ():React.ReactNode => {
-  const {auth} = useSelector((state: RootState) => state);
-  const {status} = auth;
+const AppRouter = (): React.ReactNode => {
+  const { auth } = useSelector((state: RootState) => state);
+  const { status } = auth; // asumo: 'checking' | 'authenticated' | 'not-authenticated'
   const location = useLocation();
   const lastRoute: string = localStorage.getItem("lastRoute") || "/new-sell";
   const safeRoute: string = lastRoute === "/" ? "/home" : lastRoute;
@@ -25,45 +26,33 @@ const AppRouter = ():React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    const checkAuthentication = async () => {
-      try{
-        await dispatch(startCheckAuth());
-      } catch (error: unknown) {
-        if(!(error instanceof Error)) throw new Error("NO se ha encontrado un refreshToken, deslogueando");
-        throw new Error(error.message);
-      }
-    }
+    dispatch(startCheckAuth());
+  }, [dispatch]);
 
-  checkAuthentication();
-  },[dispatch])
-  
+  // 👇 Clave: no decidas rutas todavía
+  if (status === 'checking') {
+    return <LoadingSpinnerComponent />; // o null, o un spinner
+  }
+
   return (
     <>
       <RouteTracker />
       <Routes>
-        {
-          status === 'authenticated'
-            ? (
-              <>
-                <Route element={<AppShell />}>
-                  <Route path="/home" element={<HomePage />} />
-                  {SellsRoutes()}
-                  {CartRoutes()}
-                  {ShopRoutes()}
-                  {AccountRoutes()}
-                  {ProvidersRoutes()}
-                  {ProductsRoutes()}
-                  {PresentationsRoutes()}
-                  <Route path="*" element={<Navigate to={'/home'} />} />
-                </Route>
-              </>
-            )
-            : (
-              <>
-                {AuthRoutes()}
-              </>
-            )
-        }
+        {status === 'authenticated' ? (
+          <Route element={<AppShell />}>
+            <Route path="/home" element={<HomePage />} />
+            {SellsRoutes()}
+            {CartRoutes()}
+            {ShopRoutes()}
+            {AccountRoutes()}
+            {ProvidersRoutes()}
+            {ProductsRoutes()}
+            {PresentationsRoutes()}
+            <Route path="*" element={<Navigate to={'/home'} />} />
+          </Route>
+        ) : (
+          <>{AuthRoutes()}</>
+        )}
       </Routes>
 
       {status === "authenticated" && location.pathname === "/" && (
