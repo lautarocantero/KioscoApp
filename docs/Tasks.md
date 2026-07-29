@@ -10,9 +10,7 @@
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
 |--------------------------------------------------------------------------------------------------|    
-| 🟢 no funciona correctamente en el carrito el aumentar stock necesario                       |
-| 🟢 Al vender un solo producto en prod desaparece todo el stock. Arreglar                      |
-| 🟢 Implementar logica para productos sin presentacion (pan), productos vendidos por medida (queso, fiambre) productos vendidos sueltos (cigarrillos)                      |
+| 🟢 Implementar logica para productos sin presentacion (pan), productos vendidos por medida (queso, fiambre) productos vendidos sueltos (cigarrillos)                                                                                          |
 |____________________________________________________________________________________________________|
 
  ________________________________________________________________________________________________
