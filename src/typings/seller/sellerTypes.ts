@@ -56,6 +56,10 @@ export interface SellerStateInterface {
     cart: ProductTicketWithStockType[],
     productSelected: ProductWithPresentations | null,
     presentationSelected: Presentation | null,
+    presentations: Presentation[],
+    presentationsLoading: boolean,
+    products: Product[],
+    productsLoading: boolean,
     description: string,
     created_at: string,
     updated_at: string,
@@ -189,6 +193,7 @@ export type UseSellerBarCategoriesResult = UseSellerBarResult['categories'] & {
 export interface UseCartPresentationPickerReturn {
     productSelected: ProductWithPresentations | null;
     presentations: Presentation[];
+    presentationsLoading: boolean;
 }
 
 

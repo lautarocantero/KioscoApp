@@ -10,6 +10,8 @@ import {
 } from '../../typings/seller/sellerTypes';
 import type { store } from '../store';
 import { CartAmount, SortOption, ViewMode } from '../../typings/seller/sellerEnums';
+import type { Presentation } from '@typings/presentation/presentationTypes';
+import type { Product } from '@typings/product/productTypes';
 
 const initialState: SellerStateInterface = {
     _id: null,
@@ -17,6 +19,10 @@ const initialState: SellerStateInterface = {
     cart: [],
     productSelected: null,
     presentationSelected: null,
+    presentations: [],
+    presentationsLoading: false,
+    products: [],
+    productsLoading: false,
     description: '',
     created_at: '',
     updated_at: '',
@@ -98,6 +104,28 @@ export const sellerSlice = createSlice({
         setPage: (state: SellerStateInterface, action: PayloadAction<number>) => {
             state.page = action.payload;
         },
+        startLoadingPresentations: (state: SellerStateInterface) => {
+            state.presentationsLoading = true;
+        },
+        setPresentations: (state: SellerStateInterface, action: PayloadAction<Presentation[]>) => {
+            state.presentations = action.payload;
+            state.presentationsLoading = false;
+        },
+        resetPresentations: (state: SellerStateInterface) => {
+            state.presentations = [];
+            state.presentationsLoading = false;
+        },
+        startLoadingProducts: (state: SellerStateInterface) => {
+            state.productsLoading = true;
+        },
+        setProducts: (state: SellerStateInterface, action: PayloadAction<Product[]>) => {
+            state.products = action.payload;
+            state.productsLoading = false;
+        },
+        resetProducts: (state: SellerStateInterface) => {
+            state.products = [];
+            state.productsLoading = false;
+        },
     }
 });
 
@@ -112,6 +140,12 @@ export const {
   setSort,
   setViewMode,
   setPage,
+  startLoadingPresentations,
+  setPresentations,
+  resetPresentations,
+  startLoadingProducts,
+  setProducts,
+  resetProducts,
 } = sellerSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>

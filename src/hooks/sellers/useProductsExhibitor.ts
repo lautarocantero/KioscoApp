@@ -8,6 +8,7 @@ import { SortOption, ViewMode } from "@typings/seller/sellerEnums";
 import { PAGE_SIZE_PRODUCT_EXHIBITOR } from "../../config/constants";
 import { useSortOptions } from "./useSortOptions";
 import { buildColumnsForProductExhibitor } from "../../modules/sellers/api/components/ProductsExhibitorList/ProductExhibitorColumns";
+import { useSellerProductsListData } from "./useSellerProductListData";
 
 
 //─── 🔎 Ordena el array de productos según la opción de sort activa 🔎 ───
@@ -37,7 +38,7 @@ const sortProducts = (products: Product[], sort: SortOption): Product[] => {
 
 export const useProductsExhibitor = (): UseProductsExhibitorResult => {
   const dispatch = useDispatch<AppDispatch>();
-  const { products, loading } = useProductsListData(null, true);
+  const { products, loading } = useSellerProductsListData();
 
   const sort = useSelector((state: RootState) => state.seller.sort);
   const viewMode = useSelector((state: RootState) => state.seller.viewMode);

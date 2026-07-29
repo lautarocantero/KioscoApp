@@ -2,7 +2,12 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import { z } from "zod";
 import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectPresentationThunkInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
 import { handleError } from "../shared/handlerStoreError";
-import { addToCartAction, addUnitAction, cleanCart, removeFromCart, setError, setPresentationSelected, setProductSelected } from "./sellerSlice";
+import { addToCartAction, addUnitAction, cleanCart, removeFromCart, resetProducts, setError, setPresentationSelected, setProducts, setProductSelected, startLoadingProducts } from "./sellerSlice";
+import type { Presentation } from "@typings/presentation/presentationTypes";
+import { resetPresentations, setPresentations, startLoadingPresentations } from "./sellerSlice";
+import { getPresentationsWithStockByProductIdRequest } from "../../modules/presentations/api/presentationsApi";
+import type { ProductWithPresentations } from "@typings/product/productTypes";
+import { getProductsWithStockRequest } from "../../modules/products/api/productApi";
 
 export const PresentationEntitySchema = z.object({
   _id: z.string().nullable(),
@@ -136,3 +141,66 @@ export const cleanCartThunk = () => {
     }
 
 }
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 fetchSellerProductsWithStock                                        ║
+║ ⚠️  Uso: EXCLUSIVO del listado de productos en new sell page.          ║
+║     Copia de getProductsWithStock (product domain) pero despachando    ║
+║     acciones de sellerSlice, para no acoplar el flujo de venta al      ║
+║     store de products (usado también en administración).               ║
+║ ⚙️  Proceso:                                                            ║
+║   1. Resetea products del seller antes de pedir (evita flash de        ║
+║      "todos los productos" antes de los filtrados por stock)           ║
+║   2. GET /get-products-with-stock                                      ║
+║   3. Guarda el resultado en seller.products                            ║
+║ 📤 Salida: ProductWithPresentations[] o undefined en caso de error     ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const fetchSellerProductsWithStock = () => {
+    return async (dispatch: Dispatch): Promise<ProductWithPresentations[] | undefined> => {
+        dispatch(resetProducts());
+        dispatch(startLoadingProducts());
+        try {
+            const products: ProductWithPresentations[] = await getProductsWithStockRequest();
+
+            if (!products) {
+                dispatch(setError({ errorMessage: "No se ha encontrado ningun producto" }));
+                throw new Error("No se encontraron productos");
+            }
+
+            dispatch(setProducts(products));
+            return products;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudieron obtener los productos" }));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 fetchCartPresentationsByProductId                                   ║
+║ ⚠️  Uso: EXCLUSIVO del picker de presentaciones en new sell page.      ║
+║     Copia de fetchPresentationsWithStockByProductId (presentation      ║
+║     domain) pero despachando acciones de sellerSlice, para no          ║
+║     acoplar el flujo de venta al store de presentations.               ║
+║ 📥 Entrada: product_id                                                 ║
+║ ⚙️  Proceso:                                                            ║
+║   1. Resetea presentations del carrito antes de pedir (evita flash     ║
+║      de presentaciones del producto anterior)                          ║
+║   2. GET /presentations-with-stock por product_id                      ║
+║   3. Guarda el resultado en seller.presentations                       ║
+║ 📤 Salida: Presentation[] o undefined en caso de error                 ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const fetchCartPresentationsByProductId = (product_id: string) => {
+    return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
+        dispatch(resetPresentations());
+        dispatch(startLoadingPresentations());
+        try {
+            const presentations = await getPresentationsWithStockByProductIdRequest({ product_id });
+            dispatch(setPresentations(presentations));
+            return presentations;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudieron cargar las presentaciones" }));
+            handleError(error);
+        }
+    };
+};
