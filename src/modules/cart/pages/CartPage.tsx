@@ -6,7 +6,7 @@ import CartHeaderComponent from '../components/CartHeader/CartHeaderComponent';
 import CartSummaryCardComponent from '../components/CartSumaryCardComponent';
 import CartProductTable from "../components/CartProductTableComponent";
 import { useCart } from "../../../hooks/sellers/useCart";
-import { useContext, type ReactNode } from "react";
+import { useContext, useMemo, type ReactNode } from "react";
 import { cartFormSchema, getCartFormInitialValues } from "../../sells/schema/CartFormSchema";
 
 const CartPage = (): ReactNode => {
@@ -24,6 +24,9 @@ const CartPage = (): ReactNode => {
         columns
     } = useCart(showSnackBar);
 
+    const initialValues = useMemo(() => getCartFormInitialValues(), []);
+    const validationSchema = useMemo(() => cartFormSchema(total), [total]);
+
     return (
         <AppLayout fullWidth>
             <Grid
@@ -39,8 +42,8 @@ const CartPage = (): ReactNode => {
                 <CartProductTable cart={cart} columns={columns} />
 
                 <Formik
-                    initialValues={getCartFormInitialValues()}
-                    validationSchema={cartFormSchema(total)}
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
                     onSubmit={generateTicket}
                     validateOnBlur={false}
                     validateOnChange={false}

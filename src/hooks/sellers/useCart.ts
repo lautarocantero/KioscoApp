@@ -1,5 +1,5 @@
 import type { CartFormValues, CreateSellResponse, ProductTicketType, ProductTicketWithStockType, SellTicketType, TicketSummaryType } from "@typings/sells/sellTypes";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { Currency, PaymentMethod, SellStatusEnum } from "../../typings/sells/sellsEnum";
@@ -7,7 +7,7 @@ import type { AppDispatch, RootState } from "../../store/seller/sellerSlice";
 import { iva } from "../../config/constants";
 import { createSellThunk } from "../../store/sell/sellsThunks";
 import { createPdfTicket } from "../../modules/shared/helpers/createPdfTicket";
-import { cleanCartThunk, removeFromCartThunk } from "../../store/seller/sellerThunks";
+import { cleanCartThunk, removeFromCartThunk, addOneUnitThunk } from "../../store/seller/sellerThunks";
 import { AlertColor } from "@typings/ui/ui";
 import { buildColumnsForCartProducts } from "../../modules/cart/components/cartColumns";
 import type { UseCartReturn } from "@typings/seller/sellerTypes";
@@ -26,16 +26,18 @@ import { CartAmount } from "@typings/seller/sellerEnums";
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const useCart = (showSnackBar: (message: string, severity: AlertColor) => void): UseCartReturn => {
-    const { seller } = useSelector((state: RootState) => state);
-    const { cart }: { cart: ProductTicketWithStockType[] } = seller;
-
+    // 🔧 Solo se suscribe a seller.cart, no al store completo
+    const cart: ProductTicketWithStockType[] = useSelector((state: RootState) => state.seller.cart);
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate: NavigateFunction = useNavigate();
 
     const [ticketSummary, setTicketSummary] = useState<TicketSummaryType | null>(null);
 
-    const productsTotalPrice: number = cart?.reduce((count: number, product: ProductTicketType) => count + product.price * product.stock_required, 0);
+    const productsTotalPrice: number = useMemo(
+        () => cart?.reduce((count: number, product: ProductTicketType) => count + product.price * product.stock_required, 0) ?? 0,
+        [cart]
+    );
     const ivaPercentage: number = iva;
     const ivaAmount: number = (productsTotalPrice * ivaPercentage) / 100;
     const total: number = productsTotalPrice + ivaAmount;
@@ -46,7 +48,6 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         [cart]
     );
 
-    //─── 🔎 Resumen del ticket confirmado (leído desde localStorage) 🔎 ───
     useEffect(() => {
         const ticketString: string | null = localStorage.getItem('last_ticket');
         if (!ticketString) return;
@@ -63,9 +64,7 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         });
     }, []);
 
-    //─── 🔎 Generación de ticket: arma el ticket (completo o parcial), lo persiste,
-    //     genera el PDF, vacía el carrito y navega a la confirmación 🔎 ───
-    const generateTicket = async (formValues: CartFormValues): Promise<void> => {
+    const generateTicket = useCallback(async (formValues: CartFormValues): Promise<void> => {
         const isPartial = formValues.status === SellStatusEnum.Parcial;
 
         const ticket: SellTicketType = {
@@ -102,49 +101,44 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         createPdfTicket(savedTicket);
         await dispatch(cleanCartThunk());
         navigate('/cart-order-confirmed');
-    }
+    }, [cart, productsTotalPrice, ivaPercentage, total, dispatch, navigate, showSnackBar]);
 
-    //─── 🔎 Impresión / descarga manual del último ticket 🔎 ───
-    const printTicket = (): void => {
+    const printTicket = useCallback((): void => {
         const ticketString: string | null = localStorage.getItem('last_ticket');
         if (!ticketString) return;
         const ticket: SellTicketType = JSON.parse(ticketString);
         createPdfTicket(ticket);
-    }
+    }, []);
 
-    //─── 🔎 Vacía por completo el carrito actual 🔎 ───
-    const handleClearCart = (): void => {
+    const handleClearCart = useCallback((): void => {
         dispatch(cleanCartThunk());
-    }
+    }, [dispatch]);
 
-    //─── 🔎 Resta una unidad del producto indicado en el carrito 🔎 ───
-    const handleDecreaseProduct = (_id: string): void => {
+    const handleDecreaseProduct = useCallback((_id: string): void => {
         dispatch(removeFromCartThunk({ _id, amount: CartAmount.One }));
-    }
+    }, [dispatch]);
 
-    const handleIncreaseProduct = (_id: string): void => {
-        // 📝 To do: dispatch del thunk que sume +1 unidad cuando exista
-    }
+    const handleIncreaseProduct = useCallback((_id: string): void => {
+        dispatch(addOneUnitThunk({ _id }));
+    }, [dispatch]);
 
-    //─── 🔎 Vuelve a la pantalla de nueva venta sin vaciar el carrito 🔎 ───
-    const goBackToSell = (): void => {
+    const goBackToSell = useCallback((): void => {
         navigate('/new-sell');
-    }
+    }, [navigate]);
 
-    //─── 🔎 Inicia una nueva venta desde cero 🔎 ───
-    const goToNewSell = (): void => {
+    const goToNewSell = useCallback((): void => {
         navigate('/new-sell');
-    }
+    }, [navigate]);
 
-    //─── 🔎 Navega al detalle de la venta del ticket recién confirmado 🔎 ───
-    const goToTicketDetail = (): void => {
+    const goToTicketDetail = useCallback((): void => {
         if (!ticketSummary) return;
         navigate(`/sell/${ticketSummary.sellId}`);
-    }
+    }, [ticketSummary, navigate]);
 
+    // 🔧 Ya no depende de [cart]: las funciones son estables por useCallback
     const columns = useMemo(
         () => buildColumnsForCartProducts(handleIncreaseProduct, handleDecreaseProduct),
-        [cart]
+        [handleIncreaseProduct, handleDecreaseProduct]
     );
 
     return {

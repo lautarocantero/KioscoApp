@@ -1,5 +1,5 @@
 import { alpha, Grid, type Theme } from "@mui/material";
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import CartPaymentMethod from './CartPaymentMethod';
 import CartSellDataComponent from './CartSellDataComponent';
 import CartSummaryFooterComponent from "./CartSummaryFooter";
@@ -56,4 +56,4 @@ const CartSummaryCardComponent = ({
     )
 }
 
-export default CartSummaryCardComponent;
+export default memo(CartSummaryCardComponent);

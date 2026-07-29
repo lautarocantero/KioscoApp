@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import type { ProductTicketWithStockType } from "@typings/sells/sellTypes";
 import DataTable from "../../shared/components/DataTable/DataTable";
 import { Grid } from "@mui/system";
@@ -25,4 +25,4 @@ const CartProductTable = ({ cart, columns }: CartProductTableProps): ReactNode =
     );
 };
 
-export default CartProductTable;
+export default memo(CartProductTable);

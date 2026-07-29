@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import CartLabel from "./CartLabelComponent";
 import CartCleanAction from "./CartCleanActionComponent";
 import type { CartHeaderProps } from "@typings/seller/sellerComponentTypes";
@@ -24,4 +24,4 @@ const CartHeaderComponent = ({ itemsCount, onClearCart }: CartHeaderProps): Reac
     )
 }
 
-export default CartHeaderComponent;
+export default memo(CartHeaderComponent);
