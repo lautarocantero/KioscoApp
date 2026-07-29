@@ -10,7 +10,6 @@
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
 |--------------------------------------------------------------------------------------------------|    
-| 🟢 Agregar colores tema claro                                                                 |
 | 🟢 Arreglar loaders                                                                              |
 | 🟢 no funciona correctamente en el carrito el aumentar stock necesario                       |
 | 🟢 Al vender un solo producto en prod desaparece todo el stock. Arreglar                      |

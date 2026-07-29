@@ -126,6 +126,27 @@ declare module '@mui/material/styles' {
   }
 }
 
+//────────────────────────────────────────────────────────────────────────
+// Tipografía única y compartida entre ambos temas.
+// Antes lightTheme y darkTheme tenían fontSize/fontWeight distintos en
+// h5, body1 y body2, lo que hacía que el layout "se moviera" al cambiar
+// de tema (textos más anchos/altos empujan al resto de los elementos).
+// Ahora se define UNA sola vez y se reutiliza en los dos createTheme.
+//────────────────────────────────────────────────────────────────────────
+const typography = {
+  fontFamily: `'Montserrat', sans-serif`,
+  htmlFontSize: 16,
+  fontSize: 16,
+  h1: { fontSize: '3rem', fontWeight: 700 },
+  h2: { fontSize: '2.5rem', fontWeight: 600 },
+  h3: { fontSize: '2rem', fontWeight: 500 },
+  h4: { fontSize: '1.5rem', fontWeight: 500 },
+  h5: { fontSize: '1.25rem', fontWeight: 500 },
+  body1: { fontSize: '1.2rem' },
+  body2: { fontSize: '0.875rem' },
+  caption: { fontSize: '0.75rem' },
+};
+
 export const darkTheme = createTheme({
   unstable_sx: true,
   unstable_grid: { cssGrid: true },
@@ -192,19 +213,7 @@ export const darkTheme = createTheme({
     },
 
   },
-  typography: {
-    fontFamily: `'Montserrat', sans-serif`,
-    htmlFontSize: 16,
-    fontSize: 16,
-    h1: { fontSize: '3rem',   fontWeight: 700 },
-    h2: { fontSize: '2.5rem', fontWeight: 600 },
-    h3: { fontSize: '2rem',   fontWeight: 500 },
-    h4: { fontSize: '1.5rem', fontWeight: 500 },
-    h5: { fontSize: '1.25rem',fontWeight: 400 },
-    body1:   { fontSize: '1.2rem'   },
-    body2:   { fontSize: '0.875rem' },
-    caption: { fontSize: '0.75rem'  },
-  },
+  typography,
 });
 
 export const lightTheme = createTheme({
@@ -231,7 +240,7 @@ export const lightTheme = createTheme({
 
     //────────────── background ──────────────────//
     lightBackground: '#F8F7FF', // fondo general (ligeramente violeta)
-    background:      '#e2def3', // surface base
+    background:      '#fdfdfd', // surface base
     darkBackground:  '#c6bdf1', // cards elevadas suaves
 
     //────────────── fonts ──────────────────//
@@ -273,20 +282,5 @@ export const lightTheme = createTheme({
     },
 
   },
-
-  typography: {
-    fontFamily: `'Montserrat', sans-serif`,
-    htmlFontSize: 16,
-    fontSize: 16,
-
-    h1: { fontSize: '3rem',   fontWeight: 700 },
-    h2: { fontSize: '2.5rem', fontWeight: 600 },
-    h3: { fontSize: '2rem',   fontWeight: 500 },
-    h4: { fontSize: '1.5rem', fontWeight: 500 },
-    h5: { fontSize: '1.25rem',fontWeight: 500 },
-
-    body1:   { fontSize: '1.1rem' },
-    body2:   { fontSize: '0.9rem' },
-    caption: { fontSize: '0.75rem' },
-  },
+  typography,
 });
