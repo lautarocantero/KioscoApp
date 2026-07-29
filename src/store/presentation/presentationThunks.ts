@@ -7,6 +7,7 @@ import {
     setSelectedPresentation,
     removePresentationFromList,
     setError,
+    resetPresentations,
 } from "./presentationSlice";
 import { handleError } from "../shared/handlerStoreError";
 import {
@@ -56,6 +57,7 @@ export const fetchPresentationsByProductId = (product_id: string) => {
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const fetchPresentationsWithStockByProductId = (product_id: string) => {
     return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
+        dispatch(resetPresentations());
         dispatch(startLoadingPresentations());
         try {
             const presentations = await getPresentationsWithStockByProductIdRequest({ product_id });
