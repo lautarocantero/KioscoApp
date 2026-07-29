@@ -14,7 +14,7 @@ const CartLabel = ({ itemsCount }: CartLabelProps): ReactNode => {
             <Box>
                 <Typography
                     sx={(theme: Theme) => ({
-                        color: theme?.custom?.fontColor,
+                        color: theme?.palette?.primary?.main,
                         fontWeight: 700,
                         fontSize: theme?.typography?.h5?.fontSize,
                     })}

@@ -26,7 +26,7 @@ const ProductDialogDataComponent = ({ product, description }: DialogDataProps): 
           <Typography
             sx={(theme: Theme) => ({
               fontSize: theme.typography.body2?.fontSize,
-              color: theme.custom.translucidWhite,
+              color: theme.custom.translucidFontColor,
               mt: 0.5,
             })}
           >
@@ -36,12 +36,12 @@ const ProductDialogDataComponent = ({ product, description }: DialogDataProps): 
         <Stack direction={'row'} alignItems={'center'} gap={0.5} sx={{ mt: 2 }}>
           <Inventory2OutlinedIcon
             fontSize="small"
-            sx={(theme: Theme) => ({ color: theme.custom.translucidWhite })}
+            sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor })}
           />
           <Typography
             sx={(theme: Theme) => ({
               fontSize: theme.typography.caption?.fontSize,
-              color: theme.custom.translucidWhite,
+              color: theme.custom.translucidFontColor,
             })}
           >
             Total en stock (todas las presentaciones)

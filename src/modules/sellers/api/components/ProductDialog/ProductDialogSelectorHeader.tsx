@@ -18,7 +18,7 @@ const ProductDialogSelectorHeaderComponent = ({ products }: ProductDialogSelecto
         <Typography
           sx={(theme: Theme) => ({
             color: theme?.custom?.fontColor,
-            backgroundColor: theme?.custom?.darkBackground,
+            backgroundColor: theme?.custom?.background,
             borderRadius: '1em',
             px: 1,
             fontSize: theme?.typography?.caption?.fontSize,

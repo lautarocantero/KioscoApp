@@ -52,7 +52,7 @@ const SortByCatalogHeader = ({viewMode}: SortByCatalogHeaderProps): ReactNode =>
           >
             <Typography
               sx={(theme: Theme) => ({
-                color: theme.custom?.fontColor,
+                color: theme.custom?.white,
                 fontSize: theme.typography?.body2?.fontSize,
                 whiteSpace: "nowrap",
               })}
@@ -65,7 +65,7 @@ const SortByCatalogHeader = ({viewMode}: SortByCatalogHeaderProps): ReactNode =>
             <KeyboardArrowDownIcon
               sx={(theme: Theme) => ({
                 fontSize: "1.2em",
-                color: theme.custom?.fontColor,
+                color: theme.custom?.white,
               })}
             />
           </Box>

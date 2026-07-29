@@ -30,7 +30,7 @@ const CartPaymentStatus = ({total}: CartPaymentStatusProps): ReactNode => {
             alignItems="flex-start"
             gap={0.5}
             sx={(theme: Theme) => ({
-                borderTop: `1px solid ${theme?.custom?.translucidWhite}`,
+                borderTop: `1px solid ${theme?.custom?.translucidFontColor}`,
                 marginTop: '1em',
                 paddingTop: '1em',
                 width: '100%',

@@ -27,7 +27,7 @@ const CartPriceComponent = (
 
             <Divider
                 sx={(theme: Theme) => ({
-                    borderColor: theme?.custom?.translucidWhite,
+                    borderColor: theme?.custom?.translucidFontColor,
                     my: 0.5,
                 })}
             />

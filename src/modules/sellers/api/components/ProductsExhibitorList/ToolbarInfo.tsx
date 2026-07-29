@@ -35,7 +35,7 @@ const ToolbarInfo = ({
     >
         <Inventory2OutlinedIcon
         sx={(theme: Theme) => ({
-            color: theme.custom?.fontColor,
+            color: theme.custom?.white,
             fontSize: { xs: "1.3rem", md: "1.6rem" },
         })}
         />
@@ -44,13 +44,13 @@ const ToolbarInfo = ({
         <Typography
             variant="body1"
             noWrap
-            sx={(theme: Theme) => ({ color: theme.custom?.fontColor, lineHeight: 1.2 })}
+            sx={(theme: Theme) => ({ color: theme.custom?.white, lineHeight: 1.2 })}
         >
             Catálogo de productos
         </Typography>
         <Typography
             variant="caption"
-            sx={(theme: Theme) => ({ color: theme.custom?.darkWhite })}
+            sx={(theme: Theme) => ({ color: theme.custom?.white })}
         >
             {totalCount} productos disponibles
         </Typography>

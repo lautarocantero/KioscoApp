@@ -101,13 +101,13 @@ export const buildColumnsForCartProducts = (
           padding: "0.6em 0.4em",
         })}
       >
-        <IconButton size="small" onClick={() => onDecrease(String(params.row._id))} sx={(theme: Theme) => ({ border: `1px solid ${theme?.custom?.translucidWhite}` })}>
+        <IconButton size="small" onClick={() => onDecrease(String(params.row._id))} sx={(theme: Theme) => ({ border: `1px solid ${theme?.palette.primary.main}` })}>
           <KeyboardArrowDownIcon fontSize="inherit" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
         </IconButton>
-        <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColor, minWidth: "1em", textAlign: "center" })}>
+        <Typography sx={(theme: Theme) => ({ color: theme?.palette.primary.main, minWidth: "1em", textAlign: "center" })}>
           {params.row.stock_required}
         </Typography>
-        <IconButton size="small" onClick={() => onIncrease(String(params.row._id))} sx={(theme: Theme) => ({ border: `1px solid ${theme?.custom?.translucidWhite}` })}>
+        <IconButton size="small" onClick={() => onIncrease(String(params.row._id))} sx={(theme: Theme) => ({ border: `1px solid ${theme?.palette.primary.main}` })}>
           <ExpandLessIcon fontSize="inherit" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
         </IconButton>
       </Box>

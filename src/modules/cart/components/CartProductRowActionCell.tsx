@@ -25,7 +25,7 @@ const CartProductRowActionCell = ({ product }: CartProductRowActionCellProps): R
             '&:hover': { backgroundColor: theme?.custom?.translucidWhite },
           })}
         >
-          <DeleteIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.custom?.fontColor })} />
+          <DeleteIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.custom?.white })} />
         </IconButton>
       </Tooltip>
     </Box>

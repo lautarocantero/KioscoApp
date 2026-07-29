@@ -45,7 +45,7 @@ const ViewModeToggle = ({viewMode, setViewMode}: ViewModeToggleProps): ReactNode
           <GridViewIcon
             fontSize="small"
             sx={(theme: Theme) => ({
-              color: viewMode === ViewMode.Grid ? theme.custom?.darkBackground : theme.custom?.translucidWhite,
+              color: viewMode === ViewMode.Grid ? theme.custom?.white : theme.custom?.translucidWhite,
               transition: "color 0.3s ease",
             })}
           />
@@ -71,7 +71,7 @@ const ViewModeToggle = ({viewMode, setViewMode}: ViewModeToggleProps): ReactNode
           <ViewListIcon
             fontSize="small"
             sx={(theme: Theme) => ({
-              color: viewMode === ViewMode.List ? theme.custom?.darkBackground : theme.custom?.translucidWhite,
+              color: viewMode === ViewMode.List ? theme.custom?.white : theme.custom?.translucidWhite,
               transition: "color 0.3s ease",
             })}
           />

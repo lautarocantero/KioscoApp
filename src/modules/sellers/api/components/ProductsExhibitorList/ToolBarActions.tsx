@@ -40,7 +40,7 @@ const ToolbarActions = ({ viewMode,setViewMode }: ToolbarActionsProps): ReactNod
                     <Typography
                         variant="caption"
                         sx={(theme: Theme) => ({
-                        color: theme.custom?.darkWhite,
+                        color: theme.custom?.white,
                         textAlign: "right",
                         display: { xs: "none", sm: "block" },
                         })}

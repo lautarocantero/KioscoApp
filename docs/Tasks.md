@@ -10,24 +10,26 @@
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
 |--------------------------------------------------------------------------------------------------|    
-| 🟢 Revision final                                                                                 |
+| 🟢 Agregar colores tema claro                                                                 |
+| 🟢 Arreglar loaders                                                                              |
+| 🟢 no funciona correctamente en el carrito el aumentar stock necesario                       |
+| 🟢 Al vender un solo producto en prod desaparece todo el stock. Arreglar                      |
 |____________________________________________________________________________________________________|
 
  ________________________________________________________________________________________________
 | 👤 **Vendedores**                                                                               |
 |--------------------------------------------------------------------------------------------------|
-| 🔴 Actualmente `seller` tiene por alguna razón la data de `sells` — modificar y desacoplar       |
 | 🔴 Modificar datos para que no sean los mismos que `auth`, también los campos                    |
 |____________________________________________________________________________________________________|
 
  ________________________________________________________________________________________________
 | ⚙️ **General**                                                                                  |
 |--------------------------------------------------------------------------------------------------|
-| 🔴 Comprobar que los `delete dialogs` no se ven bien en `xs`                                     |
-| 🟢 Refactorizar todo                                                                              |
+| 🟢 Comentar secciones no disponibles aun o poner algo                                                  |
 | 🟢 Leer la documentación y dejarla presentable                                                   |
 | 🟢 Agregar componente para las situaciones donde algo no carga o llega sin datos (early return)  |
 | 🟢 Agregar skeletons                                                                              |
+| 🟢 Mejorar login y Register                                                                            |
 |____________________________________________________________________________________________________|
 
  ________________________________________________________________________________________________

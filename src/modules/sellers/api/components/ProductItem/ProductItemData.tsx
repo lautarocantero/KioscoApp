@@ -11,6 +11,7 @@ const ProductItemData = ({ name = "presentacion", presentations = [] }: ItemData
     <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: "0.1em" }}>
       <Typography
         sx={(theme: Theme) => ({
+          color: theme?.custom?.white,
           fontWeight: 700,
           fontSize: theme?.typography?.body1?.fontSize,
           lineHeight: 1.2,

@@ -12,7 +12,7 @@ const CartPriceRow = ({ label, value, valueColor, bold = false }: CartPriceRowPr
     >
         <Typography
             sx={(theme: Theme) => ({
-                color: theme?.custom?.translucidWhite,
+                color: theme?.custom?.translucidFontColor,
                 fontSize: theme?.typography?.body2?.fontSize,
                 fontWeight: bold ? 700 : 400,
                 ...(bold ? { color: theme?.custom?.fontColor } : {}),
@@ -22,7 +22,7 @@ const CartPriceRow = ({ label, value, valueColor, bold = false }: CartPriceRowPr
         </Typography>
         <Typography
             sx={(theme: Theme) => ({
-                color: valueColor ? valueColor(theme) : theme?.custom?.white,
+                color: valueColor ? valueColor(theme) : theme?.palette?.secondary?.main,
                 fontSize: bold ? theme?.typography?.h6?.fontSize : theme?.typography?.body2?.fontSize,
                 fontWeight: bold ? 700 : 600,
             })}

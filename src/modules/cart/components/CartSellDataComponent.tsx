@@ -37,7 +37,7 @@ const CartSellDataComponent = ({
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor: theme?.palette?.primary?.main,
-                        color: theme?.custom?.fontColor,
+                        color: theme?.custom?.white,
                         borderRadius: '0.5em',
                         width: '1.7em',
                         height: '1.7em',

@@ -43,7 +43,7 @@ const TicketSummaryDetailsComponent = ({ ticketSummary }: TicketSummaryDetailsPr
                 >
                     <Icon sx={(theme: Theme) => ({ color: iconColor(theme), fontSize: '1.3em' })} />
                     <Box sx={{ width: "100%" }}>
-                        <Typography sx={(theme: Theme) => ({ color: theme?.custom?.darkWhite, fontSize: theme?.typography?.caption.fontSize })}>
+                        <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColor, fontSize: theme?.typography?.caption.fontSize })}>
                             {label}
                         </Typography>
                         <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColor, fontWeight: 600, fontSize: theme?.typography?.body2.fontSize, textAlign: { xs: "end", sm: "start" } })}>

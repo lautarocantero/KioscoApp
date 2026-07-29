@@ -25,7 +25,7 @@ const ProductItemChip = ({totalStock}: ProductItemChipProps): ReactNode => {
             fontSize: "0.75em",
             height: "1.6em",
             borderRadius: "0.6em",
-            color: theme.custom?.fontColor,
+            color: theme.custom?.white,
             "& .MuiChip-icon": {
             color: "inherit",
             },

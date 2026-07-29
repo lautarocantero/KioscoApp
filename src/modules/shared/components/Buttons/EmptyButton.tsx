@@ -16,7 +16,7 @@ const EmptyButton = ({
         color: (theme: Theme) =>
           color === "main"
             ? theme?.palette?.primary?.main
-            : theme?.custom?.translucidWhite,
+            : theme?.custom?.translucidFontColor,
         width: buttonWidth,
         borderRadius: 35,
         padding: 1,
