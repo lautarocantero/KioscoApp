@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useProductsListData } from "../products/useProductListData";
 import type { Product } from "@typings/product/productTypes";
 import type { UseProductsExhibitorResult } from "@typings/sells/sellTypes";
 import { setSort, setViewMode, setPage, type RootState, type AppDispatch } from "../../store/seller/sellerSlice";
