@@ -1,10 +1,10 @@
-// modules/shared/components/CategorySelector/CategorySelectorMulti.tsx
+// modules/shared/components/FormSelector/FormSelectorMulti.tsx
 import { Box, Chip, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { sharedSx } from "../sharedSx/sharedSx";
 import { useCategorySelectorMulti } from "../../../../hooks/shared/useCategorySelectorMulti";
 import type { CategorySelectorMultiProps } from "@typings/presentation/presentationComponentTypes";
 
-function CategorySelectorMulti<C extends string>({
+function FormSelectorMulti<C extends string>({
     label = "Categoría",
     categories,
     getLabel,
@@ -58,4 +58,4 @@ function CategorySelectorMulti<C extends string>({
     );
 }
 
-export default CategorySelectorMulti;
+export default FormSelectorMulti;

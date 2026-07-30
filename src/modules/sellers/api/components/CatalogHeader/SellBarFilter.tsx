@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import CategorySelector from "../../../../shared/components/CategorySelector/CategorySelector";
+import FormSelector from "../../../../shared/components/FormSelector/FormSelector";
 import type { SellerBarFilterProps } from "@typings/seller/sellerComponentTypes";
 
 
@@ -7,7 +7,7 @@ export const SellbarFilter = ({ categories }: SellerBarFilterProps): ReactNode =
   const { list, selected, getLabel, onSelect } = categories;
 
   return (
-    <CategorySelector
+    <FormSelector
       mode="single"
       id="sellbar-category"
       label="Categoría"

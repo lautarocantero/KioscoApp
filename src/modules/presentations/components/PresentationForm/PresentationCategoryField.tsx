@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
 import type { SelectFieldProps } from "@typings/shared/types/formCard.types";
-import CategorySelector from "../../../shared/components/CategorySelector/CategorySelector";
-import { useFormikCategorySelector, useFormikCategorySelectorMulti } from "../../../shared/components/CategorySelector/useFormikCategorySelector";
+import { useFormikFormSelector, useFormikFormSelectorMulti } from "../../../shared/components/FormSelector/useFormikFormSelector";
+import FormSelector from "../../../shared/components/FormSelector/FormSelector";
 
 function SelectFieldSingle<T extends object, C extends string>({
     name, label, options, getOptionLabel, allowClear, clearLabel,
 }: Omit<SelectFieldProps<T, C>, "multiple">): ReactNode {
-    const { value, onChange } = useFormikCategorySelector<T, C>(name);
+    const { value, onChange } = useFormikFormSelector<T, C>(name);
     return (
-        <CategorySelector
+        <FormSelector
             mode="single"
             id={name}
             label={label}
@@ -25,9 +25,9 @@ function SelectFieldSingle<T extends object, C extends string>({
 function SelectFieldMulti<T extends object, C extends string>({
     name, label, options, getOptionLabel,
 }: Omit<SelectFieldProps<T, C>, "multiple" | "allowClear" | "clearLabel">): ReactNode {
-    const { value, onChange } = useFormikCategorySelectorMulti<T, C>(name);
+    const { value, onChange } = useFormikFormSelectorMulti<T, C>(name);
     return (
-        <CategorySelector
+        <FormSelector
             mode="multi"
             id={name}
             label={label}

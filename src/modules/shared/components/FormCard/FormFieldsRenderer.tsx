@@ -6,6 +6,7 @@ import { useFocusFirstField } from "../../../../hooks/shared/useFocusFirstField"
 import { useFieldDisplayState } from "../../../../hooks/shared/useFieldDisplayState";
 import type { FieldConfig, FormFieldsRendererProps } from "@typings/shared/types/formCard.types";
 import SelectField from "../../../presentations/components/PresentationForm/PresentationCategoryField";
+import type { ReactNode } from "react";
 
 
 function FormFieldsRenderer<T extends object>({
@@ -16,7 +17,7 @@ function FormFieldsRenderer<T extends object>({
     sectionLabel,
     idPrefix,
     renderAfterField,
-}: FormFieldsRendererProps<T>): React.ReactNode {
+}: FormFieldsRendererProps<T>): ReactNode {
     const { setFieldValue, setFieldTouched } = useFormikContext<T>();
     const firstFieldRef = useFocusFirstField(fields[0] as string | undefined, readOnly);
 

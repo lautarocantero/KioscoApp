@@ -1,7 +1,7 @@
 import { useFormikContext } from "formik";
 import type { UseFormikCategorySelectorMultiResult, UseFormikCategorySelectorResult } from "@typings/presentation/presentationComponentTypes";
 
-export function useFormikCategorySelector<T extends object, C extends string>(
+export function useFormikFormSelector<T extends object, C extends string>(
     name: keyof T & string,
 ): UseFormikCategorySelectorResult<C> {
     const { values, setFieldValue } = useFormikContext<T>();
@@ -14,7 +14,7 @@ export function useFormikCategorySelector<T extends object, C extends string>(
     return { value, onChange };
 }
 
-export function useFormikCategorySelectorMulti<T extends object, C extends string>(
+export function useFormikFormSelectorMulti<T extends object, C extends string>(
     name: keyof T & string,
 ): UseFormikCategorySelectorMultiResult<C> {
     const { values, setFieldValue } = useFormikContext<T>();
