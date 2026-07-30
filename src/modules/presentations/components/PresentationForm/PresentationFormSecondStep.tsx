@@ -10,35 +10,36 @@ import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import type { ReactNode } from "react";
 import { useFormikContext } from "formik";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
-import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
 import ProductImagePreview from "../../../shared/components/Image/ProductImagePreview";
+import { getCatalogStepConfig } from "./presentationFormStepConfig";
 
 
 const PresentationFormSecondStep = (): ReactNode => {
     const theme = useTheme();
-    const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
+    const { actionTitle, currentStep, submitError, stepErrors } = useFormNavigation();
     const { isCreate, headerTitle } = usePresentationFormHeader(actionTitle);
     const { values } = useFormikContext<PresentationFormValues>();
+    const { fields: catalogFields, registryOverride } = getCatalogStepConfig(values);
 
     return (
-        <FormCard 
-            submitText={isCreate ? "Crear" : "Actualizar"} 
-            showButtons 
+        <FormCard
+            submitText={isCreate ? "Crear" : "Actualizar"}
+            showButtons
             header={{ title: headerTitle }}
             submitError={submitError}
             stepErrors={stepErrors}
-            multiStepHeader={{ 
-                stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS, 
-                currentStep 
+            multiStepHeader={{
+                stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS,
+                currentStep
             }}
         >
             <FormFieldsRenderer<PresentationFormValues>
                 idPrefix="presentation"
                 sectionLabel="Datos de catálogo de la presentación"
-                registry={PRESENTATION_FIELD_REGISTRY}
-                fields={["sku", "barcode", "model_type", "model_size", "image_url"]}
+                registry={registryOverride}
+                fields={catalogFields}
                 icons={{
                     sku: { icon: <QrCode2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
                     barcode: { icon: <QrCodeScannerOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
@@ -51,6 +52,7 @@ const PresentationFormSecondStep = (): ReactNode => {
                 }
             />
         </FormCard>
-    );};
+    );
+};
 
 export default PresentationFormSecondStep;

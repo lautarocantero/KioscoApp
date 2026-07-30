@@ -7,38 +7,42 @@ import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined
 import type { ReactNode } from "react";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
-import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
 import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
+import { useFormikContext } from "formik";
+import { getStockStepConfig } from "./presentationFormStepConfig";
 
 
 const PresentationFormThirdStep = (): ReactNode => {
     const theme = useTheme();
-    const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
+    const { actionTitle, currentStep, submitError, stepErrors } = useFormNavigation();
     const { isCreate, headerTitle } = usePresentationFormHeader(actionTitle);
+    const { values } = useFormikContext<PresentationFormValues>();
+    const { fields: stockFields, registryOverride } = getStockStepConfig(values);
 
     return (
-        <FormCard 
-            submitText={isCreate ? "Crear" : "Actualizar"} 
-            showButtons  
+        <FormCard
+            submitText={isCreate ? "Crear" : "Actualizar"}
+            showButtons
             header={{ title: headerTitle }}
             submitError={submitError}
             stepErrors={stepErrors}
-            multiStepHeader={{ 
-                stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS, 
-                currentStep 
+            multiStepHeader={{
+                stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS,
+                currentStep
             }}
         >
             <FormFieldsRenderer<PresentationFormValues>
                 idPrefix="presentation"
                 sectionLabel="Stock de la presentación"
-                registry={PRESENTATION_FIELD_REGISTRY}
-                fields={["stock", "min_stock"]}
+                registry={registryOverride}
+                fields={stockFields}
                 icons={{
                     stock: { icon: <Inventory2OutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
                     min_stock: { icon: <ReportProblemOutlinedIcon fontSize="small" />, color: theme.palette.warning.main },
                 }}
             />
         </FormCard>
-)};
+    );
+};
 
 export default PresentationFormThirdStep;
