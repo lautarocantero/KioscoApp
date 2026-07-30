@@ -9,7 +9,7 @@ import { AlertColor } from "@typings/ui/ui";
 import handleAddProductDialogItemToCart from "../../modules/sellers/api/components/ProductDialog/handleAddProductItemToCart";
 import { buildColumnsForProductDialog } from "../../modules/sellers/api/components/ProductDialog/productDialogColumns";
 import type { AddedItem, UseProductDialogSelectorReturn } from "@typings/seller/sellerTypes";
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
+import { isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -42,7 +42,7 @@ const useProductDialogSelector = (products?: Presentation[]): UseProductDialogSe
         return quantities[presentationId];
       }
       const presentation = products?.find((p) => String(p._id) === presentationId);
-      return presentation?.sale_type === SALE_TYPE_LABELS.weight ? 100 : 1;
+      return isWeightSaleType(presentation?.sale_type) ? 100 : 1;
     },
     [quantities, products],
   );
@@ -50,7 +50,7 @@ const useProductDialogSelector = (products?: Presentation[]): UseProductDialogSe
   const handleQuantityChange = useCallback((presentationId: string, value: number | null) => {
     setQuantities((prev) => {
       const presentation = products?.find((p) => String(p._id) === presentationId);
-      const fallback = presentation?.sale_type === SALE_TYPE_LABELS.weight ? 100 : 1;
+      const fallback = isWeightSaleType(presentation?.sale_type) ? 100 : 1;
       return { ...prev, [presentationId]: value ?? fallback };
     });
   }, [products]);
