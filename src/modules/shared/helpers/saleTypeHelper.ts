@@ -2,6 +2,8 @@
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
 
+export const GRAMS_PER_WEIGHT_UNIT = 100;
+
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🔎 isWeightSaleType                                                   ║
 ║ Devuelve true si la presentación/sale_type corresponde a venta por   ║
@@ -30,3 +32,8 @@ export const getTotalPresentationsStock = (presentations?: Presentation[]): numb
     }
     return acc + (p?.stock ?? 0);
   }, 0);
+
+export const formatWeightAwareQuantity = (quantity: number, saleType?: string): string => {
+  if (!isWeightSaleType(saleType)) return `${quantity}`;
+  return formatStockQuantity(quantity * GRAMS_PER_WEIGHT_UNIT, saleType);
+};

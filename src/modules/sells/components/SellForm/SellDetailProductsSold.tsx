@@ -4,6 +4,7 @@ import type { SellDetailProductsSoldProps } from "@typings/sells/SellComponentTy
 import { useSellDetailForm } from "../../../../hooks/sells/useSellDetailForm";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 import { formatAmount } from "../../helpers/ProductDialog/Formatter/formatDetail";
+import { formatWeightAwareQuantity } from "../../../shared/helpers/saleTypeHelper";
 
 const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): React.ReactNode => {
      const { goToPresentation } = useSellDetailForm();
@@ -96,7 +97,9 @@ const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): Reac
                                             </Box>
                                         </Stack>
                                     </TableCell>
-                                    <TableCell align="right">{product.quantity}</TableCell>
+                                    <TableCell align="right">
+                                        {formatWeightAwareQuantity(product.quantity, product.sale_type)}
+                                    </TableCell>
                                     <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>{formatAmount(product.unitPrice)}</TableCell>
                                     <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>{formatAmount(product.subtotal)}</TableCell>
                                 </TableRow>
