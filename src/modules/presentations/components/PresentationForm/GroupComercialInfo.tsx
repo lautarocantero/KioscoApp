@@ -7,14 +7,19 @@ import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { BadgeColorEnum } from "@typings/ui/uiEnums";
 import type { GroupCommercialInfoProps } from "@typings/presentation/presentationComponentTypes";
+import { formatPriceValue, getPriceLabel } from "../../../shared/helpers/saleTypeHelper";
 
 
 const GroupCommercialInfo = ({
     price,
     expirationDate,
     isNotExpired,
+    saleType,
 }: GroupCommercialInfoProps): React.ReactNode => {
     const theme = useTheme();
+
+    const priceLabel = getPriceLabel(saleType);
+    const priceValue = formatPriceValue(price as number, saleType);
 
     return (
         <NoisyCard sx={{ p: 2.5 }}>
@@ -28,8 +33,8 @@ const GroupCommercialInfo = ({
                     <PresentationDetailField
                         icon={<AttachMoneyOutlinedIcon fontSize="small" />}
                         iconColor={theme.custom.accents.violet}
-                        label="Precio"
-                        value={`$ ${price}`}
+                        label={priceLabel}
+                        value={priceValue}
                     />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>

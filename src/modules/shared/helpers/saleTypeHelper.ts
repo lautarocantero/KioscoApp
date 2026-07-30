@@ -33,7 +33,13 @@ export const getTotalPresentationsStock = (presentations?: Presentation[]): numb
     return acc + (p?.stock ?? 0);
   }, 0);
 
-export const formatWeightAwareQuantity = (quantity: number, saleType?: string): string => {
-  if (!isWeightSaleType(saleType)) return `${quantity}`;
-  return formatStockQuantity(quantity * GRAMS_PER_WEIGHT_UNIT, saleType);
-};
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🔎 formatWeightAwarePrice                                             ║
+║ Label y valor de precio, ajustado a "por 100g" cuando la              ║
+║ presentación es por peso.                                             ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const getPriceLabel = (saleType?: string): string =>
+  isWeightSaleType(saleType) ? "Precio por 100g" : "Precio";
+
+export const formatPriceValue = (price: number, saleType?: string): string =>
+  isWeightSaleType(saleType) ? `$ ${price} / 100g` : `$ ${price}`;
