@@ -1,5 +1,5 @@
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
 import type { Presentation } from "@typings/presentation/presentationTypes";
+import { isWeightSaleType } from "./saleTypeHelper";
 
 export const getStockStatus = ({stock, minStock} : {stock: number, minStock: number}) => {
   if (stock <= 0) return { label: 'Sin stock', color: 'error' as const };
@@ -16,7 +16,7 @@ export const getStockStatus = ({stock, minStock} : {stock: number, minStock: num
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const getTotalPresentationsStock = (presentations?: Presentation[]): number =>
   (presentations ?? []).reduce((acc: number, p: Presentation) => {
-    if (p?.sale_type === SALE_TYPE_LABELS.weight) {
+    if (isWeightSaleType(p?.sale_type)) {
       return acc + ((p?.stock ?? 0) > 0 ? 1 : 0);
     }
     return acc + (p?.stock ?? 0);
