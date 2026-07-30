@@ -1,6 +1,6 @@
 // helpers/presentation/saleType.ts
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
+import { SALE_TYPE_VALUES } from "@typings/presentation/presentationEnum";
 
 export const GRAMS_PER_WEIGHT_UNIT = 100;
 
@@ -10,7 +10,7 @@ export const GRAMS_PER_WEIGHT_UNIT = 100;
 ║ peso (stock/cantidades expresadas en gramos).                        ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const isWeightSaleType = (saleType?: string): boolean =>
-  saleType === SALE_TYPE_LABELS.weight;
+  saleType === SALE_TYPE_VALUES[1];
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🔎 formatStockQuantity                                                ║
