@@ -5,6 +5,7 @@ import { formatCurrency } from "../helpers/formatCurrency";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CartProductRowActionCell from "./CartProductRowActionCell";
+import { isWeightSaleType } from "../../shared/helpers/saleTypeHelper";
 
 export const buildColumnsForCartProducts = (
   onIncrease: (_id: string) => void,
@@ -89,9 +90,13 @@ export const buildColumnsForCartProducts = (
     align: "center",
     headerAlign: "center",
     sortable: false,
-    renderCell: (params) => (
-      <Box
-        sx={() => ({
+    renderCell: (params) => {
+      const isWeight = isWeightSaleType(params.row.sale_type);
+      const displayValue = isWeight
+        ? `${params.row.stock_required * 100}g`
+        : params.row.stock_required;
+      return (
+        <Box sx={() => ({
           display: "flex",
           alignItems: "center",
           alignContent: "center",
@@ -99,19 +104,19 @@ export const buildColumnsForCartProducts = (
           gap: 1,
           borderRadius: "0.6em",
           padding: "0.6em 0.4em",
-        })}
-      >
-        <IconButton size="small" onClick={() => onDecrease(String(params.row._id))} sx={(theme: Theme) => ({ border: `1px solid ${theme?.palette.primary.main}` })}>
-          <KeyboardArrowDownIcon fontSize="inherit" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
-        </IconButton>
-        <Typography sx={(theme: Theme) => ({ color: theme?.palette.primary.main, minWidth: "1em", textAlign: "center" })}>
-          {params.row.stock_required}
-        </Typography>
-        <IconButton size="small" onClick={() => onIncrease(String(params.row._id))} sx={(theme: Theme) => ({ border: `1px solid ${theme?.palette.primary.main}` })}>
-          <ExpandLessIcon fontSize="inherit" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
-        </IconButton>
-      </Box>
-    ),
+        })}>
+          <IconButton size="small" onClick={() => onDecrease(String(params.row._id))} sx={(theme: Theme) => ({ border: `1px solid ${theme?.palette.primary.main}` })}>
+            <KeyboardArrowDownIcon fontSize="inherit" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
+          </IconButton>
+          <Typography sx={(theme: Theme) => ({ color: theme?.palette.primary.main, minWidth: "2.5em", textAlign: "center" })}>
+            {displayValue}
+          </Typography>
+          <IconButton size="small" onClick={() => onIncrease(String(params.row._id))} sx={(theme: Theme) => ({ border: `1px solid ${theme?.palette.primary.main}` })}>
+            <ExpandLessIcon fontSize="inherit" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
+          </IconButton>
+        </Box>
+      );
+    },
   },
   {
     field: "subtotal",

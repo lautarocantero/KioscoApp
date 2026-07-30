@@ -3,8 +3,10 @@ import { Box, Chip, IconButton, Stack, Typography, type Theme } from "@mui/mater
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import type { BuildColumnsForProductDialogInterface } from "@typings/sells/sellTypes";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import { getStockStatus } from "../../../../shared/helpers/getStockStatus";
+import { getStockStatus } from "../../../../shared/helpers/stockHandler";
 import NumberField from "../../../../shared/components/NumberField/NumberField";
+import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
+import { isWeightSaleType } from "../../../../shared/helpers/saleTypeHelper";
 
 
 export const buildColumnsForProductDialog = ({
@@ -41,11 +43,12 @@ export const buildColumnsForProductDialog = ({
     renderCell: (params) => {
       const stock = params.row.stock ?? 0;
       const minStock = params.row.min_stock ?? 0;
+      const isWeight = isWeightSaleType(params.row.sale_type);
       const status = getStockStatus({stock, minStock});
       return (
         <Stack direction="row" alignItems="center" gap={1}>
           <Typography sx={(theme: Theme) => ({ color: theme?.custom?.fontColor, fontWeight: 'bold' })}>
-            {stock}
+            {isWeight ? `${stock}g` : stock}
           </Typography>
           <Chip label={status.label} size="small" color={status.color} />
         </Stack>
@@ -61,13 +64,15 @@ export const buildColumnsForProductDialog = ({
     filterable: false,
     renderCell: (params) => {
       const stock = params.row.stock ?? 0;
+      const isWeight = params.row.sale_type === SALE_TYPE_LABELS.weight;
       return (
         <NumberField
-          label={'Cant.'}
-          min={1}
+          label={isWeight ? 'Gramos' : 'Cant.'}
+          min={isWeight ? 100 : 1}
+          step={isWeight ? 100 : 1}
           max={stock}
           size="small"
-          defaultValue={1}
+          defaultValue={isWeight ? 100 : 1}
           value={getQuantity(String(params.row._id))}
           onValueChange={(value: number | null) => handleQuantityChange(String(params.row._id), value)}
         />
