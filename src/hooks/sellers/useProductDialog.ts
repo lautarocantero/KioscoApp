@@ -1,8 +1,8 @@
 import { useContext, useMemo } from "react";
 import type { UseProductDialogReturn } from "@typings/sells/sellTypes";
-import type { Presentation } from "@typings/presentation/presentationTypes";
 import useCartPresentationPicker from "./useCartPresentationPicker";
 import { ProductDialogContext } from "../../modules/sells/context/Product/ProductDialogContext";
+import { getTotalPresentationsStock } from "../../modules/shared/helpers/stockHandler";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🪝 useProductDialog                                                   ║
@@ -22,7 +22,7 @@ const useProductDialog = (): UseProductDialogReturn => {
 
   //─── 🔎 stock total de las presentaciones 🔎 ───
   const totalStock = useMemo(
-    () => (presentations ?? []).reduce((acc: number, p: Presentation) => acc + (p?.stock ?? 0), 0),
+    () => getTotalPresentationsStock(presentations),
     [presentations],
   );
 

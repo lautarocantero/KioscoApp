@@ -6,6 +6,8 @@ import type { getProductSelectedPayload } from "@typings/seller/sellerTypes";
 import { selectProductThunk } from "../../store/seller/sellerThunks";
 import { ProductDialogContext } from "../../modules/sells/context/Product/ProductDialogContext";
 import type { Presentation } from "@typings/presentation/presentationTypes";
+import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
+import { getTotalPresentationsStock } from "../../modules/shared/helpers/stockHandler";
 
 
 export const useProductItem = (product: ProductWithPresentations) => {
@@ -26,7 +28,7 @@ export const useProductItem = (product: ProductWithPresentations) => {
 
 export const useProductStock = (presentations?: Presentation[]) => {
   const totalStock = useMemo(
-    () => presentations?.reduce((count, p) => count + p.stock, 0) ?? 0,
+    () => getTotalPresentationsStock(presentations),
     [presentations]
   );
 
