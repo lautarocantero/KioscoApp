@@ -38,12 +38,14 @@ const PresentationDetailForm = (): React.ReactNode => {
                     minStock={values.min_stock}
                     stock={values.stock}
                     hasSufficientStock={hasSufficientStock}
+                    saleType={values.sale_type}
                 />
 
                 <GroupCommercialInfo
                     price={values.price}
                     expirationDate={values.expiration_date}
                     isNotExpired={isNotExpired}
+                    saleType={values.sale_type}
                 />
             </Box>
         </FormCard>

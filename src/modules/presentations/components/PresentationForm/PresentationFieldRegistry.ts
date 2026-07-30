@@ -1,3 +1,5 @@
+import { PRESENTATION_CATEGORY_LABELS, SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
+import { PRESENTATION_CATEGORY_VALUES, PresentationCategory, SALE_TYPE_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import type { FieldRegistry } from "@typings/shared/types/formCard.types";
 
@@ -40,6 +42,15 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         tooltip: "Tamaño, volumen o cantidad de esta presentación (número + unidad: ml, l, g, kg, oz, lb, cc)",
         required: true,
     },
+    sale_type: {
+        label: "Tipo de venta",
+        tooltip: "Define si esta presentación se vende por unidad o por peso",
+        type: "select",
+        multiple: false,
+        options: SALE_TYPE_VALUES,
+        getOptionLabel: (v) => SALE_TYPE_LABELS[v as SaleType],
+        required: true,
+    },
     image_url: {
         label: "URL de imagen",
         placeholder: "/images/productExample/mi-producto.png",
@@ -78,10 +89,13 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         required: true,
         min: todayISODate,
     },
-        category: {
+    category: {
         label: "Categoría",
         tooltip: "Categoría a la que pertenece esta presentación",
-        type: "category",
+        type: "select",
+        multiple: true,
+        options: PRESENTATION_CATEGORY_VALUES,
+        getOptionLabel: (c) => PRESENTATION_CATEGORY_LABELS[c as PresentationCategory],
         required: true,
     },
 };

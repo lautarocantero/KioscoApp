@@ -51,6 +51,7 @@ export const mapProductsToSoldRows = (products: ProductTicketWithStockType[]): S
         quantity: product.stock_required,
         unitPrice: product.price,
         subtotal: product.price * product.stock_required,
+        sale_type: product.sale_type,
     }));
 };
 

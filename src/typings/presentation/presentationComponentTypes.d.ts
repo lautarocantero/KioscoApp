@@ -3,6 +3,7 @@ import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { BadgeColorEnum } from "@typings/ui/uiEnums";
 import type React from "react";
 import type { UpdatedPresentationInterface } from "./presentationTypes";
+import type { SaleType } from "./presentationEnum";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📋 PresentationForm  📋📋📋📋📋📋📋📋📋📋📋📋📋📋                       ║
@@ -38,12 +39,14 @@ export interface GroupCommercialInfoProps {
     price: number | string;
     expirationDate?: string | Date | null;
     isNotExpired: boolean;
+    saleType: SaleType;
 }
 
 export interface GroupStockProps {
-    minStock: number | string;
+    minStock: number;
     stock: number | string;
     hasSufficientStock: boolean;
+    saleType: SaleType;
 }
 
 export type CategorySelectorBaseProps<C extends string> = {
@@ -75,6 +78,11 @@ export type CategorySelectorProps<C extends string> =
 export interface PresentationCategoryFieldProps<T> {
     name: keyof T & string;
     label?: string;
+}
+
+export interface UseFormikCategorySelectorResult<C> { 
+    value: C | null; 
+    onChange: (next: C | null) => void 
 }
 
 export interface UseFormikCategorySelectorMultiResult<C extends string> {

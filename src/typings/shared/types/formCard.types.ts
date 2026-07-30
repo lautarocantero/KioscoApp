@@ -17,13 +17,29 @@ export interface FieldConfig {
     label: string;
     placeholder?: string;
     tooltip: string;
-    type?: "text" | "number" | "date"| "category";
+    type?: "text" | "number" | "date" | "select";
     required?: boolean;
     multiline?: boolean;
     rows?: number;
     step?: string;
     helperTextWhenEmpty?: string;
     min?: string;
+    // solo para type: "select"
+    multiple?: boolean;
+    options?: readonly string[];
+    getOptionLabel?: (value: string) => string;
+    allowClear?: boolean;
+    clearLabel?: string;
+}
+
+export interface SelectFieldProps<T extends object, C extends string> {
+    name: keyof T & string;
+    label: string;
+    options: readonly C[];
+    getOptionLabel: (value: C) => string;
+    multiple?: boolean;
+    allowClear?: boolean;
+    clearLabel?: string;
 }
 
 export type FieldRegistry<T> = Partial<Record<keyof T, FieldConfig>>;

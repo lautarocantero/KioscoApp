@@ -1,5 +1,5 @@
 import type { CreatedProductInterface } from "@typings/product/productTypes";
-import type { PresentationCategory } from "./presentationEnum";
+import type { PresentationCategory, SaleType } from "./presentationEnum";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
@@ -23,6 +23,7 @@ interface PresentationEntity {
     sku: string;
     stock: number;
     updated_at: string;
+    sale_type: SaleType;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -63,6 +64,7 @@ interface PresentationBaseFormValues {
     barcode: string;
     sku: string;
     stock: number;
+    sale_type: SaleType; 
 }
 
 // Formulario de CREACIÓN — idéntico a la base por ahora (sin campos extra de variante/stock)
@@ -214,8 +216,6 @@ export type BuildColumnsArgs = {
 // ║ 🛞 Utilidades  🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞🛞                 
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type CreatedPresentationInterface = Pick<CreatedPresentationInterface, '_id' | 'name'>;
-
 export interface PresentationCreatedComponentProps {
     createdPresentation: CreatedPresentationInterface;
     handleCreateAnotherPresentation: () => void;
@@ -228,18 +228,6 @@ export interface PresentationCreatedComponentProps {
 export interface UpdatedPresentationInterface {
     _id:  string;
     name: string;
-}
-
-export interface PresentationFormValues {
-    sku:             string;
-    model_type:      string;
-    model_size:      string;
-    image_file?: File | null;
-    image_url:       string;
-    min_stock:       number;
-    stock:           number;
-    price:           number;
-    expiration_date: string;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

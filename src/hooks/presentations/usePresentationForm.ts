@@ -19,6 +19,7 @@ import { useErrorParser } from "../shared/useErrorParser";
 import { stepFieldsMap } from "../../modules/presentations/schema/PresentationFormSchema";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../config/constants";
+import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
 
 const buildStepsConfig = () => PRODUCTS_VARIANT_STEPS_LABELS.map((label) => ({ title: label, content: null }));
 
@@ -78,6 +79,9 @@ export function usePresentationCreate(): UsePresentationFormReturn {
 
         setIsSubmitting(true);
         setSubmitError(null);
+        const stockValue = values.sale_type === SALE_TYPE_LABELS.weight
+            ? Number(values.model_size)
+            : values.stock;
 
         try {
             const now = new Date().toISOString();
@@ -91,8 +95,9 @@ export function usePresentationCreate(): UsePresentationFormReturn {
                 barcode:             values.barcode,
                 model_type:      values.model_type,
                 model_size:      values.model_size,
+                sale_type:       values.sale_type,
                 min_stock:       values.min_stock,
-                stock:           values.stock,
+                stock:           stockValue,
                 price:           values.price,
                 expiration_date: values.expiration_date,
                 category:        values.category,
@@ -234,10 +239,15 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
         setIsSubmitting(true);
         setSubmitError(null);
 
+        const stockValue = values.sale_type === SALE_TYPE_LABELS.weight
+            ? Number(values.model_size)
+            : values.stock;
+
         try {
             const body = {
                 _id: variantId,
                 ...values,
+                stock: stockValue,
             };
 
             const updated = await dispatch(editPresentation(body));

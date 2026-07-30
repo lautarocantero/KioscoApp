@@ -1,3 +1,4 @@
+import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
 import type { FormatProductTicketInterface, ProductTicketWithStockType } from "@typings/sells/sellTypes";
 
 
@@ -19,9 +20,14 @@ const formatProductTicket = ({Presentation, requiredStock } : FormatProductTicke
       name, 
       price,
       product_id,
+      sale_type,
       sku,
       stock,
     } = Presentation;
+
+    const stock_required = sale_type === SALE_TYPE_LABELS.weight
+    ? requiredStock / 100
+    : requiredStock;
 
     return {
       _id,
@@ -34,10 +40,11 @@ const formatProductTicket = ({Presentation, requiredStock } : FormatProductTicke
       name,
       price,
       product_id,
+      sale_type,
       sku,
       stock,
-      stock_required: requiredStock,
-    }
+      stock_required,
+    };
   }
 
 export default formatProductTicket;

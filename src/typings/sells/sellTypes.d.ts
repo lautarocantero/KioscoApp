@@ -9,6 +9,7 @@ import type { SelectChangeEvent } from "@mui/material";
 import type { GridColDef } from "@mui/x-data-grid";
 import type { SortOption, ViewMode } from "../../modules/sells/components/ProductsExhibitorList/ProductToolbar";
 import type { AppDispatch } from "../../store/presentation/presentationSlice";
+import type { SaleType } from "@typings/presentation/presentationEnum";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
@@ -61,6 +62,7 @@ export interface ProductTicketType {
   expiration_date: string;   
   image_url: string;        
   stock_required: number;   
+  sale_type: SaleType;
 }
 
 export type ProductTicketWithStockType = ProductTicketType & {
@@ -116,6 +118,7 @@ export type SoldProductRow = {
     quantity: number;
     unitPrice: number;
     subtotal: number;
+    sale_type: SaleType;
 };
 
 export interface PaymentDetail {

@@ -9,6 +9,7 @@ import { AlertColor } from "@typings/ui/ui";
 import handleAddProductDialogItemToCart from "../../modules/sellers/api/components/ProductDialog/handleAddProductItemToCart";
 import { buildColumnsForProductDialog } from "../../modules/sellers/api/components/ProductDialog/productDialogColumns";
 import type { AddedItem, UseProductDialogSelectorReturn } from "@typings/seller/sellerTypes";
+import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -36,13 +37,23 @@ const useProductDialogSelector = (products?: Presentation[]): UseProductDialogSe
   const [addedItems, setAddedItems] = useState<AddedItem[]>([]);
 
   const getQuantity = useCallback(
-    (presentationId: string) => quantities[presentationId] ?? 1,
-    [quantities],
+    (presentationId: string) => {
+      if (quantities[presentationId] !== undefined) {
+        return quantities[presentationId];
+      }
+      const presentation = products?.find((p) => String(p._id) === presentationId);
+      return presentation?.sale_type === SALE_TYPE_LABELS.weight ? 100 : 1;
+    },
+    [quantities, products],
   );
 
   const handleQuantityChange = useCallback((presentationId: string, value: number | null) => {
-    setQuantities((prev) => ({ ...prev, [presentationId]: value ?? 1 }));
-  }, []);
+    setQuantities((prev) => {
+      const presentation = products?.find((p) => String(p._id) === presentationId);
+      const fallback = presentation?.sale_type === SALE_TYPE_LABELS.weight ? 100 : 1;
+      return { ...prev, [presentationId]: value ?? fallback };
+    });
+  }, [products]);
 
   //─── 🔎 cuánto de esta presentación ya está en el carrito 🔎 ───
   const getQuantityInCart = useCallback(

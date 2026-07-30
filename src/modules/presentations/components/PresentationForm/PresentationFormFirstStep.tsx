@@ -3,6 +3,7 @@ import { useFormNavigation } from "../../../shared/context/FormNavigationContext
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import { useParams } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import type { ReactNode } from "react";
@@ -45,8 +46,9 @@ const PresentationFormFirstStep = (): ReactNode => {
                 idPrefix="presentation"
                 sectionLabel="Identidad de la presentación"
                 registry={PRESENTATION_FIELD_REGISTRY}
-                fields={["name", "description", "category"]}
+                fields={["sale_type", "name", "description", "category"]}
                 icons={{
+                    sale_type: { icon: <SellOutlinedIcon fontSize="small" />, color: theme.custom.accents.blue },
                     name: { icon: <BookmarkBorderOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
                     description: { icon: <DescriptionOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
                     category: { icon: <CategoryOutlinedIcon fontSize="small" />, color: theme.custom.accents.blue },

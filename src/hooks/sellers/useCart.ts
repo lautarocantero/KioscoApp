@@ -35,7 +35,7 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     const [ticketSummary, setTicketSummary] = useState<TicketSummaryType | null>(null);
 
     const productsTotalPrice: number = useMemo(
-        () => cart?.reduce((count: number, product: ProductTicketType) => count + product.price * product.stock_required, 0) ?? 0,
+        () => cart?.reduce((count, product) => count + product.price * product.stock_required, 0) ?? 0,
         [cart]
     );
     const ivaPercentage: number = iva;

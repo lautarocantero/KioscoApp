@@ -1,27 +1,49 @@
-// modules/presentations/components/PresentationForm/PresentationCategoryField.tsx
+import type { ReactNode } from "react";
+import type { SelectFieldProps } from "@typings/shared/types/formCard.types";
 import CategorySelector from "../../../shared/components/CategorySelector/CategorySelector";
-import { useFormikCategorySelectorMulti } from "../../../shared/components/CategorySelector/useFormikCategorySelector";
-import { PresentationCategory, PRESENTATION_CATEGORY_VALUES } from "@typings/presentation/presentationEnum";
-import { PRESENTATION_CATEGORY_LABELS } from "@typings/presentation/presentationCategoryLabels";
-import type { PresentationCategoryFieldProps } from "@typings/presentation/presentationComponentTypes";
+import { useFormikCategorySelector, useFormikCategorySelectorMulti } from "../../../shared/components/CategorySelector/useFormikCategorySelector";
 
-function PresentationCategoryField<T extends object>({
-    name,
-    label,
-}: PresentationCategoryFieldProps<T>): React.ReactNode {
-    const { value, onChange } = useFormikCategorySelectorMulti<T, PresentationCategory>(name);
+function SelectFieldSingle<T extends object, C extends string>({
+    name, label, options, getOptionLabel, allowClear, clearLabel,
+}: Omit<SelectFieldProps<T, C>, "multiple">): ReactNode {
+    const { value, onChange } = useFormikCategorySelector<T, C>(name);
+    return (
+        <CategorySelector
+            mode="single"
+            id={name}
+            label={label}
+            categories={options}
+            getLabel={getOptionLabel}
+            value={value}
+            onChange={onChange}
+            allowClear={allowClear}
+            clearLabel={clearLabel}
+        />
+    );
+}
 
+function SelectFieldMulti<T extends object, C extends string>({
+    name, label, options, getOptionLabel,
+}: Omit<SelectFieldProps<T, C>, "multiple" | "allowClear" | "clearLabel">): ReactNode {
+    const { value, onChange } = useFormikCategorySelectorMulti<T, C>(name);
     return (
         <CategorySelector
             mode="multi"
             id={name}
-            label={label ?? "Categorías"}
-            categories={PRESENTATION_CATEGORY_VALUES}
-            getLabel={(c) => PRESENTATION_CATEGORY_LABELS[c]}
+            label={label}
+            categories={options}
+            getLabel={getOptionLabel}
             value={value}
             onChange={onChange}
         />
     );
 }
 
-export default PresentationCategoryField;
+// Wrapper: decide qué subcomponente montar según `multiple`.
+// Cada subcomponente llama su propio hook de forma incondicional (reglas de hooks).
+function SelectField<T extends object, C extends string>(props: SelectFieldProps<T, C>): ReactNode {
+    if (props.multiple) return <SelectFieldMulti {...props} />;
+    return <SelectFieldSingle {...props} />;
+}
+
+export default SelectField;

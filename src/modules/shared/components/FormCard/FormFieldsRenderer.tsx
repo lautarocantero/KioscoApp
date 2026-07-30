@@ -5,7 +5,7 @@ import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
 import { useFocusFirstField } from "../../../../hooks/shared/useFocusFirstField";
 import { useFieldDisplayState } from "../../../../hooks/shared/useFieldDisplayState";
 import type { FieldConfig, FormFieldsRendererProps } from "@typings/shared/types/formCard.types";
-import PresentationCategoryField from "../../../presentations/components/PresentationForm/PresentationCategoryField";
+import SelectField from "../../../presentations/components/PresentationForm/PresentationCategoryField";
 
 
 function FormFieldsRenderer<T extends object>({
@@ -29,11 +29,19 @@ function FormFieldsRenderer<T extends object>({
                 const { fieldError, fieldValue, helperId, inputId, isFirstField } =
                     useFieldDisplayState<T>(fieldKey, index, idPrefix);
 
-                if (config.type === "category") {
+                if (config.type === "select") {
                     return (
                         <Grid key={String(fieldKey)} spacing={{ xs: 12, sm: 12 }}>
                             <FieldWithIcon iconConfig={icons?.[fieldKey]}>
-                                <PresentationCategoryField<T> name={fieldKey as keyof T & string} label={config.label} />
+                                <SelectField<T, string>
+                                    name={fieldKey as keyof T & string}
+                                    label={config.label}
+                                    options={config.options ?? []}
+                                    getOptionLabel={config.getOptionLabel ?? ((v) => v)}
+                                    multiple={config.multiple}
+                                    allowClear={config.allowClear}
+                                    clearLabel={config.clearLabel}
+                                />
                             </FieldWithIcon>
                             {renderAfterField?.[fieldKey]}
                         </Grid>

@@ -3,8 +3,9 @@ import type {
     ExistingPresentationInterface,
     PresentationFormValues,
 } from "@typings/presentation/presentationTypes";
-import { PresentationCategory } from "@typings/presentation/presentationEnum";
+import { PresentationCategory, SALE_TYPE_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
 import { BARCODE_REGEX, MODEL_SIZE_REGEX, RELATIVE_OR_URL_REGEX } from "../../../config/constants";
+import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
 
 const getTodayISODate = () => new Date().toISOString().slice(0, 10);
 const getStartOfToday = () => {
@@ -23,6 +24,7 @@ export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     min_stock:       0,
     model_size:      "",
     model_type:      "",
+    sale_type:       "unit",
     name:      "",
     price:           0,
     product_id:           "",
@@ -42,6 +44,7 @@ export const getPresentationEditInitialValues = (
     description:     presentation?.description      ?? "",
     model_type:      presentation?.model_type       ?? "",
     model_size:      presentation?.model_size       ?? "",
+    sale_type:      presentation?.sale_type       ?? "unit",
     image_url:       presentation?.image_url        ?? "",
     product_id:      presentation?.product_id       ?? "",
     min_stock:       presentation?.min_stock        ?? 0,
@@ -66,10 +69,23 @@ const baseShape = {
             "El código de barras debe tener entre 8 y 14 dígitos numéricos",
             (value) => !value || BARCODE_REGEX.test(value),
         ),
-    model_type: Yup.string().min(2).required("Tipo de modelo requerido"),
-    model_size: Yup.string()
-        .required("Tamaño/Presentación requerido")
-        .matches(MODEL_SIZE_REGEX, "Formato inválido. Ej: 500ml, 1l, 2kg"),
+    model_type: Yup.string().when('sale_type', {
+        is: SALE_TYPE_LABELS.weight,
+        then: (schema) => schema.notRequired(),
+        otherwise: (schema) => schema.min(2).required("Tipo de modelo requerido"),
+    }),
+    model_size: Yup.string().when('sale_type', {
+        is: SALE_TYPE_LABELS.weight,
+        then: (schema) => schema
+            .required("Cantidad en stock requerida")
+            .matches(/^\d+$/, "Debe ser un número entero de gramos (ej: 800)"),
+        otherwise: (schema) => schema
+            .required("Tamaño/Presentación requerido")
+            .matches(MODEL_SIZE_REGEX, "Formato inválido. Ej: 500ml, 1l, 2kg"),
+    }),
+    sale_type: Yup.mixed<SaleType>()
+        .oneOf(SALE_TYPE_VALUES, "Tipo de venta inválido")
+        .required("Tipo de venta requerido"),
     image_url:       Yup.string()
         .trim()
         .test(
@@ -78,7 +94,16 @@ const baseShape = {
             (value) => !value || RELATIVE_OR_URL_REGEX.test(value),
         ),
     min_stock:       Yup.number().integer("Debe ser un número entero").min(0, "No puede ser negativo").required("Stock mínimo requerido").typeError("Debe ser un número"),
-    stock:           Yup.number().integer("Debe ser un número entero").min(0, "No puede ser negativo").required("Stock requerido").typeError("Debe ser un número"),
+    stock: Yup.number().when('sale_type', {
+        is: SALE_TYPE_LABELS.weight,
+        // no se pide en el form para weight: se deriva de model_size en el submit
+        then: (schema) => schema.notRequired(),
+        otherwise: (schema) => schema
+            .integer("Debe ser un número entero")
+            .min(0, "No puede ser negativo")
+            .required("Stock requerido")
+            .typeError("Debe ser un número"),
+    }),
     price:           Yup.number().moreThan(0, "El precio debe ser mayor a 0").required("Precio requerido").typeError("Debe ser un número"),
     expiration_date: Yup.date()
         .min(getStartOfToday(), "La fecha no puede ser anterior a hoy")
@@ -93,7 +118,7 @@ export const presentationEditFormSchema = Yup.object(baseShape);
 // ── Step fields map ───────────────────────────────────────────────────────────
 
 export const stepFieldsMap: Record<number, (keyof PresentationFormValues)[]> = {
-    0: ["name", "description", "category"],
+    0: ["sale_type", "name", "description", "category"],
     1: ["sku", "barcode", "model_type", "model_size", "image_url"],
     2: ["stock", "min_stock"],
     3: ["price", "expiration_date"],

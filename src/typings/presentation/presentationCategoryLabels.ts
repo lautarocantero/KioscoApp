@@ -1,4 +1,4 @@
-import { PresentationCategory } from "@typings/presentation/presentationEnum";
+import { PresentationCategory, type SaleType } from "@typings/presentation/presentationEnum";
 
 export const PRESENTATION_CATEGORY_LABELS: Record<PresentationCategory, string> = {
   [PresentationCategory.Food]: "Comida",
@@ -30,4 +30,9 @@ export const PRESENTATION_CATEGORY_LABELS: Record<PresentationCategory, string> 
   [PresentationCategory.TobaccoAndCigarettes]: "Cigarrillos y Tabaco",
   [PresentationCategory.StationeryAndKiosk]: "Librería y Kiosco",
   [PresentationCategory.Deli]: "Rotisería",
+};
+
+export const SALE_TYPE_LABELS: Record<SaleType, string> = {
+  unit: "Por unidad",
+  weight: "Por peso",
 };
