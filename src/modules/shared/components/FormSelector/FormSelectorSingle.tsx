@@ -16,6 +16,7 @@ function FormSelectorSingle<C extends string>({
     onChange,
     allowClear,
     clearLabel = "Todas",
+    catalogFilter = false,
 }: CategorySelectorSingleProps<C>): React.ReactNode {
     const { handleSelect, selectedLabel } =
         useCategorySelector({ value, onChange, getLabel, disabled });
@@ -30,7 +31,16 @@ function FormSelectorSingle<C extends string>({
     };
 
     return (
-        <FormControl fullWidth disabled={disabled} variant="outlined" sx={sharedSx}>
+        <FormControl
+            fullWidth
+            disabled={disabled}
+            variant="outlined"
+            data-catalog-filter={catalogFilter || undefined}
+            sx={(theme) => ({
+                ...sharedSx(theme),
+                ...(catalogFilter ? { flex: 1, width: "auto" } : {}),
+            })}
+        >
             <InputLabel id={`${id}-label`}>{label}</InputLabel>
             <Select
                 labelId={`${id}-label`}

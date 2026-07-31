@@ -63,6 +63,7 @@ export type CategorySelectorSingleProps<C extends string> = CategorySelectorBase
     onChange: (value: C | null) => void;
     allowClear?: boolean;
     clearLabel?: string;
+    catalogFilter?: boolean;
 };
 
 export type CategorySelectorMultiProps<C extends string> = CategorySelectorBaseProps<C> & {

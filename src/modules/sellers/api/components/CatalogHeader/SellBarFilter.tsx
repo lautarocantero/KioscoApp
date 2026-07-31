@@ -10,6 +10,7 @@ export const SellbarFilter = ({ categories }: SellerBarFilterProps): ReactNode =
     <FormSelector
       mode="single"
       id="sellbar-category"
+      catalogFilter
       label="Categoría"
       categories={list}
       getLabel={getLabel}

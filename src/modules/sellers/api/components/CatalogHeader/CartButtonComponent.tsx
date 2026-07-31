@@ -16,10 +16,10 @@ export const CartButtonComponent = ({ cart }: CartButtonComponentProps): ReactNo
           justifyContent="center"
           onClick={goToCart}
           sx={(theme: Theme) => ({ 
-            flex: 1,
+            flex: '0.6 1 0%',
+            minWidth: '3.5em',
             position: 'relative',
             cursor: 'pointer',
-            width: "100%",
             border: `1px solid ${theme?.custom?.darkGray}`,
             borderRadius: "8px",
             '&:hover': {
