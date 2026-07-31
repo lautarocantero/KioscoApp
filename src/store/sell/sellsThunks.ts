@@ -2,7 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import type { CreateSellResponse, CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, EditSellSanitizedPayloadInterface, GetSellByIdThunkInterface, Sell, SellTicketType } from "@typings/sells/sellTypes";
 import { deleteSellRequest, getSellByIdRequest, getSellsRequest, getTodaySellsCountRequest, postSellRequest, putSellRequest, searchSellsRequest } from "../../modules/sells/api/sellApi";
 import { handleError } from "../shared/handlerStoreError";
-import { checkingSells, removeSell, setError, setSells, setCurrentSell, checkingTodaySells, setTodaySellsCount, setTodaySellsError } from "./sellSlice";
+import { checkingSells, removeSell, setError, setSells, setCurrentSell, checkingTodaySells, setTodaySellsCount, setTodaySellsError, setCurrentSellError, checkingCurrentSell } from "./sellSlice";
 
 //──────────────────────────────────────────── Get ───────────────────────────────────────────//
 
@@ -26,21 +26,19 @@ export const getSellsThunk = () => {
 };
 
 export const getSellByIdThunk = ({_id}: GetSellByIdThunkInterface) => {
-
-    return async (dispatch: Dispatch) : Promise<Sell | undefined> => {
-        dispatch(checkingSells());
+    return async (dispatch: Dispatch): Promise<Sell | undefined> => {
+        dispatch(checkingCurrentSell());
 
         try {
             const sell: SellTicketType[] = await getSellByIdRequest({_id});
 
-            if(!sell) {
-                dispatch(setError({ errorMessage: "No se ha encontrado la venta"}))
+            if (!sell) {
+                dispatch(setCurrentSellError("No se ha encontrado la venta"));  // 👈 también corregir esto
                 throw new Error('No se encontraron ventas que concuerden con este ticket');
             }
 
             dispatch(setCurrentSell(sell[0]));
             return sell[0] as Sell;
-
         } catch (error: unknown) {
             handleError(error);
         }

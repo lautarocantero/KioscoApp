@@ -48,6 +48,7 @@ export const sellSlice = createSlice({
         },
 
         checkingCurrentSell: (state: SellStateInterface) => {
+            state.currentSell      = null; 
             state.isLoadingCurrent = true;
             state.currentSellError = null;
         },
