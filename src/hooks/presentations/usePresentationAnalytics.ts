@@ -16,7 +16,7 @@ const getDefaultDateRange = () => ({
 const DEFAULT_SELLER_ID = "all";
 
 export function usePresentationAnalytics(presentationId?: string, options: UsePresentationAnalyticsOptions = {}) {
-    const { title = "Ventas de la presentación", subtitle = "analytics", currentStock: currentStockOverride } = options;
+    const { title = "Ventas de la presentación", subtitle = "analytics", currentStock: currentStockOverride, saleType } = options;
 
     const theme = useTheme();
     const dispatch = useDispatch<AppDispatch>();
@@ -67,8 +67,8 @@ export function usePresentationAnalytics(presentationId?: string, options: UsePr
     const currentStock = currentStockOverride ?? selectedPresentation?.stock ?? 0;
 
     const analyticsData = useMemo(
-        () => (analytics ? mapPresentationAnalytics({ raw: analytics, title, subtitle, currentStock, theme }) : null),
-        [analytics, title, subtitle, currentStock, theme],
+        () => (analytics ? mapPresentationAnalytics({ raw: analytics, title, subtitle, currentStock, saleType, theme }) : null),
+        [analytics, title, subtitle, currentStock, saleType, theme],
     );
 
     const applyFilters = useCallback(({ startDate, endDate, sellerId }: AnalyticsFiltersInterface) => {

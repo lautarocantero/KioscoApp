@@ -7,6 +7,7 @@ export interface UsePresentationAnalyticsOptions {
     title?: string;
     subtitle?: string;
     currentStock?: number;
+    saleType?: string;
 }
 
 export interface AnalyticsFiltersInterface {
@@ -114,6 +115,7 @@ export interface MapPresentationAnalyticsParams {
     title: string;
     subtitle: string;
     currentStock: number;
+    saleType?: string; 
     theme: Theme;
 }
 

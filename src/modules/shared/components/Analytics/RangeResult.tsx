@@ -8,6 +8,7 @@ import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutl
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import type { MapPresentationAnalyticsParams, PresentationAnalyticsData } from "@typings/shared/types/useAnalytics.types";
 import { formatDayLabel, formatRangeLabel, buildStockEvolution } from "./AnalyticsHelper";
+import { GRAMS_PER_WEIGHT_UNIT, isWeightSaleType } from "../../helpers/saleTypeHelper";
 
 
 export const mapPresentationAnalytics = ({
@@ -15,15 +16,24 @@ export const mapPresentationAnalytics = ({
     title,
     subtitle,
     currentStock,
+    saleType,
     theme,
 }: MapPresentationAnalyticsParams): PresentationAnalyticsData => {
     const { totals, deltas, dailySales, topSellingDays, periodSummary, range } = raw;
+    const isWeight = isWeightSaleType(saleType);
+    const noun = isWeight ? "gramos" : "unidades";
 
-    // ⚠️ El backend todavía no manda el rango anterior (`previousRange`), así que
-    // no podemos mostrar sus fechas exactas. Si en algún momento el endpoint lo
-    // agrega a `range`, reemplazar esta comparisonLabel por
-    // `vs ${formatRangeLabel(previousRange.start, previousRange.end)}`.
+    // El backend cuenta "units" como bloques de venta (1 unidad = 100g cuando es weight).
+    // Para mostrar/graficar gramos reales hay que multiplicar por GRAMS_PER_WEIGHT_UNIT.
+    const toDisplayQty = (units: number): number => (isWeight ? units * GRAMS_PER_WEIGHT_UNIT : units);
+    const fmtQty = (units: number): string =>
+        `${toDisplayQty(units).toLocaleString("es-AR")}${isWeight ? "g" : ""}`;
+
     const comparisonLabel = "vs período anterior";
+
+    // dailySales convertido una sola vez: se reusa para el chart y para stockEvolution,
+    // así currentStock (gramos reales) y las ventas diarias quedan en la misma unidad.
+    const dailySalesInDisplayUnits = dailySales.map((b) => ({ ...b, units: toDisplayQty(b.units) }));
 
     return {
         title,
@@ -32,8 +42,8 @@ export const mapPresentationAnalytics = ({
         kpis: [
             {
                 id: "units",
-                label: "Unidades vendidas",
-                value: totals.units.toLocaleString("es-AR"),
+                label: isWeight ? "Gramos vendidos" : "Unidades vendidas",
+                value: fmtQty(totals.units),
                 deltaPct: deltas.unitsPct ?? 0,
                 comparisonLabel,
                 icon: <AddCircleOutlineIcon fontSize="small" />,
@@ -41,7 +51,7 @@ export const mapPresentationAnalytics = ({
             },
             {
                 id: "revenue",
-                label: "Ventas totales",
+                label: isWeight ? "Ventas totales (por 100g)" : "Ventas totales",
                 value: `$ ${totals.revenue.toLocaleString("es-AR")}`,
                 deltaPct: deltas.revenuePct ?? 0,
                 comparisonLabel,
@@ -67,27 +77,27 @@ export const mapPresentationAnalytics = ({
                 iconColor: theme?.palette?.secondary?.main,
             },
         ],
-        dailySales: dailySales.map((b) => ({ date: formatDayLabel(b.date), units: b.units })),
-        stockEvolution: buildStockEvolution(dailySales, currentStock),
-        topSellingDays: topSellingDays.map((d) => ({ date: formatDayLabel(d.date), units: d.units })),
+        dailySales: dailySalesInDisplayUnits.map((b) => ({ date: formatDayLabel(b.date), units: b.units })),
+        stockEvolution: buildStockEvolution(dailySalesInDisplayUnits, currentStock),
+        topSellingDays: topSellingDays.map((d) => ({ date: formatDayLabel(d.date), units: toDisplayQty(d.units) })),
         periodSummary: [
             {
                 label: "Máximo diario",
-                value: periodSummary.maxDaily ? `${periodSummary.maxDaily.units} unidades` : "—",
+                value: periodSummary.maxDaily ? `${toDisplayQty(periodSummary.maxDaily.units).toLocaleString("es-AR")} ${noun}` : "—",
                 subValue: periodSummary.maxDaily ? formatDayLabel(periodSummary.maxDaily.date) : undefined,
                 icon: <ArrowCircleUpOutlinedIcon fontSize="small" />,
                 iconColor: theme?.palette?.primary?.main,
             },
             {
                 label: "Mínimo diario",
-                value: periodSummary.minDaily ? `${periodSummary.minDaily.units} unidades` : "—",
+                value: periodSummary.minDaily ? `${toDisplayQty(periodSummary.minDaily.units).toLocaleString("es-AR")} ${noun}` : "—",
                 subValue: periodSummary.minDaily ? formatDayLabel(periodSummary.minDaily.date) : undefined,
                 icon: <ArrowCircleDownOutlinedIcon fontSize="small" />,
                 iconColor: theme?.palette?.primary?.main,
             },
             {
                 label: "Promedio diario",
-                value: `${periodSummary.avgDailyUnits} unidades`,
+                value: `${toDisplayQty(periodSummary.avgDailyUnits).toLocaleString("es-AR")} ${noun}`,
                 subValue: `${periodSummary.activeDaysCount} días con ventas`,
                 icon: <TrendingUpOutlinedIcon fontSize="small" />,
                 iconColor: theme?.palette?.primary?.main,

@@ -39,9 +39,10 @@ export const buildStockEvolution = (dailySales: DailySalesPoint[], currentStock:
         .reverse();
 };
 
-export const getChartTitle = (startDate?: string, endDate?: string): string => {
-    if (!startDate || !endDate) return "Unidades vendidas";
-    return `Unidades vendidas entre ${startDate} y ${endDate}`;
+export const getChartTitle = (startDate?: string, endDate?: string, isWeight?: boolean): string => {
+    const noun = isWeight ? "Gramos vendidos" : "Unidades vendidas";
+    if (!startDate || !endDate) return noun;
+    return `${noun} entre ${startDate} y ${endDate}`;
 };
 
 export const currencyFmt = new Intl.NumberFormat("es-AR", {

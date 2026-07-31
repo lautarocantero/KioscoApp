@@ -5,7 +5,7 @@ import { formatCurrency } from "../helpers/formatCurrency";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CartProductRowActionCell from "./CartProductRowActionCell";
-import { isWeightSaleType } from "../../shared/helpers/saleTypeHelper";
+import { formatStockQuantity } from "../../shared/helpers/saleTypeHelper";
 
 export const buildColumnsForCartProducts = (
   onIncrease: (_id: string) => void,
@@ -63,19 +63,9 @@ export const buildColumnsForCartProducts = (
     headerAlign: "center",
     sortable: false,
     renderCell: (params) => (
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-        }}
-      >
-        <Typography
-          variant="body2"
-          sx={(theme: Theme) => ({ color: theme?.custom?.translucidWhite })}
-        >
-          {params.row.stock}
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+        <Typography variant="body2" sx={(theme: Theme) => ({ color: theme?.custom?.translucidWhite })}>
+          {formatStockQuantity(params.row.stock, params.row.sale_type)}
         </Typography>
       </Box>
     ),
@@ -91,20 +81,9 @@ export const buildColumnsForCartProducts = (
     headerAlign: "center",
     sortable: false,
     renderCell: (params) => {
-      const isWeight = isWeightSaleType(params.row.sale_type);
-      const displayValue = isWeight
-        ? `${params.row.stock_required * 100}g`
-        : params.row.stock_required;
+      const displayValue = formatStockQuantity(params.row.stock_required, params.row.sale_type);
       return (
-        <Box sx={() => ({
-          display: "flex",
-          alignItems: "center",
-          alignContent: "center",
-          justifyContent: "center",
-          gap: 1,
-          borderRadius: "0.6em",
-          padding: "0.6em 0.4em",
-        })}>
+        <Box sx={() => ({ display: "flex", alignItems: "center", alignContent: "center", justifyContent: "center", gap: 1, borderRadius: "0.6em", padding: "0.6em 0.4em" })}>
           <IconButton size="small" onClick={() => onDecrease(String(params.row._id))} sx={(theme: Theme) => ({ border: `1px solid ${theme?.palette.primary.main}` })}>
             <KeyboardArrowDownIcon fontSize="inherit" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main })} />
           </IconButton>

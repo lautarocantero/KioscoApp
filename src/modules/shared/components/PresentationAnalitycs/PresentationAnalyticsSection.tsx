@@ -29,6 +29,7 @@ const PresentationAnalyticsSection = ({
         title: selectedPresentation?.name ?? "Analíticas",
         subtitle: "Rendimiento de ventas",
         currentStock: selectedPresentation?.stock ?? 0,
+        saleType: selectedPresentation?.sale_type,
     });
 
     if (isLoadingPresentations) return <LoadingSpinnerComponent />;
