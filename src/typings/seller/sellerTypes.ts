@@ -201,6 +201,7 @@ export interface AddedItem {
   presentationId: string;
   price: number;
   quantity: number;
+  amount: number;
 }
 
 

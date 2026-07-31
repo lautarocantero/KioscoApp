@@ -93,10 +93,21 @@ const useProductDialogSelector = (products?: Presentation[]): UseProductDialogSe
 
       if (!wasAdded) return;
 
+      const unitPrice = presentation?.price ?? 0;
+      const amount = isWeightSaleType(presentation.sale_type)
+        ? unitPrice * (quantityToAdd / 100)
+        : unitPrice * quantityToAdd;
+
       setAddedItems((prev) => [
         ...prev,
-        { presentationId: String(presentation?._id), price: presentation?.price ?? 0, quantity: quantityToAdd },
+        {
+          presentationId: String(presentation?._id),
+          price: unitPrice,
+          quantity: quantityToAdd,
+          amount,
+        },
       ]);
+
     },
     [dispatch, showSnackBar, cart],
   );
@@ -108,7 +119,7 @@ const useProductDialogSelector = (products?: Presentation[]): UseProductDialogSe
 
   //─── 🔎 total acumulado (precio × cantidad) de lo agregado en esta sesión de diálogo 🔎 ───
   const sessionTotal = useMemo(
-    () => addedItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    () => addedItems.reduce((acc, item) => acc + item.amount, 0),
     [addedItems],
   );
 
