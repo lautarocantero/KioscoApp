@@ -29,6 +29,11 @@ const getStockValue = (values: Pick<PresentationFormValues, "sale_type" | "model
         ? Number(values.model_size.replace(/g$/, ""))
         : values.stock;
 
+const getMinStockValue = (values: Pick<PresentationFormValues, "sale_type" | "min_stock">): number =>
+    values.sale_type === WEIGHT_SALE_TYPE
+        ? Number(values.min_stock.replace(/g$/, ""))
+        : Number(values.min_stock);
+
 const buildStepsConfig = () => PRODUCTS_VARIANT_STEPS_LABELS.map((label) => ({ title: label, content: null }));
 
 /*══════════════════════════════════════════════╗
@@ -88,6 +93,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
         setIsSubmitting(true);
         setSubmitError(null);
         const stockValue = getStockValue(values);
+        const minStockValue = getMinStockValue(values); 
 
         try {
             const now = new Date().toISOString();
@@ -102,7 +108,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
                 model_type:      values.model_type,
                 model_size:      values.model_size,
                 sale_type:       values.sale_type,
-                min_stock:       values.min_stock,
+                min_stock:       minStockValue,
                 stock:           stockValue,
                 price:           values.price,
                 expiration_date: values.expiration_date,
@@ -246,12 +252,14 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
         setSubmitError(null);
 
         const stockValue = getStockValue(values);
+        const minStockValue = getMinStockValue(values);
 
         try {
             const body = {
                 _id: variantId,
                 ...values,
                 stock: stockValue,
+                min_stock: minStockValue,
             };
 
             const updated = await dispatch(editPresentation(body));

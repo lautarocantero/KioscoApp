@@ -9,7 +9,11 @@
 
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
-|-------------------------------------------------------------------------------------------------|    
+|-------------------------------------------------------------------------------------------------|   
+| 🟢 al editar se carga en cantidad los g (300) y no agrega la g al final, por lo que falla la comprobacion
+| 🟢 analytics sigue multiplicando por 100, cuenta de mas. tambien hay g s de mas en las etiquetas
+| 🟢 en el carrito se hace mal la suma en gramos. 
+| 🟢 dividir entre cantidad (100,200) y valor (gramos, kilos)                                     
 |_________________________________________________________________________________________________|
 
  ________________________________________________________________________________________________
@@ -21,6 +25,7 @@ ________________________________________________________________________________
  ________________________________________________________________________________________________
 | ⚙️ **General**                                                                                  |
 |--------------------------------------------------------------------------------------------------|
+| 🟢 los form card deben de mostrar con un snackbar o algo que fallo la peticion, ahora solo muestrea la validacion.                                                |
 | 🟢 Comentar secciones no disponibles aun o poner algo                                                  |
 | 🟢 Leer la documentación y dejarla presentable                                                   |
 | 🟢 Agregar componente para las situaciones donde algo no carga o llega sin datos (early return)  |

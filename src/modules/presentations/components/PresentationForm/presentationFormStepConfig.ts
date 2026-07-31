@@ -2,6 +2,7 @@
 import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
 import { getPriceLabel, isWeightSaleType } from "../../../shared/helpers/saleTypeHelper";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
+import type { FieldRegistry } from "@typings/shared/types/formCard.types";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🔎 getCatalogStepConfig                                               ║
@@ -42,13 +43,15 @@ export const getStockStepConfig = (values: PresentationFormValues) => {
     ? ["min_stock"]
     : ["stock", "min_stock"];
 
-  const registryOverride = isWeight
+  const registryOverride: FieldRegistry<PresentationFormValues> = isWeight
     ? {
         ...PRESENTATION_FIELD_REGISTRY,
         min_stock: {
           ...PRESENTATION_FIELD_REGISTRY.min_stock,
           label: "Cantidad mínima de stock (gramos)",
           tooltip: "Umbral mínimo de gramos a partir del cual se avisa que el stock es bajo",
+          type: "text",
+          placeholder: "Ej: 250g",
         },
       }
     : PRESENTATION_FIELD_REGISTRY;

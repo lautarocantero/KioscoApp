@@ -14,6 +14,17 @@ const getStartOfToday = () => {
     return d;
 };
 
+const normalizeWeightModelSize = (
+    modelSize: string | undefined,
+    saleType: SaleType | undefined,
+): string => {
+    const value = modelSize ?? "";
+    if (saleType !== WEIGHT_SALE_TYPE || value === "" || /g$/.test(value)) {
+        return value;
+    }
+    return `${value}g`;
+};
+
 // ── Initial values ────────────────────────────────────────────────────────────
 
 export const getPresentationFormInitialValues = (): PresentationFormValues => ({
@@ -21,7 +32,7 @@ export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     description:     "",
     expiration_date: getTodayISODate(),
     image_url:       "",
-    min_stock:       0,
+    min_stock:       "0",
     model_size:      "",
     model_type:      "",
     sale_type:       "unit",
@@ -43,11 +54,11 @@ export const getPresentationEditInitialValues = (
     brand:           presentation?.brand            ?? "",
     description:     presentation?.description      ?? "",
     model_type:      presentation?.model_type       ?? "",
-    model_size:      presentation?.model_size       ?? "",
+    model_size:      normalizeWeightModelSize(presentation?.model_size, presentation?.sale_type),
     sale_type:      presentation?.sale_type       ?? "unit",
     image_url:       presentation?.image_url        ?? "",
     product_id:      presentation?.product_id       ?? "",
-    min_stock:       presentation?.min_stock        ?? 0,
+    min_stock:       normalizeWeightModelSize(String(presentation?.min_stock ?? ""), presentation?.sale_type),
     stock:           presentation?.stock             ?? 0,
     price:           presentation?.price             ?? 0,
     expiration_date: presentation?.expiration_date  ?? getTodayISODate(),
@@ -93,7 +104,17 @@ const baseShape = {
             "Debe ser una ruta relativa (ej: /images/foto.png) o una URL válida (https://...)",
             (value) => !value || RELATIVE_OR_URL_REGEX.test(value),
         ),
-    min_stock:       Yup.number().integer("Debe ser un número entero").min(0, "No puede ser negativo").required("Stock mínimo requerido").typeError("Debe ser un número"),
+    min_stock: Yup.string()
+    .required("Stock mínimo requerido")
+    .when('sale_type', {
+        is: WEIGHT_SALE_TYPE,
+        then: (schema) => schema.matches(/^\d+g$/, "Debe ser un número entero de gramos, terminado en 'g' (ej: 250g)"),
+        otherwise: (schema) => schema.matches(/^\d+$/, "Debe ser un número entero").test(
+            "min-stock-non-negative",
+            "No puede ser negativo",
+            (value) => value === undefined || Number(value) >= 0,
+        ),
+    }),
     stock: Yup.number().when('sale_type', {
         is: WEIGHT_SALE_TYPE,
         // no se pide en el form para weight: se deriva de model_size en el submit

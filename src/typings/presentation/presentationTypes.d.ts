@@ -55,7 +55,7 @@ interface PresentationBaseFormValues {
     category: PresentationCategory[];
     expiration_date: string;
     image_url: string;
-    min_stock: number;
+    min_stock: string;
     model_size: string;
     model_type: string;
     name: string;
@@ -74,13 +74,15 @@ export type PresentationFormValues = PresentationBaseFormValues;
 export type PresentationEditFormValues = PresentationBaseFormValues;
 
 // Cuerpo enviado al POST /product/create-product
-export type CreatePresentationBody = PresentationBaseFormValues & {
-    created_at:   string;
-    updated_at:   string;
+export type CreatePresentationBody = Omit<PresentationBaseFormValues, 'min_stock'> & {
+    min_stock:  number;
+    created_at: string;
+    updated_at: string;
 };
 
 // Cuerpo enviado al PATCH /product/:id
-export type UpdatePresentationBody = PresentationBaseFormValues & {
+export type UpdatePresentationBody = Omit<PresentationBaseFormValues, 'min_stock'> & {
+    min_stock:  number;
     updated_at: string;
 };
 
