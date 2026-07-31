@@ -35,8 +35,7 @@ export const getTotalPresentationsStock = (presentations?: Presentation[]): numb
 
 
 export const formatWeightAwareQuantity = (quantity: number, saleType?: string): string => {
-  if (!isWeightSaleType(saleType)) return `${quantity}`;
-  return formatStockQuantity(quantity * GRAMS_PER_WEIGHT_UNIT, saleType);
+  return formatStockQuantity(quantity, saleType);
 };
 
 export const getPriceLabel = (saleType?: string): string =>

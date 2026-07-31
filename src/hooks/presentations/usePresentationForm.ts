@@ -1,3 +1,4 @@
+// hooks/presentations/usePresentationForm.ts
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -19,7 +20,14 @@ import { useErrorParser } from "../shared/useErrorParser";
 import { stepFieldsMap } from "../../modules/presentations/schema/PresentationFormSchema";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../config/constants";
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
+import { WEIGHT_SALE_TYPE } from "@typings/presentation/presentationEnum";
+
+
+//─── 🔎 Deriva el stock (en gramos) a partir de model_size ("1200g" -> 1200) 🔎 ───
+const getStockValue = (values: Pick<PresentationFormValues, "sale_type" | "model_size" | "stock">): number =>
+    values.sale_type === WEIGHT_SALE_TYPE
+        ? Number(values.model_size.replace(/g$/, ""))
+        : values.stock;
 
 const buildStepsConfig = () => PRODUCTS_VARIANT_STEPS_LABELS.map((label) => ({ title: label, content: null }));
 
@@ -79,9 +87,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
 
         setIsSubmitting(true);
         setSubmitError(null);
-        const stockValue = values.sale_type === SALE_TYPE_LABELS.weight
-            ? Number(values.model_size)
-            : values.stock;
+        const stockValue = getStockValue(values);
 
         try {
             const now = new Date().toISOString();
@@ -239,9 +245,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
         setIsSubmitting(true);
         setSubmitError(null);
 
-        const stockValue = values.sale_type === SALE_TYPE_LABELS.weight
-            ? Number(values.model_size)
-            : values.stock;
+        const stockValue = getStockValue(values);
 
         try {
             const body = {

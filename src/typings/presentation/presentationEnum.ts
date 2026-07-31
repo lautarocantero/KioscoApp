@@ -54,3 +54,5 @@ export const PRESENTATION_CATEGORY_VALUES = Object.values(PresentationCategory);
 export const SALE_TYPE_VALUES = ['unit', 'weight'] as const;
 
 export type SaleType = typeof SALE_TYPE_VALUES[number];
+
+export const WEIGHT_SALE_TYPE: SaleType = SALE_TYPE_VALUES[1];

@@ -12,6 +12,7 @@ import type { store } from '../store';
 import { CartAmount, SortOption, ViewMode } from '../../typings/seller/sellerEnums';
 import type { Presentation } from '@typings/presentation/presentationTypes';
 import type { Product } from '@typings/product/productTypes';
+import { isWeightSaleType } from '../../modules/shared/helpers/saleTypeHelper';
 
 const initialState: SellerStateInterface = {
     _id: null,
@@ -68,22 +69,27 @@ export const sellerSlice = createSlice({
             const { payload } = action;
             const { _id } = payload;
 
-            const productIndex = state.cart.findIndex(item => item._id === String(_id)); 
-            if (productIndex !== -1) { 
-                state.cart[productIndex].stock_required += 1; 
+            const productIndex = state.cart.findIndex(item => item._id === String(_id));
+            if (productIndex !== -1) {
+                const step = isWeightSaleType(state.cart[productIndex].sale_type) ? 100 : 1;
+                state.cart[productIndex].stock_required += step;
             }
         },
         removeFromCart: (state: SellerStateInterface, action: PayloadAction<SellerRemoveFromCartActionPayload>) => {
             const { payload } = action;
-            const { _id, amount} = payload;
+            const { _id, amount } = payload;
 
-            const productIndex = state.cart.findIndex(item => item._id === String(_id)); 
+            const productIndex = state.cart.findIndex(item => item._id === String(_id));
             if (productIndex === -1) return;
 
-            if(amount === CartAmount.One) state.cart[productIndex].stock_required -= 1; 
-            if(amount === CartAmount.All) state.cart[productIndex].stock_required = 0; 
+            const step = isWeightSaleType(state.cart[productIndex].sale_type) ? 100 : 1;
 
-            if (state.cart[productIndex].stock_required <= 0) { state.cart = state.cart.filter((item) => item._id !== String(_id)); }
+            if (amount === CartAmount.One) state.cart[productIndex].stock_required -= step;
+            if (amount === CartAmount.All) state.cart[productIndex].stock_required = 0;
+
+            if (state.cart[productIndex].stock_required <= 0) {
+                state.cart = state.cart.filter((item) => item._id !== String(_id));
+            }
         },
         cleanCart: (state: SellerStateInterface) => {
             state.cart = []

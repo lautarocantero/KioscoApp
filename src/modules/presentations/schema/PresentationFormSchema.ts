@@ -1,11 +1,11 @@
+// PresentationFormSchema.ts
 import * as Yup from "yup";
 import type {
     ExistingPresentationInterface,
     PresentationFormValues,
 } from "@typings/presentation/presentationTypes";
-import { PresentationCategory, SALE_TYPE_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
+import { PresentationCategory, SALE_TYPE_VALUES, WEIGHT_SALE_TYPE, type SaleType } from "@typings/presentation/presentationEnum";
 import { BARCODE_REGEX, MODEL_SIZE_REGEX, RELATIVE_OR_URL_REGEX } from "../../../config/constants";
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
 
 const getTodayISODate = () => new Date().toISOString().slice(0, 10);
 const getStartOfToday = () => {
@@ -70,15 +70,15 @@ const baseShape = {
             (value) => !value || BARCODE_REGEX.test(value),
         ),
     model_type: Yup.string().when('sale_type', {
-        is: SALE_TYPE_LABELS.weight,
+        is: WEIGHT_SALE_TYPE,
         then: (schema) => schema.notRequired(),
         otherwise: (schema) => schema.min(2).required("Tipo de modelo requerido"),
     }),
     model_size: Yup.string().when('sale_type', {
-        is: SALE_TYPE_LABELS.weight,
+        is: WEIGHT_SALE_TYPE,
         then: (schema) => schema
             .required("Cantidad en stock requerida")
-            .matches(/^\d+$/, "Debe ser un número entero de gramos (ej: 800)"),
+            .matches(/^\d+g$/, "Debe ser un número entero de gramos, terminado en 'g' (ej: 800g)"),
         otherwise: (schema) => schema
             .required("Tamaño/Presentación requerido")
             .matches(MODEL_SIZE_REGEX, "Formato inválido. Ej: 500ml, 1l, 2kg"),
@@ -95,7 +95,7 @@ const baseShape = {
         ),
     min_stock:       Yup.number().integer("Debe ser un número entero").min(0, "No puede ser negativo").required("Stock mínimo requerido").typeError("Debe ser un número"),
     stock: Yup.number().when('sale_type', {
-        is: SALE_TYPE_LABELS.weight,
+        is: WEIGHT_SALE_TYPE,
         // no se pide en el form para weight: se deriva de model_size en el submit
         then: (schema) => schema.notRequired(),
         otherwise: (schema) => schema
