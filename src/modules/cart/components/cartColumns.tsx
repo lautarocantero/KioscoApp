@@ -5,7 +5,7 @@ import { formatCurrency } from "../helpers/formatCurrency";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CartProductRowActionCell from "./CartProductRowActionCell";
-import { formatStockQuantity } from "../../shared/helpers/saleTypeHelper";
+import { calculateItemAmount, formatStockQuantity } from "../../shared/helpers/saleTypeHelper";
 
 export const buildColumnsForCartProducts = (
   onIncrease: (_id: string) => void,
@@ -107,7 +107,7 @@ export const buildColumnsForCartProducts = (
     align: "center",
     headerAlign: "center",
     sortable: false,
-    valueGetter: (_value, row) => formatCurrency(row.price * row.stock_required),
+    valueGetter: (_value, row) => formatCurrency(calculateItemAmount(row.price, row.stock_required, row.sale_type)),
   },
   {
     field: "actions",

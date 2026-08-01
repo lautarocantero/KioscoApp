@@ -8,7 +8,7 @@ import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutl
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import type { MapPresentationAnalyticsParams, PresentationAnalyticsData } from "@typings/shared/types/useAnalytics.types";
 import { formatDayLabel, formatRangeLabel, buildStockEvolution } from "./AnalyticsHelper";
-import { GRAMS_PER_WEIGHT_UNIT, isWeightSaleType } from "../../helpers/saleTypeHelper";
+import { isWeightSaleType } from "../../helpers/saleTypeHelper";
 
 
 export const mapPresentationAnalytics = ({
@@ -23,9 +23,9 @@ export const mapPresentationAnalytics = ({
     const isWeight = isWeightSaleType(saleType);
     const noun = isWeight ? "gramos" : "unidades";
 
-    // El backend cuenta "units" como bloques de venta (1 unidad = 100g cuando es weight).
-    // Para mostrar/graficar gramos reales hay que multiplicar por GRAMS_PER_WEIGHT_UNIT.
-    const toDisplayQty = (units: number): number => (isWeight ? units * GRAMS_PER_WEIGHT_UNIT : units);
+    // stock_required (y por lo tanto "units" del backend) ya viene en gramos reales
+    // para presentaciones weight — no hace falta ninguna conversión de unidad acá.
+    const toDisplayQty = (units: number): number => units;
     const fmtQty = (units: number): string =>
         `${toDisplayQty(units).toLocaleString("es-AR")}${isWeight ? "g" : ""}`;
 

@@ -2,6 +2,7 @@ import type { PaymentDetail, ProductTicketWithStockType, PurchaseDateParts, Sell
 import { MONTHS_ES } from "../../../../../config/constants";
 import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import { PAYMENT_METHOD_LABELS } from "@typings/sells/SellMethodLabels";
+import { calculateItemAmount } from "../../../../shared/helpers/saleTypeHelper";
 
 
 /*══════════ 📅 parsePurchaseDate ══════════╗
@@ -50,7 +51,7 @@ export const mapProductsToSoldRows = (products: ProductTicketWithStockType[]): S
         imageUrl: product.image_url || undefined,
         quantity: product.stock_required,
         unitPrice: product.price,
-        subtotal: product.price * product.stock_required,
+        subtotal: calculateItemAmount(product.price, product.stock_required, product.sale_type),
         sale_type: product.sale_type,
     }));
 };

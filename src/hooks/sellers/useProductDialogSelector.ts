@@ -9,7 +9,7 @@ import { AlertColor } from "@typings/ui/ui";
 import handleAddProductDialogItemToCart from "../../modules/sellers/api/components/ProductDialog/handleAddProductItemToCart";
 import { buildColumnsForProductDialog } from "../../modules/sellers/api/components/ProductDialog/productDialogColumns";
 import type { AddedItem, UseProductDialogSelectorReturn } from "@typings/seller/sellerTypes";
-import { isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
+import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -94,9 +94,7 @@ const useProductDialogSelector = (products?: Presentation[]): UseProductDialogSe
       if (!wasAdded) return;
 
       const unitPrice = presentation?.price ?? 0;
-      const amount = isWeightSaleType(presentation.sale_type)
-        ? unitPrice * (quantityToAdd / 100)
-        : unitPrice * quantityToAdd;
+      const amount = calculateItemAmount(presentation?.price ?? 0, quantityToAdd, presentation.sale_type);
 
       setAddedItems((prev) => [
         ...prev,

@@ -12,6 +12,7 @@ import { AlertColor } from "@typings/ui/ui";
 import { buildColumnsForCartProducts } from "../../modules/cart/components/cartColumns";
 import type { UseCartReturn } from "@typings/seller/sellerTypes";
 import { CartAmount } from "@typings/seller/sellerEnums";
+import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -35,9 +36,9 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     const [ticketSummary, setTicketSummary] = useState<TicketSummaryType | null>(null);
 
     const productsTotalPrice: number = useMemo(
-        () => cart?.reduce((count, product) => count + product.price * product.stock_required, 0) ?? 0,
-        [cart]
-    );
+    () => cart?.reduce((count, product) => count + calculateItemAmount(product.price, product.stock_required, product.sale_type), 0) ?? 0,
+    [cart]
+);
     const ivaPercentage: number = iva;
     const ivaAmount: number = (productsTotalPrice * ivaPercentage) / 100;
     const total: number = productsTotalPrice + ivaAmount;
@@ -59,7 +60,10 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
             ticketNumber: ticket._id,
             date: ticket.purchase_date,
             total: ticket.total_amount,
-            productsCount: ticket.products.reduce((count, product) => count + product.stock_required, 0),
+            productsCount: ticket.products.reduce(
+                (count, product) => count + (isWeightSaleType(product.sale_type) ? 1 : product.stock_required),
+                0
+            ),
             paymentMethod: ticket.payment_method,
         });
     }, []);

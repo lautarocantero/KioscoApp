@@ -9,10 +9,8 @@
 
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
-|-------------------------------------------------------------------------------------------------|   
-| 🟢 al editar se carga en cantidad los g (300) y no agrega la g al final, por lo que falla la comprobacion
-| 🟢 analytics sigue multiplicando por 100, cuenta de mas. tambien hay g s de mas en las etiquetas
-| 🟢 en el carrito se hace mal la suma en gramos. 
+|-------------------------------------------------------------------------------------------------| 
+| 🟢 cuando no hay stock de una sola presentacion por peso, aparece 0. contemplar que hacer
 | 🟢 dividir entre cantidad (100,200) y valor (gramos, kilos)                                     
 |_________________________________________________________________________________________________|
 

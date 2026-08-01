@@ -43,7 +43,7 @@ export interface GroupCommercialInfoProps {
 }
 
 export interface GroupStockProps {
-    minStock: number;
+    minStock: number | string
     stock: number | string;
     hasSufficientStock: boolean;
     saleType: SaleType;

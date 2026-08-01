@@ -76,7 +76,7 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellerBarBarcodePar
             _id, name, description, image_url,
             brand, sku, model_type,
             model_size, price, expiration_date,
-            product_id, stock,
+            product_id, stock, sale_type,
         } = product;
 
         const productTicket: ProductTicketWithStockType = {
@@ -93,6 +93,7 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseSellerBarBarcodePar
             stock_required: 1,
             product_id,
             stock,
+            sale_type,
         };
 
         const wasAdded = await dispatch(addToCartThunk({ productData: productTicket }));

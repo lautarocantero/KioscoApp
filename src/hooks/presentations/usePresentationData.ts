@@ -49,10 +49,15 @@ export const usePresentationData = (
 ║ de una presentación, aunque no dependa de Redux.                     ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
+const parseWeightAwareNumber = (value: number | string): number => {
+    if (typeof value === "number") return value;
+    return Number(value.replace(/g$/, ""));
+};
+
 export const usePresentationDetailStatus = (
     values: ReturnType<typeof getPresentationEditInitialValues>
 ): UsePresentationDetailStatusReturn => {
-    const hasSufficientStock = Number(values.stock) > Number(values.min_stock);
+    const hasSufficientStock = parseWeightAwareNumber(values.stock) > parseWeightAwareNumber(values.min_stock);
 
     const isNotExpired = values.expiration_date
         ? new Date(values.expiration_date) > new Date()

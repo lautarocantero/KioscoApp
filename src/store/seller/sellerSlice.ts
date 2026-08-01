@@ -70,10 +70,13 @@ export const sellerSlice = createSlice({
             const { _id } = payload;
 
             const productIndex = state.cart.findIndex(item => item._id === String(_id));
-            if (productIndex !== -1) {
-                const step = isWeightSaleType(state.cart[productIndex].sale_type) ? 100 : 1;
-                state.cart[productIndex].stock_required += step;
-            }
+            if (productIndex === -1) return;
+
+            const item = state.cart[productIndex];
+            const step = isWeightSaleType(item.sale_type) ? 100 : 1;
+            const maxAvailable = item.stock ?? Infinity;
+
+            state.cart[productIndex].stock_required = Math.min(item.stock_required + step, maxAvailable);
         },
         removeFromCart: (state: SellerStateInterface, action: PayloadAction<SellerRemoveFromCartActionPayload>) => {
             const { payload } = action;

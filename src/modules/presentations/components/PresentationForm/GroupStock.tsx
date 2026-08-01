@@ -29,7 +29,7 @@ const GroupStock = ({ minStock, stock, hasSufficientStock, saleType }: GroupStoc
                         icon={<ArrowCircleDownOutlinedIcon fontSize="small" />}
                         iconColor={theme.custom.accents.green}
                         label={isWeight ? "Stock mínimo (gramos)" : "Stock mínimo"}
-                        value={formatQuantity(minStock)}
+                        value={minStock}
                     />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>
@@ -39,7 +39,7 @@ const GroupStock = ({ minStock, stock, hasSufficientStock, saleType }: GroupStoc
                         label={isWeight ? "Stock actual (gramos)" : "Stock actual"}
                         value={formatQuantity(stock)}
                         badge={{
-                            label: hasSufficientStock ? "Stock OK" : "Stock bajo",
+                            label: hasSufficientStock ? "Stock Disponible" : "Stock bajo",
                             color: hasSufficientStock ? BadgeColorEnum.Success : BadgeColorEnum.Error,
                         }}
                     />

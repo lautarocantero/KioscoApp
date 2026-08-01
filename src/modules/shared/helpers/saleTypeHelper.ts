@@ -43,3 +43,12 @@ export const getPriceLabel = (saleType?: string): string =>
 
 export const formatPriceValue = (price: number, saleType?: string): string =>
   isWeightSaleType(saleType) ? `$ ${price} / 100g` : `$ ${price}`;
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🔎 calculateItemAmount                                                ║
+║ Calcula el importe de una línea (precio × cantidad), ajustando por   ║
+║ GRAMS_PER_WEIGHT_UNIT cuando la presentación es por peso, ya que el  ║
+║ precio está expresado "por cada 100g" en vez de por unidad/gramo.    ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const calculateItemAmount = (price: number, quantity: number, saleType?: string): number =>
+  isWeightSaleType(saleType) ? price * (quantity / GRAMS_PER_WEIGHT_UNIT) : price * quantity;
