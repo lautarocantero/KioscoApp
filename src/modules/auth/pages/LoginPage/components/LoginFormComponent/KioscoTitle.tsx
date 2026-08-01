@@ -16,7 +16,7 @@ const KioscoTitle = (): React.ReactNode => (
       sx={{
         display: "flex",
         alignItems: "center",
-        color: (theme: Theme) => theme?.custom?.fontColor,
+        color: (theme: Theme) => theme?.palette?.primary?.main,
         fontSize: (theme: Theme) => ({
           xs: theme?.typography?.h3?.fontSize,
         }),
