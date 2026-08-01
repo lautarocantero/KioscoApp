@@ -1,26 +1,4 @@
-
-// # Componente: LoginForm  
-
-// ## Descripción 📦
-// Formulario de inicio de sesión con validación y animación.  
-// Renderiza inputs, botones y manejo de errores dentro de un `Box` con animación de entrada.  
-
-// ## Funciones 🔧
-// - `LoginForm`: componente principal que controla el flujo de login.  
-//   - Recibe `showForm` desde `LoginFormType`; si es `false`, retorna `null`.  
-//   - Usa `useFormik` para manejar estado, valores y validación del formulario.  
-//   - `onSubmit`: despacha `startLoginWithEmailPassword` con email y contraseña.  
-//   - Renderiza `LoginFormInputs` para campos, `ApiErrorsHandler` para errores y `LoginFormButtons` para acciones.  
-//   - Incluye un `Link` a la ruta `/login` con texto "¿Olvidaste tu contraseña?".  
-
-// ## Notas técnicas 💽
-// - Validación con `Yup`: email requerido y válido, contraseña requerida.  
-// - Animación: `animate__bounceInRight` de `animate.css`.  
-// - Usa `useDispatch` y `useSelector` de Redux para manejar estado de autenticación.  
-//-----------------------------------------------------------------------------//
-
-
-import { Box, Link, type Theme } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Grid, Link, type Theme } from "@mui/material";
 import { Link as LinkReactRouter } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -30,7 +8,6 @@ import "animate.css";
 import { startLoginWithEmailPassword } from "../../../../../../store/auth/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../../../../store/auth/authSlice";
-import type { LoginFormType } from "../../../../../../typings/auth/authComponentTypes";
 import type { AuthLoginRequestPayload } from "../../../../../../typings/auth/authTypes";
 import ApiErrorsHandler from "../../../../../shared/components/ErrorHandler/ErrorFormHandler";
 
@@ -52,7 +29,7 @@ const getValidationSchema = () =>
   );
 
   
-const LoginForm = ({ showForm }: LoginFormType): React.ReactNode | null => {
+const LoginForm = (): React.ReactNode | null => {
   const dispatch = useDispatch<AppDispatch>();
   const { auth } = useSelector((state: RootState) => state);
   const { errorMessage } = auth;
@@ -70,8 +47,6 @@ const LoginForm = ({ showForm }: LoginFormType): React.ReactNode | null => {
     validationSchema: getValidationSchema(),
   });
 
-  if (!showForm) return null;
-
   return (
     <Box
       component="form"
@@ -87,34 +62,55 @@ const LoginForm = ({ showForm }: LoginFormType): React.ReactNode | null => {
         alignItems: "center",
         margin: "auto"
       }}
-      className="animate__animated animate__bounceInRight"
     >
       <LoginFormInputs
         values={values}
         setFieldValue={setFieldValue}
         errors={errors}
       />
-      <ApiErrorsHandler error={errorMessage}/>
-      <Link
-        component={LinkReactRouter}
-        to={"/login"}
-        sx={{
-          alignSelf: "center",
-          mt: "1em",
-          textDecoration: "none",
-          textAlign: "center",
-          display: "block",
-          color: (theme: Theme) => theme?.custom?.fontColor,
-          fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
-          backgroundColor: (theme: Theme) => theme?.custom?.background,
-          borderRadius: "1em",
-          width: "90%",
-          justifySelf: 'center',
-        }}
+      <Grid
+        container
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ width: "90%", mt: "0.8em" }}
       >
-        ¿Olvidaste tu contraseña?
-      </Link>
+        <FormControlLabel
+          control={
+            <Checkbox
+              defaultChecked
+              sx={{
+                color: (theme: Theme) => theme?.custom?.darkGray,
+                "&.Mui-checked": {
+                  color: (theme: Theme) => theme?.palette?.primary?.main,
+                },
+              }}
+            />
+          }
+          label="Recordarme"
+          sx={{
+            color: (theme: Theme) => theme?.custom?.fontColor,
+            "& .MuiTypography-root": {
+              fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
+            },
+          }}
+        />
+        <Link
+          component={LinkReactRouter}
+          to={"/login"}
+          sx={{
+            textDecoration: "none",
+            color: (theme: Theme) => theme?.palette?.primary?.main,
+            fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
+            fontWeight: 500,
+          }}
+        >
+          ¿Olvidaste tu contraseña?
+        </Link>
+      </Grid>
+
+      <ApiErrorsHandler error={errorMessage}/>
       <LoginFormButtons errors={errors} />
+
     </Box>
   );
 };

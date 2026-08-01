@@ -48,8 +48,7 @@ const AuthLayout = ({ children }: PropsWithChildren): React.ReactNode => {
           spacing={{ xs: 12, sm: 6 }}
           display={"flex"}
           alignItems={"center"}
-          sx={(theme: Theme) => ({
-            backgroundColor: { md: theme.custom?.background },
+          sx={() => ({
             minWidth: { xs: "100%", md: "50%" },
             height: '100%',
           })}
@@ -69,7 +68,7 @@ const AuthLayout = ({ children }: PropsWithChildren): React.ReactNode => {
               borderRadius: { xs: "1em" },
               overflowX: "hidden",
               backgroundColor: {
-                xs: theme.custom?.darkBackground,
+                xs: theme.custom?.background,
               },
             })}
           >

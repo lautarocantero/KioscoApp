@@ -14,15 +14,6 @@ export type RegisterFormButtonsInterface = LoginFormButtonsInterface;
 ║ ██ FORMS   📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface FormVisibilityState {
-  showForm: boolean;
-  setShowForm: ToggleFormCallback;
-}
-
-export type LoginFormType = Pick<FormVisibilityState, 'showForm'>;
-
-export type FormToggleButtonInterface = Pick<FormVisibilityState, 'setShowForm'>;
-
 export interface LoginFormInputsInterface {    
   values: AuthLoginData;
   setFieldValue: (field: string, value: string) => void;

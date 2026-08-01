@@ -1,28 +1,4 @@
-
-// # Componente: RegisterForm  
-
-// ## Descripción 📦
-// Formulario de registro de usuario con validación, sanitización y manejo de errores.  
-// Renderiza inputs, botones y un enlace de navegación dentro de un `Box`.  
-
-// ## Funciones 🔧
-// - `RegisterForm`: componente principal que controla el flujo de registro.  
-//   - Usa `useFormik` para manejar estado, valores y validación del formulario.  
-//   - `onSubmit`: sanitiza los datos y despacha `startRegister` vía Redux.  
-//   - Renderiza `RegisterFormInputs` para campos, `ApiErrorsHandler` para errores y `RegisterFormButtons` para acciones.  
-//   - Incluye un `Link` a la ruta `/login` con texto "¿Ya tienes cuenta? Inicia Sesión".  
-// - `sanitizeInput`: función auxiliar que limpia entradas y reemplaza caracteres sospechosos.  
-// - `getInitialValues`: define valores iniciales del formulario.  
-// - `getValidationSchema`: esquema de validación con `Yup` (username, email, password, repeatPassword).  
-
-// ## Notas técnicas 💽
-// - Validación estricta: email válido, contraseñas coincidentes.  
-// - Manejo de errores centralizado con `handleError` y `ApiErrorsHandler`.  
-// - Estilos dinámicos con `Theme` para color y tipografía.  
-//-----------------------------------------------------------------------------//
-
-
-import { Box, Link, type Theme } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Link, Typography, type Theme } from "@mui/material";
 import RegisterFormInputs from "./RegisterFormInputs";
 import RegisterFormButtons from "./RegisterFormButtons";
 import { Link as LinkReactRouter } from "react-router-dom";
@@ -69,27 +45,27 @@ const getValidationSchema = () =>
         .required("Campo requerido")
         .trim(),
       password: Yup.string().required("Campo requerido"),
-      repeatPassword: 
+      repeatPassword:
         Yup.string()
           .required("Campo requerido")
           .oneOf([Yup.ref("password")], "No coinciden las contraseñas")
     })
   );
 
-  const onSubmit = async (data: AuthRegisterRequestPayload, dispatch: AppDispatch): Promise<void> => {
-    try {
-      const sanitizedData = {
-        username: sanitizeInput(data.username, 'Username'),
-        email: sanitizeInput(data.email, 'Email'),
-        password: data.password,         // ✅ sin sanitizar
-        repeatPassword: data.repeatPassword, // ✅ sin sanitizar
-      };
-    
-      dispatch(startRegister({sanitizedData}));
-    } catch (error: unknown) { 
-      handleError(error);
-    }
-  };
+const onSubmit = async (data: AuthRegisterRequestPayload, dispatch: AppDispatch): Promise<void> => {
+  try {
+    const sanitizedData = {
+      username: sanitizeInput(data.username, 'Username'),
+      email: sanitizeInput(data.email, 'Email'),
+      password: data.password,         // ✅ sin sanitizar
+      repeatPassword: data.repeatPassword, // ✅ sin sanitizar
+    };
+
+    dispatch(startRegister({ sanitizedData }));
+  } catch (error: unknown) {
+    handleError(error);
+  }
+};
 
 const RegisterForm = (): React.ReactNode => {
   const dispatch = useDispatch<AppDispatch>();
@@ -110,8 +86,12 @@ const RegisterForm = (): React.ReactNode => {
       role="form"
       onSubmit={handleSubmit}
       sx={{
-        maxWidth: { xs: "12em", sm: "90%" },
+        width: { xs: "90%" },
         height: "100%",
+        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        margin: "auto",
       }}
     >
       <RegisterFormInputs
@@ -119,24 +99,70 @@ const RegisterForm = (): React.ReactNode => {
         setFieldValue={setFieldValue}
         errors={errors}
       />
-      <ApiErrorsHandler error={errorMessage}/>
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            defaultChecked
+            sx={{
+              color: (theme: Theme) => theme?.custom?.darkGray,
+              "&.Mui-checked": {
+                color: (theme: Theme) => theme?.palette?.primary?.main,
+              },
+            }}
+          />
+        }
+        label={
+          <Typography
+            sx={{
+              fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
+              color: (theme: Theme) => theme?.custom?.fontColor,
+            }}
+          >
+            Acepto los{" "}
+            <Link
+              component={LinkReactRouter}
+              to={"/terms"}
+              sx={{
+                color: (theme: Theme) => theme?.palette?.primary?.main,
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              términos y condiciones
+            </Link>
+          </Typography>
+        }
+        sx={{ mt: "0.8em", alignSelf: "flex-start" }}
+      />
+
+      <ApiErrorsHandler error={errorMessage} />
+
       <RegisterFormButtons errors={errors} />
-      <Link
-        component={LinkReactRouter}
-        to={"/login"}
-        sx={{
-          mt: "1em",
-          textDecoration: "none",
-          textAlign: "center",
-          display: "block",
-          color: (theme: Theme ) => theme?.custom?.translucidFontColor,
-          fontSize: (theme: Theme ) => theme?.typography?.body2.fontSize,
-          borderRadius: "1em",
-          width: "100%",
-        }}
-      >
-        ¿Ya tienes cuenta? Inicia Sesión
-      </Link>
+
+      <Box sx={{ textAlign: "center", mt: "1em" }}>
+        <Typography
+          component="span"
+          sx={{
+            color: (theme: Theme) => theme?.custom?.translucidFontColor,
+            fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
+          }}
+        >
+          ¿Ya tienes cuenta?{" "}
+        </Typography>
+        <Link
+          component={LinkReactRouter}
+          to={"/login"}
+          sx={{
+            color: (theme: Theme) => theme?.palette?.primary?.main,
+            fontWeight: 600,
+            fontSize: (theme: Theme) => theme?.typography?.body2.fontSize,
+            textDecoration: "none",
+          }}
+        >
+          Inicia Sesión
+        </Link>
+      </Box>
     </Box>
   );
 };
