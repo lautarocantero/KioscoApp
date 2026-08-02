@@ -11,7 +11,7 @@ import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
 import SellsRoutes from "../modules/sells/routes/SellsRoutes";
 import ShopRoutes from "../modules/shop/ShopRoutes";
 import type { AppDispatch, RootState } from "../store/auth/authSlice";
-import { startCheckAuth } from "../store/auth/thunks";
+import { startCheckAuth } from "../store/auth/authThunks";
 import RouteTracker from "./RouteTracker";
 import AppShell from "../modules/shared/layout/AppShell";
 import LoadingSpinnerComponent from "../modules/shared/components/LoadingSpinner";

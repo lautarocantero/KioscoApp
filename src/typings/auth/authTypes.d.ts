@@ -21,13 +21,10 @@ interface AuthEntity {
 // ║ 🧩 DERIVADOS 🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩                ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-// // derivado para no utilizar directamente el AuthEntity
 export type Auth = AuthEntity;
 
-// // derivado para los datos publicos
 export type AuthPublic = Omit<AuthEntity, 'password' | 'repeatPassword' | 'authToken' |'refreshToken' | 'status'>;
 
-// // derivado para el slice
 export type AuthSliceState = Omit<Auth,  "password" | "repeatPassword" | "authToken" | "refreshToken"  > & {
     isLoading: boolean;
     isAuthenticated: boolean;
@@ -59,9 +56,6 @@ export interface AuthRegisterSanitizedPayload {
     sanitizedData: AuthRegisterRequestPayload;
 }
 
-// Fix: este tipo no coincide con lo que realmente se usa en startCheckAuth (ver AuthCheckAuthDataResponse).
-// Se mantiene por compatibilidad pero revisar si sigue haciendo falta en algún otro lado del código;
-// si no se usa en ningún otro archivo, se puede eliminar para evitar confusión con AuthCheckAuthDataResponse.
 export type AuthCheckAutResponse = Pick<Auth, '_id' | 'email' | 'password' | 'refreshToken' | 'username' >
 
 export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' | 'profilePhoto' | 'role'>
@@ -70,8 +64,36 @@ export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' |
 // ║ 🔗 API 🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗                          ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-// Fix: había una coma de más antes de "| 'profilePhoto'" que hacía que TS interpretara
-// un tercer argumento genérico para Pick<T, K> (que solo acepta 2), rompiendo la compilación.
 export type AuthRegisterApiPayload = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' | 'profilePhoto'>
 
 export type AuthLoginApiPayload  = Pick<Auth, 'email' | 'password' >;
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📝 FORMS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export type AuthLoginFormValues = Pick<Auth, 'email' | 'password'>;
+
+export type AuthRegisterFormValues = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword'> & {
+    profilePhoto: string | null;
+};
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🪝 HOOKS  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝  ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface UseLoginFormReturn {
+    errorMessage: string | null;
+    isSubmitting: boolean;
+    handleSubmit: (values: AuthLoginFormValues) => Promise<void>;
+    handleGoToRegister: () => void;
+    handleGoToForgotPassword: () => void;
+}
+
+export interface UseRegisterFormReturn {
+    errorMessage: string | null;
+    isSubmitting: boolean;
+    registeredUserId: string | null;
+    handleSubmit: (values: AuthRegisterFormValues) => Promise<void>;
+    handleGoToLogin: () => void;
+}

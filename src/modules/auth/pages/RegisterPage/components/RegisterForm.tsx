@@ -9,7 +9,7 @@ import { handleError } from "../../../../../store/shared/handlerStoreError";
 import ApiErrorsHandler from "../../../../shared/components/ErrorHandler/ErrorFormHandler";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../../../store/auth/authSlice";
-import { startRegister } from "../../../../../store/auth/thunks";
+import { startRegister } from "../../../../../store/auth/authThunks";
 
 
 const sanitizeInput = (input: string, label: string): string => {

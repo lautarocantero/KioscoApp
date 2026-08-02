@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../../../../store/user/userSlice";
-import { startLogout } from "../../../../../../store/auth/thunks";
+import { startLogout } from "../../../../../../store/auth/authThunks";
 import { SidebarNavLinks } from "../../../../../../config/Links";
 import { NAV_SUBGROUPS } from "../helper/NavSubGroups";
 import type { NavLinkInterface } from "@typings/ui/sidebar.types";

@@ -1,37 +1,34 @@
+import type { FormikErrors } from "formik";
+import type { AuthLoginFormValues, AuthRegisterFormValues } from "./authTypes";
+
 /*══════════════════════════════════════════════════════════════════════╗
 ║ ██ BUTTONS   🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨   ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type ErrorsInterface = AuthRegisterRequest;
-
 export interface LoginFormButtonsInterface {
-  errors: ErrorsInterface;
+  errors: FormikErrors<AuthLoginFormValues>;
+  isSubmitting: boolean;
+  onGoToRegister: () => void;
 }
 
-export type RegisterFormButtonsInterface = LoginFormButtonsInterface;
+export interface RegisterFormButtonsInterface {
+  errors: FormikErrors<AuthRegisterFormValues>;
+  isSubmitting: boolean;
+  onGoToLogin: () => void;
+}
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ ██ FORMS   📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export interface LoginFormInputsInterface {    
-  values: AuthLoginData;
+export interface LoginFormInputsInterface {
+  values: AuthLoginFormValues;
   setFieldValue: (field: string, value: string) => void;
-  errors: ErrorsInterface;
+  errors: FormikErrors<AuthLoginFormValues>;
 }
 
 export interface RegisterFormInputsInterface {
-  values: AuthRegisterPayload;
+  values: AuthRegisterFormValues;
   setFieldValue: (field: string, value: string) => void;
-  errors: ErrorsFullInterface;
+  errors: FormikErrors<AuthRegisterFormValues>;
 }
-
-
-
-
-
-
-
-
-
-
