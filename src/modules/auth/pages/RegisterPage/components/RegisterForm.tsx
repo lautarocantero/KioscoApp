@@ -37,7 +37,8 @@ const RegisterForm = (): React.ReactNode => {
             <FormControlLabel
                 control={
                     <Checkbox
-                        defaultChecked
+                        checked={values.acceptedTerms}
+                        onChange={(e) => setFieldValue("acceptedTerms", e.target.checked)}
                         sx={{
                             color: (theme: Theme) => theme?.custom?.darkGray,
                             "&.Mui-checked": { color: (theme: Theme) => theme?.palette?.primary?.main },
@@ -70,7 +71,12 @@ const RegisterForm = (): React.ReactNode => {
 
             <ApiErrorsHandler error={errorMessage} />
 
-            <RegisterFormButtons errors={errors} isSubmitting={isSubmitting} onGoToLogin={handleGoToLogin} />
+            <RegisterFormButtons
+                errors={errors}
+                isSubmitting={isSubmitting}
+                onGoToLogin={handleGoToLogin}
+                disabled={!values.acceptedTerms}
+            />
         </Box>
     );
 };

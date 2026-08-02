@@ -8,6 +8,7 @@ const RegisterFormButtons = ({
     errors,
     isSubmitting,
     onGoToLogin,
+    disabled,
 }: RegisterFormButtonsInterface): ReactNode => {
 
 
@@ -29,7 +30,7 @@ const RegisterFormButtons = ({
                 buttonWidth={{ xs: "100%", md: "100%" }}
                 buttonColor={Object.keys(errors).length === 0 ? "default" : "error"}
                 padding={1}
-                disabled={isSubmitting}
+                disabled={isSubmitting || disabled}
             />
 
             <Grid sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%", my: 0.5 }}>

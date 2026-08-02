@@ -26,6 +26,7 @@ export const getRegisterInitialValues = (): AuthRegisterFormValues => ({
     password: "",
     repeatPassword: "",
     profilePhoto: null,
+    acceptedTerms: false,
 });
 
 export const registerFormSchema = Yup.lazy(() =>
@@ -41,5 +42,6 @@ export const registerFormSchema = Yup.lazy(() =>
         repeatPassword: Yup.string()
             .oneOf([Yup.ref("password")], "Las contraseñas no coinciden")
             .required("Campo requerido"),
+        acceptedTerms: Yup.boolean().oneOf([true], "Debes aceptar los términos y condiciones"),
     })
 );

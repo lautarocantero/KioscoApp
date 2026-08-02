@@ -97,6 +97,7 @@ export type AuthLoginFormValues = AuthCredentialsPayload;
 
 export type AuthRegisterFormValues = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword'> & {
     profilePhoto: string | null;
+    acceptedTerms: boolean;
 };
 
 // /*══════════════════════════════════════════════════════════════════════╗

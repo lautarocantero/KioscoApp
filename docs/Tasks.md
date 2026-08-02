@@ -8,9 +8,7 @@
 ---
 ________________________________________________________________________________________________
 | 🧾 **Login**                                                                                   |
-|-------------------------------------------------------------------------------------------------|                                 |       
-| 🟢 Implementar inicio de sesion con google         |  
-| 🟢 Verificar que solo se pueda al aceptar los terminos y condiciones (luego ver que pingo pongo)         |                           
+|-------------------------------------------------------------------------------------------------|                                 |                        
 | 🟢 Agregar envio de mail para cuando creas sesion         |
 | 🟢 Implementar emial de olvidaste tu password                                                      |
 |_________________________________________________________________________________________________|

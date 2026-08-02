@@ -15,6 +15,7 @@ export interface RegisterFormButtonsInterface {
   errors: FormikErrors<AuthRegisterFormValues>;
   isSubmitting: boolean;
   onGoToLogin: () => void;
+  disabled: boolean;
 }
 
 /*══════════════════════════════════════════════════════════════════════╗
