@@ -1,15 +1,9 @@
-import axios from "axios";
 import { API_URL } from "../../../config/api";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { PresentationAnalyticsRaw } from "@typings/shared/types/useAnalytics.types";
+import { createHttpClient } from "../../shared/api/httpClient";
 
-
-const baseUrl = axios.create({
-    baseURL: `${API_URL}/presentation`,
-    timeout: 5000,
-    headers: { "Content-Type": "application/json" },
-    withCredentials: true,
-});
+const baseUrl = createHttpClient(`${API_URL}/presentation`);
 
 /*══════════════════════════════════════════════════════════════════════════╗
 ║ 📥 GET                                                                    ║

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { API_URL } from "../../../config/api";
 import type {
   CreateProductBody,
@@ -9,13 +8,9 @@ import type {
   ProductWithPresentations,
 } from "@typings/product/productTypes";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
+import { createHttpClient } from "../../shared/api/httpClient";
 
-const baseUrl = axios.create({
-  baseURL: `${API_URL}/product`,
-  timeout: 5000,
-  headers: { "Content-Type": "application/json" },
-  withCredentials: true,
-});
+const baseUrl = createHttpClient(`${API_URL}/product`);
 
 /*══════════════════════════════════════════════════════════════════════════╗
 ║ 📥 GET                                                                    ║
