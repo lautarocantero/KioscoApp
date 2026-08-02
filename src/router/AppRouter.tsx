@@ -15,10 +15,10 @@ import { startCheckAuth } from "../store/auth/authThunks";
 import RouteTracker from "./RouteTracker";
 import AppShell from "../modules/shared/layout/AppShell";
 import LoadingSpinnerComponent from "../modules/shared/components/LoadingSpinner";
+import { AuthStatus } from "@typings/auth/authEnums";
 
 const AppRouter = (): React.ReactNode => {
-  const { auth } = useSelector((state: RootState) => state);
-  const { status } = auth; // asumo: 'checking' | 'authenticated' | 'not-authenticated'
+  const { status } = useSelector((state: RootState) => state.auth);
   const location = useLocation();
   const lastRoute: string = localStorage.getItem("lastRoute") || "/new-sell";
   const safeRoute: string = lastRoute === "/" ? "/home" : lastRoute;
@@ -30,7 +30,7 @@ const AppRouter = (): React.ReactNode => {
   }, [dispatch]);
 
   // 👇 Clave: no decidas rutas todavía
-  if (status === 'checking') {
+  if (status === AuthStatus.Checking) {
     return <LoadingSpinnerComponent />; // o null, o un spinner
   }
 
@@ -38,7 +38,7 @@ const AppRouter = (): React.ReactNode => {
     <>
       <RouteTracker />
       <Routes>
-        {status === 'authenticated' ? (
+        {status === AuthStatus.Authenticated ? (
           <Route element={<AppShell />}>
             <Route path="/home" element={<HomePage />} />
             {SellsRoutes()}
@@ -55,7 +55,7 @@ const AppRouter = (): React.ReactNode => {
         )}
       </Routes>
 
-      {status === "authenticated" && location.pathname === "/" && (
+      {status === AuthStatus.Authenticated && location.pathname === "/" && (
         <Navigate to={safeRoute} replace />
       )}
     </>

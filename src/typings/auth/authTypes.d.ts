@@ -97,6 +97,8 @@ export type AuthRegisterFormValues = Pick<Auth, 'username' | 'email' | 'password
 // ║ 🪝 HOOKS  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝  ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
+export type LogoutHandler = (reason: string) => void;
+
 export interface UseLoginFormReturn {
     errorMessage: string | null;
     isSubmitting: boolean;

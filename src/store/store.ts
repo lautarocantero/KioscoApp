@@ -8,6 +8,7 @@ import sellSlice from "./sell/sellSlice";
 import sellerSlice from "./seller/sellerSlice";
 import sellerPersonSlice from "./seller/sellerPersonSlice";
 import presentationSlice from "./presentation/presentationSlice";
+import { initAuthHttpBridge } from "../hooks/auth/useLogoutHandler";
 
 //─── 🔎 Storage engine manual 🔎 ───
 // redux-persist/lib/storage tiene problemas de interop con el pre-bundling
@@ -57,3 +58,8 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+// httpClient.ts no puede importar el store directamente (dependencia
+// circular: store → thunks → api → httpClient → store), así que se lo
+// conecta acá, una sola vez, ya con el store creado. Ver authHttpBridge.ts.
+initAuthHttpBridge(store.dispatch);

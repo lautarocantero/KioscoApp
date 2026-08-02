@@ -1,5 +1,22 @@
 import axios, { type AxiosInstance } from "axios";
 import { API_URL } from "../../../config/api";
+import type { LogoutHandler } from "@typings/auth/authTypes";
+
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🚪 LOGOUT HANDLER (inyección tardía)                                      ║
+║                                                                          ║
+║ httpClient no conoce Redux ni el store, para evitar dependencia          ║
+║ circular (store → thunks → api → httpClient → store). En su lugar,       ║
+║ expone un setter que el store le inyecta una sola vez al arrancar la     ║
+║ app. Si el refresh falla definitivamente, avisa por acá.                 ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+
+
+const logoutHandlerRef: { current: LogoutHandler | null } = { current: null };
+
+export const setLogoutHandler = (handler: LogoutHandler): void => {
+  logoutHandlerRef.current = handler;
+};
 
 /*══════════════════════════════════════════════════════════════════════════╗
 ║ 🔁 REFRESH CLIENT                                                         ║
