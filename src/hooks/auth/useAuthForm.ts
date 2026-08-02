@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import type {
+    AuthLoginFormValues,
+    AuthRegisterFormValues,
+    UseLoginFormReturn,
+    UseRegisterFormReturn,
+} from "@typings/auth/authTypes";
 import type { AppDispatch, RootState } from "../../store/auth/authSlice";
 import { clearAuthError } from "../../store/auth/authSlice";
 import { startLoginWithEmailPassword, startRegister } from "../../store/auth/authThunks";
-import type { AuthLoginFormValues, AuthRegisterFormValues, UseLoginFormReturn, UseRegisterFormReturn } from "@typings/auth/authTypes";
+import { sanitizeRegisterValues } from "../../modules/auth/helpers/sanitizeAuthInput";
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 useLoginForm                                ║
@@ -61,7 +67,13 @@ export function useRegisterForm(): UseRegisterFormReturn {
     const handleSubmit = async (values: AuthRegisterFormValues) => {
         setIsSubmitting(true);
         try {
-            const _id = await dispatch(startRegister({ sanitizedData: values }));
+            const sanitizedData = {
+                ...sanitizeRegisterValues(values),
+                profilePhoto: values.profilePhoto,
+            };
+
+            const _id = await dispatch(startRegister({ sanitizedData }));
+
             if (_id) {
                 setRegisteredUserId(_id);
                 navigate("/login");

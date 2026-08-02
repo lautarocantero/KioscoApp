@@ -1,11 +1,11 @@
-import { Suspense } from "react";
+import { Suspense, type ReactNode } from "react";
 import AuthLayout from "../../layout/AuthLayout";
 import LoginLoader from "./components/LoginFormComponent/LoginLoader";
 import AuthTitle from "./components/LoginFormComponent/AuthTitle";
 import LoginForm from "./components/LoginFormComponent/LoginForm";
 
 
-const LoginPage = (): React.ReactNode => {
+const LoginPage = (): ReactNode => {
   return (
     <AuthLayout>
       <Suspense fallback={<LoginLoader />}>

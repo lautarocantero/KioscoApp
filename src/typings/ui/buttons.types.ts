@@ -13,6 +13,7 @@ export interface PrimaryButtonComponentProps {
   padding?: number;
   marginTop?: string,
   icon?: ReactNode,
+  disabled?: boolean;
 }
 
 export interface EmptyButtonProps {

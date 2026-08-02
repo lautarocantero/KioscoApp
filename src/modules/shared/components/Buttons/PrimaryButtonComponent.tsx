@@ -11,6 +11,7 @@ const PrimaryButtonComponent = ({
   padding = 1,
   marginTop = '1.5em',
   icon = null,
+  disabled = false,
 }: PrimaryButtonComponentProps): React.ReactNode => {
   return (
     <Button
@@ -31,6 +32,7 @@ const PrimaryButtonComponent = ({
       type={buttonType}
       role="button"
       data-testid={dataTestId}
+      disabled={disabled}
     >
       {icon}{buttonText}
     </Button>
