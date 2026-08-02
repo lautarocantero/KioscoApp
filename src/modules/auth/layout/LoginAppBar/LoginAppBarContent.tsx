@@ -11,7 +11,7 @@ const LoginAppBarContent = (): React.ReactNode => {
       width={"100%"}
       sx={(theme: Theme) => ({
         color: theme.custom?.white,
-        justifyContent: { xs: "flex-end", md: "space-between" },
+        justifyContent: { xs: "flex-end" },
       })}
     >
       <LightMode />
