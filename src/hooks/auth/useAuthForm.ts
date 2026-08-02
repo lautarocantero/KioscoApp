@@ -27,10 +27,10 @@ export function useLoginForm(): UseLoginFormReturn {
     }, [dispatch]);
 
     const handleSubmit = async (values: AuthLoginFormValues) => {
-        const { email, password } = values;
+        const { email, password, rememberMe } = values;
         setIsSubmitting(true);
         try {
-            const user = await dispatch(startLoginWithEmailPassword({ email, password }));
+            const user = await dispatch(startLoginWithEmailPassword({ email, password, rememberMe }));
             if (user) navigate("/home");
         } finally {
             setIsSubmitting(false);

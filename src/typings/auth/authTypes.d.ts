@@ -2,6 +2,7 @@
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
+import type { checkingCredentials, login, logout } from "../../store/auth/authSlice";
 import type { AuthRoleEnum } from "./authEnums";
 
 interface AuthEntity {
@@ -23,7 +24,7 @@ interface AuthEntity {
 
 export type Auth = AuthEntity;
 
-export type AuthPublic = Omit<AuthEntity, 'password' | 'repeatPassword' | 'authToken' |'refreshToken' | 'status'>;
+export type AuthPublic = Omit<AuthEntity, 'password' | 'repeatPassword' | 'authToken' | 'refreshToken' | 'status'>;
 
 export type AuthSliceState = Omit<Auth,  "password" | "repeatPassword" | "authToken" | "refreshToken"  > & {
     isLoading: boolean;
@@ -45,10 +46,24 @@ export type AuthLoginSlicePayload = Pick<Auth, '_id' | 'username' |  'email' | '
 export type AuthSliceErrorPayload = Pick<AuthSliceState, 'errorMessage'>;
 
 // /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🔑 CREDENCIALES DE LOGIN 🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑🔑        ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export type AuthCredentialsPayload = Pick<Auth, 'email' | 'password'> & {
+    rememberMe: boolean;
+};
+
+// /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🕐 THUNKS 🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type AuthLoginRequestPayload = Pick<Auth, 'email' | 'password' >;
+export type AuthActionsType = 
+  | ReturnType<typeof checkingCredentials> 
+  | ReturnType<typeof login> 
+  | ReturnType<typeof logout>
+  ;
+
+export type AuthLoginRequestPayload = AuthCredentialsPayload;
 
 export type AuthRegisterRequestPayload = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' | 'profilePhoto' >
 
@@ -66,13 +81,13 @@ export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' |
 
 export type AuthRegisterApiPayload = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' | 'profilePhoto'>
 
-export type AuthLoginApiPayload  = Pick<Auth, 'email' | 'password' >;
+export type AuthLoginApiPayload = AuthCredentialsPayload;
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📝 FORMS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type AuthLoginFormValues = Pick<Auth, 'email' | 'password'>;
+export type AuthLoginFormValues = AuthCredentialsPayload;
 
 export type AuthRegisterFormValues = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword'> & {
     profilePhoto: string | null;

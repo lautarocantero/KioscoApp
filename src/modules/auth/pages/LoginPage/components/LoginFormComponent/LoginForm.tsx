@@ -7,8 +7,9 @@ import LoginFormButtons from "./LoginFormButtons";
 import ApiErrorsHandler from "../../../../../shared/components/ErrorHandler/ErrorFormHandler";
 import { useLoginForm } from "../../../../../../hooks/auth/useAuthForm";
 import { getLoginInitialValues, loginFormSchema } from "../../../../schema/authFormSchema";
+import type { ReactNode } from "react";
 
-const LoginForm = (): React.ReactNode => {
+const LoginForm = (): ReactNode => {
     const { errorMessage, isSubmitting, handleSubmit, handleGoToRegister } = useLoginForm();
 
     const { handleSubmit: formikSubmit, values, setFieldValue, errors } = useFormik({
@@ -46,7 +47,8 @@ const LoginForm = (): React.ReactNode => {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            defaultChecked
+                            checked={values.rememberMe}
+                            onChange={(e) => setFieldValue("rememberMe", e.target.checked)}
                             sx={{
                                 color: (theme: Theme) => theme?.custom?.darkGray,
                                 "&.Mui-checked": { color: (theme: Theme) => theme?.palette?.primary?.main },

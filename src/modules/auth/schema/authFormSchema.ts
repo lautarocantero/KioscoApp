@@ -5,6 +5,7 @@ import * as Yup from "yup";
 export const getLoginInitialValues = (): AuthLoginFormValues => ({
     email: "",
     password: "",
+    rememberMe: true,
 });
 
 export const loginFormSchema = Yup.lazy(() =>
@@ -14,6 +15,7 @@ export const loginFormSchema = Yup.lazy(() =>
             .required("Campo requerido")
             .trim(),
         password: Yup.string().required("Campo requerido"),
+        rememberMe: Yup.boolean(),
     })
 );
 

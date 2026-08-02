@@ -2,22 +2,17 @@ import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { checkingCredentials, clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
 import { authCheckStatusRequest, authLoginRequest, authLogoutRequest, authRegisterRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
-import type { AuthCheckAuthDataResponse, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload } from "../../typings/auth/authTypes";
+import type { AuthActionsType, AuthCheckAuthDataResponse, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload } from "../../typings/auth/authTypes";
 import { handleErrorWithAction, handleError } from "../shared/handlerStoreError";
 
-type AuthActionsType = 
-  | ReturnType<typeof checkingCredentials> 
-  | ReturnType<typeof login> 
-  | ReturnType<typeof logout>
-  ;
 
 export const startLoginWithEmailPassword = (
-  { email, password }: AuthLoginRequestPayload): ThunkAction<Promise<AuthPublic | undefined>, RootState, unknown, AuthActionsType> => {
+  { email, password, rememberMe }: AuthLoginRequestPayload): ThunkAction<Promise<AuthPublic | undefined>, RootState, unknown, AuthActionsType> => {
   
     return async (dispatch: Dispatch) => {
       dispatch(checkingCredentials());
       try {
-        const { user } : { user: AuthPublic} = await authLoginRequest({ email, password });
+        const { user } : { user: AuthPublic} = await authLoginRequest({ email, password, rememberMe });
 
         if (!user) {
           dispatch(logout({ errorMessage: 'No se recibió usuario válido' }));
