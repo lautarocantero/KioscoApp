@@ -1,26 +1,6 @@
-
-// # Componente: AuthRoutes  
-
-// ## Descripción 📦
-// Definición de rutas para el flujo de autenticación.  
-// Renderiza las páginas de login y registro, con redirección automática a la raíz en rutas no válidas.  
-
-// ## Rutas 🛣️
-// ┌───────────────────────────────┐
-// │ "/"         → LoginPage        │
-// │ "/register" → RegisterPage     │
-// │ "*"         → Redirect to "/"  │
-// └───────────────────────────────┘
-
-// ## Notas técnicas 💽
-// - Usa `react-router-dom` para la gestión de rutas.  
-// - Mantiene consistencia modular separando páginas (`LoginPage`, `RegisterPage`).  
-//-----------------------------------------------------------------------------//
-
-
 import { Navigate, Route } from "react-router-dom"
-import { LoginPage } from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 const AuthRoutes = ():React.ReactNode => {
 
