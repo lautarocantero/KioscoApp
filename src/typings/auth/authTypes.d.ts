@@ -3,7 +3,7 @@
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 import type { checkingCredentials, login, logout } from "../../store/auth/authSlice";
-import type { AuthRoleEnum } from "./authEnums";
+import type { AuthRoleEnum, VerifyEmailStatusEnum } from "./authEnums";
 
 interface AuthEntity {
     _id: string | null,
@@ -71,6 +71,10 @@ export interface AuthRegisterSanitizedPayload {
     sanitizedData: AuthRegisterRequestPayload;
 }
 
+export type AuthVerifyEmailApiPayload = {
+  token: string;
+};
+
 export type AuthCheckAutResponse = Pick<Auth, '_id' | 'email' | 'password' | 'refreshToken' | 'username' >
 
 export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' | 'profilePhoto' | 'role'>
@@ -103,6 +107,13 @@ export type AuthRegisterFormValues = Pick<Auth, 'username' | 'email' | 'password
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🪝 HOOKS  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝  ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface UseVerifyEmailFormReturn {
+    status: VerifyEmailStatusEnum;
+    errorMessage: string | null;
+    handleGoToLogin: () => void;
+    handleGoToRegister: () => void;
+}
 
 export type LogoutHandler = (reason: string) => void;
 

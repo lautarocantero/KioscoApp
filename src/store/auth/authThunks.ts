@@ -1,8 +1,8 @@
 import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { checkingCredentials, clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
-import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest } from "../../modules/auth/api/authApi";
+import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authVerifyEmailRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
-import type { AuthActionsType, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload } from "../../typings/auth/authTypes";
+import type { AuthActionsType, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthVerifyEmailApiPayload } from "../../typings/auth/authTypes";
 import { handleErrorWithAction, handleError } from "../shared/handlerStoreError";
 
 
@@ -122,3 +122,18 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: nu
     } 
   }
 }
+
+export const startVerifyEmail = (
+  { token }: AuthVerifyEmailApiPayload
+): ThunkAction<Promise<boolean>, RootState, unknown, AuthActionsType> => {
+
+    return async (): Promise<boolean> => {
+      try {
+        await authVerifyEmailRequest({ token });
+        return true;
+      } catch (error: unknown) {
+        handleError(error);
+        return false;
+      }
+    };
+};

@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type {
     AuthLoginFormValues,
     AuthRegisterFormValues,
     UseLoginFormReturn,
     UseRegisterFormReturn,
+    UseVerifyEmailFormReturn,
 } from "@typings/auth/authTypes";
 import type { AppDispatch, RootState } from "../../store/auth/authSlice";
 import { clearAuthError } from "../../store/auth/authSlice";
-import { startLoginWithEmailPassword, startRegister } from "../../store/auth/authThunks";
+import { startLoginWithEmailPassword, startRegister, startVerifyEmail } from "../../store/auth/authThunks";
 import { sanitizeRegisterValues } from "../../modules/auth/helpers/sanitizeAuthInput";
+import { VerifyEmailStatusEnum } from "@typings/auth/authEnums";
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 useLoginForm                                ║
@@ -92,4 +94,41 @@ export function useRegisterForm(): UseRegisterFormReturn {
         handleSubmit,
         handleGoToLogin,
     };
+}
+
+/*══════════════════════════════════════════════╗
+║ 🪝 useVerifyEmailForm                          ║
+╚══════════════════════════════════════════════*/
+export function useVerifyEmailForm(): UseVerifyEmailFormReturn {
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    const [status, setStatus] = useState<VerifyEmailStatusEnum>(VerifyEmailStatusEnum.Verifying);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    useEffect(() => {
+        const token = searchParams.get("token");
+
+        if (!token) {
+            setStatus(VerifyEmailStatusEnum.Error);
+            setErrorMessage("Falta el token de verificación en el link");
+            return;
+        }
+
+        const verify = async () => {
+            const success = await dispatch(startVerifyEmail({ token }));
+            setStatus(success ? VerifyEmailStatusEnum.Success : VerifyEmailStatusEnum.Error);
+            if (!success) setErrorMessage("El link expiró o no es válido. Solicitá uno nuevo.");
+        };
+
+        verify();
+        // Se ejecuta una única vez al montar: el token no cambia dentro de esta pantalla.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleGoToLogin = () => navigate("/login");
+    const handleGoToRegister = () => navigate("/register");
+
+    return { status, errorMessage, handleGoToLogin, handleGoToRegister };
 }

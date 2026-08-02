@@ -1,3 +1,4 @@
+import type { VerifyEmailStatusEnum } from "@typings/auth/authEnums";
 import type { ReactNode } from "react";
 
 
@@ -38,4 +39,10 @@ export type UseFormNavButtonsParams = {
 
 export interface GoogleAuthButtonProps {
     label?: string;
+}
+
+export interface VerificationFormButtonsProps {
+    status: VerifyEmailStatusEnum;
+    onGoToLogin: () => void;
+    onGoToRegister: () => void;
 }

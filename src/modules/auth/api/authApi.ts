@@ -64,3 +64,14 @@ export const authCheckStatusRequest = async () => {
   const response = await baseUrl.post("/check-auth");
   return response;
 };
+
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 📧 authVerifyEmailRequest                                                 ║
+║                                                                          ║
+║ Confirma el email de un usuario a partir del token recibido por mail.    ║
+║ POST /verify-email                                                       ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+export const authVerifyEmailRequest = async (data: { token: string }) => {
+  const response = await baseUrl.post("/verify-email", data);
+  return response.data;
+};

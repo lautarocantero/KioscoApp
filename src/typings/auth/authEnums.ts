@@ -1,6 +1,4 @@
 
-{/*─────────────────── 🔎 auth 🔎 ───────────────────*/}
-
 export enum AuthStatus {
     Authenticated = "authenticated",
     Checking = "checking",
@@ -10,5 +8,11 @@ export enum AuthStatus {
 export enum AuthRoleEnum {
     Administrador = "Administrador",
     Usuario = "Usuario",
+};
+
+export enum VerifyEmailStatusEnum {
+    Verifying = "verifying",
+    Success = "success",
+    Error = "error",
 };
 
