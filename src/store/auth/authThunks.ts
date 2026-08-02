@@ -94,9 +94,7 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: nu
 
       return response;
     } catch(error: unknown) {
-        // Mismo motivo: si el request rechaza (ej. interceptor de axios ante 401),
-        // hay que sacar el status de "Checking" igual.
-        handleErrorWithAction({ error, dispatch, action: logout });
+        dispatch(logout({ errorMessage: null }));
     } 
   }
 }
