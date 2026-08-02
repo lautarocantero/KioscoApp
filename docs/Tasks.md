@@ -30,6 +30,11 @@ ________________________________________________________________________________
 | 🟢 (pausado) Cerrar sesión en todos los dispositivos — ya existe deleteRefreshToken en el modelo,|
 |    falta exponerlo como acción de usuario                                                        |
 | 🟢 terminar de comprobar que funcione remember me. (luego documentar y agregar test)             |
+| 🟢 Implementar emial de olvidaste tu password                                                      |
+| 🟢 Implementar inicio de sesion con google         |
+| 🟢 Agregar envio de mail para cuando creas sesion         |
+| 🟢 Verificar que solo se pueda al aceptar los terminos y condiciones (luego ver que pingo pongo)         |
+| 🟢 terminar de comprobar que funcione remember me. (luego documentar y agregar test)             |
 |_________________________________________________________________________________________________|
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
