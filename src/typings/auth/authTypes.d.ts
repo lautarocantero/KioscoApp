@@ -83,6 +83,12 @@ export type AuthRegisterApiPayload = Pick<Auth, 'username' | 'email' | 'password
 
 export type AuthLoginApiPayload = AuthCredentialsPayload;
 
+export interface AuthGoogleApiPayload {
+  accessToken: string;
+}
+
+export type AuthGoogleRequestPayload = AuthGoogleApiPayload;
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📝 FORMS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -113,4 +119,10 @@ export interface UseRegisterFormReturn {
     registeredUserId: string | null;
     handleSubmit: (values: AuthRegisterFormValues) => Promise<void>;
     handleGoToLogin: () => void;
+}
+
+export interface UseGoogleAuthReturn {
+    handleGoogleSignIn: () => void;
+    isLoading: boolean;
+    error: string | null;
 }

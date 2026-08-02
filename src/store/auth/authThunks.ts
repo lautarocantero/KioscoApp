@@ -1,8 +1,8 @@
 import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { checkingCredentials, clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
-import { authCheckStatusRequest, authLoginRequest, authLogoutRequest, authRegisterRequest } from "../../modules/auth/api/authApi";
+import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
-import type { AuthActionsType, AuthCheckAuthDataResponse, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload } from "../../typings/auth/authTypes";
+import type { AuthActionsType, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload } from "../../typings/auth/authTypes";
 import { handleErrorWithAction, handleError } from "../shared/handlerStoreError";
 
 
@@ -55,6 +55,35 @@ export const startRegister = (
     }
 
 }
+
+export const startGoogleLogin = (
+  { accessToken }: AuthGoogleRequestPayload
+): ThunkAction<Promise<AuthPublic | undefined>, RootState, unknown, AuthActionsType> => {
+
+    return async (dispatch: Dispatch) => {
+      dispatch(checkingCredentials());
+      try {
+        const { user }: { user: AuthPublic } = await authGoogleRequest({ accessToken });
+
+        if (!user) {
+          dispatch(logout({ errorMessage: 'No se recibió usuario válido' }));
+          throw new Error('No se recibió usuario válido');
+        }
+
+        dispatch(login({
+          email: user.email,
+          username: user.username,
+          profilePhoto: user.profilePhoto,
+          role: user.role,
+          _id: user._id,
+        }));
+
+        return user as AuthPublic;
+      } catch (error: unknown) {
+        handleErrorWithAction({ error, dispatch, action: logout });
+      }
+    };
+};
 
 export const startLogout = (): ThunkAction<void, RootState, unknown, AuthActionsType> => {
     return async(dispatch: Dispatch) => {

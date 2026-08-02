@@ -1,4 +1,4 @@
-import type { AuthLoginApiPayload, AuthRegisterApiPayload } from "../../../typings/auth/authTypes";
+import type { AuthGoogleApiPayload, AuthLoginApiPayload, AuthRegisterApiPayload } from "../../../typings/auth/authTypes";
 import { API_URL } from "../../../config/api";
 import { createHttpClient } from "../../shared/api/httpClient";
 
@@ -18,6 +18,17 @@ const baseUrl = createHttpClient(`${API_URL}/auth`);
 ╚══════════════════════════════════════════════════════════════════════════╝*/
 export const authRegisterRequest = async (data: AuthRegisterApiPayload) => {
   const response = await baseUrl.post("/register", data);
+  return response.data;
+};
+
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔓 authGoogleRequest                                                      ║
+║                                                                          ║
+║ Inicia sesión con Google usando el access_token del popup OAuth.         ║
+║ POST /google                                                             ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+export const authGoogleRequest = async (data: AuthGoogleApiPayload) => {
+  const response = await baseUrl.post("/google", data);
   return response.data;
 };
 

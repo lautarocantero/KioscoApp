@@ -35,3 +35,7 @@ export type UseFormNavButtonsParams = {
     backText?: string;
     readOnly?: boolean;
 };
+
+export interface GoogleAuthButtonProps {
+    label?: string;
+}
