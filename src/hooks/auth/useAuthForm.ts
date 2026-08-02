@@ -31,7 +31,7 @@ export function useLoginForm(): UseLoginFormReturn {
         setIsSubmitting(true);
         try {
             const user = await dispatch(startLoginWithEmailPassword({ email, password }));
-            if (user) navigate("/");
+            if (user) navigate("/home");
         } finally {
             setIsSubmitting(false);
         }
