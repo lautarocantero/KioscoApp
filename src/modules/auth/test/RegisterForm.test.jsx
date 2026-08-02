@@ -1,24 +1,33 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import { beforeEach } from "node:test";
-import { describe, it, expect } from "vitest";
+import { beforeEach, describe, it, expect } from "vitest";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { MemoryRouter } from "react-router-dom";
+import '@testing-library/jest-dom';
 import RegisterForm from "../pages/RegisterPage/components/RegisterForm";
-import '@testing-library/jest-dom'
+import authReducer from "../../../store/auth/authSlice";
 
+const renderWithProviders = (ui) => {
+    const store = configureStore({ reducer: { auth: authReducer } });
+    return render(
+        <Provider store={store}>
+            <MemoryRouter>{ui}</MemoryRouter>
+        </Provider>
+    );
+};
 
-beforeEach(cleanup)
+beforeEach(cleanup);
 
 describe('RegisterForm', () => {
 
     it('should render correctly', () => {
-        render(<RegisterForm />)
-    })
+        renderWithProviders(<RegisterForm />);
+    });
 
     it('should be a form', () => {
-        render(<RegisterForm />)
-        const form = screen.getByRole('form')
-        expect(form).toBeInTheDocument()
-    })
+        renderWithProviders(<RegisterForm />);
+        const form = screen.getByRole('form');
+        expect(form).toBeInTheDocument();
+    });
 
-
-
-})
+});

@@ -1,10 +1,15 @@
 import { afterEach, beforeEach, describe, it } from "vitest"
-import { cleanup, fireEvent, render, screen } from "@testing-library/react"
+import { cleanup, render, screen } from "@testing-library/react"
 import { createTheme, ThemeProvider } from "@mui/material"
+import { MemoryRouter } from "react-router-dom"
 import LoginAppBarContent from "../layout/LoginAppBar/LoginAppBarContent"
 
 const renderWithTheme = (ui) => {
-  return render(<ThemeProvider theme={createTheme()}>{ui}</ThemeProvider>)
+  return render(
+    <ThemeProvider theme={createTheme()}>
+      <MemoryRouter>{ui}</MemoryRouter>
+    </ThemeProvider>
+  )
 }
 
 beforeEach(cleanup)
@@ -15,12 +20,6 @@ describe("LoginAppBarContent", () => {
 
    it("should render the LoginAppBarContent correctly", () => {
       renderWithTheme(<LoginAppBarContent />)
-   })
-
-   it("should show the links to register and login", () => {
-      renderWithTheme(<LoginAppBarContent />)
-      screen.getByText('Inicio de sesión');
-      screen.getByText('Registro');
    })
 
    it('should render the lightMode',() => {

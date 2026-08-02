@@ -78,6 +78,7 @@ const RegisterFormInputs = ({
           value={values?.password}
           onChange={({ target }) => setFieldValue("password", target?.value)}
           placeholder="Contraseña"
+          aria-label="Contraseña"
           name="password"
           type={showPassword ? "text" : "password"}
           variant="outlined"

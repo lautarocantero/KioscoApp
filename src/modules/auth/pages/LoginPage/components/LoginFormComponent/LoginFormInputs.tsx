@@ -40,6 +40,9 @@ const LoginFormInputs = ({
                 </InputAdornment>
               ),
             },
+            htmlInput: {
+              "aria-label": "E-mail",
+            },
             formHelperText: {
               sx: { textAlign: "right" },
             },
@@ -92,6 +95,9 @@ const LoginFormInputs = ({
                   </IconButton>
                 </InputAdornment>
               ),
+            },
+            htmlInput: {
+              "aria-label": "Contraseña",
             },
             formHelperText: {
               sx: { textAlign: "right" },

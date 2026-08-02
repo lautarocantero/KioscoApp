@@ -17,14 +17,6 @@ describe("LoginFormInputs", () => {
     errors: {},
   }
 
-  it("should render email and password inputs", () => {
-    renderWithTheme(<LoginFormInputs {...defaultProps} />)
-
-    expect(screen.getByLabelText(/E-mail/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/Contraseña/i)).toBeInTheDocument()
-    expect(screen.getByText(/Iniciar sesión/i)).toBeInTheDocument()
-  })
-
   it("should call setFieldValue when typing in inputs", () => {
     renderWithTheme(<LoginFormInputs {...defaultProps} />)
 

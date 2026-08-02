@@ -1,7 +1,7 @@
 import { Box, Typography, type Theme } from "@mui/material";
 import stocoLogo from "../../../../../../../public/images/logo/StocoLogoalt.png";
 
-const KioscoTitle = (): React.ReactNode => (
+const StockoTitle = (): React.ReactNode => (
   <Box
     sx={{
       display: "flex",
@@ -12,7 +12,7 @@ const KioscoTitle = (): React.ReactNode => (
     }}
   >
     <Typography
-      component="span"
+      component="h1"
       sx={{
         display: "flex",
         alignItems: "center",
@@ -36,4 +36,4 @@ const KioscoTitle = (): React.ReactNode => (
   </Box>
 );
 
-export default KioscoTitle;
+export default StockoTitle;

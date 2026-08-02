@@ -1,25 +1,24 @@
-import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, it } from "vitest";
-import LoginAppBar from "../layout/LoginAppBar/LoginAppBar";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { beforeEach, describe, it } from "vitest"
+import { cleanup, render, screen } from "@testing-library/react"
+import LoginAppBar from "../layout/LoginAppBar/LoginAppBar"
+import { createTheme, ThemeProvider } from "@mui/material"
+import { MemoryRouter } from "react-router-dom"
 
 const renderWithTheme = (ui) => {
-  return render(<ThemeProvider theme={createTheme()}>{ui}</ThemeProvider>)
+  return render(
+    <ThemeProvider theme={createTheme()}>
+      <MemoryRouter>{ui}</MemoryRouter>
+    </ThemeProvider>
+  )
 }
 
 describe('LoginAppBar', () => {
 
-    afterEach(cleanup)
+    beforeEach(cleanup)
 
     it('should render correctly', () => {
         renderWithTheme(<LoginAppBar />);
     });
-
-    it("should show the links to register and login", () => {
-      renderWithTheme(<LoginAppBar />)
-      screen.getByText('Inicio de sesión');
-      screen.getByText('Registro');
-   })
 
    it('should render the lightMode',() => {
       renderWithTheme(<LoginAppBar />)

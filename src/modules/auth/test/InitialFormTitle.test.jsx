@@ -8,10 +8,10 @@ describe('AuthTitle', () => {
     render(<AuthTitle />);
   });
 
-  it(`should show 'Stoko'`, () => {
+  it(`should show 'Stocko'`, () => {
         render(<AuthTitle />);
-        expect(document.querySelector('h1').textContent).toContain('Stoko');
-        expect(screen.findAllByAltText("stoko icon")).toBeTruthy()
+        expect(document.querySelector('h1').textContent).toContain('Stocko');
+        expect(screen.findAllByAltText("stocko icon")).toBeTruthy()
   });
 
 })

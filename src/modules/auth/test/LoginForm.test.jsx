@@ -1,26 +1,35 @@
 import { createTheme, ThemeProvider } from "@mui/material";
 import { cleanup, render, screen } from "@testing-library/react";
-import { describe, it } from "vitest";
+import { describe, it, beforeEach, expect } from "vitest";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { MemoryRouter } from "react-router-dom";
 import LoginForm from '../pages/LoginPage/components/LoginFormComponent/LoginForm'
-import { beforeEach } from "node:test";
 import '@testing-library/jest-dom'
+import authReducer from "../../../store/auth/authSlice";
 
-const renderWithTheme = (ui) => {
-  return render(<ThemeProvider theme={createTheme()}>{ui}</ThemeProvider>)
+const renderWithProviders = (ui) => {
+  const store = configureStore({ reducer: { auth: authReducer } });
+  return render(
+    <Provider store={store}>
+      <MemoryRouter>
+        <ThemeProvider theme={createTheme()}>{ui}</ThemeProvider>
+      </MemoryRouter>
+    </Provider>
+  );
 }
 
 beforeEach(cleanup)
 
 describe('LoginForm', () => {
-    const defaultProps= {showForm: true}
-    
+
     it('LoginForm should render correctly', () => {
-        renderWithTheme(<LoginForm />);
+        renderWithProviders(<LoginForm />);
     })
 
     it('LoginForm should render forget password', () => {
-        renderWithTheme(<LoginForm {...defaultProps}/>);
+        renderWithProviders(<LoginForm />);
         expect(screen.getByText(/¿Olvidaste tu contraseña?/)).toBeInTheDocument();
     })
-    
+
 })

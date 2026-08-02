@@ -1,6 +1,6 @@
 
 import { Grid } from "@mui/material";
-import KioscoTitle from "./KioscoTitle";
+import StockoTitle from "./StockoTitle";
 import "animate.css";
 
 const AuthTitle = (): React.ReactNode => {
@@ -15,7 +15,7 @@ const AuthTitle = (): React.ReactNode => {
         mb: 2,
       }}
     >
-      <KioscoTitle />
+      <StockoTitle />
     </Grid>
   );
 };

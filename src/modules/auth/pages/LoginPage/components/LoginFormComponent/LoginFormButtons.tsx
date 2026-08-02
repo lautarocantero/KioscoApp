@@ -1,6 +1,5 @@
 import PrimaryButton from "../../../../../shared/components/Buttons/PrimaryButtonComponent";
 import { Button, Divider, Grid, Link, Typography, type Theme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import type { LoginFormButtonsInterface } from "../../../../../../typings/auth/authComponentTypes";
 
 const GoogleIcon = () => (
@@ -12,8 +11,11 @@ const GoogleIcon = () => (
   </svg>
 );
 
-const LoginFormButtons = ({ errors }: LoginFormButtonsInterface): React.ReactNode => {
-  const navigate = useNavigate();
+const LoginFormButtons = ({
+  errors,
+  isSubmitting,
+  onGoToRegister,
+}: LoginFormButtonsInterface): React.ReactNode => {
 
   return (
     <Grid
@@ -32,6 +34,7 @@ const LoginFormButtons = ({ errors }: LoginFormButtonsInterface): React.ReactNod
           buttonType="submit"
           buttonColor={Object.keys(errors).length === 0 ? "default" : "error"}
           padding={1}
+          disabled={isSubmitting}
         />
       </Grid>
 
@@ -80,7 +83,7 @@ const LoginFormButtons = ({ errors }: LoginFormButtonsInterface): React.ReactNod
         </Typography>
         <Link
           component="button"
-          onClick={() => navigate("/register")}
+          onClick={onGoToRegister}
           sx={{
             color: (theme: Theme) => theme?.palette?.primary?.main,
             fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
