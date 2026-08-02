@@ -41,10 +41,9 @@ const rootReducer = combineReducers({
     product: productSlice,
     presentation: presentationSlice,
     provider: providerSlice,
-    sell: sellSlice,
-    seller: persistedSellerReducer,
-    sellerPerson: sellerPersonSlice, // to do aca se repiten porque por alguna razon en seller puse todo lo de sells,
-    // debe de ser sell para las ventas y seller para los vendedores, arreglar luego. sellerPerson tiene lo de los vendedores al dia
+    sell: sellSlice,    // se queda igual
+    seller: persistedSellerReducer, // se deberia llamar cart
+    sellerPerson: sellerPersonSlice, // se deberia llamar employes
 });
 
 export const store = configureStore({

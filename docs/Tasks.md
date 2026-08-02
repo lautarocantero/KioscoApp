@@ -8,27 +8,7 @@
 ---
 ________________________________________________________________________________________________
 | 🧾 **Login**                                                                                   |
-|-------------------------------------------------------------------------------------------------| 
-| 🔴 Logout global en 401 post-refresh: si httpClient.ts intenta refrescar y también falla,       |
-|    hoy nadie despacha logout() en el store (solo pasa en authThunks.ts). Definir si lo hace     |
-|    el propio httpClient o cada thunk de negocio en su catch                                     |
-| 🔴 Verificar el interceptor de refresh end-to-end: bajar expiresIn a 10s, loguearse, disparar   |
-|    una request protegida y confirmar en Network 401 → POST /refresh → reintento exitoso         |
-| 🔴 Verificar caso de sesión realmente vencida: borrar refresh_token manualmente y confirmar      |
-|    que el usuario termina redirigido al login en vez de quedar colgado                          |
-| 🟡 Probar el caso rememberMe: false en DevTools (cookie debe aparecer como Session, sin fecha)  |
-| 🟡 Confirmar que el JWT interno respeta el flag (exp: 1d sin remember vs 30d con remember)      |
-| 🟢 Excluir /login, /register, /check-auth del interceptor de refresh (evitar refresh inútil     |
-|    en cada login fallido)                                                                        |
-| 🟢 Actualizar tabla de endpoints en el header de auth.controller.ts (falta /refresh)             |
-| 🟢 Revisar AuthCheckAutResponse en authTypes.ts (tiene password/refreshToken que no deberían    |
-|    viajar al frontend — confirmar si es un tipo viejo sin uso)                                  |
-| 🟢 Decidir si checkAuth debe reemitir access_token al validar sesión, o dejarlo al interceptor  |
-| 🟢 Test automatizado (Jest/Supertest): POST /login valida Max-Age presente/ausente según         |
-|    rememberMe                                                                                    |
-| 🟢 Test automatizado: POST /refresh → 200 con token válido, 401 sin cookie, 401 con token vencido|
-| 🟢 (pausado) Cerrar sesión en todos los dispositivos — ya existe deleteRefreshToken en el modelo,|
-|    falta exponerlo como acción de usuario                                                        |
+|-------------------------------------------------------------------------------------------------|                                 |                                    
 | 🟢 terminar de comprobar que funcione remember me. (luego documentar y agregar test)             |
 | 🟢 Implementar emial de olvidaste tu password                                                      |
 | 🟢 Implementar inicio de sesion con google         |
