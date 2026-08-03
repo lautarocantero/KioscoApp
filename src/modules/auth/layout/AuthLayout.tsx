@@ -6,7 +6,7 @@ import { ThemeContext } from "../../../theme/ThemeContext";
 import LoginAppBar from "./LoginAppBar/LoginAppBar";
 
 const AuthLayout = ({ children }: PropsWithChildren): React.ReactNode => {
-  const { appTheme }: {appTheme: boolean} = useContext(ThemeContext);
+  const { appTheme }: { appTheme: boolean } = useContext(ThemeContext);
 
   const backgroundUrl: string = `url(/images/backgroundImages/${
     !appTheme ? "black" : "white"
@@ -24,49 +24,56 @@ const AuthLayout = ({ children }: PropsWithChildren): React.ReactNode => {
         backgroundImage: backgroundUrl,
         backgroundSize: "cover",
         backgroundPosition: "center",
+        overflow: "hidden",
       }}
     >
       <Grid
         container
         display={"flex"}
         flexDirection={"row"}
+        flexWrap={"nowrap"}
         justifyContent={"space-between"}
         sx={{ height: "100vh", width: "100vw" }}
         spacing={0}
       >
-        {/* este grid se utiliza para centrar a la derecha el main */}
         <Grid
           component={"div"}
-          spacing={{ xs: 12, sm: 6 }}
           sx={{
             display: { xs: "none", md: "block" },
-            minWidth: { md: "50%" },
+            width: { md: "50%" },
+            flexGrow: 0,
+            flexShrink: 0,
           }}
-        ></Grid>
+        />
         <Grid
           component={"div"}
-          spacing={{ xs: 12, sm: 6 }}
           display={"flex"}
           alignItems={"center"}
-          sx={() => ({
-            minWidth: { xs: "100%", md: "50%" },
-            height: '100%',
-          })}
+          sx={{
+            width: { xs: "100%", md: "50%" },
+            flexGrow: 0,
+            flexShrink: 0,
+            height: "100%",
+            overflow: "hidden",
+            boxSizing: "border-box",
+          }}
         >
           <LoginAppBar />
           <Grid
             container
             component="main"
             sx={(theme: Theme) => ({
-              display: { xs: "flex"},
+              display: { xs: "flex" },
               flexDirection: { xs: "column" },
               alignItems: { xs: "center", md: "center" },
               width: { xs: "90%", sm: "90%", md: "80%" },
+              maxWidth: "100%",
               justifyContent: "center",
               margin: "auto",
               padding: "3em 0",
               borderRadius: { xs: "1em" },
               overflowX: "hidden",
+              boxSizing: "border-box",
               backgroundColor: {
                 xs: theme.custom?.background,
               },
