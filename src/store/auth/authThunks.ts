@@ -1,21 +1,15 @@
 import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
-import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authVerifyEmailRequest } from "../../modules/auth/api/authApi";
+import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authRequestPasswordResetRequest, authResetPasswordRequest, authVerifyEmailRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
-import type { AuthActionsType, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthVerifyEmailApiPayload } from "../../typings/auth/authTypes";
-import { handleErrorWithAction, handleError } from "../shared/handlerStoreError";
+import type { AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthRequestPasswordResetPayload, AuthResetPasswordPayload, AuthVerifyEmailApiPayload } from "../../typings/auth/authTypes";
+import { extractAuthErrorMessage, handleErrorWithAction, handleError } from "../shared/handlerStoreError";
 
 
 export const startLoginWithEmailPassword = (
   { email, password, rememberMe }: AuthLoginRequestPayload): ThunkAction<Promise<AuthPublic | undefined>, RootState, unknown, AuthActionsType> => {
 
-    // ─── 🔎 Sin checkingCredentials() acá 🔎 ───
-    // Pone status: Checking en el slice global, y AppRouter usa ese status
-    // para desmontar TODO (incluido LoginForm) y mostrar el spinner de
-    // arranque. Al fallar el login, LoginForm se remonta de cero y su
-    // useEffect de montaje llama a clearAuthError(), borrando el mensaje
-    // de error antes de que se llegue a ver. El feedback de "procesando"
-    // ya lo da isSubmitting en useLoginForm.
+    // Sin checkingCredentials() acá: ver nota en el bug de "se reinicia todo".
     return async (dispatch: Dispatch) => {
       try {
         const { user } : { user: AuthPublic} = await authLoginRequest({ email, password, rememberMe });
@@ -66,7 +60,6 @@ export const startGoogleLogin = (
   { accessToken }: AuthGoogleRequestPayload
 ): ThunkAction<Promise<AuthPublic | undefined>, RootState, unknown, AuthActionsType> => {
 
-    // Mismo motivo que startLoginWithEmailPassword: sin checkingCredentials() acá.
     return async (dispatch: Dispatch) => {
       try {
         const { user }: { user: AuthPublic } = await authGoogleRequest({ accessToken });
@@ -109,7 +102,6 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: nu
       const { status, data } : { status: number, data: AuthCheckAuthDataResponse} = response;
 
       if (status !== 200) {
-        // Sin esto, el status queda trabado en "Checking" para siempre
         dispatch(logout({ errorMessage: null }));
         return;
       }
@@ -138,10 +130,53 @@ export const startVerifyEmail = (
         await authVerifyEmailRequest({ token });
         return true;
       } catch (error: unknown) {
-        // No usamos handleError acá: relanza el error, y este thunk necesita
-        // resolver siempre a boolean para que el hook pueda setear el status.
         console.error('Email verification failed:', error);
         return false;
+      }
+    };
+};
+
+/*══════════ 🎮 startRequestPasswordReset ══════════╗
+║ 📥 Entrada: AuthRequestPasswordResetPayload {email} ║
+║ ⚙️ Proceso: pide el link de reset. No toca el slice  ║
+║    global (no hay login/logout de por medio); el      ║
+║    backend siempre responde 200 con mensaje genérico  ║
+║    exista o no el email — solo un fallo real (red,     ║
+║    servidor caído) resuelve success:false               ║
+║ 📤 Salida: AuthAsyncActionResult                          ║
+╚═══════════════════════════════════════════════════════════╝*/
+export const startRequestPasswordReset = (
+  { email }: AuthRequestPasswordResetPayload
+): ThunkAction<Promise<AuthAsyncActionResult>, RootState, unknown, AuthActionsType> => {
+
+    return async (): Promise<AuthAsyncActionResult> => {
+      try {
+        await authRequestPasswordResetRequest({ email });
+        return { success: true, errorMessage: null };
+      } catch (error: unknown) {
+        console.error('Request password reset failed:', error);
+        return { success: false, errorMessage: extractAuthErrorMessage(error) };
+      }
+    };
+};
+
+/*══════════ 🎮 startResetPassword ══════════╗
+║ 📥 Entrada: AuthResetPasswordPayload {token,newPassword,repeatNewPassword} ║
+║ ⚙️ Proceso: aplica la nueva contraseña. Tampoco toca el ║
+║    slice global: el usuario todavía no está logueado.    ║
+║ 📤 Salida: AuthAsyncActionResult                            ║
+╚═════════════════════════════════════════════════════════════╝*/
+export const startResetPassword = (
+  { token, newPassword, repeatNewPassword }: AuthResetPasswordPayload
+): ThunkAction<Promise<AuthAsyncActionResult>, RootState, unknown, AuthActionsType> => {
+
+    return async (): Promise<AuthAsyncActionResult> => {
+      try {
+        await authResetPasswordRequest({ token, newPassword, repeatNewPassword });
+        return { success: true, errorMessage: null };
+      } catch (error: unknown) {
+        console.error('Reset password failed:', error);
+        return { success: false, errorMessage: extractAuthErrorMessage(error) };
       }
     };
 };

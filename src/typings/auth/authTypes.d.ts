@@ -2,8 +2,9 @@
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
+import type { FormikProps } from "formik";
 import type { checkingCredentials, login, logout } from "../../store/auth/authSlice";
-import type { AuthRoleEnum, VerifyEmailStatusEnum } from "./authEnums";
+import type { AuthRoleEnum, ResetPasswordStatusEnum, VerifyEmailStatusEnum } from "./authEnums";
 
 interface AuthEntity {
     _id: string | null,
@@ -79,6 +80,22 @@ export type AuthCheckAutResponse = Pick<Auth, '_id' | 'email' | 'password' | 're
 
 export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' | 'profilePhoto' | 'role'>
 
+// ─── Recuperación de contraseña ───────────────────────────
+export type AuthRequestPasswordResetPayload = Pick<Auth, 'email'>;
+
+export type AuthResetPasswordPayload = {
+  token: string;
+  newPassword: string;
+  repeatNewPassword: string;
+};
+
+// Resultado uniforme para thunks que no tocan el estado global de auth
+// (no hay login/logout de por medio, solo éxito o un mensaje de error puntual)
+export type AuthAsyncActionResult = {
+  success: boolean;
+  errorMessage: string | null;
+};
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔗 API 🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗                          ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -93,6 +110,10 @@ export interface AuthGoogleApiPayload {
 
 export type AuthGoogleRequestPayload = AuthGoogleApiPayload;
 
+export type AuthRequestPasswordResetApiPayload = AuthRequestPasswordResetPayload;
+
+export type AuthResetPasswordApiPayload = AuthResetPasswordPayload;
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📝 FORMS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -103,6 +124,10 @@ export type AuthRegisterFormValues = Pick<Auth, 'username' | 'email' | 'password
     profilePhoto: string | null;
     acceptedTerms: boolean;
 };
+
+export type AuthForgotPasswordFormValues = Pick<Auth, 'email'>;
+
+export type AuthResetPasswordFormValues = Pick<AuthResetPasswordPayload, 'newPassword' | 'repeatNewPassword'>;
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🪝 HOOKS  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝  ║
@@ -137,6 +162,24 @@ export interface UseGoogleAuthReturn {
     handleGoogleSignIn: () => void;
     isLoading: boolean;
     error: string | null;
+}
+
+export interface UseForgotPasswordFormReturn {
+    formik: FormikProps<AuthForgotPasswordFormValues>;
+    isSubmitting: boolean;
+    isSent: boolean;
+    errorMessage: string | null;
+    handleGoToLogin: () => void;
+}
+
+export interface UseResetPasswordFormReturn {
+    formik: FormikProps<AuthResetPasswordFormValues>;
+    status: ResetPasswordStatusEnum;
+    errorMessage: string | null;
+    isSubmitting: boolean;
+    hasToken: boolean;
+    handleGoToLogin: () => void;
+    handleGoToForgotPassword: () => void;
 }
 
 /*══════════════════════════════════════════════════════════════════════╗

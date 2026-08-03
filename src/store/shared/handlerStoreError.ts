@@ -7,24 +7,29 @@ export const handleError = (error: unknown ) => {
     if(!(error instanceof Error)) throw new Error('Something went wrong while login, retry please.');
 
     throw new Error(error.message);
-      
+
 }
 
-export const handleErrorWithAction = ({error, dispatch,action} : HandleErrorWithActionProps ): void => {
+/*══════════ 🎮 extractAuthErrorMessage ══════════╗
+║ 📥 Entrada: unknown (error capturado en un catch) ║
+║ ⚙️ Proceso: si es AxiosError, saca el message del  ║
+║    body y lo traduce con translateAuthError; si no, ║
+║    usa error.message o un fallback genérico          ║
+║ 📤 Salida: string                                    ║
+╚═══════════════════════════════════════════════════════╝*/
+export const extractAuthErrorMessage = (error: unknown): string => {
+  if (axios.isAxiosError(error)) {
+    const serverMessage = (error.response?.data as { message?: string })?.message;
+    return translateAuthError(serverMessage) || "Error inesperado en el servidor";
+  }
 
-    if (axios.isAxiosError(error)) {
-      const serverMessage = (error.response?.data as { message?: string })?.message;
-      const translatedMessage = translateAuthError(serverMessage);
-      dispatch(action({ errorMessage: translatedMessage || "Error inesperado en el servidor" }));
-      throw new Error(translatedMessage || error.message || "Error desconocido en la petición");
-    }
+  if (error instanceof Error) return error.message;
 
-    if (error instanceof Error) {
-      dispatch(action({ errorMessage: error.message }));
-      throw new Error(error.message);
-    }
-    
-    dispatch(action({ errorMessage: "Something went wrong, retry please." }));
-    throw new Error("Something went wrong, retry please.");
-  
+  return "Something went wrong, retry please.";
+};
+
+export const handleErrorWithAction = ({error, dispatch, action} : HandleErrorWithActionProps ): void => {
+  const message = extractAuthErrorMessage(error);
+  dispatch(action({ errorMessage: message }));
+  throw new Error(message);
 };

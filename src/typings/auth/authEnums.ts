@@ -16,3 +16,8 @@ export enum VerifyEmailStatusEnum {
     Error = "error",
 };
 
+export enum ResetPasswordStatusEnum {
+  Idle = 'idle',
+  Success = 'success',
+  Error = 'error',
+}

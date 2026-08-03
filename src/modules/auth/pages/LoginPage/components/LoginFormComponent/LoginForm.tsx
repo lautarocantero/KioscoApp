@@ -56,7 +56,7 @@ const LoginForm = (): ReactNode => {
                 />
                 <Link
                     component={LinkReactRouter}
-                    to={"/login"}
+                    to={"/forgot-password"}
                     sx={{
                         textDecoration: "none",
                         color: (theme: Theme) => theme?.palette?.primary?.main,

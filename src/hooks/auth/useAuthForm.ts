@@ -3,18 +3,22 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik, type FormikProps } from "formik";
 import type {
+    AuthForgotPasswordFormValues,
     AuthLoginFormValues,
     AuthRegisterFormValues,
+    AuthResetPasswordFormValues,
+    UseForgotPasswordFormReturn,
     UseLoginFormReturn,
     UseRegisterFormReturn,
+    UseResetPasswordFormReturn,
     UseVerifyEmailFormReturn,
 } from "@typings/auth/authTypes";
 import type { AppDispatch, RootState } from "../../store/auth/authSlice";
 import { clearAuthError } from "../../store/auth/authSlice";
-import { startLoginWithEmailPassword, startRegister, startVerifyEmail } from "../../store/auth/authThunks";
+import { startLoginWithEmailPassword, startRegister, startRequestPasswordReset, startResetPassword, startVerifyEmail } from "../../store/auth/authThunks";
 import { sanitizeRegisterValues } from "../../modules/auth/helpers/sanitizeAuthInput";
-import { VerifyEmailStatusEnum } from "@typings/auth/authEnums";
-import { getLoginInitialValues, loginFormSchema } from "../../modules/auth/schema/authFormSchema";
+import { ResetPasswordStatusEnum, VerifyEmailStatusEnum } from "@typings/auth/authEnums";
+import { forgotPasswordFormSchema, getForgotPasswordInitialValues, getLoginInitialValues, getResetPasswordInitialValues, loginFormSchema, resetPasswordFormSchema } from "../../modules/auth/schema/authFormSchema";
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 useLoginForm                                ║
@@ -161,4 +165,100 @@ export function useVerifyEmailForm(): UseVerifyEmailFormReturn {
     const handleGoToRegister = () => navigate("/register");
 
     return { status, errorMessage, handleGoToLogin, handleGoToRegister };
+}
+
+/*══════════════════════════════════════════════╗
+║ 🪝 useForgotPasswordForm                       ║
+╚══════════════════════════════════════════════*/
+export function useForgotPasswordForm(): UseForgotPasswordFormReturn {
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSent, setIsSent] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const onSubmit = async (values: AuthForgotPasswordFormValues) => {
+        setIsSubmitting(true);
+        setErrorMessage(null);
+
+        const result = await dispatch(startRequestPasswordReset(values));
+
+        if (result.success) {
+            setIsSent(true);
+        } else {
+            // Esto solo pasa ante un fallo real (red, servidor caído): "el email
+            // no existe" el backend lo responde siempre como éxito, a propósito.
+            setErrorMessage(result.errorMessage);
+        }
+
+        setIsSubmitting(false);
+    };
+
+    const formik: FormikProps<AuthForgotPasswordFormValues> = useFormik({
+        initialValues: getForgotPasswordInitialValues(),
+        onSubmit,
+        validateOnBlur: false,
+        validateOnChange: false,
+        validationSchema: forgotPasswordFormSchema,
+    });
+
+    const handleGoToLogin = () => navigate("/login");
+
+    return { formik, isSubmitting, isSent, errorMessage, handleGoToLogin };
+}
+
+/*══════════════════════════════════════════════╗
+║ 🪝 useResetPasswordForm                        ║
+╚══════════════════════════════════════════════*/
+export function useResetPasswordForm(): UseResetPasswordFormReturn {
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const token = searchParams.get("token");
+
+    const [status, setStatus] = useState<ResetPasswordStatusEnum>(ResetPasswordStatusEnum.Idle);
+    const [errorMessage, setErrorMessage] = useState<string | null>(
+        token ? null : "Falta el token de restablecimiento en el link"
+    );
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const onSubmit = async (values: AuthResetPasswordFormValues) => {
+        if (!token) return;
+
+        setIsSubmitting(true);
+
+        const result = await dispatch(startResetPassword({ token, ...values }));
+
+        if (result.success) {
+            setStatus(ResetPasswordStatusEnum.Success);
+            setErrorMessage(null);
+        } else {
+            setStatus(ResetPasswordStatusEnum.Error);
+            setErrorMessage(result.errorMessage);
+        }
+
+        setIsSubmitting(false);
+    };
+
+    const formik: FormikProps<AuthResetPasswordFormValues> = useFormik({
+        initialValues: getResetPasswordInitialValues(),
+        onSubmit,
+        validateOnBlur: false,
+        validateOnChange: false,
+        validationSchema: resetPasswordFormSchema,
+    });
+
+    const handleGoToLogin = () => navigate("/login");
+    const handleGoToForgotPassword = () => navigate("/forgot-password");
+
+    return {
+        formik,
+        status,
+        errorMessage,
+        isSubmitting,
+        hasToken: Boolean(token),
+        handleGoToLogin,
+        handleGoToForgotPassword,
+    };
 }
