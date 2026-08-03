@@ -78,7 +78,7 @@ export function useRegisterForm(): UseRegisterFormReturn {
 
             if (_id) {
                 setRegisteredUserId(_id);
-                navigate("/login");
+                navigate("/check-email");
             }
         } finally {
             setIsSubmitting(false);

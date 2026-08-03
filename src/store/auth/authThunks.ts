@@ -132,7 +132,9 @@ export const startVerifyEmail = (
         await authVerifyEmailRequest({ token });
         return true;
       } catch (error: unknown) {
-        handleError(error);
+        // No usamos handleError acá: relanza el error, y este thunk necesita
+        // resolver siempre a boolean para que el hook pueda setear el status.
+        console.error('Email verification failed:', error);
         return false;
       }
     };
