@@ -120,9 +120,9 @@ export type LogoutHandler = (reason: string) => void;
 export interface UseLoginFormReturn {
     errorMessage: string | null;
     isSubmitting: boolean;
-    handleSubmit: (values: AuthLoginFormValues) => Promise<void>;
     handleGoToRegister: () => void;
     handleGoToForgotPassword: () => void;
+    formik: FormikProps<AuthLoginFormValues>;
 }
 
 export interface UseRegisterFormReturn {
@@ -138,3 +138,9 @@ export interface UseGoogleAuthReturn {
     isLoading: boolean;
     error: string | null;
 }
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ ██ ERRORS   🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨    ║ 
+╚══════════════════════════════════════════════════════════════════════╝*/
+
+export type AuthErrorMessageMap = Record<string, string>;

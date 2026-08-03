@@ -1,24 +1,15 @@
 import { Box, Checkbox, FormControlLabel, Grid, Link, type Theme } from "@mui/material";
 import { Link as LinkReactRouter } from "react-router-dom";
-import { useFormik } from "formik";
 import "animate.css";
 import LoginFormInputs from "./LoginFormInputs";
 import LoginFormButtons from "./LoginFormButtons";
 import ApiErrorsHandler from "../../../../../shared/components/ErrorHandler/ErrorFormHandler";
 import { useLoginForm } from "../../../../../../hooks/auth/useAuthForm";
-import { getLoginInitialValues, loginFormSchema } from "../../../../schema/authFormSchema";
 import type { ReactNode } from "react";
 
 const LoginForm = (): ReactNode => {
-    const { errorMessage, isSubmitting, handleSubmit, handleGoToRegister } = useLoginForm();
-
-    const { handleSubmit: formikSubmit, values, setFieldValue, errors } = useFormik({
-        initialValues: getLoginInitialValues(),
-        onSubmit: handleSubmit,
-        validateOnBlur: false,
-        validateOnChange: false,
-        validationSchema: loginFormSchema,
-    });
+    const { formik, errorMessage, isSubmitting, handleGoToRegister } = useLoginForm();
+    const { handleSubmit: formikSubmit, values, setFieldValue, errors } = formik;
 
     return (
         <Box

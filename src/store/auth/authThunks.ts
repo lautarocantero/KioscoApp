@@ -1,5 +1,5 @@
 import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
-import { checkingCredentials, clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
+import { clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
 import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authVerifyEmailRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
 import type { AuthActionsType, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthVerifyEmailApiPayload } from "../../typings/auth/authTypes";
@@ -8,9 +8,15 @@ import { handleErrorWithAction, handleError } from "../shared/handlerStoreError"
 
 export const startLoginWithEmailPassword = (
   { email, password, rememberMe }: AuthLoginRequestPayload): ThunkAction<Promise<AuthPublic | undefined>, RootState, unknown, AuthActionsType> => {
-  
+
+    // ─── 🔎 Sin checkingCredentials() acá 🔎 ───
+    // Pone status: Checking en el slice global, y AppRouter usa ese status
+    // para desmontar TODO (incluido LoginForm) y mostrar el spinner de
+    // arranque. Al fallar el login, LoginForm se remonta de cero y su
+    // useEffect de montaje llama a clearAuthError(), borrando el mensaje
+    // de error antes de que se llegue a ver. El feedback de "procesando"
+    // ya lo da isSubmitting en useLoginForm.
     return async (dispatch: Dispatch) => {
-      dispatch(checkingCredentials());
       try {
         const { user } : { user: AuthPublic} = await authLoginRequest({ email, password, rememberMe });
 
@@ -60,8 +66,8 @@ export const startGoogleLogin = (
   { accessToken }: AuthGoogleRequestPayload
 ): ThunkAction<Promise<AuthPublic | undefined>, RootState, unknown, AuthActionsType> => {
 
+    // Mismo motivo que startLoginWithEmailPassword: sin checkingCredentials() acá.
     return async (dispatch: Dispatch) => {
-      dispatch(checkingCredentials());
       try {
         const { user }: { user: AuthPublic } = await authGoogleRequest({ accessToken });
 

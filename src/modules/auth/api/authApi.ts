@@ -1,8 +1,23 @@
+import axios from "axios";
 import type { AuthGoogleApiPayload, AuthLoginApiPayload, AuthRegisterApiPayload } from "../../../typings/auth/authTypes";
 import { API_URL } from "../../../config/api";
-import { createHttpClient } from "../../shared/api/httpClient";
 
-const baseUrl = createHttpClient(`${API_URL}/auth`);
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🔓 CLIENTE SIN INTERCEPTOR DE REFRESH                                     ║
+║                                                                          ║
+║ Estos endpoints (login, register, google, logout, check-auth,           ║
+║ verify-email) nunca dependen de un access_token vigente, así que no      ║
+║ tiene sentido reintentarlos vía /refresh. Si se usa createHttpClient acá,║
+║ un 401 de credenciales inválidas en /login dispara el interceptor de     ║
+║ refresh, ese refresh también falla (no hay sesión), y el error que       ║
+║ termina llegando al thunk es el del refresh fallido, no el del login.    ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+const baseUrl = axios.create({
+  baseURL: `${API_URL}/auth`,
+  timeout: 5000,
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
+});
 
 /*══════════════════════════════════════════════════════════════════════════╗
 ║ 📤 POST                                                                   ║

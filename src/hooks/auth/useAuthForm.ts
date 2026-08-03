@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useFormik, type FormikProps } from "formik";
 import type {
     AuthLoginFormValues,
     AuthRegisterFormValues,
@@ -13,6 +14,7 @@ import { clearAuthError } from "../../store/auth/authSlice";
 import { startLoginWithEmailPassword, startRegister, startVerifyEmail } from "../../store/auth/authThunks";
 import { sanitizeRegisterValues } from "../../modules/auth/helpers/sanitizeAuthInput";
 import { VerifyEmailStatusEnum } from "@typings/auth/authEnums";
+import { getLoginInitialValues, loginFormSchema } from "../../modules/auth/schema/authFormSchema";
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 useLoginForm                                ║
@@ -26,26 +28,50 @@ export function useLoginForm(): UseLoginFormReturn {
 
     useEffect(() => {
         dispatch(clearAuthError());
-    }, [dispatch]);
+        // Solo se ejecuta al montar el formulario, no en cada submit.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    const handleSubmit = async (values: AuthLoginFormValues) => {
-        const { email, password, rememberMe } = values;
+    const onSubmit = async (values: AuthLoginFormValues) => {
+        // Limpiamos cualquier error previo ANTES de intentar, así el usuario
+        // no ve un mensaje viejo mientras se procesa el nuevo intento.
+        dispatch(clearAuthError());
         setIsSubmitting(true);
+
         try {
-            const user = await dispatch(startLoginWithEmailPassword({ email, password, rememberMe }));
-            if (user) navigate("/home");
+            const user = await dispatch(startLoginWithEmailPassword(values));
+            if (user) {
+                navigate("/home");
+            }
+            // Si `user` viene undefined, el thunk ya se encargó de despachar
+            // `logout({ errorMessage })`, así que el Redux state ya trae el mensaje
+            // y ApiErrorsHandler lo va a mostrar. No hace falta hacer nada más acá.
+        } catch (error: unknown) {
+            // Red de seguridad: pase lo que pase adentro del thunk (incluso si
+            // relanza el error), NUNCA debe quedar como una promesa rechazada
+            // sin atrapar. Eso es lo que estaba disparando el overlay de error
+            // de Vite y se sentía como si la página se recargara.
+            console.error("Login failed:", error);
         } finally {
             setIsSubmitting(false);
         }
     };
 
+    const formik: FormikProps<AuthLoginFormValues> = useFormik({
+        initialValues: getLoginInitialValues(),
+        onSubmit,
+        validateOnBlur: false,
+        validateOnChange: false,
+        validationSchema: loginFormSchema,
+    });
+
     const handleGoToRegister = () => navigate("/register");
     const handleGoToForgotPassword = () => navigate("/forgot-password");
 
     return {
+        formik,
         errorMessage,
         isSubmitting,
-        handleSubmit,
         handleGoToRegister,
         handleGoToForgotPassword,
     };
@@ -64,9 +90,11 @@ export function useRegisterForm(): UseRegisterFormReturn {
 
     useEffect(() => {
         dispatch(clearAuthError());
-    }, [dispatch]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleSubmit = async (values: AuthRegisterFormValues) => {
+        dispatch(clearAuthError());
         setIsSubmitting(true);
         try {
             const sanitizedData = {
@@ -80,6 +108,8 @@ export function useRegisterForm(): UseRegisterFormReturn {
                 setRegisteredUserId(_id);
                 navigate("/check-email");
             }
+        } catch (error: unknown) {
+            console.error("Register failed:", error);
         } finally {
             setIsSubmitting(false);
         }
