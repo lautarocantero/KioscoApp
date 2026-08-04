@@ -4,7 +4,7 @@ const useNoData = (): LinkDataResult => ({ value: undefined, isLoading: false, e
 
 export const useLinkCard = ({ link }: LinkCardProps): OptionLink => {
     const useData = link.useData ?? useNoData;
-    const { value: dynamicValue, isLoading, error, subtitle: dynamicSubtitle } = useData();
+    const { value: dynamicValue, isLoading, error, subtitle: dynamicSubtitle, secondaryValue } = useData();
 
     const value = link.useData
         ? (link.formatValue ? link.formatValue(dynamicValue) : dynamicValue?.toString())
@@ -12,5 +12,5 @@ export const useLinkCard = ({ link }: LinkCardProps): OptionLink => {
 
     const subtitle = (error ?? dynamicSubtitle ?? link.subtitle)?.toString();
 
-    return { ...link, value, isLoading, subtitle };
+    return { ...link, value, isLoading, subtitle, secondaryValue };
 };

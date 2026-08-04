@@ -60,7 +60,7 @@ export const searchSellsThunk = (term: string) => {
 };
 
 export const getTodaySellsCountThunk = () => {
-    return async (dispatch: Dispatch): Promise<{ count: number; lastSaleAt: string | null } | undefined> => {
+    return async (dispatch: Dispatch): Promise<{ count: number; lastSaleAt: string | null; totalAmount: number } | undefined> => {
         dispatch(checkingTodaySells());
         try {
             const stats = await getTodaySellsCountRequest();

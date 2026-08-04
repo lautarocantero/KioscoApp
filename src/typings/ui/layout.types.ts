@@ -23,6 +23,7 @@ export interface ThemeContextType {
 
 export interface LinkDataResult {
   value?: string | number | null;
+  secondaryValue?: string | null;
   isLoading?: boolean;
   error?: string | null;
   subtitle?: string | number | null;
@@ -33,10 +34,12 @@ export interface OptionLink {
   icon: React.ReactNode;
   url: string;
   value?: string;
+  secondaryValue?: string | null;
   isLoading?: boolean;
   subtitle?: string;
   useData?: () => LinkDataResult;
   formatValue?: (value: string | number | null | undefined) => string;
+  disabled?: boolean; 
 }
 
 export type LinkCardArrowProps = object;

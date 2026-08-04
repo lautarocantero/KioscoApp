@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 
 const LinkCardContent = ({ link }: LinkCardContentProps): ReactNode => {
 
-    const { description, value, subtitle, isLoading } = link;
+    const { description, value, secondaryValue, subtitle, isLoading } = link;
 
     return (
     <Box
@@ -38,26 +38,51 @@ const LinkCardContent = ({ link }: LinkCardContentProps): ReactNode => {
         </Box>
 
         <Box
-            className="link-card-value"
-            aria-hidden={!isLoading && !value}
-            sx={(t: Theme) => ({
-                fontSize: "1.8rem",
-                fontWeight: 700,
-                color: t.custom.darkWhite,
-                lineHeight: 1.1,
-                visibility: isLoading || value ? "visible" : "hidden",
-                transition: "color 0.15s",
-            })}
+            sx={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: "0.5em",
+                flexWrap: "wrap",
+            }}
         >
-            {isLoading ? (
-                <Skeleton
-                    variant="text"
-                    width={40}
-                    height={32}
-                    sx={(t: Theme) => ({ bgcolor: t.custom.darkGray })}
-                />
-            ) : (
-                value ?? "0"
+            <Box
+                className="link-card-value"
+                aria-hidden={!isLoading && !value}
+                sx={(t: Theme) => ({
+                    fontSize: t.typography.h6.fontSize,
+                    fontWeight: 700,
+                    color: t.custom.darkWhite,
+                    lineHeight: 1.1,
+                    visibility: isLoading || value ? "visible" : "hidden",
+                    transition: "color 0.15s",
+                })}
+            >
+                {isLoading ? (
+                    <Skeleton
+                        variant="text"
+                        width={40}
+                        height={32}
+                        sx={(t: Theme) => ({ bgcolor: t.custom.darkGray })}
+                    />
+                ) : (
+                    value ?? "0"
+                )}
+            </Box>
+
+            {!isLoading && secondaryValue && (
+                <Box
+                    className="link-card-value"
+                    sx={(t: Theme) => ({
+                        fontSize: t.typography.h6.fontSize,
+                        fontWeight: 800,
+                        color: t.palette.secondary.light,
+                        opacity: 0.7,
+                        lineHeight: 1.1,
+                        transition: "color 0.15s",
+                    })}
+                >
+                    - {secondaryValue}
+                </Box>
             )}
         </Box>
 

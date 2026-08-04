@@ -10,6 +10,7 @@ const initialState: SellStateInterface = {
     isLoadingCurrent:    false,
     currentSellError:    null,
     todaySellsCount:     null,
+    todaySellsTotalAmount:  null,
     lastSaleAt:          null,
     isLoadingTodaySells: false,
     todaySellsError:     null,
@@ -67,11 +68,12 @@ export const sellSlice = createSlice({
             state.todaySellsError     = null;
         },
 
-        setTodaySellsCount: (state: SellStateInterface, action: PayloadAction<{ count: number; lastSaleAt: string | null }>) => {
-            state.todaySellsCount     = action.payload.count;
-            state.lastSaleAt          = action.payload.lastSaleAt;
-            state.isLoadingTodaySells = false;
-            state.todaySellsError     = null;
+        setTodaySellsCount: (state: SellStateInterface, action: PayloadAction<{ count: number; lastSaleAt: string | null; totalAmount: number }>) => {
+            state.todaySellsCount       = action.payload.count;
+            state.todaySellsTotalAmount = action.payload.totalAmount;
+            state.lastSaleAt            = action.payload.lastSaleAt;
+            state.isLoadingTodaySells   = false;
+            state.todaySellsError       = null;
         },
 
         setTodaySellsError: (state: SellStateInterface, action: PayloadAction<string>) => {

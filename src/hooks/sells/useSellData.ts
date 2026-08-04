@@ -5,6 +5,7 @@ import type { UseSellDataResult, UseSellStatsResult } from "@typings/sells/sellT
 import type { LinkDataResult } from "@typings/ui/layout.types";
 import type { AppDispatch, RootState } from "../../store/sell/sellSlice";
 import { formatRelativeTime } from "../../utils/formatter/formatDate";
+import { formatCurrency } from "../../modules/cart/helpers/formatCurrency";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -51,16 +52,17 @@ export const useSellData = (sellId: string | undefined): UseSellDataResult => {
 export const useSellStats = (): UseSellStatsResult => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const todaySells = useSelector((state: RootState) => state.sell?.todaySellsCount ?? null);
-    const lastSaleAt = useSelector((state: RootState) => state.sell?.lastSaleAt ?? null);
-    const isLoading  = useSelector((state: RootState) => state.sell?.isLoadingTodaySells ?? false);
-    const error      = useSelector((state: RootState) => state.sell?.todaySellsError ?? null);
+    const todaySells       = useSelector((state: RootState) => state.sell?.todaySellsCount ?? null);
+    const todaySellsAmount = useSelector((state: RootState) => state.sell?.todaySellsTotalAmount ?? null);
+    const lastSaleAt       = useSelector((state: RootState) => state.sell?.lastSaleAt ?? null);
+    const isLoading        = useSelector((state: RootState) => state.sell?.isLoadingTodaySells ?? false);
+    const error            = useSelector((state: RootState) => state.sell?.todaySellsError ?? null);
 
     useEffect(() => {
         void dispatch(getTodaySellsCountThunk());
     }, [dispatch]);
 
-    return { todaySells, lastSaleAt, isLoading, error };
+    return { todaySells, todaySellsAmount, lastSaleAt, isLoading, error };
 };
 
 
@@ -78,12 +80,13 @@ export const useSellStats = (): UseSellStatsResult => {
 
 // Adaptador para las cards de HomePageLinks / SidebarNavLinks
 export const useSellsLinkData = (): LinkDataResult => {
-    const { todaySells, lastSaleAt, isLoading, error } = useSellStats();
+    const { todaySells, todaySellsAmount, lastSaleAt, isLoading, error } = useSellStats();
 
     const relativeTime = formatRelativeTime(lastSaleAt);
 
     return {
         value: todaySells,
+        secondaryValue: todaySells === 0 || !todaySellsAmount ? null : formatCurrency(todaySellsAmount),
         isLoading,
         error,
         subtitle: todaySells === 0 || !relativeTime

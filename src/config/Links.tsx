@@ -51,12 +51,14 @@ export const SidebarNavLinks: OptionLink[] = [
     icon: <StoreIcon />,
     url: "/shop",
     subtitle: "Configuración del local",
+    disabled: true,
   },
   {
     description: "Proveedores",
     icon: <WarehouseIcon />,
     url: "/providers",
     subtitle: "",
+    disabled: true,
   },
 ];
 

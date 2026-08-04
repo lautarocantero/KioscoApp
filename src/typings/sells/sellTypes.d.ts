@@ -165,6 +165,7 @@ export interface SellStateInterface {
     isLoadingCurrent:    boolean;
     currentSellError:    string | null;
     todaySellsCount:     number | null;
+    todaySellsTotalAmount:  number | null;
     lastSaleAt:          string | null;
     isLoadingTodaySells: boolean;
     todaySellsError:     string | null;
@@ -311,6 +312,7 @@ export interface UseProductsExhibitorResult {
 
 export interface UseSellStatsResult {
     todaySells: number | null;
+    todaySellsAmount: number | null;
     lastSaleAt: string | null;
     isLoading:  boolean;
     error:      string | null;

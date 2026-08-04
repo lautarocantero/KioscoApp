@@ -43,10 +43,10 @@ export const getSellByIdRequest = async (data: GetSellApiPayloadType) => {
 /*══════════════════════════════════════════════════════════════════════════╗
 ║ 🔍 getTodaySellsCountRequest                                              ║
 ║                                                                          ║
-║ Obtiene la cantidad de ventas del día y la fecha de la última venta.     ║
+║ Obtiene la cantidad de ventas y dinero del día y la fecha de la última venta.     ║
 ║ GET /get-today-sells-count                                               ║
 ╚══════════════════════════════════════════════════════════════════════════╝*/
-export const getTodaySellsCountRequest = async (): Promise<{ count: number, lastSaleAt: string | null }> => {
+export const getTodaySellsCountRequest = async (): Promise<{ count: number; lastSaleAt: string | null; totalAmount: number }> => {
     const response = await baseUrl.get('/get-today-sells-count');
     return response.data;
 };
