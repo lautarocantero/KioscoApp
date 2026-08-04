@@ -16,7 +16,10 @@
 ________________________________________________________________________________________________
 | 🧾 **Login**                                                                                   |
 |-------------------------------------------------------------------------------------------------|  
-| 🟢 Agregar terminos y condiciones                    
+| 🔴 Agregar terminos y condiciones   
+| 🔴 Sacar el envio de mail de recuperar password, aun no tengo resend     
+| 🟢 Agregar test a los elementos que faltan, checkemailpage,forgotpassword, resetpassword,verification
+    Actualmente no tienen porque dependen de envio de mail la mayoria.            
 |_________________________________________________________________________________________________|
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |

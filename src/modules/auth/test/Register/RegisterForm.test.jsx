@@ -30,4 +30,24 @@ describe('RegisterForm', () => {
         expect(form).toBeInTheDocument();
     });
 
+    it('should render the terms and conditions checkbox', () => {
+        renderWithProviders(<RegisterForm />);
+        expect(screen.getByText(/términos y condiciones/i)).toBeInTheDocument();
+        expect(screen.getByRole('checkbox')).toBeInTheDocument();
+    });
+
+    it('should disable the submit button when terms are not accepted', () => {
+        renderWithProviders(<RegisterForm />);
+        const submitButton = screen.getByRole('button', { name: /Registrarse/i });
+        expect(submitButton).toBeDisabled();
+    });
+
+    it('should enable the submit button after accepting terms', () => {
+        renderWithProviders(<RegisterForm />);
+        const checkbox = screen.getByRole('checkbox');
+        checkbox.click();
+        const submitButton = screen.getByRole('button', { name: /Registrarse/i });
+        expect(submitButton).not.toBeDisabled();
+    });
+
 });
