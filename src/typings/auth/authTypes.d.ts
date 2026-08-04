@@ -151,10 +151,12 @@ export interface UseLoginFormReturn {
 }
 
 export interface UseRegisterFormReturn {
+    formik: FormikProps<AuthRegisterFormValues>;
     errorMessage: string | null;
     isSubmitting: boolean;
     registeredUserId: string | null;
-    handleSubmit: (values: AuthRegisterFormValues) => Promise<void>;
+    isSuccess: boolean;
+    secondsLeft: number;
     handleGoToLogin: () => void;
 }
 

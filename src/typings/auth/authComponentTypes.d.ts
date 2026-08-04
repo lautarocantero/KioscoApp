@@ -33,3 +33,8 @@ export interface RegisterFormInputsInterface {
   setFieldValue: (field: string, value: string) => void;
   errors: FormikErrors<AuthRegisterFormValues>;
 }
+
+export interface SuccessOnRegisterInterface {
+  isSuccess: boolean;
+  secondsLeft: number;
+}

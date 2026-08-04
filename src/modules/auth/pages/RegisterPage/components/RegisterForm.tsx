@@ -1,22 +1,17 @@
 import { Box, Checkbox, FormControlLabel, Link, Typography, type Theme } from "@mui/material";
 import { Link as LinkReactRouter } from "react-router-dom";
-import { useFormik } from "formik";
 import RegisterFormInputs from "./RegisterFormInputs";
 import RegisterFormButtons from "./RegisterFormButtons";
 import ApiErrorsHandler from "../../../../shared/components/ErrorHandler/ErrorFormHandler";
 import { useRegisterForm } from "../../../../../hooks/auth/useAuthForm";
-import { getRegisterInitialValues, registerFormSchema } from "../../../schema/authFormSchema";
+import SuccessOnRegister from "./SuccessOnRegister";
+import type { ReactNode } from "react";
 
-const RegisterForm = (): React.ReactNode => {
-    const { errorMessage, isSubmitting, handleSubmit, handleGoToLogin } = useRegisterForm();
+const RegisterForm = (): ReactNode => {
+    const { formik, errorMessage, isSubmitting, isSuccess, secondsLeft, handleGoToLogin } = useRegisterForm();
+    const { handleSubmit: formikSubmit, values, setFieldValue, errors } = formik;
 
-    const { errors, values, handleSubmit: formikSubmit, setFieldValue } = useFormik({
-        initialValues: getRegisterInitialValues(),
-        onSubmit: handleSubmit,
-        validateOnBlur: false,
-        validateOnChange: false,
-        validationSchema: registerFormSchema,
-    });
+    if (isSuccess) return <SuccessOnRegister isSuccess={isSuccess} secondsLeft={secondsLeft} />;
 
     return (
         <Box

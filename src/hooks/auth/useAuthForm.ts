@@ -17,7 +17,7 @@ import { clearAuthError } from "../../store/auth/authSlice";
 import { startLoginWithEmailPassword, startRegister, startRequestPasswordReset, startResetPassword } from "../../store/auth/authThunks";
 import { sanitizeRegisterValues } from "../../modules/auth/helpers/sanitizeAuthInput";
 import { ResetPasswordStatusEnum } from "@typings/auth/authEnums";
-import { forgotPasswordFormSchema, getForgotPasswordInitialValues, getLoginInitialValues, getResetPasswordInitialValues, loginFormSchema, resetPasswordFormSchema } from "../../modules/auth/schema/authFormSchema";
+import { forgotPasswordFormSchema, getForgotPasswordInitialValues, getLoginInitialValues, getRegisterInitialValues, getResetPasswordInitialValues, loginFormSchema, registerFormSchema, resetPasswordFormSchema } from "../../modules/auth/schema/authFormSchema";
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 useLoginForm                                ║
@@ -90,13 +90,36 @@ export function useRegisterForm(): UseRegisterFormReturn {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [registeredUserId, setRegisteredUserId] = useState<string | null>(null);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [secondsLeft, setSecondsLeft] = useState(REGISTER_SUCCESS_REDIRECT_SECONDS);
 
     useEffect(() => {
         dispatch(clearAuthError());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleSubmit = async (values: AuthRegisterFormValues) => {
+    // Countdown + redirect: arranca solo cuando isSuccess pasa a true.
+    // Se limpia solo (clearInterval en el return) si el componente se
+    // desmonta antes de que termine, para no navegar sobre un form ya destruido.
+    useEffect(() => {
+        if (!isSuccess) return;
+
+        const interval = setInterval(() => {
+            setSecondsLeft((prev) => {
+                if (prev <= 1) {
+                    clearInterval(interval);
+                    navigate("/login");
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isSuccess]);
+
+    const onSubmit = async (values: AuthRegisterFormValues) => {
         dispatch(clearAuthError());
         setIsSubmitting(true);
         try {
@@ -109,12 +132,9 @@ export function useRegisterForm(): UseRegisterFormReturn {
 
             if (_id) {
                 setRegisteredUserId(_id);
-                // TODO(email-verification): reactivar cuando se pague Resend.
-                // Mientras tanto no hay verificación por mail, así que mandamos
-                // directo a login en vez de /check-email (Resend free solo
-                // entrega a la misma dirección de la cuenta, trunca el flujo).
-                // navigate("/check-email");
-                navigate("/login");
+                // TODO(email-verification): cuando se pague Resend, en vez de
+                // isSuccess+redirect a /login, volver a navigate("/check-email").
+                setIsSuccess(true);
             }
         } catch (error: unknown) {
             console.error("Register failed:", error);
@@ -123,16 +143,28 @@ export function useRegisterForm(): UseRegisterFormReturn {
         }
     };
 
+    const formik: FormikProps<AuthRegisterFormValues> = useFormik({
+        initialValues: getRegisterInitialValues(),
+        onSubmit,
+        validateOnBlur: false,
+        validateOnChange: false,
+        validationSchema: registerFormSchema,
+    });
+
     const handleGoToLogin = () => navigate("/login");
 
     return {
+        formik,
         errorMessage,
         isSubmitting,
         registeredUserId,
-        handleSubmit,
+        isSuccess,
+        secondsLeft,
         handleGoToLogin,
     };
 }
+
+const REGISTER_SUCCESS_REDIRECT_SECONDS = 3;
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 useVerifyEmailForm                          ║
