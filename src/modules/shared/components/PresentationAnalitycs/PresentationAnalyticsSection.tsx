@@ -1,7 +1,7 @@
 import { Alert } from "@mui/material";
 import { useProductPresentations } from "../../../../hooks/products/useProductPresentations";
 import { usePresentationAnalytics } from "../../../../hooks/presentations/usePresentationAnalytics";
-import LoadingSpinnerComponent from "../Loader/LoadingSpinner";
+import LoadingSpinnerComponent from "../LoadingSpinner";
 import type { ProductAnalyticsSectionProps } from "@typings/product/productComponentTypes";
 import PresentationAnalytics from "./PresentationAnalitycs";
 import EmptyPresentationAnalytics from "./EmptyPresentationsAnalytics";

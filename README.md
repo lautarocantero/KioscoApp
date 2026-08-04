@@ -1,102 +1,114 @@
 # Stoko
 
-Sistema de gestión para ventas minoristas y tiendas de abarrotes. Actualmente en desarrollo, enfocado en facilitar el control de ventas, productos y operaciones diarias.
+Sistema de gestión para kioscos y comercios minoristas. Aplicación web construida con React, TypeScript y Vite para administrar productos, ventas, proveedores y clientes.
 
 ## 📝 Descripción
 
-Stoko es una aplicación web diseñada para pequeños negocios, como kioscos o tiendas de abarrotes. Permitirá administrar productos, registrar ventas y llevar un control básico del inventario.
+Stoko es una plataforma de administración para negocios pequeños, enfocada en:
+- registro y edición de productos y presentaciones
+- gestión de proveedores
+- control de ventas y carrito de venta
+- panel administrativo y métricas
+- autenticación de usuarios con Google OAuth y flujos de registro/login
 
-![Stoko ilustration](public/images/kiosco_images/kiosco-ilustration.jpg) 
+![Stoko ilustration](public/images/backgroundImages/stocko-banner.png)
 
-## 🛠️ Tecnologías Utilizadas
+## 🧩 Tecnologías principales
 
-- **React** (base del frontend)
-- **Typescript** (tipado)
-- **Bootstrap** (estilos y componentes UI)
-- **Mui** (componentes UI)
+- **React 19**
+- **TypeScript**
+- **Vite**
+- **Redux Toolkit** + **redux-persist**
+- **React Router v7**
+- **MUI (Material UI)**
+- **Formik** + **Yup / Zod**
+- **Dayjs**
+- **jsPDF**
+- **Google OAuth**
+- **animate.css**
 
-> _Se irán agregando nuevas tecnologías y herramientas a medida que el proyecto avance._
+## 📁 Estructura principal del proyecto
 
-🏛️ Arquitectura – Screaming Architecture
+- `src/main.tsx` — punto de entrada
+- `src/StokoApp.tsx` — providers globales y tema
+- `src/router/AppRouter.tsx` — rutas principales y control de acceso
+- `src/config/` — constantes y configuración de API
+- `src/store/` — Redux slices, thunks y store persistente
+- `src/theme/` — configuraciones de tema claro/oscuro
+- `src/modules/` — funcionalidades por dominio
+- `src/hooks/` — hooks personalizados reutilizables
+- `src/typings/` — definiciones de tipos compartidos
+- `src/utils/` — utilidades y formateadores
 
-Este proyecto sigue los principios de Screaming Architecture, donde la estructura está orientada al dominio y no a las tecnologías.
+### Módulos relevantes
 
-📂 Estructura del Proyecto
-src/<br>
-├── app/     # Configuración de rutas, layout principal y providers globales<br>
-├── auth/     # Módulo de autenticación y autorización<br>
-├── core/     # Configuración global, servicios base, helpers<br>
-├── inventory/ # Lógica y pantallas de inventario (stock, almacenes)<br>
-├── products/ # Gestión de productos (CRUD, categorías, precios)<br>
-├── sales/ # Ventas, tickets y reportes<br>
-├── shared/ # Componentes y utilidades reutilizables<br>
-├── users/ # Gestión de usuarios y roles<br>
-├── assets/ # Imágenes y recursos estáticos<br>
-└── main.tsx # Punto de entrada<br>
-<br>
-🗂️ Estructura Interna por Módulo<br>
-products/<br>
-├── components/ # Componentes UI específicos del dominio<br>
-├── pages/ # Pantallas o rutas del módulo<br>
-├── hooks/ # Custom hooks del dominio<br>
-├── services/ # Lógica de datos / API<br>
-└── types/ # Modelos y tipados<br>
-<br>
-## 🚧 Estado del Proyecto
+- `src/modules/auth/` — login, registro, recuperación de contraseña y verificación
+- `src/modules/account/` — gestión de perfil y suscripción
+- `src/modules/sells/` — ventas, nuevo ticket, detalle de venta
+- `src/modules/cart/` — carrito de venta y confirmación de pedido
+- `src/modules/products/` — listado, creación, edición y detalle de productos
+- `src/modules/presentations/` — gestión de presentaciones/variantes de producto
+- `src/modules/providers/` — administración de proveedores
+- `src/modules/shop/` — administración de tienda, vendedores y estadísticas
+- `src/modules/shared/` — layout, componentes comunes y notificaciones
 
-**En desarrollo** – Actualmente se están construyendo las primeras funcionalidades y estructura inicial.
+## 🚀 Funcionalidades actuales
 
-## 📦 Instalación y Uso
+- Rutas protegidas para usuarios autenticados
+- Persistencia de sesión con `redux-persist`
+- Soporte de tema claro/oscuro
+- Flujo completo de autenticación y registro
+- Carrito de ventas con ticket de confirmación
+- Gestión de productos, presentaciones y proveedores
+- Páginas de administración para vendedores, tiendas y roles
+
+## 📦 Scripts disponibles
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/usuario/stoko.git
+yarn dev
+yarn build
+yarn preview
+yarn lint
+yarn test
+```
 
-# Instalar dependencias
+## 🔧 Instalación local
+
+1. Instalar Node.js 20+ y Yarn
+2. Clonar el repositorio
+
+```bash
+git clone <repo-url>
+cd KioscoApp
 yarn
+```
 
-# Iniciar el entorno de desarrollo
+3. Crear un archivo `.env` con variables necesarias:
+
+```env
+VITE_GOOGLE_CLIENT_ID=your-google-oauth-client-id
+VITE_API_URL=https://api.example.com
+```
+
+4. Ejecutar en modo desarrollo:
+
+```bash
 yarn dev
 ```
-## 📦 Instalacion en ubuntu
-
-# Instalar yarn
-sudo npm install -g yarn
-# Instalacion NVM
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-cerrar terminal
-# Instalacion Node 20 o superior
-nvm install 20
-nvm use 20
-
-## ✨ Características (Planeadas)
-
-- Registro y listado de productos
-- Control de ventas diarias
-- Gestión básica de inventario
-- Interfaz simple y responsive
-
-## ✔️🏗️🚧 Gestión de tareas y progreso 🗞️
-
-Este proyecto utiliza un sistema de checklist y categorización para organizar el avance técnico.  
-Cada tarea se registra con:
-
-![Task List](public/images/task_and_progress/task-list.png) 
-
-![Progress](public/images/task_and_progress/progres-list.png) 
-
-🧭 Las tareas se actualizan al finalizar cada bloque funcional o sprint.  
-🎬 El objetivo es mantener trazabilidad clara, expresiva y útil para onboarding técnico.
 
 
-## 📅 Roadmap Futuro
+## 📚 Documentación adicional
 
-- Integración con base de datos (Firebase / Supabase / MongoDB)
-- Reportes de ventas y estadísticas
-- Autenticación de usuarios
+- `docs/` — notas, tareas y especificaciones internas
+- `src/documentation/` — documentación de hooks, módulos, router y store
+
+## 🛠️ Estado del proyecto
+
+**En desarrollo** — la aplicación ya cuenta con la estructura de dominio, rutas y módulos principales. El foco actual está en completar los flujos de ventas, productos, presentaciones y administración.
 
 ## 👤 Autor
 
 Desarrollado por **Lautaro Cantero**
 
-_Este README se actualizará a medida que el proyecto avance._
+> Este README refleja la estructura actual del proyecto y puede seguir actualizándose conforme se avance en nuevas funcionalidades.
+
