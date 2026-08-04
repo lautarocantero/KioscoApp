@@ -1,3 +1,6 @@
+
+![Stoko ilustration](public/images/backgroundImages/stocko-banner.png)
+
 # Stoko
 
 Sistema de gestión para kioscos y comercios minoristas. Aplicación web construida con React, TypeScript y Vite para administrar productos, ventas, proveedores y clientes.
@@ -11,7 +14,7 @@ Stoko es una plataforma de administración para negocios pequeños, enfocada en:
 - panel administrativo y métricas
 - autenticación de usuarios con Google OAuth y flujos de registro/login
 
-![Stoko ilustration](public/images/backgroundImages/stocko-banner.png)
+
 
 ## 🧩 Tecnologías principales
 
