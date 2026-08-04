@@ -63,7 +63,7 @@ const ForgotPasswordForm = (): ReactNode => {
             }}
         >
             <Typography sx={{ color: (theme: Theme) => theme?.custom?.translucidFontColor, textAlign: "center" }}>
-                Ingresá tu email y te mandamos un link para restablecer tu contraseña.
+                Ingresá tu email y podras restablecer tu contraseña.
             </Typography>
 
             <TextField
@@ -80,7 +80,7 @@ const ForgotPasswordForm = (): ReactNode => {
             <ApiErrorsHandler error={errorMessage} />
 
             <PrimaryButtonComponent
-                buttonText="Enviar link"
+                buttonText="Continuar"
                 buttonOnClick={() => {}}
                 buttonWidth={{ xs: "100%", md: "100%" }}
                 buttonType="submit"

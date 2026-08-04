@@ -1,16 +1,14 @@
-import { Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
-import { Grid, IconButton, InputAdornment, TextField, type Theme } from "@mui/material";
-import { useState } from "react";
+import { Email } from "@mui/icons-material";
+import { Grid, InputAdornment, TextField, type Theme } from "@mui/material";
 import type { LoginFormInputsInterface } from "../../../../../../typings/auth/authComponentTypes";
 import { sharedSx } from "../../../../../shared/components/sharedSx/sharedSx";
+import PasswordField from "../../../../../shared/components/PasswordField/PasswordField";
 
 const LoginFormInputs = ({
   values,
   setFieldValue,
   errors,
 }: LoginFormInputsInterface): React.ReactNode => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-
   return (
     <Grid
       container
@@ -51,58 +49,14 @@ const LoginFormInputs = ({
       </Grid>
 
       <Grid component={"div"} width={"100%"}>
-        <TextField
-          fullWidth
-          type={showPassword ? "text" : "password"}
-          placeholder="Contraseña"
+        <PasswordField
           name="password"
+          placeholder="Contraseña"
           value={values?.password}
-          onChange={({ target }) => setFieldValue("password", target.value)}
+          onChange={(value) => setFieldValue("password", value)}
           error={!!errors.password}
           helperText={errors?.password?.toString()}
-          variant="outlined"
-          sx={sharedSx}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Lock
-                    sx={{
-                      color: (theme: Theme) =>
-                        errors.password ? theme?.palette?.error?.main : theme?.custom?.darkWhite,
-                    }}
-                  />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
-                    {showPassword ? (
-                      <VisibilityOff
-                        sx={{
-                          color: (theme: Theme) =>
-                            errors.password ? theme?.palette?.error?.main : theme?.custom?.darkWhite,
-                        }}
-                      />
-                    ) : (
-                      <Visibility
-                        sx={{
-                          color: (theme: Theme) =>
-                            errors.password ? theme?.palette?.error?.main : theme?.custom?.darkWhite,
-                        }}
-                      />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            },
-            htmlInput: {
-              "aria-label": "Contraseña",
-            },
-            formHelperText: {
-              sx: { textAlign: "right" },
-            },
-          }}
+          ariaLabel="Contraseña"
         />
       </Grid>
     </Grid>

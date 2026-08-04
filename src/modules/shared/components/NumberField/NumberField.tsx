@@ -1,39 +1,3 @@
-
-// # Componente: NumberField  
-
-// ## Descripción 📦  
-// Campo de entrada numérica reutilizable que combina `BaseNumberField` de `@base-ui-components` con estilos de MUI.  
-// Permite capturar valores numéricos con validación visual, etiqueta flotante y mensaje de ayuda.  
-// Se integra en formularios donde se requiere ingresar cantidades o límites numéricos.  
-
-// ## Lógica 🔧  
-// - `SSRInitialFilled`: placeholder para manejar correctamente el estado de la etiqueta (`shrink`) en renderizado SSR.  
-// - Props principales:  
-//   - `id`: identificador único del campo.  
-//   - `label`: etiqueta visible del campo.  
-//   - `error`: estado de error para mostrar estilos rojos.  
-//   - `size`: tamaño del campo (`small` | `medium`).  
-//   - `max`: valor máximo permitido, mostrado en el helper text.  
-//   - `onValueChange`: callback que recibe el valor numérico parseado.  
-// - `BaseNumberField.Root`: envuelve el campo y renderiza `FormControl` con estilos personalizados según el tema.  
-// - `BaseNumberField.Input`: renderiza un `OutlinedInput` de MUI, manejando eventos (`onBlur`, `onChange`, `onFocus`, etc.).  
-//   - En `onChange`, convierte el valor a número y dispara `onValueChange` si es válido.  
-
-// ## Renderizado 🎨  
-// - `FormControl`:  
-//   - Estilos dinámicos basados en `Theme` (`white`, bordes, etc.).  
-//   - Maneja estados `disabled`, `required` y `error`.  
-// - `InputLabel`: etiqueta flotante vinculada al campo.  
-// - `OutlinedInput`: campo de texto numérico con borde y estilos adaptados al tema.  
-// - `FormHelperText`: mensaje de ayuda que indica el rango permitido (`1` a `max`).  
-
-// ## Notas técnicas 💽  
-// - Integra tipado fuerte con `BaseNumberField.Root.Props`.  
-// - Compatible con SSR gracias al placeholder `SSRInitialFilled`.  
-// - Estilos consistentes con el tema global (`theme.custom`).  
-// - Ideal para formularios que requieren validación visual y control de valores numéricos.  
-
-
 import * as React from 'react';
 import { NumberField as BaseNumberField } from '@base-ui-components/react/number-field';
 import FormControl from '@mui/material/FormControl';

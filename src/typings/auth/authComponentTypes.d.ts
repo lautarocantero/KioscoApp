@@ -1,5 +1,6 @@
 import type { FormikErrors } from "formik";
 import type { AuthLoginFormValues, AuthRegisterFormValues } from "./authTypes";
+import type { ResetPasswordStatusEnum } from "./authEnums";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ ██ BUTTONS   🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨   ║
@@ -22,6 +23,16 @@ export interface RegisterFormButtonsInterface {
 ║ ██ FORMS   📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
+export interface PasswordFieldProps {
+    name: string;
+    placeholder: string;
+    value: string;
+    onChange: (value: string) => void;
+    error?: boolean;
+    helperText?: string;
+    ariaLabel: string;
+}
+
 export interface LoginFormInputsInterface {
   values: AuthLoginFormValues;
   setFieldValue: (field: string, value: string) => void;
@@ -37,4 +48,41 @@ export interface RegisterFormInputsInterface {
 export interface SuccessOnRegisterInterface {
   isSuccess: boolean;
   secondsLeft: number;
+}
+
+export interface AskForLinkInterface {
+  hasToken: boolean;
+  errorMessage?: string | null;
+  handleGoToForgotPassword: () => void;
+};
+
+export interface ResetPasswordSuccessInterface {
+  status: ResetPasswordStatusEnum;
+  handleGoToLogin:() => void;
+};
+
+export interface ResetPasswordFormInterface {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  values: any;
+  setFieldValue: (field: string, value: string) => void;
+  errors: FormikErrors<any>;
+  isSubmitting: boolean;
+  errorMessage: string | null;
+  status: ResetPasswordStatusEnum;
+}
+
+export interface ResetPasswordInputsInterface {
+  values: any;
+  setFieldValue: (field: string, value: string) => void;
+  errors: FormikErrors<any>;
+}
+
+export interface ResetPasswordErrorInterface {
+  status: ResetPasswordStatusEnum;
+  errorMessage: string | null;
+}
+
+export interface ResetPasswordButtonsInterface {
+  errors: FormikErrors<any>;
+  isSubmitting: boolean;
 }
