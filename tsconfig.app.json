@@ -25,7 +25,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
-      "@typings/*": ["./src/typings/*"]
+      "@typings/*": ["./src/typings/*"],
+      "@hooks/*": ["./src/hooks/*"]
     }
   },
   "include": ["src"]
