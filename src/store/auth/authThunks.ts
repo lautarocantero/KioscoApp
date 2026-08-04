@@ -121,20 +121,26 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: nu
   }
 }
 
-export const startVerifyEmail = (
-  { token }: AuthVerifyEmailApiPayload
-): ThunkAction<Promise<boolean>, RootState, unknown, AuthActionsType> => {
+/*══════════ 🎮 startVerifyEmail ══════════╗
+║ ⏸️ DESHABILITADO temporalmente: depende del ║
+║ mail de verificación que Resend free no      ║
+║ puede entregar a terceros. Reactivar cuando  ║
+║ se pague Resend.                             ║
+╚═══════════════════════════════════════════════╝*/
+// export const startVerifyEmail = (
+//   { token }: AuthVerifyEmailApiPayload
+// ): ThunkAction<Promise<boolean>, RootState, unknown, AuthActionsType> => {
 
-    return async (): Promise<boolean> => {
-      try {
-        await authVerifyEmailRequest({ token });
-        return true;
-      } catch (error: unknown) {
-        console.error('Email verification failed:', error);
-        return false;
-      }
-    };
-};
+//     return async (): Promise<boolean> => {
+//       try {
+//         await authVerifyEmailRequest({ token });
+//         return true;
+//       } catch (error: unknown) {
+//         console.error('Email verification failed:', error);
+//         return false;
+//       }
+//     };
+// };
 
 /*══════════ 🎮 startRequestPasswordReset ══════════╗
 ║ 📥 Entrada: AuthRequestPasswordResetPayload {email} ║
