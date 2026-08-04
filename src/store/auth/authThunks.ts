@@ -1,8 +1,11 @@
 import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
-import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authRequestPasswordResetRequest, authResetPasswordRequest, authVerifyEmailRequest } from "../../modules/auth/api/authApi";
+import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authRequestPasswordResetRequest, authResetPasswordRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
-import type { AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthRequestPasswordResetPayload, AuthResetPasswordPayload, AuthVerifyEmailApiPayload } from "../../typings/auth/authTypes";
+import type { 
+  AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, 
+  AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthRequestPasswordResetPayload, 
+  AuthResetPasswordPayload } from "../../typings/auth/authTypes";
 import { extractAuthErrorMessage, handleErrorWithAction, handleError } from "../shared/handlerStoreError";
 
 
