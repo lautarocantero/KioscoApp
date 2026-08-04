@@ -1,6 +1,6 @@
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import Timeline from "../../../../shared/components/TimeLine";
+import Timeline from "../../../../shared/components/Timeline/TimeLine";
 
 const ProductCreatedTimeline = (): React.ReactNode => (
     <Timeline

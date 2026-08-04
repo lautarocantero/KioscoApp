@@ -14,7 +14,7 @@ import type { AppDispatch, RootState } from "../store/auth/authSlice";
 import { startCheckAuth } from "../store/auth/authThunks";
 import RouteTracker from "./RouteTracker";
 import AppShell from "../modules/shared/layout/AppShell";
-import LoadingSpinnerComponent from "../modules/shared/components/LoadingSpinner";
+import LoadingSpinnerComponent from "../modules/shared/components/Loader/LoadingSpinner";
 import { AuthStatus } from "@typings/auth/authEnums";
 
 const AppRouter = (): React.ReactNode => {

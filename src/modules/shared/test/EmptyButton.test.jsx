@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import EmptyButton from "../components/EmptyButton";
+import EmptyButton from "../components/Buttons/EmptyButton";
 
 
 describe('EmptyButton', () => {

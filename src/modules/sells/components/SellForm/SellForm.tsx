@@ -11,8 +11,8 @@ import { getSellEditInitialValues, sellEditFormSchema } from "../../schema/SellF
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import { useSellDetail, useSellEdit } from "../../../../hooks/sells/useSellsForm";
-import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
-import NotEntityLoaded from "../../../shared/components/NotEntityLoaded";
+import LoadingSpinnerComponent from "../../../shared/components/Loader/LoadingSpinner";
+import NotEntityLoaded from "../../../shared/components/NoContent/NotEntityLoaded";
 import SellEdited from "../../pages/SellEdit/components/SellEdited";
 
 const STEP_COMPONENTS = [SellFormFirstStep];

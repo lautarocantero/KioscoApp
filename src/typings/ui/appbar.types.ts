@@ -9,9 +9,6 @@ export interface LinkInterface {
   underline: Partial<Record<Breakpoint, UnderlineVariant>>;
 }
 
-export interface LinksComponentInterface {
-  linksToShow: LinkInterface[];
-}
 
 export interface SellbarSectionProps {
   gridArea: string;
