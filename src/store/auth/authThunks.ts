@@ -5,6 +5,7 @@ import type { AxiosResponse } from "axios";
 import type { 
   AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, 
   AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthRequestPasswordResetPayload, 
+  AuthRequestPasswordResetResult, 
   AuthResetPasswordPayload } from "../../typings/auth/authTypes";
 import { extractAuthErrorMessage, handleErrorWithAction, handleError } from "../shared/handlerStoreError";
 
@@ -147,24 +148,28 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: nu
 
 /*══════════ 🎮 startRequestPasswordReset ══════════╗
 ║ 📥 Entrada: AuthRequestPasswordResetPayload {email} ║
-║ ⚙️ Proceso: pide el link de reset. No toca el slice  ║
-║    global (no hay login/logout de por medio); el      ║
-║    backend siempre responde 200 con mensaje genérico  ║
-║    exista o no el email — solo un fallo real (red,     ║
-║    servidor caído) resuelve success:false               ║
-║ 📤 Salida: AuthAsyncActionResult                          ║
+║ ⚙️ Proceso: pide el reset. No toca el slice global.  ║
+║                                                        ║
+║ 🚧 BYPASS TEMPORAL (sin Resend pago): el backend ya no ║
+║ manda el link por mail, lo devuelve directo acá. Por    ║
+║ eso el thunk ahora también devuelve el token, para que  ║
+║ el form navegue directo a /reset-password?token=...     ║
+║ Cuando se reactive Resend: volver a AuthAsyncActionResult║
+║ (sin token) y restaurar la pantalla de "revisá tu email" ║
+║ en ForgotPasswordForm.                                    ║
+║ 📤 Salida: AuthRequestPasswordResetResult                 ║
 ╚═══════════════════════════════════════════════════════════╝*/
 export const startRequestPasswordReset = (
   { email }: AuthRequestPasswordResetPayload
-): ThunkAction<Promise<AuthAsyncActionResult>, RootState, unknown, AuthActionsType> => {
+): ThunkAction<Promise<AuthRequestPasswordResetResult>, RootState, unknown, AuthActionsType> => {
 
-    return async (): Promise<AuthAsyncActionResult> => {
+    return async (): Promise<AuthRequestPasswordResetResult> => {
       try {
-        await authRequestPasswordResetRequest({ email });
-        return { success: true, errorMessage: null };
+        const { token } = await authRequestPasswordResetRequest({ email });
+        return { success: true, errorMessage: null, token: token ?? null };
       } catch (error: unknown) {
         console.error('Request password reset failed:', error);
-        return { success: false, errorMessage: extractAuthErrorMessage(error) };
+        return { success: false, errorMessage: extractAuthErrorMessage(error), token: null };
       }
     };
 };

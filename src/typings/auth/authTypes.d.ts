@@ -89,11 +89,24 @@ export type AuthResetPasswordPayload = {
   repeatNewPassword: string;
 };
 
+// 🚧 BYPASS TEMPORAL (sin Resend pago): el backend devuelve el token
+// directo en la respuesta en vez de mandarlo por mail.
+// Revertir (volver a solo un mensaje genérico) cuando se reactive el envío.
+export type AuthRequestPasswordResetApiResponse = {
+  token: string;
+};
+
 // Resultado uniforme para thunks que no tocan el estado global de auth
 // (no hay login/logout de por medio, solo éxito o un mensaje de error puntual)
 export type AuthAsyncActionResult = {
   success: boolean;
   errorMessage: string | null;
+};
+
+// 🚧 BYPASS TEMPORAL: variante de AuthAsyncActionResult que además trae
+// el token, para que el form pueda navegar directo a /reset-password.
+export type AuthRequestPasswordResetResult = AuthAsyncActionResult & {
+  token: string | null;
 };
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -169,7 +182,6 @@ export interface UseGoogleAuthReturn {
 export interface UseForgotPasswordFormReturn {
     formik: FormikProps<AuthForgotPasswordFormValues>;
     isSubmitting: boolean;
-    isSent: boolean;
     errorMessage: string | null;
     handleGoToLogin: () => void;
 }

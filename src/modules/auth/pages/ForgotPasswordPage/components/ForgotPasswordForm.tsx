@@ -5,8 +5,18 @@ import PrimaryButtonComponent from "../../../../shared/components/Buttons/Primar
 import ApiErrorsHandler from "../../../../shared/components/ErrorHandler/ErrorFormHandler";
 
 const ForgotPasswordForm = (): ReactNode => {
-    const { formik, isSubmitting, isSent, errorMessage, handleGoToLogin } = useForgotPasswordForm();
+    const { formik, isSubmitting, errorMessage } = useForgotPasswordForm();
     const { handleSubmit, values, handleChange, errors } = formik;
+
+    /*
+    🚧 BYPASS TEMPORAL (sin Resend pago): antes de este bypass, un submit
+    exitoso dejaba al usuario acá, esperando el mail. Ahora
+    useForgotPasswordForm navega directo a /reset-password?token=... apenas
+    el backend responde, así que este bloque nunca se llega a renderizar.
+
+    Para restaurar cuando se reactive Resend:
+    1. Volver a desestructurar `handleGoToLogin` del hook arriba.
+    2. Volver a exponer `isSent` en useForgotPasswordForm y usarlo acá.
 
     if (isSent) {
         return (
@@ -35,6 +45,7 @@ const ForgotPasswordForm = (): ReactNode => {
             </Box>
         );
     }
+    */
 
     return (
         <Box

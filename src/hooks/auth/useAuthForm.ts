@@ -216,7 +216,6 @@ export function useForgotPasswordForm(): UseForgotPasswordFormReturn {
     const navigate = useNavigate();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSent, setIsSent] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const onSubmit = async (values: AuthForgotPasswordFormValues) => {
@@ -225,11 +224,19 @@ export function useForgotPasswordForm(): UseForgotPasswordFormReturn {
 
         const result = await dispatch(startRequestPasswordReset(values));
 
-        if (result.success) {
-            setIsSent(true);
+        if (result.success && result.token) {
+            // 🚧 BYPASS TEMPORAL (sin Resend pago): en vez de mostrar la
+            // pantalla de "revisá tu email" (isSent), navegamos directo a
+            // reset-password con el token que devolvió el backend.
+            // Cuando se reactive Resend: volver a un isSent(true) acá y
+            // restaurar la pantalla de confirmación en ForgotPasswordForm.
+            navigate(`/reset-password?token=${result.token}`);
+        } else if (result.success && !result.token) {
+            // No debería pasar mientras dure el bypass, pero por las dudas
+            // no dejamos al usuario sin feedback si el backend no manda token.
+            setErrorMessage("No se pudo obtener el link de recuperación. Probá de nuevo.");
         } else {
-            // Esto solo pasa ante un fallo real (red, servidor caído): "el email
-            // no existe" el backend lo responde siempre como éxito, a propósito.
+            // Fallo real (red, servidor caído).
             setErrorMessage(result.errorMessage);
         }
 
@@ -246,7 +253,7 @@ export function useForgotPasswordForm(): UseForgotPasswordFormReturn {
 
     const handleGoToLogin = () => navigate("/login");
 
-    return { formik, isSubmitting, isSent, errorMessage, handleGoToLogin };
+    return { formik, isSubmitting, errorMessage, handleGoToLogin };
 }
 
 /*══════════════════════════════════════════════╗
