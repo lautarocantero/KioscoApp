@@ -8,7 +8,6 @@ const PresentationSelector = ({
     onChange,
     disabled,
 }: PresentationSelectorProps): React.ReactNode => {
-    if (presentations.length <= 1) return null;
 
     const handleChange = (e: SelectChangeEvent) => onChange(e.target.value);
 

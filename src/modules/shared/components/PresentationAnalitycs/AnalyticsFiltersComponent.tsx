@@ -48,7 +48,6 @@ const AnalyticsFiltersComponent = ({
                             onPresentationChange={onPresentationChange}
                             selectedPresentationId={selectedPresentationId}
                             isPresentationSelectorDisabled={isPresentationSelectorDisabled}
-                            hidePresentationFilter={hidePresentationFilter}
                         />
                     </Box>
                 )}

@@ -10,6 +10,7 @@ const PresentationAnalyticsSection = ({
     productId,
     initialPresentationId,
 }: ProductAnalyticsSectionProps): React.ReactNode => {
+    
 
     const {
         presentations,
@@ -32,6 +33,9 @@ const PresentationAnalyticsSection = ({
         saleType: selectedPresentation?.sale_type,
     });
 
+    const hidePresentationFilter = Boolean(initialPresentationId);
+    const isPresentationSelectorDisabled = isLoadingAnalytics || presentations.length <= 1;
+
     if (isLoadingPresentations) return <LoadingSpinnerComponent />;
     if (presentationsError) return <Alert severity="error">{presentationsError}</Alert>;
 
@@ -48,9 +52,9 @@ const PresentationAnalyticsSection = ({
             presentations={presentations}
             selectedPresentationId={selectedPresentationId}
             onPresentationChange={setSelectedPresentationId}
-            isPresentationSelectorDisabled={isLoadingAnalytics}
+            isPresentationSelectorDisabled={isPresentationSelectorDisabled}
             onApplyFilters={applyFilters}
-            hidePresentationFilter={Boolean(initialPresentationId)}
+            hidePresentationFilter={hidePresentationFilter}
         />
     );
 };

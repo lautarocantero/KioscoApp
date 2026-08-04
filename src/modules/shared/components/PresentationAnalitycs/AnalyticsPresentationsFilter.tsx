@@ -1,4 +1,3 @@
-// PresentationFilter.tsx
 import { Box, Typography } from "@mui/material";
 import PresentationSelector from "../../../products/components/PresentationSelector";
 import { fieldLabelSx } from "../sharedSx/sharedSx";
@@ -11,15 +10,10 @@ export const PresentationFilter = ({
     onPresentationChange,
     selectedPresentationId,
     isPresentationSelectorDisabled,
-    hidePresentationFilter
 }: PresentationFilterProps) => {
-    const showPresentationSelector = Boolean(presentations && onPresentationChange);
-
-    if (!showPresentationSelector || !presentations || !onPresentationChange) {
+    if (!presentations || !onPresentationChange) {
         return null;
     }
-
-    if (hidePresentationFilter) return null;
 
     return (
         <Box>

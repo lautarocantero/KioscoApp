@@ -62,7 +62,6 @@ export interface AnalyticsFiltersProps {
 /** El filtro de presentación es un subconjunto de AnalyticsFiltersProps, no de PresentationAnalyticsProps directamente. */
 export type PresentationFilterProps = Pick<AnalyticsFiltersProps,"presentations" | "onPresentationChange" | "selectedPresentationId" | "isPresentationSelectorDisabled"> & {
     label: string;
-    hidePresentationFilter: boolean;
 };
 
 export interface SellerFilterProps {
