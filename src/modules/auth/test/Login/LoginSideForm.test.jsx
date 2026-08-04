@@ -4,9 +4,9 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { MemoryRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material";
-import LoginForm from "../../../modules/auth/pages/LoginPage/components/LoginFormComponent/LoginForm";
-import AuthLayout from '../../../../src/modules/auth/layout/AuthLayout';
-import authReducer from "../../../../src/store/auth/authSlice";
+import LoginForm from "../../pages/LoginPage/components/LoginFormComponent/LoginForm";
+import AuthLayout from '../../layout/AuthLayout';
+import authReducer from "../../../../store/auth/authSlice";
 
 describe('LoginForm', () => {
   it('should render LoginForm correctly', () => {

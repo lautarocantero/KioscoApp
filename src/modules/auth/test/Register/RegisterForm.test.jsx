@@ -4,8 +4,8 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { MemoryRouter } from "react-router-dom";
 import '@testing-library/jest-dom';
-import RegisterForm from "../pages/RegisterPage/components/RegisterForm";
-import authReducer from "../../../store/auth/authSlice";
+import RegisterForm from "../../pages/RegisterPage/components/RegisterForm";
+import authReducer from "../../../../store/auth/authSlice";
 
 const renderWithProviders = (ui) => {
     const store = configureStore({ reducer: { auth: authReducer } });

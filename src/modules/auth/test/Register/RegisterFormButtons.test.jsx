@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, vi, expect } from "vitest";
-import RegisterFormButtons from "../pages/RegisterPage/components/RegisterFormButtons";
+import RegisterFormButtons from "../../pages/RegisterPage/components/RegisterFormButtons";
 
 const defaultProps = {
     errors: {},

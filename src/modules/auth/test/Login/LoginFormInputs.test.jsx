@@ -2,7 +2,7 @@ import { describe, it, vi, expect, beforeEach } from "vitest"
 import { render, screen, fireEvent, cleanup } from "@testing-library/react"
 import '@testing-library/jest-dom'
 import { ThemeProvider, createTheme } from "@mui/material"
-import LoginFormInputs from "../pages/LoginPage/components/LoginFormComponent/LoginFormInputs"
+import LoginFormInputs from "../../pages/LoginPage/components/LoginFormComponent/LoginFormInputs"
 
 const renderWithTheme = (ui) =>
   render(<ThemeProvider theme={createTheme()}>{ui}</ThemeProvider>)

@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { describe, it, beforeEach, vi } from "vitest";
-import LoginFormButtons from '../pages/LoginPage/components/LoginFormComponent/LoginFormButtons'
+import LoginFormButtons from '../../pages/LoginPage/components/LoginFormComponent/LoginFormButtons'
 import { createTheme, ThemeProvider } from "@mui/material";
 import '@testing-library/jest-dom'
 

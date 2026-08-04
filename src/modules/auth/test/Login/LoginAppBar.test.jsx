@@ -1,8 +1,8 @@
-import { afterEach, beforeEach, describe, it } from "vitest"
+import { beforeEach, describe, it } from "vitest"
 import { cleanup, render, screen } from "@testing-library/react"
+import LoginAppBar from "../../layout/LoginAppBar/LoginAppBar"
 import { createTheme, ThemeProvider } from "@mui/material"
 import { MemoryRouter } from "react-router-dom"
-import LoginAppBarContent from "../layout/LoginAppBar/LoginAppBarContent"
 
 const renderWithTheme = (ui) => {
   return render(
@@ -12,20 +12,23 @@ const renderWithTheme = (ui) => {
   )
 }
 
-beforeEach(cleanup)
+describe('LoginAppBar', () => {
 
-describe("LoginAppBarContent", () => {
+    beforeEach(cleanup)
 
-    afterEach(cleanup)
-
-   it("should render the LoginAppBarContent correctly", () => {
-      renderWithTheme(<LoginAppBarContent />)
-   })
+    it('should render correctly', () => {
+        renderWithTheme(<LoginAppBar />);
+    });
 
    it('should render the lightMode',() => {
-      renderWithTheme(<LoginAppBarContent />)
+      renderWithTheme(<LoginAppBar />)
       screen.getByTestId('ModeNightIcon');
       screen.getByTestId('Brightness4Icon');
    })
 
-})
+   it('should render the Appbar', () => {
+        renderWithTheme(<LoginAppBar />);
+        screen.getByTestId('login-appbar');
+    });
+
+});
