@@ -87,7 +87,7 @@ export const useProductsLinkData = (): LinkDataResult => {
         : lowStockPresentations === null
             ? undefined
             : lowStockPresentations === 0
-                ? "Sin stock bajo"
+                ? "Stock al día"
                 : `${lowStockPresentations} con stock bajo`;
 
     return {
