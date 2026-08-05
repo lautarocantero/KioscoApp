@@ -1,30 +1,9 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { describe, it, expect } from "vitest";
+import { screen } from "@testing-library/react";
 import type { Product } from "../../../../typings/product/productTypes";
 import { buildColumnsForProductExhibitor } from "../../components/ProductsExhibitorList/ProductExhibitorColumns";
 import type { GridColDef } from "@mui/x-data-grid";
-import { ProductDialogContext } from "../../context/Product/ProductDialogContext";
-import { configureStore } from "@reduxjs/toolkit";
-import { Provider } from "react-redux";
-
-const testTheme = createTheme({
-    custom: {
-        white: "rgb(255, 255, 255)",
-        black: "rgb(0, 0, 0)",
-    },
-} as any);
-
-const mockProductDialogContext = {
-    setShowModal: vi.fn(),
-    showModal: false,
-};
-
-const testStore = configureStore({
-    reducer: {
-        dummy: (state = {}) => state,
-    },
-});
+import { renderWithTheme, renderWithProviders } from "../../../shared/test/utils/setupTests"; // 👈 ajustá el path
 
 const buildProduct = (overrides: Partial<Product> = {}): Product =>
     ({
@@ -57,11 +36,7 @@ describe("buildColumnsForProductExhibitor", () => {
             const column = getColumn("name");
             const product = buildProduct();
 
-            render(
-                <ThemeProvider theme={testTheme}>
-                    {column.renderCell!({ row: product } as any)}
-                </ThemeProvider>
-            );
+            renderWithTheme(column.renderCell!({ row: product } as any));
 
             expect(screen.getByAltText("Coca Cola")).toBeInTheDocument();
             expect(screen.getByText("Coca Cola")).toBeInTheDocument();
@@ -80,7 +55,7 @@ describe("buildColumnsForProductExhibitor", () => {
             const column = getColumn("presentation");
             const product = buildProduct({ presentations: [] });
 
-            expect((column.valueGetter as any)(undefined, product, column, {})).toBe("-");
+            expect(callValueGetter(column, product)).toBe("-");
         });
     });
 
@@ -130,15 +105,7 @@ describe("buildColumnsForProductExhibitor", () => {
             const column = getColumn("actions");
             const product = buildProduct();
 
-            render(
-                <Provider store={testStore}>
-                    <ThemeProvider theme={testTheme}>
-                        <ProductDialogContext.Provider value={mockProductDialogContext as any}>
-                            {column.renderCell!({ row: product } as any)}
-                        </ProductDialogContext.Provider>
-                    </ThemeProvider>
-                </Provider>
-            );
+            renderWithProviders(column.renderCell!({ row: product } as any));
 
             expect(document.body).toBeTruthy();
         });
