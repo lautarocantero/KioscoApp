@@ -73,7 +73,7 @@ export const getPresentationDetailInitialValues = getPresentationEditInitialValu
 const baseShape = {
     name:       Yup.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100).required("Nombre requerido"),
     description:       Yup.string().trim().min(2, "La descripcion debe tener al menos 2 caracteres").max(100).required("Descripcion requerida"),
-    sku:        Yup.string().min(2).max(50).required("SKU requerido"),
+    sku:        Yup.string().min(2).max(50),
     barcode:    Yup.string()
         .test(
             "barcode-format",
