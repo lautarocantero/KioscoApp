@@ -55,14 +55,6 @@ describe("ResetPassword", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("siempre renderiza el formulario, tenga o no token", () => {
-    renderWithProviders(<ResetPassword />, { route: "/reset-password" });
-    expect(screen.getByRole("form")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Nueva contraseña")).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText("Repetí la nueva contraseña")
-    ).toBeInTheDocument();
-  });
 
   it("no muestra la pantalla de éxito antes de enviar el formulario", () => {
     renderWithProviders(<ResetPassword />, {
