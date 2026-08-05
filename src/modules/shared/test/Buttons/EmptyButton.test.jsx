@@ -1,21 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import PrimaryButton from "../components/Buttons/PrimaryButtonComponent";
+import EmptyButton from "../../components/Buttons/EmptyButton";
 
 
-describe('PrimaryButton', () => {
-  it('should render PrimaryButtoncorrectly', () => {
-        render(<PrimaryButton 
+describe('EmptyButton', () => {
+  it('should render EmptyButtoncorrectly', () => {
+        render(<EmptyButton 
                 buttonText={'Iniciar sesión'}
                 buttonOnClick={() => {}}
               />)
   });
 
   it('should render the text correctly', () => {
-        render(<PrimaryButton 
-                buttonText={'Iniciar sesión'}
+        render(<EmptyButton 
+                buttonText={'Registrarse'}
                 buttonOnClick={() => {}}
               />)
-        expect(screen.queryAllByText('Iniciar sesión'));
+        expect(screen.queryAllByText('Registrarse'));
   });
 });
