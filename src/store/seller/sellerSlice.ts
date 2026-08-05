@@ -29,7 +29,7 @@ const initialState: SellerStateInterface = {
     created_at: '',
     updated_at: '',
     errorMessage: null,
-    sort: SortOption.NameDesc,
+    sort: SortOption.NameAsc,
     viewMode: ViewMode.Grid,
     page: 1,
     selectedCategory: null,
