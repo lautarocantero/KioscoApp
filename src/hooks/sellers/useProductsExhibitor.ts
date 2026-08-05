@@ -6,7 +6,7 @@ import { setSort, setViewMode, setPage, type RootState, type AppDispatch } from 
 import { SortOption, ViewMode } from "@typings/seller/sellerEnums";
 import { PAGE_SIZE_PRODUCT_EXHIBITOR } from "../../config/constants";
 import { useSortOptions } from "./useSortOptions";
-import { buildColumnsForProductExhibitor } from "../../modules/sellers/api/components/ProductsExhibitorList/ProductExhibitorColumns";
+import { buildColumnsForProductExhibitor } from "../../modules/sellers/components/ProductsExhibitorList/ProductExhibitorColumns";
 import { useSellerProductsListData } from "./useSellerProductListData";
 
 

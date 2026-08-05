@@ -85,7 +85,7 @@ export interface ProductRowActionCellProps {
 
 export type  ProductsSkeletonsProps = Pick<ProductsExhibitorListProps, 'isLoading' | 'gridSx'>;
 
-export interface SortByCatalogHeaderProps {
+export interface SortByCatalogProps {
     viewMode: ViewMode;
 }
 

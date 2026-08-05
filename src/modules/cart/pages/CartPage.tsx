@@ -7,7 +7,7 @@ import CartSummaryCardComponent from '../components/CartSumaryCardComponent';
 import CartProductTable from "../components/CartProductTableComponent";
 import { useCart } from "../../../hooks/sellers/useCart";
 import { useContext, useMemo, type ReactNode } from "react";
-import { cartFormSchema, getCartFormInitialValues } from "../../sells/schema/CartFormSchema";
+import { cartFormSchema, getCartFormInitialValues } from "../../sellers/schema/CartFormSchema";
 
 const CartPage = (): ReactNode => {
     const { showSnackBar } = useContext(SnackBarContext)!;

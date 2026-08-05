@@ -1,7 +1,7 @@
 import { useContext, useMemo } from "react";
 import type { UseProductDialogReturn } from "@typings/sells/sellTypes";
 import useCartPresentationPicker from "./useCartPresentationPicker";
-import { ProductDialogContext } from "../../modules/sells/context/Product/ProductDialogContext";
+import { ProductDialogContext } from "../../modules/sellers/context/Product/ProductDialogContext";
 import { getTotalPresentationsStock } from "../../modules/shared/helpers/stockHandler";
 
 /*══════════════════════════════════════════════════════════════════════╗

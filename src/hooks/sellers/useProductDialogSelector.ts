@@ -6,8 +6,8 @@ import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackB
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { RootState } from "../../store/seller/sellerSlice";
 import { AlertColor } from "@typings/ui/ui";
-import handleAddProductDialogItemToCart from "../../modules/sellers/api/components/ProductDialog/handleAddProductItemToCart";
-import { buildColumnsForProductDialog } from "../../modules/sellers/api/components/ProductDialog/productDialogColumns";
+import handleAddProductDialogItemToCart from "../../modules/sellers/components/ProductDialog/handleAddProductItemToCart";
+import { buildColumnsForProductDialog } from "../../modules/sellers/components/ProductDialog/productDialogColumns";
 import type { AddedItem, UseProductDialogSelectorReturn } from "@typings/seller/sellerTypes";
 import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
 

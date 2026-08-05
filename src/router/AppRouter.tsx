@@ -9,6 +9,7 @@ import ProductsRoutes from "../modules/products/ProductsRoutes";
 import PresentationsRoutes from "../modules/presentations/PresentationsRoutes";
 import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
 import SellsRoutes from "../modules/sells/routes/SellsRoutes";
+import SellerRoutes from "../modules/sellers/routes/SellerRoutes";
 import ShopRoutes from "../modules/shop/ShopRoutes";
 import type { AppDispatch, RootState } from "../store/auth/authSlice";
 import { startCheckAuth } from "../store/auth/authThunks";
@@ -42,6 +43,7 @@ const AppRouter = (): React.ReactNode => {
           <Route element={<AppShell />}>
             <Route path="/home" element={<HomePage />} />
             {SellsRoutes()}
+            {SellerRoutes()}
             {CartRoutes()}
             {ShopRoutes()}
             {AccountRoutes()}

@@ -3,7 +3,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import type { SellDetailAditionalDataProps } from "@typings/sells/SellComponentTypes";
 import SellDetailPendingBalance from "./SellDetailPendingBalance";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
-import { formatAmount } from "../../helpers/ProductDialog/Formatter/formatDetail";
+import { formatAmount } from "../../../sellers/helpers/ProductDialog/Formatter/formatDetail";
 import type { ReactNode } from "react";
 
 

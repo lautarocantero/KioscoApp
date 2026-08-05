@@ -3,7 +3,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import type { SellDetailProductsSoldProps } from "@typings/sells/SellComponentTypes";
 import { useSellDetailForm } from "../../../../hooks/sells/useSellDetailForm";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
-import { formatAmount } from "../../helpers/ProductDialog/Formatter/formatDetail";
+import { formatAmount } from "../../../sellers/helpers/ProductDialog/Formatter/formatDetail";
 import { formatWeightAwareQuantity } from "../../../shared/helpers/saleTypeHelper";
 
 const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): React.ReactNode => {

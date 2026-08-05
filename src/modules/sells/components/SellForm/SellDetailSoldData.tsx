@@ -2,7 +2,7 @@ import { Divider, Grid, Stack, Typography } from "@mui/material";
 import PointOfSaleOutlinedIcon from "@mui/icons-material/PointOfSaleOutlined";
 import type { SellDetailSoldDataProps } from "@typings/sells/SellComponentTypes";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
-import { formatAmount } from "../../helpers/ProductDialog/Formatter/formatDetail";
+import { formatAmount } from "../../../sellers/helpers/ProductDialog/Formatter/formatDetail";
 
 
 const SellDetailSoldData = ({ subTotal, iva, ivaPercentage, total }: SellDetailSoldDataProps): React.ReactNode => {

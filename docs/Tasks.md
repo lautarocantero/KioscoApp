@@ -12,13 +12,13 @@ ________________________________________________________________________________
 | 🧾 **Login**                                                                                   |
 |-------------------------------------------------------------------------------------------------|  
 | 🔴 Agregar terminos y condiciones   
-| 🔴 Agregar test a resetpassword   
 | 🟢 Agregar test a los elementos que faltan, checkemailpage,forgotpassword,verification
     Actualmente no tienen porque dependen de envio de mail la mayoria.            
 |_________________________________________________________________________________________________|
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
 |-------------------------------------------------------------------------------------------------| 
+| 🔴 Separar sell de sellers totalmente, algunas cosas de sellers estan en sell.
 | 🟢 cuando no hay stock de una sola presentacion por peso, aparece 0. contemplar que hacer
 | 🟢 dividir entre cantidad (100,200) y valor (gramos, kilos)                                     
 |_________________________________________________________________________________________________|

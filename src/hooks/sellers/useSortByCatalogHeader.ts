@@ -2,7 +2,7 @@ import { useState, type MouseEvent } from "react";
 import { useProductsExhibitor } from "./useProductsExhibitor";
 import type { SortOption } from "@typings/seller/sellerEnums";
 
-export const useSortByCatalogHeader = () => {
+export const useSortByCatalog = () => {
   const { sort, handleSortChange, options } = useProductsExhibitor();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const isMenuOpen = Boolean(anchorEl);
