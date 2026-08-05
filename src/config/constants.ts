@@ -60,7 +60,7 @@ export const RELATIVE_OR_URL_REGEX = /^(\/[\w\-./]+\.(png|jpe?g|webp|svg|gif)|ht
 export const BARCODE_REGEX = /^\d{8,14}$/;
 
 // tamaño/presentación: número (con . o , decimal) + unidad de medida conocida
-export const MODEL_SIZE_REGEX = /^\d+([.,]\d+)?\s?(ml|l|g|kg|oz|lb|cc)$/i;
+export const MODEL_SIZE_REGEX = /^\d+([.,]\d+)?\s?(ml|l|g|kg|oz|lb|cc|u)$/i;
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📝 FORMULARIOS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝              ║
