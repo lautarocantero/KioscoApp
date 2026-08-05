@@ -12,6 +12,7 @@ import type { store } from '../store';
 import { CartAmount, SortOption, ViewMode } from '../../typings/seller/sellerEnums';
 import type { Presentation } from '@typings/presentation/presentationTypes';
 import type { Product } from '@typings/product/productTypes';
+import type { PresentationCategory } from '@typings/presentation/presentationEnum';
 import { isWeightSaleType } from '../../modules/shared/helpers/saleTypeHelper';
 
 const initialState: SellerStateInterface = {
@@ -31,6 +32,8 @@ const initialState: SellerStateInterface = {
     sort: SortOption.NameDesc,
     viewMode: ViewMode.Grid,
     page: 1,
+    selectedCategory: null,
+    searchTerm: '',
 }
 
 export const sellerSlice = createSlice({
@@ -113,6 +116,16 @@ export const sellerSlice = createSlice({
         setPage: (state: SellerStateInterface, action: PayloadAction<number>) => {
             state.page = action.payload;
         },
+        // 🆕 filtro de categoría del listado de venta
+        setSelectedCategory: (state: SellerStateInterface, action: PayloadAction<PresentationCategory | null>) => {
+            state.selectedCategory = action.payload;
+            state.page = 1;
+        },
+        // 🆕 término de búsqueda del listado de venta
+        setSearchTerm: (state: SellerStateInterface, action: PayloadAction<string>) => {
+            state.searchTerm = action.payload;
+            state.page = 1;
+        },
         startLoadingPresentations: (state: SellerStateInterface) => {
             state.presentationsLoading = true;
         },
@@ -149,6 +162,8 @@ export const {
   setSort,
   setViewMode,
   setPage,
+  setSelectedCategory,
+  setSearchTerm,
   startLoadingPresentations,
   setPresentations,
   resetPresentations,

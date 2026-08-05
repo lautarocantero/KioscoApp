@@ -1,13 +1,13 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { z } from "zod";
-import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectPresentationThunkInterface, SelectProductThunkInterface } from "../../typings/seller/sellerTypes";
+import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectPresentationThunkInterface, SelectProductThunkInterface, SellerStateInterface } from "../../typings/seller/sellerTypes";
 import { handleError } from "../shared/handlerStoreError";
 import { addToCartAction, addUnitAction, cleanCart, removeFromCart, resetProducts, setError, setPresentationSelected, setProducts, setProductSelected, startLoadingProducts } from "./sellerSlice";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { resetPresentations, setPresentations, startLoadingPresentations } from "./sellerSlice";
 import { getPresentationsWithStockByProductIdRequest } from "../../modules/presentations/api/presentationsApi";
 import type { ProductWithPresentations } from "@typings/product/productTypes";
-import { getProductsWithStockRequest } from "../../modules/products/api/productApi";
+import { getProductsWithStockRequest, searchProductsWithPresentationsRequest } from "../../modules/products/api/productApi";
 
 export const PresentationEntitySchema = z.object({
   _id: z.string().nullable(),
@@ -161,6 +161,52 @@ export const fetchSellerProductsWithStock = () => {
         dispatch(startLoadingProducts());
         try {
             const products: ProductWithPresentations[] = await getProductsWithStockRequest();
+
+            if (!products) {
+                dispatch(setError({ errorMessage: "No se ha encontrado ningun producto" }));
+                throw new Error("No se encontraron productos");
+            }
+
+            dispatch(setProducts(products));
+            return products;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "No se pudieron obtener los productos" }));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 fetchSellerProducts                                                 ║
+║ ⚠️  Uso: EXCLUSIVO del listado de venta. Reemplaza la necesidad de      ║
+║     que useSellerProductsListData decida qué request llamar — el       ║
+║     thunk lee categoría/búsqueda directo del propio state.seller,      ║
+║     así queda todo centralizado en el dominio seller (sin tocar        ║
+║     product.products ni sus thunks/acciones).                          ║
+║ ⚙️  Proceso:                                                            ║
+║   1. Lee selectedCategory / searchTerm de getState().seller            ║
+║   2. Si hay categoría o término activo -> búsqueda filtrada            ║
+║      (reusa searchProductsWithPresentationsRequest, solo la función    ║
+║      de request HTTP, no el store de product)                          ║
+║   3. Si no hay filtro activo -> trae todo lo disponible con stock      ║
+║   4. Guarda siempre en seller.products                                 ║
+║ 📤 Salida: ProductWithPresentations[] o undefined en caso de error     ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const fetchSellerProducts = () => {
+    return async (
+        dispatch: Dispatch,
+        getState: () => { seller: SellerStateInterface },
+    ): Promise<ProductWithPresentations[] | undefined> => {
+        dispatch(resetProducts());
+        dispatch(startLoadingProducts());
+
+        try {
+            const { selectedCategory, searchTerm } = getState().seller;
+            const hasActiveFilter = searchTerm.trim() !== "" || !!selectedCategory;
+
+            const products: ProductWithPresentations[] = hasActiveFilter
+                ? await searchProductsWithPresentationsRequest(searchTerm, selectedCategory ?? undefined)
+                : await getProductsWithStockRequest();
 
             if (!products) {
                 dispatch(setError({ errorMessage: "No se ha encontrado ningun producto" }));

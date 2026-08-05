@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { useSelector } from "react-redux";
-import type { RootState as SellerRootState } from "../../store/seller/sellerSlice";
+import { useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState as SellerRootState } from "../../store/seller/sellerSlice";
+import { setSearchTerm, setSelectedCategory } from "../../store/seller/sellerSlice";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
-import { useProductsListData } from "../products/useProductListData";
 import { useSellbarCart } from "./useSellbarCart";
 import { useSellbarBarcode } from "./useSellbarBarcode";
 import { useSellbarCategories } from "./useSellbarCategories";
@@ -10,20 +10,30 @@ import type { UseSellerBarResult } from "@typings/seller/sellerTypes";
 
 export const useSellbar = (): UseSellerBarResult => {
     const { showSnackBar } = useContext(SnackBarContext)!;
-    const { cart } = useSelector((state: SellerRootState) => state.seller);
+    const dispatch = useDispatch<AppDispatch>();
+    const { cart, searchTerm } = useSelector((state: SellerRootState) => state.seller);
 
     const cartData = useSellbarCart();
     const barcodeData = useSellbarBarcode({ cart, showSnackBar });
     const categories = useSellbarCategories({ showSnackBar });
 
+    /*──────────── 🔎 sincroniza la categoría elegida hacia seller ────────────╗
+    ║ useSellbarCategories mantiene su propio estado (fuera de este cambio);  ║
+    ║ acá solo la reflejamos en sellerSlice, que es lo que lee                ║
+    ║ useSellerProductsListData para disparar el fetch.                       ║
+    ╚═══════════════════════════════════════════════════════════════════════*/
+    useEffect(() => {
+        dispatch(setSelectedCategory(categories.selected));
+    }, [categories.selected, dispatch]);
+
     /*──────────────── 🔎 Search ────────────────*/
-    const { searchTerm, setSearchTerm } = useProductsListData(categories.selectedCategory);
-    const handleClearSearch = () => setSearchTerm("");
+    const handleSearchChange = (value: string) => dispatch(setSearchTerm(value));
+    const handleClearSearch = () => dispatch(setSearchTerm(""));
 
     return {
         search: {
             value: searchTerm,
-            onChange: setSearchTerm,
+            onChange: handleSearchChange,
             onClear: handleClearSearch,
         },
         barcode: barcodeData,

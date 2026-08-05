@@ -67,6 +67,10 @@ export interface SellerStateInterface {
     sort: SortOption,
     viewMode: ViewMode,
     page: number,
+    // 🆕 filtro del listado de venta (compartido entre useSellbar y
+    // useSellerProductsListData vía Redux, en vez de estado local)
+    selectedCategory: PresentationCategory | null,
+    searchTerm: string,
 };
 
 export interface getProductSelectedPayload {
@@ -96,6 +100,10 @@ export type SellerSetSortPayload = Pick<SellerStateInterface, 'sort'>
 export type SellerSetViewModePayload = Pick<SellerStateInterface, 'viewMode'>
 
 export type SellerSetPagePayload = Pick<SellerStateInterface, 'page'>
+
+export type SellerSetSelectedCategoryPayload = Pick<SellerStateInterface, 'selectedCategory'>
+
+export type SellerSetSearchTermPayload = Pick<SellerStateInterface, 'searchTerm'>
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🌀 THUNK 🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀               ║
