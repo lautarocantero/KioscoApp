@@ -18,6 +18,8 @@ ________________________________________________________________________________
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
 |-------------------------------------------------------------------------------------------------| 
+| 🔴 Agregar punto de menu para ir directo al carrito
+| 🔴 Agregar barcodebutton en carrito. 
 | 🔴 Separar sell de sellers totalmente, algunas cosas de sellers estan en sell.
 | 🟢 cuando no hay stock de una sola presentacion por peso, aparece 0. contemplar que hacer
 | 🟢 dividir entre cantidad (100,200) y valor (gramos, kilos)                                     
@@ -33,17 +35,7 @@ ________________________________________________________________________________
 | ⚙️ **General**                                                                                  |
 |--------------------------------------------------------------------------------------------------|
 | 🟢 los form card deben de mostrar con un snackbar o algo que fallo la peticion, ahora solo muestrea la validacion.                                                |
-| 🟢 Comentar secciones no disponibles aun o poner algo                                                  |
 | 🟢 Leer la documentación y dejarla presentable                                                   |
-| 🟢 Agregar componente para las situaciones donde algo no carga o llega sin datos (early return)  |
-| 🟢 Agregar skeletons                                                                              |
-| 🟢 Mejorar login y Register                                                                            |
-|____________________________________________________________________________________________________|
-
- ________________________________________________________________________________________________
-| 📌 **Sidebar**                                                                                  |
-|--------------------------------------------------------------------------------------------------|
-| 🟢 Implementar colores para los menús y color picker                                             |
 |____________________________________________________________________________________________________|
 
  ________________________________________________________________________________________________
@@ -55,7 +47,7 @@ ________________________________________________________________________________
  ________________________________________________________________________________________________
 | 📦 **Presentaciones**                                                                                |
 |--------------------------------------------------------------------------------------------------|
-| 🟢 Al hacer presentacion, debe de aceptar cosas como 20u de unidades (marlboro por ejemplo)     |
+| 🟢 Al hacer presentacion, debe de aceptar cosas como 20u de unidades (marlboro por ejemplo), poner selects en lugar de inputs de texto.    |
 |____________________________________________________________________________________________________|
 
 ## ✅ Checklist — Revisión general de componente
