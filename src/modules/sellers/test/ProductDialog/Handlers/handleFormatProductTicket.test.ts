@@ -1,8 +1,7 @@
 // src/modules/sells/test/helpers/ProductDialog/Handlers/handleFormatProductTicket.test.ts
 import { describe, it, expect } from "vitest";
 import formatProductTicket from "../../../helpers/ProductDialog/Handlers/handleFormatProductTicket";
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationLabels";
-import { ModelUnit, SALE_TYPE_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
+import { ModelUnit, SALE_TYPE_VALUES, WEIGHT_SALE_TYPE, type SaleType } from "@typings/presentation/presentationEnum";
 
 const UNIT_SALE_TYPE: SaleType = SALE_TYPE_VALUES[0]; // "unit"
 
@@ -70,22 +69,26 @@ describe("formatProductTicket", () => {
       });
     });
 
-    it("calcula stock_required sin dividir cuando sale_type es 'unit'", () => {
+    it("stock_required es igual a requiredStock (sin conversión) cuando sale_type es 'unit'", () => {
       const unitData = { ...mockedData, sale_type: UNIT_SALE_TYPE };
       const result = formatProductTicket({ Presentation: unitData, requiredStock: 8 });
       expect(result?.stock_required).toBe(8);
     });
 
-    // NOTA: el helper compara `sale_type` contra SALE_TYPE_LABELS.weight ("Por peso"),
-    // no contra el literal "weight". Este test documenta el comportamiento ACTUAL
-    // del helper, que es conocido y pendiente de revisión (ver conversación).
-    it("calcula stock_required dividiendo entre 100 cuando sale_type coincide con el label de weight", () => {
-      const weightData = {
-        ...mockedData,
-        sale_type: SALE_TYPE_LABELS.weight as SaleType,
-      };
+    // stock_required ahora SIEMPRE se guarda en unidades reales (gramos reales
+    // para "weight", unidades reales para "unit"), sin dividir por 100. La
+    // conversión "precio por cada 100g" se resuelve únicamente al calcular
+    // montos (calculateItemAmount), no acá.
+    it("stock_required es igual a requiredStock (sin conversión) cuando sale_type es 'weight'", () => {
+      const weightData = { ...mockedData, sale_type: WEIGHT_SALE_TYPE };
       const result = formatProductTicket({ Presentation: weightData, requiredStock: 250 });
-      expect(result?.stock_required).toBe(2.5);
+      expect(result?.stock_required).toBe(250);
+    });
+
+    it("usa string vacío como model_type cuando Presentation no lo trae (ej: presentaciones weight sin model_type)", () => {
+      const dataWithoutModelType = { ...mockedData, model_type: undefined as unknown as string };
+      const result = formatProductTicket({ Presentation: dataWithoutModelType, requiredStock: 3 });
+      expect(result?.model_type).toBe("");
     });
 
     it("no incluye campos que no pertenecen al ticket (created_at, updated_at, min_stock, category, barcode)", () => {
