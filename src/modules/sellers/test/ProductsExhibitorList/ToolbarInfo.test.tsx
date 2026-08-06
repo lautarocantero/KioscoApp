@@ -1,0 +1,24 @@
+import { describe, it, expect } from "vitest";
+import { screen } from "@testing-library/react";
+import { renderWithTheme } from "../../../shared/test/utils/setupTests";
+import ToolbarInfo from "../../components/ProductsExhibitorList/ToolbarInfo";
+
+describe("ToolbarInfo", () => {
+    it("renderiza el título fijo", () => {
+        renderWithTheme(<ToolbarInfo totalCount={5} />);
+
+        expect(screen.getByText("Catálogo de productos")).toBeInTheDocument();
+    });
+
+    it("muestra el totalCount recibido", () => {
+        renderWithTheme(<ToolbarInfo totalCount={12} />);
+
+        expect(screen.getByText("12 productos disponibles")).toBeInTheDocument();
+    });
+
+    it("muestra 0 productos disponibles cuando totalCount es 0", () => {
+        renderWithTheme(<ToolbarInfo totalCount={0} />);
+
+        expect(screen.getByText("0 productos disponibles")).toBeInTheDocument();
+    });
+});
