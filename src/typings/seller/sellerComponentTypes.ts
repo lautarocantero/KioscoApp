@@ -239,15 +239,13 @@ export interface CartButtonsComponentProps {
     generateTicket: () => void,
 }
 
-export type CartLabelProps = {
-    itemsCount: number;
-}
 
-export type CartCleanActionProps = CartLabelProps & {
+export type CartHeaderProps = {
+    itemsCount: number;
     onClearCart: () => void;
 }
 
-export type CartHeaderProps = CartCleanActionProps;
+export type CartHeaderActionsProps = CartHeaderProps;
 
 export interface CartProductTableProps {
     cart: ProductTicketWithStockType[], 

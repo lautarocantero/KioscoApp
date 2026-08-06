@@ -20,7 +20,7 @@ export const PresentationEntitySchema = z.object({
   product_id: z.string(),
   sku: z.string(),
   model_type: z.string(),
-  model_size: z.string(),
+  model_size: z.number(),
   min_stock: z.number(),
   stock: z.number(),
   price: z.number(),
@@ -35,7 +35,7 @@ export const ProductTicketSchema = z.object({
   brand: z.string(),
   sku: z.string(),
   model_type: z.string(),
-  model_size: z.string(),
+  model_size: z.number(),
   price: z.number(),
   expiration_date: z.string(),
   stock_required: z.number(),
@@ -87,7 +87,10 @@ export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
             return false;
         }
 
+        console.log('addToCartThunk - productData:', productData); // 🔎 sacar en prod
+
         const parsed = ProductTicketSchema.safeParse(productData);
+        console.log(parsed); // 🔎 sacar en prod
         if (!parsed.success) {
             dispatch(setError({ errorMessage: "El producto no es valido."}));
             console.error('ProductTicketSchema validation failed:', parsed.error.flatten()); // 🔎 sacar en prod

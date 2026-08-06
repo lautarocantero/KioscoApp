@@ -58,7 +58,7 @@ export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps)
                 className="barcode-label"
                 sx={(theme: Theme) => ({
                   color: theme?.palette.primary.main,
-                  fontSize: theme?.typography?.body1?.fontSize,
+                  fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
                   whiteSpace: 'nowrap',
                 })}
               >

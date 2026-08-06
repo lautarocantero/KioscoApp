@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import AppSidebar from "./components/appSideBar/Appsidebar";
 import LightMode from "../components/LightMode/LightMode";
+import SimpleSnackbar from "../components/SnackBar/SnackBarComponent";
 
 const AppShell = () => (
   <Box
@@ -36,6 +37,8 @@ const AppShell = () => (
     >
       <Outlet />
     </Box>
+
+    <SimpleSnackbar />
   </Box>
 );
 

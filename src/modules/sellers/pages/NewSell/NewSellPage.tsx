@@ -1,5 +1,4 @@
 import { type ReactNode } from "react";
-import SimpleSnackbar from "../../../shared/components/SnackBar/SnackBarComponent";
 import AppLayout from "../../../shared/layout/AppLayout";
 import CatalogHeader from "../../../sellers/components/CatalogHeader/CatalogHeader";
 import ProductsExhibitorComponent from "../../../sellers/components/ProductsExhibitorList/ProductsExhibitorComponent";
@@ -12,7 +11,6 @@ const NewSellPage = (): ReactNode => {
           <CatalogHeader />
           <ProductsExhibitorComponent />
           <ProductDialog />
-          <SimpleSnackbar  />
       </AppLayout>
 
   )

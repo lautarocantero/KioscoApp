@@ -13,7 +13,10 @@ const SimpleSnackbar = (): React.ReactNode => {
     <Snackbar 
       open={snackBar.open} 
       autoHideDuration={6000} 
-      onClose={closeSnackBar} > 
+      onClose={closeSnackBar}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      sx={{ zIndex: 9999 }}
+    > 
         <Alert 
           onClose={closeSnackBar} 
           severity={snackBar.color} 
