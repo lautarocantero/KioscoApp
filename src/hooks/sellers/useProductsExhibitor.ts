@@ -85,7 +85,7 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
     totalCount: sortedProducts.length,
     page,
     pageCount,
-    setPage: (p: number) => dispatch(setPage(p)),
+    setPage: (p: number) => { if (p === page) return; dispatch(setPage(p)); },
     sort,
     handleSortChange,
     options,
