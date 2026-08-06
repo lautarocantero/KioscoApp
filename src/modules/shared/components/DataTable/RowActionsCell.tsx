@@ -17,7 +17,7 @@ const RowActionsCell = ({
 
     {onPresentations && (
       <Tooltip title="Ver presentaciones">
-        <IconButton size="small" color="success" onClick={onPresentations} aria-label="Ver presentaciones">
+        <IconButton size="small" color="secondary" onClick={onPresentations} aria-label="Ver presentaciones">
           <CookieIcon fontSize="small" />
         </IconButton>
       </Tooltip>
@@ -33,7 +33,7 @@ const RowActionsCell = ({
 
     {onEdit && (
       <Tooltip title="Editar">
-        <IconButton size="small" color="warning" onClick={onEdit} aria-label="Editar">
+        <IconButton size="small" color="info" onClick={onEdit} aria-label="Editar">
           <EditOutlinedIcon fontSize="small" />
         </IconButton>
       </Tooltip>

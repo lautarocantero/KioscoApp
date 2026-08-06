@@ -23,10 +23,10 @@ import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../config/constants";
 import { WEIGHT_SALE_TYPE } from "@typings/presentation/presentationEnum";
 
 
-//─── 🔎 Deriva el stock (en gramos) a partir de model_size ("1200g" -> 1200) 🔎 ───
+//─── 🔎 Deriva el stock a partir de model_size (ya viene como number) 🔎 ───
 const getStockValue = (values: Pick<PresentationFormValues, "sale_type" | "model_size" | "stock">): number =>
     values.sale_type === WEIGHT_SALE_TYPE
-        ? Number(values.model_size.replace(/g$/, ""))
+        ? values.model_size
         : values.stock;
 
 const getMinStockValue = (values: Pick<PresentationFormValues, "sale_type" | "min_stock">): number =>
@@ -90,6 +90,15 @@ export function usePresentationCreate(): UsePresentationFormReturn {
     const handleSubmit = async (values: PresentationFormValues) => {
         if (!productData) return;
 
+        // 👇 Guard: narrowa model_unit de "ModelUnit | \"\"" a "ModelUnit".
+        // Necesario porque el <Select> del form permite "" como placeholder,
+        // pero el body que se manda a la API (CreatePresentationBody) exige
+        // un ModelUnit real.
+        if (values.model_unit === "") {
+            setSubmitError("Debe seleccionar una unidad de medida");
+            return;
+        }
+
         setIsSubmitting(true);
         setSubmitError(null);
         const stockValue = getStockValue(values);
@@ -104,9 +113,11 @@ export function usePresentationCreate(): UsePresentationFormReturn {
                 image_url:       values.image_url || productData.image_url,
                 product_id:      productId ?? "",
                 sku:             values.sku,
-                barcode:             values.barcode,
+                barcode:         values.barcode,
                 model_type:      values.model_type,
                 model_size:      values.model_size,
+                model_unit:      values.model_unit,
+                is_perishable:   values.is_perishable,
                 sale_type:       values.sale_type,
                 min_stock:       minStockValue,
                 stock:           stockValue,
@@ -248,6 +259,18 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
     const handleEdit = async (values: PresentationEditFormValues) => {
         if (!variantId) return;
 
+        // 👇 Guard: narrowa model_unit de "ModelUnit | \"\"" a "ModelUnit"
+        if (values.model_unit === "") {
+            setSubmitError("Debe seleccionar una unidad de medida");
+            return;
+        }
+
+        // 👇 Capturamos el valor ya angostado en una constante propia.
+        // Esto es necesario porque las llamadas a getStockValue/getMinStockValue
+        // más abajo invalidan el narrowing de values.model_unit (TS asume que
+        // cualquier función que reciba `values` podría mutarlo).
+        const modelUnit = values.model_unit;
+
         setIsSubmitting(true);
         setSubmitError(null);
 
@@ -258,6 +281,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
             const body = {
                 _id: variantId,
                 ...values,
+                model_unit: modelUnit, // 👈 sobrescribe con la versión ya angostada (ModelUnit puro)
                 stock: stockValue,
                 min_stock: minStockValue,
             };

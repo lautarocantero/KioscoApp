@@ -157,7 +157,7 @@ export const darkTheme = createTheme({
     error:     { main: '#842325' },
     success:   { main: '#8FE34A' },
     warning:   { main: '#842325' },
-    info:      { main: '#A65CFF' },
+    info:      { main: '#60A5FA' },
   },
   custom: {
     //────────────── main ──────────────────//
@@ -229,7 +229,7 @@ export const lightTheme = createTheme({
     error:     { main: '#EF4444' },
     success:   { main: '#22C55E' },
     warning:   { main: '#EF4444' },
-    info:      { main: '#8B5CF6' },
+    info:      { main: '#3B82F6' },
   },
   custom: {
     //────────────── main (violeta) ──────────────────//

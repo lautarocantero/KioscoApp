@@ -68,7 +68,9 @@ const CartEmptyComponent = (): ReactNode => {
                     color="text.secondary"
                     sx={{ maxWidth: 380, mb: '1.5em' }}
                 >
-                    Parece que aún no agregaste ningún producto. Explora nuestro catálogo y encuentra lo que necesitas.
+                    Parece que aún no agregaste ningún producto. <br />
+                    Utiliza el escáner y agrega directamente, o <br />
+                    explora nuestro catálogo y encuentra lo que necesitas.
                 </Typography>
 
                     

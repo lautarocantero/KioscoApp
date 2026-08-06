@@ -8,8 +8,10 @@ import GroupBasicInfo from "./GroupBasicInfo";
 import GroupStock from "./GroupStock";
 import GroupCommercialInfo from "./GroupComercialInfo";
 import type { getPresentationEditInitialValues } from "../../schema/PresentationFormSchema";
+import type { ReactNode } from "react";
 
-const PresentationDetailForm = (): React.ReactNode => {
+
+const PresentationDetailForm = (): ReactNode => {
     const { product_id } = useParams<{ product_id: string }>();
     const { values } = useFormikContext<ReturnType<typeof getPresentationEditInitialValues>>();
 
@@ -30,7 +32,7 @@ const PresentationDetailForm = (): React.ReactNode => {
                     sku={values.sku}
                     barcode={values.barcode}
                     modelType={values.model_type}
-                    modelSize={values.model_size}
+                    modelSize={String(values.model_size)}
                     imageUrl={values.image_url}
                 />
 

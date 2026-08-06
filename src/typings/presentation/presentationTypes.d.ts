@@ -78,15 +78,21 @@ export type PresentationFormValues = PresentationBaseFormValues;
 export type PresentationEditFormValues = PresentationBaseFormValues;
 
 // Cuerpo enviado al POST /product/create-product
-export type CreatePresentationBody = Omit<PresentationBaseFormValues, 'min_stock'> & {
+// 👇 FIX: se omite también 'model_unit' de la base (que permite "") y se
+// redefine como ModelUnit puro, ya que el body enviado a la API nunca
+// debe llevar el placeholder vacío del <Select>.
+export type CreatePresentationBody = Omit<PresentationBaseFormValues, 'min_stock' | 'model_unit'> & {
     min_stock:  number;
+    model_unit: ModelUnit;
     created_at: string;
     updated_at: string;
 };
 
 // Cuerpo enviado al PATCH /product/:id
-export type UpdatePresentationBody = Omit<PresentationBaseFormValues, 'min_stock'> & {
+// 👇 mismo fix que arriba
+export type UpdatePresentationBody = Omit<PresentationBaseFormValues, 'min_stock' | 'model_unit'> & {
     min_stock:  number;
+    model_unit: ModelUnit;
     updated_at: string;
 };
 

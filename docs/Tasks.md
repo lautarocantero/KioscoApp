@@ -10,7 +10,6 @@
  ________________________________________________________________________________________________
 | ⚙️ **General**                                                                                  |
 |--------------------------------------------------------------------------------------------------|
-| 🔴 Agregar punto rapido para ir al carrito y otro para ir al home. (el rapido srea el logo) 
 | 🟢 los form card deben de mostrar con un snackbar o algo que fallo la peticion, ahora solo muestrea la validacion.                                                |
 | 🟢 Leer la documentación y dejarla presentable                                                   |
 |____________________________________________________________________________________________________|
@@ -25,8 +24,6 @@
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
 |-------------------------------------------------------------------------------------------------| 
-| 🔴 Agregar punto de menu para ir directo al carrito
-| 🔴 Agregar barcodebutton en carrito. 
 | 🔴 Separar sell de sellers totalmente, algunas cosas de sellers estan en sell.
 | 🟢 cuando no hay stock de una sola presentacion por peso, aparece 0. contemplar que hacer
 | 🟢 dividir entre cantidad (100,200) y valor (gramos, kilos)                                     
