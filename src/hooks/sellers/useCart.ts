@@ -15,19 +15,7 @@ import { CartAmount } from "@typings/seller/sellerEnums";
 import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
 
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 useCart                                                            ║
-║                                                                       ║
-║ Maneja el estado y las acciones del carrito de venta:                ║
-║   1. Lee el cart desde el store del seller                            ║
-║   2. Calcula totales (subtotal, IVA, total, unidades)                ║
-║   3. Genera el ticket de venta (completa o parcial) y su PDF          ║
-║   4. Maneja el resumen del último ticket confirmado (localStorage)    ║
-║   5. Expone acciones de navegación y manipulación del carrito         ║
-╚══════════════════════════════════════════════════════════════════════╝*/
-
 export const useCart = (showSnackBar: (message: string, severity: AlertColor) => void): UseCartReturn => {
-    // 🔧 Solo se suscribe a seller.cart, no al store completo
     const cart: ProductTicketWithStockType[] = useSelector((state: RootState) => state.seller.cart);
 
     const dispatch = useDispatch<AppDispatch>();
@@ -36,16 +24,17 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     const [ticketSummary, setTicketSummary] = useState<TicketSummaryType | null>(null);
 
     const productsTotalPrice: number = useMemo(
-    () => cart?.reduce((count, product) => count + calculateItemAmount(product.price, product.stock_required, product.sale_type), 0) ?? 0,
-    [cart]
-);
+        () => cart?.reduce((count, product) => count + calculateItemAmount(product.price, product.stock_required, product.sale_type), 0) ?? 0,
+        [cart]
+    );
     const ivaPercentage: number = iva;
     const ivaAmount: number = (productsTotalPrice * ivaPercentage) / 100;
     const total: number = productsTotalPrice + ivaAmount;
     const paymentMethodRef: React.RefObject<PaymentMethod> = useRef<PaymentMethod>(PaymentMethod?.Transfer);
 
     const totalUnits: number = useMemo(
-        () => cart?.reduce((count: number, product: ProductTicketType) => count + product.stock_required, 0) ?? 0,
+        () => cart?.reduce((count: number, product: ProductTicketType) =>
+            count + (isWeightSaleType(product.sale_type) ? 1 : product.stock_required), 0) ?? 0,
         [cart]
     );
 
@@ -139,7 +128,6 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         navigate(`/sell/${ticketSummary.sellId}`);
     }, [ticketSummary, navigate]);
 
-    // 🔧 Ya no depende de [cart]: las funciones son estables por useCallback
     const columns = useMemo(
         () => buildColumnsForCartProducts(handleIncreaseProduct, handleDecreaseProduct),
         [handleIncreaseProduct, handleDecreaseProduct]

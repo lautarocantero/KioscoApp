@@ -60,7 +60,12 @@ const useProductDialogSelector = (products?: Presentation[]): UseProductDialogSe
     (presentationId: string) =>
       cart
         .filter((item) => item._id === presentationId)
-        .reduce((acc, item) => acc + item.stock_required, 0),
+        .reduce((acc, item) => {
+          const itemQuantity = isWeightSaleType(item.sale_type)
+            ? item.stock_required * 100
+            : item.stock_required;
+          return acc + itemQuantity;
+        }, 0),
     [cart],
   );
 

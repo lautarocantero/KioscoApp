@@ -14,17 +14,6 @@ const getStartOfToday = () => {
     return d;
 };
 
-// Solo min_stock sigue guardándose con sufijo "g" para peso; model_size ahora es siempre numérico.
-const normalizeWeightMinStock = (
-    minStock: string | undefined,
-    saleType: SaleType | undefined,
-): string => {
-    const value = minStock ?? "";
-    if (saleType !== WEIGHT_SALE_TYPE || value === "" || /g$/.test(value)) {
-        return value;
-    }
-    return `${value}g`;
-};
 
 // ── Initial values ────────────────────────────────────────────────────────────
 
@@ -62,7 +51,7 @@ export const getPresentationEditInitialValues = (
     sale_type:      presentation?.sale_type       ?? "unit",
     image_url:       presentation?.image_url        ?? "",
     product_id:      presentation?.product_id       ?? "",
-    min_stock:       normalizeWeightMinStock(String(presentation?.min_stock ?? ""), presentation?.sale_type),
+    min_stock:       String(presentation?.min_stock ?? ""),
     stock:           presentation?.stock             ?? 0,
     price:           presentation?.price             ?? 0,
     is_perishable:   presentation?.is_perishable ?? true,
@@ -115,26 +104,18 @@ const baseShape = {
             (value) => !value || RELATIVE_OR_URL_REGEX.test(value),
         ),
     min_stock: Yup.string()
-    .required("Stock mínimo requerido")
-    .when('sale_type', {
-        is: WEIGHT_SALE_TYPE,
-        then: (schema) => schema.matches(/^\d+g$/, "Debe ser un número entero de gramos, terminado en 'g' (ej: 250g)"),
-        otherwise: (schema) => schema.matches(/^\d+$/, "Debe ser un número entero").test(
+        .required("Stock mínimo requerido")
+        .matches(/^\d+$/, "Debe ser un número entero")
+        .test(
             "min-stock-non-negative",
             "No puede ser negativo",
             (value) => value === undefined || Number(value) >= 0,
         ),
-    }),
-    stock: Yup.number().when('sale_type', {
-        is: WEIGHT_SALE_TYPE,
-        // no se pide en el form para weight: se deriva de model_size en el submit
-        then: (schema) => schema.notRequired(),
-        otherwise: (schema) => schema
-            .integer("Debe ser un número entero")
-            .min(0, "No puede ser negativo")
-            .required("Stock requerido")
-            .typeError("Debe ser un número"),
-    }),
+    stock: Yup.number()
+        .integer("Debe ser un número entero")
+        .min(0, "No puede ser negativo")
+        .required("Stock requerido")
+        .typeError("Debe ser un número"),
     price:           Yup.number().moreThan(0, "El precio debe ser mayor a 0").required("Precio requerido").typeError("Debe ser un número"),
     is_perishable: Yup.boolean().required("Indicá si el producto es perecedero"),
     expiration_date: Yup.date()

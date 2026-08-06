@@ -4,27 +4,17 @@ import { SALE_TYPE_VALUES } from "@typings/presentation/presentationEnum";
 
 export const GRAMS_PER_WEIGHT_UNIT = 100;
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🔎 isWeightSaleType                                                   ║
-║ Devuelve true si la presentación/sale_type corresponde a venta por   ║
-║ peso (stock/cantidades expresadas en gramos).                        ║
-╚══════════════════════════════════════════════════════════════════════╝*/
 export const isWeightSaleType = (saleType?: string): boolean =>
   saleType === SALE_TYPE_VALUES[1];
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🔎 formatStockQuantity                                                ║
-║ Formatea un valor de stock/cantidad agregando el sufijo "g" cuando   ║
-║ la presentación es por peso.                                         ║
+║ Formatea un valor YA EXPRESADO EN UNIDADES REALES (gramos reales para ║
+║ weight, unidades reales para unit) — sirve para stock Y stock_required║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const formatStockQuantity = (value: number | string, saleType?: string): string =>
   isWeightSaleType(saleType) ? `${value}g` : `${value}`;
 
-/*══════════════════════════════════════════════════════════════════════╗
-║ 🔎 getTotalPresentationsStock                                         ║
-║ Suma el stock de un array de presentaciones, contando como 1 unidad  ║
-║ cada presentación por peso en vez de sumar sus gramos.                ║
-╚══════════════════════════════════════════════════════════════════════╝*/
 export const getTotalPresentationsStock = (presentations?: Presentation[]): number =>
   (presentations ?? []).reduce((acc: number, p: Presentation) => {
     if (isWeightSaleType(p?.sale_type)) {
@@ -32,7 +22,6 @@ export const getTotalPresentationsStock = (presentations?: Presentation[]): numb
     }
     return acc + (p?.stock ?? 0);
   }, 0);
-
 
 export const formatWeightAwareQuantity = (quantity: number, saleType?: string): string => {
   return formatStockQuantity(quantity, saleType);
@@ -46,9 +35,11 @@ export const formatPriceValue = (price: number, saleType?: string): string =>
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🔎 calculateItemAmount                                                ║
-║ Calcula el importe de una línea (precio × cantidad), ajustando por   ║
-║ GRAMS_PER_WEIGHT_UNIT cuando la presentación es por peso, ya que el  ║
-║ precio está expresado "por cada 100g" en vez de por unidad/gramo.    ║
+║ Recibe cantidad en UNIDADES REALES (gramos reales o unidades reales). ║
+║ Para weight, el precio es "por cada 100g", por eso se divide acá.     ║
+║ Única función de cálculo de monto en todo el sistema — se usa igual   ║
+║ en ProductDialog (quantityToAdd) y en el carrito (stock_required),    ║
+║ porque ambos ya están en la misma unidad real.                        ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const calculateItemAmount = (price: number, quantity: number, saleType?: string): number =>
   isWeightSaleType(saleType) ? price * (quantity / GRAMS_PER_WEIGHT_UNIT) : price * quantity;

@@ -1,6 +1,7 @@
 // src/modules/sells/test/helpers/ProductDialog/Validation/ValidateProductForCart.test.ts
 import { describe, expect, it } from "vitest";
 import { SALE_TYPE_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
+import { ModelUnit } from "@typings/presentation/presentationEnum";
 import validateProductForCart from "../../../helpers/ProductDialog/Validation/ValidateProductForCart";
 
 const UNIT_SALE_TYPE: SaleType = SALE_TYPE_VALUES[0]; // "unit"
@@ -18,8 +19,10 @@ const data = {
     expiration_date: "2025",
     image_url: "img.png",
     min_stock: 1,
-    model_size: "M",
+    model_size: 500,
     model_type: "type",
+    model_unit: ModelUnit.Units,
+    is_perishable: false,
     product_id: "pid",
     barcode: "7791234567890",
     sku: "sku",
@@ -64,20 +67,20 @@ describe("Helper: ValidateProductForCart", () => {
     });
 
     it("falla si requiredStock no es múltiplo de 100 cuando sale_type es weight", () => {
-    const weightData = { ...data, sale_type: WEIGHT_SALE_TYPE, stock: 500 };
+    const weightData = { ...data, sale_type: WEIGHT_SALE_TYPE, model_unit: ModelUnit.Grams, stock: 500 };
     const result = validateProductForCart({ Presentation: weightData, requiredStock: 150 });
     expect(result.valid).toBe(false);
     expect(result.message).toMatch(/múltiplo de 100 gramos/);
     });
 
     it("pasa si requiredStock es múltiplo de 100 cuando sale_type es weight", () => {
-    const weightData = { ...data, sale_type: WEIGHT_SALE_TYPE, stock: 500 };
+    const weightData = { ...data, sale_type: WEIGHT_SALE_TYPE, model_unit: ModelUnit.Grams, stock: 500 };
     const result = validateProductForCart({ Presentation: weightData, requiredStock: 200 });
     expect(result.valid).toBe(true);
     });
 
     it("muestra el stock disponible en gramos cuando sale_type es weight", () => {
-    const weightData = { ...data, sale_type: WEIGHT_SALE_TYPE, stock: 100 };
+    const weightData = { ...data, sale_type: WEIGHT_SALE_TYPE, model_unit: ModelUnit.Grams, stock: 100 };
     const result = validateProductForCart({ Presentation: weightData, requiredStock: 200 });
     expect(result.valid).toBe(false);
     expect(result.message).toMatch(/stock disponible es de 100g/);

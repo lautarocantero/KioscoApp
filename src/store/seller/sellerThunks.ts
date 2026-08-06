@@ -34,7 +34,7 @@ export const ProductTicketSchema = z.object({
   image_url: z.string(),
   brand: z.string(),
   sku: z.string(),
-  model_type: z.string(),
+  model_type: z.string().nullable().optional(),
   model_size: z.number(),
   price: z.number(),
   expiration_date: z.string(),

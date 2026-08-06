@@ -5,7 +5,6 @@ import type { BuildColumnsForProductDialogInterface } from "@typings/sells/sellT
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { getStockStatus } from "../../../shared/helpers/stockHandler";
 import NumberField from "../../../shared/components/NumberField/NumberField";
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationLabels";
 import { isWeightSaleType } from "../../../shared/helpers/saleTypeHelper";
 
 
@@ -64,7 +63,7 @@ export const buildColumnsForProductDialog = ({
     filterable: false,
     renderCell: (params) => {
       const stock = params.row.stock ?? 0;
-      const isWeight = params.row.sale_type === SALE_TYPE_LABELS.weight;
+      const isWeight = isWeightSaleType(params.row.sale_type);
       return (
         <NumberField
           label={isWeight ? 'Gramos' : 'Cant.'}

@@ -23,7 +23,8 @@
 
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
-|-------------------------------------------------------------------------------------------------| 
+|-------------------------------------------------------------------------------------------------|
+| 🔴 agregar accion saldar deuda
 | 🔴 Separar sell de sellers totalmente, algunas cosas de sellers estan en sell.
 | 🟢 cuando no hay stock de una sola presentacion por peso, aparece 0. contemplar que hacer
 | 🟢 dividir entre cantidad (100,200) y valor (gramos, kilos)                                     

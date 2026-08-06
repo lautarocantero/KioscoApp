@@ -21,23 +21,13 @@ export const getIdentificationStepConfig = () => {
 export const getFormatStepConfig = (values: PresentationFormValues) => {
   const isWeight = isWeightSaleType(values.sale_type);
 
+  // model_type no aplica a "weight" (se valida como notRequired en el schema).
+  // model_unit SÍ aplica a ambos tipos de venta.
   const fields: (keyof PresentationFormValues)[] = isWeight
-    ? ["model_size"]
+    ? ["model_size", "model_unit"]
     : ["model_type", "model_size", "model_unit"];
 
-  const registryOverride = isWeight
-    ? {
-        ...PRESENTATION_FIELD_REGISTRY,
-        model_size: {
-          ...PRESENTATION_FIELD_REGISTRY.model_size,
-          label: "Cantidad en stock (gramos)",
-          placeholder: "Ej: 800",
-          tooltip: "Peso total disponible de este producto, en gramos. Esto define el stock inicial.",
-        },
-      }
-    : PRESENTATION_FIELD_REGISTRY;
-
-  return { isWeight, fields, registryOverride };
+  return { isWeight, fields, registryOverride: PRESENTATION_FIELD_REGISTRY };
 };
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -48,13 +38,18 @@ export const getFormatStepConfig = (values: PresentationFormValues) => {
 export const getStockStepConfig = (values: PresentationFormValues) => {
   const isWeight = isWeightSaleType(values.sale_type);
 
-  const fields: (keyof PresentationFormValues)[] = isWeight
-    ? ["min_stock"]
-    : ["stock", "min_stock"];
+  // "stock" ahora vive siempre en este step, para ambos tipos de venta.
+  const fields: (keyof PresentationFormValues)[] = ["stock", "min_stock"];
 
   const registryOverride: FieldRegistry<PresentationFormValues> = isWeight
     ? {
         ...PRESENTATION_FIELD_REGISTRY,
+        stock: {
+          ...PRESENTATION_FIELD_REGISTRY.stock,
+          label: "Cantidad en stock (gramos)",
+          placeholder: "Ej: 800",
+          tooltip: "Peso total disponible de este producto, en gramos.",
+        },
         min_stock: {
           ...PRESENTATION_FIELD_REGISTRY.min_stock,
           label: "Cantidad mínima de stock (gramos)",
