@@ -155,6 +155,9 @@ export const darkTheme = createTheme({
     primary:   { main: '#A65CFF' },
     secondary: { main: '#8FE34A' },
     error:     { main: '#842325' },
+    success:   { main: '#8FE34A' },
+    warning:   { main: '#842325' },
+    info:      { main: '#A65CFF' },
   },
   custom: {
     //────────────── main ──────────────────//
@@ -224,6 +227,9 @@ export const lightTheme = createTheme({
     primary:   { main: '#8B5CF6' },   // violeta principal (más moderno tipo Tailwind)
     secondary: { main: '#22C55E' },   // verde suave de acento
     error:     { main: '#EF4444' },
+    success:   { main: '#22C55E' },
+    warning:   { main: '#EF4444' },
+    info:      { main: '#8B5CF6' },
   },
   custom: {
     //────────────── main (violeta) ──────────────────//

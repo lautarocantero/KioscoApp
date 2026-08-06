@@ -87,13 +87,10 @@ export const addToCartThunk = ({ productData }: AddToCartThunkInterface ) => {
             return false;
         }
 
-        console.log('addToCartThunk - productData:', productData); // 🔎 sacar en prod
 
         const parsed = ProductTicketSchema.safeParse(productData);
-        console.log(parsed); // 🔎 sacar en prod
         if (!parsed.success) {
             dispatch(setError({ errorMessage: "El producto no es valido."}));
-            console.error('ProductTicketSchema validation failed:', parsed.error.flatten()); // 🔎 sacar en prod
             return false;
         }
 

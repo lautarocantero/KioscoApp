@@ -20,8 +20,6 @@ export const useFormNavButtons = ({ defaultBack, backText, readOnly }: UseFormNa
     };
 
     const handleBack = () => {
-        console.log("readOnly", readOnly);
-        console.log("defaultBack", defaultBack);
         if (isFirstStep || readOnly) { goBack(); return; }
         context?.onPrev();
     };
