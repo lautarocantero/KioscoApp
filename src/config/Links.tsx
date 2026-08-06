@@ -4,6 +4,7 @@ import StoreIcon from "@mui/icons-material/Store";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import HubIcon from '@mui/icons-material/Hub';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import NewLabelIcon from '@mui/icons-material/NewLabel';
@@ -16,7 +17,7 @@ import type { OptionLink } from "@typings/ui/layout.types";
 import stocoLogo from "../../public/images/logo/StocoLogoalt.png";
 
 const KioscoLink: OptionLink = {
-  description: "Stocko",
+  description: "Carrito",
   icon: (
     <img
       src={stocoLogo}
@@ -26,12 +27,17 @@ const KioscoLink: OptionLink = {
       style={{ objectFit: "contain" }}
     />
   ),
-  url: "/home",
-  subtitle: "Hoy · última hace 20 min",
+  url: "/cart",
 };
 
 export const SidebarNavLinks: OptionLink[] = [
   KioscoLink,
+  {
+    description: "Inicio",
+    icon: <HubIcon />,
+    url: "/home",
+    value: "12",
+  },
   {
     description: "Ventas",
     icon: <PointOfSaleIcon />,
