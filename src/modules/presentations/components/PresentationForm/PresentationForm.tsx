@@ -15,15 +15,17 @@ import {
 } from "../../schema/PresentationFormSchema";
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep";
-import PresentationFormThirdStep from "./PresentationFormThirdStep";
+import PresentationFormFormatStep from "./PresentationFormThirdStep";
+import PresentationFormThirdStep from "./PresentationFormForthStep";
 import PresentationDetailFormComponent from "./PresentationDetailForm";
-import PresentationFormFourthStep from "./PresentationFormFourthStep";
+import PresentationFormFourthStep from "./PresentationFormFifthStep";
 import PresentationSkeleton from "./PresentationSkeleton";
 import EmptyPresentation from "./EmptyPresentation";
 
 const STEP_COMPONENTS = [
     PresentationFormFirstStep,
     PresentationFormSecondStep,
+    PresentationFormFormatStep,
     PresentationFormThirdStep,
     PresentationFormFourthStep,
 ];

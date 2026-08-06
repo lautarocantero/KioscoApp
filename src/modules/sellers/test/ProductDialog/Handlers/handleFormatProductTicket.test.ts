@@ -1,8 +1,8 @@
 // src/modules/sells/test/helpers/ProductDialog/Handlers/handleFormatProductTicket.test.ts
 import { describe, it, expect } from "vitest";
 import formatProductTicket from "../../../helpers/ProductDialog/Handlers/handleFormatProductTicket";
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
-import { SALE_TYPE_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
+import { SALE_TYPE_LABELS } from "@typings/presentation/presentationLabels";
+import { ModelUnit, SALE_TYPE_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
 
 const UNIT_SALE_TYPE: SaleType = SALE_TYPE_VALUES[0]; // "unit"
 
@@ -12,11 +12,13 @@ const mockedData = {
     category: [],
     created_at: "2024",
     description: "desc",
+    is_perishable: true,
     expiration_date: "2025",
     image_url: "img.png",
     min_stock: 1,
-    model_size: "M",
+    model_size: 1,
     model_type: "type",
+    model_unit: ModelUnit.Units,
     name: "Test",
     price: 10,
     product_id: "pid",
@@ -48,13 +50,17 @@ describe("formatProductTicket", () => {
     it("incluye todos los campos principales del Presentation", () => {
       const result = formatProductTicket({ Presentation: mockedData, requiredStock: 2 });
 
+      // model_size se pasa tal cual viene del Presentation (el helper no lo
+      // transforma a una letra de talle "S"/"M"/"L"), por eso el valor
+      // esperado acá debe coincidir con mockedData.model_size (1), no con
+      // un código de talle.
       expect(result).toMatchObject({
         _id: "1",
         brand: "X",
         description: "desc",
         expiration_date: "2025",
         image_url: "img.png",
-        model_size: "M",
+        model_size: 1,
         model_type: "type",
         name: "Test",
         price: 10,

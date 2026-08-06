@@ -76,7 +76,8 @@ export const PRODUCTS_EDIT_STEPS_LABELS = [
 
 export const PRODUCTS_VARIANT_STEPS_LABELS = [
     "Identidad",
-    "Datos de catálogo",
+    "Identificación",
+    "Formato",
     "Stock",
     "Datos comerciales",
 ];

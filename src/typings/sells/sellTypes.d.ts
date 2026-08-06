@@ -57,7 +57,7 @@ export interface ProductTicketType {
   description: string;     
   brand: string;          
   model_type: string;      
-  model_size: string;       
+  model_size: number;       
   price: number;         
   expiration_date: string;   
   image_url: string;        

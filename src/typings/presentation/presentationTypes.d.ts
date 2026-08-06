@@ -1,5 +1,5 @@
 import type { CreatedProductInterface } from "@typings/product/productTypes";
-import type { PresentationCategory, SaleType } from "./presentationEnum";
+import type { ModelUnit, PresentationCategory, SaleType } from "./presentationEnum";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
@@ -14,8 +14,9 @@ interface PresentationEntity {
     expiration_date: string;
     image_url: string;
     min_stock: number;
-    model_size: string;
+    model_size: number;
     model_type: string;
+    model_unit: ModelUnit;
     name: string;
     price: number;
     product_id: string;
@@ -23,6 +24,7 @@ interface PresentationEntity {
     sku: string;
     stock: number;
     updated_at: string;
+    is_perishable: boolean
     sale_type: SaleType;
 }
 
@@ -39,7 +41,7 @@ export interface ExistingPresentationInterface extends PresentationEntity {}
 // // derivado para los datos publicos
 export type PresentationPublic = Pick<PresentationEntity, 
     '_id' |'name'| 'description'|'image_url'|
-    'brand'| 'sku'|'model_type'|'model_size'|
+    'brand'| 'sku'|'model_type'|'model_size'|'model_unit'|
     'stock'|'price'|'expiration_date'>
 
 export type CreatedPresentationInterface = Pick<PresentationEntity, '_id' |'name'>
@@ -56,14 +58,16 @@ interface PresentationBaseFormValues {
     expiration_date: string;
     image_url: string;
     min_stock: string;
-    model_size: string;
+    model_size: number;
     model_type: string;
+    model_unit: ModelUnit | "";
     name: string;
     price: number;
     product_id: string;
     barcode: string;
     sku: string;
     stock: number;
+    is_perishable: boolean
     sale_type: SaleType; 
 }
 

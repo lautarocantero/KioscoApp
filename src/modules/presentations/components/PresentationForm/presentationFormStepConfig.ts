@@ -1,20 +1,29 @@
-// PresentationFormStepConfig.ts
 import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
 import { getPriceLabel, isWeightSaleType } from "../../../shared/helpers/saleTypeHelper";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import type { FieldRegistry } from "@typings/shared/types/formCard.types";
 
 /*══════════════════════════════════════════════════════════════════════╗
-║ 🔎 getCatalogStepConfig                                               ║
-║ Campos y overrides de registry para el 2do step del form              ║
-║ (datos de catálogo), según si la presentación es por peso.            ║
+║ 🔎 getIdentificationStepConfig                                        ║
+║ Campos del 2do step del form (identificación: sku, barcode, imagen). ║
+║ No depende de sale_type, no necesita override de registry.            ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-export const getCatalogStepConfig = (values: PresentationFormValues) => {
+export const getIdentificationStepConfig = () => {
+  const fields: (keyof PresentationFormValues)[] = ["sku", "barcode", "image_url"];
+  return { fields, registryOverride: PRESENTATION_FIELD_REGISTRY };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🔎 getFormatStepConfig                                                ║
+║ Campos y overrides de registry para el 3er step del form              ║
+║ (formato y tamaño), según si la presentación es por peso.             ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const getFormatStepConfig = (values: PresentationFormValues) => {
   const isWeight = isWeightSaleType(values.sale_type);
 
   const fields: (keyof PresentationFormValues)[] = isWeight
-    ? ["sku", "barcode", "model_size", "image_url"]
-    : ["sku", "barcode", "model_type", "model_size", "image_url"];
+    ? ["model_size"]
+    : ["model_type", "model_size", "model_unit"];
 
   const registryOverride = isWeight
     ? {
@@ -33,7 +42,7 @@ export const getCatalogStepConfig = (values: PresentationFormValues) => {
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🔎 getStockStepConfig                                                 ║
-║ Campos y overrides de registry para el 3er step del form (stock),    ║
+║ Campos y overrides de registry para el 4to step del form (stock),    ║
 ║ según si la presentación es por peso.                                 ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const getStockStepConfig = (values: PresentationFormValues) => {
@@ -61,13 +70,15 @@ export const getStockStepConfig = (values: PresentationFormValues) => {
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🔎 getPricingStepConfig                                               ║
-║ Campos y overrides de registry para el 4to step del form (datos      ║
+║ Campos y overrides de registry para el 5to step del form (datos      ║
 ║ comerciales), según si la presentación es por peso.                   ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export const getPricingStepConfig = (values: PresentationFormValues) => {
   const isWeight = isWeightSaleType(values.sale_type);
 
-  const fields: (keyof PresentationFormValues)[] = ["price", "expiration_date"];
+  const fields: (keyof PresentationFormValues)[] = values.is_perishable
+    ? ["price", "is_perishable", "expiration_date"]
+    : ["price", "is_perishable"];
 
   const registryOverride = isWeight
     ? {

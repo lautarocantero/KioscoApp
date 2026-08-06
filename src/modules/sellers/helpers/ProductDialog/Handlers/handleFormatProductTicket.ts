@@ -1,4 +1,4 @@
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
+import { SALE_TYPE_LABELS } from "@typings/presentation/presentationLabels";
 import type { FormatProductTicketInterface, ProductTicketWithStockType } from "@typings/sells/sellTypes";
 
 

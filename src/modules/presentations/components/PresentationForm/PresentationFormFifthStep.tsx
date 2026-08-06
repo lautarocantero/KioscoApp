@@ -37,8 +37,8 @@ const PresentationFormFourthStep = (): ReactNode => {
                 registry={registryOverride}
                 fields={pricingFields}
                 icons={{
-                    price: { icon: <AttachMoneyOutlinedIcon fontSize="small" />, color: theme.custom.accents.green },
-                    expiration_date: { icon: <EventBusyOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
+                    price: { icon: <AttachMoneyOutlinedIcon fontSize="small" />, color: theme.custom.accents.gold },
+                    expiration_date: { icon: <EventBusyOutlinedIcon fontSize="small" />, color: theme.custom.accents.gold },
                 }}
             />
         </FormCard>

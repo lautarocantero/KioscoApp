@@ -49,8 +49,8 @@ const PresentationFormFirstStep = (): ReactNode => {
                 fields={["sale_type", "name", "description", "category"]}
                 icons={{
                     sale_type: { icon: <SellOutlinedIcon fontSize="small" />, color: theme.custom.accents.blue },
-                    name: { icon: <BookmarkBorderOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
-                    description: { icon: <DescriptionOutlinedIcon fontSize="small" />, color: theme.custom.accents.pink },
+                    name: { icon: <BookmarkBorderOutlinedIcon fontSize="small" />, color: theme.custom.accents.blue },
+                    description: { icon: <DescriptionOutlinedIcon fontSize="small" />, color: theme.custom.accents.blue },
                     category: { icon: <CategoryOutlinedIcon fontSize="small" />, color: theme.custom.accents.blue },
                 }}
             />

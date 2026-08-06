@@ -5,7 +5,7 @@ import type { BuildColumnsForProductDialogInterface } from "@typings/sells/sellT
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { getStockStatus } from "../../../shared/helpers/stockHandler";
 import NumberField from "../../../shared/components/NumberField/NumberField";
-import { SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
+import { SALE_TYPE_LABELS } from "@typings/presentation/presentationLabels";
 import { isWeightSaleType } from "../../../shared/helpers/saleTypeHelper";
 
 

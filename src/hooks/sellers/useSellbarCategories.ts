@@ -1,6 +1,6 @@
 import { useEffect, useState, type MouseEvent } from "react";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
-import { PRESENTATION_CATEGORY_LABELS } from "@typings/presentation/presentationCategoryLabels";
+import { PRESENTATION_CATEGORY_LABELS } from "@typings/presentation/presentationLabels";
 import { AlertColor } from "../../typings/ui/ui";
 import { getAvailableCategoriesRequest } from "../../modules/presentations/api/presentationsApi";
 import type { UseSellerBarCategoriesParams, UseSellerBarCategoriesResult } from "@typings/seller/sellerTypes";

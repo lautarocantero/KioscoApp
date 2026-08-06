@@ -4,8 +4,8 @@ import type {
     ExistingPresentationInterface,
     PresentationFormValues,
 } from "@typings/presentation/presentationTypes";
-import { PresentationCategory, SALE_TYPE_VALUES, WEIGHT_SALE_TYPE, type SaleType } from "@typings/presentation/presentationEnum";
-import { BARCODE_REGEX, MODEL_SIZE_REGEX, RELATIVE_OR_URL_REGEX } from "../../../config/constants";
+import { ModelType, MODEL_TYPE_VALUES, ModelUnit, MODEL_UNIT_VALUES, PresentationCategory, SALE_TYPE_VALUES, WEIGHT_SALE_TYPE, type SaleType } from "@typings/presentation/presentationEnum";
+import { BARCODE_REGEX, RELATIVE_OR_URL_REGEX } from "../../../config/constants";
 
 const getTodayISODate = () => new Date().toISOString().slice(0, 10);
 const getStartOfToday = () => {
@@ -14,11 +14,12 @@ const getStartOfToday = () => {
     return d;
 };
 
-const normalizeWeightModelSize = (
-    modelSize: string | undefined,
+// Solo min_stock sigue guardándose con sufijo "g" para peso; model_size ahora es siempre numérico.
+const normalizeWeightMinStock = (
+    minStock: string | undefined,
     saleType: SaleType | undefined,
 ): string => {
-    const value = modelSize ?? "";
+    const value = minStock ?? "";
     if (saleType !== WEIGHT_SALE_TYPE || value === "" || /g$/.test(value)) {
         return value;
     }
@@ -30,11 +31,11 @@ const normalizeWeightModelSize = (
 export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     brand:             "",
     description:     "",
-    expiration_date: getTodayISODate(),
     image_url:       "",
     min_stock:       "0",
-    model_size:      "",
+    model_size:      0,
     model_type:      "",
+    model_unit:      "",
     sale_type:       "unit",
     name:      "",
     price:           0,
@@ -42,6 +43,8 @@ export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     barcode:        "",
     sku:             "",
     stock:           0,
+    is_perishable:   true,
+    expiration_date: getTodayISODate(),
     category:        [],
 });
 
@@ -54,13 +57,15 @@ export const getPresentationEditInitialValues = (
     brand:           presentation?.brand            ?? "",
     description:     presentation?.description      ?? "",
     model_type:      presentation?.model_type       ?? "",
-    model_size:      normalizeWeightModelSize(presentation?.model_size, presentation?.sale_type),
+    model_size:      presentation?.model_size        ?? 0,
+    model_unit:      presentation?.model_unit        ?? "",
     sale_type:      presentation?.sale_type       ?? "unit",
     image_url:       presentation?.image_url        ?? "",
     product_id:      presentation?.product_id       ?? "",
-    min_stock:       normalizeWeightModelSize(String(presentation?.min_stock ?? ""), presentation?.sale_type),
+    min_stock:       normalizeWeightMinStock(String(presentation?.min_stock ?? ""), presentation?.sale_type),
     stock:           presentation?.stock             ?? 0,
     price:           presentation?.price             ?? 0,
+    is_perishable:   presentation?.is_perishable ?? true,
     expiration_date: presentation?.expiration_date  ?? getTodayISODate(),
     category:        presentation?.category         ?? [],
 });
@@ -80,20 +85,25 @@ const baseShape = {
             "El código de barras debe tener entre 8 y 14 dígitos numéricos",
             (value) => !value || BARCODE_REGEX.test(value),
         ),
-    model_type: Yup.string().when('sale_type', {
-        is: WEIGHT_SALE_TYPE,
-        then: (schema) => schema.notRequired(),
-        otherwise: (schema) => schema.min(2).required("Tipo de modelo requerido"),
-    }),
-    model_size: Yup.string().when('sale_type', {
-        is: WEIGHT_SALE_TYPE,
-        then: (schema) => schema
-            .required("Cantidad en stock requerida")
-            .matches(/^\d+g$/, "Debe ser un número entero de gramos, terminado en 'g' (ej: 800g)"),
-        otherwise: (schema) => schema
-            .required("Tamaño/Presentación requerido")
-            .matches(MODEL_SIZE_REGEX, "Formato inválido. Ej: 500ml, 1l, 2kg"),
-    }),
+    model_type: Yup.mixed<ModelType>()
+        .oneOf(MODEL_TYPE_VALUES, "Tipo de modelo inválido")
+        .when('sale_type', {
+            is: WEIGHT_SALE_TYPE,
+            then: (schema) => schema.notRequired(),
+            otherwise: (schema) => schema.required("Tipo de modelo requerido"),
+        }),
+    model_size: Yup.number()
+        .typeError("Debe ser un número")
+        .integer("Debe ser un número entero")
+        .positive("Debe ser mayor a 0")
+        .required("Tamaño requerido"),
+    model_unit: Yup.mixed<ModelUnit>()
+        .oneOf(MODEL_UNIT_VALUES, "Tipo de presentación inválido")
+        .when('sale_type', {
+            is: WEIGHT_SALE_TYPE,
+            then: (schema) => schema.notRequired(),
+            otherwise: (schema) => schema.required("Tipo de presentación requerido"),
+        }),
     sale_type: Yup.mixed<SaleType>()
         .oneOf(SALE_TYPE_VALUES, "Tipo de venta inválido")
         .required("Tipo de venta requerido"),
@@ -126,10 +136,16 @@ const baseShape = {
             .typeError("Debe ser un número"),
     }),
     price:           Yup.number().moreThan(0, "El precio debe ser mayor a 0").required("Precio requerido").typeError("Debe ser un número"),
+    is_perishable: Yup.boolean().required("Indicá si el producto es perecedero"),
     expiration_date: Yup.date()
-        .min(getStartOfToday(), "La fecha no puede ser anterior a hoy")
-        .required("Fecha de vencimiento requerida")
-        .typeError("Fecha inválida"),
+        .when('is_perishable', {
+            is: true,
+            then: (schema) => schema
+                .min(getStartOfToday(), "La fecha no puede ser anterior a hoy")
+                .required("Fecha de vencimiento requerida")
+                .typeError("Fecha inválida"),
+            otherwise: (schema) => schema.notRequired(),
+        }),
     category: Yup.array().of(Yup.mixed<PresentationCategory>().oneOf(Object.values(PresentationCategory))),
 };
 
@@ -140,7 +156,8 @@ export const presentationEditFormSchema = Yup.object(baseShape);
 
 export const stepFieldsMap: Record<number, (keyof PresentationFormValues)[]> = {
     0: ["sale_type", "name", "description", "category"],
-    1: ["sku", "barcode", "model_type", "model_size", "image_url"],
-    2: ["stock", "min_stock"],
-    3: ["price", "expiration_date"],
+    1: ["sku", "barcode", "image_url"],
+    2: ["model_type", "model_size", "model_unit"],
+    3: ["stock", "min_stock"],
+    4: ["price", "is_perishable", "expiration_date"],
 };

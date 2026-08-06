@@ -1,5 +1,5 @@
-import { PRESENTATION_CATEGORY_LABELS, SALE_TYPE_LABELS } from "@typings/presentation/presentationCategoryLabels";
-import { PRESENTATION_CATEGORY_VALUES, PresentationCategory, SALE_TYPE_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
+import { PRESENTATION_CATEGORY_VALUES, PresentationCategory, SALE_TYPE_VALUES, ModelType, MODEL_TYPE_VALUES, ModelUnit, MODEL_UNIT_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
+import { MODEL_TYPE_LABELS, MODEL_UNIT_LABELS, PRESENTATION_CATEGORY_LABELS, SALE_TYPE_LABELS } from "@typings/presentation/presentationLabels";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import type { FieldRegistry } from "@typings/shared/types/formCard.types";
 
@@ -32,14 +32,28 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
     },
     model_type: {
         label: "Tipo de modelo",
-        placeholder: "Ej: Lata, Botella, Tetra Pack",
         tooltip: "Formato o envase en el que se presenta el producto",
+        type: "select",
+        multiple: false,
+        options: MODEL_TYPE_VALUES,
+        getOptionLabel: (v) => MODEL_TYPE_LABELS[v as ModelType],
         required: true,
     },
     model_size: {
-        label: "Tamaño/Presentación",
-        placeholder: "Ej: 500ml, 1l, 2kg",
-        tooltip: "Tamaño, volumen o cantidad de esta presentación (número + unidad: ml, l, g, kg, oz, lb, cc)",
+        label: "Tamaño",
+        placeholder: "Ej: 500, 25, 6",
+        tooltip: "Cantidad numérica de esta presentación. Se combina con el tipo de presentación (ej: 500 + ml, 25 + hojas)",
+        type: "number",
+        required: true,
+        min: "1",
+    },
+    model_unit: {
+        label: "Tipo de presentación",
+        tooltip: "Unidad de medida de esta presentación (unidades, ml, litros, hojas, etc.)",
+        type: "select",
+        multiple: false,
+        options: MODEL_UNIT_VALUES,
+        getOptionLabel: (v) => MODEL_UNIT_LABELS[v as ModelUnit],
         required: true,
     },
     sale_type: {
@@ -96,6 +110,16 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         multiple: true,
         options: PRESENTATION_CATEGORY_VALUES,
         getOptionLabel: (c) => PRESENTATION_CATEGORY_LABELS[c as PresentationCategory],
+        required: true,
+    },
+    is_perishable: {
+        label: "¿Es un producto perecedero?",
+        tooltip: "Los perecederos (lácteos, comida, etc.) requieren fecha de vencimiento. Productos como cuadernos o artículos de librería no la necesitan.",
+        type: "radio",
+        radioOptions: [
+            { value: "true", label: "Sí, es perecedero" },
+            { value: "false", label: "No, no vence" },
+        ],
         required: true,
     },
 };
