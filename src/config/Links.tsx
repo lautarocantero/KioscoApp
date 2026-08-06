@@ -55,14 +55,14 @@ export const SidebarNavLinks: OptionLink[] = [
   {
     description: "Tienda",
     icon: <StoreIcon />,
-    url: "/shop",
+    url: "/home", // url: "/shop",
     subtitle: "Configuración del local",
     disabled: true,
   },
   {
     description: "Proveedores",
     icon: <WarehouseIcon />,
-    url: "/providers",
+    url: "/home", // url: "/providers",
     subtitle: "",
     disabled: true,
   },
