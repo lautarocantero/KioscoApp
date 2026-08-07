@@ -24,12 +24,21 @@ export const PRESENTATION_CATEGORY_LABELS: Record<PresentationCategory, string> 
   [PresentationCategory.HouseholdCleaning]: "Limpieza del Hogar",
   [PresentationCategory.Disposables]: "Descartables",
 
+  [PresentationCategory.Bijouterie]: "Bijouterie",
+  [PresentationCategory.Toys]: "Juguetes",
+  [PresentationCategory.Bazaar]: "Bazar",
+  [PresentationCategory.VirtualTopUp]: "Carga Virtual",
+  [PresentationCategory.Haberdashery]: "Mercería",
+  [PresentationCategory.Accessories]: "Accesorios",
+  [PresentationCategory.Supplies]: "Insumos",
+
   [PresentationCategory.Baby]: "Bebés",
   [PresentationCategory.Pets]: "Mascotas",
   [PresentationCategory.Pharmacy]: "Farmacia",
   [PresentationCategory.TobaccoAndCigarettes]: "Cigarrillos y Tabaco",
   [PresentationCategory.StationeryAndKiosk]: "Librería y Kiosco",
   [PresentationCategory.Deli]: "Rotisería",
+  [PresentationCategory.Miscellaneous]: "Varios",
 };
 
 export const SALE_TYPE_LABELS: Record<SaleType, string> = {

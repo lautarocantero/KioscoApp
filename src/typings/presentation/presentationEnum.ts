@@ -1,15 +1,13 @@
-
-
 export enum PresentationStatus {
-    "Available" ="available",
-    "Out_of_stock" = "out_of_stock",
-    "Unavailable" = "unavailable",
+  Available = "available",
+  Out_of_stock = "out_of_stock",
+  Unavailable = "unavailable",
 }
 
 export enum PresentationStatusColors {
-    "Success" ="success",
-    "Error" = "error",
-    "Default" = "default",
+  Success = "success",
+  Error = "error",
+  Default = "default",
 }
 
 export enum PresentationCategory {
@@ -40,6 +38,16 @@ export enum PresentationCategory {
   HouseholdCleaning = "household_cleaning",
   Disposables = "disposables",
 
+  Bijouterie = "bijouterie",
+  Toys = "toys",
+  Bazaar = "bazaar",
+  VirtualTopUp = "virtual_topup",
+  // mercería
+  Haberdashery = "haberdashery",
+  Accessories = "accessories",
+  // insumos
+  Supplies = "supplies",
+
   // Other
   Baby = "baby",
   Pets = "pets",
@@ -47,9 +55,10 @@ export enum PresentationCategory {
   TobaccoAndCigarettes = "tobacco_and_cigarettes",
   StationeryAndKiosk = "stationery_and_kiosk",
   Deli = "deli",
+  Miscellaneous = "miscellaneous",
 }
 
-export const PRESENTATION_CATEGORY_VALUES = Object.values(PresentationCategory);
+export const PRESENTATION_CATEGORY_VALUES: string[] = Object.values(PresentationCategory);
 
 export const SALE_TYPE_VALUES = ['unit', 'weight'] as const;
 
@@ -58,35 +67,35 @@ export type SaleType = typeof SALE_TYPE_VALUES[number];
 export const WEIGHT_SALE_TYPE: SaleType = SALE_TYPE_VALUES[1];
 
 export enum ModelType {
-    Can = "can",
-    Bottle = "bottle",
-    TetraPack = "tetra_pack",
-    Bag = "bag",
-    Box = "box",
-    Jar = "jar",
-    Sachet = "sachet",
-    Blister = "blister",
-    Pack = "pack",
-    Roll = "roll",
-    Aerosol = "aerosol",
-    SoftCover = "soft_cover",
-    HardCover = "hard_cover",
-    Other = "other",
+  Can = "can",
+  Bottle = "bottle",
+  TetraPack = "tetra_pack",
+  Bag = "bag",
+  Box = "box",
+  Jar = "jar",
+  Sachet = "sachet",
+  Blister = "blister",
+  Pack = "pack",
+  Roll = "roll",
+  Aerosol = "aerosol",
+  SoftCover = "soft_cover",
+  HardCover = "hard_cover",
+  Other = "other",
 }
 
-export const MODEL_TYPE_VALUES = Object.values(ModelType);
+export const MODEL_TYPE_VALUES: string[] = Object.values(ModelType);
 
 export enum ModelUnit {
-    Units = "units",
-    Milliliters = "ml",
-    Liters = "l",
-    Grams = "g",
-    Kilograms = "kg",
-    Ounces = "oz",
-    Pounds = "lb",
-    Sheets = "sheets",
-    Meters = "m",
-    Centimeters = "cm",
+  Units = "units",
+  Milliliters = "ml",
+  Liters = "l",
+  Grams = "g",
+  Kilograms = "kg",
+  Ounces = "oz",
+  Pounds = "lb",
+  Sheets = "sheets",
+  Meters = "m",
+  Centimeters = "cm",
 }
 
-export const MODEL_UNIT_VALUES = Object.values(ModelUnit);
+export const MODEL_UNIT_VALUES: string[] = Object.values(ModelUnit);

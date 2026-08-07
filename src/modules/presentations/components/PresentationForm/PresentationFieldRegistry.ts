@@ -39,10 +39,10 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         getOptionLabel: (v) => MODEL_TYPE_LABELS[v as ModelType],
         required: true,
     },
-    model_size: {
-        label: "Tamaño",
-        placeholder: "Ej: 500, 25, 6",
-        tooltip: "Cantidad numérica de esta presentación. Se combina con el tipo de presentación (ej: 500 + ml, 25 + hojas)",
+        model_size: {
+        label: "Contenido neto",
+        placeholder: "Ej: 500, 1.5, 6",
+        tooltip: "Cantidad de producto que contiene el envase, en la unidad que elijas a continuación. Ejemplos: 500 (ml) para una botella, 1.5 (kg) para un paquete, 6 (unidades) si vienen varias piezas en un mismo pack.",
         type: "number",
         required: true,
         min: "1",
