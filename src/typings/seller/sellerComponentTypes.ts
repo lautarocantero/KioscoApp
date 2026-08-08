@@ -150,11 +150,7 @@ export interface ProductDialogIlustrationProps {
 export type ProductDialogImageProps = Pick<ProductDialogIlustrationProps, 'name' | 'image_url'>
 
 export interface ProductDialogContentProps {
-    product: {
-        name: string,
-        description: string,
-        image: string,
-    }
+    product: Product,
     products: Presentation[],
 }
 
@@ -166,11 +162,11 @@ export type DialogDataProps = Pick< ProductDialogContentProps ,"product"> & {
     setFieldValue?: (field: string, value: unknown, shouldValidate?: boolean) => void;
 };
 
-export type ProductDialogHeaderProps = Pick< ProductDialogContentProps ,"product">
+export type ProductDialogHeaderProps = Pick< ProductDialogContentProps , "product" | "product">
 
-export type ProductDialogSelectorProps = Pick<ProductDialogContentProps, 'products'>;
+export type ProductDialogSelectorProps = Pick<ProductDialogContentProps, "product" | 'products'>;
 
-export type ProductDialogTableProps = Pick<ProductDialogContentProps, 'products'>;
+export type ProductDialogTableProps = Pick<ProductDialogContentProps, "product" | 'products'>;
 
 export type ProductDialogSelectorHeaderComponent = Pick<ProductDialogContentProps, 'products'>;
 

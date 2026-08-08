@@ -19,6 +19,7 @@ const ProductDialogMainContentComponent = ({
         />
 
         <ProductDialogSelector
+          product={product}
           products={products}
         />
     </Box>

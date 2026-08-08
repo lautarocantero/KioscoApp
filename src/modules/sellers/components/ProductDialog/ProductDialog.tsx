@@ -1,4 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, type Theme } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, IconButton, type Theme } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import ProductDialogContentComponent from "./ProductDialogContentComponent";
 import type { ReactNode } from "react";
 import useProductDialog from "../../../../hooks/sellers/useProductDialog";
@@ -15,8 +16,6 @@ const ProductDialog = (): ReactNode => {
 
   if (!productSelected) return null;
 
-  const { name, description, image_url } = productSelected;
-
   return (
     <Dialog
       open={showModal}
@@ -24,6 +23,20 @@ const ProductDialog = (): ReactNode => {
       fullWidth
       maxWidth="md"
     >
+      <IconButton
+        onClick={() => setShowModal(false)}
+        aria-label="Cerrar"
+        sx={(theme: Theme) => ({
+          position: "absolute",
+          top: 16,
+          right: 16,
+          color: theme.custom?.lightGray,
+          zIndex: 1,
+        })}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+
       <DialogContent
         sx={(theme: Theme) => ({
           color: theme?.custom?.fontColor,
@@ -32,11 +45,7 @@ const ProductDialog = (): ReactNode => {
         })}
       >
         <ProductDialogContentComponent
-          product={{
-            name: name,
-            description: description,
-            image: image_url,
-          }}
+          product={productSelected}
           products={presentations}
         />
       </DialogContent>

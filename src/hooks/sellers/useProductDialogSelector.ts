@@ -10,6 +10,7 @@ import handleAddProductDialogItemToCart from "../../modules/sellers/components/P
 import { buildColumnsForProductDialog } from "../../modules/sellers/components/ProductDialog/productDialogColumns";
 import type { AddedItem, UseProductDialogSelectorReturn } from "@typings/seller/sellerTypes";
 import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
+import type { Product } from "@typings/product/productTypes";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -25,7 +26,7 @@ import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/help
 ║   4. Calcula el total formateado (ARS) de lo agregado en la sesión   ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-const useProductDialogSelector = (products?: Presentation[]): UseProductDialogSelectorReturn => {
+const useProductDialogSelector = (products?: Presentation[], product?: Product,): UseProductDialogSelectorReturn => {
   const isEmpty = useMemo(() => (products?.length ?? 0) === 0, [products]);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -126,9 +127,15 @@ const useProductDialogSelector = (products?: Presentation[]): UseProductDialogSe
     [addedItems],
   );
 
-  const columns = useMemo(
-    () => buildColumnsForProductDialog({ getQuantity, handleQuantityChange, handleAddToCart }),
-    [getQuantity, handleQuantityChange, handleAddToCart],
+    const columns = useMemo(
+    () =>
+      buildColumnsForProductDialog({
+        getQuantity,
+        handleQuantityChange,
+        handleAddToCart,
+        fallbackImage: product?.image_url,
+      }),
+    [getQuantity, handleQuantityChange, handleAddToCart, product?.image_url],
   );
 
   return {

@@ -12,27 +12,35 @@ export const buildColumnsForProductDialog = ({
   getQuantity,
   handleQuantityChange,
   handleAddToCart,
+  fallbackImage,
 }: BuildColumnsForProductDialogInterface): GridColDef<Presentation>[] => [
   {
     field: "name",
     headerName: "Presentación",
     flex: 1.5,
     minWidth: 220,
-    renderCell: (params) => (
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, height: "100%" }}>
-        <Box
-          component="img"
-          src={params.row.image_url ? params.row.image_url : '/images/stocko_images/empty_product.png'}
-          alt={params.row.name}
-          sx={{ width: 32, height: 32, objectFit: "contain", borderRadius: "0.4em" }}
-        />
-        <Box sx={{ minWidth: 0 }}>
-          <Typography variant="body2" fontWeight={500} noWrap>
-            {params.row.name}
-          </Typography>
+    renderCell: (params) => {
+      const imageSrc =
+        params.row.image_url
+        || fallbackImage
+        || '/images/stocko_images/empty_product.png';
+
+      return (
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, height: "100%" }}>
+          <Box
+            component="img"
+            src={imageSrc}
+            alt={params.row.name}
+            sx={{ width: 32, height: 32, objectFit: "contain", borderRadius: "0.4em" }}
+          />
+          <Box sx={{ minWidth: 0 }}>
+            <Typography variant="body2" fontWeight={500} noWrap>
+              {params.row.name}
+            </Typography>
+          </Box>
         </Box>
-      </Box>
-    ),
+      );
+    },
   },
   {
     field: "stock",

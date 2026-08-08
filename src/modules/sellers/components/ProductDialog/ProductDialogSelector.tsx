@@ -6,19 +6,15 @@ import useProductDialogSelector from "../../../../hooks/sellers/useProductDialog
 import type { ProductDialogSelectorProps } from "@typings/seller/sellerComponentTypes";
 
 
-const ProductDialogSelectorComponent = ({ products }: ProductDialogSelectorProps): ReactNode => {
-  const {
-    isEmpty,
-  } = useProductDialogSelector(products);
+const ProductDialogSelectorComponent = ({ product, products }: ProductDialogSelectorProps): ReactNode => {
+  const { isEmpty } = useProductDialogSelector(products, product);
 
   if (isEmpty) return (<Box><Typography>No se han encontrado Productos</Typography></Box>);
 
   return (
     <Box display={'flex'} flexDirection={'column'} gap={1}>
-
         <ProductDialogSelectorHeaderComponent products={products} />
-
-        <ProductDialogTable products={products}/>
+        <ProductDialogTable products={products} product={product} />
     </Box>
   );
 };

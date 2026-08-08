@@ -8,7 +8,7 @@ const ProductDialogImageComponent = ({
     product
 }: ProductDialogHeaderProps): ReactNode => {
 
-    const { name, image = '/images/stocko_images/empty_product_list.png' } = product;
+    const { name, image_url = '/images/stocko_images/empty_product_list.png' } = product;
 
     return (
         <Box
@@ -25,7 +25,7 @@ const ProductDialogImageComponent = ({
         >
             <Box
                 component={'img'}
-                src={image}
+                src={image_url}
                 alt={`${name} Image`}
                 sx={{
                     height: { xs: "15em", sm: "30em" },

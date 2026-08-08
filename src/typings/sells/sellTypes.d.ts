@@ -382,9 +382,10 @@ export interface HandleProductDialogUnitsChangeInterface {
 }
 
 export interface BuildColumnsForProductDialogInterface {
-  getQuantity: (presentationId: string) => number;
-  handleQuantityChange: (presentationId: string, value: number | null) => void;
-  handleAddToCart: (args: { presentation: Presentation; quantity: number }) => void;
+    getQuantity: (presentationId: string) => number;
+    handleQuantityChange: (presentationId: string, value: number | null) => void;
+    handleAddToCart: (args: { presentation: Presentation; quantity: number }) => void;
+    fallbackImage?: string;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

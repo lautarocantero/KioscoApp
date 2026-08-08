@@ -6,13 +6,13 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { ProductDialogTableProps } from "@typings/seller/sellerComponentTypes";
 
 
-const ProductDialogTable = ({ products }: ProductDialogTableProps): ReactNode => {
+const ProductDialogTable = ({ products, product }: ProductDialogTableProps): ReactNode => {
   const {
     formatter,
     sessionTotal,
     addedItems,
     columns,
-  } = useProductDialogSelector(products);
+  } = useProductDialogSelector(products, product);
 
   return (
     <>

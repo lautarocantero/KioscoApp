@@ -32,7 +32,7 @@ const ConfirmDialog = ({
                     borderColor: theme.custom.darkGray,
                     borderRadius: "16px",
                     minWidth: { xs: 200, sm: 480 },
-                    width: { xs: 300, sm: 480 },
+                    width: { xs: 300, sm: 680 },
                     boxShadow: `
                         0 1px 3px ${alpha(theme.custom.black, 0.06)},
                         4px 8px 16px ${alpha(theme.custom.black, 0.1)},
