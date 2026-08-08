@@ -101,3 +101,24 @@ export interface PresentationAnalyticsProps {
     hidePresentationFilter: boolean;
 }
 
+export interface ProductReceiptChargeUploadAreaProps {
+    acceptedFormats: string[];
+    maxSize: string;
+    onSelectFile: () => void;
+}
+
+export interface ProductReceiptChargeSummaryCardProps {
+    status: string;
+    description: string;
+}
+
+export interface ProductReceiptChargeAdviceCardProps {
+    adviceItems: string[];
+}
+
+export interface ProductReceiptChargeHelpCardProps {
+    helpDescription: string;
+    buttonLabel: string;
+    onSupportClick: () => void;
+}
+

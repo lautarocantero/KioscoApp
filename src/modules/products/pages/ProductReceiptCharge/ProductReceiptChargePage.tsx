@@ -1,14 +1,74 @@
-import ProductForm from "../../components/ProductForm/ProductForm";
+import { Box, Typography } from "@mui/material";
 import AppLayout from "../../../shared/layout/AppLayout";
-import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import ProductReceiptChargeUploadArea from "./components/ProductReceiptChargeUploadArea";
+import ProductReceiptChargeSummaryCard from "./components/ProductReceiptChargeSummaryCard";
+import ProductReceiptChargeAdviceCard from "./components/ProductReceiptChargeAdviceCard";
+import ProductReceiptChargeHelpCard from "./components/ProductReceiptChargeHelpCard";
+import type {
+    ProductReceiptChargeUploadAreaProps,
+    ProductReceiptChargeSummaryCardProps,
+    ProductReceiptChargeAdviceCardProps,
+    ProductReceiptChargeHelpCardProps,
+} from "@typings/product/productComponentTypes";
 
+const uploadAreaProps: ProductReceiptChargeUploadAreaProps = {
+    acceptedFormats: [".xlsx", ".xls"],
+    maxSize: "10 MB",
+    onSelectFile: () => {
+        console.log("Seleccionar archivo");
+    },
+};
 
-const ProductCreatePage = ():React.ReactNode => {
-    return (
-        <AppLayout>
-            <ProductForm mode={FormModeComplexEnum.Create} />
-        </AppLayout>
-    )
-}
+const summaryCardProps: ProductReceiptChargeSummaryCardProps = {
+    status: "Aún no has cargado",
+    description: "Ningún archivo procesado",
+};
 
-export default ProductCreatePage;
+const adviceCardProps: ProductReceiptChargeAdviceCardProps = {
+    adviceItems: [
+        "Asegurate de que el archivo tenga los encabezados correctos.",
+        "No modifiqués el orden de las columnas.",
+        "Verificá que los códigos de producto existan en el catálogo.",
+    ],
+};
+
+const helpCardProps: ProductReceiptChargeHelpCardProps = {
+    helpDescription: "Contactá al soporte si tenés dudas sobre el formato o la carga de archivos.",
+    buttonLabel: "Ir a soporte",
+    onSupportClick: () => {
+        console.log("Ir a soporte");
+    },
+};
+
+const ProductReceiptChargePage = (): React.ReactNode => (
+    <AppLayout fullWidth>
+        <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 3 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                <Typography variant="h4" sx={{ fontWeight: 700 }}>
+                    Carga de boletas
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                    Importa tus boletas desde un archivo Excel y actualizá tu inventario.
+                </Typography>
+            </Box>
+
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: { xs: "1fr", lg: "2fr 1fr" },
+                    gap: 3,
+                }}
+            >
+                <ProductReceiptChargeUploadArea {...uploadAreaProps} />
+
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                    <ProductReceiptChargeSummaryCard {...summaryCardProps} />
+                    <ProductReceiptChargeAdviceCard {...adviceCardProps} />
+                    <ProductReceiptChargeHelpCard {...helpCardProps} />
+                </Box>
+            </Box>
+        </Box>
+    </AppLayout>
+);
+
+export default ProductReceiptChargePage;

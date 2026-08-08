@@ -18,8 +18,8 @@ Tasks.md
 .env.production
 .env
 
-docs/promptsExamples
-docs/promptsExamples/*
+docs/prompts/*
+docs/usefull/*
 
 # Editor directories and files
 .vscode/*
