@@ -4,6 +4,7 @@ import StoreIcon from "@mui/icons-material/Store";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 import HubIcon from '@mui/icons-material/Hub';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
@@ -54,7 +55,7 @@ export const SidebarNavLinks: OptionLink[] = [
   },
   {
     description: "Boletas",
-    icon: <StoreIcon />,
+    icon: <ReceiptIcon />,
     url: "/receipts",
     subtitle: "Carga de boletas y actualizaciones",
   },
