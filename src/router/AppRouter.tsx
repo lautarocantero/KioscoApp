@@ -11,6 +11,7 @@ import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
 import SellsRoutes from "../modules/sells/routes/SellsRoutes";
 import SellerRoutes from "../modules/sellers/routes/SellerRoutes";
 import ShopRoutes from "../modules/shop/ShopRoutes";
+import ReceiptRoutes from "../modules/receipt/ReceiptRoutes";
 import type { AppDispatch, RootState } from "../store/auth/authSlice";
 import { startCheckAuth } from "../store/auth/authThunks";
 import RouteTracker from "./RouteTracker";
@@ -49,6 +50,7 @@ const AppRouter = (): React.ReactNode => {
             {AccountRoutes()}
             {ProvidersRoutes()}
             {ProductsRoutes()}
+            {ReceiptRoutes()}
             {PresentationsRoutes()}
             <Route path="*" element={<Navigate to={'/home'} />} />
           </Route>

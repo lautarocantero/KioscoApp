@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import FilePresentOutlinedIcon from "@mui/icons-material/FilePresentOutlined";
 import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
-import type { ProductReceiptChargeSummaryCardProps } from "@typings/product/productComponentTypes";
+import type { ReceiptSummaryCardProps } from "@typings/receipt/receiptComponentTypes";
 
-const ProductReceiptChargeSummaryCard = ({ status, description }: ProductReceiptChargeSummaryCardProps): React.ReactNode => (
+const ReceiptSummaryCard = ({ status, description }: ReceiptSummaryCardProps): React.ReactNode => (
     <NoisyCard sx={{ p: 3, borderRadius: "24px" }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
             Resumen de la última carga
@@ -44,4 +44,4 @@ const ProductReceiptChargeSummaryCard = ({ status, description }: ProductReceipt
     </NoisyCard>
 );
 
-export default ProductReceiptChargeSummaryCard;
+export default ReceiptSummaryCard;

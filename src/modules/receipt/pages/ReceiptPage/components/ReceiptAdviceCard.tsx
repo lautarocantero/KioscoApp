@@ -1,9 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
-import type { ProductReceiptChargeAdviceCardProps } from "@typings/product/productComponentTypes";
+import type { ReceiptAdviceCardProps } from "@typings/receipt/receiptComponentTypes";
 
-const ProductReceiptChargeAdviceCard = ({ adviceItems }: ProductReceiptChargeAdviceCardProps): React.ReactNode => (
+const ReceiptAdviceCard = ({ adviceItems }: ReceiptAdviceCardProps): React.ReactNode => (
     <NoisyCard sx={{ p: 3, borderRadius: "24px" }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
             Consejos
@@ -22,4 +22,4 @@ const ProductReceiptChargeAdviceCard = ({ adviceItems }: ProductReceiptChargeAdv
     </NoisyCard>
 );
 
-export default ProductReceiptChargeAdviceCard;
+export default ReceiptAdviceCard;

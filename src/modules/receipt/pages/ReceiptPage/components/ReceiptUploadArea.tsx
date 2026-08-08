@@ -1,13 +1,13 @@
 import { Box, Button, Typography } from "@mui/material";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
-import type { ProductReceiptChargeUploadAreaProps } from "@typings/product/productComponentTypes";
+import type { ReceiptUploadAreaProps } from "@typings/receipt/receiptComponentTypes";
 
-const ProductReceiptChargeUploadArea = ({
+const ReceiptUploadArea = ({
     acceptedFormats,
     maxSize,
     onSelectFile,
-}: ProductReceiptChargeUploadAreaProps): React.ReactNode => (
+}: ReceiptUploadAreaProps): React.ReactNode => (
     <NoisyCard
         sx={{
             p: { xs: 3, md: 4 },
@@ -96,4 +96,4 @@ const ProductReceiptChargeUploadArea = ({
     </NoisyCard>
 );
 
-export default ProductReceiptChargeUploadArea;
+export default ReceiptUploadArea;

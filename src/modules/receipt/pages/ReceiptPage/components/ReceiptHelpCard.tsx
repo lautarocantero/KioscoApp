@@ -1,13 +1,13 @@
 import { Box, Button, Typography } from "@mui/material";
 import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
-import type { ProductReceiptChargeHelpCardProps } from "@typings/product/productComponentTypes";
+import type { ReceiptHelpCardProps } from "@typings/receipt/receiptComponentTypes";
 
-const ProductReceiptChargeHelpCard = ({
+const ReceiptHelpCard = ({
     helpDescription,
     buttonLabel,
     onSupportClick,
-}: ProductReceiptChargeHelpCardProps): React.ReactNode => (
+}: ReceiptHelpCardProps): React.ReactNode => (
     <NoisyCard sx={{ p: 3, borderRadius: "24px" }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
             <SupportAgentOutlinedIcon sx={{ color: "primary.main" }} />
@@ -32,4 +32,4 @@ const ProductReceiptChargeHelpCard = ({
     </NoisyCard>
 );
 
-export default ProductReceiptChargeHelpCard;
+export default ReceiptHelpCard;

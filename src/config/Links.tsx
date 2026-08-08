@@ -53,6 +53,12 @@ export const SidebarNavLinks: OptionLink[] = [
     subtitle: "3 con stock bajo",
   },
   {
+    description: "Boletas",
+    icon: <StoreIcon />,
+    url: "/receipts",
+    subtitle: "Carga de boletas y actualizaciones",
+  },
+  {
     description: "Tienda",
     icon: <StoreIcon />,
     url: "/home", // url: "/shop",

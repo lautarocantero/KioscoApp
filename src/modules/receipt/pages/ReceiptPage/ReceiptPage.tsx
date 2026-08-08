@@ -1,17 +1,17 @@
 import { Box, Typography } from "@mui/material";
 import AppLayout from "../../../shared/layout/AppLayout";
-import ProductReceiptChargeUploadArea from "./components/ProductReceiptChargeUploadArea";
-import ProductReceiptChargeSummaryCard from "./components/ProductReceiptChargeSummaryCard";
-import ProductReceiptChargeAdviceCard from "./components/ProductReceiptChargeAdviceCard";
-import ProductReceiptChargeHelpCard from "./components/ProductReceiptChargeHelpCard";
+import ReceiptUploadArea from "./components/ReceiptUploadArea";
+import ReceiptSummaryCard from "./components/ReceiptSummaryCard";
+import ReceiptAdviceCard from "./components/ReceiptAdviceCard";
+import ReceiptHelpCard from "./components/ReceiptHelpCard";
 import type {
-    ProductReceiptChargeUploadAreaProps,
-    ProductReceiptChargeSummaryCardProps,
-    ProductReceiptChargeAdviceCardProps,
-    ProductReceiptChargeHelpCardProps,
-} from "@typings/product/productComponentTypes";
+    ReceiptUploadAreaProps,
+    ReceiptSummaryCardProps,
+    ReceiptAdviceCardProps,
+    ReceiptHelpCardProps,
+} from "@typings/receipt/receiptComponentTypes";
 
-const uploadAreaProps: ProductReceiptChargeUploadAreaProps = {
+const uploadAreaProps: ReceiptUploadAreaProps = {
     acceptedFormats: [".xlsx", ".xls"],
     maxSize: "10 MB",
     onSelectFile: () => {
@@ -19,12 +19,12 @@ const uploadAreaProps: ProductReceiptChargeUploadAreaProps = {
     },
 };
 
-const summaryCardProps: ProductReceiptChargeSummaryCardProps = {
+const summaryCardProps: ReceiptSummaryCardProps = {
     status: "Aún no has cargado",
     description: "Ningún archivo procesado",
 };
 
-const adviceCardProps: ProductReceiptChargeAdviceCardProps = {
+const adviceCardProps: ReceiptAdviceCardProps = {
     adviceItems: [
         "Asegurate de que el archivo tenga los encabezados correctos.",
         "No modifiqués el orden de las columnas.",
@@ -32,7 +32,7 @@ const adviceCardProps: ProductReceiptChargeAdviceCardProps = {
     ],
 };
 
-const helpCardProps: ProductReceiptChargeHelpCardProps = {
+const helpCardProps: ReceiptHelpCardProps = {
     helpDescription: "Contactá al soporte si tenés dudas sobre el formato o la carga de archivos.",
     buttonLabel: "Ir a soporte",
     onSupportClick: () => {
@@ -40,7 +40,7 @@ const helpCardProps: ProductReceiptChargeHelpCardProps = {
     },
 };
 
-const ProductReceiptChargePage = (): React.ReactNode => (
+const ReceiptPage = (): React.ReactNode => (
     <AppLayout fullWidth>
         <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 3 }}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -59,16 +59,16 @@ const ProductReceiptChargePage = (): React.ReactNode => (
                     gap: 3,
                 }}
             >
-                <ProductReceiptChargeUploadArea {...uploadAreaProps} />
+                <ReceiptUploadArea {...uploadAreaProps} />
 
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                    <ProductReceiptChargeSummaryCard {...summaryCardProps} />
-                    <ProductReceiptChargeAdviceCard {...adviceCardProps} />
-                    <ProductReceiptChargeHelpCard {...helpCardProps} />
+                    <ReceiptSummaryCard {...summaryCardProps} />
+                    <ReceiptAdviceCard {...adviceCardProps} />
+                    <ReceiptHelpCard {...helpCardProps} />
                 </Box>
             </Box>
         </Box>
     </AppLayout>
 );
 
-export default ProductReceiptChargePage;
+export default ReceiptPage;
