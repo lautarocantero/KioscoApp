@@ -14,6 +14,7 @@ import type { ReactNode } from "react";
 const SellDetailFormComponent = (): ReactNode => {
     const { values, date, time, timezone, products, payment, ivaPercentage, currency } = useSellDetailForm();
     const { submitError, stepErrors } = useFormNavigation();
+    const isPartialPayment = payment.pendingAmount !== null && payment.pendingAmount > 0;
 
     return (
         <FormCard
@@ -38,6 +39,7 @@ const SellDetailFormComponent = (): ReactNode => {
                     sellerName={values.seller_name}
                     paymentMethodLabel={values.payment_method}
                     currency={currency}
+                    isPartialPayment={isPartialPayment}
                 />
                 <SellDetailProductsSold products={products} />
                 <SellDetailPaymentData payment={payment} />

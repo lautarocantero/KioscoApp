@@ -7,9 +7,6 @@ import type { InfoItem } from "@typings/sells/sellTypes";
 import type { SellDetailInfoBarProps } from "@typings/sells/SellComponentTypes";
 
 
-// 🔧 Hardcodeado temporalmente — luego vendrá del backend (paid_amount < total_amount)
-const MOCK_IS_PARTIAL_PAYMENT = true;
-
 export const useSellInfoItems = ({
     purchaseDate,
     purchaseTime,
@@ -17,6 +14,7 @@ export const useSellInfoItems = ({
     sellerName,
     paymentMethodLabel,
     currency,
+    isPartialPayment,
 }: SellDetailInfoBarProps): InfoItem[] => {
     const theme = useTheme();
 
@@ -39,7 +37,7 @@ export const useSellInfoItems = ({
             color: theme.custom.accents.green,
             label: "Método de pago",
             value: paymentMethodLabel,
-            badge: MOCK_IS_PARTIAL_PAYMENT ? "Pago parcial" : undefined,
+            badge: isPartialPayment ? "Pago parcial" : undefined,
         },
         {
             icon: <CurrencyExchangeOutlinedIcon fontSize="small" aria-hidden="true" />,

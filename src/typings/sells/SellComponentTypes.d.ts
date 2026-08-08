@@ -35,6 +35,7 @@ export interface SellDetailInfoBarProps {
     sellerName: string;
     paymentMethodLabel: string;
     currency: string;
+    isPartialPayment: boolean;
 }
 
 export interface SellDetailProductsSoldProps {

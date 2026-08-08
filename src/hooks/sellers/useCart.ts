@@ -16,6 +16,7 @@ import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/help
 
 
 export const useCart = (showSnackBar: (message: string, severity: AlertColor) => void): UseCartReturn => {
+    const { _id, username } = useSelector((state: RootState) => state.auth);
     const cart: ProductTicketWithStockType[] = useSelector((state: RootState) => state.seller.cart);
 
     const dispatch = useDispatch<AppDispatch>();
@@ -68,8 +69,8 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
                 year: 'numeric',
             }),
             modification_date: null,
-            seller_id: '0123',
-            seller_name: 'Claudia',
+            seller_id: _id ?? "",
+            seller_name: username,
             payment_method: formValues.payment_method,
             status: isPartial ? SellStatusEnum.Parcial : SellStatusEnum.Completada,
             amount_paid: isPartial ? formValues.amount_paid : total,
