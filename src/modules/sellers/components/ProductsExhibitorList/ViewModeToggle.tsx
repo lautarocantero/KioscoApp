@@ -1,6 +1,7 @@
 import { Box, Tooltip, type Theme } from "@mui/material";
 import GridViewIcon from "@mui/icons-material/GridView";
 import ViewListIcon from "@mui/icons-material/ViewList";
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import type { ReactNode } from "react";
 import { ViewMode } from "@typings/seller/sellerEnums";
 import type { ViewModeToggleProps } from "@typings/seller/sellerComponentTypes";
@@ -44,6 +45,7 @@ const ViewModeToggle = ({viewMode, setViewMode}: ViewModeToggleProps): ReactNode
         >
           <GridViewIcon
             fontSize="small"
+            data-testid="GridViewIcon"
             sx={(theme: Theme) => ({
               color: viewMode === ViewMode.Grid ? theme.custom?.white : theme.custom?.translucidWhite,
               transition: "color 0.3s ease",
@@ -70,8 +72,36 @@ const ViewModeToggle = ({viewMode, setViewMode}: ViewModeToggleProps): ReactNode
         >
           <ViewListIcon
             fontSize="small"
+            data-testid="ViewListIcon"
             sx={(theme: Theme) => ({
               color: viewMode === ViewMode.List ? theme.custom?.white : theme.custom?.translucidWhite,
+              transition: "color 0.3s ease",
+            })}
+          />
+        </Box>
+
+        <Box
+          onClick={() => setViewMode(ViewMode.Collapsed)}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          sx={(theme: Theme) => ({
+            cursor: "pointer",
+            borderRadius: "6px",
+            width: "1.8em",
+            height: "1.6em",
+            transition: "all 0.3s ease",
+            backgroundColor: viewMode === ViewMode.Collapsed ? theme.palette?.primary?.dark : "transparent",
+            '&:hover': {
+              backgroundColor: viewMode === ViewMode.Collapsed ? theme.palette?.primary?.dark : theme?.custom?.darkBackground,
+            },
+          })}
+        >
+          <HorizontalRuleIcon
+            fontSize="small"
+            data-testid="ViewSidebarIcon"
+            sx={(theme: Theme) => ({
+              color: viewMode === ViewMode.Collapsed ? theme.custom?.white : theme.custom?.translucidWhite,
               transition: "color 0.3s ease",
             })}
           />

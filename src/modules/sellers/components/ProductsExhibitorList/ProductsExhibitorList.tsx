@@ -29,6 +29,10 @@ const ProductsExhibitorList = ({
     return <ProductExhibitorTable products={products} isLoading={isLoading} columns={columns}/>;
   }
 
+  if (viewMode === ViewMode.Collapsed) {
+    return null;
+  }
+
   return (
     <>
 

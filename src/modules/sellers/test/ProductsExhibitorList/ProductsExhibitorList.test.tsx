@@ -108,6 +108,24 @@ describe("ProductsExhibitorList", () => {
         expect(screen.queryByTestId("product-item")).not.toBeInTheDocument();
     });
 
+    it("no renderiza listado cuando viewMode es Collapsed", () => {
+        const products = [buildProduct()];
+
+        renderWithTheme(
+            <ProductsExhibitorList
+                products={products}
+                viewMode={ViewMode.Collapsed}
+                isLoading={false}
+                isEmpty={false}
+                columns={[]}
+                gridSx={gridSx}
+            />
+        );
+
+        expect(screen.queryByTestId("product-item")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("product-exhibitor-table")).not.toBeInTheDocument();
+    });
+
     it("renderiza un ProductItemComponent por producto cuando viewMode es Grid", () => {
         const products = [buildProduct({ _id: "1" }), buildProduct({ _id: "2" })];
 

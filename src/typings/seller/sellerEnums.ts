@@ -10,6 +10,7 @@ export enum SortOption {
 export enum ViewMode {
   Grid = 'grid',
   List = 'list',
+  Collapsed = 'collapsed',
 }
 
 export enum SellerRol {
