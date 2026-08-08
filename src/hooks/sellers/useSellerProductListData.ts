@@ -2,8 +2,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/seller/sellerSlice";
-import { setSearchTerm } from "../../store/seller/sellerSlice";
-import { fetchSellerProducts } from "../../store/seller/sellerThunks";
+import { fetchSellerProducts, setSearchTermThunk } from "../../store/seller/sellerThunks";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🪝 useSellerProductsListData                                          ║
@@ -61,6 +60,6 @@ export const useSellerProductsListData = () => {
         loading,
         error,
         searchTerm,
-        setSearchTerm: (value: string) => dispatch(setSearchTerm(value)),
+        setSearchTerm: (value: string) => dispatch(setSearchTermThunk(value)),
     };
 };
