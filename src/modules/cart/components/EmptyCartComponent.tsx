@@ -1,15 +1,9 @@
 import { Box, Grid, Typography, type Theme } from "@mui/material";
-import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
-import PrimaryButtonComponent from "../../../modules/shared/components/Buttons/PrimaryButtonComponent";
 import { getNoisyBackgroundSx } from "../../shared/components/NoisyBackground/NoisyBackground";
-import { useCart } from "../../../hooks/sellers/useCart";
-import { useContext, type ReactNode } from "react";
-import { SnackBarContext } from "../../shared/components/SnackBar/SnackBarContext";
+import { type ReactNode } from "react";
 
 
 const CartEmptyComponent = (): ReactNode => {
-    const { showSnackBar } = useContext(SnackBarContext)!;
-    const { goToNewSell } = useCart(showSnackBar);
 
     return (
         <Grid 
@@ -73,14 +67,6 @@ const CartEmptyComponent = (): ReactNode => {
                     explora nuestro catálogo y encuentra lo que necesitas.
                 </Typography>
 
-                    
-                <PrimaryButtonComponent
-                    buttonText="Explorar productos"
-                    buttonOnClick={goToNewSell}
-                    buttonWidth={{ xs: '20%' }}
-                    marginTop="0"
-                    icon={<StorefrontOutlinedIcon fontSize="small"/>}
-                />
             </Grid>
         </Grid>
     );

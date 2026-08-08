@@ -4,7 +4,6 @@ import ProductsExhibitorList from "./ProductsExhibitorList";
 import ProductsToolbar from "./ProductToolbar";
 import { useProductsExhibitor } from "../../../../hooks/sellers/useProductsExhibitor";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
-import { ViewMode } from "@typings/seller/sellerEnums";
 
 const ProductsExhibitorComponent = (): ReactNode => {
   const {
@@ -27,7 +26,7 @@ const ProductsExhibitorComponent = (): ReactNode => {
         display: "flex",
         flexDirection: "column",
         gap: 2,
-        mt: viewMode !== ViewMode.Collapsed ? 10 : 2,
+        mt: 2,
       }}
     >
       <ProductsToolbar totalCount={totalCount} viewMode={viewMode} setViewMode={setViewMode}/>

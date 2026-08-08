@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, type Theme } from "@mui/material";
 import { memo, type ReactNode } from 'react';
 import CartLabel from "./CartLabelComponent";
 import type { CartHeaderProps } from "@typings/seller/sellerComponentTypes";
@@ -12,7 +12,12 @@ const CartHeaderComponent = ({ itemsCount, onClearCart }: CartHeaderProps): Reac
         <Grid
             container
             size={{ xs: 12, md: 8 }}
-            sx={{ mb: "2em", rowGap: "1em" }}
+            sx={(theme: Theme) => ({
+                mb: "2em", 
+                rowGap: "1em", 
+                borderTop:  `0.1em solid ${theme?.custom?.darkGray}`,
+                paddingTop: "1em"
+            })}
         >
             <CartLabel />
             <CartHeaderActions itemsCount={itemsCount} onClearCart={onClearCart} />

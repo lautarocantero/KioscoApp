@@ -10,10 +10,10 @@ const NewSellPage = (): ReactNode => {
     
   return (
       <AppLayout noCenter fullWidth>
-            <CatalogHeader />
-            <ProductsExhibitorComponent />
-            <CartComponent />
-            <ProductDialog />
+        <CatalogHeader />
+        <ProductsExhibitorComponent />
+        <CartComponent />
+        <ProductDialog />
       </AppLayout>
 
   )
