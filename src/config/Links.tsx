@@ -58,6 +58,7 @@ export const SidebarNavLinks: OptionLink[] = [
     icon: <ReceiptIcon />,
     url: "/receipts",
     subtitle: "Carga de boletas y actualizaciones",
+    disabled: true,
   },
   {
     description: "Tienda",
