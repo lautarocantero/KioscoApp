@@ -4,6 +4,7 @@ import { renderWithTheme } from "../../../shared/test/utils/setupTests";
 import { ViewMode } from "@typings/seller/sellerEnums";
 import type { Product } from "@typings/product/productTypes";
 import ProductsExhibitorList from "../../components/ProductsExhibitorList/ProductsExhibitorList";
+import type { ProductsExhibitorListProps } from "@typings/seller/sellerComponentTypes";
 
 vi.mock("../../components/ProductItem/ProductItemComponent", () => ({
     default: vi.fn(() => <div data-testid="product-item" />),
@@ -39,6 +40,16 @@ describe("ProductsExhibitorList", () => {
       width: "100%" as const,
   };
 
+    // 🆕 props comunes a todos los casos — paginatedProducts/page/count/onChange
+    // pasaron a ser requeridas cuando separamos el listado completo (para el
+    // DataGrid, que pagina internamente) del recortado (para el modo grid)
+    const baseProps: Pick<ProductsExhibitorListProps, "paginatedProducts" | "page" | "count" | "onChange"> = {
+        paginatedProducts: [],
+        page: 1,
+        count: 1,
+        onChange: vi.fn(),
+    };
+
     beforeEach(() => {
         vi.clearAllMocks();
     });
@@ -46,6 +57,7 @@ describe("ProductsExhibitorList", () => {
     it("renderiza ProductsSkeletons cuando isLoading es true", () => {
         renderWithTheme(
             <ProductsExhibitorList
+                {...baseProps}
                 products={[]}
                 viewMode={ViewMode.Grid}
                 isLoading={true}
@@ -62,6 +74,7 @@ describe("ProductsExhibitorList", () => {
     it("prioriza isLoading sobre isEmpty", () => {
         renderWithTheme(
             <ProductsExhibitorList
+                {...baseProps}
                 products={[]}
                 viewMode={ViewMode.Grid}
                 isLoading={true}
@@ -78,6 +91,7 @@ describe("ProductsExhibitorList", () => {
     it("renderiza EmptyProductsList cuando isEmpty es true y no está cargando", () => {
         renderWithTheme(
             <ProductsExhibitorList
+                {...baseProps}
                 products={[]}
                 viewMode={ViewMode.Grid}
                 isLoading={false}
@@ -95,6 +109,7 @@ describe("ProductsExhibitorList", () => {
 
         renderWithTheme(
             <ProductsExhibitorList
+                {...baseProps}
                 products={products}
                 viewMode={ViewMode.List}
                 isLoading={false}
@@ -113,6 +128,7 @@ describe("ProductsExhibitorList", () => {
 
         renderWithTheme(
             <ProductsExhibitorList
+                {...baseProps}
                 products={products}
                 viewMode={ViewMode.Collapsed}
                 isLoading={false}
@@ -131,6 +147,8 @@ describe("ProductsExhibitorList", () => {
 
         renderWithTheme(
             <ProductsExhibitorList
+                {...baseProps}
+                paginatedProducts={products}
                 products={products}
                 viewMode={ViewMode.Grid}
                 isLoading={false}

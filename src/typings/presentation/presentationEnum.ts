@@ -58,7 +58,7 @@ export enum PresentationCategory {
   Miscellaneous = "miscellaneous",
 }
 
-export const PRESENTATION_CATEGORY_VALUES: string[] = Object.values(PresentationCategory);
+export const PRESENTATION_CATEGORY_VALUES = Object.values(PresentationCategory);
 
 export const SALE_TYPE_VALUES = ['unit', 'weight'] as const;
 
@@ -83,7 +83,7 @@ export enum ModelType {
   Other = "other",
 }
 
-export const MODEL_TYPE_VALUES: string[] = Object.values(ModelType);
+export const MODEL_TYPE_VALUES = Object.values(ModelType);
 
 export enum ModelUnit {
   Units = "units",
@@ -98,4 +98,4 @@ export enum ModelUnit {
   Centimeters = "cm",
 }
 
-export const MODEL_UNIT_VALUES: string[] = Object.values(ModelUnit);
+export const MODEL_UNIT_VALUES = Object.values(ModelUnit);

@@ -1,7 +1,7 @@
 import { Box, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import type { ProductDialogHeaderProps } from "@typings/seller/sellerComponentTypes";
-import { memo, useState, type ReactNode, type SyntheticEvent } from "react";
+import { memo, useState, type ReactNode } from "react";
 
 const FALLBACK_IMAGE = '/images/stocko_images/empty_product.png';
 
@@ -13,8 +13,7 @@ const ProductDialogImageComponent = ({
 
     const [src, setSrc] = useState(image_url || FALLBACK_IMAGE);
 
-    const handleError = (event: SyntheticEvent<HTMLImageElement>) => {
-        // evita loop infinito si el fallback también fallara
+    const handleError = () => {
         if (src !== FALLBACK_IMAGE) setSrc(FALLBACK_IMAGE);
     };
 

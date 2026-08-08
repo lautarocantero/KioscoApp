@@ -4,7 +4,7 @@ import type {
     ExistingPresentationInterface,
     PresentationFormValues,
 } from "@typings/presentation/presentationTypes";
-import { ModelType, MODEL_TYPE_VALUES, ModelUnit, MODEL_UNIT_VALUES, PresentationCategory, SALE_TYPE_VALUES, WEIGHT_SALE_TYPE, type SaleType } from "@typings/presentation/presentationEnum";
+import { MODEL_TYPE_VALUES, MODEL_UNIT_VALUES, ModelType, ModelUnit, PresentationCategory, SALE_TYPE_VALUES, WEIGHT_SALE_TYPE, type SaleType } from "@typings/presentation/presentationEnum";
 import { BARCODE_REGEX, RELATIVE_OR_URL_REGEX } from "../../../config/constants";
 
 const getTodayISODate = () => new Date().toISOString().slice(0, 10);

@@ -23,7 +23,13 @@ const mockedUseSellbar = vi.mocked(useSellbar);
 describe("SellBarActions", () => {
   beforeEach(() => {
     mockedUseSellbar.mockReturnValue({
-      search: { value: "", onChange: vi.fn(), onClear: vi.fn() },
+      search: {
+        value: "",
+        onChange: vi.fn(),
+        onClear: vi.fn(),
+        exactMatch: false,
+        onToggleExactMatch: vi.fn(),
+      },
       barcode: {
         showBarcodeInput: false,
         value: "",
