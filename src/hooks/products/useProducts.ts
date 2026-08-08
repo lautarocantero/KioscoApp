@@ -4,7 +4,7 @@ import type { UseProductsReturn } from "@typings/product/productTypes";
 import type { AppDispatch } from "../../store/product/productSlice";
 import { deleteProduct } from "../../store/product/productThunks";
 import { buildColumnsForProducts } from "../../modules/products/pages/ProductsList/components/productColumns";
-import { useProductsListData } from "./useProductListData";
+import useProductsListData from "./useProductListData";
 import { useState } from "react";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import { CLOSED_DIALOG } from "../../config/constants";

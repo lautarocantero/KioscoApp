@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState as SellerRootState } from "../../store/seller/sellerSlice";
-import { setSearchTermThunk, clearSearchTermThunk, setSelectedCategoryThunk } from "../../store/seller/sellerThunks";
+import { setSearchTermThunk, clearSearchTermThunk, setSelectedCategoryThunk, setExactMatchThunk } from "../../store/seller/sellerThunks";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import { useSellbarCart } from "./useSellbarCart";
 import { useSellbarBarcode } from "./useSellbarBarcode";
@@ -11,7 +11,7 @@ import type { UseSellerBarResult } from "@typings/seller/sellerTypes";
 export const useSellbar = (): UseSellerBarResult => {
     const { showSnackBar } = useContext(SnackBarContext)!;
     const dispatch = useDispatch<AppDispatch>();
-    const { cart, searchTerm } = useSelector((state: SellerRootState) => state.seller);
+    const { cart, searchTerm, exactMatch } = useSelector((state: SellerRootState) => state.seller);
 
     const cartData = useSellbarCart();
     const barcodeData = useSellbarBarcode({ cart, showSnackBar });
@@ -30,11 +30,19 @@ export const useSellbar = (): UseSellerBarResult => {
     const handleSearchChange = (value: string) => dispatch(setSearchTermThunk(value));
     const handleClearSearch = () => dispatch(clearSearchTermThunk());
 
+    /*──────────── 🎯 Exact match toggle ────────────╗
+    ║ El componente no decide el próximo valor: solo dispara el evento.     ║
+    ║ La negación del estado actual (lógica) vive acá, no en la UI.         ║
+    ╚═══════════════════════════════════════════════════════════════════════*/
+    const handleToggleExactMatch = () => dispatch(setExactMatchThunk(!exactMatch));
+
     return {
         search: {
             value: searchTerm,
             onChange: handleSearchChange,
             onClear: handleClearSearch,
+            exactMatch,
+            onToggleExactMatch: handleToggleExactMatch,
         },
         barcode: barcodeData,
         cart: cartData,

@@ -2,7 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import { z } from "zod";
 import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectPresentationThunkInterface, SelectProductThunkInterface, SellerStateInterface } from "../../typings/seller/sellerTypes";
 import { handleError } from "../shared/handlerStoreError";
-import { addToCartAction, addUnitAction, cleanCart, removeFromCart, resetProducts, setError, setPresentationSelected, setProducts, setProductSelected, setSearchTerm, setSelectedCategory, startLoadingProducts } from "./sellerSlice";
+import { addToCartAction, addUnitAction, cleanCart, removeFromCart, resetProducts, setError, setExactMatch, setPresentationSelected, setProducts, setProductSelected, setSearchTerm, setSelectedCategory, startLoadingProducts } from "./sellerSlice";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { resetPresentations, setPresentations, startLoadingPresentations } from "./sellerSlice";
 import { getPresentationsWithStockByProductIdRequest } from "../../modules/presentations/api/presentationsApi";
@@ -189,6 +189,21 @@ export const setSelectedCategoryThunk = (category: PresentationCategory | null) 
 }
 
 /*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 setExactMatchThunk                                                  ║
+║ ⚠️  Uso: EXCLUSIVO del checkbox "búsqueda exacta" en new sell page.    ║
+║ ⚙️  Proceso: despacha el nuevo valor hacia seller.exactMatch.         ║
+╚══════════════════════════════════════════════════════════════════════*/
+export const setExactMatchThunk = (exactMatch: boolean) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        try {
+            dispatch(setExactMatch(exactMatch));
+        } catch (error: unknown) {
+            handleError(error);
+        }
+    }
+}
+
+/*══════════════════════════════════════════════════════════════════════╗
 ║ 🚀 fetchSellerProductsWithStock                                        ║
 ║ ⚠️  Uso: EXCLUSIVO del listado de productos en new sell page.          ║
 ║     Copia de getProductsWithStock (product domain) pero despachando    ║
@@ -226,11 +241,11 @@ export const fetchSellerProductsWithStock = () => {
 ║ 🚀 fetchSellerProducts                                                 ║
 ║ ⚠️  Uso: EXCLUSIVO del listado de venta. Reemplaza la necesidad de      ║
 ║     que useSellerProductsListData decida qué request llamar — el       ║
-║     thunk lee categoría/búsqueda directo del propio state.seller,      ║
-║     así queda todo centralizado en el dominio seller (sin tocar        ║
-║     product.products ni sus thunks/acciones).                          ║
+║     thunk lee categoría/búsqueda/exactMatch directo del propio         ║
+║     state.seller, así queda todo centralizado en el dominio seller     ║
+║     (sin tocar product.products ni sus thunks/acciones).               ║
 ║ ⚙️  Proceso:                                                            ║
-║   1. Lee selectedCategory / searchTerm de getState().seller            ║
+║   1. Lee selectedCategory / searchTerm / exactMatch de getState().seller║
 ║   2. Si hay categoría o término activo -> búsqueda filtrada            ║
 ║      (reusa searchProductsWithPresentationsRequest, solo la función    ║
 ║      de request HTTP, no el store de product)                          ║
@@ -247,11 +262,11 @@ export const fetchSellerProducts = () => {
         dispatch(startLoadingProducts());
 
         try {
-            const { selectedCategory, searchTerm } = getState().seller;
+            const { selectedCategory, searchTerm, exactMatch } = getState().seller;
             const hasActiveFilter = searchTerm.trim() !== "" || !!selectedCategory;
 
             const products: ProductWithPresentations[] = hasActiveFilter
-                ? await searchProductsWithPresentationsRequest(searchTerm, selectedCategory ?? undefined)
+                ? await searchProductsWithPresentationsRequest(searchTerm, selectedCategory ?? undefined, exactMatch)
                 : await getProductsWithStockRequest();
 
             if (!products) {

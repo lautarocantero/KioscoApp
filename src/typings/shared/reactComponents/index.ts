@@ -130,12 +130,14 @@ export interface BackPathProps extends Omit<IconButtonProps, "onClick"> {
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface SearchBarProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  onClear?: () => void;
-  showShortcutHint?: boolean;
-  shortcutHint?: string;
-  sx?: SxProps<Theme>;
-  fullWidth?: boolean;
+    value: string;
+    onChange: (value: string) => void;
+    placeholder?: string;
+    onClear?: () => void;
+    showShortcutHint?: boolean;
+    shortcutHint?: string;
+    sx?: SxProps<Theme>;
+    fullWidth?: boolean;
+    exactMatch?: boolean;
+    onToggleExactMatch?: () => void;
 }

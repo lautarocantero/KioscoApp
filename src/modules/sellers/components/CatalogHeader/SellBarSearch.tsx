@@ -4,7 +4,7 @@ import type { SellerBarSearchProps } from "@typings/seller/sellerComponentTypes"
 
 
 const SellbarSearch = ({ search }: SellerBarSearchProps): ReactNode => {
-  const { value, onChange, onClear } = search;
+  const { value, onChange, onClear, exactMatch, onToggleExactMatch } = search;
 
   return (
     <SearchBar
@@ -13,6 +13,8 @@ const SellbarSearch = ({ search }: SellerBarSearchProps): ReactNode => {
       onClear={onClear}
       placeholder="Buscar..."
       fullWidth
+      exactMatch={exactMatch}
+      onToggleExactMatch={onToggleExactMatch}
     />
   );
 };

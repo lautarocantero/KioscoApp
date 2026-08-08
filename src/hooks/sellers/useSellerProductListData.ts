@@ -8,11 +8,13 @@ import { fetchSellerProducts, setSearchTermThunk } from "../../store/seller/sell
 ║ 🪝 useSellerProductsListData                                          ║
 ║                                                                       ║
 ║ Trae los productos con stock (o filtrados) para el listado de new    ║
-║ sell page. selectedCategory y searchTerm viven en sellerSlice, así    ║
-║ este hook y useSellbar comparten la misma fuente de verdad.           ║
+║ sell page. selectedCategory, searchTerm y exactMatch viven en         ║
+║ sellerSlice, así este hook y useSellbar comparten la misma fuente     ║
+║ de verdad.                                                            ║
 ║                                                                       ║
-║   1. Al montar / cambiar selectedCategory: fetch INMEDIATO (sin       ║
-║      debounce), para que loading pase a true antes de evaluar vacío. ║
+║   1. Al montar / cambiar selectedCategory / cambiar exactMatch:       ║
+║      fetch INMEDIATO (sin debounce) — son acciones puntuales de       ║
+║      click, no tipeo, así que no necesitan esperar.                   ║
 ║   2. Al cambiar searchTerm (tipeo en el buscador): debouncea.         ║
 ║                                                                       ║
 ║ ⚠️  Este es el ÚNICO hook que debe disparar el fetch — useSellbar     ║
@@ -27,17 +29,18 @@ export const useSellerProductsListData = () => {
     const error = useSelector((state: RootState) => state.seller.errorMessage);
     const searchTerm = useSelector((state: RootState) => state.seller.searchTerm);
     const selectedCategory = useSelector((state: RootState) => state.seller.selectedCategory);
+    const exactMatch = useSelector((state: RootState) => state.seller.exactMatch);
 
     const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
     const skipNextSearchEffectRef = useRef(false);
 
-    //─── 🔎 fetch inmediato al montar / cambiar categoría 🔎 ───
+    //─── 🔎 fetch inmediato al montar / cambiar categoría o exactMatch 🔎 ───
     useEffect(() => {
         clearTimeout(debounceRef.current);
         skipNextSearchEffectRef.current = true;
         void dispatch(fetchSellerProducts());
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedCategory, dispatch]);
+    }, [selectedCategory, exactMatch, dispatch]);
 
     //─── 🔎 búsqueda debounced 🔎 ───
     useEffect(() => {

@@ -1,6 +1,7 @@
 import { Box, IconButton, InputBase, Typography, type Theme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
+import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import type { SearchBarProps } from "@typings/shared/reactComponents";
 
 
@@ -13,6 +14,8 @@ export const SearchBar = ({
   shortcutHint = "⌘",
   sx,
   fullWidth,
+  exactMatch,
+  onToggleExactMatch,
 }: SearchBarProps): React.ReactNode => {
 
   return (
@@ -73,7 +76,24 @@ export const SearchBar = ({
         />
       </Box>
 
-      <Box>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 0.25 }}>
+        {onToggleExactMatch ? (
+          <IconButton
+            size="small"
+            onClick={onToggleExactMatch}
+            aria-label="Búsqueda exacta"
+            aria-pressed={exactMatch}
+            sx={{ p: 0.25, flexShrink: 0 }}
+          >
+            <PanoramaFishEyeIcon
+              sx={(theme: Theme) => ({
+                fontSize: "1.1rem",
+                color: exactMatch ? theme.palette?.primary?.main : theme.custom?.background
+              })}
+            />
+          </IconButton>
+        ) : null}
+
         {value ? (
           <IconButton
             size="small"

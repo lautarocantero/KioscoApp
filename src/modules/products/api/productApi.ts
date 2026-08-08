@@ -107,11 +107,12 @@ export const getProductsWithPresentationsRequest = async (): Promise<ProductWith
 ╚══════════════════════════════════════════════════════════════════════════╝*/
 export const searchProductsWithPresentationsRequest = async (
   term: string,
-  category?: PresentationCategory
+  category?: PresentationCategory,
+  exact?: boolean
 ): Promise<ProductWithPresentations[]> => {
   const response = await baseUrl.get<ProductWithPresentations[]>(
     "/search-products-with-presentations",
-    { params: { term, category } }
+    { params: { term, category, exact } }
   );
   return response.data;
 };

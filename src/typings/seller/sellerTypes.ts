@@ -71,6 +71,9 @@ export interface SellerStateInterface {
     // useSellerProductsListData vía Redux, en vez de estado local)
     selectedCategory: PresentationCategory | null,
     searchTerm: string,
+    // 🆕 si true, la búsqueda exige match literal completo del campo
+    // (^term$) en vez de substring parcial
+    exactMatch: boolean,
 };
 
 export interface getProductSelectedPayload {
@@ -105,6 +108,8 @@ export type SellerSetSelectedCategoryPayload = Pick<SellerStateInterface, 'selec
 
 export type SellerSetSearchTermPayload = Pick<SellerStateInterface, 'searchTerm'>
 
+export type SellerSetExactMatchPayload = Pick<SellerStateInterface, 'exactMatch'>
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🌀 THUNK 🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀               ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
@@ -138,6 +143,10 @@ export interface UseSellerBarResult {
         value: string;
         onChange: (value: string) => void;
         onClear: () => void;
+        // 🆕 toggle de búsqueda exacta — el hook decide el nuevo valor,
+        // el componente solo dispara el evento
+        exactMatch: boolean;
+        onToggleExactMatch: () => void;
     };
     barcode: {
         showBarcodeInput: boolean;

@@ -1,54 +1,48 @@
-// hooks/products/useProductsListData.ts
-import { useEffect, useRef, useState } from "react";
+// hooks/sellers/useProductListData.ts
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../store/product/productSlice";
-import { getProducts, getProductsWithStock, searchProducts } from "../../store/product/productThunks";
-import type { UseProductsListDataResult } from "@typings/product/productTypes";
-import type { PresentationCategory } from "@typings/presentation/presentationEnum";
+import type { AppDispatch, RootState } from "../../store/seller/sellerSlice";
+import { fetchSellerProducts, setSearchTermThunk } from "../../store/seller/sellerThunks";
 
 /*══════════════════════════════════════════════════════════════════════╗
-║ 🪝 useProductsListData                                                ║
+║ 🪝 useProductListData                                          ║
 ║                                                                       ║
-║   1. Al montar / cambiar selectedCategory o stockAvailable: fetch    ║
-║      INMEDIATO (sin debounce), para que loading pase a true antes    ║
-║      de que se llegue a evaluar "vacío".                             ║
-║   2. Al tipear en el buscador (searchTerm): debouncea y despacha     ║
-║      searchProducts.                                                 ║
+║ Trae los productos con stock (o filtrados) para el listado de new    ║
+║ sell page. selectedCategory, searchTerm y exactMatch viven en         ║
+║ sellerSlice, así este hook y useSellbar comparten la misma fuente     ║
+║ de verdad.                                                            ║
+║                                                                       ║
+║   1. Al montar / cambiar selectedCategory / cambiar exactMatch:       ║
+║      fetch INMEDIATO (sin debounce) — son acciones puntuales de       ║
+║      click, no tipeo, así que no necesitan esperar.                   ║
+║   2. Al cambiar searchTerm (tipeo en el buscador): debouncea.         ║
+║                                                                       ║
+║ ⚠️  Este es el ÚNICO hook que debe disparar el fetch — useSellbar     ║
+║     solo lee/escribe el filtro en Redux, no vuelve a pedir datos,     ║
+║     para evitar fetches duplicados si ambos están montados a la vez. ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-
-export const useProductsListData = (
-    selectedCategory: PresentationCategory | null = null,
-    stockAvailable = false,
-): UseProductsListDataResult => {
+const useProductListData = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const products = useSelector((state: RootState) => state.product.products);
-    const loading = useSelector((state: RootState) => state.product.isLoading);
-    const error = useSelector((state: RootState) => state.product.errorMessage);
+    const products = useSelector((state: RootState) => state.seller.products);
+    const loading = useSelector((state: RootState) => state.seller.productsLoading);
+    const error = useSelector((state: RootState) => state.seller.errorMessage);
+    const searchTerm = useSelector((state: RootState) => state.seller.searchTerm);
+    const selectedCategory = useSelector((state: RootState) => state.seller.selectedCategory);
+    const exactMatch = useSelector((state: RootState) => state.seller.exactMatch);
 
-    const [searchTerm, setSearchTerm] = useState("");
     const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
     const skipNextSearchEffectRef = useRef(false);
 
+    //─── 🔎 fetch inmediato al montar / cambiar categoría o exactMatch 🔎 ───
     useEffect(() => {
         clearTimeout(debounceRef.current);
         skipNextSearchEffectRef.current = true;
+        void dispatch(fetchSellerProducts());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedCategory, exactMatch, dispatch]);
 
-        const hasActiveSearch = searchTerm.trim() !== "" || !!selectedCategory;
-
-        if (hasActiveSearch) {
-            void dispatch(searchProducts(searchTerm, selectedCategory ?? undefined));
-            return;
-        }
-
-        if (stockAvailable) {
-            void dispatch(getProductsWithStock());
-            return;
-        }
-
-        void dispatch(getProducts());
-    }, [selectedCategory, stockAvailable, dispatch]);
-
+    //─── 🔎 búsqueda debounced 🔎 ───
     useEffect(() => {
         if (skipNextSearchEffectRef.current) {
             skipNextSearchEffectRef.current = false;
@@ -57,23 +51,20 @@ export const useProductsListData = (
 
         clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
-            const hasActiveSearch = searchTerm.trim() !== "" || !!selectedCategory;
-
-            if (hasActiveSearch) {
-                void dispatch(searchProducts(searchTerm, selectedCategory ?? undefined));
-                return;
-            }
-
-            if (stockAvailable) {
-                void dispatch(getProductsWithStock());
-                return;
-            }
-
-            void dispatch(getProducts());
+            void dispatch(fetchSellerProducts());
         }, 350);
 
         return () => clearTimeout(debounceRef.current);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
 
-    return { products, loading, error, searchTerm, setSearchTerm };
+    return {
+        products,
+        loading,
+        error,
+        searchTerm,
+        setSearchTerm: (value: string) => dispatch(setSearchTermThunk(value)),
+    };
 };
+
+export default useProductListData;

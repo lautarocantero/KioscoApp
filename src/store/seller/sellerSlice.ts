@@ -34,6 +34,7 @@ const initialState: SellerStateInterface = {
     page: 1,
     selectedCategory: null,
     searchTerm: '',
+    exactMatch: false,
 }
 
 export const sellerSlice = createSlice({
@@ -126,6 +127,11 @@ export const sellerSlice = createSlice({
             state.searchTerm = action.payload;
             state.page = 1;
         },
+        // 🆕 modo de búsqueda exacta (checkbox) del listado de venta
+        setExactMatch: (state: SellerStateInterface, action: PayloadAction<boolean>) => {
+            state.exactMatch = action.payload;
+            state.page = 1;
+        },
         startLoadingPresentations: (state: SellerStateInterface) => {
             state.presentationsLoading = true;
         },
@@ -164,6 +170,7 @@ export const {
   setPage,
   setSelectedCategory,
   setSearchTerm,
+  setExactMatch,
   startLoadingPresentations,
   setPresentations,
   resetPresentations,
