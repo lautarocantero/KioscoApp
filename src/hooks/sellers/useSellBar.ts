@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState as SellerRootState } from "../../store/seller/sellerSlice";
-import { setSearchTerm, setSelectedCategory } from "../../store/seller/sellerSlice";
+import { setSearchTermThunk, clearSearchTermThunk, setSelectedCategoryThunk } from "../../store/seller/sellerThunks";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import { useSellbarCart } from "./useSellbarCart";
 import { useSellbarBarcode } from "./useSellbarBarcode";
@@ -23,12 +23,12 @@ export const useSellbar = (): UseSellerBarResult => {
     ║ useSellerProductsListData para disparar el fetch.                       ║
     ╚═══════════════════════════════════════════════════════════════════════*/
     useEffect(() => {
-        dispatch(setSelectedCategory(categories.selected));
+        dispatch(setSelectedCategoryThunk(categories.selected));
     }, [categories.selected, dispatch]);
 
     /*──────────────── 🔎 Search ────────────────*/
-    const handleSearchChange = (value: string) => dispatch(setSearchTerm(value));
-    const handleClearSearch = () => dispatch(setSearchTerm(""));
+    const handleSearchChange = (value: string) => dispatch(setSearchTermThunk(value));
+    const handleClearSearch = () => dispatch(clearSearchTermThunk());
 
     return {
         search: {

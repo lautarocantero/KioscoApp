@@ -2,11 +2,12 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import { z } from "zod";
 import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectPresentationThunkInterface, SelectProductThunkInterface, SellerStateInterface } from "../../typings/seller/sellerTypes";
 import { handleError } from "../shared/handlerStoreError";
-import { addToCartAction, addUnitAction, cleanCart, removeFromCart, resetProducts, setError, setPresentationSelected, setProducts, setProductSelected, startLoadingProducts } from "./sellerSlice";
+import { addToCartAction, addUnitAction, cleanCart, removeFromCart, resetProducts, setError, setPresentationSelected, setProducts, setProductSelected, setSearchTerm, setSelectedCategory, startLoadingProducts } from "./sellerSlice";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { resetPresentations, setPresentations, startLoadingPresentations } from "./sellerSlice";
 import { getPresentationsWithStockByProductIdRequest } from "../../modules/presentations/api/presentationsApi";
 import type { ProductWithPresentations } from "@typings/product/productTypes";
+import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 import { getProductsWithStockRequest, searchProductsWithPresentationsRequest } from "../../modules/products/api/productApi";
 
 export const PresentationEntitySchema = z.object({
@@ -143,6 +144,51 @@ export const cleanCartThunk = () => {
 }
 
 /*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 setSearchTermThunk                                                  ║
+║ ⚠️  Uso: EXCLUSIVO del buscador de new sell page.                      ║
+║ ⚙️  Proceso: despacha el nuevo searchTerm hacia seller.searchTerm.     ║
+╚══════════════════════════════════════════════════════════════════════*/
+export const setSearchTermThunk = (searchTerm: string) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        try {
+            dispatch(setSearchTerm(searchTerm));
+        } catch (error: unknown) {
+            handleError(error);
+        }
+    }
+}
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 clearSearchTermThunk                                                ║
+║ ⚠️  Uso: EXCLUSIVO del botón de limpiar búsqueda en new sell page.     ║
+║ ⚙️  Proceso: resetea seller.searchTerm a "".                          ║
+╚══════════════════════════════════════════════════════════════════════*/
+export const clearSearchTermThunk = () => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        try {
+            dispatch(setSearchTerm(""));
+        } catch (error: unknown) {
+            handleError(error);
+        }
+    }
+}
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 setSelectedCategoryThunk                                            ║
+║ ⚠️  Uso: EXCLUSIVO del filtro de categoría en new sell page.           ║
+║ ⚙️  Proceso: despacha la categoría elegida hacia seller.selectedCategory║
+╚══════════════════════════════════════════════════════════════════════*/
+export const setSelectedCategoryThunk = (category: PresentationCategory | null) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        try {
+            dispatch(setSelectedCategory(category));
+        } catch (error: unknown) {
+            handleError(error);
+        }
+    }
+}
+
+/*══════════════════════════════════════════════════════════════════════╗
 ║ 🚀 fetchSellerProductsWithStock                                        ║
 ║ ⚠️  Uso: EXCLUSIVO del listado de productos en new sell page.          ║
 ║     Copia de getProductsWithStock (product domain) pero despachando    ║
@@ -154,7 +200,7 @@ export const cleanCartThunk = () => {
 ║   2. GET /get-products-with-stock                                      ║
 ║   3. Guarda el resultado en seller.products                            ║
 ║ 📤 Salida: ProductWithPresentations[] o undefined en caso de error     ║
-╚══════════════════════════════════════════════════════════════════════╝*/
+╚══════════════════════════════════════════════════════════════════════*/
 export const fetchSellerProductsWithStock = () => {
     return async (dispatch: Dispatch): Promise<ProductWithPresentations[] | undefined> => {
         dispatch(resetProducts());
@@ -191,7 +237,7 @@ export const fetchSellerProductsWithStock = () => {
 ║   3. Si no hay filtro activo -> trae todo lo disponible con stock      ║
 ║   4. Guarda siempre en seller.products                                 ║
 ║ 📤 Salida: ProductWithPresentations[] o undefined en caso de error     ║
-╚══════════════════════════════════════════════════════════════════════╝*/
+╚══════════════════════════════════════════════════════════════════════*/
 export const fetchSellerProducts = () => {
     return async (
         dispatch: Dispatch,
@@ -235,7 +281,7 @@ export const fetchSellerProducts = () => {
 ║   2. GET /presentations-with-stock por product_id                      ║
 ║   3. Guarda el resultado en seller.presentations                       ║
 ║ 📤 Salida: Presentation[] o undefined en caso de error                 ║
-╚══════════════════════════════════════════════════════════════════════╝*/
+╚══════════════════════════════════════════════════════════════════════*/
 export const fetchCartPresentationsByProductId = (product_id: string) => {
     return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
         dispatch(resetPresentations());
