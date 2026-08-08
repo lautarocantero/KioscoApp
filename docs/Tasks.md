@@ -24,6 +24,7 @@
 ________________________________________________________________________________________________
 | 🧾 **Ventas**                                                                                   |
 |-------------------------------------------------------------------------------------------------|
+| 🔴 arreglar bug de product pagination en new sell
 | 🔴 agregar accion saldar deuda
 | 🔴 Separar sell de sellers totalmente, algunas cosas de sellers estan en sell.
 | 🟢 cuando no hay stock de una sola presentacion por peso, aparece 0. contemplar que hacer

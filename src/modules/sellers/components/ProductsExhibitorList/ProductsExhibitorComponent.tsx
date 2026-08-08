@@ -2,7 +2,6 @@
 import type { ReactNode } from "react";
 import ProductsExhibitorList from "./ProductsExhibitorList";
 import ProductsToolbar from "./ProductToolbar";
-import ProductsPagination from "./ProductsPagination";
 import { useProductsExhibitor } from "../../../../hooks/sellers/useProductsExhibitor";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 
@@ -38,8 +37,11 @@ const ProductsExhibitorComponent = (): ReactNode => {
         isEmpty={isEmpty}
         columns={columns}
         gridSx={gridSx}
+        page={page} 
+        count={pageCount} 
+        onChange={setPage}
       />
-      <ProductsPagination page={page} count={pageCount} onChange={setPage} />
+      
     </NoisyCard>
   );
 };

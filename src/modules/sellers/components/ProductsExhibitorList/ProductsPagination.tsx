@@ -16,6 +16,7 @@ const ProductsPagination = ({ page, count, onChange }: ProductsPaginationProps):
         display: "flex",
         justifyContent: "center",
         mt: 3,
+        mb: 3,
         "& .MuiPaginationItem-root": {
           color: theme.custom?.translucidWhite,
         },
