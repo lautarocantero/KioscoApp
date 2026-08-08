@@ -3,6 +3,9 @@ import { Box, Typography } from "@mui/material";
 import ProductRowActionCell from "./ProductRowActionCell";
 import type { Product } from "../../../../typings/product/productTypes";
 import { FALLBACK_PRODUCT_IMAGE } from "../../../../config/constants";
+import { MODEL_TYPE_LABELS, PRESENTATION_CATEGORY_LABELS } from "@typings/presentation/presentationLabels";
+import type { ModelType, PresentationCategory } from "@typings/presentation/presentationEnum";
+
 
 export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
   {
@@ -40,7 +43,10 @@ export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
     valueGetter: (_value, row) => {
       const presentation = row.presentations?.[0];
       if (!presentation) return "-";
-      return `${presentation.model_type ?? ""}, ${presentation.model_size ?? ""}`.trim();
+      const modelTypeLabel = presentation.model_type
+        ? MODEL_TYPE_LABELS[presentation.model_type as ModelType] ?? presentation.model_type
+        : "";
+      return `${modelTypeLabel}, ${presentation.model_size ?? ""}`.trim();
     },
   },
   {
@@ -53,7 +59,9 @@ export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
     valueGetter: (_value, row) => {
       const category = row.presentations?.[0]?.category;
       if (!category || category.length === 0) return "-";
-      return category.join(", ");
+      return category
+        .map((cat: any) => PRESENTATION_CATEGORY_LABELS[cat as PresentationCategory] ?? cat)
+        .join(", ");
     },
   },
   {
