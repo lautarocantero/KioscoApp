@@ -53,6 +53,7 @@ export interface DataTableProps<T extends object>
     newItem?: DataTableNewItemConfig;
     deleteDialog?: DataTableDeleteDialogConfig;
     getRowId?: (row: T) => string;
+    id?: string;
 }
 
 export interface DataTableHeaderProps {

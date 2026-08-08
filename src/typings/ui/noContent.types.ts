@@ -23,4 +23,5 @@ export interface EmptyStateCardProps {
     };
     height?: string;
     centered?: boolean;
+    id?: string;
 }

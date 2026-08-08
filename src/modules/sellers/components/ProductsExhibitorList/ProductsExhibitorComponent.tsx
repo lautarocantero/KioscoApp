@@ -27,6 +27,7 @@ const ProductsExhibitorComponent = (): ReactNode => {
         flexDirection: "column",
         gap: 2,
         mt: 2,
+        scrollMarginTop: "1em",
       }}
     >
       <ProductsToolbar totalCount={totalCount} viewMode={viewMode} setViewMode={setViewMode}/>
@@ -42,7 +43,6 @@ const ProductsExhibitorComponent = (): ReactNode => {
         count={pageCount}
         onChange={setPage}
       />
-
     </NoisyCard>
   );
 };

@@ -121,6 +121,8 @@ export const SELL_STATUS_OPTIONS = [
     { value: SellStatusEnum.Parcial, label: 'Abono parcial' },
 ];
 
+export const PRODUCTS_EXHIBITOR_ANCHOR_ID = "seller-products-exhibitor";
+
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🎨 IMAGENES   🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️              ║

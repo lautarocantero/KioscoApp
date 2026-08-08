@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import type { RootState as SellerRootState } from "../../store/seller/sellerSlice";
 import type { UseSellerBarResult } from "@typings/seller/sellerTypes";
+import { PRODUCTS_EXHIBITOR_ANCHOR_ID } from "../../config/constants";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🛒 useSellbarCart                                                     ║
@@ -9,10 +9,13 @@ import type { UseSellerBarResult } from "@typings/seller/sellerTypes";
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const useSellbarCart = (): UseSellerBarResult['cart'] => {
-    const navigate = useNavigate();
     const { cart } = useSelector((state: SellerRootState) => state.seller);
 
-    const goToCart = () => navigate('/cart');
+    const goToCart = () => {
+        document
+            .getElementById(PRODUCTS_EXHIBITOR_ANCHOR_ID)
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
     return {
         count: cart?.length,

@@ -27,8 +27,6 @@ const ProductsExhibitorList = ({
   if (isEmpty) return <EmptyProductsList isEmpty={isEmpty}/>;
 
   if (viewMode === ViewMode.List) {
-    // 🔎 el DataGrid pagina internamente (footer nativo), por eso acá
-    // le pasamos el listado COMPLETO y no el recortado por página
     return <ProductExhibitorTable products={products} isLoading={isLoading} columns={columns}/>;
   }
 

@@ -14,6 +14,7 @@ const EmptyStateCard = ({
     button,
     height = "37em",
     centered = false,
+    
 }: EmptyStateCardProps): ReactNode => {
     
     const bp = useBreakpoint();

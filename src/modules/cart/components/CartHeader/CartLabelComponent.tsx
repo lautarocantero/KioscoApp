@@ -1,9 +1,10 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Grid, Typography, type Theme } from "@mui/material";
+import type { CartLabelProps } from '@typings/seller/sellerComponentTypes';
 import type { ReactNode } from 'react';
 
 
-const CartLabel = (): ReactNode => {
+const CartLabel = ({itemsCount}: CartLabelProps ): ReactNode => {
 
 
     return (
@@ -18,7 +19,15 @@ const CartLabel = (): ReactNode => {
                             fontSize: theme?.typography?.h5?.fontSize,
                         })}
                     >
-                        Carrito
+                        Carrito{" "}
+                        <Box
+                        component="span"
+                        sx={(theme: Theme) => ({
+                            color: itemsCount > 0 ? theme.palette?.secondary?.main : theme.custom?.white,
+                        })}
+                        >
+                        {itemsCount}
+                        </Box>
                     </Typography>
                 </Box>
             </Box>

@@ -241,6 +241,8 @@ export type CartHeaderProps = {
     onClearCart: () => void;
 }
 
+export type CartLabelProps = Pick<CartHeaderProps, "itemsCount">
+
 export type CartHeaderActionsProps = CartHeaderProps;
 
 export interface CartProductTableProps {

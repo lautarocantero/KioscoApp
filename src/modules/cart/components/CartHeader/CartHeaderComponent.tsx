@@ -19,7 +19,7 @@ const CartHeaderComponent = ({ itemsCount, onClearCart }: CartHeaderProps): Reac
                 paddingTop: "1em"
             })}
         >
-            <CartLabel />
+            <CartLabel itemsCount={itemsCount} />
             <CartHeaderActions itemsCount={itemsCount} onClearCart={onClearCart} />
         </Grid>
     )

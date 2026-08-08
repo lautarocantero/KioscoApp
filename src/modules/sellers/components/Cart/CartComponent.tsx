@@ -7,6 +7,7 @@ import { cartFormSchema, getCartFormInitialValues } from "../../schema/CartFormS
 import CartHeaderComponent from "../../../cart/components/CartHeader/CartHeaderComponent";
 import CartProductTableComponent from "../../../cart/components/CartProductTableComponent";
 import CartSummaryCardComponent from '../../../cart/components/CartSumaryCardComponent';
+import { PRODUCTS_EXHIBITOR_ANCHOR_ID } from "../../../../config/constants";
 
 const CartComponent = (): ReactNode => {
     const { showSnackBar } = useContext(SnackBarContext)!;
@@ -32,6 +33,7 @@ const CartComponent = (): ReactNode => {
             columnSpacing={2}
             rowSpacing={2}
             sx={{ width: "100%" }}
+            id={PRODUCTS_EXHIBITOR_ANCHOR_ID}
         >
             <CartHeaderComponent
                 itemsCount={cart?.length ?? 0}
