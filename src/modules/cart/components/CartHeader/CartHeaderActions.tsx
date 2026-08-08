@@ -3,12 +3,9 @@ import { Box } from "@mui/material";
 import type { ReactNode } from 'react';
 import PrimaryButtonComponent from '../../../shared/components/Buttons/PrimaryButtonComponent';
 import type { CartHeaderActionsProps } from '@typings/seller/sellerComponentTypes';
-import BarcodeButtonComponent from '../../../sellers/components/CatalogHeader/BarcodeButtonComponent';
-import { useSellbar } from '@hooks/sellers/useSellBar';
 
 
 const CartHeaderActions = ({ itemsCount, onClearCart }: CartHeaderActionsProps): ReactNode => {
-    const { barcode } = useSellbar();
     const hasItems = itemsCount > 0;
 
     return (
@@ -28,7 +25,6 @@ const CartHeaderActions = ({ itemsCount, onClearCart }: CartHeaderActionsProps):
                     maxWidth: { sm: "320px" },
                 }}
             >
-                <BarcodeButtonComponent barcode={barcode} />
             </Box>
 
             {hasItems && (

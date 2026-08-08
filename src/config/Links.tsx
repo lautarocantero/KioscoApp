@@ -18,7 +18,7 @@ import type { OptionLink } from "@typings/ui/layout.types";
 import stocoLogo from "../../public/images/logo/StocoLogoalt.png";
 
 const KioscoLink: OptionLink = {
-  description: "Carrito",
+  description: "Catalogo",
   icon: (
     <img
       src={stocoLogo}
@@ -28,7 +28,7 @@ const KioscoLink: OptionLink = {
       style={{ objectFit: "contain" }}
     />
   ),
-  url: "/cart",
+  url: "/new-sell",
 };
 
 export const SidebarNavLinks: OptionLink[] = [
