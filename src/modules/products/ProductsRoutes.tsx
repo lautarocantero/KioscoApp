@@ -9,10 +9,10 @@ const ProductsRoutes = (): React.ReactNode => {
         <>
             {/* ── Productos ─────────────────────────────────────────────── */}
             <Route path="/products"                   element={<ProductsListPage />} />
+            <Route path="/products/receipt-charge"   element={<ProductsListPage />} />
             <Route path="/product-create"            element={<ProductCreatePage />} />
             <Route path="/product/:product_id"         element={<ProductDetailPage />} />
             <Route path="/product/:product_id/product-edit"   element={<ProductsEditPage />} />
-
         </>
     );
 };

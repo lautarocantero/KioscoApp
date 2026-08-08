@@ -18,6 +18,9 @@ Tasks.md
 .env.production
 .env
 
+docs/promptsExamples
+docs/promptsExamples/*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
