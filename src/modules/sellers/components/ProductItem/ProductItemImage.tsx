@@ -1,40 +1,21 @@
-import { Box, type Theme } from "@mui/material";
-import ImageNotSupportedOutlinedIcon from "@mui/icons-material/ImageNotSupportedOutlined";
+import { useState } from "react";
+import { Box } from "@mui/material";
 import type { ProductItemImageProps } from "@typings/seller/sellerComponentTypes";
 import type { ReactNode } from "react";
-
+import { FALLBACK_PRODUCT_IMAGE } from "../../../../config/constants";
 
 const ProductItemImage = ({ source, name, onClick }: ProductItemImageProps): ReactNode => {
-  if (!source) {
-    return (
-      <Box
-        onClick={onClick}
-        sx={(theme: Theme) => ({
-          position: "absolute",
-          inset: 0,
-          backgroundColor: theme.custom?.blackTranslucid,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: onClick ? "pointer" : "default",
-        })}
-      >
-        <ImageNotSupportedOutlinedIcon
-          sx={(theme: Theme) => ({
-            fontSize: "2rem",
-            color: theme.custom?.translucidWhite,
-          })}
-        />
-      </Box>
-    );
-  }
+  const [hasError, setHasError] = useState(false);
+
+  const imageSource = !source || hasError ? FALLBACK_PRODUCT_IMAGE : source;
 
   return (
     <Box
       component="img"
-      src={source}
+      src={imageSource}
       alt={name}
       onClick={onClick}
+      onError={() => setHasError(true)}
       sx={{
         position: "absolute",
         inset: 0,

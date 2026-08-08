@@ -2,6 +2,7 @@ import { type GridColDef } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
 import ProductRowActionCell from "./ProductRowActionCell";
 import type { Product } from "../../../../typings/product/productTypes";
+import { FALLBACK_PRODUCT_IMAGE } from "../../../../config/constants";
 
 export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
   {
@@ -15,8 +16,12 @@ export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, height: "100%" }}>
         <Box
           component="img"
-          src={params.row.image_url}
+          src={params.row.image_url || FALLBACK_PRODUCT_IMAGE}
           alt={params.row.name}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = FALLBACK_PRODUCT_IMAGE;
+          }}
           sx={{ width: 32, height: 32, objectFit: "contain", borderRadius: "0.4em" }}
         />
         <Typography variant="body2" noWrap>

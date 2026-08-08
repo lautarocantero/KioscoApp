@@ -120,3 +120,10 @@ export const SELL_STATUS_OPTIONS = [
     { value: SellStatusEnum.Completada, label: 'Abono total' },
     { value: SellStatusEnum.Parcial, label: 'Abono parcial' },
 ];
+
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🎨 IMAGENES   🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️              ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export const FALLBACK_PRODUCT_IMAGE = "/images/stocko_images/empty_product.png";
