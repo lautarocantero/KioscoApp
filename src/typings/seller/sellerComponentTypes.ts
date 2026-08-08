@@ -47,6 +47,7 @@ export type ToolbarActionsProps = Pick<ProductsToolbarProps, 'viewMode' | 'setVi
 
 export interface ProductsExhibitorListProps {
     products: Product[];
+    paginatedProducts: Product[];
     viewMode: ViewMode;
     isLoading?: boolean;
     isEmpty?: boolean;

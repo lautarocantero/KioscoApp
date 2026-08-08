@@ -279,24 +279,21 @@ export interface EditSellSanitizedPayloadInterface {
 }
 
 export interface UseProductsExhibitorResult {
-  isEmpty: boolean;
-  loading: boolean;
-  paginatedProducts: Product[];
-  totalCount: number;
-  page: number;
-  pageCount: number;
-  setPage: (page: number) => void;
-  sort: SortOption;
-  handleSortChange: (e: SelectChangeEvent) => void;
-  options: {
-    value: SortOption;
-    label: string;
-  }[];
-  viewMode: ViewMode;
-  setViewMode: (mode: ViewMode) => void;
-  columns: GridColDef<ProductEntity>[];
-  gridSx: {
-        readonly display: "grid" | "flex";
+    isEmpty: boolean;
+    loading: boolean;
+    products: Product[];
+    paginatedProducts: Product[];
+    totalCount: number;
+    page: number;
+    pageCount: number;
+    setPage: (page: number) => void;
+    sort: SortOption;
+    handleSortChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    options: { value: SortOption; label: string }[];
+    viewMode: ViewMode;
+    setViewMode: (mode: ViewMode) => void;
+    gridSx: {
+        readonly display: "flex" | "grid";
         readonly flexDirection: "column" | undefined;
         readonly gridTemplateColumns: {
             xs: string;
@@ -307,7 +304,9 @@ export interface UseProductsExhibitorResult {
         readonly rowGap: 2;
         readonly columnGap: 2;
         readonly width: "100%";
-    }
+        readonly padding: 2;
+    };
+    columns: GridColDef<ProductEntity>[];
 }
 
 export interface UseSellStatsResult {

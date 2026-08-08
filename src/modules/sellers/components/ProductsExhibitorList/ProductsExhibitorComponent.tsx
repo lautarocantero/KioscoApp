@@ -1,4 +1,3 @@
-// ProductsExhibitorComponent.tsx
 import type { ReactNode } from "react";
 import ProductsExhibitorList from "./ProductsExhibitorList";
 import ProductsToolbar from "./ProductToolbar";
@@ -9,6 +8,7 @@ const ProductsExhibitorComponent = (): ReactNode => {
   const {
     isEmpty,
     loading,
+    products,
     paginatedProducts,
     totalCount,
     page,
@@ -31,17 +31,18 @@ const ProductsExhibitorComponent = (): ReactNode => {
     >
       <ProductsToolbar totalCount={totalCount} viewMode={viewMode} setViewMode={setViewMode}/>
       <ProductsExhibitorList
-        products={paginatedProducts}
+        products={products}
+        paginatedProducts={paginatedProducts}
         viewMode={viewMode}
         isLoading={loading}
         isEmpty={isEmpty}
         columns={columns}
         gridSx={gridSx}
-        page={page} 
-        count={pageCount} 
+        page={page}
+        count={pageCount}
         onChange={setPage}
       />
-      
+
     </NoisyCard>
   );
 };

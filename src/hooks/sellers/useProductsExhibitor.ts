@@ -33,6 +33,10 @@ const sortProducts = (products: Product[], sort: SortOption): Product[] => {
 ║      aislamiento de estado entre instancias del componente           ║
 ║   4. Delega en useSortOptions las opciones y el handler de sort       ║
 ║   5. Arma los estilos de grilla/lista y las columnas del listado      ║
+║   6. Expone tanto el listado completo ordenado (products, para el    ║
+║      DataGrid en modo lista, que pagina internamente) como el         ║
+║      recortado a la página actual (paginatedProducts, para el modo   ║
+║      grid, que usa paginación manual vía ProductsPagination)          ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const useProductsExhibitor = (): UseProductsExhibitorResult => {
@@ -51,7 +55,7 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
 
   const pageCount = Math.max(1, Math.ceil(sortedProducts.length / PAGE_SIZE_PRODUCT_EXHIBITOR));
 
-  //─── 🔎 recorta el array ordenado según la página actual 🔎 ───
+  //─── 🔎 recorta el array ordenado según la página actual (solo para modo grid) 🔎 ───
   const paginatedProducts = useMemo(() => {
     const start = (page - 1) * PAGE_SIZE_PRODUCT_EXHIBITOR;
     return sortedProducts.slice(start, start + PAGE_SIZE_PRODUCT_EXHIBITOR);
@@ -81,6 +85,7 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
   return {
     isEmpty: safeProducts.length === 0,
     loading,
+    products: sortedProducts,
     paginatedProducts,
     totalCount: sortedProducts.length,
     page,

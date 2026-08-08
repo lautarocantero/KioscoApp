@@ -11,14 +11,15 @@ import ProductsPagination from "./ProductsPagination";
 
 const ProductsExhibitorList = ({
   products,
+  paginatedProducts,
   viewMode = ViewMode.Grid,
   isLoading = false,
   isEmpty = false,
   gridSx,
   columns,
-  page, 
-  count, 
-  onChange
+  page,
+  count,
+  onChange,
 }: ProductsExhibitorListProps): ReactNode => {
 
   if (isLoading) return <ProductsSkeletons isLoading={isLoading} gridSx={gridSx}/>;
@@ -26,6 +27,8 @@ const ProductsExhibitorList = ({
   if (isEmpty) return <EmptyProductsList isEmpty={isEmpty}/>;
 
   if (viewMode === ViewMode.List) {
+    // 🔎 el DataGrid pagina internamente (footer nativo), por eso acá
+    // le pasamos el listado COMPLETO y no el recortado por página
     return <ProductExhibitorTable products={products} isLoading={isLoading} columns={columns}/>;
   }
 
@@ -35,13 +38,12 @@ const ProductsExhibitorList = ({
 
   return (
     <>
-
-    <Box sx={gridSx}>
-      {products.map((prod: Product) => (
-        <ProductItemComponent key={prod._id} product={prod} viewMode={viewMode} />
-      ))}
-    </Box>
-    <ProductsPagination page={page} count={count} onChange={onChange} />
+      <Box sx={gridSx}>
+        {paginatedProducts.map((prod: Product) => (
+          <ProductItemComponent key={prod._id} product={prod} viewMode={viewMode} />
+        ))}
+      </Box>
+      <ProductsPagination page={page} count={count} onChange={onChange} />
     </>
   );
 };
