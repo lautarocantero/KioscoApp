@@ -9,6 +9,7 @@ import sellerSlice from "./seller/sellerSlice";
 import sellerPersonSlice from "./seller/sellerPersonSlice";
 import presentationSlice from "./presentation/presentationSlice";
 import { initAuthHttpBridge } from "../hooks/auth/useLogoutHandler";
+import { receiptSlice } from "./receipt/receiptsSlice";
 
 //─── 🔎 Storage engine manual 🔎 ───
 // redux-persist/lib/storage tiene problemas de interop con el pre-bundling
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
     product: productSlice,
     presentation: presentationSlice,
     provider: providerSlice,
+    receipt: receiptSlice,
     sell: sellSlice,    // se queda igual
     seller: persistedSellerReducer, // se deberia llamar cart
     sellerPerson: sellerPersonSlice, // se deberia llamar employes

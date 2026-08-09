@@ -4,71 +4,55 @@ import ReceiptUploadArea from "./components/ReceiptUploadArea";
 import ReceiptSummaryCard from "./components/ReceiptSummaryCard";
 import ReceiptAdviceCard from "./components/ReceiptAdviceCard";
 import ReceiptHelpCard from "./components/ReceiptHelpCard";
-import type {
-    ReceiptUploadAreaProps,
-    ReceiptSummaryCardProps,
-    ReceiptAdviceCardProps,
-    ReceiptHelpCardProps,
-} from "@typings/receipt/receiptComponentTypes";
+import { RECEIPT_ACCEPTED_FORMATS, RECEIPT_ADVICE_ITEMS, RECEIPT_HELP_DESCRIPTION, RECEIPT_MAX_SIZE } from "../constants/receiptStaticContent";
+import { useReceiptUpload } from "@hooks/receipt/useReceiptUpload";
 
-const uploadAreaProps: ReceiptUploadAreaProps = {
-    acceptedFormats: [".xlsx", ".xls"],
-    maxSize: "10 MB",
-    onSelectFile: () => {
-        console.log("Seleccionar archivo");
-    },
-};
+const ReceiptPage = (): React.ReactNode => {
+  const {
+    fileInputRef,
+    isUploading,
+    summaryCardProps,
+    handleSelectFile,
+    handleFileChange,
+    handleFileDrop,
+  } = useReceiptUpload();
 
-const summaryCardProps: ReceiptSummaryCardProps = {
-    status: "Aún no has cargado",
-    description: "Ningún archivo procesado",
-};
-
-const adviceCardProps: ReceiptAdviceCardProps = {
-    adviceItems: [
-        "Asegurate de que el archivo tenga los encabezados correctos.",
-        "No modifiqués el orden de las columnas.",
-        "Verificá que los códigos de producto existan en el catálogo.",
-    ],
-};
-
-const helpCardProps: ReceiptHelpCardProps = {
-    helpDescription: "Contactá al soporte si tenés dudas sobre el formato o la carga de archivos.",
-    buttonLabel: "Ir a soporte",
-    onSupportClick: () => {
-        console.log("Ir a soporte");
-    },
-};
-
-const ReceiptPage = (): React.ReactNode => (
+  return (
     <AppLayout fullWidth>
-        <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 3 }}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                <Typography variant="h4" sx={{ fontWeight: 700 }}>
-                    Carga de boletas
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                    Importa tus boletas desde un archivo Excel y actualizá tu inventario.
-                </Typography>
-            </Box>
-
-            <Box
-                sx={{
-                    display: "grid",
-                    gridTemplateColumns: { xs: "1fr", lg: "2fr 1fr" },
-                    gap: 3,
-                }}
-            >
-                <ReceiptUploadArea {...uploadAreaProps} />
-
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                    <ReceiptSummaryCard {...summaryCardProps} />
-                    <ReceiptAdviceCard {...adviceCardProps} />
-                    <ReceiptHelpCard {...helpCardProps} />
-                </Box>
-            </Box>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 3 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
+            Carga de boletas
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Importa tus boletas desde un archivo Excel y actualizá tu inventario.
+          </Typography>
         </Box>
+
+        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "2fr 1fr" }, gap: 3 }}>
+          <ReceiptUploadArea
+            acceptedFormats={RECEIPT_ACCEPTED_FORMATS}
+            maxSize={RECEIPT_MAX_SIZE}
+            onSelectFile={handleSelectFile}
+            onFileChange={handleFileChange}
+            onFileDrop={handleFileDrop}
+            fileInputRef={fileInputRef}
+            disabled={isUploading}
+          />
+
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <ReceiptSummaryCard {...summaryCardProps} />
+            <ReceiptAdviceCard adviceItems={RECEIPT_ADVICE_ITEMS} />
+            <ReceiptHelpCard
+              helpDescription={RECEIPT_HELP_DESCRIPTION}
+              buttonLabel="Ir a soporte"
+              onSupportClick={() => console.log("Ir a soporte")}
+            />
+          </Box>
+        </Box>
+      </Box>
     </AppLayout>
-);
+  );
+};
 
 export default ReceiptPage;

@@ -1,32 +1,55 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { uploadReceiptThunk } from "./receiptsThunks";
-import type { ReceiptsState } from "@typings/receipt/receiptTypes";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { store } from "../store";
+import type { ReceiptImportResult, ReceiptState, ReceiptStateError } from "@typings/receipt/receiptTypes";
 
+const initialState: ReceiptState = {
+    status:       "idle",
+    result:       null,
+    isLoading:    false,
+    error:        null,
+    errorMessage: null,
+}
 
-const initialState: ReceiptsState = { status: "idle", result: null, error: null };
+export const receiptSlice = createSlice({
+    name: 'Receipt',
+    initialState,
+    reducers: {
 
-const receiptsSlice = createSlice({
-  name: "receipts",
-  initialState,
-  reducers: {
-    resetReceiptState: () => initialState,
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(uploadReceiptThunk.pending, (state) => {
-        state.status = "loading";
-        state.error = null;
-      })
-      .addCase(uploadReceiptThunk.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.result = action.payload;
-      })
-      .addCase(uploadReceiptThunk.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload ?? "Error desconocido";
-      });
-  },
+        checkingReceiptUpload: (state: ReceiptState) => {
+            state.status       = "loading";
+            state.isLoading    = true;
+            state.error        = null;
+            state.errorMessage = null;
+        },
+
+        setReceiptResult: (state: ReceiptState, action: PayloadAction<ReceiptImportResult>) => {
+            state.status       = "succeeded";
+            state.result       = action.payload;
+            state.isLoading    = false;
+            state.error        = null;
+            state.errorMessage = null;
+        },
+
+        setReceiptError: (state: ReceiptState, action: PayloadAction<ReceiptStateError>) => {
+            state.status       = "failed";
+            state.error        = action.payload.errorMessage;
+            state.errorMessage = action.payload.errorMessage;
+            state.isLoading    = false;
+        },
+
+        // 🆕 vuelve al estado inicial, ej. al desmontar la página o antes de un nuevo upload
+        resetReceiptState: () => initialState,
+    }
 });
 
-export const { resetReceiptState } = receiptsSlice.actions;
-export default receiptsSlice.reducer;
+export const {
+    checkingReceiptUpload,
+    setReceiptResult,
+    setReceiptError,
+    resetReceiptState,
+} = receiptSlice.actions;
+
+export type RootState   = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export default receiptSlice.reducer;
