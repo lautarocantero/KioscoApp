@@ -22,6 +22,8 @@ export const uploadReceiptRequest = async (
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await baseUrl.post<ReceiptImportResult>("/", formData);
+  const response = await baseUrl.post<ReceiptImportResult>("/", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 };
