@@ -31,7 +31,6 @@ const AppRouter = (): React.ReactNode => {
     dispatch(startCheckAuth());
   }, [dispatch]);
 
-  // 👇 Clave: no decidas rutas todavía
   if (status === AuthStatus.Checking) {
     return <LoadingSpinnerComponent />; // o null, o un spinner
   }
