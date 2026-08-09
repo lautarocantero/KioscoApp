@@ -8,8 +8,9 @@ import sellSlice from "./sell/sellSlice";
 import sellerSlice from "./seller/sellerSlice";
 import sellerPersonSlice from "./seller/sellerPersonSlice";
 import presentationSlice from "./presentation/presentationSlice";
+import receiptSlice from "./receipt/receiptsSlice";
 import { initAuthHttpBridge } from "../hooks/auth/useLogoutHandler";
-import { receiptSlice } from "./receipt/receiptsSlice";
+
 
 //─── 🔎 Storage engine manual 🔎 ───
 // redux-persist/lib/storage tiene problemas de interop con el pre-bundling
