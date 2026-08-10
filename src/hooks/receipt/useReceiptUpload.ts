@@ -1,46 +1,54 @@
 import { useRef, type ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadReceiptThunk } from "../../store/receipt/receiptsThunks";
+import { previewReceiptThunk, confirmReceiptThunk } from "../../store/receipt/receiptsThunks";
+import { resetReceiptState } from "../../store/receipt/receiptsSlice";
 import { buildReceiptSummaryCardProps } from "../../modules/receipt/pages/ReceiptPage/helpers/buildReceiptSummaryCardProps";
 import type { AppDispatch, RootState } from "../../store/receipt/receiptsSlice";
 
-/*══════════════════════════════════════════════════════════════════════════╗
-║ 🪝 useReceiptUpload                                                       ║
-║                                                                          ║
-║ Encapsula todo lo que ReceiptPage necesita: estado de Redux, ref del     ║
-║ input file y los tres puntos de entrada de archivo (click, input        ║
-║ nativo, drag&drop) unificados en un solo dispatch. La página no          ║
-║ conoce el thunk ni el shape del slice, solo consume esto.                ║
-╚══════════════════════════════════════════════════════════════════════════╝*/
 export function useReceiptUpload() {
   const dispatch = useDispatch<AppDispatch>();
-  const { status, result, error, uploadProgress } = useSelector((state: RootState) => state.receipt);
+  const { status, preview, result, errorMessage, uploadProgress } = useSelector((state: RootState) => state.receipt);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const isUploading = status === "loading";
+  const isConfirming = status === "confirming";
+  const isModalOpen = status === "awaitingConfirmation";
 
   const handleSelectFile = (): void => {
     fileInputRef.current?.click();
   };
 
   const handleFileSelected = (file: File): void => {
-    dispatch(uploadReceiptThunk(file));
+    dispatch(previewReceiptThunk(file));
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
     if (file) handleFileSelected(file);
-    e.target.value = ""; // permite volver a elegir el mismo archivo
+    e.target.value = "";
   };
 
-  const summaryCardProps = buildReceiptSummaryCardProps(status, result, error, uploadProgress);
+  const handleConfirmImport = (): void => {
+    if (preview) dispatch(confirmReceiptThunk(preview));
+  };
+
+  const handleCancelPreview = (): void => {
+    dispatch(resetReceiptState());
+  };
+
+  const summaryCardProps = buildReceiptSummaryCardProps(status, result, errorMessage, uploadProgress);
 
   return {
     fileInputRef,
     isUploading,
+    isConfirming,
+    isModalOpen,
+    preview,
     summaryCardProps,
     handleSelectFile,
     handleFileChange,
     handleFileDrop: handleFileSelected,
+    handleConfirmImport,
+    handleCancelPreview,
   };
 }

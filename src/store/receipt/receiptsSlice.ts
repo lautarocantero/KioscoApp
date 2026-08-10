@@ -1,13 +1,14 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { uploadReceiptThunk } from "./receiptsThunks";
+import { previewReceiptThunk, confirmReceiptThunk } from "./receiptsThunks";
 import type { store } from "../store";
-import type { ReceiptImportResult, ReceiptState } from "@typings/receipt/receiptTypes";
+import type { ReceiptImportResult, ReceiptPreviewResult, ReceiptState } from "@typings/receipt/receiptTypes";
+import { ReceiptStatusEnum } from "@typings/receipt/receiptEnums";
 
 const initialState: ReceiptState = {
-    status:         "idle",
+    status:         ReceiptStatusEnum.Idle,
+    preview:        null,
     result:         null,
     isLoading:      false,
-    error:          null,
     errorMessage:   null,
     uploadProgress: 0,
 }
@@ -16,38 +17,52 @@ export const receiptSlice = createSlice({
     name: 'Receipt',
     initialState,
     reducers: {
-        // 🆕 progreso de subida (0-100), emitido por onUploadProgress de axios
         setReceiptUploadProgress: (state: ReceiptState, action: PayloadAction<number>) => {
             state.uploadProgress = action.payload;
         },
 
-        // vuelve al estado inicial, ej. al desmontar la página o antes de un nuevo upload
+        // 🆕 vuelve al estado inicial: se usa para "Cancelar" en el modal
+        // de confirmación y para arrancar una nueva carga desde cero.
         resetReceiptState: () => initialState,
     },
     extraReducers: (builder) => {
         builder
-            .addCase(uploadReceiptThunk.pending, (state) => {
-                state.status         = "loading";
+            .addCase(previewReceiptThunk.pending, (state) => {
+                state.status         = ReceiptStatusEnum.Loading;
                 state.isLoading      = true;
-                state.error          = null;
                 state.errorMessage   = null;
                 state.uploadProgress = 0;
+                state.preview        = null;
             })
-            .addCase(uploadReceiptThunk.fulfilled, (state, action: PayloadAction<ReceiptImportResult>) => {
-                state.status         = "succeeded";
-                state.result         = action.payload;
+            .addCase(previewReceiptThunk.fulfilled, (state, action: PayloadAction<ReceiptPreviewResult>) => {
+                state.status         = ReceiptStatusEnum.AwaitingConfirmation;
+                state.preview        = action.payload;
                 state.isLoading      = false;
-                state.error          = null;
                 state.errorMessage   = null;
                 state.uploadProgress = 100;
             })
-            .addCase(uploadReceiptThunk.rejected, (state, action) => {
-                const message = action.payload ?? "Ocurrió un error inesperado";
-                state.status         = "failed";
-                state.error          = message;
-                state.errorMessage   = message;
+            .addCase(previewReceiptThunk.rejected, (state, action) => {
+                state.status         = ReceiptStatusEnum.Failed;
+                state.errorMessage   = action.payload ?? "Ocurrió un error inesperado";
                 state.isLoading      = false;
                 state.uploadProgress = 0;
+            })
+            .addCase(confirmReceiptThunk.pending, (state) => {
+                state.status       = ReceiptStatusEnum.Confirming;
+                state.isLoading    = true;
+                state.errorMessage = null;
+            })
+            .addCase(confirmReceiptThunk.fulfilled, (state, action: PayloadAction<ReceiptImportResult>) => {
+                state.status       = ReceiptStatusEnum.Succeeded;
+                state.result       = action.payload;
+                state.preview      = null;
+                state.isLoading    = false;
+                state.errorMessage = null;
+            })
+            .addCase(confirmReceiptThunk.rejected, (state, action) => {
+                state.status       = ReceiptStatusEnum.Failed;
+                state.errorMessage = action.payload ?? "Ocurrió un error inesperado";
+                state.isLoading    = false;
             });
     },
 });

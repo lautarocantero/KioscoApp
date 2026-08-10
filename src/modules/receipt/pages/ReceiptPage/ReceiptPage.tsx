@@ -5,15 +5,21 @@ import ReceiptSummaryCard from "./components/ReceiptSummaryCard";
 import ReceiptAdviceCard from "./components/ReceiptAdviceCard";
 import { RECEIPT_ACCEPTED_FORMATS, RECEIPT_ADVICE_ITEMS, RECEIPT_MAX_SIZE } from "../constants/receiptStaticContent";
 import { useReceiptUpload } from "@hooks/receipt/useReceiptUpload";
+import ReceiptConfirmModal from "./components/ReceiptConfirmModal";
 
 const ReceiptPage = (): React.ReactNode => {
   const {
     fileInputRef,
     isUploading,
+    isConfirming,
+    isModalOpen,
+    preview,
     summaryCardProps,
     handleSelectFile,
     handleFileChange,
     handleFileDrop,
+    handleConfirmImport,
+    handleCancelPreview,
   } = useReceiptUpload();
 
   return (
@@ -36,20 +42,23 @@ const ReceiptPage = (): React.ReactNode => {
             onFileChange={handleFileChange}
             onFileDrop={handleFileDrop}
             fileInputRef={fileInputRef}
-            disabled={isUploading}
+            disabled={isUploading || isConfirming || isModalOpen}
           />
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
             <ReceiptSummaryCard {...summaryCardProps} />
             <ReceiptAdviceCard adviceItems={RECEIPT_ADVICE_ITEMS} />
-            {/* <ReceiptHelpCard
-              helpDescription={RECEIPT_HELP_DESCRIPTION}
-              buttonLabel="Ir a soporte"
-              onSupportClick={() => console.log("Ir a soporte")}
-            /> */}
           </Box>
         </Box>
       </Box>
+
+      <ReceiptConfirmModal
+        open={isModalOpen}
+        preview={preview}
+        loading={isConfirming}
+        onConfirm={handleConfirmImport}
+        onCancel={handleCancelPreview}
+      />
     </AppLayout>
   );
 };

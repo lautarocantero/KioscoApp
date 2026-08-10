@@ -1,3 +1,5 @@
+import type { ReceiptPreviewResult } from "./receiptTypes";
+
 export interface ReceiptUploadAreaProps {
     acceptedFormats: string[];
     maxSize: string;
@@ -12,6 +14,7 @@ export interface ReceiptSummaryCardProps {
     status: string;
     description: string;
     progress?: number;
+    showProgress?: boolean;
     isProcessing?: boolean;
     stats?: {
         productsInserted: number;
@@ -64,4 +67,12 @@ export interface ReceiptImportResult {
     products: BulkInsertResult;
     presentations: BulkInsertResult;
   };
+}
+
+export interface ReceiptConfirmModalProps {
+  open: boolean;
+  preview: ReceiptPreviewResult | null;
+  loading: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
 }

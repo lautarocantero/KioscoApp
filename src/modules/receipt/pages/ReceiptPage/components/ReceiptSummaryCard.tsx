@@ -9,10 +9,10 @@ const ReceiptSummaryCard = ({
     status,
     description,
     progress,
+    showProgress,
     isProcessing,
     stats,
 }: ReceiptSummaryCardProps): React.ReactNode => {
-    const isLoading = progress !== undefined;
     const hasIssues = stats && (stats.productsFailed > 0 || stats.presentationsFailed > 0 || stats.pendingReviewCount > 0);
 
     return (
@@ -44,7 +44,7 @@ const ReceiptSummaryCard = ({
                         color: "common.white",
                     }}
                 >
-                    {stats && !isLoading ? (
+                    {stats && !showProgress ? (
                         hasIssues ? <ErrorOutlineIcon fontSize="large" /> : <CheckCircleOutlineIcon fontSize="large" />
                     ) : (
                         <FilePresentOutlinedIcon fontSize="large" />
@@ -58,14 +58,14 @@ const ReceiptSummaryCard = ({
                     {description}
                 </Typography>
 
-                {isLoading && (
+                {showProgress && (
                     <Box sx={{ width: "100%", px: 1 }}>
                         <LinearProgress
                             variant={isProcessing ? "indeterminate" : "determinate"}
                             value={isProcessing ? undefined : progress}
                             sx={{ height: 8, borderRadius: 4 }}
                         />
-                        {!isProcessing && (
+                        {!isProcessing && progress !== undefined && (
                             <Typography variant="caption" color="text.secondary" sx={{ display: "block", textAlign: "right", mt: 0.5 }}>
                                 {progress}%
                             </Typography>

@@ -1,6 +1,5 @@
-import type { ReceiptImportResult } from "@typings/receipt/receiptComponentTypes";
-
-export type ReceiptUploadStatus = "idle" | "loading" | "succeeded" | "failed";
+import type { ReceiptStatusEnum } from "@typings/receipt/receiptEnums";
+import type { ReceiptImportResult } from "@typings/receipt/receiptTypes";
 
 export interface ReceiptSummaryStats {
   productsInserted: number;
@@ -17,38 +16,43 @@ export interface ReceiptSummaryCardViewProps {
   status: string;
   description: string;
   progress?: number;
-  isProcessing?: boolean; // 100% subido pero backend aún procesando
+  showProgress?: boolean;
+  isProcessing?: boolean;
   stats?: ReceiptSummaryStats;
 }
 
-/*══════════════════════════════════════════════════════════════════════════╗
-║ 🧮 buildReceiptSummaryCardProps                                           ║
-║                                                                          ║
-║ Traduce el estado del thunk de subida (idle/loading/succeeded/failed)    ║
-║ + el progreso real de subida a las props que consume                    ║
-║ ReceiptSummaryCard. Aislado del componente para poder testear el         ║
-║ mapeo sin renderizar nada.                                               ║
-╚══════════════════════════════════════════════════════════════════════════╝*/
 export function buildReceiptSummaryCardProps(
-  status: ReceiptUploadStatus,
+  status: ReceiptStatusEnum,
   result: ReceiptImportResult | null,
-  error: string | null,
+  errorMessage: string | null,
   progress: number
 ): ReceiptSummaryCardViewProps {
   if (status === "loading") {
     const isProcessing = progress >= 100;
     return {
-      status: isProcessing ? "Procesando…" : "Subiendo archivo…",
-      description: isProcessing
-        ? "Analizando e importando los datos del archivo"
-        : `${progress}% subido`,
+      status: isProcessing ? "Analizando…" : "Subiendo archivo…",
+      description: isProcessing ? "Revisando el contenido del archivo" : `${progress}% subido`,
       progress,
+      showProgress: true,
       isProcessing,
     };
   }
 
+  if (status === "awaitingConfirmation") {
+    return { status: "Esperando confirmación", description: "Revisá el detalle antes de aplicar los cambios" };
+  }
+
+  if (status === "confirming") {
+    return {
+      status: "Aplicando cambios…",
+      description: "Insertando productos y presentaciones",
+      showProgress: true,
+      isProcessing: true,
+    };
+  }
+
   if (status === "failed") {
-    return { status: "Error", description: error ?? "Ocurrió un error inesperado" };
+    return { status: "Error", description: errorMessage ?? "Ocurrió un error inesperado" };
   }
 
   if (status === "succeeded" && result) {
