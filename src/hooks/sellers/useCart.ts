@@ -24,9 +24,35 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
 
     const [ticketSummary, setTicketSummary] = useState<TicketSummaryType | null>(null);
 
+    // Overrides de subtotal editados a mano, indexados por _id del producto
+    const [subtotalOverrides, setSubtotalOverrides] = useState<Record<string, number>>({});
+
+    // Si el carrito se vacía (por ej. después de generar el ticket, o clear manual),
+    // limpiamos también los overrides para no arrastrarlos a la próxima venta
+    useEffect(() => {
+        if (!cart || cart.length === 0) {
+            setSubtotalOverrides({});
+        }
+    }, [cart]);
+
+    const getItemSubtotal = useCallback(
+        (product: ProductTicketType): number => {
+            const override = subtotalOverrides[String(product._id)];
+            return override !== undefined
+                ? override
+                : calculateItemAmount(product.price, product.stock_required, product.sale_type);
+        },
+        [subtotalOverrides]
+    );
+
+    const cartWithSubtotals: ProductTicketWithStockType[] = useMemo(
+        () => cart?.map((product) => ({ ...product, subtotal: getItemSubtotal(product) })) ?? [],
+        [cart, getItemSubtotal]
+    );
+
     const productsTotalPrice: number = useMemo(
-        () => cart?.reduce((count, product) => count + calculateItemAmount(product.price, product.stock_required, product.sale_type), 0) ?? 0,
-        [cart]
+        () => cartWithSubtotals.reduce((count, product) => count + (product.subtotal ?? 0), 0),
+        [cartWithSubtotals]
     );
     const ivaPercentage: number = iva;
     const ivaAmount: number = (productsTotalPrice * ivaPercentage) / 100;
@@ -58,6 +84,10 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         });
     }, []);
 
+    const handleSubtotalChange = useCallback((_id: string, value: number): void => {
+        setSubtotalOverrides((prev) => ({ ...prev, [_id]: value }));
+    }, []);
+
     const generateTicket = useCallback(async (formValues: CartFormValues): Promise<void> => {
         const isPartial = formValues.status === SellStatusEnum.Parcial;
 
@@ -75,7 +105,7 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
             status: isPartial ? SellStatusEnum.Parcial : SellStatusEnum.Completada,
             amount_paid: isPartial ? formValues.amount_paid : total,
             debtor_name: isPartial ? formValues.debtor_name : null,
-            products: cart,
+            products: cartWithSubtotals,
             sub_total: productsTotalPrice,
             iva: ivaPercentage,
             total_amount: total,
@@ -94,8 +124,9 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         localStorage.setItem('last_ticket', JSON.stringify(savedTicket));
         createPdfTicket(savedTicket);
         await dispatch(cleanCartThunk());
+        setSubtotalOverrides({});
         navigate('/cart-order-confirmed');
-    }, [cart, productsTotalPrice, ivaPercentage, total, dispatch, navigate, showSnackBar]);
+    }, [cartWithSubtotals, productsTotalPrice, ivaPercentage, total, dispatch, navigate, showSnackBar]);
 
     const printTicket = useCallback((): void => {
         const ticketString: string | null = localStorage.getItem('last_ticket');
@@ -106,6 +137,7 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
 
     const handleClearCart = useCallback((): void => {
         dispatch(cleanCartThunk());
+        setSubtotalOverrides({});
     }, [dispatch]);
 
     const handleDecreaseProduct = useCallback((_id: string): void => {
@@ -130,12 +162,12 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     }, [ticketSummary, navigate]);
 
     const columns = useMemo(
-        () => buildColumnsForCartProducts(handleIncreaseProduct, handleDecreaseProduct),
-        [handleIncreaseProduct, handleDecreaseProduct]
+        () => buildColumnsForCartProducts(handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange),
+        [handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange]
     );
 
     return {
-        cart,
+        cart: cartWithSubtotals,
         productsTotalPrice,
         ivaPercentage,
         ivaAmount,

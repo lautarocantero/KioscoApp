@@ -68,6 +68,7 @@ export interface ProductTicketType {
 export type ProductTicketWithStockType = ProductTicketType & {
     product_id: string;
     stock: number;
+    subtotal?: number;
 };
 
 // /*══════════════════════════════════════════════════════════════════════╗

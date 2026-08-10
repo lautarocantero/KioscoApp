@@ -5,11 +5,13 @@ import { formatCurrency } from "../helpers/formatCurrency";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CartProductRowActionCell from "./CartProductRowActionCell";
-import { calculateItemAmount, formatStockQuantity } from "../../shared/helpers/saleTypeHelper";
+import { formatStockQuantity } from "../../shared/helpers/saleTypeHelper";
+import EditableNumberCell from "../../shared/components/DataTable/EditableNumberCell";
 
 export const buildColumnsForCartProducts = (
   onIncrease: (_id: string) => void,
   onDecrease: (_id: string) => void,
+  onSubtotalChange: (_id: string, value: number) => void,
 ): GridColDef<ProductTicketWithStockType>[] => [
   {
     field: "name",
@@ -107,7 +109,13 @@ export const buildColumnsForCartProducts = (
     align: "center",
     headerAlign: "center",
     sortable: false,
-    valueGetter: (_value, row) => formatCurrency(calculateItemAmount(row.price, row.stock_required, row.sale_type)),
+    renderCell: (params) => (
+      <EditableNumberCell
+        productId={String(params.row._id)}
+        value={params.row.subtotal ?? 0}
+        onChange={onSubtotalChange}
+      />
+    ),
   },
   {
     field: "actions",
