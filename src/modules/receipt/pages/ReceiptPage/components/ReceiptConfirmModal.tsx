@@ -55,23 +55,6 @@ const ReceiptConfirmModal = ({ open, preview, loading, onConfirm, onCancel }: Re
 
           <Divider />
 
-          <Box>
-            <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
-              Productos a crear
-            </Typography>
-            <List dense sx={{ maxHeight: 240, overflowY: "auto", bgcolor: "action.hover", borderRadius: 2 }}>
-              {visibleProducts.map((product) => (
-                <ListItem key={product._id}>
-                  <ListItemText primary={product.name} secondary={`${product.presentations.length} presentación(es)`} />
-                </ListItem>
-              ))}
-            </List>
-            {remainingProductsCount > 0 && (
-              <Typography variant="caption" color="text.secondary">
-                y {remainingProductsCount} producto(s) más…
-              </Typography>
-            )}
-          </Box>
         </Stack>
       </DialogContent>
       <DialogActions sx={{ px: 3, py: 2, gap: 1 }}>
