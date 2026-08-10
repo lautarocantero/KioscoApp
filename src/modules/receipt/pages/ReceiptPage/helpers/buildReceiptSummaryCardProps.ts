@@ -42,28 +42,33 @@ export function buildReceiptSummaryCardProps(
     const productsInserted = result.insertResult?.products?.inserted?.length ?? 0;
     const productsSkipped = result.insertResult?.products?.skippedDuplicates?.length ?? 0;
     const productsFailed = result.insertResult?.products?.failed?.length ?? 0;
-    const presentationsInserted = result.insertResult?.presentations?.inserted?.length ?? 0;
-    const presentationsSkipped = result.insertResult?.presentations?.skippedDuplicates?.length ?? 0;
+    const productsAlreadyExistingCount = result.productsAlreadyExisting?.length ?? 0;
+    const productsTotal = productsInserted + productsAlreadyExistingCount;
+    const presentationsCreated = result.insertResult?.presentations?.created?.length ?? 0;
+    const presentationsUpdated = result.insertResult?.presentations?.updated?.length ?? 0;
+    const presentationsUnchanged = result.insertResult?.presentations?.unchanged?.length ?? 0;
     const presentationsFailed = result.insertResult?.presentations?.failed?.length ?? 0;
     const pendingReviewCount = result.pendingReview?.length ?? 0;
     const totalRows = result.stats?.totalRows ?? 0;
 
     const stats: ReceiptSummaryStats = {
+      productsTotal,
       productsInserted,
       productsSkipped,
       productsFailed,
-      presentationsInserted,
-      presentationsSkipped,
+      presentationsCreated,
+      presentationsUpdated,
+      presentationsUnchanged,
       presentationsFailed,
       pendingReviewCount,
       totalRows,
     };
 
-    const hasIssues = productsFailed > 0 || presentationsFailed > 0 || pendingReviewCount > 0;
+    const presentationsProcessed = presentationsCreated + presentationsUpdated + presentationsUnchanged;
 
     return {
-      status: hasIssues ? "Carga completada con observaciones" : "Carga completada",
-      description: `${productsInserted} productos y ${presentationsInserted} presentaciones procesadas de ${totalRows} filas`,
+      status: "Carga completada",
+      description: `${productsTotal} productos y ${presentationsProcessed} presentaciones procesadas de ${totalRows} filas`,
       stats,
     };
 }

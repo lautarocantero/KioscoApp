@@ -18,11 +18,13 @@ export interface ReceiptSummaryCardProps {
     showProgress?: boolean;
     isProcessing?: boolean;
     stats?: {
+        productsTotal: number;
         productsInserted: number;
         productsSkipped: number;
         productsFailed: number;
-        presentationsInserted: number;
-        presentationsSkipped: number;
+        presentationsCreated: number;
+        presentationsUpdated: number;
+        presentationsUnchanged: number;
         presentationsFailed: number;
         pendingReviewCount: number;
         totalRows: number;

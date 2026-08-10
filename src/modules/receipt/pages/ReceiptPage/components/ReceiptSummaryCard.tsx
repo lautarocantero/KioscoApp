@@ -1,7 +1,6 @@
 import { Box, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import FilePresentOutlinedIcon from "@mui/icons-material/FilePresentOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
 import type { ReceiptSummaryCardProps } from "@typings/receipt/receiptComponentTypes";
 
@@ -13,8 +12,6 @@ const ReceiptSummaryCard = ({
     isProcessing,
     stats,
 }: ReceiptSummaryCardProps): React.ReactNode => {
-    const hasIssues = stats && (stats.productsFailed > 0 || stats.presentationsFailed > 0 || stats.pendingReviewCount > 0);
-
     return (
         <NoisyCard sx={{ p: 3, borderRadius: "24px" }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
@@ -37,7 +34,7 @@ const ReceiptSummaryCard = ({
                         width: 72,
                         height: 72,
                         borderRadius: "50%",
-                        bgcolor: hasIssues ? "warning.main" : "primary.main",
+                        bgcolor: "primary.main",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -45,7 +42,7 @@ const ReceiptSummaryCard = ({
                     }}
                 >
                     {stats && !showProgress ? (
-                        hasIssues ? <ErrorOutlineIcon fontSize="large" /> : <CheckCircleOutlineIcon fontSize="large" />
+                        <CheckCircleOutlineIcon fontSize="large" />
                     ) : (
                         <FilePresentOutlinedIcon fontSize="large" />
                     )}
@@ -74,21 +71,33 @@ const ReceiptSummaryCard = ({
                 )}
 
                 {stats && (
-                    <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center" sx={{ rowGap: 1 }}>
-                        <Chip size="small" label={`${stats.productsInserted} productos`} color="primary" variant="outlined" />
-                        <Chip size="small" label={`${stats.presentationsInserted} presentaciones nuevas`} color="primary" variant="outlined" />
-                        {stats.productsSkipped > 0 && (
-                            <Chip size="small" label={`${stats.productsSkipped} productos duplicados`} color="default" variant="outlined" />
-                        )}
-                        {stats.presentationsSkipped > 0 && (
-                            <Chip size="small" label={`${stats.presentationsSkipped} presentaciones duplicadas`} color="default" variant="outlined" />
-                        )}
-                        {stats.productsFailed + stats.presentationsFailed > 0 && (
-                            <Chip size="small" label={`${stats.productsFailed + stats.presentationsFailed} fallidos`} color="error" variant="outlined" />
-                        )}
-                        {stats.pendingReviewCount > 0 && (
-                            <Chip size="small" label={`${stats.pendingReviewCount} a revisar`} color="warning" variant="outlined" />
-                        )}
+                    <Stack spacing={1} sx={{ width: "100%" }}>
+                        <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center" sx={{ rowGap: 1 }}>
+                            <Chip size="small" label={`${stats.productsTotal} productos`} color="primary" variant="outlined" />
+                            <Chip size="small" label={`${stats.productsInserted} nuevos`} color="primary" variant="outlined" />
+                            {stats.productsSkipped > 0 && (
+                                <Chip size="small" label={`${stats.productsSkipped} duplicados`} color="default" variant="outlined" />
+                            )}
+                            {stats.productsFailed > 0 && (
+                                <Chip size="small" label={`${stats.productsFailed} fallidos`} color="error" variant="outlined" />
+                            )}
+                        </Stack>
+
+                        <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center" sx={{ rowGap: 1 }}>
+                            <Chip
+                                size="small"
+                                label={`${stats.presentationsCreated + stats.presentationsUpdated + stats.presentationsUnchanged} presentaciones`}
+                                color="primary"
+                                variant="outlined"
+                            />
+                            <Chip size="small" label={`${stats.presentationsCreated} nuevas`} color="primary" variant="outlined" />
+                            {stats.presentationsUpdated > 0 && (
+                                <Chip size="small" label={`${stats.presentationsUpdated} actualizadas`} color="info" variant="outlined" />
+                            )}
+                            {stats.presentationsFailed > 0 && (
+                                <Chip size="small" label={`${stats.presentationsFailed} fallidas`} color="error" variant="outlined" />
+                            )}
+                        </Stack>
                     </Stack>
                 )}
             </Box>

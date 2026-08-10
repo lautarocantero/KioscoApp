@@ -22,11 +22,13 @@ export interface ReceiptPendingReview {
 }
 
 export interface ReceiptSummaryStats {
+  productsTotal: number;
   productsInserted: number;
   productsSkipped: number;
   productsFailed: number;
-  presentationsInserted: number;
-  presentationsSkipped: number;
+  presentationsCreated: number;
+  presentationsUpdated: number;
+  presentationsUnchanged: number;
   presentationsFailed: number;
   pendingReviewCount: number;
   totalRows: number;
@@ -61,6 +63,7 @@ export interface ReceiptBulkInsertResult {
 export interface ReceiptBulkWriteResult {
   created: string[];
   updated: string[];
+  unchanged: string[];
   failed: { _id: string; error: string }[];
 }
 
@@ -69,8 +72,13 @@ export interface ReceiptImportResult {
   pendingReview: ReceiptPendingReview[];
   insertResult: {
     products: ReceiptBulkInsertResult;
-    presentations: ReceiptBulkInsertResult;
+    presentations: ReceiptBulkWriteResult;
   };
+  // Ids de productos que ya existían en la BD y por lo tanto no se
+  // insertaron de nuevo (resueltos en el preview, pasados sin cambios
+  // por el front al confirmar). Sirve para calcular el total real de
+  // productos del archivo (nuevos + existentes) en el resumen.
+  productsAlreadyExisting: string[];
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -106,6 +114,7 @@ export interface ReceiptPreviewPresentation {
   updated_at: string;
   action: ReceiptDocAction;
   existingId: string | null;
+  existingProductId: string | null;
 }
 
 export interface ReceiptPreviewResult {
@@ -113,6 +122,7 @@ export interface ReceiptPreviewResult {
   pendingReview: ReceiptPendingReview[];
   products: ReceiptPreviewProduct[];
   presentations: ReceiptPreviewPresentation[];
+  productsAlreadyExisting: string[];
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
