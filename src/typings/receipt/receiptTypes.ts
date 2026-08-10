@@ -64,6 +64,7 @@ export interface ReceiptState {
   result: ReceiptImportResult | null;
   isLoading: boolean;
   errorMessage: string | null;
+  uploadProgress: number;
 }
 
 export interface ReceiptStateError {

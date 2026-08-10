@@ -11,6 +11,18 @@ export interface ReceiptUploadAreaProps {
 export interface ReceiptSummaryCardProps {
     status: string;
     description: string;
+    progress?: number;
+    isProcessing?: boolean;
+    stats?: {
+        productsInserted: number;
+        productsSkipped: number;
+        productsFailed: number;
+        presentationsInserted: number;
+        presentationsSkipped: number;
+        presentationsFailed: number;
+        pendingReviewCount: number;
+        totalRows: number;
+    };
 }
 
 export interface ReceiptAdviceCardProps {

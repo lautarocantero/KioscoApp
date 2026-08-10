@@ -14,7 +14,7 @@ import type { AppDispatch, RootState } from "../../store/receipt/receiptsSlice";
 ╚══════════════════════════════════════════════════════════════════════════╝*/
 export function useReceiptUpload() {
   const dispatch = useDispatch<AppDispatch>();
-  const { status, result, error } = useSelector((state: RootState) => state.receipt);
+  const { status, result, error, uploadProgress } = useSelector((state: RootState) => state.receipt);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const isUploading = status === "loading";
@@ -33,7 +33,7 @@ export function useReceiptUpload() {
     e.target.value = ""; // permite volver a elegir el mismo archivo
   };
 
-  const summaryCardProps = buildReceiptSummaryCardProps(status, result, error);
+  const summaryCardProps = buildReceiptSummaryCardProps(status, result, error, uploadProgress);
 
   return {
     fileInputRef,
