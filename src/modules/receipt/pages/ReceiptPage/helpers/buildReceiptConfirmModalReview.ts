@@ -1,11 +1,9 @@
 import { ReceiptDocAction } from "@typings/receipt/receiptEnums";
-import type { ReceiptConfirmModalView, ReceiptPreviewProduct, ReceiptPreviewResult } from "@typings/receipt/receiptTypes";
-import { MAX_VISIBLE_ITEMS } from "../../../../../config/constants";
+import type { ReceiptConfirmModalView, ReceiptPreviewResult } from "@typings/receipt/receiptTypes";
 
 export function buildReceiptConfirmModalView(preview: ReceiptPreviewResult): ReceiptConfirmModalView {
   const { stats, pendingReview, products, presentations } = preview;
 
-  const visibleProducts = products.slice(0, MAX_VISIBLE_ITEMS);
 
   return {
     stats,
@@ -15,7 +13,5 @@ export function buildReceiptConfirmModalView(preview: ReceiptPreviewResult): Rec
     presentationsToCreateCount: presentations.filter((p) => p.action === ReceiptDocAction.Create).length,
     presentationsToUpdateCount: presentations.filter((p) => p.action === ReceiptDocAction.Update).length,
     presentationsCount: presentations.length,
-    visibleProducts,
-    remainingProductsCount: products.length - visibleProducts.length,
   };
 }

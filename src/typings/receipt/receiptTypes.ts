@@ -45,12 +45,11 @@ export interface ReceiptSummaryCardViewProps {
 
 export interface ReceiptConfirmModalView {
   stats: ReceiptPreviewResult["stats"];
-  pendingReview: ReceiptPreviewResult["pendingReview"];
   pendingReviewCount: number;
   productsCount: number;
   presentationsCount: number;
-  visibleProducts: ReceiptPreviewProduct[];
-  remainingProductsCount: number;
+  presentationsToCreateCount: number;
+  presentationsToUpdateCount: number;
   hasPendingReview: boolean;
 }
 

@@ -3,15 +3,9 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Typography,
-  Box,
-  Stack,
-  Chip,
-  List,
-  ListItem,
-  ListItemText,
-  Alert,
-  Divider,
+  Typography, Stack,
+  Chip, Alert,
+  Divider
 } from "@mui/material";
 import EmptyButton from "../../../../shared/components/Buttons/EmptyButton";
 import PrimaryButtonComponent from "../../../../shared/components/Buttons/PrimaryButtonComponent";
@@ -25,9 +19,8 @@ const ReceiptConfirmModal = ({ open, preview, loading, onConfirm, onCancel }: Re
     stats,
     pendingReviewCount,
     productsCount,
-    presentationsCount,
-    visibleProducts,
-    remainingProductsCount,
+    presentationsToCreateCount,
+    presentationsToUpdateCount,
     hasPendingReview,
 } = buildReceiptConfirmModalView(preview);
 
@@ -42,7 +35,10 @@ const ReceiptConfirmModal = ({ open, preview, loading, onConfirm, onCancel }: Re
 
           <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ rowGap: 1 }}>
             <Chip label={`${productsCount} productos nuevos`} color="primary" />
-            <Chip label={`${presentationsCount} presentaciones nuevas`} color="primary" />
+            <Chip label={`${presentationsToCreateCount} presentaciones nuevas`} color="primary" />
+            {presentationsToUpdateCount > 0 && (
+                <Chip label={`${presentationsToUpdateCount} presentaciones a actualizar`} color="info" />
+            )}
             {hasPendingReview && <Chip label={`${pendingReviewCount} a revisar`} color="warning" />}
         </Stack>
 
