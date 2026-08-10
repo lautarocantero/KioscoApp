@@ -1,7 +1,8 @@
 import { useState, type DragEvent } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
+import PrimaryButtonComponent from "../../../../shared/components/Buttons/PrimaryButtonComponent";
 import type { ReceiptUploadAreaProps } from "@typings/receipt/receiptComponentTypes";
 
 const ReceiptUploadArea = ({
@@ -100,15 +101,13 @@ const ReceiptUploadArea = ({
                     disabled={disabled}
                 />
 
-                <Button
-                    variant="contained"
-                    size="large"
-                    onClick={onSelectFile}
+                <PrimaryButtonComponent
+                    buttonText="Seleccionar archivo"
+                    buttonOnClick={onSelectFile}
+                    buttonWidth="200px"
                     disabled={disabled}
-                    sx={{ textTransform: "none", minWidth: 200 }}
-                >
-                    Seleccionar archivo
-                </Button>
+                    marginTop="0"
+                />
 
                 <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
                     Formatos permitidos: {acceptedFormats.join(" • ")} • Tamaño máximo: {maxSize}
@@ -130,14 +129,17 @@ const ReceiptUploadArea = ({
                     Descargá nuestra plantilla de ejemplo para asegurarte de que tus datos estén en el
                     formato correcto.
                 </Typography>
-                <Button
-                    variant="outlined"
-                    color="primary"
-                    size="medium"
-                    sx={{ mt: 2, textTransform: "none" }}
-                >
-                    Descargar plantilla
-                </Button>
+                <PrimaryButtonComponent
+                    buttonText="Descargar plantilla"
+                    buttonOnClick={() => {
+                        const link = document.createElement("a");
+                        link.href = "/files/receiptTemplate.xls";
+                        link.download = "plantilla-boletas.xls";
+                        link.click();
+                    }}
+                    buttonWidth="220px"
+                    marginTop="0"
+                />
             </Box>
         </NoisyCard>
     );
