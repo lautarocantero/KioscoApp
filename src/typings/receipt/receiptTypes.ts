@@ -3,7 +3,7 @@
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 import type { ChangeEvent, RefObject } from "react";
-import type { ReceiptStatusEnum } from "./receiptEnums";
+import type { ReceiptDocAction, ReceiptStatusEnum } from "./receiptEnums";
 
 export interface ReceiptStats {
   totalRows: number;
@@ -58,6 +58,12 @@ export interface ReceiptBulkInsertResult {
   failed: { _id: string; error: string }[];
 }
 
+export interface ReceiptBulkWriteResult {
+  created: string[];
+  updated: string[];
+  failed: { _id: string; error: string }[];
+}
+
 export interface ReceiptImportResult {
   stats: ReceiptStats;
   pendingReview: ReceiptPendingReview[];
@@ -98,6 +104,8 @@ export interface ReceiptPreviewPresentation {
   status: string;
   created_at: string;
   updated_at: string;
+  action: ReceiptDocAction;
+  existingId: string | null;
 }
 
 export interface ReceiptPreviewResult {
@@ -110,7 +118,6 @@ export interface ReceiptPreviewResult {
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
-
 
 
 export interface ReceiptState {

@@ -7,3 +7,8 @@ export enum ReceiptStatusEnum {
   Succeeded = "succeeded",
   Failed = "failed",
 }
+
+export enum ReceiptDocAction {
+  Create = "create",
+  Update = "update",
+}

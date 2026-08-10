@@ -41,10 +41,10 @@ const ReceiptConfirmModal = ({ open, preview, loading, onConfirm, onCancel }: Re
           </Typography>
 
           <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ rowGap: 1 }}>
-              <Chip label={`${productsCount} productos nuevos`} color="primary" />
-              <Chip label={`${presentationsCount} presentaciones nuevas`} color="primary" />
-              {hasPendingReview && <Chip label={`${pendingReviewCount} a revisar`} color="warning" />}
-          </Stack>
+            <Chip label={`${productsCount} productos nuevos`} color="primary" />
+            <Chip label={`${presentationsCount} presentaciones nuevas`} color="primary" />
+            {hasPendingReview && <Chip label={`${pendingReviewCount} a revisar`} color="warning" />}
+        </Stack>
 
           {hasPendingReview && (
             <Alert severity="warning">

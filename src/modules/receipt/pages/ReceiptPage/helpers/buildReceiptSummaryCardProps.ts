@@ -1,5 +1,8 @@
-import type { ReceiptStatusEnum } from "@typings/receipt/receiptEnums";
+import { ReceiptStatusEnum } from "@typings/receipt/receiptEnums";
 import type { ReceiptImportResult, ReceiptSummaryCardViewProps, ReceiptSummaryStats } from "@typings/receipt/receiptTypes";
+
+
+
 
 export function buildReceiptSummaryCardProps(
   status: ReceiptStatusEnum,
@@ -7,7 +10,7 @@ export function buildReceiptSummaryCardProps(
   errorMessage: string | null,
   progress: number
 ): ReceiptSummaryCardViewProps {
-  if (status === "loading") {
+  if (status === ReceiptStatusEnum.Loading) {
     const isProcessing = progress >= 100;
     return {
       status: isProcessing ? "Analizando…" : "Subiendo archivo…",
@@ -18,11 +21,11 @@ export function buildReceiptSummaryCardProps(
     };
   }
 
-  if (status === "awaitingConfirmation") {
+  if (status === ReceiptStatusEnum.AwaitingConfirmation) {
     return { status: "Esperando confirmación", description: "Revisá el detalle antes de aplicar los cambios" };
   }
 
-  if (status === "confirming") {
+  if (status === ReceiptStatusEnum.Confirming) {
     return {
       status: "Aplicando cambios…",
       description: "Insertando productos y presentaciones",
@@ -31,31 +34,39 @@ export function buildReceiptSummaryCardProps(
     };
   }
 
-  if (status === "failed") {
+  if (status === ReceiptStatusEnum.Failed) {
     return { status: "Error", description: errorMessage ?? "Ocurrió un error inesperado" };
   }
 
-  if (status === "succeeded" && result) {
-    const { products, presentations } = result.insertResult;
+  if (status === ReceiptStatusEnum.Succeeded && result) {
+    const productsInserted = result.insertResult?.products?.inserted?.length ?? 0;
+    const productsSkipped = result.insertResult?.products?.skippedDuplicates?.length ?? 0;
+    const productsFailed = result.insertResult?.products?.failed?.length ?? 0;
+    const presentationsInserted = result.insertResult?.presentations?.inserted?.length ?? 0;
+    const presentationsSkipped = result.insertResult?.presentations?.skippedDuplicates?.length ?? 0;
+    const presentationsFailed = result.insertResult?.presentations?.failed?.length ?? 0;
+    const pendingReviewCount = result.pendingReview?.length ?? 0;
+    const totalRows = result.stats?.totalRows ?? 0;
+
     const stats: ReceiptSummaryStats = {
-      productsInserted: products.inserted.length,
-      productsSkipped: products.skippedDuplicates.length,
-      productsFailed: products.failed.length,
-      presentationsInserted: presentations.inserted.length,
-      presentationsSkipped: presentations.skippedDuplicates.length,
-      presentationsFailed: presentations.failed.length,
-      pendingReviewCount: result.pendingReview.length,
-      totalRows: result.stats.totalRows,
+      productsInserted,
+      productsSkipped,
+      productsFailed,
+      presentationsInserted,
+      presentationsSkipped,
+      presentationsFailed,
+      pendingReviewCount,
+      totalRows,
     };
 
-    const hasIssues = stats.productsFailed > 0 || stats.presentationsFailed > 0 || stats.pendingReviewCount > 0;
+    const hasIssues = productsFailed > 0 || presentationsFailed > 0 || pendingReviewCount > 0;
 
     return {
       status: hasIssues ? "Carga completada con observaciones" : "Carga completada",
-      description: `${stats.productsInserted} productos y ${stats.presentationsInserted} presentaciones importadas de ${stats.totalRows} filas`,
+      description: `${productsInserted} productos y ${presentationsInserted} presentaciones procesadas de ${totalRows} filas`,
       stats,
     };
-  }
+}
 
   return { status: "Aún no has cargado", description: "Ningún archivo procesado" };
 }

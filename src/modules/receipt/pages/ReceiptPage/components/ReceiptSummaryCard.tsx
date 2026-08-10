@@ -76,9 +76,12 @@ const ReceiptSummaryCard = ({
                 {stats && (
                     <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center" sx={{ rowGap: 1 }}>
                         <Chip size="small" label={`${stats.productsInserted} productos`} color="primary" variant="outlined" />
-                        <Chip size="small" label={`${stats.presentationsInserted} presentaciones`} color="primary" variant="outlined" />
-                        {stats.productsSkipped + stats.presentationsSkipped > 0 && (
-                            <Chip size="small" label={`${stats.productsSkipped + stats.presentationsSkipped} duplicados`} color="default" variant="outlined" />
+                        <Chip size="small" label={`${stats.presentationsInserted} presentaciones nuevas`} color="primary" variant="outlined" />
+                        {stats.productsSkipped > 0 && (
+                            <Chip size="small" label={`${stats.productsSkipped} productos duplicados`} color="default" variant="outlined" />
+                        )}
+                        {stats.presentationsSkipped > 0 && (
+                            <Chip size="small" label={`${stats.presentationsSkipped} presentaciones duplicadas`} color="default" variant="outlined" />
                         )}
                         {stats.productsFailed + stats.presentationsFailed > 0 && (
                             <Chip size="small" label={`${stats.productsFailed + stats.presentationsFailed} fallidos`} color="error" variant="outlined" />
