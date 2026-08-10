@@ -142,10 +142,20 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
 
     const handleDecreaseProduct = useCallback((_id: string): void => {
         dispatch(removeFromCartThunk({ _id, amount: CartAmount.One }));
+        setSubtotalOverrides((prev) => {
+            if (!(_id in prev)) return prev;
+            const { [_id]: _removed, ...rest } = prev;
+            return rest;
+        });
     }, [dispatch]);
 
     const handleIncreaseProduct = useCallback((_id: string): void => {
         dispatch(addOneUnitThunk({ _id }));
+        setSubtotalOverrides((prev) => {
+            if (!(_id in prev)) return prev;
+            const { [_id]: _removed, ...rest } = prev;
+            return rest;
+        });
     }, [dispatch]);
 
     const goBackToSell = useCallback((): void => {
