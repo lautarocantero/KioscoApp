@@ -1,3 +1,4 @@
+import type { ReceiptSummaryCardViewProps } from "../../modules/receipt/pages/ReceiptPage/helpers/buildReceiptSummaryCardProps";
 import type { ReceiptPreviewResult } from "./receiptTypes";
 
 export interface ReceiptUploadAreaProps {
@@ -75,4 +76,19 @@ export interface ReceiptConfirmModalProps {
   loading: boolean;
   onConfirm: () => void;
   onCancel: () => void;
+}
+
+export interface ReceiptSideCardsProps {
+  summaryCardProps: ReceiptSummaryCardViewProps;
+}
+
+export interface ReceiptContentProps {
+  handleSelectFile: () => void;
+  handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleFileDrop: (file: File) => void;
+  fileInputRef: RefObject<HTMLInputElement | null>;
+  isUploading: boolean;
+  isConfirming: boolean;
+  isModalOpen: boolean;
+  summaryCardProps: ReceiptSummaryCardViewProps;
 }

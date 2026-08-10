@@ -16,15 +16,20 @@ import {
 import EmptyButton from "../../../../shared/components/Buttons/EmptyButton";
 import PrimaryButtonComponent from "../../../../shared/components/Buttons/PrimaryButtonComponent";
 import type { ReceiptConfirmModalProps } from "@typings/receipt/receiptComponentTypes";
-import { MAX_VISIBLE_ITEMS } from "../../../../../config/constants";
-
+import { buildReceiptConfirmModalView } from "./buildReceiptConfirmModalReview";
 
 const ReceiptConfirmModal = ({ open, preview, loading, onConfirm, onCancel }: ReceiptConfirmModalProps): React.ReactNode => {
   if (!preview) return null;
 
-  const { stats, pendingReview, products, presentations } = preview;
-  const visibleProducts = products.slice(0, MAX_VISIBLE_ITEMS);
-  const remainingProducts = products.length - visibleProducts.length;
+  const {
+    stats,
+    pendingReviewCount,
+    productsCount,
+    presentationsCount,
+    visibleProducts,
+    remainingProductsCount,
+    hasPendingReview,
+} = buildReceiptConfirmModalView(preview);
 
   return (
     <Dialog open={open} onClose={onCancel} maxWidth="sm" fullWidth>
@@ -36,12 +41,12 @@ const ReceiptConfirmModal = ({ open, preview, loading, onConfirm, onCancel }: Re
           </Typography>
 
           <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ rowGap: 1 }}>
-            <Chip label={`${products.length} productos nuevos`} color="primary" />
-            <Chip label={`${presentations.length} presentaciones nuevas`} color="primary" />
-            {pendingReview.length > 0 && <Chip label={`${pendingReview.length} a revisar`} color="warning" />}
+              <Chip label={`${productsCount} productos nuevos`} color="primary" />
+              <Chip label={`${presentationsCount} presentaciones nuevas`} color="primary" />
+              {hasPendingReview && <Chip label={`${pendingReviewCount} a revisar`} color="warning" />}
           </Stack>
 
-          {pendingReview.length > 0 && (
+          {hasPendingReview && (
             <Alert severity="warning">
               Algunos ítems se importarán igual, pero tienen datos incompletos (rubro sin mapeo, tamaño no
               detectado, sin código de barras, etc.). Podés revisarlos después de la carga.
@@ -61,9 +66,9 @@ const ReceiptConfirmModal = ({ open, preview, loading, onConfirm, onCancel }: Re
                 </ListItem>
               ))}
             </List>
-            {remainingProducts > 0 && (
+            {remainingProductsCount > 0 && (
               <Typography variant="caption" color="text.secondary">
-                y {remainingProducts} producto(s) más…
+                y {remainingProductsCount} producto(s) más…
               </Typography>
             )}
           </Box>

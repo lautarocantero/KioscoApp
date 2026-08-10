@@ -1,8 +1,8 @@
-import { useState, type DragEvent } from "react";
 import { Box, Typography } from "@mui/material";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
 import PrimaryButtonComponent from "../../../../shared/components/Buttons/PrimaryButtonComponent";
+import { useReceiptUploadArea } from "@hooks/receipt/useReceiptUploadArea";
 import type { ReceiptUploadAreaProps } from "@typings/receipt/receiptComponentTypes";
 
 const ReceiptUploadArea = ({
@@ -14,26 +14,7 @@ const ReceiptUploadArea = ({
     fileInputRef,
     disabled = false,
 }: ReceiptUploadAreaProps): React.ReactNode => {
-    const [isDragging, setIsDragging] = useState(false);
-
-    const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        if (!disabled) setIsDragging(true);
-    };
-
-    const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        setIsDragging(false);
-    };
-
-    const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        setIsDragging(false);
-        if (disabled) return;
-
-        const file = e.dataTransfer.files?.[0];
-        if (file) onFileDrop(file);
-    };
+    const { isDragging, handleDragOver, handleDragLeave, handleDrop } = useReceiptUploadArea(onFileDrop, disabled);
 
     return (
         <NoisyCard
@@ -120,12 +101,13 @@ const ReceiptUploadArea = ({
                     borderTop: "1px solid",
                     borderColor: (theme) => theme.custom?.darkGray,
                     pt: 3,
+                    gap: 2,
                 }}
             >
                 <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>
                     ¿Cómo debe ser tu archivo?
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     Descargá nuestra plantilla de ejemplo para asegurarte de que tus datos estén en el
                     formato correcto.
                 </Typography>
@@ -138,7 +120,7 @@ const ReceiptUploadArea = ({
                         link.click();
                     }}
                     buttonWidth="220px"
-                    marginTop="0"
+                    marginTop="2em"
                 />
             </Box>
         </NoisyCard>

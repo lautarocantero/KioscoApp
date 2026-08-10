@@ -4,8 +4,9 @@ import { previewReceiptThunk, confirmReceiptThunk } from "../../store/receipt/re
 import { resetReceiptState } from "../../store/receipt/receiptsSlice";
 import { buildReceiptSummaryCardProps } from "../../modules/receipt/pages/ReceiptPage/helpers/buildReceiptSummaryCardProps";
 import type { AppDispatch, RootState } from "../../store/receipt/receiptsSlice";
+import type { UseReceiptUploadReturn } from "@typings/receipt/receiptTypes";
 
-export function useReceiptUpload() {
+export function useReceiptUpload() : UseReceiptUploadReturn {
   const dispatch = useDispatch<AppDispatch>();
   const { status, preview, result, errorMessage, uploadProgress } = useSelector((state: RootState) => state.receipt);
   const fileInputRef = useRef<HTMLInputElement>(null);

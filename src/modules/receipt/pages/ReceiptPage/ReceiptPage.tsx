@@ -1,13 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import AppLayout from "../../../shared/layout/AppLayout";
-import ReceiptUploadArea from "./components/ReceiptUploadArea";
-import ReceiptSummaryCard from "./components/ReceiptSummaryCard";
-import ReceiptAdviceCard from "./components/ReceiptAdviceCard";
-import { RECEIPT_ACCEPTED_FORMATS, RECEIPT_ADVICE_ITEMS, RECEIPT_MAX_SIZE } from "../constants/receiptStaticContent";
 import { useReceiptUpload } from "@hooks/receipt/useReceiptUpload";
 import ReceiptConfirmModal from "./components/ReceiptConfirmModal";
+import ReceiptPageTitle from "./components/ReceiptTitle";
+import ReceiptContent from "./components/ReceiptContent";
+import type { ReactNode } from "react";
 
-const ReceiptPage = (): React.ReactNode => {
+const ReceiptPage = (): ReactNode => {
   const {
     fileInputRef,
     isUploading,
@@ -25,31 +24,18 @@ const ReceiptPage = (): React.ReactNode => {
   return (
     <AppLayout fullWidth>
       <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 3 }}>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <Typography variant="h4" sx={{ fontWeight: 700 }}>
-            Carga de boletas
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Importa tus boletas desde un archivo Excel y actualizá tu inventario.
-          </Typography>
-        </Box>
+        <ReceiptPageTitle />
 
-        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "2fr 1fr" }, gap: 3 }}>
-          <ReceiptUploadArea
-            acceptedFormats={RECEIPT_ACCEPTED_FORMATS}
-            maxSize={RECEIPT_MAX_SIZE}
-            onSelectFile={handleSelectFile}
-            onFileChange={handleFileChange}
-            onFileDrop={handleFileDrop}
-            fileInputRef={fileInputRef}
-            disabled={isUploading || isConfirming || isModalOpen}
-          />
-
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <ReceiptSummaryCard {...summaryCardProps} />
-            <ReceiptAdviceCard adviceItems={RECEIPT_ADVICE_ITEMS} />
-          </Box>
-        </Box>
+        <ReceiptContent 
+          handleSelectFile={handleSelectFile}
+          handleFileChange={handleFileChange}
+          handleFileDrop={handleFileDrop}
+          fileInputRef={fileInputRef}
+          isUploading={isUploading}
+          isConfirming={isConfirming}
+          isModalOpen={isModalOpen}
+          summaryCardProps={summaryCardProps}
+        />
       </Box>
 
       <ReceiptConfirmModal

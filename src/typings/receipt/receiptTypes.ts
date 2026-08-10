@@ -2,7 +2,9 @@
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
+import type { ChangeEvent, RefObject } from "react";
 import type { ReceiptStatusEnum } from "./receiptEnums";
+import type { ReceiptSummaryCardViewProps } from "../../modules/receipt/pages/ReceiptPage/helpers/buildReceiptSummaryCardProps";
 
 export interface ReceiptStats {
   totalRows: number;
@@ -98,6 +100,19 @@ export interface ReceiptStateError {
 // ║ 🪝 HOOKS  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
+export interface UseReceiptUploadReturn {
+  fileInputRef: RefObject<HTMLInputElement | null>;
+  isUploading: boolean;
+  isConfirming: boolean;
+  isModalOpen: boolean;
+  preview: ReceiptPreviewResult | null;
+  summaryCardProps: ReceiptSummaryCardViewProps;
+  handleSelectFile: () => void;
+  handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleFileDrop: (file: File) => void;
+  handleConfirmImport: () => void;
+  handleCancelPreview: () => void;
+}
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 💱 CONTEXT  💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱                       ║
