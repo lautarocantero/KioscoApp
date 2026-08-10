@@ -16,7 +16,7 @@ import {
 import EmptyButton from "../../../../shared/components/Buttons/EmptyButton";
 import PrimaryButtonComponent from "../../../../shared/components/Buttons/PrimaryButtonComponent";
 import type { ReceiptConfirmModalProps } from "@typings/receipt/receiptComponentTypes";
-import { buildReceiptConfirmModalView } from "./buildReceiptConfirmModalReview";
+import { buildReceiptConfirmModalView } from "../helpers/buildReceiptConfirmModalReview";
 
 const ReceiptConfirmModal = ({ open, preview, loading, onConfirm, onCancel }: ReceiptConfirmModalProps): React.ReactNode => {
   if (!preview) return null;
