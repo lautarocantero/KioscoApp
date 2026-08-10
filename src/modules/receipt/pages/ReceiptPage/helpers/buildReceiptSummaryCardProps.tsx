@@ -1,25 +1,5 @@
 import type { ReceiptStatusEnum } from "@typings/receipt/receiptEnums";
-import type { ReceiptImportResult } from "@typings/receipt/receiptTypes";
-
-export interface ReceiptSummaryStats {
-  productsInserted: number;
-  productsSkipped: number;
-  productsFailed: number;
-  presentationsInserted: number;
-  presentationsSkipped: number;
-  presentationsFailed: number;
-  pendingReviewCount: number;
-  totalRows: number;
-}
-
-export interface ReceiptSummaryCardViewProps {
-  status: string;
-  description: string;
-  progress?: number;
-  showProgress?: boolean;
-  isProcessing?: boolean;
-  stats?: ReceiptSummaryStats;
-}
+import type { ReceiptImportResult, ReceiptSummaryCardViewProps, ReceiptSummaryStats } from "@typings/receipt/receiptTypes";
 
 export function buildReceiptSummaryCardProps(
   status: ReceiptStatusEnum,

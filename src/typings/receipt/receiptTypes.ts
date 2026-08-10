@@ -4,7 +4,6 @@
 
 import type { ChangeEvent, RefObject } from "react";
 import type { ReceiptStatusEnum } from "./receiptEnums";
-import type { ReceiptSummaryCardViewProps } from "../../modules/receipt/pages/ReceiptPage/helpers/buildReceiptSummaryCardProps";
 
 export interface ReceiptStats {
   totalRows: number;
@@ -20,6 +19,37 @@ export interface ReceiptPendingReview {
   product: string;
   presentation: string;
   reasons: string[];
+}
+
+export interface ReceiptSummaryStats {
+  productsInserted: number;
+  productsSkipped: number;
+  productsFailed: number;
+  presentationsInserted: number;
+  presentationsSkipped: number;
+  presentationsFailed: number;
+  pendingReviewCount: number;
+  totalRows: number;
+}
+
+export interface ReceiptSummaryCardViewProps {
+  status: string;
+  description: string;
+  progress?: number;
+  showProgress?: boolean;
+  isProcessing?: boolean;
+  stats?: ReceiptSummaryStats;
+}
+
+export interface ReceiptConfirmModalView {
+  stats: ReceiptPreviewResult["stats"];
+  pendingReview: ReceiptPreviewResult["pendingReview"];
+  pendingReviewCount: number;
+  productsCount: number;
+  presentationsCount: number;
+  visibleProducts: ReceiptPreviewProduct[];
+  remainingProductsCount: number;
+  hasPendingReview: boolean;
 }
 
 export interface ReceiptBulkInsertResult {

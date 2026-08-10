@@ -1,5 +1,5 @@
-import type { ReceiptSummaryCardViewProps } from "../../modules/receipt/pages/ReceiptPage/helpers/buildReceiptSummaryCardProps";
-import type { ReceiptPreviewResult } from "./receiptTypes";
+import type { ChangeEvent, RefObject } from "react";
+import type { ReceiptPreviewResult, ReceiptSummaryCardViewProps } from "./receiptTypes";
 
 export interface ReceiptUploadAreaProps {
     acceptedFormats: string[];
@@ -7,7 +7,7 @@ export interface ReceiptUploadAreaProps {
     onSelectFile: () => void;
     onFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
     onFileDrop: (file: File) => void;
-    fileInputRef: RefObject<HTMLInputElement>;
+    fileInputRef: RefObject<HTMLInputElement | null>;
     disabled?: boolean;
 }
 
@@ -37,37 +37,6 @@ export interface ReceiptHelpCardProps {
     helpDescription: string;
     buttonLabel: string;
     onSupportClick: () => void;
-}
-
-export interface ReceiptStats {
-  totalRows: number;
-  totalProducts: number;
-  multiPresentation: number;
-  rubroFallback: number;
-  noSize: number;
-  noModelType: number;
-  noBarcode: number;
-}
-
-export interface ReceiptPendingReview {
-  product: string;
-  presentation: string;
-  reasons: string[];
-}
-
-export interface BulkInsertResult {
-  inserted: string[];
-  skippedDuplicates: string[];
-  failed: { _id: string; error: string }[];
-}
-
-export interface ReceiptImportResult {
-  stats: ReceiptStats;
-  pendingReview: ReceiptPendingReview[];
-  insertResult: {
-    products: BulkInsertResult;
-    presentations: BulkInsertResult;
-  };
 }
 
 export interface ReceiptConfirmModalProps {
