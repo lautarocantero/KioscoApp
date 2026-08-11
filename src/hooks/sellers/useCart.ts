@@ -7,7 +7,7 @@ import type { AppDispatch, RootState } from "../../store/seller/sellerSlice";
 import { iva } from "../../config/constants";
 import { createSellThunk } from "../../store/sell/sellsThunks";
 import { createPdfTicket } from "../../modules/shared/helpers/createPdfTicket";
-import { cleanCartThunk, removeFromCartThunk, addOneUnitThunk } from "../../store/seller/sellerThunks";
+import { cleanCartThunk, removeFromCartThunk, addOneUnitThunk, setQuantityThunk } from "../../store/seller/sellerThunks";
 import { AlertColor } from "@typings/ui/ui";
 import { buildColumnsForCartProducts } from "../../modules/cart/components/cartColumns";
 import type { UseCartReturn } from "@typings/seller/sellerTypes";
@@ -87,6 +87,18 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     const handleSubtotalChange = useCallback((_id: string, value: number): void => {
         setSubtotalOverrides((prev) => ({ ...prev, [_id]: value }));
     }, []);
+
+    // Cambia la cantidad exacta (en gramos) de un producto por peso.
+    // Limpiamos el override de subtotal para que se recalcule solo: price * gramos.
+    const handleQuantityChange = useCallback((_id: string, value: number): void => {
+        dispatch(setQuantityThunk({ _id, stock_required: Math.max(0, value) }));
+
+        setSubtotalOverrides((prev) => {
+            if (!(_id in prev)) return prev;
+            const { [_id]: _removed, ...rest } = prev;
+            return rest;
+        });
+    }, [dispatch]);
 
     const generateTicket = useCallback(async (formValues: CartFormValues): Promise<void> => {
         const isPartial = formValues.status === SellStatusEnum.Parcial;
@@ -172,8 +184,8 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     }, [ticketSummary, navigate]);
 
     const columns = useMemo(
-        () => buildColumnsForCartProducts(handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange),
-        [handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange]
+        () => buildColumnsForCartProducts(handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange, handleQuantityChange),
+        [handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange, handleQuantityChange]
     );
 
     return {

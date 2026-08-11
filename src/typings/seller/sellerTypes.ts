@@ -132,6 +132,16 @@ export type removeFromCartInterface = Pick<SellerStateInterface, '_id'> & {
     amount: CartAmount,
 }
 
+export interface SellerSetQuantityActionPayload {
+  _id: string;
+  stock_required: number;
+}
+
+export interface setQuantityThunkInterface {
+  _id: string;
+  stock_required: number;
+}
+
 export type SellerError = Pick<SellerStateInterface, 'errorMessage'>;
 
 // /*══════════════════════════════════════════════════════════════════════╗

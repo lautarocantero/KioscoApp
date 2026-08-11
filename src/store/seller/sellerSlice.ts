@@ -6,6 +6,7 @@ import {
     type SellerRemoveFromCartActionPayload,
     type SellerSetPresentationSlicePayload,
     type SellerSetProductSlicePayload,
+    type SellerSetQuantityActionPayload,
     type SellerStateInterface
 } from '../../typings/seller/sellerTypes';
 import type { store } from '../store';
@@ -82,6 +83,27 @@ export const sellerSlice = createSlice({
 
             state.cart[productIndex].stock_required = Math.min(item.stock_required + step, maxAvailable);
         },
+        // 🆕 setea una cantidad EXACTA (no relativa) para un producto del carrito.
+        // Uso: EXCLUSIVO de productos por peso, cuando el usuario tipea directamente
+        // la cantidad de gramos en vez de usar los steppers +/-.
+        setQuantityAction: (state: SellerStateInterface, action: PayloadAction<SellerSetQuantityActionPayload>) => {
+            const { payload } = action;
+            const { _id, stock_required } = payload;
+
+            const productIndex = state.cart.findIndex(item => item._id === String(_id));
+            if (productIndex === -1) return;
+
+            const item = state.cart[productIndex];
+            const maxAvailable = item.stock ?? Infinity;
+            const safeValue = Math.min(Math.max(0, stock_required), maxAvailable);
+
+            if (safeValue <= 0) {
+                state.cart = state.cart.filter((cartItem) => cartItem._id !== String(_id));
+                return;
+            }
+
+            state.cart[productIndex].stock_required = safeValue;
+        },
         removeFromCart: (state: SellerStateInterface, action: PayloadAction<SellerRemoveFromCartActionPayload>) => {
             const { payload } = action;
             const { _id, amount } = payload;
@@ -117,17 +139,14 @@ export const sellerSlice = createSlice({
         setPage: (state: SellerStateInterface, action: PayloadAction<number>) => {
             state.page = action.payload;
         },
-        // 🆕 filtro de categoría del listado de venta
         setSelectedCategory: (state: SellerStateInterface, action: PayloadAction<PresentationCategory | null>) => {
             state.selectedCategory = action.payload;
             state.page = 1;
         },
-        // 🆕 término de búsqueda del listado de venta
         setSearchTerm: (state: SellerStateInterface, action: PayloadAction<string>) => {
             state.searchTerm = action.payload;
             state.page = 1;
         },
-        // 🆕 modo de búsqueda exacta (checkbox) del listado de venta
         setExactMatch: (state: SellerStateInterface, action: PayloadAction<boolean>) => {
             state.exactMatch = action.payload;
             state.page = 1;
@@ -162,6 +181,7 @@ export const {
   setPresentationSelected,
   addToCartAction,
   addUnitAction,
+  setQuantityAction,
   removeFromCart,
   cleanCart,
   setError,

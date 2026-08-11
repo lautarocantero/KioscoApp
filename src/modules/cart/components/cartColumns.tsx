@@ -5,13 +5,14 @@ import { formatCurrency } from "../helpers/formatCurrency";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CartProductRowActionCell from "./CartProductRowActionCell";
-import { formatStockQuantity } from "../../shared/helpers/saleTypeHelper";
+import { formatStockQuantity, isWeightSaleType } from "../../shared/helpers/saleTypeHelper";
 import EditableNumberCell from "../../shared/components/DataTable/EditableNumberCell";
 
 export const buildColumnsForCartProducts = (
   onIncrease: (_id: string) => void,
   onDecrease: (_id: string) => void,
   onSubtotalChange: (_id: string, value: number) => void,
+  onQuantityChange: (_id: string, value: number) => void,
 ): GridColDef<ProductTicketWithStockType>[] => [
   {
     field: "name",
@@ -83,6 +84,36 @@ export const buildColumnsForCartProducts = (
     headerAlign: "center",
     sortable: false,
     renderCell: (params) => {
+      const isWeight = isWeightSaleType(params.row.sale_type);
+
+      // Producto por peso: cantidad libre, se puede tipear cualquier valor en gramos
+      if (isWeight) {
+        return (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 0.5,
+              height: "100%",
+            }}
+          >
+            <EditableNumberCell
+              productId={String(params.row._id)}
+              value={params.row.stock_required}
+              onChange={onQuantityChange}
+            />
+            <Typography
+              variant="caption"
+              sx={(theme: Theme) => ({ color: theme?.custom?.translucidWhite })}
+            >
+              g
+            </Typography>
+          </Box>
+        );
+      }
+
+      // Producto por unidad: se mantiene el stepper +/-
       const displayValue = formatStockQuantity(params.row.stock_required, params.row.sale_type);
       return (
         <Box sx={() => ({ display: "flex", alignItems: "center", alignContent: "center", justifyContent: "center", gap: 1, borderRadius: "0.6em", padding: "0.6em 0.4em" })}>
