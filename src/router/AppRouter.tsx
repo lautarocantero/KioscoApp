@@ -4,7 +4,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import AccountRoutes from "../modules/account/AccountRoutes";
 import HomePage from "../modules/app/Home/HomePage";
 import AuthRoutes from "../modules/auth/AuthRoutes";
-import CartRoutes from "../modules/cart/CartRoutes";
+import CartRoutes from "../modules/cart/routes/CartRoutes";
 import ProductsRoutes from "../modules/products/ProductsRoutes";
 import PresentationsRoutes from "../modules/presentations/PresentationsRoutes";
 import ProvidersRoutes from "../modules/providers/ProvidersRoutes";

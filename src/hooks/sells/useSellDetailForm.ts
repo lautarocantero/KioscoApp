@@ -1,7 +1,7 @@
 import { useFormikContext } from "formik";
 import { useNavigate } from "react-router-dom";
 import type { ProductTicketWithStockType, SellEditFormValues } from "@typings/sells/sellTypes";
-import { buildPaymentDetail, computeIvaPercentage, mapProductsToSoldRows, parsePurchaseDate } from "../../modules/sellers/helpers/ProductDialog/Formatter/formatDetail";
+import { buildPaymentDetail, computeIvaPercentage, mapProductsToSoldRows, parsePurchaseDate } from "../../modules/cart/helpers/ProductDialog/Formatter/formatDetail";
 
 export const useSellDetailForm = () => {
     const { values } = useFormikContext<SellEditFormValues>();
