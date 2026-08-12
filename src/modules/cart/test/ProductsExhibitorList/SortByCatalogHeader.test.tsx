@@ -5,7 +5,7 @@ import { ViewMode } from "@typings/seller/sellerEnums";
 import { useSortByCatalog } from "@hooks/cart/useSortByCatalogHeader";
 import SortByCatalog from "../../components/ProductsExhibitorList/SortByCatalog";
 
-vi.mock("@hooks/sellers/useSortByCatalogHeader");
+vi.mock("@hooks/cart/useSortByCatalogHeader");
 
 const mockedHook = vi.mocked(useSortByCatalog);
 const options = [

@@ -6,8 +6,8 @@ import { render, type RenderOptions } from "@testing-library/react";
 import { ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import { ProductDialogContext } from "../../../sellers/context/Product/ProductDialogContext";
 import { darkTheme } from "../../../../theme/mainTheme";
+import { ProductDialogContext } from "../../../cart/context/Product/ProductDialogContext";
 
 vi.mock("@hooks/auth/useGoogleAuth", () => ({
     useGoogleAuth: () => ({

@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { useSellbar } from "@hooks/sellers/useSellBar";
 import SellBarActions from "../../components/CatalogHeader/SellBarActions";
+import { useSellbar } from "@hooks/cart/useSellBar";
 
-vi.mock("@hooks/sellers/useSellBar");
+vi.mock("@hooks/cart/useSellBar");
 
 vi.mock("../../components/CatalogHeader/BarcodeButtonComponent", () => ({
   default: (props: any) => <div data-testid="barcode-btn">{JSON.stringify(!!props.barcode)}</div>,

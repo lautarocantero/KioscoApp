@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { screen } from "@testing-library/react";
 import { renderWithTheme } from "../../../shared/test/utils/setupTests";
-import { useProductsExhibitor } from "../../../../hooks/sellers/useProductsExhibitor";
 import { ViewMode } from "@typings/seller/sellerEnums";
 import ProductsExhibitorComponent from "../../components/ProductsExhibitorList/ProductsExhibitorComponent";
+import { useProductsExhibitor } from "@hooks/cart/useProductsExhibitor";
 
-vi.mock("@hooks/sellers/useProductsExhibitor");
+vi.mock("@hooks/cart/useProductsExhibitor");
 
 vi.mock("../../components/ProductsExhibitorList/ProductsExhibitorList", () => ({
     default: vi.fn(() => <div data-testid="products-exhibitor-list" />),
@@ -23,6 +23,7 @@ const buildHookReturn = (overrides: Partial<ReturnType<typeof useProductsExhibit
     ({
         isEmpty: false,
         loading: false,
+        products: [],
         paginatedProducts: [],
         totalCount: 0,
         page: 1,
@@ -63,7 +64,7 @@ describe("ProductsExhibitorComponent", () => {
         const ProductsExhibitorList = (await import("../../components/ProductsExhibitorList/ProductsExhibitorList")).default;
         const products = [{ _id: "1", name: "Coca Cola" }];
         mockedHook.mockReturnValue(
-            buildHookReturn({ paginatedProducts: products as any, loading: true, isEmpty: false })
+            buildHookReturn({ products: products as any, loading: true, isEmpty: false })
         );
 
         renderWithTheme(<ProductsExhibitorComponent />);
@@ -75,11 +76,19 @@ describe("ProductsExhibitorComponent", () => {
     it("pasa page, count y onChange a la paginación", async () => {
         const ProductsPagination = (await import("../../components/ProductsExhibitorList/ProductsPagination")).default;
         const setPage = vi.fn();
-        mockedHook.mockReturnValue(buildHookReturn({ page: 3, pageCount: 10, setPage }));
+        mockedHook.mockReturnValue(buildHookReturn({ page: 3, pageCount: 10, setPage, viewMode: ViewMode.Grid }));
 
         renderWithTheme(<ProductsExhibitorComponent />);
 
         const props = vi.mocked(ProductsPagination).mock.calls.at(-1)?.[0];
         expect(props).toEqual(expect.objectContaining({ page: 3, count: 10, onChange: setPage }));
+    });
+
+    it("no renderiza la paginación cuando viewMode es List", () => {
+        mockedHook.mockReturnValue(buildHookReturn({ viewMode: ViewMode.List }));
+
+        renderWithTheme(<ProductsExhibitorComponent />);
+
+        expect(screen.queryByTestId("products-pagination")).not.toBeInTheDocument();
     });
 });

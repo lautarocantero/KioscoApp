@@ -6,7 +6,7 @@ import { useProductItem } from "@hooks/cart/useProductItem";
 import type { Product } from "@typings/product/productTypes";
 import ProductRowActionCell from "../../components/ProductsExhibitorList/ProductRowActionCell";
 
-vi.mock("@hooks/sellers/useProductItem");
+vi.mock("@hooks/cart/useProductItem");
 
 const mockedHook = vi.mocked(useProductItem);
 

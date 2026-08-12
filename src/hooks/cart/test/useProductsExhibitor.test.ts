@@ -19,7 +19,7 @@ vi.mock("react-redux", async () => {
 
 vi.mock("../useSellerProductListData");
 vi.mock("../useSortOptions");
-vi.mock("../../../modules/sellers/components/ProductsExhibitorList/ProductExhibitorColumns");
+vi.mock("../../../modules/cart/components/ProductsExhibitorList/ProductExhibitorColumns");
 
 const mockedUseDispatch = vi.mocked(useDispatch);
 const mockedUseSelector = vi.mocked(useSelector);
