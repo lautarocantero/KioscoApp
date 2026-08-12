@@ -65,13 +65,13 @@ export interface ProductsExhibitorListProps {
         readonly columnGap: 2;
         readonly width: "100%";
     }
+}
+
+export interface ProductsPaginationProps {
     page: number;
     count: number;
     onChange: (page: number) => void;
 }
-
-
-export type ProductsPaginationProps = Pick <ProductsExhibitorListProps, "page" | "count" | "onChange">;
 
 export interface ProductExhibitorTableProps {
     products: Product[];

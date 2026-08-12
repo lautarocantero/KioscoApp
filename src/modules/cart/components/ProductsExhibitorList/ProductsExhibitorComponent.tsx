@@ -1,14 +1,16 @@
+import { ViewMode } from "@typings/seller/sellerEnums";
 import type { ReactNode } from "react";
-import ProductsExhibitorList from "./ProductsExhibitorList";
 import ProductsToolbar from "./ProductToolbar";
 import ProductsPagination from "./ProductsPagination";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 import { useProductsExhibitor } from "@hooks/cart/useProductsExhibitor";
+import ProductsExhibitorList from "./ProductsExhibitorList";
 
 const ProductsExhibitorComponent = (): ReactNode => {
   const {
     isEmpty,
     loading,
+    products,            // 👈 agregado: listado completo
     paginatedProducts,
     totalCount,
     page,
@@ -32,18 +34,17 @@ const ProductsExhibitorComponent = (): ReactNode => {
     >
       <ProductsToolbar totalCount={totalCount} viewMode={viewMode} setViewMode={setViewMode} />
       <ProductsExhibitorList
-        products={paginatedProducts}
+        products={products}
         paginatedProducts={paginatedProducts}
         viewMode={viewMode}
         isLoading={loading}
         isEmpty={isEmpty}
         columns={columns}
         gridSx={gridSx}
-        page={page}
-        count={pageCount}
-        onChange={setPage}
       />
-      <ProductsPagination page={page} count={pageCount} onChange={setPage} />
+      {viewMode !== ViewMode.List && (
+        <ProductsPagination page={page} count={pageCount} onChange={setPage} />
+      )}
     </NoisyCard>
   );
 };

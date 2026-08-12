@@ -6,7 +6,6 @@ import { ViewMode } from "@typings/seller/sellerEnums";
 import ProductExhibitorTable from "./ProductExhibitorTable";
 import type { ProductsExhibitorListProps } from "@typings/seller/sellerComponentTypes";
 import type { Product } from "@typings/product/productTypes";
-import ProductsPagination from "./ProductsPagination";
 import ProductItemComponent from "../ProductItem/ProductItemComponent";
 
 const ProductsExhibitorList = ({
@@ -17,9 +16,6 @@ const ProductsExhibitorList = ({
   isEmpty = false,
   gridSx,
   columns,
-  page,
-  count,
-  onChange,
 }: ProductsExhibitorListProps): ReactNode => {
 
   if (isLoading) return <ProductsSkeletons isLoading={isLoading} gridSx={gridSx}/>;
@@ -35,14 +31,11 @@ const ProductsExhibitorList = ({
   }
 
   return (
-    <>
-      <Box sx={gridSx}>
-        {paginatedProducts.map((prod: Product) => (
-          <ProductItemComponent key={prod._id} product={prod} viewMode={viewMode} />
-        ))}
-      </Box>
-      <ProductsPagination page={page} count={count} onChange={onChange} />
-    </>
+    <Box sx={gridSx}>
+      {paginatedProducts.map((prod: Product) => (
+        <ProductItemComponent key={prod._id} product={prod} viewMode={viewMode} />
+      ))}
+    </Box>
   );
 };
 
