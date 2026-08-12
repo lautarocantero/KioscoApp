@@ -5,6 +5,7 @@ import VerificationPage from "./pages/VerificationPage/VerificationPage";
 import CheckEmailPage from "./pages/CheckEmailPage/CheckEmailPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
+import TermsConditionsPage from "./pages/TermsConditionsPage/TermsConditionsPage";
 
 const AuthRoutes = ():React.ReactNode => {
 
@@ -16,6 +17,7 @@ const AuthRoutes = ():React.ReactNode => {
             <Route path="/verify-email" element={<VerificationPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/tems-conditions" element={<TermsConditionsPage />} />
             <Route path="*" element={<Navigate to="/" />} />
         </>
     )

@@ -50,7 +50,9 @@ const RegisterForm = (): ReactNode => {
                         Acepto los{" "}
                         <Link
                             component={LinkReactRouter}
-                            to="/terms"
+                            to="/tems-conditions"
+                            target="_blank"
+                            rel="noreferrer"
                             sx={{
                                 color: (theme: Theme) => theme?.palette?.primary?.main,
                                 fontWeight: 600,
