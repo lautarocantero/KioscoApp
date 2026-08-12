@@ -3,7 +3,12 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSellbar } from "../useSellBar";
-import { setSearchTerm, setSelectedCategory } from "../../../store/seller/sellerSlice";
+import {
+  setSearchTermThunk,
+  clearSearchTermThunk,
+  setSelectedCategoryThunk,
+  setExactMatchThunk,
+} from "../../../store/seller/sellerThunks";
 import { useSellbarCart } from "../useSellbarCart";
 import { useSellbarBarcode } from "../useSellbarBarcode";
 import { useSellbarCategories } from "../useSellbarCategories";
@@ -13,12 +18,14 @@ import type { UseSellerBarCategoriesResult } from "@typings/seller/sellerTypes";
 import { PresentationCategory } from "@typings/presentation/presentationEnum";
 
 vi.mock("react-redux");
-vi.mock("../../../store/seller/sellerSlice", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("../../../store/seller/sellerSlice")>();
+vi.mock("../../../store/seller/sellerThunks", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../../../store/seller/sellerThunks")>();
   return {
     ...actual,
-    setSearchTerm: vi.fn(actual.setSearchTerm),
-    setSelectedCategory: vi.fn(actual.setSelectedCategory),
+    setSearchTermThunk: vi.fn(actual.setSearchTermThunk),
+    clearSearchTermThunk: vi.fn(actual.clearSearchTermThunk),
+    setSelectedCategoryThunk: vi.fn(actual.setSelectedCategoryThunk),
+    setExactMatchThunk: vi.fn(actual.setExactMatchThunk),
   };
 });
 vi.mock("../useSellbarCart");
@@ -30,6 +37,10 @@ const mockedUseSelector = vi.mocked(useSelector);
 const mockedUseSellbarCart = vi.mocked(useSellbarCart);
 const mockedUseSellbarBarcode = vi.mocked(useSellbarBarcode);
 const mockedUseSellbarCategories = vi.mocked(useSellbarCategories);
+const mockedSetSelectedCategoryThunk = vi.mocked(setSelectedCategoryThunk);
+const mockedSetSearchTermThunk = vi.mocked(setSearchTermThunk);
+const mockedClearSearchTermThunk = vi.mocked(clearSearchTermThunk);
+const mockedSetExactMatchThunk = vi.mocked(setExactMatchThunk);
 
 const dispatch = vi.fn();
 const showSnackBar = vi.fn();
@@ -40,7 +51,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
     value={{
       showSnackBar,
       closeSnackBar,
-      snackBar: { open: false, message: "", color: AlertColor?.Info, },
+      snackBar: { open: false, message: "", color: AlertColor?.Info },
     }}
   >
     {children}
@@ -67,9 +78,13 @@ const buildCategories = (
 describe("useSellbar", () => {
   beforeEach(() => {
     dispatch.mockClear();
+    mockedSetSelectedCategoryThunk.mockClear();
+    mockedSetSearchTermThunk.mockClear();
+    mockedClearSearchTermThunk.mockClear();
+    mockedSetExactMatchThunk.mockClear();
     mockedUseDispatch.mockReturnValue(dispatch);
     mockedUseSelector.mockImplementation((selectorFn: any) =>
-      selectorFn({ seller: { cart: [], searchTerm: "" } })
+      selectorFn({ seller: { cart: [], searchTerm: "", exactMatch: false } })
     );
     mockedUseSellbarCart.mockReturnValue({ count: 0, goToCart: vi.fn() });
     mockedUseSellbarBarcode.mockReturnValue({
@@ -83,25 +98,31 @@ describe("useSellbar", () => {
     mockedUseSellbarCategories.mockReturnValue(buildCategories());
   });
 
-  it("despacha setSelectedCategory al montar con la categoría inicial de useSellbarCategories", () => {
+  it("despacha setSelectedCategoryThunk al montar con la categoría inicial de useSellbarCategories", () => {
     mockedUseSellbarCategories.mockReturnValue(
       buildCategories({ selected: PresentationCategory.NonAlcoholicBeverages })
     );
     renderHook(() => useSellbar(), { wrapper });
-    expect(dispatch).toHaveBeenCalledWith(setSelectedCategory(PresentationCategory.NonAlcoholicBeverages));
+
+    expect(mockedSetSelectedCategoryThunk).toHaveBeenCalledWith(
+      PresentationCategory.NonAlcoholicBeverages
+    );
+    expect(dispatch).toHaveBeenCalledWith(expect.any(Function));
   });
 
-  it("vuelve a despachar setSelectedCategory cuando cambia la categoría seleccionada", () => {
+  it("vuelve a despachar setSelectedCategoryThunk cuando cambia la categoría seleccionada", () => {
     mockedUseSellbarCategories.mockReturnValue(buildCategories({ selected: null }));
     const { rerender } = renderHook(() => useSellbar(), { wrapper });
     dispatch.mockClear();
+    mockedSetSelectedCategoryThunk.mockClear();
 
     mockedUseSellbarCategories.mockReturnValue(
       buildCategories({ selected: PresentationCategory.Dairy })
     );
     rerender();
 
-    expect(dispatch).toHaveBeenCalledWith(setSelectedCategory(PresentationCategory.Dairy));
+    expect(mockedSetSelectedCategoryThunk).toHaveBeenCalledWith(PresentationCategory.Dairy);
+    expect(dispatch).toHaveBeenCalledWith(expect.any(Function));
   });
 
   it("no vuelve a despachar si la categoría seleccionada no cambió", () => {
@@ -110,19 +131,39 @@ describe("useSellbar", () => {
     );
     const { rerender } = renderHook(() => useSellbar(), { wrapper });
     dispatch.mockClear();
+    mockedSetSelectedCategoryThunk.mockClear();
     rerender();
+
+    // "selected" es un valor primitivo (enum) y no cambió entre renders,
+    // así que la dependencia del useEffect sigue siendo igual (Object.is) y no vuelve a correr.
     expect(dispatch).not.toHaveBeenCalled();
+    expect(mockedSetSelectedCategoryThunk).not.toHaveBeenCalled();
   });
 
-  it("despacha setSearchTerm al llamar search.onChange", () => {
+  it("despacha setSearchTermThunk al llamar search.onChange", () => {
     const { result } = renderHook(() => useSellbar(), { wrapper });
     result.current.search.onChange("arroz");
-    expect(dispatch).toHaveBeenCalledWith(setSearchTerm("arroz"));
+
+    expect(mockedSetSearchTermThunk).toHaveBeenCalledWith("arroz");
+    expect(dispatch).toHaveBeenCalledWith(expect.any(Function));
   });
 
-  it("despacha setSearchTerm('') al llamar search.onClear", () => {
+  it("despacha clearSearchTermThunk al llamar search.onClear", () => {
     const { result } = renderHook(() => useSellbar(), { wrapper });
     result.current.search.onClear();
-    expect(dispatch).toHaveBeenCalledWith(setSearchTerm(""));
+
+    expect(mockedClearSearchTermThunk).toHaveBeenCalled();
+    expect(dispatch).toHaveBeenCalledWith(expect.any(Function));
+  });
+
+  it("despacha setExactMatchThunk con el valor negado al togglear", () => {
+    mockedUseSelector.mockImplementation((selectorFn: any) =>
+      selectorFn({ seller: { cart: [], searchTerm: "", exactMatch: true } })
+    );
+    const { result } = renderHook(() => useSellbar(), { wrapper });
+    result.current.search.onToggleExactMatch();
+
+    expect(mockedSetExactMatchThunk).toHaveBeenCalledWith(false);
+    expect(dispatch).toHaveBeenCalledWith(expect.any(Function));
   });
 });

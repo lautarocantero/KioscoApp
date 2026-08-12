@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import ProductsExhibitorList from "./ProductsExhibitorList";
 import ProductsToolbar from "./ProductToolbar";
+import ProductsPagination from "./ProductsPagination";
 import { useProductsExhibitor } from "../../../../hooks/sellers/useProductsExhibitor";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 
@@ -8,7 +9,6 @@ const ProductsExhibitorComponent = (): ReactNode => {
   const {
     isEmpty,
     loading,
-    products,
     paginatedProducts,
     totalCount,
     page,
@@ -30,9 +30,9 @@ const ProductsExhibitorComponent = (): ReactNode => {
         scrollMarginTop: "1em",
       }}
     >
-      <ProductsToolbar totalCount={totalCount} viewMode={viewMode} setViewMode={setViewMode}/>
+      <ProductsToolbar totalCount={totalCount} viewMode={viewMode} setViewMode={setViewMode} />
       <ProductsExhibitorList
-        products={products}
+        products={paginatedProducts}
         paginatedProducts={paginatedProducts}
         viewMode={viewMode}
         isLoading={loading}
@@ -43,6 +43,7 @@ const ProductsExhibitorComponent = (): ReactNode => {
         count={pageCount}
         onChange={setPage}
       />
+      <ProductsPagination page={page} count={pageCount} onChange={setPage} />
     </NoisyCard>
   );
 };
