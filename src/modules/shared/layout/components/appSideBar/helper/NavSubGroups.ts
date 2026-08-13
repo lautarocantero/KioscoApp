@@ -22,16 +22,9 @@ export const NAV_SUBGROUPS: Record<string, SubGroup[]> = {
   ],
   "/shop": [
     {
-      groupLabel: "Administradores",
-      links: [
-        { label: "Listado", url: "/shop-administrators-list" },
-        { label: "Crear",   url: "/shop-administrators-create" },
-      ],
-    },
-    {
       groupLabel: "Vendedores",
       links: [
-        { label: "Listado", url: "/shop-sellers-list" },
+        { label: "Listado", url: "/shop-sellers" },
         { label: "Crear",   url: "/shop-sellers-create" },
       ],
     },

@@ -11,7 +11,6 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import NewLabelIcon from '@mui/icons-material/NewLabel';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
-import StarPurple500Icon from '@mui/icons-material/StarPurple500';
 import GroupsIcon from '@mui/icons-material/Groups';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import type { OptionLink } from "@typings/ui/layout.types";
@@ -74,26 +73,6 @@ export const SidebarNavLinks: OptionLink[] = [
   },
 ];
 
-export const ShopAdminNavLinks: OptionLink[] = [
-  { 
-    description: 'Ver Administradores', 
-    icon: <RecentActorsIcon />, 
-    url: '/shop-administrators-list', 
-    subtitle: '' 
-  },
-  { 
-    description: 'Crear Administrador', 
-    icon: <PersonAddAlt1Icon />, 
-    url: '/shop-administrators-create', 
-    subtitle: '' 
-  },
-  { 
-    description: 'Editar Administrador',
-    icon: <ManageAccountsIcon />, 
-    url: '/shop-administrators-edit', 
-    subtitle: '' 
-  },
-];
 
 export const CategoriesNavLinks: OptionLink[] = [
   { description: 'Ver Categorias', icon: <CollectionsBookmarkIcon />, url: '/categories-list', subtitle: '' },
@@ -113,7 +92,6 @@ export const AccountNavLinks: OptionLink[] = [
 ];
 
 export const ShopNavLinks: OptionLink[] = [
-  { description: 'Administradores', icon: <StarPurple500Icon />, url: '/shop-administrators', subtitle: '' },
   { description: 'Vendedores', icon: <GroupsIcon />, url: '/shop-sellers', subtitle: '' },
   { description: 'Estadisticas', icon: <QueryStatsIcon />, url: '/shop-stadistics', subtitle: '' },
 ];
