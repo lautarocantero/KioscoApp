@@ -35,12 +35,15 @@ const buildProduct = (overrides: Partial<{ _id: string; name: string }> = {}) =>
     ...overrides,
 });
 
+//─── 🔎 Shape de RootState['cart'] que este hook toca (sort/viewMode/page). ───
+//    Antes vivía bajo la key "seller", pero el store la renombró a "cart"
+//    (ver cartSlice.ts / useProductsExhibitor.ts -> state.cart.sort).
 const buildSelectorState = ({
     sort = SortOption.NameAsc,
     viewMode = ViewMode.Grid,
     page = 1,
 }: { sort?: SortOption; viewMode?: ViewMode; page?: number } = {}) => ({
-    seller: { sort, viewMode, page },
+    cart: { sort, viewMode, page },
 });
 
 describe("useProductsExhibitor", () => {

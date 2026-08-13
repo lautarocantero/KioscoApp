@@ -14,8 +14,9 @@ import { useSellbarBarcode } from "../useSellbarBarcode";
 import { useSellbarCategories } from "../useSellbarCategories";
 import { SnackBarContext } from "../../../modules/shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
-import type { UseCartBarCategoriesResult } from "@typings/cart/cartTypes";
+import type { CartStateInterface, UseCartBarCategoriesResult } from "@typings/cart/cartTypes";
 import { PresentationCategory } from "@typings/presentation/presentationEnum";
+import { SortOption, ViewMode } from "@typings/cart/cartEnums";
 
 vi.mock("react-redux");
 vi.mock("../../../store/cart/cartThunks", async (importOriginal) => {
@@ -75,6 +76,42 @@ const buildCategories = (
   ...overrides,
 });
 
+/*──────────────── 🧱 buildCartState ────────────────╗
+║ Shape completo de CartRootState['cart'] (SellerStateInterface).       ║
+║ Evita repetir un objeto parcial a mano en cada test: si el hook       ║
+║ empieza a leer un campo nuevo del slice, ya está acá con un default   ║
+║ razonable en vez de romper con "Cannot destructure ... undefined".    ║
+╚════════════════════════════════════════════════════════════════════*/
+
+const buildCartState = (overrides: Partial<CartStateInterface> = {}) => ({
+  _id: null,
+  name: "",
+  cart: [] as unknown[],
+  productSelected: null,
+  presentationSelected: null,
+  presentations: [] as unknown[],
+  presentationsLoading: false,
+  products: [] as unknown[],
+  productsLoading: false,
+  description: "",
+  created_at: "",
+  updated_at: "",
+  errorMessage: null,
+  sort: SortOption.NameAsc,
+  viewMode: ViewMode.Grid,
+  page: 1,
+  selectedCategory: null as PresentationCategory | null,
+  searchTerm: "",
+  exactMatch: false,
+  ...overrides,
+});
+
+const mockSelector = (cartOverrides: Partial<CartStateInterface> = {}) => {
+  mockedUseSelector.mockImplementation((selectorFn: any) =>
+    selectorFn({ cart: buildCartState(cartOverrides) })
+  );
+};
+
 describe("useSellbar", () => {
   beforeEach(() => {
     dispatch.mockClear();
@@ -83,9 +120,7 @@ describe("useSellbar", () => {
     mockedClearSearchTermThunk.mockClear();
     mockedSetExactMatchThunk.mockClear();
     mockedUseDispatch.mockReturnValue(dispatch);
-    mockedUseSelector.mockImplementation((selectorFn: any) =>
-      selectorFn({ seller: { cart: [], searchTerm: "", exactMatch: false } })
-    );
+    mockSelector();
     mockedUseSellbarCart.mockReturnValue({ count: 0, goToCart: vi.fn() });
     mockedUseSellbarBarcode.mockReturnValue({
       showBarcodeInput: false,
@@ -157,9 +192,7 @@ describe("useSellbar", () => {
   });
 
   it("despacha setExactMatchThunk con el valor negado al togglear", () => {
-    mockedUseSelector.mockImplementation((selectorFn: any) =>
-      selectorFn({ seller: { cart: [], searchTerm: "", exactMatch: true } })
-    );
+    mockSelector({ exactMatch: true });
     const { result } = renderHook(() => useSellbar(), { wrapper });
     result.current.search.onToggleExactMatch();
 

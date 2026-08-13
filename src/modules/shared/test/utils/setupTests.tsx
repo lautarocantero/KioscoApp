@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { darkTheme } from "../../../../theme/mainTheme";
 import { ProductDialogContext } from "../../../cart/context/Product/ProductDialogContext";
+import { SnackBarContext } from "../../components/SnackBar/SnackBarContext";
+import { AlertColor } from "@typings/ui/ui";
 
 vi.mock("@hooks/auth/useGoogleAuth", () => ({
     useGoogleAuth: () => ({
@@ -26,6 +28,20 @@ export const mockProductDialogContext = {
     showModal: false,
 };
 
+//─── 🔎 SnackBarContext: cualquier componente que haga            ───
+//    `useContext(SnackBarContext)!` explota si no hay provider (el default
+//    del contexto es null). Se centraliza acá para no repetirlo en cada
+//    archivo de test — showSnackBar/closeSnackBar quedan disponibles para
+//    hacer asserts sobre ellos si algún test lo necesita.
+export const showSnackBar = vi.fn();
+export const closeSnackBar = vi.fn();
+
+export const mockSnackBarContext = {
+    showSnackBar,
+    closeSnackBar,
+    snackBar: { open: false, message: "", color: AlertColor?.Info },
+};
+
 //─── 🔎 Store de prueba 🔎 ───
 export const buildTestStore = () =>
     configureStore({
@@ -34,12 +50,21 @@ export const buildTestStore = () =>
         },
     });
 
-//─── 🔎 Render solo con tema 🔎 ───
-export const renderWithTheme = (ui: ReactNode, options?: Omit<RenderOptions, "wrapper">) =>
+//─── 🔎 Render solo con tema (+ SnackBarContext) 🔎 ───
+interface RenderWithThemeOptions extends Omit<RenderOptions, "wrapper"> {
+    snackBarContext?: typeof mockSnackBarContext;
+}
+
+export const renderWithTheme = (
+    ui: ReactNode,
+    { snackBarContext = mockSnackBarContext, ...options }: RenderWithThemeOptions = {}
+) =>
     render(
-        <ThemeProvider theme={testTheme}>
-            {ui}
-        </ThemeProvider>,
+        <SnackBarContext.Provider value={snackBarContext as any}>
+            <ThemeProvider theme={testTheme}>
+                {ui}
+            </ThemeProvider>
+        </SnackBarContext.Provider>,
         options
     );
 
@@ -47,18 +72,26 @@ export const renderWithTheme = (ui: ReactNode, options?: Omit<RenderOptions, "wr
 interface RenderWithProvidersOptions extends Omit<RenderOptions, "wrapper"> {
     store?: ReturnType<typeof buildTestStore>;
     productDialogContext?: typeof mockProductDialogContext;
+    snackBarContext?: typeof mockSnackBarContext;
 }
 
 export const renderWithProviders = (
     ui: ReactNode,
-    { store = buildTestStore(), productDialogContext = mockProductDialogContext, ...options }: RenderWithProvidersOptions = {}
+    {
+        store = buildTestStore(),
+        productDialogContext = mockProductDialogContext,
+        snackBarContext = mockSnackBarContext,
+        ...options
+    }: RenderWithProvidersOptions = {}
 ) =>
     render(
         <Provider store={store}>
             <ThemeProvider theme={testTheme}>
-                <ProductDialogContext.Provider value={productDialogContext as any}>
-                    {ui}
-                </ProductDialogContext.Provider>
+                <SnackBarContext.Provider value={snackBarContext as any}>
+                    <ProductDialogContext.Provider value={productDialogContext as any}>
+                        {ui}
+                    </ProductDialogContext.Provider>
+                </SnackBarContext.Provider>
             </ThemeProvider>
         </Provider>,
         options
