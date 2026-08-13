@@ -1,29 +1,52 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getSellers } from "../../store/seller/sellerPersonThunks";
-import type { AppDispatch, RootState } from "../../store/seller/sellerPersonSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import type { AppDispatch } from "../../store/seller/sellerPersonSlice";
+import { deleteSellerThunk, selectSellerThunk } from "../../store/seller/sellerThunks";
+import type { DeleteDialogState } from "@typings/ui/dialog.types";
+import type { Seller, UseSellersReturn } from "@typings/seller/sellerTypes";
+import { CLOSED_DIALOG } from "../../config/constants";
+import useSellersListData from "./useSellerListData";
+import { buildColumnsForSellers } from "../../modules/sellers/pages/SellersList/components/SellerColumns";
 
-export const useSellers = () => {
+export const useSellers = (): UseSellersReturn => {
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-    const sellers    = useSelector((state: RootState) => state.sellerPerson.sellers);
-    const loading    = useSelector((state: RootState) => state.sellerPerson.isLoading);
-    const storeError = useSelector((state: RootState) => state.sellerPerson.errorMessage);
+    const { sellers, loading, error, clearError } = useSellersListData();
 
-    const [error, setError] = useState<string | null>(null);
+    const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
 
-    useEffect(() => {
-        setError(storeError);
-    }, [storeError]);
+    const handleDeleteRequest = (id: string, name: string) =>
+        setDeleteDialog({ open: true, id, name });
 
-    useEffect(() => {
-        void dispatch(getSellers());
-    }, [dispatch]);
+    const handleDeleteCancel = () => setDeleteDialog(CLOSED_DIALOG);
+
+    const handleDeleteConfirm = async () => {
+        await dispatch(deleteSellerThunk(deleteDialog.id));
+        setDeleteDialog(CLOSED_DIALOG);
+    };
+
+    const handleEditRequest = (seller: Seller) => {
+        dispatch(selectSellerThunk(seller));
+        navigate(`/seller/${seller._id}/seller-edit`);
+    };
+
+    const columns = buildColumnsForSellers({
+        onDeleteRequest: handleDeleteRequest,
+        onEditRequest: handleEditRequest,
+        navigate,
+    });
 
     return {
         sellers,
         loading,
         error,
-        clearError: () => setError(null),
+        clearError,
+        deleteDialog,
+        handleDeleteRequest,
+        handleDeleteCancel,
+        handleDeleteConfirm,
+        columns,
     };
 };

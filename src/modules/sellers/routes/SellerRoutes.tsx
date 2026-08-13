@@ -1,19 +1,17 @@
 import { Route } from "react-router-dom";
-import SellersListPage from "../pages/SellersListPage";
-import ShopSellersEditPage from "../pages/SellersEditPage";
-import ShopSellersCreatePage from "../pages/SellersCreatePage";
 import type { ReactNode } from "react";
+import SellersListPage from "../pages/SellersList/SellersListPage";
+import SellerEditPage from "../pages/SellerEdit/SellerEditPage";
+import SellerDetailPage from "../pages/SellerDetail/SellerDetailPage";
 
-
-const CartRoutes = (): ReactNode => {
-
+const SellerRoutes = (): ReactNode => {
     return (
         <>
             <Route path="/sellers" element={<SellersListPage />} />
-            <Route path="/sellers-create" element={<ShopSellersCreatePage />} />
-            <Route path="/sellers-edit" element={<ShopSellersEditPage />} />
+            <Route path="/seller/:seller_id" element={<SellerDetailPage />} />
+            <Route path="/seller/:seller_id/seller-edit" element={<SellerEditPage />} />
         </>
-    )
-}
+    );
+};
 
-export default CartRoutes;
+export default SellerRoutes;
