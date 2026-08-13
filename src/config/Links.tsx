@@ -99,6 +99,6 @@ export const AccountNavLinks: OptionLink[] = [
 ];
 
 export const ShopNavLinks: OptionLink[] = [
-  { description: 'Vendedores', icon: <GroupsIcon />, url: '/shop-sellers', subtitle: '' },
+  { description: 'Vendedores', icon: <GroupsIcon />, url: '/sellers', subtitle: '' },
   { description: 'Estadisticas', icon: <QueryStatsIcon />, url: '/shop-stadistics', subtitle: '' },
 ];

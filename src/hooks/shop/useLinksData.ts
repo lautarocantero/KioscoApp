@@ -9,7 +9,7 @@ import { ShopNavLinks } from "../../config/Links";
 
 const dataHooksByUrl: Record<string, () => LinkDataResult> = {
   "/shop-administrators": useShopAdministratorsLinkData,
-  "/shop-sellers": useShopSellersLinkData,
+  "/sellers": useShopSellersLinkData,
   "/shop-stadistics": useShopStatisticsLinkData,
 };
 

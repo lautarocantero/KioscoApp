@@ -43,12 +43,12 @@ const ShopSellersListPage = (): ReactNode => {
             renderCell: (params) => (
                 <CellCenter>
                     <RowActionsCell
-                        onView={() => navigate(`/shop-sellers/${params.row._id}`)}
+                        onView={() => navigate(`/sellers/${params.row._id}`)}
                         onEdit={() => {
                             // select seller in store so edit page can read it
                             // @ts-ignore
                             dispatch(selectSellerThunk(params.row));
-                            navigate(`/shop-sellers-edit`);
+                            navigate(`/sellers-edit`);
                         }}
                         onDelete={() => handleDeleteRequest(params.row._id, params.row.name)}
                     />
@@ -69,7 +69,7 @@ const ShopSellersListPage = (): ReactNode => {
                 emptyMessage="No hay vendedores registrados"
                 height={"35em"}
                 search={undefined}
-                newItem={{ label: "Nuevo vendedor", href: "/shop-sellers-create" }}
+                newItem={{ label: "Nuevo vendedor", href: "/sellers-create" }}
                 deleteDialog={{
                     open: deleteDialog.open,
                     description: (<>{`¿Eliminar vendedor ${deleteDialog.name ?? ""}?`}</>),
