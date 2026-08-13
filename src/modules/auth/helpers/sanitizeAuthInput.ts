@@ -16,12 +16,12 @@ export const sanitizeInput = (input: string, label: string): string => {
 };
 
 export const sanitizeRegisterValues = (values: {
-    username: string;
+    name: string;
     email: string;
     password: string;
     repeatPassword: string;
 }) => ({
-    username: sanitizeInput(values.username, "Username"),
+    name: sanitizeInput(values.name, "Name"),
     email: sanitizeInput(values.email, "Email"),
     password: values.password, // sin sanitizar
     repeatPassword: values.repeatPassword, // sin sanitizar

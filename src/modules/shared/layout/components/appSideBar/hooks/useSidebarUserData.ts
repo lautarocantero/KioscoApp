@@ -5,7 +5,7 @@ import type { UseSidebarUserDataReturn } from "@typings/auth/authTypes";
 
 
 export const useSidebarUserData = (): UseSidebarUserDataReturn => {
-  const { _id, username, role, email, profilePhoto, isLoading, isAuthenticated } = useSelector(
+  const { _id, name, role, email, profilePhoto, isLoading, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -15,7 +15,7 @@ export const useSidebarUserData = (): UseSidebarUserDataReturn => {
 
   const userData: UserData = {
     id: _id,
-    name: username,
+    name: name,
     role: role,
     avatarUrl: profilePhoto ?? undefined,
     email,

@@ -16,7 +16,7 @@ const authErrorMessages: AuthErrorMessageMap = {
   "please verify your email before logging in": "Tenés que verificar tu email antes de iniciar sesión",
 
   // ─── register ───
-  "username already exists": "Ya existe una cuenta con ese nombre de usuario",
+  "name already exists": "Ya existe una cuenta con ese nombre de usuario",
   "email already exists": "Ya existe una cuenta con ese email",
 
   // ─── verify email ───

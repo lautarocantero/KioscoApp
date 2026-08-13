@@ -24,13 +24,13 @@ const RegisterFormInputs = ({
         <Grid component={"div"} sx={{ flex: 1, width: "100%" }}>
           <TextField
             fullWidth
-            name="username"
-            onChange={({ target }) => setFieldValue("username", target?.value)}
+            name="name"
+            onChange={({ target }) => setFieldValue("name", target?.value)}
             placeholder="Usuario"
             type="text"
-            value={values?.username}
-            error={!!errors.username}
-            helperText={errors?.username?.toString()}
+            value={values?.name}
+            error={!!errors.name}
+            helperText={errors?.name?.toString()}
             variant="outlined"
             sx={sharedSx}
             slotProps={{

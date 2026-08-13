@@ -21,7 +21,7 @@ export const loginFormSchema = Yup.lazy(() =>
 
 //─── Register ────────────────────────────────────────────
 export const getRegisterInitialValues = (): AuthRegisterFormValues => ({
-    username: "",
+    name: "",
     email: "",
     password: "",
     repeatPassword: "",
@@ -31,7 +31,7 @@ export const getRegisterInitialValues = (): AuthRegisterFormValues => ({
 
 export const registerFormSchema = Yup.lazy(() =>
     Yup.object().shape({
-        username: Yup.string().required("Campo requerido").trim(),
+        name: Yup.string().required("Campo requerido").trim(),
         email: Yup.string()
             .email("Ingresa un E-mail")
             .required("Campo requerido")

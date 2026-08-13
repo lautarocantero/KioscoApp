@@ -8,7 +8,7 @@ import type { AuthRoleEnum, ResetPasswordStatusEnum, VerifyEmailStatusEnum } fro
 
 interface AuthEntity {
     _id: string | null,
-    username: string,
+    name: string,
     email: string,
     password: string,
     repeatPassword: string,
@@ -16,6 +16,7 @@ interface AuthEntity {
     refreshToken: string,
     status: AuthStatus,
     profilePhoto?: string | null,
+    isVerified: boolean,
     role: AuthRoleEnum,
 };
 
@@ -42,7 +43,7 @@ export interface UseSidebarUserDataReturn {
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type AuthLoginSlicePayload = Pick<Auth, '_id' | 'username' |  'email' | 'profilePhoto' | 'role'>
+export type AuthLoginSlicePayload = Pick<Auth, '_id' | 'name' | 'email' | 'profilePhoto' | 'role' | 'isVerified'>
 
 export type AuthSliceErrorPayload = Pick<AuthSliceState, 'errorMessage'>;
 
@@ -66,7 +67,7 @@ export type AuthActionsType =
 
 export type AuthLoginRequestPayload = AuthCredentialsPayload;
 
-export type AuthRegisterRequestPayload = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' | 'profilePhoto' >
+export type AuthRegisterRequestPayload = Pick<Auth, 'name' | 'email' | 'password' | 'repeatPassword' | 'profilePhoto' >
 
 export interface AuthRegisterSanitizedPayload {
     sanitizedData: AuthRegisterRequestPayload;
@@ -76,9 +77,13 @@ export type AuthVerifyEmailApiPayload = {
   token: string;
 };
 
-export type AuthCheckAutResponse = Pick<Auth, '_id' | 'email' | 'password' | 'refreshToken' | 'username' >
+// ⚠️ No encontré ningún uso de este tipo en authApi/authStoreThunks/authSlice.
+// Si nada más lo usa, es candidato a borrar: 'password' y 'refreshToken' no
+// deberían tener un tipo dedicado a "lo que vuelve del checkAuth", porque el
+// backend ya no los expone ahí (nunca lo hizo, en rigor).
+export type AuthCheckAutResponse = Pick<Auth, '_id' | 'email' | 'password' | 'refreshToken' | 'name' >
 
-export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'username' | 'email' | 'profilePhoto' | 'role'>
+export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'name' | 'email' | 'profilePhoto' | 'role' | 'isVerified'>
 
 // ─── Recuperación de contraseña ───────────────────────────
 export type AuthRequestPasswordResetPayload = Pick<Auth, 'email'>;
@@ -113,7 +118,7 @@ export type AuthRequestPasswordResetResult = AuthAsyncActionResult & {
 // ║ 🔗 API 🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗🔗                          ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type AuthRegisterApiPayload = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword' | 'profilePhoto'>
+export type AuthRegisterApiPayload = Pick<Auth, 'name' | 'email' | 'password' | 'repeatPassword' | 'profilePhoto'>
 
 export type AuthLoginApiPayload = AuthCredentialsPayload;
 
@@ -133,7 +138,7 @@ export type AuthResetPasswordApiPayload = AuthResetPasswordPayload;
 
 export type AuthLoginFormValues = AuthCredentialsPayload;
 
-export type AuthRegisterFormValues = Pick<Auth, 'username' | 'email' | 'password' | 'repeatPassword'> & {
+export type AuthRegisterFormValues = Pick<Auth, 'name' | 'email' | 'password' | 'repeatPassword'> & {
     profilePhoto: string | null;
     acceptedTerms: boolean;
 };

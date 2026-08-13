@@ -6,7 +6,7 @@ import type { AuthLoginSlicePayload, AuthSliceErrorPayload, AuthSliceState } fro
 
 const initialState: AuthSliceState = {
     _id: null,
-    username: '',
+    name: '',
     email: '',
     status: AuthStatus.Checking,
     isLoading: true,
@@ -14,6 +14,7 @@ const initialState: AuthSliceState = {
     profilePhoto: null,
     errorMessage: null,
     role: AuthRoleEnum.Usuario,
+    isVerified: false,
 }
 
 export const authSlice = createSlice({
@@ -22,15 +23,16 @@ export const authSlice = createSlice({
     reducers: {
         login: (state: AuthSliceState, action: PayloadAction<AuthLoginSlicePayload>) => {
             const { payload } = action;
-            const { _id, username, email, profilePhoto, role } = payload;
+            const { _id, name, email, profilePhoto, role, isVerified } = payload;
             state._id = _id;
-            state.username = username ?? '';
+            state.name = name ?? '';
             state.email = email ?? '';
             state.status = AuthStatus.Authenticated;
             state.isLoading = false;
             state.isAuthenticated = true;
             state.profilePhoto = profilePhoto ?? null;
             state.role = role;
+            state.isVerified = isVerified ?? false;
             state.errorMessage = null;
         },
         logout: (state: AuthSliceState, action: PayloadAction<AuthSliceErrorPayload>) => {
@@ -40,10 +42,11 @@ export const authSlice = createSlice({
             state.isLoading = false;
             state.isAuthenticated = false;
             state.email = '';
-            state.username = '';
+            state.name = '';
             state.profilePhoto = null;
             state._id = null;
             state.role = AuthRoleEnum.Usuario;
+            state.isVerified = false;
             state.errorMessage = errorMessage ?? null;
         },
         checkingCredentials: (state: AuthSliceState) => {

@@ -25,9 +25,10 @@ export const startLoginWithEmailPassword = (
 
         dispatch(login({
           email: user.email,
-          username: user.username,
+          name: user.name,
           profilePhoto: user.profilePhoto,
           role: user.role,
+          isVerified: user.isVerified,
           _id: user._id,
         }));
 
@@ -40,19 +41,20 @@ export const startLoginWithEmailPassword = (
 
 export const startRegister = (
   { sanitizedData } : AuthRegisterSanitizedPayload): ThunkAction<Promise<string | undefined>, RootState, undefined, AnyAction> => {
-    const {username, email, password, repeatPassword, profilePhoto } = sanitizedData;
+    const { name, email, password, repeatPassword, profilePhoto } = sanitizedData;
 
     return async (dispatch: AppDispatch): Promise<string | undefined> => {
       try{
-        const _id : string = await authRegisterRequest({username, email, password, repeatPassword, profilePhoto});
+        // 🔧 Fix: el backend devuelve { id, message }, no un string suelto
+        const { id } : { id: string } = await authRegisterRequest({ name, email, password, repeatPassword, profilePhoto });
 
-        if(!_id) {
+        if(!id) {
           dispatch(logout({ errorMessage: 'No se pudo registrar al usuario, intente de nuevo' }));
           throw new Error('Error durante el  registro');
         }
 
         dispatch(clearAuthError());
-        return _id as string;
+        return id;
       } catch (error: unknown) {
         handleErrorWithAction({error, dispatch, action: logout});  
       }
@@ -75,9 +77,10 @@ export const startGoogleLogin = (
 
         dispatch(login({
           email: user.email,
-          username: user.username,
+          name: user.name,
           profilePhoto: user.profilePhoto,
           role: user.role,
+          isVerified: user.isVerified,
           _id: user._id,
         }));
 
@@ -111,12 +114,13 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: nu
       }
 
       dispatch(login({
-          email: data.email,
-          username: data.username,
-          profilePhoto: data.profilePhoto,
-          role: data.role,
-          _id: data._id,
-        }));
+        email: data.email,
+        name: data.name,
+        profilePhoto: data.profilePhoto,
+        role: data.role,
+        isVerified: data.isVerified,
+        _id: data._id,
+      }));
 
       return response;
     } catch(error: unknown) {
