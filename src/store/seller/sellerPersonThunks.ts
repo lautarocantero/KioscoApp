@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { handleError } from "../shared/handlerStoreError";
-import { getSellersRequest } from "../../modules/shop/api/sellerApi";
+import { getSellersRequest } from "../../modules/sellers/api/sellerApi";
 import type { Seller } from "../../typings/seller/sellerTypes";
 import { checkingSellers, setSellers, setSellersError } from "./sellerPersonSlice";
 

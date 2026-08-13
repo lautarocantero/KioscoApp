@@ -14,6 +14,7 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import GroupsIcon from '@mui/icons-material/Groups';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import type { OptionLink } from "@typings/ui/layout.types";
+import GroupIcon from '@mui/icons-material/Group';
 import stocoLogo from "../../public/images/logo/StocoLogoalt.png";
 
 const KioscoLink: OptionLink = {
@@ -63,6 +64,12 @@ export const SidebarNavLinks: OptionLink[] = [
     icon: <StoreIcon />,
     url: "/shop",
     subtitle: "Configuración del local",
+  },
+  {
+    description: "Vendedores",
+    icon: <GroupIcon />,
+    url: "/sellers",
+    subtitle: "",
   },
   {
     description: "Proveedores",

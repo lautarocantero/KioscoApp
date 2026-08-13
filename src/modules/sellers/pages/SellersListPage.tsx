@@ -1,14 +1,14 @@
-import React, { type ReactNode, useState } from "react";
-import DataTable from "../../../shared/components/DataTable/DataTable";
-import AppLayout from "../../../shared/layout/AppLayout";
-import { useSellers } from "../../../../hooks/sellers/useSellers";
+import { type ReactNode, useState } from "react";
+import DataTable from "../../shared/components/DataTable/DataTable";
+import AppLayout from "../../shared/layout/AppLayout";
+import { useSellers } from "../../../hooks/sellers/useSellers";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { GridColDef } from "@mui/x-data-grid";
-import RowActionsCell from "../../../shared/components/DataTable/RowActionsCell";
-import { CellCenter } from "../../../shared/components/DataTable/CellCenter";
-import { dateColumn } from "../../../shared/components/DataTable/ColumnHelpers";
-import { deleteSellerThunk, selectSellerThunk } from "../../../../store/seller/sellerThunks";
+import RowActionsCell from "../../shared/components/DataTable/RowActionsCell";
+import { CellCenter } from "../../shared/components/DataTable/CellCenter";
+import { dateColumn } from "../../shared/components/DataTable/ColumnHelpers";
+import { deleteSellerThunk, selectSellerThunk } from "../../../store/seller/sellerThunks";
 
 const ShopSellersListPage = (): ReactNode => {
     const { sellers, loading, error, clearError } = useSellers();

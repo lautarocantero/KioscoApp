@@ -9,7 +9,7 @@ import ProductsRoutes from "../modules/products/ProductsRoutes";
 import PresentationsRoutes from "../modules/presentations/PresentationsRoutes";
 import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
 import SellsRoutes from "../modules/sells/routes/SellsRoutes";
-import ShopRoutes from "../modules/shop/routes/ShopRoutes";
+import SellerRoutes from "../modules/sellers/routes/SellerRoutes";
 import ReceiptRoutes from "../modules/receipt/ReceiptRoutes";
 import type { AppDispatch, RootState } from "../store/auth/authSlice";
 import { startCheckAuth } from "../store/auth/authThunks";
@@ -43,7 +43,7 @@ const AppRouter = (): React.ReactNode => {
             <Route path="/home" element={<HomePage />} />
             {SellsRoutes()}
             {CartRoutes()}
-            {ShopRoutes()}
+            {SellerRoutes()}
             {AccountRoutes()}
             {ProvidersRoutes()}
             {ProductsRoutes()}
