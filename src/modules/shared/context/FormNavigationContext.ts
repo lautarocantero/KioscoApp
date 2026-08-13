@@ -1,5 +1,5 @@
+import type { FormNavigationContextType } from "@typings/shared/types/formCard.types";
 import { createContext, useContext } from "react";
-import type { FormNavigationContextType } from "@typings/product/productTypes";
 
 
 export const FormNavigationContext = createContext<FormNavigationContextType | undefined>(undefined);

@@ -1,55 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import type { FormikErrors } from "formik";
 import type {
-    Seller,
-    CreateSellerPayload,
     EditSellerPayload,
 } from "@typings/seller/sellerTypes";
-import type { AppDispatch } from "../../store/store";
-import { createSellerThunk, editSellerThunk } from "../../store/seller/sellerThunks";
+import { editSellerThunk } from "../../store/seller/sellerThunks";
 import { useSellerData } from "./useSellerData";
 import { useErrorParser } from "../shared/useErrorParser";
+import type { AppDispatch } from "../../store/seller/sellerSlice";
 
-export function useSellerCreate() {
-    const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate();
-
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitError, setSubmitError] = useState<string | null>(null);
-
-    const { parseError } = useErrorParser();
-
-    const handleSubmit = async (values: { name: string; email: string; password?: string; rol?: string }) => {
-        setIsSubmitting(true);
-        setSubmitError(null);
-
-        try {
-            const now = new Date().toISOString();
-            const body: CreateSellerPayload = {
-                name: values.name,
-                email: values.email,
-                password: values.password ?? "",
-                rol: values.rol ?? "seller",
-                created_at: now,
-                user_status: "active" as any,
-            } as unknown as CreateSellerPayload;
-
-            const ok = await dispatch(createSellerThunk(body));
-            if (!ok) throw new Error("No se pudo crear el vendedor");
-
-            navigate(`/sellers`);
-        } catch (err) {
-            const message = await parseError(err, "Error inesperado al crear el vendedor");
-            setSubmitError(message);
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
-    return { isSubmitting, submitError, handleSubmit };
-}
 
 export function useSellerEdit() {
     const navigate = useNavigate();
@@ -101,4 +60,4 @@ export function useSellerEdit() {
     };
 }
 
-export default useSellerCreate;
+export default useSellerEdit;

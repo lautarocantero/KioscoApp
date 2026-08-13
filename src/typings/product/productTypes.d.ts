@@ -220,26 +220,6 @@ export interface UseProductsListDataResult {
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
-// ║ 💱 CONTEXT  💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱💱                       ║
-// ╚══════════════════════════════════════════════════════════════════════╝*/
-
-export interface FormNavigationContextType {
-    currentStep:  number;
-    totalSteps:   number;
-    isSubmitting: boolean;
-    submitError:  string | null;
-    stepErrors:   string[];
-    onNext: (
-        validateForm: () => Promise<FormikErrors<ProductFormValues>>,
-        onValidSubmit?: () => void,
-    ) => Promise<void>;
-    onPrev:        () => void;
-    onSubmit:      (e?: FormEvent<HTMLFormElement>) => void;
-    validateForm?: () => Promise<FormikErrors<ProductFormValues>>;
-    actionTitle?:  FormModeComplexEnum;
-}
-
-// /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🗂️ COLUMNAS  🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️🗂️           ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 

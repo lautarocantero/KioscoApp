@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSellers } from "../../store/seller/sellerPersonThunks";
-import type { AppDispatch, RootState } from "../../store/seller/sellerPersonSlice";
+import type { AppDispatch, RootState } from "../../store/seller/sellerSlice";
+import { fetchSellersThunk } from "../../store/seller/sellerThunks";
+
 
 const useSellersListData = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const sellers = useSelector((state: RootState) => state.sellerPerson.sellers);
-    const loading = useSelector((state: RootState) => state.sellerPerson.isLoading);
-    const storeError = useSelector((state: RootState) => state.sellerPerson.errorMessage);
+    const sellers = useSelector((state: RootState) => state.seller.sellers);
+    const loading = useSelector((state: RootState) => state.seller.isLoading);
+    const storeError = useSelector((state: RootState) => state.seller.errorMessage);
 
     const [error, setError] = useState<string | null>(null);
 
@@ -17,7 +18,7 @@ const useSellersListData = () => {
     }, [storeError]);
 
     useEffect(() => {
-        void dispatch(getSellers());
+        void dispatch(fetchSellersThunk());
     }, [dispatch]);
 
     return {

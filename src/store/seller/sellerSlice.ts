@@ -1,24 +1,18 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { Seller } from '../../typings/seller/sellerTypes';
+import type {
+    SellerSliceState,
+    SetSellersPayload,
+    SetSelectedSellerPayload,
+    SellerSliceError,
+    AddSellerToListPayload,
+    UpdateSellerInListPayload,
+    RemoveSellerFromListPayload,
+} from '../../typings/seller/sellerTypes';
+import type { store } from '../store';
 
-// 🆕 Tipos locales — mové esto a typings/seller/sellerTypes.ts si preferís centralizarlo.
-export interface SellerAdminStateInterface {
-    sellers: Seller[];
-    sellersLoading: boolean;
-    selectedSeller: Seller | null;
-    errorMessage: string | null;
-}
-
-export interface SetSellersPayload { sellers: Seller[] }
-export interface SetSelectedSellerPayload { seller: Seller | null }
-export interface SellerAdminError { errorMessage: string | null }
-export interface AddSellerToListPayload { seller: Seller }
-export interface UpdateSellerInListPayload { seller: Seller }
-export interface RemoveSellerFromListPayload { _id: string }
-
-const initialState: SellerAdminStateInterface = {
+const initialState: SellerSliceState = {
     sellers: [],
-    sellersLoading: false,
+    isLoading: false,
     selectedSeller: null,
     errorMessage: null,
 };
@@ -27,27 +21,27 @@ export const sellerSlice = createSlice({
     name: 'sellers', // distinto del 'seller' de cartSlice para no chocar en el store
     initialState,
     reducers: {
-        startLoadingSellers: (state: SellerAdminStateInterface) => {
-            state.sellersLoading = true;
+        startLoadingSellers: (state: SellerSliceState) => {
+            state.isLoading = true;
         },
-        setSellers: (state: SellerAdminStateInterface, action: PayloadAction<SetSellersPayload>) => {
+        setSellers: (state: SellerSliceState, action: PayloadAction<SetSellersPayload>) => {
             state.sellers = action.payload.sellers;
-            state.sellersLoading = false;
+            state.isLoading = false;
         },
-        resetSellers: (state: SellerAdminStateInterface) => {
+        resetSellers: (state: SellerSliceState) => {
             state.sellers = [];
-            state.sellersLoading = false;
+            state.isLoading = false;
         },
-        setSelectedSeller: (state: SellerAdminStateInterface, action: PayloadAction<SetSelectedSellerPayload>) => {
+        setSelectedSeller: (state: SellerSliceState, action: PayloadAction<SetSelectedSellerPayload>) => {
             state.selectedSeller = action.payload.seller;
         },
-        clearSelectedSeller: (state: SellerAdminStateInterface) => {
+        clearSelectedSeller: (state: SellerSliceState) => {
             state.selectedSeller = null;
         },
-        addSellerToList: (state: SellerAdminStateInterface, action: PayloadAction<AddSellerToListPayload>) => {
+        addSellerToList: (state: SellerSliceState, action: PayloadAction<AddSellerToListPayload>) => {
             state.sellers = [...state.sellers, action.payload.seller];
         },
-        updateSellerInList: (state: SellerAdminStateInterface, action: PayloadAction<UpdateSellerInListPayload>) => {
+        updateSellerInList: (state: SellerSliceState, action: PayloadAction<UpdateSellerInListPayload>) => {
             const { seller } = action.payload;
             const index = state.sellers.findIndex((item) => item._id === seller._id);
             if (index === -1) return;
@@ -57,7 +51,7 @@ export const sellerSlice = createSlice({
                 state.selectedSeller = seller;
             }
         },
-        removeSellerFromList: (state: SellerAdminStateInterface, action: PayloadAction<RemoveSellerFromListPayload>) => {
+        removeSellerFromList: (state: SellerSliceState, action: PayloadAction<RemoveSellerFromListPayload>) => {
             const { _id } = action.payload;
             state.sellers = state.sellers.filter((item) => item._id !== _id);
 
@@ -65,7 +59,7 @@ export const sellerSlice = createSlice({
                 state.selectedSeller = null;
             }
         },
-        setSellerError: (state: SellerAdminStateInterface, action: PayloadAction<SellerAdminError>) => {
+        setSellerError: (state: SellerSliceState, action: PayloadAction<SellerSliceError>) => {
             state.errorMessage = action.payload.errorMessage;
         },
     },
@@ -82,5 +76,9 @@ export const {
     removeSellerFromList,
     setSellerError,
 } = sellerSlice.actions;
+
+export type RootState   = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
 
 export default sellerSlice.reducer;

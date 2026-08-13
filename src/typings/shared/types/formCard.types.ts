@@ -1,5 +1,7 @@
 import type { IconConfig } from "@typings/presentation/presentationTypes";
-import type { ReactNode } from "react";
+import type { ReactNode, FormEvent } from "react";
+import type { FormikErrors } from "formik";
+import type { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 
 export interface StepConfig {
     title: string;
@@ -61,4 +63,24 @@ export interface FieldDisplayState {
     helperId: string;
     inputId: string;
     isFirstField: boolean;
+}
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 💱 NAVIGATION CONTEXT — compartido por todos los forms 💱💱💱💱💱💱💱💱  ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface FormNavigationContextType<TValues = any> {
+    currentStep:  number;
+    totalSteps:   number;
+    isSubmitting: boolean;
+    submitError:  string | null;
+    stepErrors:   string[];
+    onNext: (
+        validateForm: () => Promise<FormikErrors<TValues>>,
+        onValidSubmit?: () => void,
+    ) => Promise<void>;
+    onPrev:        () => void;
+    onSubmit:      (e?: FormEvent<HTMLFormElement>) => void;
+    validateForm?: () => Promise<FormikErrors<TValues>>;
+    actionTitle?:  FormModeComplexEnum;
 }

@@ -7,7 +7,6 @@ import providerSlice from "./provider/providerSlice";
 import cartSlice from "./cart/cartSlice";
 import sellSlice from "./sell/sellSlice";
 import sellerSlice from "./seller/sellerSlice";
-import sellerPersonSlice from "./seller/sellerPersonSlice";
 import presentationSlice from "./presentation/presentationSlice";
 import receiptSlice from "./receipt/receiptsSlice";
 import { initAuthHttpBridge } from "../hooks/auth/useLogoutHandler";
@@ -31,25 +30,24 @@ const localStorageEngine = {
 };
 
 //─── 🔎 Persistencia: solo el carrito sobrevive a un reload 🔎 ───
-const sellerPersistConfig = {
-    key: 'seller',
+const cartPersistConfig = {
+    key: 'cart',
     storage: localStorageEngine,
     whitelist: ['cart'],
 };
 
-const persistedSellerReducer = persistReducer(sellerPersistConfig, sellerSlice);
+const persistedCartReducer = persistReducer(cartPersistConfig, cartSlice);
 
 const rootReducer = combineReducers({
     auth: authSlice,
-    cart: cartSlice,
+    cart: persistedCartReducer,
     user: userSlice,
     product: productSlice,
     presentation: presentationSlice,
     provider: providerSlice,
     receipt: receiptSlice,
-    sell: sellSlice,    // se queda igual
-    seller: persistedSellerReducer, // se deberia llamar cart
-    sellerPerson: sellerPersonSlice, // se deberia llamar employes
+    sell: sellSlice,
+    seller: sellerSlice,
 });
 
 export const store = configureStore({

@@ -15,7 +15,7 @@ export const useSellerData = (sellerId: string | undefined): UseSellerDataResult
     const dispatch = useDispatch<AppDispatch>();
 
     const sellerData = useSelector((state: RootState) => state.seller?.selectedSeller ?? null);
-    const isLoading = useSelector((state: RootState) => state.seller?.sellersLoading ?? false);
+    const isLoading = useSelector((state: RootState) => state.seller?.isLoading ?? false);
     const error = useSelector((state: RootState) => state.seller?.errorMessage ?? null);
 
     const storeHasIt = sellerData?._id === sellerId;
