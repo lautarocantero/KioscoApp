@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Product } from "@typings/product/productTypes";
-import type { ProductExhibitorTableProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductExhibitorTableProps } from "@typings/cart/cartComponentTypes";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 
 

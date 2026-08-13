@@ -1,8 +1,8 @@
 import { Box, Menu, MenuItem, Tooltip, Typography, type Theme } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import type { ReactNode } from "react";
-import { ViewMode } from "@typings/seller/sellerEnums";
-import type { SortByCatalogProps } from "@typings/seller/sellerComponentTypes";
+import { ViewMode } from "@typings/cart/cartEnums";
+import type { SortByCatalogProps } from "@typings/cart/cartComponentTypes";
 import { useSortByCatalog } from "@hooks/cart/useSortByCatalogHeader";
 
 const SortByCatalog = ({viewMode}: SortByCatalogProps): ReactNode => {

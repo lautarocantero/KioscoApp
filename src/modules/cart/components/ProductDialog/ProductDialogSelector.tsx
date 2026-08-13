@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React, { type ReactNode } from "react";
 import ProductDialogSelectorHeaderComponent from "./ProductDialogSelectorHeader";
 import ProductDialogTable from "./ProductDialogTable";
-import type { ProductDialogSelectorProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductDialogSelectorProps } from "@typings/cart/cartComponentTypes";
 import useProductDialogSelector from "@hooks/cart/useProductDialogSelector";
 
 

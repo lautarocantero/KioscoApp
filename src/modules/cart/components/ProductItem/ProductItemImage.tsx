@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import type { ProductItemImageProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductItemImageProps } from "@typings/cart/cartComponentTypes";
 import type { ReactNode } from "react";
 import { FALLBACK_PRODUCT_IMAGE } from "../../../../config/constants";
 

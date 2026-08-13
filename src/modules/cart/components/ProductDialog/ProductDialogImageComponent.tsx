@@ -1,6 +1,6 @@
 import { Box, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import type { ProductDialogHeaderProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductDialogHeaderProps } from "@typings/cart/cartComponentTypes";
 import { memo, useState, type ReactNode } from "react";
 
 const FALLBACK_IMAGE = '/images/stocko_images/empty_product.png';

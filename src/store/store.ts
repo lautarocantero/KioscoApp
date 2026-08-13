@@ -4,12 +4,14 @@ import authSlice from "./auth/authSlice";
 import userSlice from "./user/userSlice";
 import productSlice from "./product/productSlice";
 import providerSlice from "./provider/providerSlice";
+import cartSlice from "./cart/cartSlice";
 import sellSlice from "./sell/sellSlice";
 import sellerSlice from "./seller/sellerSlice";
 import sellerPersonSlice from "./seller/sellerPersonSlice";
 import presentationSlice from "./presentation/presentationSlice";
 import receiptSlice from "./receipt/receiptsSlice";
 import { initAuthHttpBridge } from "../hooks/auth/useLogoutHandler";
+
 
 
 //─── 🔎 Storage engine manual 🔎 ───
@@ -39,6 +41,7 @@ const persistedSellerReducer = persistReducer(sellerPersistConfig, sellerSlice);
 
 const rootReducer = combineReducers({
     auth: authSlice,
+    cart: cartSlice,
     user: userSlice,
     product: productSlice,
     presentation: presentationSlice,

@@ -2,9 +2,9 @@ import { Box } from "@mui/material";
 import ProductsSkeletons from "./ProductsSkeletons";
 import EmptyProductsList from "./EmptyProductsList";
 import type { ReactNode } from "react";
-import { ViewMode } from "@typings/seller/sellerEnums";
+import { ViewMode } from "@typings/cart/cartEnums";
 import ProductExhibitorTable from "./ProductExhibitorTable";
-import type { ProductsExhibitorListProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductsExhibitorListProps } from "@typings/cart/cartComponentTypes";
 import type { Product } from "@typings/product/productTypes";
 import ProductItemComponent from "../ProductItem/ProductItemComponent";
 

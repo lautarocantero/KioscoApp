@@ -1,10 +1,9 @@
 import { Chip, type Theme } from "@mui/material";
+import type { ProductItemBadgeProps } from "@typings/cart/cartComponentTypes";
+import type { ReactNode } from "react";
 
-export interface ProductItemBadgeProps {
-  label: string;
-}
 
-const ProductItemBadge = ({ label }: ProductItemBadgeProps): React.ReactNode => (
+const ProductItemBadge = ({ label }: ProductItemBadgeProps): ReactNode => (
   <Chip
     label={label}
     size="small"

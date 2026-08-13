@@ -1,11 +1,11 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, Tooltip, type Theme } from "@mui/material";
 import { useDispatch } from "react-redux";
-import type { AppDispatch } from '../../../../store/seller/sellerSlice';
-import { removeFromCartThunk } from '../../../../store/seller/sellerThunks';
 import type { ReactNode } from 'react';
-import type { CartProductRowActionCellProps } from '@typings/seller/sellerComponentTypes';
-import { CartAmount } from '@typings/seller/sellerEnums';
+import type { CartProductRowActionCellProps } from '@typings/cart/cartComponentTypes';
+import { CartAmount } from '@typings/cart/cartEnums';
+import type { AppDispatch } from '../../../../store/cart/cartSlice';
+import { removeFromCartThunk } from '../../../../store/cart/cartThunks';
 
 
 const CartProductRowActionCell = ({ product }: CartProductRowActionCellProps): ReactNode => {

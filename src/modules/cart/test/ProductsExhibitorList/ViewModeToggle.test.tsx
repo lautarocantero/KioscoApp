@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ViewMode } from "@typings/seller/sellerEnums";
+import { ViewMode } from "@typings/cart/cartEnums";
 import ViewModeToggle from "../../components/ProductsExhibitorList/ViewModeToggle";
 
 describe("ViewModeToggle", () => {

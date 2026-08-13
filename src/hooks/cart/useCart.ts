@@ -3,21 +3,21 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { Currency, PaymentMethod, SellStatusEnum } from "../../typings/sells/sellsEnum";
-import type { AppDispatch, RootState } from "../../store/seller/sellerSlice";
+import type { AppDispatch, RootState } from "../../store/cart/cartSlice";
 import { iva } from "../../config/constants";
 import { createSellThunk } from "../../store/sell/sellsThunks";
 import { createPdfTicket } from "../../modules/shared/helpers/createPdfTicket";
-import { cleanCartThunk, removeFromCartThunk, addOneUnitThunk, setQuantityThunk } from "../../store/seller/sellerThunks";
+import { cleanCartThunk, removeFromCartThunk, addOneUnitThunk, setQuantityThunk } from "../../store/cart/cartThunks";
 import { AlertColor } from "@typings/ui/ui";
 import { buildColumnsForCartProducts } from "../../modules/cart/components/CartComponent/cartColumns";
-import type { UseCartReturn } from "@typings/seller/sellerTypes";
-import { CartAmount } from "@typings/seller/sellerEnums";
+import type { UseCartReturn } from "@typings/cart/cartTypes";
+import { CartAmount } from "@typings/cart/cartEnums";
 import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
 
 
 export const useCart = (showSnackBar: (message: string, severity: AlertColor) => void): UseCartReturn => {
     const { _id, username } = useSelector((state: RootState) => state.auth);
-    const cart: ProductTicketWithStockType[] = useSelector((state: RootState) => state.seller.cart);
+    const cart: ProductTicketWithStockType[] = useSelector((state: RootState) => state.cart.cart);
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate: NavigateFunction = useNavigate();

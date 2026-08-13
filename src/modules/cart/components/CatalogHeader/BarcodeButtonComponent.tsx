@@ -1,6 +1,6 @@
 import BarcodeReaderIcon from '@mui/icons-material/BarcodeReader';
 import { Box, TextField, Tooltip, Typography, type Theme } from "@mui/material";
-import type { BarcodeButtonComponentProps } from '@typings/seller/sellerComponentTypes';
+import type { BarcodeButtonComponentProps } from '@typings/cart/cartComponentTypes';
 import type { ReactNode } from 'react';
 
 

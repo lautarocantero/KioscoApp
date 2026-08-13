@@ -2,7 +2,7 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, type Theme } from "@mui/material";
 import { PAYMENT_METHOD_OPTIONS } from "../../../../config/constants";
 import { useCartPaymentMethodForm } from '../../../../hooks/cart/useCartPaymentMethodForm';
-import type { CartPaymentMethodProps } from '@typings/seller/sellerComponentTypes';
+import type { CartPaymentMethodProps } from '@typings/cart/cartComponentTypes';
 
 const CartPaymentMethod = ({total}: CartPaymentMethodProps): React.ReactNode => {
     const { handleChange , values } = useCartPaymentMethodForm();

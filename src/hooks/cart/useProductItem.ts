@@ -1,9 +1,9 @@
 import { useContext, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import type { ProductWithPresentations } from "@typings/product/productTypes";
-import type { AppDispatch } from "../../store/seller/sellerSlice";
-import type { getProductSelectedPayload } from "@typings/seller/sellerTypes";
-import { selectProductThunk } from "../../store/seller/sellerThunks";
+import type { AppDispatch } from "../../store/cart/cartSlice";
+import type { getProductSelectedPayload } from "@typings/cart/cartTypes";
+import { selectProductThunk } from "../../store/cart/cartThunks";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { getTotalPresentationsStock } from "../../modules/shared/helpers/stockHandler";
 import { ProductDialogContext } from "../../modules/cart/context/Product/ProductDialogContext";

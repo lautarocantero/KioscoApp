@@ -2,7 +2,7 @@ import { Box, Typography, type Theme } from "@mui/material";
 import type { ReactNode } from "react";
 import ProductItemChip from "./ProductItemChip";
 import { useProductStock } from "../../../../hooks/cart/useProductItem";
-import type { ItemDataProps } from "@typings/seller/sellerComponentTypes";
+import type { ItemDataProps } from "@typings/cart/cartComponentTypes";
 
 const ProductItemData = ({ name = "presentacion", presentations = [] }: ItemDataProps): ReactNode => {
   const { totalStock }  = useProductStock(presentations);

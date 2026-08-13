@@ -2,7 +2,7 @@ import { Divider, Grid, type Theme } from "@mui/material";
 import { formatCurrency } from "../../helpers/formatCurrency";
 import CartPriceRow from "./CartPriceRow";
 import type { ReactNode } from "react";
-import type { CartPriceProps } from "@typings/seller/sellerComponentTypes";
+import type { CartPriceProps } from "@typings/cart/cartComponentTypes";
 
 
 const CartPriceComponent = (

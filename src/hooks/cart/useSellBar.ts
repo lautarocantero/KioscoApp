@@ -1,17 +1,17 @@
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState as SellerRootState } from "../../store/seller/sellerSlice";
-import { setSearchTermThunk, clearSearchTermThunk, setSelectedCategoryThunk, setExactMatchThunk } from "../../store/seller/sellerThunks";
+import type { AppDispatch, RootState as CartRootState } from "../../store/cart/cartSlice";
+import { setSearchTermThunk, clearSearchTermThunk, setSelectedCategoryThunk, setExactMatchThunk } from "../../store/cart/cartThunks";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import { useSellbarCart } from "./useSellbarCart";
 import { useSellbarBarcode } from "./useSellbarBarcode";
 import { useSellbarCategories } from "./useSellbarCategories";
-import type { UseSellerBarResult } from "@typings/seller/sellerTypes";
+import type { UseCartBarResult } from "@typings/cart/cartTypes";
 
-export const useSellbar = (): UseSellerBarResult => {
+export const useSellbar = (): UseCartBarResult => {
     const { showSnackBar } = useContext(SnackBarContext)!;
     const dispatch = useDispatch<AppDispatch>();
-    const { cart, searchTerm, exactMatch } = useSelector((state: SellerRootState) => state.seller);
+    const { cart, searchTerm, exactMatch } = useSelector((state: CartRootState) => state.cart);
 
     const cartData = useSellbarCart();
     const barcodeData = useSellbarBarcode({ cart, showSnackBar });

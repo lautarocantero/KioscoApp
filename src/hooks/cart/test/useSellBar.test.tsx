@@ -8,18 +8,18 @@ import {
   clearSearchTermThunk,
   setSelectedCategoryThunk,
   setExactMatchThunk,
-} from "../../../store/seller/sellerThunks";
+} from "../../../store/cart/cartThunks";
 import { useSellbarCart } from "../useSellbarCart";
 import { useSellbarBarcode } from "../useSellbarBarcode";
 import { useSellbarCategories } from "../useSellbarCategories";
 import { SnackBarContext } from "../../../modules/shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
-import type { UseSellerBarCategoriesResult } from "@typings/seller/sellerTypes";
+import type { UseCartBarCategoriesResult } from "@typings/cart/cartTypes";
 import { PresentationCategory } from "@typings/presentation/presentationEnum";
 
 vi.mock("react-redux");
-vi.mock("../../../store/seller/sellerThunks", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("../../../store/seller/sellerThunks")>();
+vi.mock("../../../store/cart/cartThunks", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../../../store/cart/cartThunks")>();
   return {
     ...actual,
     setSearchTermThunk: vi.fn(actual.setSearchTermThunk),
@@ -59,8 +59,8 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 const buildCategories = (
-  overrides: Partial<UseSellerBarCategoriesResult> = {}
-): UseSellerBarCategoriesResult => ({
+  overrides: Partial<UseCartBarCategoriesResult> = {}
+): UseCartBarCategoriesResult => ({
   list: [],
   isLoading: false,
   selected: null,

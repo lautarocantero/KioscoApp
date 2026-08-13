@@ -1,6 +1,6 @@
 import { Box, Stack, Typography, type Theme } from "@mui/material";
 import React, { type ReactNode } from "react";
-import type { ProductDialogSelectorHeaderComponent } from "@typings/seller/sellerComponentTypes";
+import type { ProductDialogSelectorHeaderComponent } from "@typings/cart/cartComponentTypes";
 import useProductDialogSelector from "@hooks/cart/useProductDialogSelector";
 
 const ProductDialogSelectorHeaderComponent = ({ products }: ProductDialogSelectorHeaderComponent): ReactNode => {

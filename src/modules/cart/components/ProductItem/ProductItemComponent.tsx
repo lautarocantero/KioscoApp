@@ -4,7 +4,7 @@ import ProductItemImage from "./ProductItemImage";
 import ProductItemData from "./ProductItemData";
 import ProductItemButton from "./ProductItemButton";
 import { useProductItem } from "../../../../hooks/cart/useProductItem";
-import type { ProductItemProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductItemProps } from "@typings/cart/cartComponentTypes";
 
 
 const ProductItemComponent = ({ product }: ProductItemProps): ReactNode => {

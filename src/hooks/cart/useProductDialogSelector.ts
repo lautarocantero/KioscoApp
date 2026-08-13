@@ -1,16 +1,16 @@
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDelegatedHandler } from "../shared/useDelegatedHandler";
-import type { AppDispatch } from "../../store/presentation/presentationSlice";
+import type { AppDispatch } from "../../store/cart/cartSlice";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { RootState } from "../../store/seller/sellerSlice";
 import { AlertColor } from "@typings/ui/ui";
-import type { AddedItem, UseProductDialogSelectorReturn } from "@typings/seller/sellerTypes";
+import type { AddedItem, UseProductDialogSelectorReturn } from "@typings/cart/cartTypes";
 import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
 import type { Product } from "@typings/product/productTypes";
 import handleAddProductDialogItemToCart from "../../modules/cart/components/ProductDialog/handleAddProductItemToCart";
 import { buildColumnsForProductDialog } from "../../modules/cart/components/ProductDialog/productDialogColumns";
+import type { RootState } from "../../store/cart/cartSlice";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -32,7 +32,7 @@ const useProductDialogSelector = (products?: Presentation[], product?: Product,)
   const dispatch = useDispatch<AppDispatch>();
   const { showSnackBar } = useContext(SnackBarContext)!;
 
-  const cart = useSelector((state: RootState) => state.seller.cart);
+  const cart = useSelector((state: RootState) => state.cart.cart);
 
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [addedItems, setAddedItems] = useState<AddedItem[]>([]);
@@ -58,10 +58,10 @@ const useProductDialogSelector = (products?: Presentation[], product?: Product,)
 
   //─── 🔎 cuánto de esta presentación ya está en el carrito 🔎 ───
   const getQuantityInCart = useCallback(
-    (presentationId: string) =>
+    (presentationId: string): number =>
       cart
-        .filter((item) => item._id === presentationId)
-        .reduce((acc, item) => {
+        .filter((item: { _id: string | number; sale_type?: string; stock_required: number }) => item._id === presentationId)
+        .reduce((acc: number, item: { _id: string | number; sale_type?: string; stock_required: number }) => {
           const itemQuantity = isWeightSaleType(item.sale_type)
             ? item.stock_required * 100
             : item.stock_required;

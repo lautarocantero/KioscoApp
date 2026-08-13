@@ -2,7 +2,7 @@
 import { useFormikContext } from "formik";
 import { SellStatusEnum } from "../../typings/sells/sellsEnum";
 import { getStatusChangePatch, getClampedAmountPaid } from "../../modules/cart/helpers/cartPaymentStatus.helper";
-import type { useCartPaymentStatusFormReturn } from "@typings/seller/sellerTypes";
+import type { useCartPaymentStatusFormReturn } from "@typings/cart/cartTypes";
 import type { CartFormValues } from "@typings/sells/sellTypes";
 
 export const useCartPaymentStatusForm = (total: number): useCartPaymentStatusFormReturn => {

@@ -1,8 +1,8 @@
-// hooks/sellers/useProductListData.ts
+// hooks/products/useProductListData.ts
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../store/seller/sellerSlice";
-import { fetchSellerProducts, setSearchTermThunk } from "../../store/seller/sellerThunks";
+import type { AppDispatch, RootState } from "../../store/cart/cartSlice";
+import { fetchCartProducts, setSearchTermThunk } from "../../store/cart/cartThunks";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🪝 useProductListData                                          ║
@@ -24,12 +24,12 @@ import { fetchSellerProducts, setSearchTermThunk } from "../../store/seller/sell
 const useProductListData = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const products = useSelector((state: RootState) => state.seller.products);
-    const loading = useSelector((state: RootState) => state.seller.productsLoading);
-    const error = useSelector((state: RootState) => state.seller.errorMessage);
-    const searchTerm = useSelector((state: RootState) => state.seller.searchTerm);
-    const selectedCategory = useSelector((state: RootState) => state.seller.selectedCategory);
-    const exactMatch = useSelector((state: RootState) => state.seller.exactMatch);
+    const products = useSelector((state: RootState) => state.cart.products);
+    const loading = useSelector((state: RootState) => state.cart.productsLoading);
+    const error = useSelector((state: RootState) => state.cart.errorMessage);
+    const searchTerm = useSelector((state: RootState) => state.cart.searchTerm);
+    const selectedCategory = useSelector((state: RootState) => state.cart.selectedCategory);
+    const exactMatch = useSelector((state: RootState) => state.cart.exactMatch);
 
     const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
     const skipNextSearchEffectRef = useRef(false);
@@ -38,7 +38,7 @@ const useProductListData = () => {
     useEffect(() => {
         clearTimeout(debounceRef.current);
         skipNextSearchEffectRef.current = true;
-        void dispatch(fetchSellerProducts());
+        void dispatch(fetchCartProducts());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCategory, exactMatch, dispatch]);
 
@@ -51,7 +51,7 @@ const useProductListData = () => {
 
         clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
-            void dispatch(fetchSellerProducts());
+            void dispatch(fetchCartProducts());
         }, 350);
 
         return () => clearTimeout(debounceRef.current);

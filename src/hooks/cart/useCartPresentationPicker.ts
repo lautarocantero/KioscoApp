@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import type { AppDispatch } from "../../store/presentation/presentationSlice";
-import type { UseCartPresentationPickerReturn } from "@typings/seller/sellerTypes";
-import type { RootState } from "../../store/seller/sellerSlice";
-import { fetchCartPresentationsByProductId } from "../../store/seller/sellerThunks";
+import type { AppDispatch } from "../../store/cart/cartSlice";
+import type { UseCartPresentationPickerReturn } from "@typings/cart/cartTypes";
+import type { RootState } from "../../store/cart/cartSlice";
+import { fetchCartPresentationsByProductId } from "../../store/cart/cartThunks";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -18,15 +18,15 @@ import { fetchCartPresentationsByProductId } from "../../store/seller/sellerThun
 const useCartPresentationPicker = (): UseCartPresentationPickerReturn => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const productSelected = useSelector((state: RootState) => state.seller.productSelected);
+    const productSelected = useSelector((state: RootState) => state.cart.productSelected);
 
     const presentations = useSelector(
-        (state: RootState) => state.seller.presentations,
+        (state: RootState) => state.cart.presentations,
         shallowEqual
     );
 
     const presentationsLoading = useSelector(
-        (state: RootState) => state.seller.presentationsLoading
+        (state: RootState) => state.cart.presentationsLoading
     );
 
     useEffect(() => {

@@ -3,7 +3,7 @@ import type { PresentationCategory } from "@typings/presentation/presentationEnu
 import { PRESENTATION_CATEGORY_LABELS } from "@typings/presentation/presentationLabels";
 import { AlertColor } from "../../typings/ui/ui";
 import { getAvailableCategoriesRequest } from "../../modules/presentations/api/presentationsApi";
-import type { UseSellerBarCategoriesParams, UseSellerBarCategoriesResult } from "@typings/seller/sellerTypes";
+import type { UseCartBarCategoriesParams, UseCartBarCategoriesResult } from "@typings/cart/cartTypes";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🏷️ useSellbarCategories                                               ║
@@ -12,7 +12,7 @@ import type { UseSellerBarCategoriesParams, UseSellerBarCategoriesResult } from 
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 
-export const useSellbarCategories = ({ showSnackBar }: UseSellerBarCategoriesParams): UseSellerBarCategoriesResult => {
+export const useSellbarCategories = ({ showSnackBar }: UseCartBarCategoriesParams): UseCartBarCategoriesResult => {
     const [categoriesList, setCategoriesList] = useState<PresentationCategory[]>([]);
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<PresentationCategory | null>(null);

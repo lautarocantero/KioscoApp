@@ -5,7 +5,7 @@ import {
 } from "@mui/material";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import type { ReactNode } from "react";
-import type { ToolbarInfoProps } from "@typings/seller/sellerComponentTypes";
+import type { ToolbarInfoProps } from "@typings/cart/cartComponentTypes";
 
 
 const ToolbarInfo = ({

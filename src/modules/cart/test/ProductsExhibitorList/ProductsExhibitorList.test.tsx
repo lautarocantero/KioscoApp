@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { screen } from "@testing-library/react";
 import { renderWithTheme } from "../../../shared/test/utils/setupTests";
-import { ViewMode } from "@typings/seller/sellerEnums";
+import { ViewMode } from "@typings/cart/cartEnums";
 import type { Product } from "@typings/product/productTypes";
 import ProductsExhibitorList from "../../components/ProductsExhibitorList/ProductsExhibitorList";
-import type { ProductsExhibitorListProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductsExhibitorListProps } from "@typings/cart/cartComponentTypes";
 
 vi.mock("../../components/ProductItem/ProductItemComponent", () => ({
     default: vi.fn(() => <div data-testid="product-item" />),
@@ -40,14 +40,11 @@ describe("ProductsExhibitorList", () => {
       width: "100%" as const,
   };
 
-    // 🆕 props comunes a todos los casos — paginatedProducts/page/count/onChange
-    // pasaron a ser requeridas cuando separamos el listado completo (para el
-    // DataGrid, que pagina internamente) del recortado (para el modo grid)
-    const baseProps: Pick<ProductsExhibitorListProps, "paginatedProducts" | "page" | "count" | "onChange"> = {
+    const baseProps: Pick<ProductsExhibitorListProps, "products" | "paginatedProducts" | "gridSx" | "columns"> = {
+        products: [],
         paginatedProducts: [],
-        page: 1,
-        count: 1,
-        onChange: vi.fn(),
+        gridSx,
+        columns: [],
     };
 
     beforeEach(() => {

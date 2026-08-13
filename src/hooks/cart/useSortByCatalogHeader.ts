@@ -1,6 +1,6 @@
 import { useState, type MouseEvent } from "react";
 import { useProductsExhibitor } from "./useProductsExhibitor";
-import type { SortOption } from "@typings/seller/sellerEnums";
+import type { SortOption } from "@typings/cart/cartEnums";
 
 export const useSortByCatalog = () => {
   const { sort, handleSortChange, options } = useProductsExhibitor();

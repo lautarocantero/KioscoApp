@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import type { CartButtonComponentProps } from "@typings/seller/sellerComponentTypes";
+import type { CartButtonComponentProps } from "@typings/cart/cartComponentTypes";
 import CartButtonComponent from "../../components/CatalogHeader/CartButtonComponent";
 
 const testTheme = createTheme({

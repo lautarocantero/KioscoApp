@@ -1,5 +1,5 @@
 import { Pagination, type Theme } from "@mui/material";
-import type { ProductsPaginationProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductsPaginationProps } from "@typings/cart/cartComponentTypes";
 import type { ReactNode } from "react";
 
 

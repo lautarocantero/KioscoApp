@@ -3,8 +3,8 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import type { ReactNode } from "react";
-import { ViewMode } from "@typings/seller/sellerEnums";
-import type { ViewModeToggleProps } from "@typings/seller/sellerComponentTypes";
+import { ViewMode } from "@typings/cart/cartEnums";
+import type { ViewModeToggleProps } from "@typings/cart/cartComponentTypes";
 
 
 const ViewModeToggle = ({viewMode, setViewMode}: ViewModeToggleProps): ReactNode => {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { screen } from "@testing-library/react";
 import { renderWithTheme } from "../../../shared/test/utils/setupTests";
-import { ViewMode } from "@typings/seller/sellerEnums";
+import { ViewMode } from "@typings/cart/cartEnums";
 import ToolbarInfo from "../../components/ProductsExhibitorList/ToolbarInfo";
 import ToolbarActions from "../../components/ProductsExhibitorList/ToolBarActions";
 import ProductsToolbar from "../../components/ProductsExhibitorList/ProductToolbar";

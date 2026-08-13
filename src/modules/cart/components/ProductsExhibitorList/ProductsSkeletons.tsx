@@ -2,7 +2,7 @@
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
 import ProductItemSkeleton from "./ProductsItemSkeleton";
-import type { ProductsSkeletonsProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductsSkeletonsProps } from "@typings/cart/cartComponentTypes";
 import { SKELETON_COUNT } from "../../../../config/constants";
 
 

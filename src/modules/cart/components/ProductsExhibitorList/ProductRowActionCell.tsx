@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { ProductRowActionCellProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductRowActionCellProps } from "@typings/cart/cartComponentTypes";
 import { useProductItem } from "@hooks/cart/useProductItem";
 import { CellCenter } from "../../../shared/components/DataTable/CellCenter";
 import ProductItemButton from "../ProductItem/ProductItemButton";

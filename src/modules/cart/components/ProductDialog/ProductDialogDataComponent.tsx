@@ -2,7 +2,7 @@ import { Box, Typography, type Theme } from "@mui/material";
 import React, { type ReactNode } from "react";
 import { Stack } from "@mui/system";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import type { DialogDataProps } from "@typings/seller/sellerComponentTypes";
+import type { DialogDataProps } from "@typings/cart/cartComponentTypes";
 import useProductDialog from "@hooks/cart/useProductDialog";
 
 

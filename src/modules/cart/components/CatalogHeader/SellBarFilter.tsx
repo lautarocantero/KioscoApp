@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import type { SellerBarFilterProps } from "@typings/seller/sellerComponentTypes";
+import type { CartBarFilterProps } from "@typings/cart/cartComponentTypes";
 import FormSelector from "../../../shared/components/FormSelector/FormSelector";
 
 
-const SellbarFilter = ({ categories }: SellerBarFilterProps): ReactNode => {
+const SellbarFilter = ({ categories }: CartBarFilterProps): ReactNode => {
   const { list, selected, getLabel, onSelect } = categories;
 
   return (

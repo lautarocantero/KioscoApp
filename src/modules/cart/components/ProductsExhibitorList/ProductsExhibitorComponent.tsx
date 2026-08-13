@@ -1,4 +1,4 @@
-import { ViewMode } from "@typings/seller/sellerEnums";
+import { ViewMode } from "@typings/cart/cartEnums";
 import type { ReactNode } from "react";
 import ProductsToolbar from "./ProductToolbar";
 import ProductsPagination from "./ProductsPagination";
@@ -10,7 +10,7 @@ const ProductsExhibitorComponent = (): ReactNode => {
   const {
     isEmpty,
     loading,
-    products,            // 👈 agregado: listado completo
+    products,
     paginatedProducts,
     totalCount,
     page,
@@ -42,7 +42,7 @@ const ProductsExhibitorComponent = (): ReactNode => {
         columns={columns}
         gridSx={gridSx}
       />
-      {viewMode !== ViewMode.List && (
+      {viewMode === ViewMode.Grid && (
         <ProductsPagination page={page} count={pageCount} onChange={setPage} />
       )}
     </NoisyCard>

@@ -5,7 +5,7 @@ import ReceiptContent from "../../pages/ReceiptPage/components/ReceiptContent";
 
 describe("ReceiptContent", () => {
   it("renderiza el área de carga y los paneles laterales", () => {
-    const fileInputRef = { current: null } as React.RefObject<HTMLInputElement>;
+    const fileInputRef = { current: null } as unknown as React.RefObject<HTMLInputElement>;
 
     renderWithTheme(
       <ReceiptContent
@@ -40,7 +40,7 @@ describe("ReceiptContent", () => {
   });
 
   it("deshabilita la carga cuando isUploading o isConfirming o isModalOpen es true", () => {
-    const fileInputRef = { current: null } as React.RefObject<HTMLInputElement>;
+    const fileInputRef = { current: null } as unknown as React.RefObject<HTMLInputElement>;
 
     renderWithTheme(
       <ReceiptContent

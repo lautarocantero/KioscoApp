@@ -1,9 +1,9 @@
 import type { ProductTicketWithStockType, ValidationResultType } from "@typings/sells/sellTypes";
 import { AlertColor } from "@typings/ui/ui";
-import type { HandleAddProductDialogItemToCartInterface } from "@typings/seller/sellerTypes";
+import type { HandleAddProductDialogItemToCartInterface } from "@typings/cart/cartTypes";
 import validateProductForCart from "../../helpers/ProductDialog/Validation/ValidateProductForCart";
 import formatProductTicket from "../../helpers/ProductDialog/Handlers/handleFormatProductTicket";
-import { addToCartThunk } from "../../../../store/seller/sellerThunks";
+import { addToCartThunk } from "../../../../store/cart/cartThunks";
 
 
 const handleAddProductDialogItemToCart = async ({

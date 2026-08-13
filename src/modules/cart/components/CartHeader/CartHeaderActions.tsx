@@ -2,7 +2,7 @@ import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import { Box } from "@mui/material";
 import type { ReactNode } from 'react';
 import PrimaryButtonComponent from '../../../shared/components/Buttons/PrimaryButtonComponent';
-import type { CartHeaderActionsProps } from '@typings/seller/sellerComponentTypes';
+import type { CartHeaderActionsProps } from '@typings/cart/cartComponentTypes';
 
 
 const CartHeaderActions = ({ itemsCount, onClearCart }: CartHeaderActionsProps): ReactNode => {

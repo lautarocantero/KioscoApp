@@ -1,205 +1,86 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import {
-    type SellerAddToCartSlicePayload,
-    type SellerAddUnitActionPayload,
-    type SellerError,
-    type SellerRemoveFromCartActionPayload,
-    type SellerSetPresentationSlicePayload,
-    type SellerSetProductSlicePayload,
-    type SellerSetQuantityActionPayload,
-    type SellerStateInterface
-} from '../../typings/seller/sellerTypes';
-import type { store } from '../store';
-import { CartAmount, SortOption, ViewMode } from '../../typings/seller/sellerEnums';
-import type { Presentation } from '@typings/presentation/presentationTypes';
-import type { Product } from '@typings/product/productTypes';
-import type { PresentationCategory } from '@typings/presentation/presentationEnum';
-import { isWeightSaleType } from '../../modules/shared/helpers/saleTypeHelper';
+import type { Seller } from '../../typings/seller/sellerTypes';
 
-const initialState: SellerStateInterface = {
-    _id: null,
-    name: '',
-    cart: [],
-    productSelected: null,
-    presentationSelected: null,
-    presentations: [],
-    presentationsLoading: false,
-    products: [],
-    productsLoading: false,
-    description: '',
-    created_at: '',
-    updated_at: '',
-    errorMessage: null,
-    sort: SortOption.NameAsc,
-    viewMode: ViewMode.Grid,
-    page: 1,
-    selectedCategory: null,
-    searchTerm: '',
-    exactMatch: false,
+// 🆕 Tipos locales — mové esto a typings/seller/sellerTypes.ts si preferís centralizarlo.
+export interface SellerAdminStateInterface {
+    sellers: Seller[];
+    sellersLoading: boolean;
+    selectedSeller: Seller | null;
+    errorMessage: string | null;
 }
 
+export interface SetSellersPayload { sellers: Seller[] }
+export interface SetSelectedSellerPayload { seller: Seller | null }
+export interface SellerAdminError { errorMessage: string | null }
+export interface AddSellerToListPayload { seller: Seller }
+export interface UpdateSellerInListPayload { seller: Seller }
+export interface RemoveSellerFromListPayload { _id: string }
+
+const initialState: SellerAdminStateInterface = {
+    sellers: [],
+    sellersLoading: false,
+    selectedSeller: null,
+    errorMessage: null,
+};
+
 export const sellerSlice = createSlice({
-    name: 'seller',
+    name: 'sellers', // distinto del 'seller' de cartSlice para no chocar en el store
     initialState,
     reducers: {
-        setProductSelected: (state: SellerStateInterface, action: PayloadAction<SellerSetProductSlicePayload>) => {
-            const { payload } = action;
-            const { product } = payload;
-
-            state.productSelected = product;
+        startLoadingSellers: (state: SellerAdminStateInterface) => {
+            state.sellersLoading = true;
         },
-        setPresentationSelected: (state: SellerStateInterface, action: PayloadAction<SellerSetPresentationSlicePayload>) => {
-            const { payload } = action;
-            const { presentation } = payload;
-
-            state.presentationSelected = presentation;
+        setSellers: (state: SellerAdminStateInterface, action: PayloadAction<SetSellersPayload>) => {
+            state.sellers = action.payload.sellers;
+            state.sellersLoading = false;
         },
-        addToCartAction: (state: SellerStateInterface, action: PayloadAction<SellerAddToCartSlicePayload>) => {
-            const { payload } = action;
-            const { product } = payload;
-
-            const existingItemIndex = state.cart.findIndex((item) => item._id === product._id);
-
-            if (existingItemIndex !== -1) {
-                state.cart[existingItemIndex] = {
-                    ...state.cart[existingItemIndex],
-                    stock_required: state.cart[existingItemIndex].stock_required + product.stock_required,
-                };
-                return;
-            }
-
-            state.cart = [...state.cart, product];
+        resetSellers: (state: SellerAdminStateInterface) => {
+            state.sellers = [];
+            state.sellersLoading = false;
         },
-        addUnitAction: (state: SellerStateInterface, action: PayloadAction<SellerAddUnitActionPayload>) => {
-            const { payload } = action;
-            const { _id } = payload;
-
-            const productIndex = state.cart.findIndex(item => item._id === String(_id));
-            if (productIndex === -1) return;
-
-            const item = state.cart[productIndex];
-            const step = isWeightSaleType(item.sale_type) ? 100 : 1;
-            const maxAvailable = item.stock ?? Infinity;
-
-            state.cart[productIndex].stock_required = Math.min(item.stock_required + step, maxAvailable);
+        setSelectedSeller: (state: SellerAdminStateInterface, action: PayloadAction<SetSelectedSellerPayload>) => {
+            state.selectedSeller = action.payload.seller;
         },
-        // 🆕 setea una cantidad EXACTA (no relativa) para un producto del carrito.
-        // Uso: EXCLUSIVO de productos por peso, cuando el usuario tipea directamente
-        // la cantidad de gramos en vez de usar los steppers +/-.
-        setQuantityAction: (state: SellerStateInterface, action: PayloadAction<SellerSetQuantityActionPayload>) => {
-            const { payload } = action;
-            const { _id, stock_required } = payload;
-
-            const productIndex = state.cart.findIndex(item => item._id === String(_id));
-            if (productIndex === -1) return;
-
-            const item = state.cart[productIndex];
-            const maxAvailable = item.stock ?? Infinity;
-            const safeValue = Math.min(Math.max(0, stock_required), maxAvailable);
-
-            if (safeValue <= 0) {
-                state.cart = state.cart.filter((cartItem) => cartItem._id !== String(_id));
-                return;
-            }
-
-            state.cart[productIndex].stock_required = safeValue;
+        clearSelectedSeller: (state: SellerAdminStateInterface) => {
+            state.selectedSeller = null;
         },
-        removeFromCart: (state: SellerStateInterface, action: PayloadAction<SellerRemoveFromCartActionPayload>) => {
-            const { payload } = action;
-            const { _id, amount } = payload;
+        addSellerToList: (state: SellerAdminStateInterface, action: PayloadAction<AddSellerToListPayload>) => {
+            state.sellers = [...state.sellers, action.payload.seller];
+        },
+        updateSellerInList: (state: SellerAdminStateInterface, action: PayloadAction<UpdateSellerInListPayload>) => {
+            const { seller } = action.payload;
+            const index = state.sellers.findIndex((item) => item._id === seller._id);
+            if (index === -1) return;
+            state.sellers[index] = seller;
 
-            const productIndex = state.cart.findIndex(item => item._id === String(_id));
-            if (productIndex === -1) return;
-
-            const step = isWeightSaleType(state.cart[productIndex].sale_type) ? 100 : 1;
-
-            if (amount === CartAmount.One) state.cart[productIndex].stock_required -= step;
-            if (amount === CartAmount.All) state.cart[productIndex].stock_required = 0;
-
-            if (state.cart[productIndex].stock_required <= 0) {
-                state.cart = state.cart.filter((item) => item._id !== String(_id));
+            if (state.selectedSeller?._id === seller._id) {
+                state.selectedSeller = seller;
             }
         },
-        cleanCart: (state: SellerStateInterface) => {
-            state.cart = []
-        },
-        setError: (state: SellerStateInterface, action: PayloadAction<SellerError>) => {
-            const { payload } = action;
-            const { errorMessage } = payload;
+        removeSellerFromList: (state: SellerAdminStateInterface, action: PayloadAction<RemoveSellerFromListPayload>) => {
+            const { _id } = action.payload;
+            state.sellers = state.sellers.filter((item) => item._id !== _id);
 
-            state.errorMessage = errorMessage;
+            if (state.selectedSeller?._id === _id) {
+                state.selectedSeller = null;
+            }
         },
-        setSort: (state: SellerStateInterface, action: PayloadAction<SortOption>) => {
-            state.sort = action.payload;
-            state.page = 1;
+        setSellerError: (state: SellerAdminStateInterface, action: PayloadAction<SellerAdminError>) => {
+            state.errorMessage = action.payload.errorMessage;
         },
-        setViewMode: (state: SellerStateInterface, action: PayloadAction<ViewMode>) => {
-            state.viewMode = action.payload;
-        },
-        setPage: (state: SellerStateInterface, action: PayloadAction<number>) => {
-            state.page = action.payload;
-        },
-        setSelectedCategory: (state: SellerStateInterface, action: PayloadAction<PresentationCategory | null>) => {
-            state.selectedCategory = action.payload;
-            state.page = 1;
-        },
-        setSearchTerm: (state: SellerStateInterface, action: PayloadAction<string>) => {
-            state.searchTerm = action.payload;
-            state.page = 1;
-        },
-        setExactMatch: (state: SellerStateInterface, action: PayloadAction<boolean>) => {
-            state.exactMatch = action.payload;
-            state.page = 1;
-        },
-        startLoadingPresentations: (state: SellerStateInterface) => {
-            state.presentationsLoading = true;
-        },
-        setPresentations: (state: SellerStateInterface, action: PayloadAction<Presentation[]>) => {
-            state.presentations = action.payload;
-            state.presentationsLoading = false;
-        },
-        resetPresentations: (state: SellerStateInterface) => {
-            state.presentations = [];
-            state.presentationsLoading = false;
-        },
-        startLoadingProducts: (state: SellerStateInterface) => {
-            state.productsLoading = true;
-        },
-        setProducts: (state: SellerStateInterface, action: PayloadAction<Product[]>) => {
-            state.products = action.payload;
-            state.productsLoading = false;
-        },
-        resetProducts: (state: SellerStateInterface) => {
-            state.products = [];
-            state.productsLoading = false;
-        },
-    }
+    },
 });
 
 export const {
-  setProductSelected,
-  setPresentationSelected,
-  addToCartAction,
-  addUnitAction,
-  setQuantityAction,
-  removeFromCart,
-  cleanCart,
-  setError,
-  setSort,
-  setViewMode,
-  setPage,
-  setSelectedCategory,
-  setSearchTerm,
-  setExactMatch,
-  startLoadingPresentations,
-  setPresentations,
-  resetPresentations,
-  startLoadingProducts,
-  setProducts,
-  resetProducts,
+    startLoadingSellers,
+    setSellers,
+    resetSellers,
+    setSelectedSeller,
+    clearSelectedSeller,
+    addSellerToList,
+    updateSellerInList,
+    removeSellerFromList,
+    setSellerError,
 } = sellerSlice.actions;
-
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch;
 
 export default sellerSlice.reducer;

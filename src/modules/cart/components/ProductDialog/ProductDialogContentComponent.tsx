@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import React, { type ReactNode } from "react";
 import ProductDialogImageComponent from "./ProductDialogImageComponent";
 import ProductDialogMainContentComponent from "./ProductDialogMainContent";
-import type { ProductDialogContentProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductDialogContentProps } from "@typings/cart/cartComponentTypes";
 
 
 const ProductDialogContentComponent = ({ 

@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import type { ReactNode } from 'react';
 import PrimaryButtonComponent from "../../../shared/components/Buttons/PrimaryButtonComponent";
 import EmptyButton from "../../../shared/components/Buttons/EmptyButton";
-import type { OrderConfirmedActionsProps } from '@typings/seller/sellerComponentTypes';
+import type { OrderConfirmedActionsProps } from '@typings/cart/cartComponentTypes';
 
 
 const OrderConfirmedActionsComponent = ({ onPrintTicket, onNewSell, goToTicketDetail }: OrderConfirmedActionsProps): ReactNode => {

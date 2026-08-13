@@ -5,8 +5,8 @@ import { translateAuthError } from "./authErrorMessages";
 export const handleError = (error: unknown ) => {
 
     if(!(error instanceof Error)) throw new Error('Something went wrong while login, retry please.');
-
-    throw new Error(error.message);
+    console.log(error)
+    throw new Error(error?.message);
 
 }
 

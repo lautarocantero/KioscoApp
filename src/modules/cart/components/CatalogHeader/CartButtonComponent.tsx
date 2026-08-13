@@ -1,6 +1,6 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Tooltip, Typography, type Theme } from "@mui/material";
-import type { CartButtonComponentProps } from '@typings/seller/sellerComponentTypes';
+import type { CartButtonComponentProps } from '@typings/cart/cartComponentTypes';
 import "animate.css";
 import type { ReactNode } from 'react';
 

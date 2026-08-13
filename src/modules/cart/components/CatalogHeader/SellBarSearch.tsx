@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import type { SellerBarSearchProps } from "@typings/seller/sellerComponentTypes";
+import type { CartBarSearchProps } from "@typings/cart/cartComponentTypes";
 import SearchBar from "../../../shared/components/SearchBar/SearchBar";
 
 
-const SellbarSearch = ({ search }: SellerBarSearchProps): ReactNode => {
+const SellbarSearch = ({ search }: CartBarSearchProps): ReactNode => {
   const { value, onChange, onClear, exactMatch, onToggleExactMatch } = search;
 
   return (

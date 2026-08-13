@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createRef } from "react";
-import type { BarcodeButtonComponentProps } from "@typings/seller/sellerComponentTypes";
+import type { BarcodeButtonComponentProps } from "@typings/cart/cartComponentTypes";
 import BarcodeButtonComponent from "../../components/CatalogHeader/BarcodeButtonComponent";
 
 const buildBarcode = (

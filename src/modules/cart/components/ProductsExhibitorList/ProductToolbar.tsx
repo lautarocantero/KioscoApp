@@ -5,7 +5,7 @@ import {
 import type { ReactNode } from "react";
 import ToolbarInfo from "./ToolbarInfo";
 import ToolbarActions from "./ToolBarActions";
-import type { ProductsToolbarProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductsToolbarProps } from "@typings/cart/cartComponentTypes";
 
 
 const ProductsToolbar = ({

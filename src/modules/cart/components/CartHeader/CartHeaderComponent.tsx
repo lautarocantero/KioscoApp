@@ -1,7 +1,7 @@
 import { Grid, type Theme } from "@mui/material";
 import { memo, type ReactNode } from 'react';
 import CartLabel from "./CartLabelComponent";
-import type { CartHeaderProps } from "@typings/seller/sellerComponentTypes";
+import type { CartHeaderProps } from "@typings/cart/cartComponentTypes";
 import CartHeaderActions from "./CartHeaderActions";
 
 

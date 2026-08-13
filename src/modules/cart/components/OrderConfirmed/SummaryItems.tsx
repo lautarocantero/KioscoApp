@@ -4,7 +4,7 @@ import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalance
 import EventOutlinedIcon from '@mui/icons-material/EventOutlined';
 import { PAYMENT_METHOD_LABELS } from '@typings/sells/SellMethodLabels';
 import type { TicketSummaryType } from '@typings/sells/sellTypes';
-import type { SummaryItem } from '@typings/seller/sellerComponentTypes';
+import type { SummaryItem } from '@typings/cart/cartComponentTypes';
 import { formatCurrency } from '../../helpers/formatCurrency';
 
 

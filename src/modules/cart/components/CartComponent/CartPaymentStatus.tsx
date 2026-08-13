@@ -3,7 +3,7 @@ import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Text
 import { SELL_STATUS_OPTIONS } from "../../../../config/constants";
 import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
 import { useCartPaymentStatusForm } from '../../../../hooks/cart/useCartPaymentStatusForm';
-import type { CartPaymentStatusProps } from '@typings/seller/sellerComponentTypes';
+import type { CartPaymentStatusProps } from '@typings/cart/cartComponentTypes';
 import type { ReactNode } from 'react';
 
 

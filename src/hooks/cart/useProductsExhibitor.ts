@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { Product } from "@typings/product/productTypes";
 import type { UseProductsExhibitorResult } from "@typings/sells/sellTypes";
-import { setSort, setViewMode, setPage, type RootState, type AppDispatch } from "../../store/seller/sellerSlice";
-import { SortOption, ViewMode } from "@typings/seller/sellerEnums";
+import { setSort, setViewMode, setPage, type RootState, type AppDispatch } from "../../store/cart/cartSlice";
+import { SortOption, ViewMode } from "@typings/cart/cartEnums";
 import { PAGE_SIZE_PRODUCT_EXHIBITOR } from "../../config/constants";
 import { useSortOptions } from "./useSortOptions";
 import { useSellerProductsListData } from "./useSellerProductListData";
@@ -43,9 +43,9 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
   const dispatch = useDispatch<AppDispatch>();
   const { products, loading } = useSellerProductsListData();
 
-  const sort = useSelector((state: RootState) => state.seller.sort);
-  const viewMode = useSelector((state: RootState) => state.seller.viewMode);
-  const page = useSelector((state: RootState) => state.seller.page);
+  const sort = useSelector((state: RootState) => state.cart.sort);
+  const viewMode = useSelector((state: RootState) => state.cart.viewMode);
+  const page = useSelector((state: RootState) => state.cart.page);
 
   const { options, handleSortChange } = useSortOptions((value) => dispatch(setSort(value)));
 

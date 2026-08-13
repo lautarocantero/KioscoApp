@@ -8,7 +8,7 @@ describe("ReceiptUploadArea", () => {
     const onSelectFile = vi.fn();
     const onFileChange = vi.fn();
     const onFileDrop = vi.fn();
-    const fileInputRef = { current: null } as React.RefObject<HTMLInputElement>;
+    const fileInputRef = { current: null } as unknown as React.RefObject<HTMLInputElement>;
 
     renderWithTheme(
       <ReceiptUploadArea
@@ -38,7 +38,7 @@ describe("ReceiptUploadArea", () => {
     const onSelectFile = vi.fn();
     const onFileChange = vi.fn();
     const onFileDrop = vi.fn();
-    const fileInputRef = { current: null } as React.RefObject<HTMLInputElement>;
+    const fileInputRef = { current: null } as unknown as React.RefObject<HTMLInputElement>;
 
     renderWithTheme(
       <ReceiptUploadArea

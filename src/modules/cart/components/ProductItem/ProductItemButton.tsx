@@ -1,6 +1,6 @@
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Button, type Theme } from "@mui/material";
-import type { ProductItemButtonProps } from '@typings/seller/sellerComponentTypes';
+import type { ProductItemButtonProps } from '@typings/cart/cartComponentTypes';
 import type { ReactNode } from 'react';
 
 

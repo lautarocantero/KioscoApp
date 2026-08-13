@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import ProductDialogTableTotal from "./ProductDialogTableTotal";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { ProductDialogTableProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductDialogTableProps } from "@typings/cart/cartComponentTypes";
 import useProductDialogSelector from "@hooks/cart/useProductDialogSelector";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 

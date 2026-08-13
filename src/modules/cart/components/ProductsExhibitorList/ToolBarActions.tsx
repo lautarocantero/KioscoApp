@@ -6,7 +6,7 @@ import {
 import type { ReactNode } from "react";
 import SortByCatalog from "./SortByCatalog";
 import ViewModeToggle from "./ViewModeToggle";
-import type { ToolbarActionsProps } from "@typings/seller/sellerComponentTypes";
+import type { ToolbarActionsProps } from "@typings/cart/cartComponentTypes";
 
 
 const ToolbarActions = ({ viewMode,setViewMode }: ToolbarActionsProps): ReactNode => {

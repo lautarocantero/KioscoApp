@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useDispatch, useSelector } from "react-redux";
-import { SortOption, ViewMode } from "@typings/seller/sellerEnums";
+import { SortOption, ViewMode } from "@typings/cart/cartEnums";
 import { useSellerProductsListData } from "../useSellerProductListData";
 import { useSortOptions } from "../useSortOptions";
 import { useProductsExhibitor } from "../useProductsExhibitor";
-import { setPage, setViewMode } from "../../../store/seller/sellerSlice";
+import { setPage, setViewMode } from "../../../store/cart/cartSlice";
 import { buildColumnsForProductExhibitor } from "../../../modules/cart/components/ProductsExhibitorList/ProductExhibitorColumns";
 
 vi.mock("react-redux", async () => {

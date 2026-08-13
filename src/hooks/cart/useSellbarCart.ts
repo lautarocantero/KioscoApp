@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import type { RootState as SellerRootState } from "../../store/seller/sellerSlice";
-import type { UseSellerBarResult } from "@typings/seller/sellerTypes";
+import type { RootState as CartRootState } from "../../store/cart/cartSlice";
+import type { UseCartBarResult } from "@typings/cart/cartTypes";
 import { PRODUCTS_EXHIBITOR_ANCHOR_ID } from "../../config/constants";
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -8,8 +8,8 @@ import { PRODUCTS_EXHIBITOR_ANCHOR_ID } from "../../config/constants";
 ║ Encapsula el conteo del carrito y la navegación hacia /cart.          ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export const useSellbarCart = (): UseSellerBarResult['cart'] => {
-    const { cart } = useSelector((state: SellerRootState) => state.seller);
+export const useSellbarCart = (): UseCartBarResult['cart'] => {
+    const { cart } = useSelector((state: CartRootState) => state.cart);
 
     const goToCart = () => {
         document

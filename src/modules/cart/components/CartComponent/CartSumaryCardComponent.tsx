@@ -5,7 +5,7 @@ import CartSellDataComponent from './CartSellDataComponent';
 import CartSummaryFooterComponent from "./CartSummaryFooter";
 import { getNoisyBackgroundSx } from "../../../shared/components/NoisyBackground/NoisyBackground";
 import CartPaymentStatus from "./CartPaymentStatus";
-import type { CartSummaryCardProps } from "@typings/seller/sellerComponentTypes";
+import type { CartSummaryCardProps } from "@typings/cart/cartComponentTypes";
 
 
 const CartSummaryCardComponent = ({ 

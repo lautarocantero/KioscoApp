@@ -1,5 +1,5 @@
 import { Stack, Typography, useTheme, type Theme } from "@mui/material";
-import type { ProductDialogTableTotalProps } from "@typings/seller/sellerComponentTypes";
+import type { ProductDialogTableTotalProps } from "@typings/cart/cartComponentTypes";
 import React, { type ReactNode } from "react";
 
 
