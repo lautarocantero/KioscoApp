@@ -23,7 +23,7 @@ import {
     createSellerRequest,
     editSellerRequest,
     deleteSellerRequest,
-} from "../../modules/sellers/api/sellerApi";
+} from "../../modules/shop/api/sellerApi";
 
 export const CreateSellerSchema = z.object({
     name: z.string().min(1),
