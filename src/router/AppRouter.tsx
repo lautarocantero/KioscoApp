@@ -5,7 +5,7 @@ import AccountRoutes from "../modules/account/AccountRoutes";
 import HomePage from "../modules/app/Home/HomePage";
 import AuthRoutes from "../modules/auth/AuthRoutes";
 import CartRoutes from "../modules/cart/routes/CartRoutes";
-import ProductsRoutes from "../modules/products/ProductsRoutes";
+import ProductsRoutes from "../modules/products/routes/ProductsRoutes";
 import PresentationsRoutes from "../modules/presentations/PresentationsRoutes";
 import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
 import SellsRoutes from "../modules/sells/routes/SellsRoutes";

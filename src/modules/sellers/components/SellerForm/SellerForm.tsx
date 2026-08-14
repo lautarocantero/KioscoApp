@@ -4,9 +4,6 @@ import { useParams } from "react-router-dom";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
-import FormCard from "../../../shared/components/FormCard/FormCard";
-import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
-import { SELLER_FIELD_REGISTRY } from "./SellerFieldRegistry";
 import SellerSkeleton from "./SellerSkeleton";
 import EmptySeller from "./EmptySeller";
 import { useSellerEdit } from "../../../../hooks/sellers/useSellersForm";
@@ -14,14 +11,10 @@ import { useSellerData } from "../../../../hooks/sellers/useSellerData";
 import {
     getSellerEditInitialValues,
     sellerEditFormSchema,
-} from "./SellerFormSchema.ts";
+} from "../../schema/SellerFormSchema.ts";
+import SellerFormFirstStep from "./SellerFormFirstStep.tsx";
 
-const STEP_COMPONENTS = [() => (
-    <FormCard submitText="Guardar" header={{ title: "Vendedor" }}>
-        <FormFieldsRenderer idPrefix="seller" sectionLabel="Datos del vendedor" registry={SELLER_FIELD_REGISTRY} fields={["name", "email", "rol"]} />
-    </FormCard>
-)];
-
+const STEP_COMPONENTS = [SellerFormFirstStep];
 
 // ── Modo EDITAR ───────────────────────────────────────────────────────────────
 const SellerEditForm = (): React.ReactNode => {
@@ -44,7 +37,7 @@ const SellerEditForm = (): React.ReactNode => {
                     value={{
                         currentStep: 0,
                         totalSteps: 1,
-                        onNext: async () => {},
+                        onNext: async (validateFormFn, onValidSubmit) => { if (onValidSubmit) onValidSubmit(); },
                         onPrev: () => {},
                         onSubmit: formikSubmit,
                         isSubmitting,
@@ -72,13 +65,17 @@ const SellerDetailForm = (): React.ReactNode => {
     if (!viewingEntity) return <EmptySeller />;
 
     return (
-        <Formik initialValues={getSellerEditInitialValues(viewingEntity)} onSubmit={() => {}} enableReinitialize>
+        <Formik 
+            initialValues={getSellerEditInitialValues(viewingEntity)} 
+            onSubmit={() => {}} 
+            enableReinitialize
+        >
             {() => (
                 <FormNavigationContext.Provider
                     value={{
                         currentStep: 0,
                         totalSteps: 1,
-                        onNext: async () => {},
+                        onNext: async (validateFormFn, onValidSubmit) => { if (onValidSubmit) onValidSubmit(); },
                         onPrev: () => {},
                         onSubmit: () => {},
                         isSubmitting: false,
@@ -106,7 +103,7 @@ const SellerDetailForm = (): React.ReactNode => {
 };
 
 // ── Export público ────────────────────────────────────────────────────────────
-const SellerForm = ({ mode = FormModeComplexEnum.Create }: { mode?: FormModeComplexEnum }): React.ReactNode => {
+const SellerForm = ({ mode = FormModeComplexEnum.Detail }: { mode?: FormModeComplexEnum }): React.ReactNode => {
     if (mode === FormModeComplexEnum.Edit) return <SellerEditForm />;
     return <SellerDetailForm />;
 };

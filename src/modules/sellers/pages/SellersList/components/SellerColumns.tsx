@@ -11,7 +11,7 @@ export const buildColumnsForSellers = ({
 }: BuildSellerColumnsArgs): GridColDef<Seller>[] => [
     { field: "name", headerName: "Nombre", flex: 1.5, minWidth: 150 },
     { field: "email", headerName: "Email", flex: 1, minWidth: 200 },
-    { field: "rol", headerName: "Rol", flex: 0.8, minWidth: 120 },
+    { field: "role", headerName: "Rol", flex: 0.8, minWidth: 120 },
     dateColumn<Seller>({ field: "created_at", headerName: "Creado", width: 110 }),
     {
         field: "actions",

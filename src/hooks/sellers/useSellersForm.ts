@@ -33,13 +33,13 @@ export function useSellerEdit() {
                 _id: sellerId,
                 name: values.name,
                 email: values.email,
-                password: editingSeller?.password ?? "",
                 rol: values.rol ?? (editingSeller?.rol as any),
                 created_at: editingSeller?.created_at ?? new Date().toISOString(),
                 user_status: editingSeller?.user_status ?? ("active" as any),
             } as unknown as EditSellerPayload;
 
             const ok = await dispatch(editSellerThunk(body));
+            console.log(ok)
             if (!ok) throw new Error("No se pudo editar el vendedor");
 
             navigate(`/sellers`);

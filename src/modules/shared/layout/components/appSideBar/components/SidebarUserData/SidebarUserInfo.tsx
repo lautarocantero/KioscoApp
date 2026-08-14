@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Box, Typography, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import type { SidebarUserInfoProps } from "@typings/account/accountComponentTypes";
-import { AuthRoleEnum } from "../../../../../../../typings/auth/authEnums";
+import { AuthRoleEnum } from "@typings/auth/authEnums";
 
 const SidebarUserInfo = ({ name, role, isExpanded }: SidebarUserInfoProps): React.ReactNode => {
   if (!isExpanded) return null;
@@ -28,7 +28,7 @@ const SidebarUserInfo = ({ name, role, isExpanded }: SidebarUserInfoProps): Reac
             py: 0.25,
             borderRadius: "999px",
             fontSize: "0.45rem",
-            fontWeight: 70,
+            fontWeight: 700,
             letterSpacing: "0.04em",
             textTransform: "uppercase",
             lineHeight: 1.5,

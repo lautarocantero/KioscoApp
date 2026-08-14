@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../store/store";
 import { fetchSellerByIdThunk } from "../../store/seller/sellerThunks";
-import { setSelectedSeller } from "../../store/seller/sellerSlice";
+import { setSelectedSeller, type AppDispatch, type RootState } from "../../store/seller/sellerSlice";
 import type { Seller } from "@typings/seller/sellerTypes";
 
 interface UseSellerDataResult {

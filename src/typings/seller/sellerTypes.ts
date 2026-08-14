@@ -1,42 +1,46 @@
 import type { NavigateFunction } from 'react-router-dom';
-import type { SellerRol, SellerStatus } from './sellerEnums';
+import type { SellerStatus } from './sellerEnums';
 import type { DeleteDialogState } from '@typings/ui/dialog.types';
 import type { GridColDef } from '@mui/x-data-grid';
+import type { AuthRoleEnum } from '@typings/auth/authEnums';
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
+// Espejo exacto de SellerEntity en el back (@typings/seller).
+// email y rol ya NO viven acá — son de Auth.
 interface SellerEntity {
-    _id:          string;
-    name:         string;
-    email:        string;
-    rol:          SellerRol;
-    created_at:   string;
-    user_status:  SellerStatus;
-    __v?:         number;
+    _id:            string;
+    name:           string;
+    profilePhoto:   string | null;
+    created_at:     string;
+    user_status:    SellerStatus;
+    __v?:           number;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🧩 DERIVADOS 🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩                ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-// Derivado principal — evita exponer SellerEntity directamente
 export type Seller = SellerEntity;
 
 // Solo los campos públicos (sin _id)
 export type SellerPublic = Omit<SellerEntity, "_id">;
 
+export type SellerWithRole = Seller & { role: AuthRoleEnum; email: string };
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📋 API 📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋📋               ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type CreateSellerPayload = Omit<SellerEntity, '_id' | '__v'>;
-export type EditSellerPayload = Omit<SellerEntity, '__v'>;
+// El back ya no tiene create-seller/delete-seller como endpoints propios
+// (ver /register y /delete-auth en Auth). Si el front necesita crear/eliminar
+// vendedores, el payload debería vivir en typings/auth, no acá.
 
-export interface DeleteSellerPayload {
-  _id: string;
-}
+// edit-seller: el back solo pisa los campos que vengan definidos.
+export type EditSellerPayload =
+    Pick<SellerEntity, "_id"> & Partial<Omit<SellerEntity, "_id" | "__v">>;
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
