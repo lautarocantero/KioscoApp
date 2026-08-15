@@ -17,9 +17,9 @@
 
 const AccountEditPage = ():React.ReactNode => {
     return (
-        <>
+        <main>
             <p>AccountEditPage</p>
-        </>
+        </main>
     )
 }
 

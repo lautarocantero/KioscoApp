@@ -17,9 +17,9 @@
 
 const AccountSubscriptionPage = ():React.ReactNode => {
     return (
-        <>
+        <main>
             <p>AccountSubscriptionPage</p>
-        </>
+        </main>
     )
 }
 
