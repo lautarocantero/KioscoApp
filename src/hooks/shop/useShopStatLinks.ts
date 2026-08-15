@@ -5,6 +5,8 @@ import { useProvidersLinkData } from "../providers/useProvidersLinkData";
 import { useSellsLinkData } from "../sells/useSellData";
 import { useSellersLinkData } from "../sellers/useSellersLinkData";
 
+const STAT_URLS = ["/sells", "/products", "/sellers", "/providers"];
+
 const dataHooksByUrl: Record<string, () => LinkDataResult> = {
   "/sells": useSellsLinkData,
   "/products": useProductsLinkData,
@@ -12,11 +14,13 @@ const dataHooksByUrl: Record<string, () => LinkDataResult> = {
   "/sellers": useSellersLinkData,
 };
 
-// Tarjetas de sección para /shop: excluye el Catálogo (acceso directo al
-// POS, siempre visible en el sidebar) y la propia Tienda (ya estamos ahí).
-export const useShopPageLinks = (): OptionLink[] =>
+// Tarjetas de stats de la fila superior de /shop: Ventas, Productos,
+// Vendedores y Proveedores. Excluye el Catálogo (acceso directo al POS),
+// la propia Tienda (ya estamos ahí) y Boletas (va como CTA junto al
+// gráfico de ventas, no tiene un número real que mostrar).
+export const useShopStatLinks = (): OptionLink[] =>
   SidebarNavLinks
-    .filter((link) => link.description !== "Catalogo" && link.description !== "Tienda")
+    .filter((link) => STAT_URLS.includes(link.url))
     .map((link) => ({
       ...link,
       useData: dataHooksByUrl[link.url],

@@ -1,4 +1,36 @@
+import type { Provider } from "@typings/provider/providerTypes";
+import type { SellerStatus } from "@typings/seller/sellerEnums";
+
 export interface UseShopGreetingReturn {
   greeting: string;
   isLoading: boolean;
+}
+
+export interface DailySalesPoint {
+  date: string;
+  label: string;
+  total: number;
+}
+
+export interface TopSellerSummary {
+  sellerId: string;
+  sellerName: string;
+  totalAmount: number;
+  ordersCount: number;
+  status: SellerStatus;
+}
+
+export interface UseShopSalesSummaryReturn {
+  dailySales: DailySalesPoint[];
+  weekTotal: number;
+  topSellers: TopSellerSummary[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+export interface UseShopFeaturedProvidersReturn {
+  featured: Provider[];
+  total: number;
+  isLoading: boolean;
+  error: string | null;
 }

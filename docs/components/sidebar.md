@@ -114,7 +114,7 @@ Ejemplo de link:
 }
 ```
 
-`/shop` es el punto de entrada de la app (ver [useShopPageLinks](../hooks/shop/useShopPageLinks.md)): parte de este mismo `SidebarNavLinks`, excluyendo "Catalogo" y la propia "Tienda", para armar las tarjetas del dashboard de `/shop`.
+`/shop` es el punto de entrada de la app (ver [docs/features/shopDashboard.md](../features/shopDashboard.md)): la fila de stats de `/shop` (`useShopStatLinks`, ver [docs/hooks/shop/useShopStatLinks.md](../hooks/shop/useShopStatLinks.md)) parte de este mismo `SidebarNavLinks`.
 
 ---
 
