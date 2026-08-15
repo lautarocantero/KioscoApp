@@ -20,6 +20,7 @@ import {
 } from "../../modules/sellers/api/sellerApi";
 import { authDeleteAccountRequest } from "../../modules/auth/api/authApi";
 import { EditSellerSchema } from "../../modules/sellers/schema/SellerSchema";
+import { DeleteAuthAccountSchema } from "../../modules/auth/schema/authAccountSchema";
 
 
 export const fetchSellersThunk = () => {
@@ -115,7 +116,8 @@ export const clearSelectedSellerThunk = () => {
 // solo el perfil vía /seller/delete-seller deja el login huérfano.
 export const deleteSellerThunk = (_id: string) => {
     return async (dispatch: Dispatch): Promise<boolean> => {
-        if (!_id) {
+        const parsed = DeleteAuthAccountSchema.safeParse({ _id });
+        if (!parsed.success) {
             dispatch(setSellerError({ errorMessage: "No se ha proporcionado un _id." }));
             return false;
         }

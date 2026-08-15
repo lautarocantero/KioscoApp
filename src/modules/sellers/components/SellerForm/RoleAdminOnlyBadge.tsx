@@ -6,8 +6,9 @@ import type { ReactNode } from "react";
 const RoleAdminOnlyBadge = (): ReactNode => (
     <Chip
         size="small"
-        icon={<InfoOutlinedIcon />}
+        icon={<InfoOutlinedIcon aria-hidden="true" />}
         label="Solo administradores pueden editar el rol."
+        role="status"
         sx={(theme: Theme) => ({
             alignSelf: "flex-start",
             mb: 1,

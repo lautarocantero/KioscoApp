@@ -32,7 +32,7 @@ describe("useSellers — visibilidad del borrado según rol", () => {
     const navigate = vi.fn();
 
     const mockRole = (role: AuthRoleEnum) => {
-        mockedUseSelector.mockImplementation((selectorFn: any) => selectorFn({ auth: { role } }));
+        mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) => selectorFn({ auth: { role } }));
     };
 
     beforeEach(() => {

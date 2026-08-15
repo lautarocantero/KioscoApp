@@ -1,22 +1,20 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import type { EditSellerPayload, SellerFormValues } from "@typings/seller/sellerTypes";
-import { AuthRoleEnum } from "@typings/auth/authEnums";
 import { editSellerThunk } from "../../store/seller/sellerThunks";
 import { startEditAuthRole } from "../../store/auth/authThunks";
 import { useSellerData } from "./useSellerData";
+import { useIsAdmin } from "../auth/useIsAdmin";
 import { useErrorParser } from "../shared/useErrorParser";
 import type { AppDispatch } from "../../store/seller/sellerSlice";
-import type { RootState } from "../../store/auth/authSlice";
 
 
 export function useSellerEdit() {
     const navigate = useNavigate();
     const { seller_id: sellerId } = useParams<{ seller_id: string }>();
     const dispatch = useDispatch<AppDispatch>();
-    const currentUserRole = useSelector((state: RootState) => state.auth.role);
-    const isAdmin = currentUserRole === AuthRoleEnum.Admin;
+    const isAdmin = useIsAdmin();
 
     const { sellerData: editingSeller, isLoading: isLoadingSeller, error: loadError } = useSellerData(sellerId);
 

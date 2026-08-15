@@ -1,20 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { deleteSellerThunk, selectSellerThunk } from "../../store/seller/sellerThunks";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { Seller, UseSellersReturn } from "@typings/seller/sellerTypes";
-import { AuthRoleEnum } from "@typings/auth/authEnums";
 import { CLOSED_DIALOG } from "../../config/constants";
 import useSellersListData from "./useSellerListData";
 import { buildColumnsForSellers } from "../../modules/sellers/pages/SellersList/components/SellerColumns";
 import type { AppDispatch } from "../../store/seller/sellerSlice";
-import type { RootState } from "../../store/auth/authSlice";
+import { useIsAdmin } from "../auth/useIsAdmin";
 
 export const useSellers = (): UseSellersReturn => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const isAdmin = useSelector((state: RootState) => state.auth.role) === AuthRoleEnum.Admin;
+    const isAdmin = useIsAdmin();
 
     const { sellers, loading, error, clearError } = useSellersListData();
 

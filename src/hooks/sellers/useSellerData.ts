@@ -2,15 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSellerByIdThunk } from "../../store/seller/sellerThunks";
 import { setSelectedSeller, type AppDispatch, type RootState } from "../../store/seller/sellerSlice";
-import type { SellerWithRole } from "@typings/seller/sellerTypes";
+import type { SellerWithRole, UseSellerDataReturn } from "@typings/seller/sellerTypes";
 
-interface UseSellerDataResult {
-    sellerData: SellerWithRole | null;
-    isLoading: boolean;
-    error: string | null;
-}
-
-export const useSellerData = (sellerId: string | undefined): UseSellerDataResult => {
+export const useSellerData = (sellerId: string | undefined): UseSellerDataReturn => {
     const dispatch = useDispatch<AppDispatch>();
 
     // El slice tipa selectedSeller como Seller (sin role/email) porque también

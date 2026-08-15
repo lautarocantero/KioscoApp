@@ -3,13 +3,13 @@ import { Box, Typography, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import type { SidebarUserInfoProps } from "@typings/account/accountComponentTypes";
 import { AuthRoleEnum } from "@typings/auth/authEnums";
-import { ROLE_LABELS } from "@typings/seller/sellerLabels";
+import { getRoleLabel } from "../../../../../helpers/getRoleLabel";
 
 const SidebarUserInfo = ({ name, role, isExpanded }: SidebarUserInfoProps): React.ReactNode => {
   if (!isExpanded) return null;
 
   const isAdmin = role === AuthRoleEnum.Admin;
-  const roleLabel = ROLE_LABELS[role as AuthRoleEnum] ?? role;
+  const roleLabel = getRoleLabel(role);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minWidth: 0, flex: 1, overflow: "hidden", gap: 0.5 }}>

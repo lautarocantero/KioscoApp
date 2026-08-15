@@ -8,6 +8,7 @@ import type {
   AuthRequestPasswordResetResult,
   AuthResetPasswordPayload } from "../../typings/auth/authTypes";
 import { extractAuthErrorMessage, handleErrorWithAction, handleError } from "../shared/handlerStoreError";
+import { EditAuthRoleSchema } from "../../modules/auth/schema/authAccountSchema";
 
 
 export const startLoginWithEmailPassword = (
@@ -123,9 +124,9 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: nu
       }));
 
       return response;
-    } catch(error: unknown) {
+    } catch {
         dispatch(logout({ errorMessage: null }));
-    } 
+    }
   }
 }
 
@@ -201,9 +202,10 @@ export const startResetPassword = (
 
 /*══════════ 🎮 startEditAuthRole ══════════╗
 ║ 📥 Entrada: AuthEditRolePayload {_id, role}   ║
-║ ⚙️ Proceso: edita el role en Auth. El back    ║
-║    devuelve 403 si quien llama no es admin —  ║
-║    acá no se valida nada, es solo el pegue.   ║
+║ ⚙️ Proceso: valida forma con zod y edita el   ║
+║    role en Auth. El back también devuelve 403 ║
+║    si quien llama no es admin — la validación ║
+║    de acá es de forma, no de autorización.    ║
 ║    No toca el slice: casi siempre se está     ║
 ║    editando el role de OTRO usuario.          ║
 ║ 📤 Salida: boolean (éxito)                     ║
@@ -213,6 +215,9 @@ export const startEditAuthRole = (
 ): ThunkAction<Promise<boolean>, RootState, unknown, AuthActionsType> => {
 
     return async (): Promise<boolean> => {
+      const parsed = EditAuthRoleSchema.safeParse(payload);
+      if (!parsed.success) return false;
+
       try {
         await authEditRoleRequest(payload);
         return true;

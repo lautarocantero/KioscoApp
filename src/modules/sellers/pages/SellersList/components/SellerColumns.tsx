@@ -1,7 +1,6 @@
 import { type GridColDef } from "@mui/x-data-grid";
 import type { Seller, BuildSellerColumnsArgs } from "@typings/seller/sellerTypes";
-import type { AuthRoleEnum } from "@typings/auth/authEnums";
-import { ROLE_LABELS } from "@typings/seller/sellerLabels";
+import { getRoleLabel } from "../../../../shared/helpers/getRoleLabel";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
 import { dateColumn } from "../../../../shared/components/DataTable/ColumnHelpers";
@@ -18,7 +17,7 @@ export const buildColumnsForSellers = ({
         headerName: "Rol",
         flex: 0.8,
         minWidth: 120,
-        valueFormatter: (value: AuthRoleEnum) => ROLE_LABELS[value] ?? value,
+        valueFormatter: (value: string) => getRoleLabel(value),
     },
     dateColumn<Seller>({ field: "created_at", headerName: "Creado", width: 110 }),
     {

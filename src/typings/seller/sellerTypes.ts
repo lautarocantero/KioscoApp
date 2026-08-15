@@ -73,6 +73,21 @@ export interface RemoveSellerFromListPayload { _id: string }
 // ║ 🪝 HOOKS  🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝🪝                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
+export interface UseSellerDataReturn {
+    sellerData:  SellerWithRole | null;
+    isLoading:   boolean;
+    error:       string | null;
+}
+
+// Reglas de autorización del form de edición: qué puede tocar quien lo
+// está mirando. Resueltas acá (no en el .tsx) porque son lógica de negocio,
+// no un simple condicional de render.
+export interface UseSellerFormPermissionsReturn {
+    isAdmin:        boolean;
+    disabledFields: (keyof SellerFormValues)[];
+    showRoleBadge:  boolean;
+}
+
 export interface UseSellersListDataReturn {
     sellers:     Seller[];
     loading:     boolean;

@@ -1,8 +1,8 @@
-// src/hooks/sellers/test/useSellerListData.test.ts
+// src/hooks/sellers/test/useSellersLinkData.test.ts
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSellersLinkData } from "../useSellerListData";
+import { useSellersLinkData } from "../useSellersLinkData";
 
 vi.mock("react-redux", async () => {
     const actual = await vi.importActual("react-redux");
@@ -24,7 +24,7 @@ describe("useSellersLinkData", () => {
         isLoading = false,
         errorMessage: string | null = null,
     ) => {
-        mockedUseSelector.mockImplementation((selectorFn: any) =>
+        mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
             selectorFn({ seller: { sellers, isLoading, errorMessage } })
         );
     };
