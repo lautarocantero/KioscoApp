@@ -1,11 +1,11 @@
 import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
-import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authRequestPasswordResetRequest, authResetPasswordRequest } from "../../modules/auth/api/authApi";
+import { authCheckStatusRequest, authEditRoleRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authRequestPasswordResetRequest, authResetPasswordRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
-import type { 
-  AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthGoogleRequestPayload, 
-  AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthRequestPasswordResetPayload, 
-  AuthRequestPasswordResetResult, 
+import type {
+  AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthEditRolePayload, AuthGoogleRequestPayload,
+  AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthRequestPasswordResetPayload,
+  AuthRequestPasswordResetResult,
   AuthResetPasswordPayload } from "../../typings/auth/authTypes";
 import { extractAuthErrorMessage, handleErrorWithAction, handleError } from "../shared/handlerStoreError";
 
@@ -195,6 +195,30 @@ export const startResetPassword = (
       } catch (error: unknown) {
         console.error('Reset password failed:', error);
         return { success: false, errorMessage: extractAuthErrorMessage(error) };
+      }
+    };
+};
+
+/*══════════ 🎮 startEditAuthRole ══════════╗
+║ 📥 Entrada: AuthEditRolePayload {_id, role}   ║
+║ ⚙️ Proceso: edita el role en Auth. El back    ║
+║    devuelve 403 si quien llama no es admin —  ║
+║    acá no se valida nada, es solo el pegue.   ║
+║    No toca el slice: casi siempre se está     ║
+║    editando el role de OTRO usuario.          ║
+║ 📤 Salida: boolean (éxito)                     ║
+╚════════════════════════════════════════════════╝*/
+export const startEditAuthRole = (
+  payload: AuthEditRolePayload
+): ThunkAction<Promise<boolean>, RootState, unknown, AuthActionsType> => {
+
+    return async (): Promise<boolean> => {
+      try {
+        await authEditRoleRequest(payload);
+        return true;
+      } catch (error: unknown) {
+        handleError(error);
+        return false;
       }
     };
 };

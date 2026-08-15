@@ -13,7 +13,7 @@ const initialState: AuthSliceState = {
     isAuthenticated: false,
     profilePhoto: null,
     errorMessage: null,
-    role: AuthRoleEnum.Usuario,
+    role: AuthRoleEnum.Seller,
     isVerified: false,
 }
 
@@ -45,7 +45,7 @@ export const authSlice = createSlice({
             state.name = '';
             state.profilePhoto = null;
             state._id = null;
-            state.role = AuthRoleEnum.Usuario;
+            state.role = AuthRoleEnum.Seller;
             state.isVerified = false;
             state.errorMessage = errorMessage ?? null;
         },

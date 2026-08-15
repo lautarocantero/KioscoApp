@@ -43,6 +43,7 @@ export interface SelectFieldProps<T extends object, C extends string> {
     multiple?: boolean;
     allowClear?: boolean;
     clearLabel?: string;
+    disabled?: boolean;
 }
 
 export type FieldRegistry<T> = Partial<Record<keyof T, FieldConfig>>;
@@ -52,8 +53,10 @@ export interface FormFieldsRendererProps<T extends object> {
     registry: FieldRegistry<T>;
     icons?: Partial<Record<keyof T, IconConfig>>;
     readOnly?: boolean;
+    disabledFields?: (keyof T)[];
     sectionLabel: string;
     idPrefix: string;
+    renderBeforeField?: Partial<Record<keyof T, ReactNode>>;
     renderAfterField?: Partial<Record<keyof T, ReactNode>>;
 }
 

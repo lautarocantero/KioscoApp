@@ -132,6 +132,16 @@ export type AuthRequestPasswordResetApiPayload = AuthRequestPasswordResetPayload
 
 export type AuthResetPasswordApiPayload = AuthResetPasswordPayload;
 
+// Edición administrativa de rol: PUT /auth/edit-auth solo con { _id, role }.
+export type AuthEditRolePayload = { _id: string; role: AuthRoleEnum };
+
+export type AuthEditRoleApiPayload = AuthEditRolePayload;
+
+// Elimina Auth + Seller en cascada (transacción en el back).
+export type AuthDeleteAccountPayload = { _id: string };
+
+export type AuthDeleteAccountApiPayload = AuthDeleteAccountPayload;
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📝 FORMS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/

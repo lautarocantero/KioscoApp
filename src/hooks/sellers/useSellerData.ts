@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSellerByIdThunk } from "../../store/seller/sellerThunks";
 import { setSelectedSeller, type AppDispatch, type RootState } from "../../store/seller/sellerSlice";
-import type { Seller } from "@typings/seller/sellerTypes";
+import type { SellerWithRole } from "@typings/seller/sellerTypes";
 
 interface UseSellerDataResult {
-    sellerData: Seller | null;
+    sellerData: SellerWithRole | null;
     isLoading: boolean;
     error: string | null;
 }
@@ -13,7 +13,10 @@ interface UseSellerDataResult {
 export const useSellerData = (sellerId: string | undefined): UseSellerDataResult => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const sellerData = useSelector((state: RootState) => state.seller?.selectedSeller ?? null);
+    // El slice tipa selectedSeller como Seller (sin role/email) porque también
+    // guarda ahí resultados de flujos que no hacen el join contra Auth. Acá sí
+    // lo hace siempre (get-seller-by-id), así que el cast es seguro.
+    const sellerData = useSelector((state: RootState) => state.seller?.selectedSeller ?? null) as SellerWithRole | null;
     const isLoading = useSelector((state: RootState) => state.seller?.isLoading ?? false);
     const error = useSelector((state: RootState) => state.seller?.errorMessage ?? null);
 

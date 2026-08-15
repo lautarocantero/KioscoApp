@@ -14,8 +14,10 @@ function FormFieldsRenderer<T extends object>({
     registry,
     icons,
     readOnly = false,
+    disabledFields,
     sectionLabel,
     idPrefix,
+    renderBeforeField,
     renderAfterField,
 }: FormFieldsRendererProps<T>): ReactNode {
     const { setFieldValue, setFieldTouched } = useFormikContext<T>();
@@ -30,9 +32,12 @@ function FormFieldsRenderer<T extends object>({
                 const { fieldError, fieldValue, helperId, inputId, isFirstField } =
                     useFieldDisplayState<T>(fieldKey, index, idPrefix);
 
+                const isFieldDisabled = readOnly || !!disabledFields?.includes(fieldKey);
+
                 if (config.type === "select") {
                     return (
                         <Grid key={String(fieldKey)} spacing={{ xs: 12, sm: 12 }}>
+                            {renderBeforeField?.[fieldKey]}
                             <FieldWithIcon iconConfig={icons?.[fieldKey]}>
                                 <SelectField<T, string>
                                     name={fieldKey as keyof T & string}
@@ -42,6 +47,7 @@ function FormFieldsRenderer<T extends object>({
                                     multiple={config.multiple}
                                     allowClear={config.allowClear}
                                     clearLabel={config.clearLabel}
+                                    disabled={isFieldDisabled}
                                 />
                             </FieldWithIcon>
                             {renderAfterField?.[fieldKey]}
@@ -52,8 +58,9 @@ function FormFieldsRenderer<T extends object>({
                 if (config.type === "radio") {
                     return (
                         <Grid key={String(fieldKey)} spacing={{ xs: 12, sm: 12 }}>
+                            {renderBeforeField?.[fieldKey]}
                             <FieldWithIcon iconConfig={icons?.[fieldKey]}>
-                                <FormControl error={!!fieldError} disabled={readOnly} fullWidth>
+                                <FormControl error={!!fieldError} disabled={isFieldDisabled} fullWidth>
                                     <FormLabel
                                         id={`${inputId}-label`}
                                         sx={{ fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize }}
@@ -106,6 +113,7 @@ function FormFieldsRenderer<T extends object>({
 
                 return (
                     <Grid key={String(fieldKey)} spacing={{ xs: 12, sm: 12 }}>
+                        {renderBeforeField?.[fieldKey]}
                         <FieldWithIcon iconConfig={icons?.[fieldKey]}>
                             <Tooltip title={config.tooltip} placement="top-start">
                                 <TextField
@@ -119,7 +127,7 @@ function FormFieldsRenderer<T extends object>({
                                     label={config.label}
                                     type={config.type ?? "text"}
                                     placeholder={config.placeholder}
-                                    disabled={readOnly}
+                                    disabled={isFieldDisabled}
                                     value={fieldValue ?? ""}
                                     onChange={(e) => {
                                         const raw = e.target.value;

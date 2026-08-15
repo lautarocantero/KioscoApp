@@ -18,8 +18,9 @@ export const getSellersRequest = async (): Promise<SellerWithRole[]> => {
   return response.data;
 };
 
-export const getSellerByIdRequest = async (_id: string): Promise<Seller[]> => {
-  const response = await baseUrl.get<Seller[]>("/get-seller-by-id", { params: { _id } });
+// El back resuelve role+email contra Auth acá también (mismo join que get-sellers).
+export const getSellerByIdRequest = async (_id: string): Promise<SellerWithRole[]> => {
+  const response = await baseUrl.get<SellerWithRole[]>("/get-seller-by-id", { params: { _id } });
   return response.data;
 };
 
@@ -52,13 +53,5 @@ export const editSellerRequest = async (
   return response.data;
 };
 
-/*══════════════════════════════════════════════════════════════════════════╗
-║ ✏️ DELETE                                                                   ║
-╚══════════════════════════════════════════════════════════════════════════╝*/
-
-export const deleteSellerRequest = async (
-  _id: string
-): Promise<{ _id: string; message: string }> => {
-  const response = await baseUrl.delete<{ _id: string; message: string }>("/delete-seller", { data: { _id } });
-  return response.data;
-};
+// No hay DELETE acá: eliminar un vendedor borra la cuenta completa
+// (Auth + Seller en cascada), eso vive en authApi.authDeleteAccountRequest.

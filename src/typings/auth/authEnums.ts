@@ -6,8 +6,8 @@ export enum AuthStatus {
 };
 
 export enum AuthRoleEnum {
-    Administrador = "Administrador",
-    Usuario = "Usuario",
+    Admin = 'admin',
+    Seller = 'seller',
 };
 
 export enum VerifyEmailStatusEnum {

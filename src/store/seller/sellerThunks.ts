@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { handleError } from "../shared/handlerStoreError";
-import type { Seller, EditSellerPayload } from "../../typings/seller/sellerTypes";
+import type { Seller, SellerWithRole, EditSellerPayload } from "../../typings/seller/sellerTypes";
 import {
     startLoadingSellers,
     setSellers,
@@ -17,8 +17,8 @@ import {
     getSellerByNameRequest,
     getSellerByEmailRequest,
     editSellerRequest,
-    deleteSellerRequest,
 } from "../../modules/sellers/api/sellerApi";
+import { authDeleteAccountRequest } from "../../modules/auth/api/authApi";
 import { EditSellerSchema } from "../../modules/sellers/schema/SellerSchema";
 
 
@@ -38,7 +38,7 @@ export const fetchSellersThunk = () => {
 };
 
 export const fetchSellerByIdThunk = (_id: string) => {
-    return async (dispatch: Dispatch): Promise<Seller[] | undefined> => {
+    return async (dispatch: Dispatch): Promise<SellerWithRole[] | undefined> => {
         if (!_id) {
             dispatch(setSellerError({ errorMessage: "No se ha proporcionado un _id." }));
             return;
@@ -111,6 +111,8 @@ export const clearSelectedSellerThunk = () => {
     };
 };
 
+// Borra la cuenta completa (Auth + Seller en cascada, ver authApi). Borrar
+// solo el perfil vía /seller/delete-seller deja el login huérfano.
 export const deleteSellerThunk = (_id: string) => {
     return async (dispatch: Dispatch): Promise<boolean> => {
         if (!_id) {
@@ -119,7 +121,7 @@ export const deleteSellerThunk = (_id: string) => {
         }
 
         try {
-            await deleteSellerRequest(_id);
+            await authDeleteAccountRequest({ _id });
             dispatch(removeSellerFromList({ _id }));
             return true;
         } catch (error: unknown) {

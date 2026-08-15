@@ -4,7 +4,7 @@ import { useFormikFormSelector, useFormikFormSelectorMulti } from "../../../shar
 import FormSelector from "../../../shared/components/FormSelector/FormSelector";
 
 function SelectFieldSingle<T extends object, C extends string>({
-    name, label, options, getOptionLabel, allowClear, clearLabel,
+    name, label, options, getOptionLabel, allowClear, clearLabel, disabled,
 }: Omit<SelectFieldProps<T, C>, "multiple">): ReactNode {
     const { value, onChange } = useFormikFormSelector<T, C>(name);
     return (
@@ -18,12 +18,13 @@ function SelectFieldSingle<T extends object, C extends string>({
             onChange={onChange}
             allowClear={allowClear}
             clearLabel={clearLabel}
+            disabled={disabled}
         />
     );
 }
 
 function SelectFieldMulti<T extends object, C extends string>({
-    name, label, options, getOptionLabel,
+    name, label, options, getOptionLabel, disabled,
 }: Omit<SelectFieldProps<T, C>, "multiple" | "allowClear" | "clearLabel">): ReactNode {
     const { value, onChange } = useFormikFormSelectorMulti<T, C>(name);
     return (
@@ -35,6 +36,7 @@ function SelectFieldMulti<T extends object, C extends string>({
             getLabel={getOptionLabel}
             value={value}
             onChange={onChange}
+            disabled={disabled}
         />
     );
 }

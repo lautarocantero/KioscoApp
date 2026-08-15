@@ -43,6 +43,14 @@ export type EditSellerPayload =
     Pick<SellerEntity, "_id"> & Partial<Omit<SellerEntity, "_id" | "__v">>;
 
 // /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📝 FORMS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+// email/rol no viven en Seller (ver nota arriba): salen de SellerWithRole.
+export type SellerFormValues =
+    Pick<SellerEntity, "name"> & { email: string; rol: AuthRoleEnum; password?: string };
+
+// /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
@@ -89,7 +97,8 @@ export interface UseSellersReturn {
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface BuildSellerColumnsArgs {
-    onDeleteRequest:  (id: string, name: string) => void;
+    // undefined: quien ve la tabla no es admin, no puede eliminar (ver useSellers).
+    onDeleteRequest?: (id: string, name: string) => void;
     onEditRequest:    (seller: Seller) => void;
     navigate:         NavigateFunction;
 }

@@ -1,17 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { deleteSellerThunk, selectSellerThunk } from "../../store/seller/sellerThunks";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { Seller, UseSellersReturn } from "@typings/seller/sellerTypes";
+import { AuthRoleEnum } from "@typings/auth/authEnums";
 import { CLOSED_DIALOG } from "../../config/constants";
 import useSellersListData from "./useSellerListData";
 import { buildColumnsForSellers } from "../../modules/sellers/pages/SellersList/components/SellerColumns";
 import type { AppDispatch } from "../../store/seller/sellerSlice";
+import type { RootState } from "../../store/auth/authSlice";
 
 export const useSellers = (): UseSellersReturn => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const isAdmin = useSelector((state: RootState) => state.auth.role) === AuthRoleEnum.Admin;
 
     const { sellers, loading, error, clearError } = useSellersListData();
 
@@ -33,7 +36,9 @@ export const useSellers = (): UseSellersReturn => {
     };
 
     const columns = buildColumnsForSellers({
-        onDeleteRequest: handleDeleteRequest,
+        // El borrado elimina Auth+Seller en cascada: solo un admin puede
+        // hacerlo (el back también lo rechaza con 403 si no lo es).
+        onDeleteRequest: isAdmin ? handleDeleteRequest : undefined,
         onEditRequest: handleEditRequest,
         navigate,
     });
