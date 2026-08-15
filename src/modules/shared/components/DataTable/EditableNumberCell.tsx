@@ -37,6 +37,7 @@ const EditableNumberCell = ({ productId, value, onChange }: CartSubtotalCellProp
   if (isEditing) {
     return (
       <TextField
+        // eslint-disable-next-line jsx-a11y/no-autofocus -- foco se mueve en respuesta a un click explícito del usuario, no al cargar la página
         autoFocus
         type="number"
         size="small"

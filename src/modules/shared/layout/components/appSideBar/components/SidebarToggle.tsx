@@ -10,6 +10,7 @@ const SidebarToggleComponent = ({isExpanded, toggleSidebar}: SidebarToggleProps 
     <Box sx={{ width: "100%", display: "flex", justifyContent: isExpanded ? "flex-end" : "center", px: isExpanded ? "10px" : 0 }}>
         <IconButton
             onClick={toggleSidebar}
+            aria-label={isExpanded ? "Contraer menú lateral" : "Expandir menú lateral"}
             size="small"
             sx={(theme: Theme) => ({
                 color: theme.custom?.white,

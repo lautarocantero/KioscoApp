@@ -32,7 +32,7 @@ const ProductsListPage = (): ReactNode => {
                 search={{
                     value: searchTerm,
                     onChange: setSearchTerm,
-                    placeholder: "Azucar 600gr...",
+                    placeholder: "Azúcar 600gr...",
                 }}
                 newItem={{
                     label: "Nuevo producto",

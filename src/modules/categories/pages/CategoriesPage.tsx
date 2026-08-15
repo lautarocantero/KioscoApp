@@ -7,7 +7,7 @@ const CategoriesPage = (): React.ReactNode => {
   const links = useCategoriesLinks();
 
   return (
-    <DisplayOptions title='Categorias' icon={<BookmarksIcon />} links={links} />
+    <DisplayOptions title='Categorías' icon={<BookmarksIcon />} links={links} />
   );
 };
 

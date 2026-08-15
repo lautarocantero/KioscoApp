@@ -17,7 +17,6 @@ const LinkCard = ({ link }: LinkCardProps): ReactNode => {
         return (
             <Box
                 role="listitem"
-                aria-disabled="true"
                 sx={(theme) => linkCardSx(theme, true)}
             >
                 <Box component="span" sx={linkCardBadgeSx}>

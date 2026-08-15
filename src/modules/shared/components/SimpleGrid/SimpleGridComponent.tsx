@@ -2,7 +2,7 @@
 //─────────────────── Componente 🧩: SimpleGridComponent ───────────────────//
 
 //─────────────────── Descripción 📝 ───────────────────//
-// Es un grid de fondo oscuro para destacar la informacion de sus hijos
+// Es un grid de fondo oscuro para destacar la información de sus hijos
 
 //-----------------------------------------------------------------------------//
 
