@@ -12,9 +12,11 @@ const dataHooksByUrl: Record<string, () => LinkDataResult> = {
   "/sellers": useSellersLinkData,
 };
 
-export const useHomePageLinks = (): OptionLink[] =>
+// Tarjetas de sección para /shop: excluye el Catálogo (acceso directo al
+// POS, siempre visible en el sidebar) y la propia Tienda (ya estamos ahí).
+export const useShopPageLinks = (): OptionLink[] =>
   SidebarNavLinks
-    .filter((link) => link.description !== "Catalogo" && link.description !== "Inicio")
+    .filter((link) => link.description !== "Catalogo" && link.description !== "Tienda")
     .map((link) => ({
       ...link,
       useData: dataHooksByUrl[link.url],

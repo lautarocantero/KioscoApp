@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import AccountRoutes from "../modules/account/AccountRoutes";
-import HomePage from "../modules/app/Home/HomePage";
 import AuthRoutes from "../modules/auth/AuthRoutes";
 import CartRoutes from "../modules/cart/routes/CartRoutes";
 import ProductsRoutes from "../modules/products/routes/ProductsRoutes";
@@ -10,6 +9,7 @@ import PresentationsRoutes from "../modules/presentations/PresentationsRoutes";
 import ProviderRoutes from "../modules/providers/routes/ProviderRoutes";
 import SellsRoutes from "../modules/sells/routes/SellsRoutes";
 import SellerRoutes from "../modules/sellers/routes/SellerRoutes";
+import ShopRoutes from "../modules/shop/routes/ShopRoutes";
 import ReceiptRoutes from "../modules/receipt/ReceiptRoutes";
 import type { AppDispatch, RootState } from "../store/auth/authSlice";
 import { startCheckAuth } from "../store/auth/authThunks";
@@ -22,7 +22,7 @@ const AppRouter = (): React.ReactNode => {
   const { status } = useSelector((state: RootState) => state.auth);
   const location = useLocation();
   const lastRoute: string = localStorage.getItem("lastRoute") || "/new-sell";
-  const safeRoute: string = lastRoute === "/" ? "/home" : lastRoute;
+  const safeRoute: string = lastRoute === "/" ? "/shop" : lastRoute;
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -40,7 +40,7 @@ const AppRouter = (): React.ReactNode => {
       <Routes>
         {status === AuthStatus.Authenticated ? (
           <Route element={<AppShell />}>
-            <Route path="/home" element={<HomePage />} />
+            {ShopRoutes()}
             {SellsRoutes()}
             {CartRoutes()}
             {SellerRoutes()}
@@ -49,7 +49,7 @@ const AppRouter = (): React.ReactNode => {
             {ProductsRoutes()}
             {ReceiptRoutes()}
             {PresentationsRoutes()}
-            <Route path="*" element={<Navigate to={'/home'} />} />
+            <Route path="*" element={<Navigate to={'/shop'} />} />
           </Route>
         ) : (
           <>{AuthRoutes()}</>

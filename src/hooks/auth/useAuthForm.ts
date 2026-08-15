@@ -44,7 +44,7 @@ export function useLoginForm(): UseLoginFormReturn {
         try {
             const user = await dispatch(startLoginWithEmailPassword(values));
             if (user) {
-                navigate("/home");
+                navigate("/shop");
             }
             // Si `user` viene undefined, el thunk ya se encargó de despachar
             // `logout({ errorMessage })`, así que el Redux state ya trae el mensaje
