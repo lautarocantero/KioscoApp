@@ -2,6 +2,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { useDispatch, useSelector } from "react-redux";
+import { SellerStatus } from "@typings/seller/sellerEnums";
 import { useSellersLinkData } from "../useSellersLinkData";
 
 vi.mock("react-redux", async () => {
@@ -42,11 +43,22 @@ describe("useSellersLinkData", () => {
         expect(result.current.value).toBe(3);
     });
 
-    it("mockea el subtitle de 'en línea' en 0 (todavía no hay tracking real de conexión)", () => {
-        mockSellerState([{ _id: "1" }]);
+    it("el subtitle es '0 en línea' cuando ningún vendedor está online", () => {
+        mockSellerState([{ _id: "1", user_status: SellerStatus.Offline }]);
         const { result } = renderHook(() => useSellersLinkData());
 
         expect(result.current.subtitle).toBe("0 en línea");
+    });
+
+    it("el subtitle cuenta solo los vendedores con user_status online", () => {
+        mockSellerState([
+            { _id: "1", user_status: SellerStatus.Online },
+            { _id: "2", user_status: SellerStatus.Offline },
+            { _id: "3", user_status: SellerStatus.Online },
+        ]);
+        const { result } = renderHook(() => useSellersLinkData());
+
+        expect(result.current.subtitle).toBe("2 en línea");
     });
 
     it("propaga isLoading y error del store de sellers", () => {

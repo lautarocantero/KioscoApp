@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/seller/sellerSlice";
 import { fetchSellersThunk } from "../../store/seller/sellerThunks";
+import { sortSellersOnlineFirst } from "../../modules/sellers/helpers/sortSellersOnlineFirst";
 
 
 const useSellersListData = () => {
@@ -21,8 +22,10 @@ const useSellersListData = () => {
         void dispatch(fetchSellersThunk());
     }, [dispatch]);
 
+    const sortedSellers = useMemo(() => sortSellersOnlineFirst(sellers), [sellers]);
+
     return {
-        sellers,
+        sellers: sortedSellers,
         loading,
         error,
         clearError: () => setError(null),

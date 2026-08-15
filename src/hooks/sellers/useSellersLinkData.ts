@@ -1,5 +1,6 @@
 import type { LinkDataResult } from "@typings/ui/layout.types";
 import useSellersListData from "./useSellerListData";
+import { countOnlineSellers } from "../../modules/sellers/helpers/countOnlineSellers";
 
 // Adapta useSellersListData al shape que esperan las cards de
 // HomePageLinks / SidebarNavLinks (mismo patrón que useProductsLinkData
@@ -7,15 +8,11 @@ import useSellersListData from "./useSellerListData";
 export const useSellersLinkData = (): LinkDataResult => {
     const { sellers, loading, error } = useSellersListData();
 
-    // TODO(online-status): todavía no hay tracking real de conexión de
-    // vendedores. Mockeado a 0 hasta que exista ese estado.
-    const onlineCount = 0;
-
     return {
         value: sellers.length,
         isLoading: loading,
         error,
-        subtitle: `${onlineCount} en línea`,
+        subtitle: `${countOnlineSellers(sellers)} en línea`,
     };
 };
 

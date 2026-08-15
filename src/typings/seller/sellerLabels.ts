@@ -1,4 +1,5 @@
 import { AuthRoleEnum } from "@typings/auth/authEnums";
+import { SellerStatus } from "@typings/seller/sellerEnums";
 
 export const ROLE_LABELS: Record<AuthRoleEnum, string> = {
   [AuthRoleEnum.Admin]: "Administrador",
@@ -6,3 +7,8 @@ export const ROLE_LABELS: Record<AuthRoleEnum, string> = {
 };
 
 export const ROLE_VALUES = Object.values(AuthRoleEnum);
+
+export const STATUS_LABELS: Record<SellerStatus, string> = {
+  [SellerStatus.Online]: "En línea",
+  [SellerStatus.Offline]: "Desconectado",
+};

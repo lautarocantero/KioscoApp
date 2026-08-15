@@ -4,6 +4,7 @@ import { getRoleLabel } from "../../../../shared/helpers/getRoleLabel";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
 import { dateColumn } from "../../../../shared/components/DataTable/ColumnHelpers";
+import SellerStatusIndicator from "../../../components/SellersList/SellerStatusIndicator";
 
 export const buildColumnsForSellers = ({
     onDeleteRequest,
@@ -18,6 +19,13 @@ export const buildColumnsForSellers = ({
         flex: 0.8,
         minWidth: 120,
         valueFormatter: (value: string) => getRoleLabel(value),
+    },
+    {
+        field: "user_status",
+        headerName: "Estado",
+        flex: 0.8,
+        minWidth: 130,
+        renderCell: (params) => <SellerStatusIndicator status={params.row.user_status} />,
     },
     dateColumn<Seller>({ field: "created_at", headerName: "Creado", width: 110 }),
     {

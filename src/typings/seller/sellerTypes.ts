@@ -117,3 +117,11 @@ export interface BuildSellerColumnsArgs {
     onEditRequest:    (seller: Seller) => void;
     navigate:         NavigateFunction;
 }
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🎨 PROPS  🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨🎨                  ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface SellerStatusIndicatorProps {
+    status: SellerStatus;
+}

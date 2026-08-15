@@ -3,6 +3,9 @@
 > **Actualización:** reglas de permisos más finas por campo — ver
 > [Permisos por campo (actualización)](#permisos-por-campo-actualización)
 > al final del documento.
+>
+> **Actualización:** el conteo de "en línea" mencionado más abajo ya no
+> está mockeado — ver [docs/features/sellerOnlineStatus.md](sellerOnlineStatus.md).
 
 ## Índice
 

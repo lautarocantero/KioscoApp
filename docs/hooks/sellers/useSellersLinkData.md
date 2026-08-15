@@ -14,7 +14,7 @@ useSellersLinkData(): LinkDataResult
 
 - No recibe parámetros.
 - `value`: cantidad total de vendedores (`sellers.length`).
-- `subtitle`: `"N en línea"` — **mockeado a 0** hasta que exista tracking real de conexión (`TODO(online-status)` en el código).
+- `subtitle`: `"N en línea"` — `N` es real, viene de `countOnlineSellers(sellers)` sobre el `user_status` que persiste el backend (login → online, logout → offline). Ver [docs/features/sellerOnlineStatus.md](../../features/sellerOnlineStatus.md).
 
 ## 💡 Ejemplo
 
@@ -32,7 +32,8 @@ const dataHooksByUrl: Record<string, () => LinkDataResult> = {
 
 - 🔁 **Reusa `useSellersListData`** en vez de disparar un fetch propio.
 - 🧩 **Sigue el mismo contrato** (`LinkDataResult`) que el resto de las cards del Home, así `useLinksData`/`DisplayOptions` no necesitan casos especiales por dominio.
+- 🧮 **Reusa `countOnlineSellers`**, el mismo helper que usaría cualquier otro lugar que necesite ese conteo — no hay lógica de "es online" duplicada.
 
 ## 🚧 Pendiente
 
-El conteo de "en línea" está hardcodeado en 0 — falta implementar el tracking real de conexión de vendedores.
+"Online" hoy significa "tiene una sesión activa" (logueado y no deslogueado explícitamente) — no hay heartbeat ni detección de sesión expirada/pestaña cerrada sin logout. Ver la sección de límites conocidos en [docs/features/sellerOnlineStatus.md](../../features/sellerOnlineStatus.md).
