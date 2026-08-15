@@ -1,7 +1,6 @@
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import CategoryIcon from "@mui/icons-material/Category";
 import StoreIcon from "@mui/icons-material/Store";
-import WarehouseIcon from "@mui/icons-material/Warehouse";
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import HubIcon from '@mui/icons-material/Hub';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -87,7 +86,7 @@ export const CategoriesNavLinks: OptionLink[] = [
 
 export const AccountNavLinks: OptionLink[] = [
   { description: 'Editar cuenta', icon: <ManageAccountsIcon />, url: '/account-edit', subtitle: '' },
-  { description: 'Plan de subscripcion', icon: <WorkspacePremiumIcon />, url: '/account-subscription', subtitle: '' },
+  { description: 'Plan de suscripción', icon: <WorkspacePremiumIcon />, url: '/account-subscription', subtitle: '' },
 ];
 
 export const ShopNavLinks: OptionLink[] = [

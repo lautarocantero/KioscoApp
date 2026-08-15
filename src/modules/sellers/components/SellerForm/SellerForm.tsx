@@ -37,7 +37,7 @@ const SellerEditForm = (): React.ReactNode => {
                     value={{
                         currentStep: 0,
                         totalSteps: 1,
-                        onNext: async (validateFormFn, onValidSubmit) => { if (onValidSubmit) onValidSubmit(); },
+                        onNext: async (_validateFormFn, onValidSubmit) => { if (onValidSubmit) onValidSubmit(); },
                         onPrev: () => {},
                         onSubmit: formikSubmit,
                         isSubmitting,
@@ -75,7 +75,7 @@ const SellerDetailForm = (): React.ReactNode => {
                     value={{
                         currentStep: 0,
                         totalSteps: 1,
-                        onNext: async (validateFormFn, onValidSubmit) => { if (onValidSubmit) onValidSubmit(); },
+                        onNext: async (_validateFormFn, onValidSubmit) => { if (onValidSubmit) onValidSubmit(); },
                         onPrev: () => {},
                         onSubmit: () => {},
                         isSubmitting: false,
