@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { act, fireEvent } from "@testing-library/react";
 import { Formik } from "formik";
 import { renderWithTheme } from "../utils/setupTests";
 import FormFieldsRenderer from "../../components/FormCard/FormFieldsRenderer";
@@ -23,6 +24,31 @@ const REGISTRY: FieldRegistry<TestValues> = {
         getOptionLabel: (v) => v,
     },
 };
+
+interface RatingTestValues {
+    valoration: number;
+}
+
+const RATING_REGISTRY: FieldRegistry<RatingTestValues> = {
+    valoration: {
+        label: "Valoración",
+        tooltip: "Valoración",
+        type: "rating",
+        maxRating: 5,
+    },
+};
+
+const renderRatingForm = (initialValue = 0) =>
+    renderWithTheme(
+        <Formik initialValues={{ valoration: initialValue }} onSubmit={() => {}}>
+            <FormFieldsRenderer<RatingTestValues>
+                idPrefix="test"
+                sectionLabel="Datos"
+                registry={RATING_REGISTRY}
+                fields={["valoration"]}
+            />
+        </Formik>
+    );
 
 const renderForm = (
     disabledFields: (keyof TestValues)[] = [],
@@ -78,5 +104,32 @@ describe("FormFieldsRenderer — renderBeforeField", () => {
         const { queryByText } = renderForm([], { rol: undefined });
 
         expect(queryByText("Solo administradores pueden editar el rol.")).not.toBeInTheDocument();
+    });
+});
+
+describe("FormFieldsRenderer — rating", () => {
+    it("renderiza el label y las estrellas según maxRating", () => {
+        const { getByText, getAllByRole } = renderRatingForm();
+
+        expect(getByText("Valoración")).toBeInTheDocument();
+        // maxRating: 5 → 5 radios "N Star(s)" + 1 radio oculto "Empty"
+        expect(getAllByRole("radio")).toHaveLength(6);
+    });
+
+    it("marca como checked el radio correspondiente al valor inicial", () => {
+        const { getByRole } = renderRatingForm(4);
+
+        expect(getByRole("radio", { name: "4 Stars" })).toBeChecked();
+    });
+
+    it("actualiza el valor de Formik al seleccionar una estrella", async () => {
+        const { getByRole } = renderRatingForm(0);
+
+        const threeStars = getByRole("radio", { name: "3 Stars" });
+        await act(async () => {
+            fireEvent.click(threeStars);
+        });
+
+        expect(threeStars).toBeChecked();
     });
 });

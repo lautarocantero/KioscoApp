@@ -7,7 +7,7 @@ import AuthRoutes from "../modules/auth/AuthRoutes";
 import CartRoutes from "../modules/cart/routes/CartRoutes";
 import ProductsRoutes from "../modules/products/routes/ProductsRoutes";
 import PresentationsRoutes from "../modules/presentations/PresentationsRoutes";
-import ProvidersRoutes from "../modules/providers/ProvidersRoutes";
+import ProviderRoutes from "../modules/providers/routes/ProviderRoutes";
 import SellsRoutes from "../modules/sells/routes/SellsRoutes";
 import SellerRoutes from "../modules/sellers/routes/SellerRoutes";
 import ReceiptRoutes from "../modules/receipt/ReceiptRoutes";
@@ -45,7 +45,7 @@ const AppRouter = (): React.ReactNode => {
             {CartRoutes()}
             {SellerRoutes()}
             {AccountRoutes()}
-            {ProvidersRoutes()}
+            {ProviderRoutes()}
             {ProductsRoutes()}
             {ReceiptRoutes()}
             {PresentationsRoutes()}

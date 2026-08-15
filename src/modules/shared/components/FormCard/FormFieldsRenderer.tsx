@@ -1,4 +1,4 @@
-import { alpha, FormControl, FormControlLabel, FormHelperText, FormLabel, Grid, Radio, RadioGroup, TextField, Tooltip, type Theme } from "@mui/material";
+import { alpha, FormControl, FormControlLabel, FormHelperText, FormLabel, Grid, Radio, RadioGroup, Rating, TextField, Tooltip, type Theme } from "@mui/material";
 import { useFormikContext } from "formik";
 import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
 import FieldWithIcon from "../../../shared/components/FormCard/FieldWithIcon";
@@ -49,6 +49,31 @@ function FormFieldsRenderer<T extends object>({
                                     clearLabel={config.clearLabel}
                                     disabled={isFieldDisabled}
                                 />
+                            </FieldWithIcon>
+                            {renderAfterField?.[fieldKey]}
+                        </Grid>
+                    );
+                }
+
+                if (config.type === "rating") {
+                    return (
+                        <Grid key={String(fieldKey)} spacing={{ xs: 12, sm: 12 }}>
+                            {renderBeforeField?.[fieldKey]}
+                            <FieldWithIcon iconConfig={icons?.[fieldKey]}>
+                                <FormControl error={!!fieldError} disabled={isFieldDisabled} fullWidth>
+                                    <FormLabel id={`${inputId}-label`} sx={{ fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize }}>
+                                        {config.label}
+                                    </FormLabel>
+                                    <Rating
+                                        aria-labelledby={`${inputId}-label`}
+                                        value={fieldValue ? Number(fieldValue) : 0}
+                                        max={config.maxRating ?? 5}
+                                        onChange={(_e, newValue) => setFieldValue(fieldKey as string, newValue ?? 0)}
+                                        onBlur={() => setFieldTouched(fieldKey as string, true)}
+                                        sx={{ mt: 1 }}
+                                    />
+                                    <FormHelperText id={helperId}>{fieldError ?? config.helperTextWhenEmpty}</FormHelperText>
+                                </FormControl>
                             </FieldWithIcon>
                             {renderAfterField?.[fieldKey]}
                         </Grid>

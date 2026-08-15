@@ -33,8 +33,8 @@ export const NAV_SUBGROUPS: Record<string, SubGroup[]> = {
     {
       groupLabel: "Proveedores",
       links: [
-        { label: "Listado", url: "/providers-list" },
-        { label: "Crear",   url: "/providers-create" },
+        { label: "Listado", url: "/providers" },
+        { label: "Crear",   url: "/provider-create" },
       ],
     },
   ],

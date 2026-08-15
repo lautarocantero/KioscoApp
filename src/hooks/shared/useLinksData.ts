@@ -1,7 +1,7 @@
 import type { LinkDataResult, OptionLink } from "@typings/ui/layout.types";
 import { SidebarNavLinks } from "../../config/Links";
 import { useProductsLinkData } from "../products/useProductData";
-import { useProvidersLinkData } from "../suppliers/useSupplier";
+import { useProvidersLinkData } from "../providers/useProvidersLinkData";
 import { useSellsLinkData } from "../sells/useSellData";
 import { useSellersLinkData } from "../sellers/useSellersLinkData";
 

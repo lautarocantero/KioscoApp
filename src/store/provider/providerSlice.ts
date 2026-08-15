@@ -1,61 +1,104 @@
-
-// # Slice: providerSlice  
-
-// ## Descripción 📦  
-// Slice de Redux encargado de manejar el estado de **proveedores** en la aplicación.  
-// Actualmente funciona como **stub** (estructura inicial) sin reducers definidos, preparado para futuras implementaciones.  
-
-// ## Estado inicial 🔧  
-// - `_id`: identificador único del proveedor (null por defecto).  
-// - `name`: nombre del proveedor (string vacío).  
-// - `description`: descripción del proveedor (string vacío).  
-// - `created_at`: fecha de creación (string vacío).  
-// - `updated_at`: fecha de última actualización (string vacío).  
-// - `errorMessage`: mensaje de error (null).  
-
-// ## Reducers 🎭  
-// - Actualmente no hay reducers implementados.  
-// - En futuras iteraciones se pueden añadir acciones como:  
-//   - Crear proveedor.  
-//   - Editar proveedor.  
-//   - Eliminar proveedor.  
-//   - Manejar errores específicos.  
-
-// ## Tipos 📑  
-// - `RootState`: tipo derivado de `store.getState`.  
-// - `AppDispatch`: tipo derivado de `store.dispatch`.  
-
-// ## Notas técnicas 💽  
-// - El slice se exporta como `providerSlice.reducer` para integrarse en el store global.  
-// - Modularidad: centraliza la lógica de proveedores en un único slice.  
-// - Escalabilidad: preparado para añadir reducers y acciones según crezca la funcionalidad de proveedores.  
-
-
-import { createSlice } from '@reduxjs/toolkit';
-import type { store } from '../store';
-import type { ProviderState } from '../../typings/providers/providerTypes';
-
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { store } from "../store";
+import type { Provider, ProviderState, ProviderStateError, ProviderStats } from "../../typings/provider/providerTypes";
 
 const initialState: ProviderState = {
-    _id: null,
-    name: '',
-    description: '',
-    created_at: '',
-    updated_at: '',
-    errorMessage: null,
-}
+    providers:             [],
+    currentProvider:       null,
+    isLoading:             false,
+    errorMessage:          null,
+    isLoadingCurrent:      false,
+    currentProviderError:  null,
+    stats:                 null,
+    isLoadingStats:        false,
+    statsError:            null,
+};
 
 export const providerSlice = createSlice({
-    name: 'provider',
+    name: "provider",
     initialState,
     reducers: {
 
-    }
+        setProviders: (state: ProviderState, action: PayloadAction<Provider[]>) => {
+            state.providers    = action.payload;
+            state.isLoading    = false;
+            state.errorMessage = null;
+        },
+
+        setCurrentProvider: (state: ProviderState, action: PayloadAction<Provider>) => {
+            state.currentProvider      = action.payload;
+            state.isLoadingCurrent     = false;
+            state.currentProviderError = null;
+        },
+
+        clearCurrentProvider: (state: ProviderState) => {
+            state.currentProvider = null;
+        },
+
+        setError: (state: ProviderState, action: PayloadAction<ProviderStateError>) => {
+            state.errorMessage = action.payload.errorMessage;
+            state.isLoading    = false;
+        },
+
+        checkingProviders: (state: ProviderState) => {
+            state.providers    = [];
+            state.isLoading    = true;
+            state.errorMessage = null;
+        },
+
+        checkingCurrentProvider: (state: ProviderState) => {
+            state.isLoadingCurrent     = true;
+            state.currentProviderError = null;
+        },
+
+        setCurrentProviderError: (state: ProviderState, action: PayloadAction<string>) => {
+            state.isLoadingCurrent     = false;
+            state.currentProviderError = action.payload;
+        },
+
+        // Saca un proveedor de la lista sin necesidad de refetch.
+        removeProvider: (state: ProviderState, action: PayloadAction<string>) => {
+            state.providers = state.providers.filter((p) => p._id !== action.payload);
+        },
+
+        checkingStats: (state: ProviderState) => {
+            state.isLoadingStats = true;
+            state.statsError     = null;
+        },
+
+        setStats: (state: ProviderState, action: PayloadAction<ProviderStats>) => {
+            state.stats           = action.payload;
+            state.isLoadingStats  = false;
+        },
+
+        setStatsError: (state: ProviderState, action: PayloadAction<string>) => {
+            state.statsError      = action.payload;
+            state.isLoadingStats  = false;
+        },
+
+        resetProviders: (state: ProviderState) => {
+            state.providers    = [];
+            state.errorMessage = null;
+        },
+    },
 });
 
-// export const {} = providerSlice.actions;
+export const {
+    setProviders,
+    setCurrentProvider,
+    clearCurrentProvider,
+    setError,
+    checkingProviders,
+    checkingCurrentProvider,
+    setCurrentProviderError,
+    removeProvider,
+    checkingStats,
+    setStats,
+    setStatsError,
+    resetProviders,
+} = providerSlice.actions;
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState   = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export default providerSlice.reducer;

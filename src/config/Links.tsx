@@ -2,8 +2,6 @@ import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import CategoryIcon from "@mui/icons-material/Category";
 import StoreIcon from "@mui/icons-material/Store";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
-import RecentActorsIcon from '@mui/icons-material/RecentActors';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import HubIcon from '@mui/icons-material/Hub';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -15,6 +13,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import type { OptionLink } from "@typings/ui/layout.types";
 import GroupIcon from '@mui/icons-material/Group';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import stocoLogo from "../../public/images/logo/StocoLogoalt.png";
 
 const KioscoLink: OptionLink = {
@@ -73,10 +72,9 @@ export const SidebarNavLinks: OptionLink[] = [
   },
   {
     description: "Proveedores",
-    icon: <WarehouseIcon />,
-    url: "/home", // url: "/providers",
+    icon: <LocalShippingIcon />,
+    url: "/providers",
     subtitle: "",
-    disabled: true,
   },
 ];
 
@@ -85,12 +83,6 @@ export const CategoriesNavLinks: OptionLink[] = [
   { description: 'Ver Categorias', icon: <CollectionsBookmarkIcon />, url: '/categories-list', subtitle: '' },
   { description: 'Crear Categoria', icon: <NewLabelIcon />, url: '/categories-create', subtitle: '' },
   { description: 'Editar Categoria', icon: <DriveFileRenameOutlineIcon />, url: '/categories-edit', subtitle: '' },
-];
-
-export const ProvidersNavLinks: OptionLink[] = [
-  { description: 'Ver Proveedores', icon: <RecentActorsIcon />, url: '/providers-list', subtitle: '' },
-  { description: 'Crear Proveedor', icon: <PersonAddAlt1Icon />, url: '/providers-create', subtitle: '' },
-  { description: 'Editar Proveedor', icon: <ManageAccountsIcon />, url: '/providers-edit', subtitle: '' },
 ];
 
 export const AccountNavLinks: OptionLink[] = [

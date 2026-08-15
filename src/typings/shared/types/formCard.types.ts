@@ -19,7 +19,7 @@ export interface FieldConfig {
     label: string;
     placeholder?: string;
     tooltip: string;
-    type?: "text" | "number" | "date" | "select"  | "radio" ;
+    type?: "text" | "number" | "date" | "select"  | "radio" | "rating" ;
     radioOptions?: { value: string; label: string }[];
     required?: boolean;
     multiline?: boolean;
@@ -33,6 +33,8 @@ export interface FieldConfig {
     getOptionLabel?: (value: string) => string;
     allowClear?: boolean;
     clearLabel?: string;
+    // solo para type: "rating" — cantidad de estrellas, default 5
+    maxRating?: number;
 }
 
 export interface SelectFieldProps<T extends object, C extends string> {
