@@ -16,9 +16,9 @@
 
 const CategoriesListPage = ():React.ReactNode => {
     return (
-        <>
+        <main>
             <p>CategoriesListPage</p>
-        </>
+        </main>
     )
 }
 

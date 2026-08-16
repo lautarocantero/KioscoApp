@@ -18,9 +18,9 @@
 const CategoriesCreatePage = ():React.ReactNode => {
 
     return (
-        <>
+        <main>
             <p>CategoriesCreatePage</p>
-        </>
+        </main>
     )
 
 }

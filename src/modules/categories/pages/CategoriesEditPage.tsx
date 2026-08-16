@@ -16,9 +16,9 @@
 
 const CategoriesEditPage = ():React.ReactNode => {
     return (
-        <>
+        <main>
             <p>CategoriesEditPage</p>
-        </>
+        </main>
     )
 }
 

@@ -1,15 +1,12 @@
-// # Componente: ProductsRoutes
+// # Componente: CategoriesRoutes
 
 // ## Descripción 📦
-// Definición de rutas para la gestión de productos y categorías.
-// Las rutas de presentaciones (variantes) viven en PresentationRoutes.
+// Definición de rutas para la gestión de categorías.
+// Las rutas de productos viven en modules/products/routes/ProductsRoutes,
+// y las de presentaciones (variantes) en PresentationRoutes.
 
 // ## Rutas 🛣️
 // ┌────────────────────────────────────────────────────────────┐
-// │ "/products"                      → ProductsListPage            │
-// │ "/product-create"               → ProductCreatePage      │
-// │ "/product/:productId"            → ProductDetailPage       │
-// │ "/products/:productId/edit"      → ProductsEditPage        │
 // │ "/categories"                    → CategoriesPage          │
 // │ "/categories-list"               → CategoriesListPage      │
 // │ "/categories-create"             → CategoriesCreatePage    │
@@ -17,8 +14,10 @@
 // └────────────────────────────────────────────────────────────┘
 
 // ## Notas técnicas 💽
-// - Las rutas de variantes fueron movidas a PresentationRoutes
-//   (modules/Presentations/PresentationRoutes.tsx).
+// - Este componente todavía no está montado en src/router/AppRouter.tsx,
+//   por lo que las rutas "/categories*" no son alcanzables desde la app
+//   todavía. Las páginas de creación/edición/listado son placeholders
+//   pendientes de implementación (ver docs correspondientes).
 //-----------------------------------------------------------------------------//
 
 import { Route } from "react-router-dom";
@@ -27,7 +26,7 @@ import CategoriesListPage from "./pages/CategoriesListPage";
 import CategoriesCreatePage from "./pages/CategoriesCreatePage";
 import CategoriesEditPage from "./pages/CategoriesEditPage";
 
-const ProductsRoutes = (): React.ReactNode => {
+const CategoriesRoutes = (): React.ReactNode => {
     return (
         <>
             {/* ── Categorías ────────────────────────────────────────────── */}
@@ -39,4 +38,4 @@ const ProductsRoutes = (): React.ReactNode => {
     );
 };
 
-export default ProductsRoutes;
+export default CategoriesRoutes;

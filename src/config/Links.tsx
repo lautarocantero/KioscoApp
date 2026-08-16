@@ -79,9 +79,9 @@ export const SidebarNavLinks: OptionLink[] = [
 
 
 export const CategoriesNavLinks: OptionLink[] = [
-  { description: 'Ver Categorias', icon: <CollectionsBookmarkIcon />, url: '/categories-list', subtitle: '' },
-  { description: 'Crear Categoria', icon: <NewLabelIcon />, url: '/categories-create', subtitle: '' },
-  { description: 'Editar Categoria', icon: <DriveFileRenameOutlineIcon />, url: '/categories-edit', subtitle: '' },
+  { description: 'Ver Categorías', icon: <CollectionsBookmarkIcon />, url: '/categories-list', subtitle: '' },
+  { description: 'Crear Categoría', icon: <NewLabelIcon />, url: '/categories-create', subtitle: '' },
+  { description: 'Editar Categoría', icon: <DriveFileRenameOutlineIcon />, url: '/categories-edit', subtitle: '' },
 ];
 
 export const AccountNavLinks: OptionLink[] = [
