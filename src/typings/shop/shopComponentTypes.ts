@@ -1,5 +1,11 @@
 import type { OptionLink } from "@typings/ui/layout.types";
-import type { UseShopFeaturedProvidersReturn, UseShopInventorySummaryReturn, UseShopSalesSummaryReturn } from "./shopTypes";
+import type {
+  LowStockPresentationSummary,
+  UseShopFeaturedProvidersReturn,
+  UseShopInventorySummaryReturn,
+  UseShopLowStockPresentationsReturn,
+  UseShopSalesSummaryReturn,
+} from "./shopTypes";
 
 export interface ShopHeaderProps {
   greeting: string;
@@ -20,4 +26,11 @@ export type ShopTopSellersProps = Pick<UseShopSalesSummaryReturn, "topSellers" |
 
 export type ShopTopProvidersProps = UseShopFeaturedProvidersReturn;
 
-export type ShopInventoryPanelProps = UseShopInventorySummaryReturn;
+export interface ShopInventoryPanelProps extends UseShopInventorySummaryReturn {
+  lowStockItems: LowStockPresentationSummary[];
+  lowStockItemsTotal: number;
+  isLoadingLowStockItems: boolean;
+  lowStockItemsError: string | null;
+}
+
+export type ShopLowStockListProps = UseShopLowStockPresentationsReturn;

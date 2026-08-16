@@ -106,6 +106,13 @@ export interface PresentationState {
     selectedPresentation: Presentation | null;
     isLoading: boolean;
     errorMessage: string | null;
+    // Catálogo completo de presentaciones (todas las variantes, sin filtrar
+    // por producto) — usado por el dashboard de /shop para el detalle de
+    // stock bajo. Separado de `presentations` (que es por-producto) para
+    // no pisarse entre sí.
+    allPresentations: Presentation[];
+    isLoadingAllPresentations: boolean;
+    allPresentationsError: string | null;
 }
 
 export type PresentationStateError = Pick<PresentationState, 'errorMessage'>;

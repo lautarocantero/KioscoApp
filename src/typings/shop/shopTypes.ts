@@ -1,5 +1,6 @@
 import type { Provider } from "@typings/provider/providerTypes";
 import type { SellerStatus } from "@typings/seller/sellerEnums";
+import type { StockSeverity } from "./shopEnums";
 
 export interface UseShopGreetingReturn {
   greeting: string;
@@ -40,6 +41,22 @@ export interface UseShopInventorySummaryReturn {
   withStock: number | null;
   lowStock: number | null;
   withoutStock: number | null;
+  isLoading: boolean;
+  error: string | null;
+}
+
+export interface LowStockPresentationSummary {
+  presentationId: string;
+  name: string;
+  stock: number;
+  minStock: number;
+  severity: StockSeverity;
+  ratio: number;
+}
+
+export interface UseShopLowStockPresentationsReturn {
+  lowStock: LowStockPresentationSummary[];
+  total: number;
   isLoading: boolean;
   error: string | null;
 }

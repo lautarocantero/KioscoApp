@@ -31,6 +31,6 @@ const { total, withStock, lowStock, withoutStock, isLoading, error } = useShopIn
 <ShopInventoryPanel total={total} withStock={withStock} lowStock={lowStock} withoutStock={withoutStock} isLoading={isLoading} error={error} />
 ```
 
-## 🚧 Pendiente / limitación conocida
+## 🔗 Relacionado
 
-No hay tabla de "productos con stock bajo" con stock actual + mínimo por producto: ningún endpoint wireado hoy devuelve `min_stock` junto al `stock` para todas las presentaciones en un solo request (el `Presentation` completo sí tiene `min_stock`, pero los endpoints en bulk como `get-products-with-stock` solo traen `stock`). Ver [docs/features/shopDashboard.md](../../features/shopDashboard.md).
+El `lowStock` de acá es solo el *count* (`ProductStats.lowStockPresentations`, es la fuente de verdad del backend). El detalle por producto (nombre, stock actual/mínimo, severidad) vive en un hook aparte, [useShopLowStockPresentations](./useShopLowStockPresentations.md), que conecta un endpoint distinto (`get-product-presentations`) — se mantienen separados a propósito para no mezclar dos fuentes/formas de "stock bajo" en un solo hook.

@@ -4,6 +4,7 @@ import { useShopStatLinks } from "../../../../hooks/shop/useShopStatLinks";
 import { useShopSalesSummary } from "../../../../hooks/shop/useShopSalesSummary";
 import { useShopFeaturedProviders } from "../../../../hooks/shop/useShopFeaturedProviders";
 import { useShopInventorySummary } from "../../../../hooks/shop/useShopInventorySummary";
+import { useShopLowStockPresentations } from "../../../../hooks/shop/useShopLowStockPresentations";
 import AppLayout from "../../../shared/layout/AppLayout";
 import ShopHeader from "../../components/ShopHeader";
 import ShopStatsRow from "../../components/ShopStatsRow";
@@ -18,6 +19,7 @@ const ShopPage = (): React.ReactNode => {
     const salesSummary = useShopSalesSummary();
     const featuredProviders = useShopFeaturedProviders();
     const inventorySummary = useShopInventorySummary();
+    const lowStockPresentations = useShopLowStockPresentations();
 
     return (
         <AppLayout fullWidth noCenter>
@@ -26,7 +28,7 @@ const ShopPage = (): React.ReactNode => {
             <ShopStatsRow links={statLinks} />
 
             <Grid container spacing={2}>
-                <Grid size={{ xs: 12, md: 7 }}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <ShopSalesChart
                         dailySales={salesSummary.dailySales}
                         weekTotal={salesSummary.weekTotal}
@@ -34,7 +36,7 @@ const ShopPage = (): React.ReactNode => {
                         error={salesSummary.error}
                     />
                 </Grid>
-                <Grid size={{ xs: 12, md: 5 }}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <ShopInventoryPanel
                         total={inventorySummary.total}
                         withStock={inventorySummary.withStock}
@@ -42,6 +44,10 @@ const ShopPage = (): React.ReactNode => {
                         withoutStock={inventorySummary.withoutStock}
                         isLoading={inventorySummary.isLoading}
                         error={inventorySummary.error}
+                        lowStockItems={lowStockPresentations.lowStock}
+                        lowStockItemsTotal={lowStockPresentations.total}
+                        isLoadingLowStockItems={lowStockPresentations.isLoading}
+                        lowStockItemsError={lowStockPresentations.error}
                     />
                 </Grid>
             </Grid>

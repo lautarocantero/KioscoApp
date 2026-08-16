@@ -1,6 +1,7 @@
 import { Box, Skeleton, Typography, type Theme } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import type { ShopInventoryPanelProps } from "@typings/shop/shopComponentTypes";
+import ShopLowStockList from "./ShopLowStockList";
 
 interface InventoryTile {
     label: string;
@@ -8,11 +9,22 @@ interface InventoryTile {
     color: (theme: Theme) => string;
 }
 
-const ShopInventoryPanel = ({ total, withStock, lowStock, withoutStock, isLoading, error }: ShopInventoryPanelProps): React.ReactNode => {
+const ShopInventoryPanel = ({
+    total,
+    withStock,
+    lowStock,
+    withoutStock,
+    isLoading,
+    error,
+    lowStockItems,
+    lowStockItemsTotal,
+    isLoadingLowStockItems,
+    lowStockItemsError,
+}: ShopInventoryPanelProps): React.ReactNode => {
     const tiles: InventoryTile[] = [
         { label: "Total productos", value: total, color: (t) => t.custom.fontColor },
         { label: "Con stock", value: withStock, color: (t) => t.palette.success.main },
-        { label: "Stock bajo", value: lowStock, color: (t) => t.palette.warning.main },
+        { label: "Stock bajo", value: lowStock, color: (t) => t.custom.accents.gold },
         { label: "Sin stock", value: withoutStock, color: (t) => t.palette.error.main },
     ];
 
@@ -53,7 +65,7 @@ const ShopInventoryPanel = ({ total, withStock, lowStock, withoutStock, isLoadin
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gridTemplateColumns: { xs: "repeat(2, 1fr)", sm: "repeat(4, 1fr)" },
                     gap: 1.5,
                     mt: 2,
                 }}
@@ -73,6 +85,13 @@ const ShopInventoryPanel = ({ total, withStock, lowStock, withoutStock, isLoadin
                     </Box>
                 ))}
             </Box>
+
+            <ShopLowStockList
+                lowStock={lowStockItems}
+                total={lowStockItemsTotal}
+                isLoading={isLoadingLowStockItems}
+                error={lowStockItemsError}
+            />
         </Box>
     );
 };
