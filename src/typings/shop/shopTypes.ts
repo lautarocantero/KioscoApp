@@ -34,3 +34,12 @@ export interface UseShopFeaturedProvidersReturn {
   isLoading: boolean;
   error: string | null;
 }
+
+export interface UseShopInventorySummaryReturn {
+  total: number | null;
+  withStock: number | null;
+  lowStock: number | null;
+  withoutStock: number | null;
+  isLoading: boolean;
+  error: string | null;
+}

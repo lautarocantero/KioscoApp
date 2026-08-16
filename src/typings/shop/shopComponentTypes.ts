@@ -1,5 +1,5 @@
 import type { OptionLink } from "@typings/ui/layout.types";
-import type { UseShopFeaturedProvidersReturn, UseShopSalesSummaryReturn } from "./shopTypes";
+import type { UseShopFeaturedProvidersReturn, UseShopInventorySummaryReturn, UseShopSalesSummaryReturn } from "./shopTypes";
 
 export interface ShopHeaderProps {
   greeting: string;
@@ -19,3 +19,5 @@ export type ShopSalesChartProps = Pick<UseShopSalesSummaryReturn, "dailySales" |
 export type ShopTopSellersProps = Pick<UseShopSalesSummaryReturn, "topSellers" | "isLoading" | "error">;
 
 export type ShopTopProvidersProps = UseShopFeaturedProvidersReturn;
+
+export type ShopInventoryPanelProps = UseShopInventorySummaryReturn;
