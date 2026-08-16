@@ -13,8 +13,8 @@ ShopPage
 ├── ShopHeader           (saludo real + subtítulo)
 ├── ShopStatsRow         (4 LinkCard: Ventas, Productos, Vendedores, Proveedores)
 ├── Grid
-│   ├── ShopSalesChart       (gráfico de ventas últimos 7 días + botón "Cargar boleta")
-│   └── ShopInventoryPanel   (total / con stock / stock bajo / sin stock)
+│   ├── ShopSalesChart       (gráfico de ventas, rango elegible: 7/15/30 días)
+│   └── ShopInventoryPanel   (total / con stock / stock bajo / sin stock + botón "Cargar boleta")
 │       └── ShopLowStockList (lista con scroll: presentaciones por debajo del mínimo)
 └── Grid
     ├── ShopTopSellers   (ranking de vendedores por ventas del mes)
@@ -34,7 +34,7 @@ ShopPage
 | Productos (tile) | total + stock bajo | `GET /product/get-product-stats` (`useProductStats`) |
 | Vendedores (tile) | total + online | `GET /seller/get-sellers` (`useSellersListData`) |
 | Proveedores (tile) | total | `GET /provider/get-providers-stats` (`useProvidersLinkData`) |
-| Gráfico de ventas | ventas por día, últimos 7 días | `GET /sell/get-sells` agregado client-side (`aggregateSellsByDay`) |
+| Gráfico de ventas | ventas por día, rango elegible (7/15/30 días) | `GET /sell/get-sells` agregado client-side (`aggregateSellsByDay`) |
 | Inventario | total, con stock, stock bajo, sin stock | `GET /product/get-product-stats` + `GET /product/get-products-with-stock`, combinados en `useShopInventorySummary` |
 | Productos con stock bajo (lista) | nombre, stock actual, stock mínimo, severidad, top 20 más críticos de N reales | `GET /get-product-presentations` (antes sin usar, ver `useShopLowStockPresentations`) |
 | Vendedores destacados | ventas del mes + pedidos + online/offline | mismo `GET /sell/get-sells` cruzado con `GET /seller/get-sellers` (`aggregateTopSellers`) |
@@ -56,6 +56,10 @@ Si en algún momento el backend agrega los datos que faltan arriba, estos son lo
 ### Nota sobre `palette.warning` vs `palette.error`
 
 En el theme actual (`src/theme/mainTheme.ts`), `palette.warning.main` y `palette.error.main` tienen el mismo valor hex tanto en light como en dark theme — son indistinguibles visualmente. Para diferenciar la severidad "Bajo" de "Crítico" en `ShopLowStockList`/`ShopInventoryPanel` se usa `theme.custom.accents.gold` (ya documentado en el theme para "badges destacados") en vez de `palette.warning`. Si en algún momento se define un `warning.main` realmente distinto de `error.main`, valdría la pena volver a usar el semántico `palette.warning`.
+
+### Nota sobre el estado online/offline en "Vendedores destacados"
+
+`aggregateTopSellers` cruza el `seller_id` de cada venta contra la lista actual de `sellers` para saber si está online. En cuentas de test que se recrearon (nuevo `_id`, mismo nombre), ese cruce por id falla y el vendedor actual aparecía siempre "Desconectado" aunque estuviera logueado. Se agregó un fallback: si no hay match por `seller_id`, se intenta por `seller_name`. Es una heurística razonable para un comercio chico (nombres efectivamente únicos en la práctica), pero no es 100% robusta — si el backend algún día permite reasignar `_id` sin que cambie el nombre en un caso ambiguo (dos vendedores con el mismo nombre), el fallback podría matchear al vendedor equivocado. El match por `id` siempre tiene prioridad.
 
 ## 5. Limitación de performance conocida
 

@@ -1,5 +1,6 @@
-import { Box, Skeleton, Typography, alpha, type Theme } from "@mui/material";
+import { Box, Button, Skeleton, Typography, alpha, type Theme } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import ReceiptIcon from "@mui/icons-material/Receipt";
 import type { ShopInventoryPanelProps } from "@typings/shop/shopComponentTypes";
 import ShopLowStockList from "./ShopLowStockList";
 
@@ -98,6 +99,17 @@ const ShopInventoryPanel = ({
                     </Box>
                 ))}
             </Box>
+
+            <Button
+                component={RouterLink}
+                to="/receipts"
+                variant="outlined"
+                size="small"
+                startIcon={<ReceiptIcon />}
+                sx={{ mt: 2, alignSelf: "flex-start" }}
+            >
+                Cargar boleta
+            </Button>
 
             <ShopLowStockList
                 lowStock={lowStockItems}

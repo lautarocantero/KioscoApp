@@ -15,7 +15,7 @@ aggregateTopSellers(sells: SellTicketType[], sellers: Seller[], limit: number): 
 
 - Filtra ventas al mes calendario actual (según `purchase_date`).
 - Ordena descendente por `totalAmount` y corta en `limit`.
-- Si el vendedor de una venta ya no está en `sellers` (ej. cuenta eliminada, o la venta la hizo un Admin que no figura en `/seller/get-sellers`), el `status` cae a `SellerStatus.Offline` por defecto — no se asume "online".
+- El `status` se resuelve así: **1)** match por `seller_id` exacto; **2)** si no hay match, fallback por `seller_name` (cubre cuentas de test recreadas — mismo nombre, `_id` nuevo — donde el `seller_id` guardado en la venta quedó desactualizado); **3)** si tampoco matchea por nombre, `SellerStatus.Offline` por defecto. El match por id siempre gana sobre el de nombre.
 
 ## Dónde se usa
 

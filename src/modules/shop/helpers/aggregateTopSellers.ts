@@ -41,6 +41,12 @@ export const aggregateTopSellers = (
         });
 
     const statusBySellerId = new Map(sellers.map((seller) => [seller._id, seller.user_status]));
+    // Fallback por nombre: las ventas históricas guardan el seller_id vigente
+    // al momento de la venta, así que si esa cuenta se borró/recreó (id
+    // nuevo), el cruce por id solo falla — pero el nombre suele seguir
+    // identificando a la misma persona en un comercio chico. Evita mostrar
+    // "Desconectado" a alguien que en realidad está logueado ahora mismo.
+    const statusBySellerName = new Map(sellers.map((seller) => [seller.name, seller.user_status]));
 
     return Array.from(totalsBySellerId.entries())
         .map(([sellerId, totals]) => ({
@@ -48,7 +54,9 @@ export const aggregateTopSellers = (
             sellerName: totals.sellerName,
             totalAmount: totals.totalAmount,
             ordersCount: totals.ordersCount,
-            status: statusBySellerId.get(sellerId) ?? SellerStatus.Offline,
+            status: statusBySellerId.get(sellerId)
+                ?? statusBySellerName.get(totals.sellerName)
+                ?? SellerStatus.Offline,
         }))
         .sort((a, b) => b.totalAmount - a.totalAmount)
         .slice(0, limit);

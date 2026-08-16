@@ -19,9 +19,13 @@ const sell = (purchase_date: string, total_amount: number): SellTicketType => ({
     debtor_name: null,
 });
 
-const isoToday = (hoursAgo = 0): string => {
+// Ancla a mediodía local de hoy (no "ahora - N horas") para que restar
+// minutos nunca cruce la medianoche y el test sea flaky según la hora
+// en que corra la suite.
+const isoToday = (minutesAgo = 0): string => {
     const date = new Date();
-    date.setHours(date.getHours() - hoursAgo);
+    date.setHours(12, 0, 0, 0);
+    date.setMinutes(date.getMinutes() - minutesAgo);
     return date.toISOString();
 };
 

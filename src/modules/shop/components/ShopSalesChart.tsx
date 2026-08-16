@@ -1,13 +1,19 @@
-import { Box, Button, Skeleton, Typography, useTheme, type Theme } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Box, MenuItem, Select, Skeleton, Typography, useTheme, type Theme, type SelectChangeEvent } from "@mui/material";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import ReceiptIcon from "@mui/icons-material/Receipt";
 import type { ShopSalesChartProps } from "@typings/shop/shopComponentTypes";
+import { ShopSalesRange } from "@typings/shop/shopEnums";
+import { SHOP_SALES_RANGE_LABELS } from "@typings/shop/shopLabels";
 import { formatCurrency } from "../../cart/helpers/formatCurrency";
 import ShopSalesChartTooltip from "./ShopSalesChartTooltip";
 
-const ShopSalesChart = ({ dailySales, weekTotal, isLoading, error }: ShopSalesChartProps): React.ReactNode => {
+const RANGE_OPTIONS = Object.values(ShopSalesRange);
+
+const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, isLoading, error }: ShopSalesChartProps): React.ReactNode => {
     const theme = useTheme();
+
+    const handleRangeChange = (event: SelectChangeEvent): void => {
+        setRange(event.target.value as ShopSalesRange);
+    };
 
     return (
         <Box
@@ -37,27 +43,28 @@ const ShopSalesChart = ({ dailySales, weekTotal, isLoading, error }: ShopSalesCh
                     <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                         Ventas
                     </Typography>
-                    <Typography variant="caption" sx={(t: Theme) => ({ color: t.custom.darkWhite })}>
-                        Últimos 7 días
-                    </Typography>
                     {isLoading ? (
                         <Skeleton variant="text" width={120} height={32} />
                     ) : (
                         <Typography variant="h6" sx={{ fontWeight: 700, mt: 0.5 }}>
-                            {formatCurrency(weekTotal)}
+                            {formatCurrency(periodTotal)}
                         </Typography>
                     )}
                 </Box>
 
-                <Button
-                    component={RouterLink}
-                    to="/receipts"
-                    variant="outlined"
+                <Select
+                    value={range}
+                    onChange={handleRangeChange}
                     size="small"
-                    startIcon={<ReceiptIcon />}
+                    aria-label="Rango de fechas de ventas"
+                    sx={{ alignSelf: { xs: "flex-start", sm: "center" }, minWidth: 160 }}
                 >
-                    Cargar boleta
-                </Button>
+                    {RANGE_OPTIONS.map((option) => (
+                        <MenuItem key={option} value={option}>
+                            {SHOP_SALES_RANGE_LABELS[option]}
+                        </MenuItem>
+                    ))}
+                </Select>
             </Box>
 
             {error && (

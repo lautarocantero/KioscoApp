@@ -1,7 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { useDispatch, useSelector } from "react-redux";
+import { act } from "react";
 import { SellerStatus } from "@typings/seller/sellerEnums";
+import { ShopSalesRange } from "@typings/shop/shopEnums";
 import type { SellTicketType } from "@typings/sells/sellTypes";
 import type { Seller } from "@typings/seller/sellerTypes";
 import { useShopSalesSummary } from "../useShopSalesSummary";
@@ -45,15 +47,16 @@ describe("useShopSalesSummary", () => {
         vi.useRealTimers();
     });
 
-    it("arma una serie de 7 días y un total semanal en 0 sin ventas", () => {
+    it("arma por defecto una serie de 7 días y un total en 0 sin ventas", () => {
         const { result } = renderHook(() => useShopSalesSummary());
 
+        expect(result.current.range).toBe(ShopSalesRange.SevenDays);
         expect(result.current.dailySales).toHaveLength(7);
-        expect(result.current.weekTotal).toBe(0);
+        expect(result.current.periodTotal).toBe(0);
         expect(result.current.topSellers).toEqual([]);
     });
 
-    it("agrega ventas reales al total semanal y al ranking de vendedores", () => {
+    it("agrega ventas reales al total del período y al ranking de vendedores", () => {
         const today = new Date().toISOString();
         mockState({
             sells: [
@@ -65,8 +68,32 @@ describe("useShopSalesSummary", () => {
 
         const { result } = renderHook(() => useShopSalesSummary());
 
-        expect(result.current.weekTotal).toBe(800);
+        expect(result.current.periodTotal).toBe(800);
         expect(result.current.topSellers[0]).toMatchObject({ sellerId: "s1", totalAmount: 800, ordersCount: 2 });
+    });
+
+    it("recalcula la serie según el rango elegido con setRange", () => {
+        const today = new Date();
+        const twentyDaysAgo = new Date();
+        twentyDaysAgo.setDate(today.getDate() - 20);
+
+        mockState({
+            sells: [
+                { _id: "1", purchase_date: today.toISOString(), seller_id: "s1", seller_name: "Ana", total_amount: 100 },
+                { _id: "2", purchase_date: twentyDaysAgo.toISOString(), seller_id: "s1", seller_name: "Ana", total_amount: 900 },
+            ],
+        });
+
+        const { result } = renderHook(() => useShopSalesSummary());
+
+        expect(result.current.dailySales).toHaveLength(7);
+        expect(result.current.periodTotal).toBe(100);
+
+        act(() => result.current.setRange(ShopSalesRange.Month));
+
+        expect(result.current.range).toBe(ShopSalesRange.Month);
+        expect(result.current.dailySales).toHaveLength(30);
+        expect(result.current.periodTotal).toBe(1000);
     });
 
     it("propaga isLoading si cualquiera de las dos fuentes está cargando", () => {

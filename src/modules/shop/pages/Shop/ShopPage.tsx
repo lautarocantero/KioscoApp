@@ -36,7 +36,9 @@ const ShopPage = (): React.ReactNode => {
             <Box sx={TWO_COLUMN_GRID_SX}>
                 <ShopSalesChart
                     dailySales={salesSummary.dailySales}
-                    weekTotal={salesSummary.weekTotal}
+                    periodTotal={salesSummary.periodTotal}
+                    range={salesSummary.range}
+                    setRange={salesSummary.setRange}
                     isLoading={salesSummary.isLoading}
                     error={salesSummary.error}
                 />

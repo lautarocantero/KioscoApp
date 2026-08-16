@@ -1,6 +1,6 @@
 import type { Provider } from "@typings/provider/providerTypes";
 import type { SellerStatus } from "@typings/seller/sellerEnums";
-import type { StockSeverity } from "./shopEnums";
+import type { ShopSalesRange, StockSeverity } from "./shopEnums";
 
 export interface UseShopGreetingReturn {
   greeting: string;
@@ -23,7 +23,9 @@ export interface TopSellerSummary {
 
 export interface UseShopSalesSummaryReturn {
   dailySales: DailySalesPoint[];
-  weekTotal: number;
+  periodTotal: number;
+  range: ShopSalesRange;
+  setRange: (range: ShopSalesRange) => void;
   topSellers: TopSellerSummary[];
   isLoading: boolean;
   error: string | null;

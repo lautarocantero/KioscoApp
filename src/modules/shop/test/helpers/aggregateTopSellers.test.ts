@@ -70,4 +70,27 @@ describe("aggregateTopSellers", () => {
 
         expect(result[0].status).toBe(SellerStatus.Offline);
     });
+
+    it("hace fallback por nombre si el seller_id de la venta no coincide con ningún vendedor actual", () => {
+        // simula una cuenta recreada: la venta quedó con un seller_id viejo,
+        // pero el vendedor actual tiene el mismo nombre.
+        const sells = [sell("id-viejo", "Ana", 100)];
+        const sellers = [{ ...seller("id-nuevo", SellerStatus.Online), name: "Ana" }];
+
+        const result = aggregateTopSellers(sells, sellers, 5);
+
+        expect(result[0].status).toBe(SellerStatus.Online);
+    });
+
+    it("prioriza el match por id sobre el match por nombre", () => {
+        const sells = [sell("1", "Ana", 100)];
+        const sellers = [
+            { ...seller("1", SellerStatus.Offline), name: "Ana" },
+            { ...seller("2", SellerStatus.Online), name: "Ana" },
+        ];
+
+        const result = aggregateTopSellers(sells, sellers, 5);
+
+        expect(result[0].status).toBe(SellerStatus.Offline);
+    });
 });
