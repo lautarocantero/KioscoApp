@@ -1,4 +1,4 @@
-import { Box, Skeleton, Typography, type Theme } from "@mui/material";
+import { Box, Skeleton, Typography, alpha, type Theme } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import type { ShopInventoryPanelProps } from "@typings/shop/shopComponentTypes";
 import ShopLowStockList from "./ShopLowStockList";
@@ -37,6 +37,8 @@ const ShopInventoryPanel = ({
                 borderColor: theme.custom.darkGray,
                 bgcolor: theme.custom.background,
                 height: "100%",
+                display: "flex",
+                flexDirection: "column",
             })}
         >
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 0.5 }}>
@@ -66,19 +68,29 @@ const ShopInventoryPanel = ({
                 sx={{
                     display: "grid",
                     gridTemplateColumns: { xs: "repeat(2, 1fr)", sm: "repeat(4, 1fr)" },
-                    gap: 1.5,
-                    mt: 2,
+                    gap: 1,
+                    mt: 1.5,
                 }}
             >
                 {tiles.map((tile) => (
-                    <Box key={tile.label}>
-                        <Typography variant="caption" sx={(t: Theme) => ({ color: t.custom.darkWhite })}>
+                    <Box
+                        key={tile.label}
+                        sx={(t: Theme) => ({
+                            border: "1px solid",
+                            borderColor: alpha(tile.color(t), 0.3),
+                            bgcolor: alpha(tile.color(t), 0.08),
+                            borderRadius: "10px",
+                            p: 1,
+                            textAlign: "center",
+                        })}
+                    >
+                        <Typography variant="caption" sx={(t: Theme) => ({ color: t.custom.darkWhite, fontSize: "0.66rem" })}>
                             {tile.label}
                         </Typography>
                         {isLoading ? (
-                            <Skeleton variant="text" width={48} height={32} />
+                            <Skeleton variant="text" width={40} height={30} sx={{ mx: "auto" }} />
                         ) : (
-                            <Typography variant="h6" sx={(t: Theme) => ({ fontWeight: 700, color: tile.color(t) })}>
+                            <Typography variant="h6" sx={(t: Theme) => ({ fontWeight: 800, color: tile.color(t) })}>
                                 {tile.value ?? "-"}
                             </Typography>
                         )}

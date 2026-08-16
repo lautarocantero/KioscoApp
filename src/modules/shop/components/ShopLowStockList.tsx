@@ -15,7 +15,7 @@ const getSeverityColor = (theme: Theme, severity: StockSeverity): string =>
     severity === StockSeverity.Critico ? theme.palette.error.main : theme.custom.accents.gold;
 
 const ShopLowStockList = ({ lowStock, total, isLoading, error }: ShopLowStockListProps): React.ReactNode => (
-    <Box sx={{ mt: 2.5 }}>
+    <Box sx={{ mt: 2 }}>
         <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
             Productos con stock bajo
         </Typography>
@@ -44,7 +44,7 @@ const ShopLowStockList = ({ lowStock, total, isLoading, error }: ShopLowStockLis
             <Box
                 role="list"
                 aria-label="Productos con stock bajo"
-                sx={{ maxHeight: 260, overflowY: "auto", pr: 0.5 }}
+                sx={{ maxHeight: 280, overflowY: "auto", pr: 0.5 }}
             >
                 {lowStock.map((item) => (
                     <Box

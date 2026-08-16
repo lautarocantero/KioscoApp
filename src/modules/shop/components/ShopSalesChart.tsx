@@ -17,9 +17,12 @@ const ShopSalesChart = ({ dailySales, weekTotal, isLoading, error }: ShopSalesCh
                 border: "0.5px solid",
                 borderColor: theme.custom.darkGray,
                 bgcolor: theme.custom.background,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
             })}
         >
-            <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 1.5, mb: 2 }}>
+            <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 1.5, mb: 1.5 }}>
                 <Box>
                     <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                         Ventas
@@ -28,9 +31,9 @@ const ShopSalesChart = ({ dailySales, weekTotal, isLoading, error }: ShopSalesCh
                         Últimos 7 días
                     </Typography>
                     {isLoading ? (
-                        <Skeleton variant="text" width={140} height={40} />
+                        <Skeleton variant="text" width={120} height={32} />
                     ) : (
-                        <Typography variant="h5" sx={{ fontWeight: 700, mt: 0.5 }}>
+                        <Typography variant="h6" sx={{ fontWeight: 700, mt: 0.5 }}>
                             {formatCurrency(weekTotal)}
                         </Typography>
                     )}
@@ -53,7 +56,7 @@ const ShopSalesChart = ({ dailySales, weekTotal, isLoading, error }: ShopSalesCh
                 </Typography>
             )}
 
-            <Box sx={{ width: "100%", height: 220 }}>
+            <Box sx={{ width: "100%", flex: 1, minHeight: 180 }}>
                 {isLoading ? (
                     <Skeleton variant="rounded" width="100%" height="100%" />
                 ) : (
