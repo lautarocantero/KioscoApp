@@ -19,9 +19,19 @@ const ShopTopSellers = ({ topSellers, isLoading, error }: ShopTopSellersProps): 
                 borderColor: theme.custom.darkGray,
                 bgcolor: theme.custom.background,
                 height: "100%",
+                minWidth: 0,
             })}
         >
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    alignItems: { xs: "flex-start", sm: "center" },
+                    justifyContent: "space-between",
+                    gap: 0.5,
+                    mb: 2,
+                }}
+            >
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                     Vendedores destacados
                 </Typography>

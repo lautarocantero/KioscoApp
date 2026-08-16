@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import { useShopGreeting } from "../../../../hooks/shop/useShopGreeting";
 import { useShopStatLinks } from "../../../../hooks/shop/useShopStatLinks";
 import { useShopSalesSummary } from "../../../../hooks/shop/useShopSalesSummary";
@@ -12,6 +12,12 @@ import ShopSalesChart from "../../components/ShopSalesChart";
 import ShopInventoryPanel from "../../components/ShopInventoryPanel";
 import ShopTopSellers from "../../components/ShopTopSellers";
 import ShopTopProviders from "../../components/ShopTopProviders";
+
+const TWO_COLUMN_GRID_SX = {
+    display: "grid",
+    gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+    gap: 2,
+} as const;
 
 const ShopPage = (): React.ReactNode => {
     const { greeting } = useShopGreeting();
@@ -27,48 +33,40 @@ const ShopPage = (): React.ReactNode => {
 
             <ShopStatsRow links={statLinks} />
 
-            <Grid container spacing={2}>
-                <Grid size={{ xs: 12, md: 6 }}>
-                    <ShopSalesChart
-                        dailySales={salesSummary.dailySales}
-                        weekTotal={salesSummary.weekTotal}
-                        isLoading={salesSummary.isLoading}
-                        error={salesSummary.error}
-                    />
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
-                    <ShopInventoryPanel
-                        total={inventorySummary.total}
-                        withStock={inventorySummary.withStock}
-                        lowStock={inventorySummary.lowStock}
-                        withoutStock={inventorySummary.withoutStock}
-                        isLoading={inventorySummary.isLoading}
-                        error={inventorySummary.error}
-                        lowStockItems={lowStockPresentations.lowStock}
-                        lowStockItemsTotal={lowStockPresentations.total}
-                        isLoadingLowStockItems={lowStockPresentations.isLoading}
-                        lowStockItemsError={lowStockPresentations.error}
-                    />
-                </Grid>
-            </Grid>
+            <Box sx={TWO_COLUMN_GRID_SX}>
+                <ShopSalesChart
+                    dailySales={salesSummary.dailySales}
+                    weekTotal={salesSummary.weekTotal}
+                    isLoading={salesSummary.isLoading}
+                    error={salesSummary.error}
+                />
+                <ShopInventoryPanel
+                    total={inventorySummary.total}
+                    withStock={inventorySummary.withStock}
+                    lowStock={inventorySummary.lowStock}
+                    withoutStock={inventorySummary.withoutStock}
+                    isLoading={inventorySummary.isLoading}
+                    error={inventorySummary.error}
+                    lowStockItems={lowStockPresentations.lowStock}
+                    lowStockItemsTotal={lowStockPresentations.total}
+                    isLoadingLowStockItems={lowStockPresentations.isLoading}
+                    lowStockItemsError={lowStockPresentations.error}
+                />
+            </Box>
 
-            <Grid container spacing={2}>
-                <Grid size={{ xs: 12, md: 6 }}>
-                    <ShopTopSellers
-                        topSellers={salesSummary.topSellers}
-                        isLoading={salesSummary.isLoading}
-                        error={salesSummary.error}
-                    />
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
-                    <ShopTopProviders
-                        featured={featuredProviders.featured}
-                        total={featuredProviders.total}
-                        isLoading={featuredProviders.isLoading}
-                        error={featuredProviders.error}
-                    />
-                </Grid>
-            </Grid>
+            <Box sx={TWO_COLUMN_GRID_SX}>
+                <ShopTopSellers
+                    topSellers={salesSummary.topSellers}
+                    isLoading={salesSummary.isLoading}
+                    error={salesSummary.error}
+                />
+                <ShopTopProviders
+                    featured={featuredProviders.featured}
+                    total={featuredProviders.total}
+                    isLoading={featuredProviders.isLoading}
+                    error={featuredProviders.error}
+                />
+            </Box>
         </AppLayout>
     );
 };

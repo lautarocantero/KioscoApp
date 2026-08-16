@@ -20,9 +20,19 @@ const ShopSalesChart = ({ dailySales, weekTotal, isLoading, error }: ShopSalesCh
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
+                minWidth: 0,
             })}
         >
-            <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 1.5, mb: 1.5 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    alignItems: { xs: "stretch", sm: "flex-start" },
+                    justifyContent: "space-between",
+                    gap: 1.5,
+                    mb: 1.5,
+                }}
+            >
                 <Box>
                     <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                         Ventas

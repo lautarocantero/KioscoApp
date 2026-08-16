@@ -39,9 +39,10 @@ const ShopInventoryPanel = ({
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
+                minWidth: 0,
             })}
         >
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 0.5 }}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 0.5, gap: 1 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                     Inventario
                 </Typography>
