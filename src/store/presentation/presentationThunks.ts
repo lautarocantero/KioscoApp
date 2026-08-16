@@ -8,6 +8,9 @@ import {
     removePresentationFromList,
     setError,
     resetPresentations,
+    checkingAllPresentations,
+    setAllPresentations,
+    setAllPresentationsError,
 } from "./presentationSlice";
 import { handleError } from "../shared/handlerStoreError";
 import {
@@ -20,6 +23,7 @@ import {
     getPresentationAnalyticsRequest,
     getPresentationByBarcodeRequest,
     getPresentationsWithStockByProductIdRequest,
+    getPresentationsRequest,
 } from "../../modules/presentations/api/presentationsApi";
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -40,6 +44,30 @@ export const fetchPresentationsByProductId = (product_id: string) => {
             return presentations;
         } catch (error: unknown) {
             dispatch(setError({ errorMessage: "No se pudieron cargar las presentaciones" }));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 fetchAllPresentationsThunk                                          ║
+║ ⚙️  Proceso:                                                            ║
+║   1. GET /get-product-presentations — todas las variantes de la tienda ║
+║      (sin filtrar por producto), vía presentationsApi                  ║
+║   2. Guarda el resultado en allPresentations (campo separado de        ║
+║      `presentations`, que es por-producto, para no pisarse entre sí)   ║
+║ ⚠️  Uso: dashboard de /shop, detalle de stock bajo                      ║
+║ 📤 Salida: Presentation[] o undefined en caso de error                 ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const fetchAllPresentationsThunk = () => {
+    return async (dispatch: Dispatch): Promise<Presentation[] | undefined> => {
+        dispatch(checkingAllPresentations());
+        try {
+            const presentations = await getPresentationsRequest();
+            dispatch(setAllPresentations(presentations));
+            return presentations;
+        } catch (error: unknown) {
+            dispatch(setAllPresentationsError("No se pudieron cargar las presentaciones"));
             handleError(error);
         }
     };

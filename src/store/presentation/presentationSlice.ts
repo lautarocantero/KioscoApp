@@ -8,6 +8,9 @@ const initialState: PresentationState = {
     selectedPresentation: null,
     isLoading: false,
     errorMessage: null,
+    allPresentations: [],
+    isLoadingAllPresentations: false,
+    allPresentationsError: null,
 };
 
 export const presentationSlice = createSlice({
@@ -44,6 +47,19 @@ export const presentationSlice = createSlice({
             state.isLoading = false;
             state.errorMessage = null;
         },
+        checkingAllPresentations: (state) => {
+            state.isLoadingAllPresentations = true;
+            state.allPresentationsError = null;
+        },
+        setAllPresentations: (state, action: PayloadAction<Presentation[]>) => {
+            state.allPresentations = action.payload;
+            state.isLoadingAllPresentations = false;
+            state.allPresentationsError = null;
+        },
+        setAllPresentationsError: (state, action: PayloadAction<string>) => {
+            state.isLoadingAllPresentations = false;
+            state.allPresentationsError = action.payload;
+        },
     },
 });
 
@@ -55,6 +71,9 @@ export const {
     setError,
     clearError,
     resetPresentations,
+    checkingAllPresentations,
+    setAllPresentations,
+    setAllPresentationsError,
 } = presentationSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;

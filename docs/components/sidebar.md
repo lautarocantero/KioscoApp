@@ -114,7 +114,7 @@ Ejemplo de link:
 }
 ```
 
-También hay un filtro `HomePageLinks` que excluye el link principal de la home.
+`/shop` es el punto de entrada de la app (ver [docs/features/shopDashboard.md](../features/shopDashboard.md)): la fila de stats de `/shop` (`useShopStatLinks`, ver [docs/hooks/shop/useShopStatLinks.md](../hooks/shop/useShopStatLinks.md)) parte de este mismo `SidebarNavLinks`.
 
 ---
 

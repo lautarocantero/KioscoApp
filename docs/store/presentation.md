@@ -15,10 +15,13 @@ Gestiona el estado de presentaciones, su lista y la presentación seleccionada, 
 
 ### `presentationSlice.ts`
 - Estado inicial:
-  - `presentations`
+  - `presentations` — presentaciones de **un producto** (tabla admin, `fetchPresentationsByProductId`).
   - `selectedPresentation`
   - `isLoading`
   - `errorMessage`
+  - `allPresentations` — **todas** las presentaciones de la tienda, sin filtrar por producto. Campo separado de `presentations` a propósito, para que un fetch global (dashboard de `/shop`) no pise el estado de la tabla admin de un producto puntual, y viceversa.
+  - `isLoadingAllPresentations`
+  - `allPresentationsError`
 - Reducers:
   - `startLoadingPresentations`
   - `setPresentations`
@@ -27,6 +30,9 @@ Gestiona el estado de presentaciones, su lista y la presentación seleccionada, 
   - `setError`
   - `clearError`
   - `resetPresentations`
+  - `checkingAllPresentations`
+  - `setAllPresentations`
+  - `setAllPresentationsError`
 
 ### `presentationThunks.ts`
 - Thunks disponibles:
@@ -38,6 +44,7 @@ Gestiona el estado de presentaciones, su lista y la presentación seleccionada, 
   - `editPresentation`
   - `deletePresentation`
   - `fetchPresentationAnalytics`
+  - `fetchAllPresentationsThunk` — `GET /get-product-presentations` (`getPresentationsRequest`, endpoint que ya existía en `presentationsApi.ts` pero no tenía ningún thunk que lo consumiera). Usado por `useShopLowStockPresentations` para la lista de "Productos con stock bajo" de `/shop`.
 - Maneja errores con `handleError` y actualiza el slice.
 
 ## ✨ Beneficios
