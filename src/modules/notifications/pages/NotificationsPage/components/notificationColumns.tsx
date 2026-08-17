@@ -92,10 +92,11 @@ export const buildColumnsForNotifications = ({
     },
     // Mismo patrón que el estado de presentaciones (chipColumn: Chip "filled",
     // color por valor, sin dot aparte) en vez de un render a medida.
+    // "No leída" queda sin color (default); "Leída" lleva el color de fondo.
     chipColumn<NotificationEntity>(
         { field: "status", headerName: t("notifications.columns.status"), width: 140, sortable: false },
         (value) => (value === NotificationStatusEnum.NotReadYet ? t("notifications.status.unread") : t("notifications.status.read")),
-        (value) => (value === NotificationStatusEnum.NotReadYet ? "primary" : "default"),
+        (value) => (value === NotificationStatusEnum.NotReadYet ? "default" : "primary"),
         "filled",
     ),
     {

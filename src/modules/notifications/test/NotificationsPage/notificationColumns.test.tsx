@@ -57,18 +57,20 @@ describe("buildColumnsForNotifications", () => {
     });
 
     describe("columna status", () => {
-        it("muestra 'No leída' para una notificación sin leer", () => {
+        it("muestra 'No leída' sin color de fondo (chip default)", () => {
             const { column } = getColumn("status");
             renderWithTheme(column.renderCell!(buildCellParams(buildNotification({ status: NotificationStatusEnum.NotReadYet }))));
 
-            expect(screen.getByText("No leída")).toBeInTheDocument();
+            const chip = screen.getByText("No leída").closest(".MuiChip-root");
+            expect(chip).toHaveClass("MuiChip-colorDefault");
         });
 
-        it("muestra 'Leída' para una notificación ya leída", () => {
+        it("muestra 'Leída' con color de fondo (chip primary)", () => {
             const { column } = getColumn("status");
             renderWithTheme(column.renderCell!(buildCellParams(buildNotification({ status: NotificationStatusEnum.Readed }))));
 
-            expect(screen.getByText("Leída")).toBeInTheDocument();
+            const chip = screen.getByText("Leída").closest(".MuiChip-root");
+            expect(chip).toHaveClass("MuiChip-colorPrimary");
         });
     });
 
