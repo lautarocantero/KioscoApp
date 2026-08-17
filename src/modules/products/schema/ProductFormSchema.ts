@@ -1,6 +1,7 @@
 // modules/products/schema/ProductFormSchema.ts
 
 import * as Yup from "yup";
+import type { TFunction } from "i18next";
 import type {
     ProductFormValues,
     ProductEditFormValues,
@@ -32,47 +33,51 @@ export const getProductEditInitialValues = (
 
 // ── Field validators (compartidos entre create/edit) ─────────────────────────
 
-const nameField = Yup.string()
-    .trim()
-    .min(3, "El nombre debe tener al menos 3 caracteres")
-    .max(100, "El nombre no puede exceder 100 caracteres")
-    .matches(NAME_REGEX, "El nombre contiene caracteres no permitidos")
-    .matches(NOT_ONLY_NUMBERS_OR_SYMBOLS_REGEX, "El nombre debe contener al menos una letra")
-    .required("El nombre del producto es requerido");
+const getNameField = (t: TFunction) =>
+    Yup.string()
+        .trim()
+        .min(3, t("products.validation.name.min"))
+        .max(100, t("products.validation.name.max"))
+        .matches(NAME_REGEX, t("products.validation.name.matches"))
+        .matches(NOT_ONLY_NUMBERS_OR_SYMBOLS_REGEX, t("products.validation.name.notOnlyNumbers"))
+        .required(t("products.validation.name.required"));
 
-const brandField = Yup.string()
-    .trim()
-    .min(2, "La marca debe tener al menos 2 caracteres")
-    .max(50, "La marca no puede exceder 50 caracteres")
-    .matches(NAME_REGEX, "La marca contiene caracteres no permitidos")
-    .matches(NOT_ONLY_NUMBERS_OR_SYMBOLS_REGEX, "La marca debe contener al menos una letra")
-    .required("La marca es requerida");
+const getBrandField = (t: TFunction) =>
+    Yup.string()
+        .trim()
+        .min(2, t("products.validation.brand.min"))
+        .max(50, t("products.validation.brand.max"))
+        .matches(NAME_REGEX, t("products.validation.brand.matches"))
+        .matches(NOT_ONLY_NUMBERS_OR_SYMBOLS_REGEX, t("products.validation.brand.notOnlyNumbers"))
+        .required(t("products.validation.brand.required"));
 
-const descriptionField = Yup.string()
-    .trim()
-    .min(10, "La descripción debe tener al menos 10 caracteres")
-    .max(500, "La descripción no puede exceder 500 caracteres")
-    .required("La descripción es requerida");
+const getDescriptionField = (t: TFunction) =>
+    Yup.string()
+        .trim()
+        .min(10, t("products.validation.description.min"))
+        .max(500, t("products.validation.description.max"))
+        .required(t("products.validation.description.required"));
 
-const imageUrlField = Yup.string()
-    .trim()
-    .test(
-        "valid-image-path",
-        "Debe ser una ruta relativa (ej: /images/foto.png) o una URL válida (https://...)",
-        (value) => !value || RELATIVE_OR_URL_REGEX.test(value),
-    );
+const getImageUrlField = (t: TFunction) =>
+    Yup.string()
+        .trim()
+        .test(
+            "valid-image-path",
+            t("products.validation.image_url.invalid"),
+            (value) => !value || RELATIVE_OR_URL_REGEX.test(value),
+        );
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
 
-const baseShape = {
-    name: nameField,
-    description: descriptionField,
-    brand: brandField,
-    image_url: imageUrlField,
-};
+const getBaseShape = (t: TFunction) => ({
+    name: getNameField(t),
+    description: getDescriptionField(t),
+    brand: getBrandField(t),
+    image_url: getImageUrlField(t),
+});
 
-export const productFormSchema = Yup.object(baseShape);
-export const productEditFormSchema = Yup.object(baseShape);
+export const getProductFormSchema = (t: TFunction) => Yup.object(getBaseShape(t));
+export const getProductEditFormSchema = (t: TFunction) => Yup.object(getBaseShape(t));
 
 // ── Step fields map ───────────────────────────────────────────────────────────
 

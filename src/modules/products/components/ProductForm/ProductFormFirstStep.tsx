@@ -2,9 +2,10 @@ import { useFormNavigation } from "../../../shared/context/FormNavigationContext
 import FormCard from "../../../../modules/shared/components/FormCard/FormCard";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import type { ProductEditFormValues, ProductFormValues } from "@typings/product/productTypes";
-import { PRODUCT_FIELD_REGISTRY } from "./ProductFieldRegistry";
+import { getProductFieldRegistry } from "./ProductFieldRegistry";
 import { useFormikContext } from "formik";
 import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
@@ -14,19 +15,21 @@ import ProductImagePreview from "../../../shared/components/Image/ProductImagePr
 
 const ProductFormFirstStep = (): React.ReactNode => {
     const theme = useTheme();
+    const { t } = useTranslation();
     const { actionTitle, submitError, stepErrors } = useFormNavigation();
     const isDetail = actionTitle === FormModeComplexEnum.Detail;
     const { values } = useFormikContext<ProductFormValues>();
+    const registry = getProductFieldRegistry(t);
 
     return (
         <FormCard
-            submitText={actionTitle === FormModeComplexEnum.Create ? "Crear" : "Actualizar"}
+            submitText={actionTitle === FormModeComplexEnum.Create ? t("products.form.submit.create") : t("products.form.submit.update")}
             showButtons={!isDetail}
             header={{
                 title:
-                    actionTitle === FormModeComplexEnum.Create ? "Crear producto" :
-                    actionTitle === FormModeComplexEnum.Edit ? "Editar producto" :
-                    "Detalle del producto",
+                    actionTitle === FormModeComplexEnum.Create ? t("products.form.header.create") :
+                    actionTitle === FormModeComplexEnum.Edit ? t("products.form.header.edit") :
+                    t("products.form.header.detail"),
             }}
             submitError={submitError}
             stepErrors={stepErrors}
@@ -35,12 +38,11 @@ const ProductFormFirstStep = (): React.ReactNode => {
                 isDetail
                     ? undefined
                     : {
-                          title: "¿Cómo funciona?",
-                          content:
-                              "Creá el producto una sola vez (nombre, marca, descripción) y luego agregás sus presentaciones (2L, retornable, lata...) con el stock y precio de cada una.",
+                          title: t("products.form.accordion.title"),
+                          content: t("products.form.accordion.content"),
                           bannerImage: {
                               src: "/images/productExample/ilustration.png",
-                              alt: "Producto y presentaciones",
+                              alt: t("products.form.accordion.bannerAlt"),
                           },
                       }
             }
@@ -48,8 +50,8 @@ const ProductFormFirstStep = (): React.ReactNode => {
         >
             <FormFieldsRenderer<ProductFormValues & ProductEditFormValues>
                 idPrefix="product"
-                sectionLabel="Datos del producto"
-                registry={PRODUCT_FIELD_REGISTRY}
+                sectionLabel={t("products.form.sectionLabel")}
+                registry={registry}
                 fields={["name", "brand", "description", "image_url"]}
                 readOnly={isDetail}
                 icons={{

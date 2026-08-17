@@ -1,6 +1,7 @@
 import type { UseProductDataResult, UseProductStatsResult } from "@typings/product/productTypes";
 import { useEffect }   from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { type AppDispatch, type RootState } from "../../store/product/productSlice";
 import { getProductById, getProductStats } from "../../store/product/productThunks";
 import type { LinkDataResult } from "@typings/ui/layout.types";
@@ -80,6 +81,7 @@ export const useProductStats = (): UseProductStatsResult => {
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const useProductsLinkData = (): LinkDataResult => {
+    const { t } = useTranslation();
     const { totalProducts, lowStockPresentations, isLoading, error } = useProductStats();
 
     const subtitle = error
@@ -87,8 +89,8 @@ export const useProductsLinkData = (): LinkDataResult => {
         : lowStockPresentations === null
             ? undefined
             : lowStockPresentations === 0
-                ? "Stock al día"
-                : `${lowStockPresentations} con stock bajo`;
+                ? t("products.stockUpToDate")
+                : t("products.stockLowCount", { count: lowStockPresentations });
 
     return {
         value: totalProducts,

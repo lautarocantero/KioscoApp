@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { getPresentationsByProductIdRequest } from "../../modules/presentations/api/presentationsApi";
 import { resolveErrorMessage } from "../../utils/formatter/resolveErrorMessage";
 import type { Presentation } from "@typings/presentation/presentationTypes";
@@ -14,6 +15,7 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 ║      (ej. desde un selector en la UI)                                 ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 export function useProductPresentations(productId: string | undefined, initialPresentationId?: string) {
+    const { t } = useTranslation();
     const [presentations, setPresentations]           = useState<Presentation[]>([]);
     const [isLoading, setIsLoading]                   = useState(true);
     const [error, setError]                           = useState<string | null>(null);
@@ -31,11 +33,11 @@ export function useProductPresentations(productId: string | undefined, initialPr
             const data = await getPresentationsByProductIdRequest({ product_id: productId });
             setPresentations(data);
         } catch (err) {
-            setError(resolveErrorMessage(err) ?? "No se pudieron cargar las presentaciones");
+            setError(resolveErrorMessage(err) ?? t("products.errors.presentationsLoadFailed"));
         } finally {
             setIsLoading(false);
         }
-    }, [productId]);
+    }, [productId, t]);
 
     useEffect(() => {
         fetchPresentations();

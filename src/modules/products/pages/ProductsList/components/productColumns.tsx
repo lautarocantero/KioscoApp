@@ -8,17 +8,18 @@ import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
 export const buildColumnsForProducts = ({
     onDeleteRequest,
     navigate,
+    t,
 }: BuildColumnsArgs): GridColDef<Product>[] => [
     {
         field: "name",
-        headerName: "Nombre",
+        headerName: t("products.table.columns.name"),
         flex: 1.5,
         minWidth: 150,
         maxWidth: 150,
     },
     {
         field: "brand",
-        headerName: "Marca",
+        headerName: t("products.table.columns.brand"),
         flex: 1,
         minWidth: 200,
         maxWidth: 200,
@@ -26,7 +27,7 @@ export const buildColumnsForProducts = ({
     truncatedTextColumn<Product>(
         {
             field: "description",
-            headerName: "Descripción",
+            headerName: t("products.table.columns.description"),
             flex: 2,
             minWidth: 250,
             maxWidth: 250,
@@ -35,13 +36,13 @@ export const buildColumnsForProducts = ({
     ),
     {
         field: "presentations",
-        headerName: "Presentaciones",
+        headerName: t("products.table.columns.presentations"),
         flex: 1,
         minWidth: 200,
         renderCell: (params) => (
             <GenericListCell<PresentationSummary>
                 items={params.value ?? []}
-                emptyLabel="Sin presentaciones"
+                emptyLabel={t("products.table.columns.noPresentations")}
                 maxVisible={2}
                 getLabel={(p) => {
                     const label = `${p.model_type} ${p.model_size}`;
@@ -54,17 +55,17 @@ export const buildColumnsForProducts = ({
     },
     dateColumn<Product>({
         field: "created_at",
-        headerName: "Creado",
+        headerName: t("products.table.columns.createdAt"),
         width: 110,
     }),
     dateColumn<Product>({
         field: "updated_at",
-        headerName: "Actualizado",
+        headerName: t("products.table.columns.updatedAt"),
         width: 120,
     }),
     {
         field: "actions",
-        headerName: "Acciones",
+        headerName: t("products.table.columns.actions"),
         width: 160,
         sortable: false,
         filterable: false,

@@ -4,6 +4,7 @@ import type { Dispatch, SetStateAction, FormEvent } from "react";
 import type { GridColDef } from "@mui/x-data-grid";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { FormModeComplexEnum } from "@typings/shared/sharedEnums";
+import type { TFunction } from "i18next";
 
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -235,6 +236,7 @@ export interface UseProductsListDataResult {
 export interface BuildColumnsArgs {
     onDeleteRequest: (id: string, name: string) => void;
     navigate:        NavigateFunction;
+    t:               TFunction;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

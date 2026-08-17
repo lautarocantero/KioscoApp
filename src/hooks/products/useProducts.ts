@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { UseProductsReturn } from "@typings/product/productTypes";
 import type { AppDispatch } from "../../store/product/productSlice";
 import { deleteProduct } from "../../store/product/productThunks";
@@ -17,6 +18,7 @@ export const useProducts = (): UseProductsReturn => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const snackBarContext = useContext(SnackBarContext);
+    const { t } = useTranslation();
 
 
     const { products, loading, error, searchTerm, setSearchTerm } = useProductsListData();
@@ -35,12 +37,12 @@ export const useProducts = (): UseProductsReturn => {
             await dispatch(deleteProduct(deleteDialog.id));
             setDeleteDialog(CLOSED_DIALOG);
         } catch (err) {
-            const message = await parseError(err, "Error inesperado al eliminar el producto");
+            const message = await parseError(err, t("products.errors.deleteUnexpected"));
             snackBarContext?.showSnackBar(message, AlertColor.Error);
         }
     };
 
-    const columns = buildColumnsForProducts({ onDeleteRequest: handleDeleteRequest, navigate });
+    const columns = buildColumnsForProducts({ onDeleteRequest: handleDeleteRequest, navigate, t });
 
     return {
         productsWithPresentations: products,

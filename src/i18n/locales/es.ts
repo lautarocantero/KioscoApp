@@ -114,6 +114,136 @@ const es = {
       noContact: "Sin contacto",
     },
   },
+  products: {
+    header: {
+      title: "Productos",
+      subtitle: "Gestioná el catálogo de productos de tu negocio.",
+    },
+    restockReport: {
+      viewButton: "Ver Reposiciones",
+    },
+    table: {
+      searchPlaceholder: "Azúcar 600gr...",
+      emptyMessage: "No hay productos registrados",
+      newItem: "Nuevo producto",
+      columns: {
+        name: "Nombre",
+        brand: "Marca",
+        description: "Descripción",
+        presentations: "Presentaciones",
+        noPresentations: "Sin presentaciones",
+        createdAt: "Creado",
+        updatedAt: "Actualizado",
+        actions: "Acciones",
+      },
+    },
+    deleteDialog: {
+      title: "Confirmar eliminación",
+      descriptionPrefix: "¿Estás seguro de que querés eliminar el producto",
+      descriptionSuffix: "? Esta acción no se puede deshacer. También se eliminarán sus presentaciones y stock asociado.",
+      warningText: "Esta acción eliminará el producto de forma permanente.",
+      confirmLabel: "Eliminar",
+    },
+    empty: {
+      imageAlt: "No se encontró el producto",
+      title: "No se encontró el producto",
+      descriptionLine1: "El producto que buscás no existe o fue eliminado",
+      descriptionLine2: "Volvé al listado para ver tus productos",
+      button: "Ir a productos",
+    },
+    form: {
+      sectionLabel: "Datos del producto",
+      submit: {
+        create: "Crear",
+        update: "Actualizar",
+      },
+      header: {
+        create: "Crear producto",
+        edit: "Editar producto",
+        detail: "Detalle del producto",
+      },
+      accordion: {
+        title: "¿Cómo funciona?",
+        content: "Creá el producto una sola vez (nombre, marca, descripción) y luego agregás sus presentaciones (2L, retornable, lata...) con el stock y precio de cada una.",
+        bannerAlt: "Producto y presentaciones",
+      },
+      fields: {
+        name: {
+          label: "Nombre del producto",
+          tooltip: "Nombre con el que se identifica este producto en el catálogo",
+        },
+        brand: {
+          label: "Marca",
+          tooltip: "Marca o fabricante del producto",
+        },
+        description: {
+          label: "Descripción",
+          tooltip: "Descripción general del producto, común a todas sus presentaciones",
+        },
+        image_url: {
+          label: "URL de imagen",
+          tooltip: "Ruta relativa o URL externa hacia la imagen del producto",
+          helperTextWhenEmpty: "Opcional — ruta relativa o URL externa",
+        },
+      },
+    },
+    validation: {
+      name: {
+        min: "El nombre debe tener al menos 3 caracteres",
+        max: "El nombre no puede exceder 100 caracteres",
+        matches: "El nombre contiene caracteres no permitidos",
+        notOnlyNumbers: "El nombre debe contener al menos una letra",
+        required: "El nombre del producto es requerido",
+      },
+      brand: {
+        min: "La marca debe tener al menos 2 caracteres",
+        max: "La marca no puede exceder 50 caracteres",
+        matches: "La marca contiene caracteres no permitidos",
+        notOnlyNumbers: "La marca debe contener al menos una letra",
+        required: "La marca es requerida",
+      },
+      description: {
+        min: "La descripción debe tener al menos 10 caracteres",
+        max: "La descripción no puede exceder 500 caracteres",
+        required: "La descripción es requerida",
+      },
+      image_url: {
+        invalid: "Debe ser una ruta relativa (ej: /images/foto.png) o una URL válida (https://...)",
+      },
+    },
+    created: {
+      title: "¡Producto creado correctamente!",
+      subtitle: "El siguiente paso es agregar las presentaciones del producto para ponerlo a la venta.",
+      actions: {
+        createPresentation: "Crear Presentación",
+        viewDetail: "Ver detalle de Producto",
+        createAnother: "Crear otro Producto",
+        viewProducts: "Ver Productos",
+      },
+      timeline: {
+        previousStep: "Crear producto",
+        nextStep: "Crear presentación",
+      },
+    },
+    edited: {
+      title: "Producto actualizado correctamente",
+      subtitle: "Los cambios fueron guardados. Podés seguir editando o volver a la lista.",
+      actions: {
+        viewDetail: "Ver detalle de Producto",
+        viewProducts: "Ver Productos",
+      },
+    },
+    errors: {
+      createFailed: "Error al crear el producto",
+      createUnexpected: "Error inesperado al crear el producto",
+      updateFailed: "Error al actualizar el producto",
+      updateUnexpected: "Error inesperado al actualizar el producto",
+      deleteUnexpected: "Error inesperado al eliminar el producto",
+      presentationsLoadFailed: "No se pudieron cargar las presentaciones",
+    },
+    stockUpToDate: "Stock al día",
+    stockLowCount: "{{count}} con stock bajo",
+  },
   presentationCategory: {
     food: "Comida",
     grocery: "Almacén",

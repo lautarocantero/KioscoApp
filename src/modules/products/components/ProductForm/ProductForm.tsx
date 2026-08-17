@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type { ProductFormProps } from "@typings/product/productComponentTypes";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
@@ -12,8 +13,8 @@ import ProductEdited from "../../pages/ProductEdit/components/ProductEdited";
 import {
     getProductEditInitialValues,
     getProductFormInitialValues,
-    productEditFormSchema,
-    productFormSchema,
+    getProductEditFormSchema,
+    getProductFormSchema,
 } from "../../schema/ProductFormSchema";
 import ProductFormFirstStep from "./ProductFormFirstStep";
 import ProductSkeleton from "./ProductSkeleton";
@@ -23,9 +24,10 @@ const STEP_COMPONENTS = [ProductFormFirstStep];
 
 // ── Modo CREAR ────────────────────────────────────────────────────────────────
 const ProductCreateForm = (): React.ReactNode => {
+    const { t } = useTranslation();
     const {
-        createdProduct, 
-        handleSubmit, 
+        createdProduct,
+        handleSubmit,
         currentStep,
         totalSteps,
         handleNextStep,
@@ -55,7 +57,7 @@ const ProductCreateForm = (): React.ReactNode => {
     return (
         <Formik
             initialValues={getProductFormInitialValues()}
-            validationSchema={productFormSchema}
+            validationSchema={getProductFormSchema(t)}
             onSubmit={handleSubmit}
             validateOnBlur={false}
             validateOnChange={false}
@@ -89,6 +91,7 @@ const ProductCreateForm = (): React.ReactNode => {
 
 // ── Modo EDITAR ───────────────────────────────────────────────────────────────
 const ProductEditForm = (): React.ReactNode => {
+    const { t } = useTranslation();
     const {
         updatedProduct,
         editingProduct,
@@ -113,7 +116,7 @@ const ProductEditForm = (): React.ReactNode => {
     return (
         <Formik
             initialValues={getProductEditInitialValues(editingProduct)}
-            validationSchema={productEditFormSchema}
+            validationSchema={getProductEditFormSchema(t)}
             onSubmit={handleEdit}
             validateOnBlur={false}
             validateOnChange={false}

@@ -1,28 +1,31 @@
+import type { TFunction } from "i18next";
 import type { ProductFormValues, ProductEditFormValues } from "@typings/product/productTypes";
 import type { FieldRegistry } from "@typings/shared/types/formCard.types";
 
-export const PRODUCT_FIELD_REGISTRY: FieldRegistry<ProductFormValues & ProductEditFormValues> = {
+export const getProductFieldRegistry = (
+    t: TFunction
+): FieldRegistry<ProductFormValues & ProductEditFormValues> => ({
     name: {
-        label: "Nombre del producto",
-        tooltip: "Nombre con el que se identifica este producto en el catálogo",
+        label: t("products.form.fields.name.label"),
+        tooltip: t("products.form.fields.name.tooltip"),
         required: true,
     },
     brand: {
-        label: "Marca",
-        tooltip: "Marca o fabricante del producto",
+        label: t("products.form.fields.brand.label"),
+        tooltip: t("products.form.fields.brand.tooltip"),
         required: true,
     },
     description: {
-        label: "Descripción",
-        tooltip: "Descripción general del producto, común a todas sus presentaciones",
+        label: t("products.form.fields.description.label"),
+        tooltip: t("products.form.fields.description.tooltip"),
         required: true,
         multiline: true,
         rows: 4,
     },
     image_url: {
-        label: "URL de imagen",
+        label: t("products.form.fields.image_url.label"),
         placeholder: "/images/productExample/mi-producto.png",
-        tooltip: "Ruta relativa o URL externa hacia la imagen del producto",
-        helperTextWhenEmpty: "Opcional — ruta relativa o URL externa",
+        tooltip: t("products.form.fields.image_url.tooltip"),
+        helperTextWhenEmpty: t("products.form.fields.image_url.helperTextWhenEmpty"),
     },
-};
+});

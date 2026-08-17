@@ -1,12 +1,18 @@
 import { type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
+import { Button } from "@mui/material";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import type { Product } from "@typings/product/productTypes";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
+import { getTableActionButtonSx } from "../../../shared/components/DataTable/getTableActionButtonSx";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useProducts } from "../../../../hooks/products/useProducts";
+import { useShopRestockReport } from "../../../../hooks/shop/useShopRestockReport";
 
 const ProductsListPage = (): ReactNode => {
+    const { t } = useTranslation();
     const {
         productsWithPresentations,
         loading,
@@ -19,13 +25,14 @@ const ProductsListPage = (): ReactNode => {
         setSearchTerm,
         columns,
     } = useProducts();
+    const restockReport = useShopRestockReport();
 
     return (
         <AppLayout fullWidth>
             <TableIconHeader
                 icon={<Inventory2OutlinedIcon />}
-                title="Productos"
-                subtitle="Gestioná el catálogo de productos de tu negocio."
+                title={t("products.header.title")}
+                subtitle={t("products.header.subtitle")}
             />
 
             <DataTable<Product>
@@ -34,29 +41,39 @@ const ProductsListPage = (): ReactNode => {
                 loading={loading}
                 error={error}
                 onClearError={clearError}
-                emptyMessage="No hay productos registrados"
+                emptyMessage={t("products.table.emptyMessage")}
                 height={"35em"}
                 search={{
                     value: searchTerm,
                     onChange: setSearchTerm,
-                    placeholder: "Azúcar 600gr...",
+                    placeholder: t("products.table.searchPlaceholder"),
                 }}
                 newItem={{
-                    label: "Nuevo producto",
+                    label: t("products.table.newItem"),
                     href: "/product-create",
                 }}
+                extraActions={
+                    <Button
+                        startIcon={<FileDownloadOutlinedIcon sx={{ fontSize: "1.1rem" }} />}
+                        onClick={restockReport.handleDownload}
+                        disabled={restockReport.isDownloadDisabled}
+                        sx={(theme) => getTableActionButtonSx(theme, "primary")}
+                    >
+                        {t("products.restockReport.viewButton")}
+                    </Button>
+                }
                 deleteDialog={{
                     open: deleteDialog.open,
-                    title: "Confirmar eliminación",
+                    title: t("products.deleteDialog.title"),
                     description: (
                         <>
-                            ¿Estás seguro de que querés eliminar el producto{" "}
-                            <strong>{deleteDialog.name}</strong>? Esta acción no se puede deshacer.
-                            También se eliminarán sus presentaciones y stock asociado.
+                            {t("products.deleteDialog.descriptionPrefix")}{" "}
+                            <strong>{deleteDialog.name}</strong>
+                            {t("products.deleteDialog.descriptionSuffix")}
                         </>
                     ),
-                    warningText: "Esta acción eliminará el producto de forma permanente.",
-                    confirmLabel: "Eliminar",
+                    warningText: t("products.deleteDialog.warningText"),
+                    confirmLabel: t("products.deleteDialog.confirmLabel"),
                     onConfirm: () => void handleDeleteConfirm(),
                     onCancel: handleDeleteCancel,
                 }}

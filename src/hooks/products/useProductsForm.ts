@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import type { FormikErrors } from "formik";
 import type {
     CreatedProductInterface,
@@ -25,6 +26,7 @@ import { stepsConfig, editStepsConfig } from "../../config/constants";
 export function useProductCreate(): UseProductsFormReturn {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const [createdProduct, setCreatedProduct] = useState<CreatedProductInterface | null>(null);
     const [isSubmitting, setIsSubmitting]   = useState(false);
@@ -86,12 +88,12 @@ export function useProductCreate(): UseProductsFormReturn {
             const created = await dispatch(createProduct(body));
 
             if (!created) {
-                throw new Error("Error al crear el producto");
+                throw new Error(t("products.errors.createFailed"));
             }
 
             setCreatedProduct({ _id: created._id, name: created.name });
         } catch (error) {
-            const message = await parseError(error, "Error inesperado al crear el producto");
+            const message = await parseError(error, t("products.errors.createUnexpected"));
             setSubmitError(message);
         } finally {
             setIsSubmitting(false);
@@ -151,6 +153,7 @@ export function useProductEdit(): UseProductsEditFormReturn {
     const navigate = useNavigate();
     const { product_id: productId } = useParams<{ product_id: string }>();
     const dispatch = useDispatch<AppDispatch>();
+    const { t } = useTranslation();
 
     const {
         productData: editingProduct,
@@ -218,12 +221,12 @@ export function useProductEdit(): UseProductsEditFormReturn {
             const updated = await dispatch(editProduct(body));
 
             if (!updated) {
-                throw new Error("Error al actualizar el producto");
+                throw new Error(t("products.errors.updateFailed"));
             }
 
             setUpdatedProduct({ _id: updated._id, name: updated.name });
         } catch (error) {
-            const message = await parseError(error, "Error inesperado al actualizar el producto");
+            const message = await parseError(error, t("products.errors.updateUnexpected"));
             setSubmitError(message);
         } finally {
             setIsSubmitting(false);

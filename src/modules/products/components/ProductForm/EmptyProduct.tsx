@@ -1,22 +1,24 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import EmptyStateCard from "../../../shared/components/EmptyStateCard/EmptyStateCard";
 
 const EmptyProduct = (): React.ReactNode => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <EmptyStateCard
             imageSrc="/images/stocko_images/empty_box.png"
-            imageAlt="No se encontró el producto"
-            title="No se encontró el producto"
+            imageAlt={t("products.empty.imageAlt")}
+            title={t("products.empty.title")}
             description={
                 <>
-                    El producto que buscás no existe o fue eliminado <br />
-                    Volvé al listado para ver tus productos
+                    {t("products.empty.descriptionLine1")} <br />
+                    {t("products.empty.descriptionLine2")}
                 </>
             }
             button={{
-                buttonText: "Ir a productos",
+                buttonText: t("products.empty.button"),
                 onButtonClick: () => navigate("/products"),
             }}
         />

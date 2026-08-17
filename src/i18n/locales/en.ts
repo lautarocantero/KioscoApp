@@ -114,6 +114,136 @@ const en = {
       noContact: "No contact",
     },
   },
+  products: {
+    header: {
+      title: "Products",
+      subtitle: "Manage your business's product catalog.",
+    },
+    restockReport: {
+      viewButton: "View Restocks",
+    },
+    table: {
+      searchPlaceholder: "Sugar 600gr...",
+      emptyMessage: "No products registered",
+      newItem: "New product",
+      columns: {
+        name: "Name",
+        brand: "Brand",
+        description: "Description",
+        presentations: "Presentations",
+        noPresentations: "No presentations",
+        createdAt: "Created",
+        updatedAt: "Updated",
+        actions: "Actions",
+      },
+    },
+    deleteDialog: {
+      title: "Confirm deletion",
+      descriptionPrefix: "Are you sure you want to delete the product",
+      descriptionSuffix: "? This action can't be undone. Its presentations and associated stock will also be deleted.",
+      warningText: "This action will permanently delete the product.",
+      confirmLabel: "Delete",
+    },
+    empty: {
+      imageAlt: "Product not found",
+      title: "Product not found",
+      descriptionLine1: "The product you're looking for doesn't exist or was deleted",
+      descriptionLine2: "Go back to the list to see your products",
+      button: "Go to products",
+    },
+    form: {
+      sectionLabel: "Product details",
+      submit: {
+        create: "Create",
+        update: "Update",
+      },
+      header: {
+        create: "Create product",
+        edit: "Edit product",
+        detail: "Product detail",
+      },
+      accordion: {
+        title: "How does it work?",
+        content: "Create the product once (name, brand, description) and then add its presentations (2L, returnable, can...) with the stock and price of each one.",
+        bannerAlt: "Product and presentations",
+      },
+      fields: {
+        name: {
+          label: "Product name",
+          tooltip: "Name used to identify this product in the catalog",
+        },
+        brand: {
+          label: "Brand",
+          tooltip: "Brand or manufacturer of the product",
+        },
+        description: {
+          label: "Description",
+          tooltip: "General description of the product, common to all its presentations",
+        },
+        image_url: {
+          label: "Image URL",
+          tooltip: "Relative path or external URL to the product's image",
+          helperTextWhenEmpty: "Optional — relative path or external URL",
+        },
+      },
+    },
+    validation: {
+      name: {
+        min: "Name must be at least 3 characters long",
+        max: "Name can't exceed 100 characters",
+        matches: "Name contains characters that aren't allowed",
+        notOnlyNumbers: "Name must contain at least one letter",
+        required: "Product name is required",
+      },
+      brand: {
+        min: "Brand must be at least 2 characters long",
+        max: "Brand can't exceed 50 characters",
+        matches: "Brand contains characters that aren't allowed",
+        notOnlyNumbers: "Brand must contain at least one letter",
+        required: "Brand is required",
+      },
+      description: {
+        min: "Description must be at least 10 characters long",
+        max: "Description can't exceed 500 characters",
+        required: "Description is required",
+      },
+      image_url: {
+        invalid: "Must be a relative path (e.g. /images/photo.png) or a valid URL (https://...)",
+      },
+    },
+    created: {
+      title: "Product created successfully!",
+      subtitle: "The next step is to add the product's presentations to put it up for sale.",
+      actions: {
+        createPresentation: "Create Presentation",
+        viewDetail: "View Product detail",
+        createAnother: "Create another Product",
+        viewProducts: "View Products",
+      },
+      timeline: {
+        previousStep: "Create product",
+        nextStep: "Create presentation",
+      },
+    },
+    edited: {
+      title: "Product updated successfully",
+      subtitle: "The changes were saved. You can keep editing or go back to the list.",
+      actions: {
+        viewDetail: "View Product detail",
+        viewProducts: "View Products",
+      },
+    },
+    errors: {
+      createFailed: "Error creating the product",
+      createUnexpected: "Unexpected error creating the product",
+      updateFailed: "Error updating the product",
+      updateUnexpected: "Unexpected error updating the product",
+      deleteUnexpected: "Unexpected error deleting the product",
+      presentationsLoadFailed: "Couldn't load the presentations",
+    },
+    stockUpToDate: "Stock up to date",
+    stockLowCount: "{{count}} low stock",
+  },
   presentationCategory: {
     food: "Food",
     grocery: "Grocery",
