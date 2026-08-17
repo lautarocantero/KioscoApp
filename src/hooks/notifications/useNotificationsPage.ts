@@ -1,7 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import type { UseNotificationsPageReturn } from "@typings/notifications/notificationTypes";
+import type { NotificationEntity, UseNotificationsPageReturn } from "@typings/notifications/notificationTypes";
 import { NotificationFilterEnum, NotificationStatusEnum } from "@typings/notifications/notificationEnums";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import { CLOSED_DIALOG } from "../../config/constants";
@@ -10,16 +11,18 @@ import {
     deleteAllNotificationsThunk,
     deleteNotificationThunk,
     markAllNotificationsAsReadThunk,
-    markNotificationAsReadThunk,
+    setNotificationReadStatusThunk,
 } from "../../store/notification/notificationThunks";
 import { useNotificationsData } from "./useNotificationsData";
 import { groupNotificationsByFilter } from "../../modules/notifications/helpers/groupNotificationsByFilter";
 import { getNotificationFilterCounts } from "../../modules/notifications/helpers/getNotificationFilterCounts";
+import { getNotificationDetailRoute } from "../../modules/notifications/helpers/getNotificationDetailRoute";
 import { buildColumnsForNotifications } from "../../modules/notifications/pages/NotificationsPage/components/notificationColumns";
 
 export const useNotificationsPage = (): UseNotificationsPageReturn => {
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     const { items, loading, error } = useNotificationsData();
 
@@ -30,9 +33,17 @@ export const useNotificationsPage = (): UseNotificationsPageReturn => {
     const counts = useMemo(() => getNotificationFilterCounts(items), [items]);
     const rows = useMemo(() => groupNotificationsByFilter(items, filter), [items, filter]);
 
-    const handleToggleRead = useCallback((_id: string): void => {
-        void dispatch(markNotificationAsReadThunk({ _id, status: NotificationStatusEnum.Readed }));
+    const handleToggleRead = useCallback((_id: string, currentStatus: NotificationStatusEnum): void => {
+        const nextStatus = currentStatus === NotificationStatusEnum.NotReadYet
+            ? NotificationStatusEnum.Readed
+            : NotificationStatusEnum.NotReadYet;
+
+        void dispatch(setNotificationReadStatusThunk({ _id, status: nextStatus }));
     }, [dispatch]);
+
+    const handleGoToDetail = useCallback((notification: NotificationEntity): void => {
+        navigate(getNotificationDetailRoute(notification));
+    }, [navigate]);
 
     const handleDeleteRequest = useCallback((id: string, name: string): void => {
         setDeleteDialog({ open: true, id, name });
@@ -59,8 +70,13 @@ export const useNotificationsPage = (): UseNotificationsPageReturn => {
     }, [dispatch]);
 
     const columns = useMemo(
-        () => buildColumnsForNotifications({ onDeleteRequest: handleDeleteRequest, onToggleRead: handleToggleRead, t }),
-        [handleDeleteRequest, handleToggleRead, t],
+        () => buildColumnsForNotifications({
+            onDeleteRequest: handleDeleteRequest,
+            onToggleRead: handleToggleRead,
+            onGoToDetail: handleGoToDetail,
+            t,
+        }),
+        [handleDeleteRequest, handleToggleRead, handleGoToDetail, t],
     );
 
     return {

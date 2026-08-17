@@ -187,7 +187,8 @@ const en = {
     },
     actions: {
       markAsRead: "Mark as read",
-      markAsUnread: "Already read",
+      markAsUnread: "Mark as unread",
+      viewDetail: "View detail",
       delete: "Delete notification",
     },
     deleteDialog: {

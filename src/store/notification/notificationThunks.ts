@@ -1,12 +1,13 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { NotificationEntity } from "@typings/notifications/notificationTypes";
-import type { NotificationStatusEnum } from "@typings/notifications/notificationEnums";
+import { NotificationStatusEnum } from "@typings/notifications/notificationEnums";
 import {
     deleteAllNotificationsRequest,
     deleteNotificationRequest,
     getNotificationsRequest,
     markAllAsReadRequest,
     markAsReadRequest,
+    markAsUnreadRequest,
 } from "../../modules/notifications/api/notificationApi";
 import { handleError } from "../shared/handlerStoreError";
 import {
@@ -49,12 +50,18 @@ export const fetchNotificationsThunk = () => {
 //──────────────────────────────────────────── Patch ───────────────────────────────────────────//
 
 // Optimista: el estado cambia al toque; si el back falla, se resincroniza
-// en vez de llevar un rollback manual.
-export const markNotificationAsReadThunk = ({ _id, status }: { _id: string; status: NotificationStatusEnum }) => {
+// en vez de llevar un rollback manual. Bidireccional: `status` es el estado
+// AL QUE se quiere pasar la notificación (readed → llama a mark-as-read,
+// not-read-yet → llama a mark-as-unread).
+export const setNotificationReadStatusThunk = ({ _id, status }: { _id: string; status: NotificationStatusEnum }) => {
     return async (dispatch: Dispatch): Promise<void> => {
         dispatch(setNotificationStatusLocal({ _id, status }));
         try {
-            await markAsReadRequest(_id);
+            if (status === NotificationStatusEnum.Readed) {
+                await markAsReadRequest(_id);
+            } else {
+                await markAsUnreadRequest(_id);
+            }
         } catch (error: unknown) {
             await resyncNotifications(dispatch);
             handleError(error);

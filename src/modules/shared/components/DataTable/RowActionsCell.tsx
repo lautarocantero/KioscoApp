@@ -4,6 +4,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CookieIcon from '@mui/icons-material/Cookie';
 import type { RowActionsCellProps } from "@typings/ui/dataTable.types";
 
@@ -16,6 +17,8 @@ const RowActionsCell = ({
   onToggleRead,
   isRead,
   toggleReadLabel = "Marcar como leída",
+  onGoToDetail,
+  goToDetailLabel = "Ver detalle",
 }: RowActionsCellProps): React.ReactNode => (
   <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }} role="group" aria-label="Acciones de la fila">
 
@@ -23,6 +26,14 @@ const RowActionsCell = ({
       <Tooltip title={toggleReadLabel}>
         <IconButton size="small" color="secondary" onClick={onToggleRead} aria-label={toggleReadLabel}>
           {isRead ? <VisibilityOffOutlinedIcon fontSize="small" /> : <VisibilityOutlinedIcon fontSize="small" />}
+        </IconButton>
+      </Tooltip>
+    )}
+
+    {onGoToDetail && (
+      <Tooltip title={goToDetailLabel}>
+        <IconButton size="small" color="secondary" onClick={onGoToDetail} aria-label={goToDetailLabel}>
+          <ArrowForwardIcon fontSize="small" />
         </IconButton>
       </Tooltip>
     )}

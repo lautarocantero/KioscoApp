@@ -28,17 +28,17 @@ Frontend: campana en el header (ver [docs/components/NotificationsBell.md](../co
 
 ```
 POST /sell/create-sell
-  → SellModel.create(...)                     (venta guardada)
-  → PresentationModel.decreaseStock(...)       (stock descontado, devuelve las presentaciones actualizadas)
-  → NotificationModel.createSaleNotification(...)                (siempre, 1 por venta)
-  → NotificationModel.createLowStockNotification(...) × N        (una por cada presentación que quedó bajo min_stock)
-     (todo esto en un try/catch propio — si falla, la venta ya guardada no se ve afectada)
+  → SellModel.create(...)                     (venta guardada, _id disponible)
+  → PresentationModel.decreaseStock(...)       (stock descontado, devuelve _id/product_id/name/stock/min_stock por presentación)
+  → NotificationModel.createSaleNotification({ sellId, ... })         (siempre, 1 por venta, en su propio try/catch)
+  → NotificationModel.createLowStockNotification({ productId, ... }) × N   (una por cada presentación bajo min_stock,
+     CADA UNA en su propio try/catch — si una falla, no tumba a las demás ni a la de venta ya creada)
 
 GET /notification/get-notifications  (authMiddleware)
   → NotificationModel.getAll(req.user.id)
     → cada doc: status = readBy.includes(userId) ? "readed" : "not-read-yet"  (readBy nunca se expone)
 
-PATCH /notification/mark-as-read | mark-all-as-read   (authMiddleware, $addToSet de por vida — no hay "volver a no leída")
+PATCH /notification/mark-as-read | mark-as-unread | mark-all-as-read   (authMiddleware, $addToSet / $pull — bidireccional)
 DELETE /notification/delete-notification | delete-all-notifications   (delete duro, igual que el resto de las tablas)
 
 Frontend: useNotificationsData → fetch on mount + poll 45s, en la campana (siempre montada) y en /notifications
@@ -51,9 +51,9 @@ Repo: `KioscoAppBackEnd`, rama `feature/notifications-api`. Sigue el patrón exa
 ### `models/notificationModel.ts`
 
 - `getAll(userId)` — trae todas ordenadas por `createdAt` desc, resuelve `status` por usuario, nunca devuelve `readBy`.
-- `markAsRead(_id, userId)` / `markAllAsRead(userId)` — `$addToSet` (idempotente, de un solo sentido).
+- `markAsRead(_id, userId)` (`$addToSet`) / `markAsUnread(_id, userId)` (`$pull`) / `markAllAsRead(userId)` — ambos de a uno son idempotentes y reversibles entre sí.
 - `deleteOne(_id)` / `deleteAll()` — delete duro.
-- `createSaleNotification(...)` / `createLowStockNotification(...)` — únicos puntos de creación, llamados desde `sell.controller.ts`.
+- `createSaleNotification(...)` / `createLowStockNotification(...)` — únicos puntos de creación, llamados desde `sell.controller.ts`. `productName` valida con longitud mínima 1 (no el default de 3 que usa el resto del repo para nombres de usuario/sku) — un nombre de producto real puede ser legítimamente corto ("Pan"), y antes de este ajuste un nombre corto hacía fallar `Validation.stringValidation` silenciosamente (ver "Cómo probarlo" más abajo).
 
 ### `routes/notification.routes.ts`
 
@@ -63,7 +63,9 @@ Todas las rutas van con `authMiddleware` (necesita saber quién pregunta para re
 
 ### `controllers/sell.controller.ts` — `createSell`
 
-`PresentationModel.decreaseStock` pasó de devolver `void` a devolver las presentaciones actualizadas (`{ _id, name, stock, min_stock }[]`, vía `{ new: true }` en el `findOneAndUpdate`). Con eso, `createSell` arma la notificación de venta y filtra `stock < min_stock` para las de stock bajo. Todo envuelto en su propio `try/catch` que solo loguea — una venta ya guardada nunca debe fallar por un error de notificaciones.
+`PresentationModel.decreaseStock` pasó de devolver `void` a devolver las presentaciones actualizadas (`{ _id, product_id, name, stock, min_stock }[]`, vía `{ new: true }` en el `findOneAndUpdate`). Con eso, `createSell` arma la notificación de venta (con el `sellId` recién creado) y filtra `stock < min_stock` para las de stock bajo (con `productId` — lo necesita el frontend para armar `/products/:product_id/presentation/:presentation_id`).
+
+**Aislamiento por notificación**: la notificación de venta y cada notificación de stock bajo se crean en su propio `try/catch` independiente, no uno solo envolviendo todo el bloque. Esto corrigió un bug real: con un único `try/catch` compartido, si `createLowStockNotification` fallaba para una presentación (por ejemplo, por un nombre de producto legado más corto que el mínimo que exigía `Validation.stringValidation`), la excepción abortaba el resto del bloque — la venta ya se había creado antes de entrar ahí, así que la notificación de venta aparecía igual, pero **ninguna** de las notificaciones de stock bajo de esa venta se creaba, sin dejar rastro salvo el log. Ahora un fallo puntual en una presentación no afecta ni a la notificación de venta ni a las demás de stock bajo.
 
 ## Frontend
 
@@ -73,6 +75,7 @@ Repo: `KioscoApp`, rama `feature/integrate-notifications`. Ver [docs/components/
 - `useNotificationsData` centraliza fetch + polling; tanto la campana como la página lo usan, cada uno con su propio ciclo de vida.
 - Los mensajes cortos ("Fideo Matarazzo 500g necesita reposición (5 unidades)", "Lucas Cantero ha realizado una venta por $ 2.530,00") se arman con `getNotificationMessage` + `i18next`, compartido entre la campana y la tabla.
 - `useCart.ts` dispara un `fetchNotificationsThunk()` inmediato justo después de una venta exitosa (fire-and-forget), para que quien vendió vea su propia notificación sin esperar el polling de 45s.
+- Cada notificación abre a un detalle propio (`getNotificationDetailRoute`): la venta (`/sell/:sell_id`) o la presentación (`/products/:product_id/presentation/:presentation_id`), vía una flecha dedicada — separada de la acción de marcar leída/no leída.
 
 ## Decisiones de diseño
 
@@ -84,9 +87,9 @@ El stock se descuenta en el backend (`PresentationModel.decreaseStock`) — el f
 
 Con el volumen esperado (notificaciones de un kiosco, no miles por día) un array embebido es más simple que una tabla de join, y el único acceso que se necesita (¿este usuario ya la leyó?) es un `includes` — no hace falta indexar por usuario. Si el volumen creciera mucho, separar en una colección `notification_reads` sería el primer paso.
 
-### ¿Por qué "marcar como leída" es de un solo sentido?
+### ¿Por qué "marcar como leída" es bidireccional?
 
-No hay ningún caso de uso pedido para "volver a marcar como no leída" — el ojo abierto/cerrado en la UI es un indicador de estado, no un switch. Simplifica tanto el contrato (`$addToSet` es idempotente, no hace falta un `$pull` separado) como la UI (el ícono no necesita manejar un estado intermedio).
+Pedido explícito: el ojo (o la tarjeta entera) tiene que poder volver a "no leída" si se lo vuelve a tocar. El back expone `mark-as-read` ($addToSet) y `mark-as-unread` ($pull) como operaciones simétricas e idempotentes — no un único `read: boolean` en el body, para mantener el mismo estilo REST-y de acción explícita que el resto del módulo (`mark-all-as-read`, etc.).
 
 ### ¿Por qué "borrar" es un delete duro y no un soft-delete por usuario?
 
@@ -97,10 +100,12 @@ No hay precedente de soft-delete en ningún otro listado del repo (proveedores, 
 1. Levantar `KioscoAppBackEnd` (`npm run dev`, puerto 3000) y `KioscoApp` (`npm run dev`).
 2. Loguearse, abrir la campana (arriba a la derecha) — arranca vacía o con lo que ya haya.
 3. Hacer una venta desde `/new-sell`. La notificación de venta aparece en "Importante" casi al instante (fetch fire-and-forget); si algún producto vendido quedó bajo su mínimo, aparece también la de stock bajo en "Más notificaciones".
-4. Tocar el ojo de una notificación → pasa a atenuada, ícono a ojo cerrado; recargar la página y confirmar que persiste (viene del backend).
-5. "Ver todas las notificaciones" → `/notifications`: probar los 3 tabs (contadores correctos), marcar todas como leídas, borrar una, borrar todas.
-6. Loguearse con un segundo usuario (u otra pestaña) y confirmar que el estado leído/no-leído es independiente por usuario para la misma notificación.
-7. Cambiar idioma (es/en) y tema (claro/oscuro) desde Ajustes y confirmar que toda la sección traduce y se ve bien en ambos modos.
+4. Tocar cualquier parte de una tarjeta (o el ojo) → pasa a atenuada, ícono a ojo cerrado; tocar de nuevo → vuelve a "no leída". Recargar la página y confirmar que el último estado persiste (viene del backend).
+5. Tocar la flecha de una notificación → navega al detalle de la venta o de la presentación, sin togglear el estado de lectura.
+6. "Ver todas las notificaciones" → `/notifications`: probar los 3 tabs (contadores correctos), marcar todas como leídas, borrar una, borrar todas.
+7. Loguearse con un segundo usuario (u otra pestaña) y confirmar que el estado leído/no-leído es independiente por usuario para la misma notificación.
+8. Cambiar idioma (es/en) y tema (claro/oscuro) desde Ajustes y confirmar que toda la sección traduce y se ve bien en ambos modos.
+9. Vender un producto con un nombre corto (< 3 caracteres) — antes del fix de aislamiento por notificación, esto hacía desaparecer silenciosamente la notificación de stock bajo; ahora debe aparecer igual.
 
 ### Backend
 
@@ -123,9 +128,9 @@ El proyecto backend no tiene framework de test configurado (`npm test` → `"Err
 
 **Frontend** (`KioscoApp`)
 - `typings/notifications/*`, `modules/notifications/api/notificationApi.ts`, `store/notification/*` — nuevos
-- `modules/notifications/helpers/*`, `hooks/notifications/*` — nuevos
+- `modules/notifications/helpers/*` (incluye `getNotificationDetailRoute.ts`), `hooks/notifications/*` — nuevos
 - `modules/shared/components/NotificationsBell/*`, `modules/notifications/pages/NotificationsPage/*` — nuevos
-- `modules/shared/components/DataTable/RowActionsCell.tsx` — acción de ojo opcional
+- `modules/shared/components/DataTable/RowActionsCell.tsx` — acciones de ojo (bidireccional) y flecha de detalle opcionales
 - `modules/shared/layout/AppShell.tsx` — monta `NotificationsBell` en el `Box` reservado
 - `hooks/cart/useCart.ts` — refetch fire-and-forget tras una venta
 - `router/AppRouter.tsx`, `modules/notifications/routes/NotificationRoutes.tsx` — ruta `/notifications`

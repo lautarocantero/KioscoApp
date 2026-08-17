@@ -11,7 +11,7 @@ describe("getNotificationMessage", () => {
             type: NotificationTypeEnum.LowStock,
             status: NotificationStatusEnum.NotReadYet,
             createdAt: new Date().toISOString(),
-            payload: { presentationId: "p1", productName: "Fideo Matarazzo 500g", units: 5, minStock: 20 },
+            payload: { presentationId: "p1", productId: "prod-1", productName: "Fideo Matarazzo 500g", units: 5, minStock: 20 },
         };
 
         const { title, subtitle } = getNotificationMessage(notification, i18n.t);
@@ -26,7 +26,7 @@ describe("getNotificationMessage", () => {
             type: NotificationTypeEnum.Sale,
             status: NotificationStatusEnum.NotReadYet,
             createdAt: new Date().toISOString(),
-            payload: { sellerId: "s1", sellerName: "Lucas Cantero", amount: 2530, currency: "ARS" },
+            payload: { sellId: "sell-1", sellerId: "s1", sellerName: "Lucas Cantero", amount: 2530, currency: "ARS" },
         };
 
         const { title, subtitle } = getNotificationMessage(notification, i18n.t);

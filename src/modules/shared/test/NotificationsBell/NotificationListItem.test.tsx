@@ -10,40 +10,72 @@ const buildNotification = (overrides: Partial<NotificationEntity> = {}): Notific
     type: NotificationTypeEnum.Sale,
     status: NotificationStatusEnum.NotReadYet,
     createdAt: new Date().toISOString(),
-    payload: { sellerId: "s1", sellerName: "Lucas Cantero", amount: 2530, currency: "ARS" },
+    payload: { sellId: "sell-1", sellerId: "s1", sellerName: "Lucas Cantero", amount: 2530, currency: "ARS" },
     ...overrides,
 });
 
 describe("NotificationListItem", () => {
     it("muestra el mensaje corto de la notificación", () => {
-        renderWithTheme(<NotificationListItem notification={buildNotification()} onToggleRead={vi.fn()} />);
+        renderWithTheme(
+            <NotificationListItem notification={buildNotification()} onToggleRead={vi.fn()} onGoToDetail={vi.fn()} />
+        );
 
         expect(screen.getByText(/Lucas Cantero ha realizado una venta por/)).toBeInTheDocument();
     });
 
-    it("muestra el ojo abierto cuando no está leída y llama a onToggleRead al hacer click", () => {
+    it("muestra el ojo abierto cuando no está leída y llama a onToggleRead con el estado actual al presionarlo", () => {
         const onToggleRead = vi.fn();
         renderWithTheme(
             <NotificationListItem
                 notification={buildNotification({ status: NotificationStatusEnum.NotReadYet })}
                 onToggleRead={onToggleRead}
+                onGoToDetail={vi.fn()}
             />
         );
 
-        const button = screen.getByLabelText("Marcar como leída");
-        fireEvent.click(button);
+        fireEvent.click(screen.getByLabelText("Marcar como leída"));
 
-        expect(onToggleRead).toHaveBeenCalledWith("notification-1");
+        expect(onToggleRead).toHaveBeenCalledWith("notification-1", NotificationStatusEnum.NotReadYet);
     });
 
-    it("muestra el ojo cerrado cuando ya está leída", () => {
+    it("muestra el ojo cerrado y la etiqueta 'Marcar como no leída' cuando ya está leída", () => {
         renderWithTheme(
             <NotificationListItem
                 notification={buildNotification({ status: NotificationStatusEnum.Readed })}
                 onToggleRead={vi.fn()}
+                onGoToDetail={vi.fn()}
             />
         );
 
-        expect(screen.getByLabelText("Ya leída")).toBeInTheDocument();
+        expect(screen.getByLabelText("Marcar como no leída")).toBeInTheDocument();
+    });
+
+    it("clickear en cualquier parte de la tarjeta llama a onToggleRead (toggle bidireccional)", () => {
+        const onToggleRead = vi.fn();
+        renderWithTheme(
+            <NotificationListItem
+                notification={buildNotification({ status: NotificationStatusEnum.Readed })}
+                onToggleRead={onToggleRead}
+                onGoToDetail={vi.fn()}
+            />
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: /Lucas Cantero/ }));
+
+        expect(onToggleRead).toHaveBeenCalledWith("notification-1", NotificationStatusEnum.Readed);
+    });
+
+    it("la flecha de detalle navega sin togglear el estado de lectura", () => {
+        const onToggleRead = vi.fn();
+        const onGoToDetail = vi.fn();
+        const notification = buildNotification();
+        renderWithTheme(
+            <NotificationListItem notification={notification} onToggleRead={onToggleRead} onGoToDetail={onGoToDetail} />
+        );
+
+        fireEvent.click(screen.getByLabelText("Ver detalle"));
+
+        expect(onGoToDetail).toHaveBeenCalledWith(notification);
+        expect(onToggleRead).not.toHaveBeenCalled();
     });
 });

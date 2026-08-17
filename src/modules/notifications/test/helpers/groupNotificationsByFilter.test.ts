@@ -8,15 +8,15 @@ const buildNotification = (overrides: Partial<NotificationEntity>): Notification
     type: NotificationTypeEnum.Sale,
     status: NotificationStatusEnum.NotReadYet,
     createdAt: new Date().toISOString(),
-    payload: { sellerId: "s1", sellerName: "Lucas", amount: 100, currency: "ARS" },
+    payload: { sellId: "sell-1", sellerId: "s1", sellerName: "Lucas", amount: 100, currency: "ARS" },
     ...overrides,
 });
 
 describe("groupNotificationsByFilter", () => {
     const items: NotificationEntity[] = [
         buildNotification({ _id: "1", type: NotificationTypeEnum.Sale }),
-        buildNotification({ _id: "2", type: NotificationTypeEnum.LowStock, payload: { presentationId: "p1", productName: "Fideo", units: 1, minStock: 5 } }),
-        buildNotification({ _id: "3", type: NotificationTypeEnum.LowStock, payload: { presentationId: "p2", productName: "Aceite", units: 2, minStock: 10 } }),
+        buildNotification({ _id: "2", type: NotificationTypeEnum.LowStock, payload: { presentationId: "p1", productId: "prod-1", productName: "Fideo", units: 1, minStock: 5 } }),
+        buildNotification({ _id: "3", type: NotificationTypeEnum.LowStock, payload: { presentationId: "p2", productId: "prod-2", productName: "Aceite", units: 2, minStock: 10 } }),
     ];
 
     it("devuelve todas las notificaciones para el filtro 'all'", () => {

@@ -1,11 +1,12 @@
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import type { UseNotificationsBellReturn } from "@typings/notifications/notificationTypes";
+import type { NotificationEntity, UseNotificationsBellReturn } from "@typings/notifications/notificationTypes";
 import { NotificationStatusEnum, NotificationTypeEnum } from "@typings/notifications/notificationEnums";
 import type { AppDispatch } from "../../store/notification/notificationSlice";
-import { markAllNotificationsAsReadThunk, markNotificationAsReadThunk } from "../../store/notification/notificationThunks";
+import { markAllNotificationsAsReadThunk, setNotificationReadStatusThunk } from "../../store/notification/notificationThunks";
 import { useNotificationsData } from "./useNotificationsData";
+import { getNotificationDetailRoute } from "../../modules/notifications/helpers/getNotificationDetailRoute";
 
 export const useNotificationsBell = (): UseNotificationsBellReturn => {
     const dispatch = useDispatch<AppDispatch>();
@@ -39,15 +40,22 @@ export const useNotificationsBell = (): UseNotificationsBellReturn => {
         [items],
     );
 
-    // Acción de un solo sentido: marca como leída (el back sólo expone
-    // mark-as-read, no hay "volver a no leída").
-    const handleToggleRead = useCallback((_id: string): void => {
-        void dispatch(markNotificationAsReadThunk({ _id, status: NotificationStatusEnum.Readed }));
+    const handleToggleRead = useCallback((_id: string, currentStatus: NotificationStatusEnum): void => {
+        const nextStatus = currentStatus === NotificationStatusEnum.NotReadYet
+            ? NotificationStatusEnum.Readed
+            : NotificationStatusEnum.NotReadYet;
+
+        void dispatch(setNotificationReadStatusThunk({ _id, status: nextStatus }));
     }, [dispatch]);
 
     const handleMarkAllAsRead = useCallback((): void => {
         void dispatch(markAllNotificationsAsReadThunk(NotificationStatusEnum.Readed));
     }, [dispatch]);
+
+    const handleGoToDetail = useCallback((notification: NotificationEntity): void => {
+        handleClose();
+        navigate(getNotificationDetailRoute(notification));
+    }, [handleClose, navigate]);
 
     const handleViewAll = useCallback((): void => {
         handleClose();
@@ -64,6 +72,7 @@ export const useNotificationsBell = (): UseNotificationsBellReturn => {
         handleOpen,
         handleClose,
         handleToggleRead,
+        handleGoToDetail,
         handleMarkAllAsRead,
         handleViewAll,
     };

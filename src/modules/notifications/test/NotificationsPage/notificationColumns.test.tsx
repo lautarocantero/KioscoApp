@@ -12,16 +12,17 @@ const buildNotification = (overrides: Partial<NotificationEntity> = {}): Notific
     type: NotificationTypeEnum.LowStock,
     status: NotificationStatusEnum.NotReadYet,
     createdAt: new Date().toISOString(),
-    payload: { presentationId: "p1", productName: "Fideo Matarazzo 500g", units: 5, minStock: 20 },
+    payload: { presentationId: "p1", productId: "prod-1", productName: "Fideo Matarazzo 500g", units: 5, minStock: 20 },
     ...overrides,
 });
 
 const getColumn = (field: string) => {
     const onDeleteRequest = vi.fn();
     const onToggleRead = vi.fn();
-    const column = buildColumnsForNotifications({ onDeleteRequest, onToggleRead, t: i18n.t }).find((col) => col.field === field);
+    const onGoToDetail = vi.fn();
+    const column = buildColumnsForNotifications({ onDeleteRequest, onToggleRead, onGoToDetail, t: i18n.t }).find((col) => col.field === field);
     if (!column) throw new Error(`Column "${field}" not found`);
-    return { column, onDeleteRequest, onToggleRead };
+    return { column, onDeleteRequest, onToggleRead, onGoToDetail };
 };
 
 const buildCellParams = (notification: NotificationEntity): GridRenderCellParams<NotificationEntity> =>
@@ -29,7 +30,7 @@ const buildCellParams = (notification: NotificationEntity): GridRenderCellParams
 
 describe("buildColumnsForNotifications", () => {
     it("define las columnas message, status y actions", () => {
-        const columns = buildColumnsForNotifications({ onDeleteRequest: vi.fn(), onToggleRead: vi.fn(), t: i18n.t });
+        const columns = buildColumnsForNotifications({ onDeleteRequest: vi.fn(), onToggleRead: vi.fn(), onGoToDetail: vi.fn(), t: i18n.t });
         expect(columns.map((c) => c.field)).toEqual(["message", "status", "actions"]);
     });
 
@@ -61,14 +62,33 @@ describe("buildColumnsForNotifications", () => {
     });
 
     describe("columna actions", () => {
-        it("llama a onToggleRead con el id al presionar el ojo", () => {
+        it("llama a onToggleRead con id y estado actual al presionar el ojo", () => {
             const { column, onToggleRead } = getColumn("actions");
-            const notification = buildNotification();
+            const notification = buildNotification({ status: NotificationStatusEnum.NotReadYet });
 
             renderWithTheme(column.renderCell!(buildCellParams(notification)));
             fireEvent.click(screen.getByLabelText("Marcar como leída"));
 
-            expect(onToggleRead).toHaveBeenCalledWith("notification-1");
+            expect(onToggleRead).toHaveBeenCalledWith("notification-1", NotificationStatusEnum.NotReadYet);
+        });
+
+        it("usa la etiqueta 'Marcar como no leída' cuando ya está leída", () => {
+            const { column } = getColumn("actions");
+            const notification = buildNotification({ status: NotificationStatusEnum.Readed });
+
+            renderWithTheme(column.renderCell!(buildCellParams(notification)));
+
+            expect(screen.getByLabelText("Marcar como no leída")).toBeInTheDocument();
+        });
+
+        it("llama a onGoToDetail con la notificación al presionar la flecha", () => {
+            const { column, onGoToDetail } = getColumn("actions");
+            const notification = buildNotification();
+
+            renderWithTheme(column.renderCell!(buildCellParams(notification)));
+            fireEvent.click(screen.getByLabelText("Ver detalle"));
+
+            expect(onGoToDetail).toHaveBeenCalledWith(notification);
         });
 
         it("llama a onDeleteRequest con id y título al presionar Eliminar", () => {

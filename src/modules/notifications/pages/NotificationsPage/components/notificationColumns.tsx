@@ -13,6 +13,7 @@ const getCategoryColor = (theme: Theme, type: NotificationTypeEnum): string =>
 export const buildColumnsForNotifications = ({
     onDeleteRequest,
     onToggleRead,
+    onGoToDetail,
     t,
 }: BuildNotificationColumnsArgs): GridColDef<NotificationEntity>[] => [
     {
@@ -113,20 +114,23 @@ export const buildColumnsForNotifications = ({
     {
         field: "actions",
         headerName: t("notifications.columns.actions"),
-        width: 120,
+        width: 160,
         sortable: false,
         filterable: false,
         align: "center",
         headerAlign: "center",
         renderCell: (params) => {
             const { title } = getNotificationMessage(params.row, t);
+            const isRead = params.row.status === NotificationStatusEnum.Readed;
 
             return (
                 <CellCenter>
                     <RowActionsCell
-                        isRead={params.row.status === NotificationStatusEnum.Readed}
-                        toggleReadLabel={t("notifications.actions.markAsRead")}
-                        onToggleRead={() => onToggleRead(params.row._id)}
+                        isRead={isRead}
+                        toggleReadLabel={isRead ? t("notifications.actions.markAsUnread") : t("notifications.actions.markAsRead")}
+                        onToggleRead={() => onToggleRead(params.row._id, params.row.status)}
+                        goToDetailLabel={t("notifications.actions.viewDetail")}
+                        onGoToDetail={() => onGoToDetail(params.row)}
                         onDelete={() => onDeleteRequest(params.row._id, title)}
                     />
                 </CellCenter>

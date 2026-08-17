@@ -92,4 +92,6 @@ export interface RowActionsCellProps {
   onToggleRead?: () => void;
   isRead?: boolean;
   toggleReadLabel?: string;
+  onGoToDetail?: () => void;
+  goToDetailLabel?: string;
 }

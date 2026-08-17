@@ -22,6 +22,11 @@ export const markAsReadRequest = async (_id: string): Promise<{ message: string 
   return response.data;
 };
 
+export const markAsUnreadRequest = async (_id: string): Promise<{ message: string }> => {
+  const response = await baseUrl.patch<{ message: string }>("/mark-as-unread", { _id });
+  return response.data;
+};
+
 export const markAllAsReadRequest = async (): Promise<{ message: string }> => {
   const response = await baseUrl.patch<{ message: string }>("/mark-all-as-read");
   return response.data;

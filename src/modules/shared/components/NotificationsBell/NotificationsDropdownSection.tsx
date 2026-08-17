@@ -7,6 +7,7 @@ const NotificationsDropdownSection = ({
     emptyMessage,
     notifications,
     onToggleRead,
+    onGoToDetail,
 }: NotificationsDropdownSectionProps): React.ReactNode => (
     <Box component="section" aria-label={title} sx={(theme: Theme) => ({ borderTop: `1px solid ${theme.custom.darkGray}` })}>
         <Typography
@@ -17,7 +18,7 @@ const NotificationsDropdownSection = ({
             {title}
         </Typography>
 
-        <Box sx={{ maxHeight: 200, overflowY: "auto", display: "flex", flexDirection: "column" }}>
+        <Box sx={{ maxHeight: 260, overflowY: "auto", display: "flex", flexDirection: "column" }}>
             {notifications.length === 0 && (
                 <Typography
                     variant="body2"
@@ -32,6 +33,7 @@ const NotificationsDropdownSection = ({
                     key={notification._id}
                     notification={notification}
                     onToggleRead={onToggleRead}
+                    onGoToDetail={onGoToDetail}
                 />
             ))}
         </Box>

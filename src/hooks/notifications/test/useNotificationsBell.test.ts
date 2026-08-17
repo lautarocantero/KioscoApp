@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useNotificationsBell from "../useNotificationsBell";
 import {
     markAllNotificationsAsReadThunk,
-    markNotificationAsReadThunk,
+    setNotificationReadStatusThunk,
 } from "../../../store/notification/notificationThunks";
 import { NotificationStatusEnum, NotificationTypeEnum } from "@typings/notifications/notificationEnums";
 import type { NotificationEntity } from "@typings/notifications/notificationTypes";
@@ -25,7 +25,7 @@ vi.mock("../../../store/notification/notificationThunks", async (importOriginal)
     return {
         ...actual,
         fetchNotificationsThunk: vi.fn(actual.fetchNotificationsThunk),
-        markNotificationAsReadThunk: vi.fn(actual.markNotificationAsReadThunk),
+        setNotificationReadStatusThunk: vi.fn(actual.setNotificationReadStatusThunk),
         markAllNotificationsAsReadThunk: vi.fn(actual.markAllNotificationsAsReadThunk),
     };
 });
@@ -33,7 +33,7 @@ vi.mock("../../../store/notification/notificationThunks", async (importOriginal)
 const mockedUseDispatch = vi.mocked(useDispatch);
 const mockedUseSelector = vi.mocked(useSelector);
 const mockedUseNavigate = vi.mocked(useNavigate);
-const mockedMarkNotificationAsReadThunk = vi.mocked(markNotificationAsReadThunk);
+const mockedSetNotificationReadStatusThunk = vi.mocked(setNotificationReadStatusThunk);
 const mockedMarkAllNotificationsAsReadThunk = vi.mocked(markAllNotificationsAsReadThunk);
 
 const buildItems = (): NotificationEntity[] => [
@@ -42,14 +42,14 @@ const buildItems = (): NotificationEntity[] => [
         type: NotificationTypeEnum.Sale,
         status: NotificationStatusEnum.NotReadYet,
         createdAt: new Date().toISOString(),
-        payload: { sellerId: "s1", sellerName: "Lucas", amount: 100, currency: "ARS" },
+        payload: { sellId: "sell-1", sellerId: "s1", sellerName: "Lucas", amount: 100, currency: "ARS" },
     },
     {
         _id: "low-stock-1",
         type: NotificationTypeEnum.LowStock,
         status: NotificationStatusEnum.Readed,
         createdAt: new Date().toISOString(),
-        payload: { presentationId: "p1", productName: "Fideo", units: 1, minStock: 5 },
+        payload: { presentationId: "p1", productId: "prod-1", productName: "Fideo", units: 1, minStock: 5 },
     },
 ];
 
@@ -96,12 +96,20 @@ describe("useNotificationsBell", () => {
         expect(result.current.open).toBe(false);
     });
 
-    it("handleToggleRead marca como leída (un solo sentido)", () => {
+    it("handleToggleRead pasa de no leída a leída", () => {
         const { result } = renderHook(() => useNotificationsBell());
 
-        act(() => result.current.handleToggleRead("sale-1"));
+        act(() => result.current.handleToggleRead("sale-1", NotificationStatusEnum.NotReadYet));
 
-        expect(mockedMarkNotificationAsReadThunk).toHaveBeenCalledWith({ _id: "sale-1", status: NotificationStatusEnum.Readed });
+        expect(mockedSetNotificationReadStatusThunk).toHaveBeenCalledWith({ _id: "sale-1", status: NotificationStatusEnum.Readed });
+    });
+
+    it("handleToggleRead pasa de leída a no leída (bidireccional)", () => {
+        const { result } = renderHook(() => useNotificationsBell());
+
+        act(() => result.current.handleToggleRead("low-stock-1", NotificationStatusEnum.Readed));
+
+        expect(mockedSetNotificationReadStatusThunk).toHaveBeenCalledWith({ _id: "low-stock-1", status: NotificationStatusEnum.NotReadYet });
     });
 
     it("handleMarkAllAsRead dispara markAllNotificationsAsReadThunk", () => {
@@ -110,6 +118,18 @@ describe("useNotificationsBell", () => {
         act(() => result.current.handleMarkAllAsRead());
 
         expect(mockedMarkAllNotificationsAsReadThunk).toHaveBeenCalledWith(NotificationStatusEnum.Readed);
+    });
+
+    it("handleGoToDetail navega al detalle de la venta y cierra el popover", () => {
+        const { result } = renderHook(() => useNotificationsBell());
+
+        act(() => {
+            result.current.handleOpen({ currentTarget: document.createElement("button") } as unknown as React.MouseEvent<HTMLElement>);
+        });
+        act(() => result.current.handleGoToDetail(result.current.importantNotifications[0]));
+
+        expect(navigate).toHaveBeenCalledWith("/sell/sell-1");
+        expect(result.current.open).toBe(false);
     });
 
     it("handleViewAll navega a /notifications y cierra el popover", () => {

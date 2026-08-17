@@ -28,7 +28,7 @@ Gestiona la lista de notificaciones (venta registrada, stock bajo) que ve el usu
 ### `notificationThunks.ts`
 
 - `fetchNotificationsThunk()` — `GET /notification/get-notifications`.
-- `markNotificationAsReadThunk({ _id, status })` / `markAllNotificationsAsReadThunk(status)` — optimistas: el reducer local se actualiza al toque, y si el request falla se resincroniza pidiendo la lista de nuevo (`resyncNotifications`) en vez de llevar un snapshot manual para hacer rollback.
+- `setNotificationReadStatusThunk({ _id, status })` — bidireccional: `status` es el estado AL QUE se quiere pasar la notificación (`readed` → `PATCH /mark-as-read`, `not-read-yet` → `PATCH /mark-as-unread`). `markAllNotificationsAsReadThunk(status)` — solo tiene sentido "marcar todas como leídas" (no hay "marcar todas como no leídas"). Ambos son optimistas: el reducer local se actualiza al toque, y si el request falla se resincroniza pidiendo la lista de nuevo (`resyncNotifications`) en vez de llevar un snapshot manual para hacer rollback.
 - `deleteNotificationThunk({ _id })` / `deleteAllNotificationsThunk()` — mismo patrón optimista + resync.
 - Todos usan `handleError` (`store/shared/handlerStoreError.ts`) como el resto de los thunks del repo.
 

@@ -20,6 +20,7 @@ const NotificationsBell = (): React.ReactNode => {
         handleOpen,
         handleClose,
         handleToggleRead,
+        handleGoToDetail,
         handleMarkAllAsRead,
         handleViewAll,
     } = useNotificationsBell();
@@ -50,9 +51,11 @@ const NotificationsBell = (): React.ReactNode => {
                         open={open}
                         importantNotifications={importantNotifications}
                         alertNotifications={alertNotifications}
+                        unreadCount={unreadCount}
                         loading={loading}
                         onClose={handleClose}
                         onToggleRead={handleToggleRead}
+                        onGoToDetail={handleGoToDetail}
                         onMarkAllAsRead={handleMarkAllAsRead}
                         onViewAll={handleViewAll}
                     />

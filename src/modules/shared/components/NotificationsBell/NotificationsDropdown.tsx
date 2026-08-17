@@ -10,9 +10,11 @@ const NotificationsDropdown = ({
     open,
     importantNotifications,
     alertNotifications,
+    unreadCount,
     loading,
     onClose,
     onToggleRead,
+    onGoToDetail,
     onMarkAllAsRead,
     onViewAll,
 }: NotificationsDropdownProps): React.ReactNode => {
@@ -29,7 +31,7 @@ const NotificationsDropdown = ({
             slotProps={{
                 paper: {
                     sx: (theme: Theme) => ({
-                        width: { xs: 320, sm: 380 },
+                        width: { xs: 360, sm: 460 },
                         mt: 1,
                         border: "0.5px solid",
                         borderColor: theme.custom.darkGray,
@@ -61,9 +63,16 @@ const NotificationsDropdown = ({
                         {t("notifications.title")}
                     </Typography>
 
-                    <Button size="small" onClick={onMarkAllAsRead} disabled={loading}>
-                        {t("notifications.markAllAsRead")}
-                    </Button>
+                    {unreadCount > 0 && (
+                        <Button
+                            size="small"
+                            onClick={onMarkAllAsRead}
+                            disabled={loading}
+                            sx={(theme: Theme) => ({ fontSize: theme.typography.caption.fontSize })}
+                        >
+                            {t("notifications.markAllAsRead")}
+                        </Button>
+                    )}
                 </Box>
 
                 <NotificationsDropdownSection
@@ -71,6 +80,7 @@ const NotificationsDropdown = ({
                     emptyMessage={t("notifications.emptyImportant")}
                     notifications={importantNotifications}
                     onToggleRead={onToggleRead}
+                    onGoToDetail={onGoToDetail}
                 />
 
                 <NotificationsDropdownSection
@@ -78,10 +88,16 @@ const NotificationsDropdown = ({
                     emptyMessage={t("notifications.emptyAlerts")}
                     notifications={alertNotifications}
                     onToggleRead={onToggleRead}
+                    onGoToDetail={onGoToDetail}
                 />
 
                 <Box sx={(theme: Theme) => ({ px: 2.5, py: 2, borderTop: `1px solid ${theme.custom.darkGray}` })}>
-                    <Button fullWidth endIcon={<ArrowForwardIcon fontSize="small" />} onClick={onViewAll}>
+                    <Button
+                        fullWidth
+                        endIcon={<ArrowForwardIcon fontSize="small" />}
+                        onClick={onViewAll}
+                        sx={(theme: Theme) => ({ fontSize: theme.typography.caption.fontSize })}
+                    >
                         {t("notifications.viewAll")}
                     </Button>
                 </Box>

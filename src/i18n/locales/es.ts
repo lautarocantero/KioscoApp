@@ -187,7 +187,8 @@ const es = {
     },
     actions: {
       markAsRead: "Marcar como leída",
-      markAsUnread: "Ya leída",
+      markAsUnread: "Marcar como no leída",
+      viewDetail: "Ver detalle",
       delete: "Eliminar notificación",
     },
     deleteDialog: {

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { act, renderHook } from "@testing-library/react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import useNotificationsPage from "../useNotificationsPage";
 import {
     deleteAllNotificationsThunk,
@@ -12,6 +13,11 @@ import type { NotificationEntity } from "@typings/notifications/notificationType
 vi.mock("react-redux", async () => {
     const actual = await vi.importActual("react-redux");
     return { ...actual, useDispatch: vi.fn(), useSelector: vi.fn() };
+});
+
+vi.mock("react-router-dom", async () => {
+    const actual = await vi.importActual("react-router-dom");
+    return { ...actual, useNavigate: vi.fn() };
 });
 
 vi.mock("../../../store/notification/notificationThunks", async (importOriginal) => {
@@ -26,6 +32,7 @@ vi.mock("../../../store/notification/notificationThunks", async (importOriginal)
 
 const mockedUseDispatch = vi.mocked(useDispatch);
 const mockedUseSelector = vi.mocked(useSelector);
+const mockedUseNavigate = vi.mocked(useNavigate);
 const mockedDeleteAllNotificationsThunk = vi.mocked(deleteAllNotificationsThunk);
 const mockedMarkAllNotificationsAsReadThunk = vi.mocked(markAllNotificationsAsReadThunk);
 
@@ -35,25 +42,27 @@ const buildItems = (): NotificationEntity[] => [
         type: NotificationTypeEnum.Sale,
         status: NotificationStatusEnum.NotReadYet,
         createdAt: new Date().toISOString(),
-        payload: { sellerId: "s1", sellerName: "Lucas", amount: 100, currency: "ARS" },
+        payload: { sellId: "sell-1", sellerId: "s1", sellerName: "Lucas", amount: 100, currency: "ARS" },
     },
     {
         _id: "low-stock-1",
         type: NotificationTypeEnum.LowStock,
         status: NotificationStatusEnum.NotReadYet,
         createdAt: new Date().toISOString(),
-        payload: { presentationId: "p1", productName: "Fideo", units: 1, minStock: 5 },
+        payload: { presentationId: "p1", productId: "prod-1", productName: "Fideo", units: 1, minStock: 5 },
     },
 ];
 
 describe("useNotificationsPage", () => {
     const dispatch = vi.fn().mockResolvedValue(undefined);
+    const navigate = vi.fn();
 
     beforeEach(() => {
         vi.useFakeTimers();
         vi.clearAllMocks();
         dispatch.mockResolvedValue(undefined);
         mockedUseDispatch.mockReturnValue(dispatch);
+        mockedUseNavigate.mockReturnValue(navigate);
         mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
             selectorFn({ notification: { items: buildItems(), loading: false, errorMessage: null } })
         );

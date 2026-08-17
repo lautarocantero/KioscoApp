@@ -9,12 +9,14 @@ import type { DeleteDialogState } from "@typings/ui/dialog.types";
 
 export interface LowStockNotificationPayload {
     presentationId: string;
+    productId:      string;
     productName:    string;
     units:          number;
     minStock:       number;
 }
 
 export interface SaleNotificationPayload {
+    sellId:     string;
     sellerId:   string;
     sellerName: string;
     amount:     number;
@@ -60,7 +62,8 @@ export interface UseNotificationsBellReturn {
     loading:                 boolean;
     handleOpen:              (event: React.MouseEvent<HTMLElement>) => void;
     handleClose:             () => void;
-    handleToggleRead:        (_id: string) => void;
+    handleToggleRead:        (_id: string, currentStatus: NotificationStatusEnum) => void;
+    handleGoToDetail:        (notification: NotificationEntity) => void;
     handleMarkAllAsRead:     () => void;
     handleViewAll:           () => void;
 }
@@ -95,6 +98,7 @@ export interface NotificationMessage {
 
 export interface BuildNotificationColumnsArgs {
     onDeleteRequest:   (id: string, name: string) => void;
-    onToggleRead:      (id: string) => void;
+    onToggleRead:      (id: string, currentStatus: NotificationStatusEnum) => void;
+    onGoToDetail:      (notification: NotificationEntity) => void;
     t:                 TFunction;
 }
