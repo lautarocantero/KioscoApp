@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { deleteSellerThunk, selectSellerThunk } from "../../store/seller/sellerThunks";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { Seller, UseSellersReturn } from "@typings/seller/sellerTypes";
 import { CLOSED_DIALOG } from "../../config/constants";
 import useSellersListData from "./useSellerListData";
 import { buildColumnsForSellers } from "../../modules/sellers/pages/SellersList/components/SellerColumns";
+import { filterSellersBySearch } from "../../modules/sellers/helpers/filterSellersBySearch";
 import type { AppDispatch } from "../../store/seller/sellerSlice";
 import { useIsAdmin } from "../auth/useIsAdmin";
 
@@ -17,7 +18,10 @@ export const useSellers = (): UseSellersReturn => {
 
     const { sellers, loading, error, clearError } = useSellersListData();
 
+    const [searchTerm, setSearchTerm] = useState("");
     const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
+
+    const filteredSellers = useMemo(() => filterSellersBySearch(sellers, searchTerm), [sellers, searchTerm]);
 
     const handleDeleteRequest = (id: string, name: string) =>
         setDeleteDialog({ open: true, id, name });
@@ -43,7 +47,7 @@ export const useSellers = (): UseSellersReturn => {
     });
 
     return {
-        sellers,
+        sellers: filteredSellers,
         loading,
         error,
         clearError,
@@ -51,6 +55,8 @@ export const useSellers = (): UseSellersReturn => {
         handleDeleteRequest,
         handleDeleteCancel,
         handleDeleteConfirm,
+        searchTerm,
+        setSearchTerm,
         columns,
     };
 };

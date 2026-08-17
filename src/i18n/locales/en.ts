@@ -144,6 +144,7 @@ const en = {
     unreadBadgeLabel: "{{count}} unread notifications",
     title: "Notifications",
     subtitle: "Stay on top of what's happening in your business.",
+    searchPlaceholder: "Search notification...",
     markAllAsRead: "Mark all as read",
     deleteAll: "Delete all",
     viewAll: "View all notifications",

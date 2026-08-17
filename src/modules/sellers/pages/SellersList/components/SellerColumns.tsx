@@ -1,10 +1,11 @@
 import { type GridColDef } from "@mui/x-data-grid";
 import type { Seller, BuildSellerColumnsArgs } from "@typings/seller/sellerTypes";
+import { SellerStatus } from "@typings/seller/sellerEnums";
 import { getRoleLabel } from "../../../../shared/helpers/getRoleLabel";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
-import { dateColumn } from "../../../../shared/components/DataTable/ColumnHelpers";
-import SellerStatusIndicator from "../../../components/SellersList/SellerStatusIndicator";
+import { chipColumn, dateColumn } from "../../../../shared/components/DataTable/ColumnHelpers";
+import { getSellerStatusLabel } from "../../../helpers/getSellerStatusLabel";
 
 export const buildColumnsForSellers = ({
     onDeleteRequest,
@@ -20,13 +21,12 @@ export const buildColumnsForSellers = ({
         minWidth: 120,
         valueFormatter: (value: string) => getRoleLabel(value),
     },
-    {
-        field: "user_status",
-        headerName: "Estado",
-        flex: 0.8,
-        minWidth: 130,
-        renderCell: (params) => <SellerStatusIndicator status={params.row.user_status} />,
-    },
+    chipColumn<Seller>(
+        { field: "user_status", headerName: "Estado", flex: 0.8, minWidth: 130 },
+        (value) => getSellerStatusLabel(value as SellerStatus),
+        (value) => (value === SellerStatus.Online ? "success" : "default"),
+        "filled",
+    ),
     dateColumn<Seller>({ field: "created_at", headerName: "Creado", width: 110 }),
     {
         field: "actions",

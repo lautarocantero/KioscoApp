@@ -1,5 +1,7 @@
 import { type ReactNode } from "react";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import DataTable from "../../../shared/components/DataTable/DataTable";
+import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useSellers } from "../../../../hooks/sellers/useSellers";
 import type { Seller } from "@typings/seller/sellerTypes";
@@ -13,13 +15,20 @@ const SellersListPage = (): ReactNode => {
         deleteDialog,
         handleDeleteCancel,
         handleDeleteConfirm,
+        searchTerm,
+        setSearchTerm,
         columns,
     } = useSellers();
 
     return (
         <AppLayout fullWidth>
+            <TableIconHeader
+                icon={<GroupOutlinedIcon />}
+                title="Vendedores"
+                subtitle="Gestioná el equipo de vendedores de tu negocio."
+            />
+
             <DataTable<Seller>
-                title={"Vendedores"}
                 rows={sellers}
                 columns={columns}
                 loading={loading}
@@ -27,6 +36,7 @@ const SellersListPage = (): ReactNode => {
                 onClearError={clearError}
                 emptyMessage="No hay vendedores registrados"
                 height={"35em"}
+                search={{ value: searchTerm, onChange: setSearchTerm, placeholder: "Nombre del vendedor..." }}
                 deleteDialog={{
                     open: deleteDialog.open,
                     title: "Confirmar eliminación",

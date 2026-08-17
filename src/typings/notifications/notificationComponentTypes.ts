@@ -1,5 +1,5 @@
 import type { NotificationEntity } from "./notificationTypes";
-import type { NotificationFilterEnum, NotificationStatusEnum } from "./notificationEnums";
+import type { NotificationStatusEnum } from "./notificationEnums";
 
 export interface NotificationsDropdownProps {
     anchorEl:                 HTMLElement | null;
@@ -27,12 +27,6 @@ export interface NotificationListItemProps {
     notification: NotificationEntity;
     onToggleRead: (_id: string, currentStatus: NotificationStatusEnum) => void;
     onGoToDetail: (notification: NotificationEntity) => void;
-}
-
-export interface NotificationsFilterTabsProps {
-    filter:  NotificationFilterEnum;
-    counts:  Record<NotificationFilterEnum, number>;
-    onChange: (filter: NotificationFilterEnum) => void;
 }
 
 export interface NotificationsPageActionsProps {

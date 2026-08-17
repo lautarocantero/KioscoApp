@@ -1,15 +1,16 @@
 import { type ReactNode } from "react";
-import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import type { NotificationEntity } from "@typings/notifications/notificationTypes";
 import { NotificationFilterEnum } from "@typings/notifications/notificationEnums";
 import DataTable from "../../../shared/components/DataTable/DataTable";
+import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
+import TableFilterTabs from "../../../shared/components/DataTable/TableFilterTabs";
 import AppLayout from "../../../shared/layout/AppLayout";
 import ConfirmDialog from "../../../shared/components/ConfirmDialog/ConfirmDialog";
 import { useNotificationsPage } from "../../../../hooks/notifications/useNotificationsPage";
-import NotificationsPageHeader from "./components/NotificationsPageHeader";
 import NotificationsPageActions from "./components/NotificationsPageActions";
-import NotificationsFilterTabs from "./components/NotificationsFilterTabs";
+import { NOTIFICATION_FILTER_LABEL_KEYS, NOTIFICATION_FILTER_OPTIONS } from "../../helpers/notificationFilterOptions";
 
 const NotificationsPage = (): ReactNode => {
     const { t } = useTranslation();
@@ -21,6 +22,8 @@ const NotificationsPage = (): ReactNode => {
         filter,
         setFilter,
         counts,
+        searchTerm,
+        setSearchTerm,
         rows,
         columns,
         deleteDialog,
@@ -35,7 +38,11 @@ const NotificationsPage = (): ReactNode => {
 
     return (
         <AppLayout fullWidth>
-            <NotificationsPageHeader />
+            <TableIconHeader
+                icon={<NotificationsNoneOutlinedIcon />}
+                title={t("notifications.title")}
+                subtitle={t("notifications.subtitle")}
+            />
 
             <DataTable<NotificationEntity>
                 rows={rows}
@@ -46,15 +53,29 @@ const NotificationsPage = (): ReactNode => {
                 emptyMessage={t("notifications.emptyMessage")}
                 height="35em"
                 getRowId={(row) => row._id}
+                search={{
+                    value: searchTerm,
+                    onChange: setSearchTerm,
+                    placeholder: t("notifications.searchPlaceholder"),
+                }}
+                filters={
+                    <TableFilterTabs
+                        ariaLabel={t("notifications.title")}
+                        value={filter}
+                        onChange={setFilter}
+                        options={NOTIFICATION_FILTER_OPTIONS.map((option) => ({
+                            value: option,
+                            label: t(NOTIFICATION_FILTER_LABEL_KEYS[option]),
+                            count: counts[option],
+                        }))}
+                    />
+                }
                 extraActions={
-                    <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", width: "100%", gap: 2 }}>
-                        <NotificationsFilterTabs filter={filter} counts={counts} onChange={setFilter} />
-                        <NotificationsPageActions
-                            onMarkAllAsRead={handleMarkAllAsRead}
-                            onDeleteAll={handleDeleteAllRequest}
-                            disabled={counts[NotificationFilterEnum.All] === 0}
-                        />
-                    </Box>
+                    <NotificationsPageActions
+                        onMarkAllAsRead={handleMarkAllAsRead}
+                        onDeleteAll={handleDeleteAllRequest}
+                        disabled={counts[NotificationFilterEnum.All] === 0}
+                    />
                 }
                 deleteDialog={{
                     open: deleteDialog.open,

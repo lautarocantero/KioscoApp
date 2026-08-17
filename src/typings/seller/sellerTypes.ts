@@ -104,6 +104,8 @@ export interface UseSellersReturn {
     handleDeleteRequest:  (id: string, name: string) => void;
     handleDeleteCancel:   () => void;
     handleDeleteConfirm:  () => Promise<void>;
+    searchTerm:           string;
+    setSearchTerm:        (searchTerm: string) => void;
     columns:              GridColDef<Seller>[];
 }
 

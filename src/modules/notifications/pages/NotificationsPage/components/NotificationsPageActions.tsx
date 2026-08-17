@@ -9,7 +9,7 @@ const NotificationsPageActions = ({ onMarkAllAsRead, onDeleteAll, disabled }: No
     const { t } = useTranslation();
 
     return (
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flexWrap: "wrap" }}>
             <Button
                 disableElevation
                 startIcon={<DoneAllIcon sx={{ fontSize: "1.1rem" }} />}

@@ -2,7 +2,7 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { NavigateFunction } from "react-router-dom";
 import type { DialogContextType } from "../../ui/uiModules";
-import type { PaymentMethod, SellStatusEnum } from "./sellsEnum";
+import type { PaymentMethod, SellFilterEnum, SellStatusEnum } from "./sellsEnum";
 import type { EspecificationsLeftProps } from "./SellComponentTypes";
 import type { ReactNode, MouseEvent, SetStateAction } from "react";
 import type { SelectChangeEvent } from "@mui/material";
@@ -201,6 +201,9 @@ export interface UseSellsReturn extends UseSellsListDataResult {
     handleDeleteRequest: (id: string, name: string) => void;
     handleDeleteCancel: () => void;
     handleDeleteConfirm: () => Promise<void>;
+    filter: SellFilterEnum;
+    setFilter: (filter: SellFilterEnum) => void;
+    counts: Record<SellFilterEnum, number>;
     columns: GridColDef<SellTicketType>[];
 }
 

@@ -75,6 +75,8 @@ export interface UseNotificationsPageReturn {
     filter:                  NotificationFilterEnum;
     setFilter:               (filter: NotificationFilterEnum) => void;
     counts:                  Record<NotificationFilterEnum, number>;
+    searchTerm:              string;
+    setSearchTerm:           (searchTerm: string) => void;
     rows:                    NotificationEntity[];
     columns:                 GridColDef<NotificationEntity>[];
     deleteDialog:             DeleteDialogState;

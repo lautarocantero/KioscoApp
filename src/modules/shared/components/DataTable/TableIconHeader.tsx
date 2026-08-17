@@ -1,12 +1,9 @@
 import { Box, Typography, type Theme } from "@mui/material";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import { useTranslation } from "react-i18next";
+import type { TableIconHeaderProps } from "@typings/ui/dataTable.types";
 
-const NotificationsPageHeader = (): React.ReactNode => {
-    const { t } = useTranslation();
-
+const TableIconHeader = ({ icon, title, subtitle }: TableIconHeaderProps): React.ReactNode => {
     return (
-        <Box component="header" sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        <Box component="header" sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%" }}>
             <Box
                 aria-hidden
                 sx={(theme: Theme) => ({
@@ -21,7 +18,7 @@ const NotificationsPageHeader = (): React.ReactNode => {
                     flexShrink: 0,
                 })}
             >
-                <NotificationsNoneOutlinedIcon />
+                {icon}
             </Box>
 
             <Box>
@@ -30,14 +27,16 @@ const NotificationsPageHeader = (): React.ReactNode => {
                     variant="h4"
                     sx={(theme: Theme) => ({ color: theme.custom.fontColor, fontWeight: 700 })}
                 >
-                    {t("notifications.title")}
+                    {title}
                 </Typography>
-                <Typography variant="body2" sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor })}>
-                    {t("notifications.subtitle")}
-                </Typography>
+                {subtitle && (
+                    <Typography variant="body2" sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor })}>
+                        {subtitle}
+                    </Typography>
+                )}
             </Box>
         </Box>
     );
 };
 
-export default NotificationsPageHeader;
+export default TableIconHeader;

@@ -17,6 +17,7 @@ import { useNotificationsData } from "./useNotificationsData";
 import { groupNotificationsByFilter } from "../../modules/notifications/helpers/groupNotificationsByFilter";
 import { getNotificationFilterCounts } from "../../modules/notifications/helpers/getNotificationFilterCounts";
 import { getNotificationDetailRoute } from "../../modules/notifications/helpers/getNotificationDetailRoute";
+import { filterNotificationsBySearch } from "../../modules/notifications/helpers/filterNotificationsBySearch";
 import { buildColumnsForNotifications } from "../../modules/notifications/pages/NotificationsPage/components/notificationColumns";
 
 export const useNotificationsPage = (): UseNotificationsPageReturn => {
@@ -27,11 +28,15 @@ export const useNotificationsPage = (): UseNotificationsPageReturn => {
     const { items, loading, error } = useNotificationsData();
 
     const [filter, setFilter] = useState<NotificationFilterEnum>(NotificationFilterEnum.All);
+    const [searchTerm, setSearchTerm] = useState("");
     const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
     const [deleteAllDialogOpen, setDeleteAllDialogOpen] = useState(false);
 
     const counts = useMemo(() => getNotificationFilterCounts(items), [items]);
-    const rows = useMemo(() => groupNotificationsByFilter(items, filter), [items, filter]);
+    const rows = useMemo(
+        () => filterNotificationsBySearch(groupNotificationsByFilter(items, filter), searchTerm, t),
+        [items, filter, searchTerm, t],
+    );
 
     const handleToggleRead = useCallback((_id: string, currentStatus: NotificationStatusEnum): void => {
         const nextStatus = currentStatus === NotificationStatusEnum.NotReadYet
@@ -86,6 +91,8 @@ export const useNotificationsPage = (): UseNotificationsPageReturn => {
         filter,
         setFilter,
         counts,
+        searchTerm,
+        setSearchTerm,
         rows,
         columns,
         deleteDialog,

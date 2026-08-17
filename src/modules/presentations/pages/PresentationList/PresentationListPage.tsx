@@ -1,8 +1,10 @@
 import React from "react";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { usePresentations } from "../../../../hooks/presentations/usePresentations";
 import AppLayout from "../../../../modules/shared/layout/AppLayout";
 import DataTable from "../../../shared/components/DataTable/DataTable";
+import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
 
 
 const PresentationListPage = (): React.ReactNode => {
@@ -20,12 +22,17 @@ const PresentationListPage = (): React.ReactNode => {
         setSearchTerm,
         columns,
     } = usePresentations();
-    
+
 
     return (
         <AppLayout fullWidth >
+            <TableIconHeader
+                icon={<CategoryOutlinedIcon />}
+                title="Presentaciones"
+                subtitle="Variantes y presentaciones de este producto."
+            />
+
             <DataTable<Presentation>
-                title={"Presentaciones"}
                 rows={presentations}
                 columns={columns}
                 loading={loading}

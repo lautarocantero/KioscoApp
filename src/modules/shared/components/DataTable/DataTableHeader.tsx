@@ -2,8 +2,8 @@ import { Box, Typography } from "@mui/material";
 import DataTableToolbar from "./DataTableToolbar";
 import type { DataTableHeaderProps } from "@typings/ui/dataTable.types";
 
-const DataTableHeader = ({ title, search, newItem, extraActions }: DataTableHeaderProps): React.ReactNode => {
-    if (!title && !search && !newItem && !extraActions) return null;
+const DataTableHeader = ({ title, search, filters, newItem, extraActions }: DataTableHeaderProps): React.ReactNode => {
+    if (!title && !search && !filters && !newItem && !extraActions) return null;
 
     return (
         <Box
@@ -28,7 +28,7 @@ const DataTableHeader = ({ title, search, newItem, extraActions }: DataTableHead
                 </Typography>
             )}
 
-            <DataTableToolbar search={search} newItem={newItem} extraActions={extraActions} />
+            <DataTableToolbar search={search} filters={filters} newItem={newItem} extraActions={extraActions} />
         </Box>
     );
 };
