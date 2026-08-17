@@ -9,6 +9,7 @@ import { createSellThunk } from "../../store/sell/sellsThunks";
 import { fetchNotificationsThunk } from "../../store/notification/notificationThunks";
 import { createPdfTicket } from "../../modules/shared/helpers/createPdfTicket";
 import { cleanCartThunk, removeFromCartThunk, addOneUnitThunk, setQuantityThunk } from "../../store/cart/cartThunks";
+import { parseApiError } from "../../utils/errors/parseApiError";
 import { AlertColor } from "@typings/ui/ui";
 import { buildColumnsForCartProducts } from "../../modules/cart/components/CartComponent/cartColumns";
 import type { UseCartReturn } from "@typings/cart/cartTypes";
@@ -125,24 +126,29 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
             currency: Currency?.Ars,
         }
 
-        const response: CreateSellResponse | undefined = await dispatch(createSellThunk({ data: ticket }));
+        try {
+            const response: CreateSellResponse | undefined = await dispatch(createSellThunk({ data: ticket }));
 
-        if (!response) {
-            showSnackBar(`Ocurrio un error al agregar el producto.`, AlertColor.Error);
-            throw new Error('Ocurrio un error registrando la compra, intentalo de nuevo');
+            if (!response) {
+                showSnackBar('No se pudo registrar la venta. Intentá nuevamente.', AlertColor.Error);
+                return;
+            }
+
+            const savedTicket: SellTicketType = { ...ticket, _id: response._id };
+
+            localStorage.setItem('last_ticket', JSON.stringify(savedTicket));
+            createPdfTicket(savedTicket);
+            // El back crea la notificación de venta (y la de stock bajo si corresponde)
+            // como efecto de create-sell; refrescamos acá para que el vendedor que
+            // vendió la vea en la campana al toque, sin esperar al polling.
+            void dispatch(fetchNotificationsThunk());
+            await dispatch(cleanCartThunk());
+            setSubtotalOverrides({});
+            navigate('/cart-order-confirmed');
+        } catch (error) {
+            const message = await parseApiError(error, 'No se pudo registrar la venta. Intentá nuevamente.');
+            showSnackBar(message, AlertColor.Error);
         }
-
-        const savedTicket: SellTicketType = { ...ticket, _id: response._id };
-
-        localStorage.setItem('last_ticket', JSON.stringify(savedTicket));
-        createPdfTicket(savedTicket);
-        // El back crea la notificación de venta (y la de stock bajo si corresponde)
-        // como efecto de create-sell; refrescamos acá para que el vendedor que
-        // vendió la vea en la campana al toque, sin esperar al polling.
-        void dispatch(fetchNotificationsThunk());
-        await dispatch(cleanCartThunk());
-        setSubtotalOverrides({});
-        navigate('/cart-order-confirmed');
     }, [cartWithSubtotals, productsTotalPrice, ivaPercentage, total, dispatch, navigate, showSnackBar]);
 
     const printTicket = useCallback((): void => {

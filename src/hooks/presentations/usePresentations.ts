@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../store/presentation/presentationSlice";
@@ -8,12 +8,16 @@ import { buildColumnsForPresentations } from "../../modules/presentations/pages/
 import { usePresentationsListData } from "./usePresentationsListData";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import { CLOSED_DIALOG } from "../../config/constants";
+import { useErrorParser } from "../shared/useErrorParser";
+import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
+import { AlertColor } from "@typings/ui/ui";
 
 
 export const usePresentations = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { product_id } = useParams<{ product_id: string }>();
+    const snackBarContext = useContext(SnackBarContext);
 
     // ── data fetching delegado, mismo patrón que useProductEdit → useProductData ──
     const { presentations, loading, error, searchTerm, setSearchTerm } =
@@ -21,14 +25,23 @@ export const usePresentations = () => {
 
     const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
 
+    const { parseError } = useErrorParser();
+
     const handleDeleteRequest = (id: string, name: string) =>
         setDeleteDialog({ open: true, id, name });
 
     const handleDeleteCancel = () => setDeleteDialog(CLOSED_DIALOG);
 
     const handleDeleteConfirm = async () => {
-        await dispatch(deletePresentation(deleteDialog.id));
-        setDeleteDialog(CLOSED_DIALOG);
+        try {
+            const deleted = await dispatch(deletePresentation(deleteDialog.id));
+            if (!deleted) throw new Error("No se pudo eliminar la presentación");
+
+            setDeleteDialog(CLOSED_DIALOG);
+        } catch (err) {
+            const message = await parseError(err, "Error inesperado al eliminar la presentación");
+            snackBarContext?.showSnackBar(message, AlertColor.Error);
+        }
     };
 
     const columns = buildColumnsForPresentations({

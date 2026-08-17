@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { deleteSellerThunk, selectSellerThunk } from "../../store/seller/sellerThunks";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { Seller, UseSellersReturn } from "@typings/seller/sellerTypes";
@@ -10,11 +10,15 @@ import { buildColumnsForSellers } from "../../modules/sellers/pages/SellersList/
 import { filterSellersBySearch } from "../../modules/sellers/helpers/filterSellersBySearch";
 import type { AppDispatch } from "../../store/seller/sellerSlice";
 import { useIsAdmin } from "../auth/useIsAdmin";
+import { useErrorParser } from "../shared/useErrorParser";
+import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
+import { AlertColor } from "@typings/ui/ui";
 
 export const useSellers = (): UseSellersReturn => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const isAdmin = useIsAdmin();
+    const snackBarContext = useContext(SnackBarContext);
 
     const { sellers, loading, error, clearError } = useSellersListData();
 
@@ -23,14 +27,23 @@ export const useSellers = (): UseSellersReturn => {
 
     const filteredSellers = useMemo(() => filterSellersBySearch(sellers, searchTerm), [sellers, searchTerm]);
 
+    const { parseError } = useErrorParser();
+
     const handleDeleteRequest = (id: string, name: string) =>
         setDeleteDialog({ open: true, id, name });
 
     const handleDeleteCancel = () => setDeleteDialog(CLOSED_DIALOG);
 
     const handleDeleteConfirm = async () => {
-        await dispatch(deleteSellerThunk(deleteDialog.id));
-        setDeleteDialog(CLOSED_DIALOG);
+        try {
+            const deleted = await dispatch(deleteSellerThunk(deleteDialog.id));
+            if (!deleted) throw new Error("No se pudo eliminar el vendedor");
+
+            setDeleteDialog(CLOSED_DIALOG);
+        } catch (err) {
+            const message = await parseError(err, "Error inesperado al eliminar el vendedor");
+            snackBarContext?.showSnackBar(message, AlertColor.Error);
+        }
     };
 
     const handleEditRequest = (seller: Seller) => {

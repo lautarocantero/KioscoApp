@@ -6,6 +6,7 @@ import { useSellData } from "./useSellData";
 import type { SellEditFormValues } from "@typings/sells/sellTypes";
 import { usePrintSellTicket } from "./usePrintSellTicket";
 import type { AppDispatch } from "../../store/sell/sellSlice";
+import { useErrorParser } from "../shared/useErrorParser";
 
 
 /*══════════════════════════════════════════════╗
@@ -24,6 +25,8 @@ export const useSellEdit = () => {
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [stepErrors] = useState<string[]>([]);
 
+    const { parseError } = useErrorParser();
+
     const currentStep = 0;
     const totalSteps = 1;
     const handleNextStep = async (): Promise<void> => {};
@@ -34,13 +37,12 @@ export const useSellEdit = () => {
         setSubmitError(null);
         try {
             const _id = await dispatch(editSellThunk({ data: values }));
-            if (!_id) {
-                setSubmitError("No se pudo editar la venta");
-                return;
-            }
+            if (!_id) throw new Error("No se pudo editar la venta");
+
             setUpdatedSellId(_id);
-        } catch {
-            setSubmitError("Ocurrió un error al editar la venta");
+        } catch (err) {
+            const message = await parseError(err, "Error inesperado al editar la venta");
+            setSubmitError(message);
         } finally {
             setIsSubmitting(false);
         }

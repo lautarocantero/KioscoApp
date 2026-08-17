@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -19,11 +19,16 @@ import { getNotificationFilterCounts } from "../../modules/notifications/helpers
 import { getNotificationDetailRoute } from "../../modules/notifications/helpers/getNotificationDetailRoute";
 import { filterNotificationsBySearch } from "../../modules/notifications/helpers/filterNotificationsBySearch";
 import { buildColumnsForNotifications } from "../../modules/notifications/pages/NotificationsPage/components/notificationColumns";
+import { useErrorParser } from "../shared/useErrorParser";
+import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
+import { AlertColor } from "@typings/ui/ui";
 
 export const useNotificationsPage = (): UseNotificationsPageReturn => {
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const snackBarContext = useContext(SnackBarContext);
+    const { parseError } = useErrorParser();
 
     const { items, loading, error } = useNotificationsData();
 
@@ -43,8 +48,11 @@ export const useNotificationsPage = (): UseNotificationsPageReturn => {
             ? NotificationStatusEnum.Readed
             : NotificationStatusEnum.NotReadYet;
 
-        void dispatch(setNotificationReadStatusThunk({ _id, status: nextStatus }));
-    }, [dispatch]);
+        dispatch(setNotificationReadStatusThunk({ _id, status: nextStatus })).catch(async (err: unknown) => {
+            const message = await parseError(err, "No se pudo actualizar el estado de la notificación");
+            snackBarContext?.showSnackBar(message, AlertColor.Error);
+        });
+    }, [dispatch, parseError, snackBarContext]);
 
     const handleGoToDetail = useCallback((notification: NotificationEntity): void => {
         navigate(getNotificationDetailRoute(notification));
@@ -57,22 +65,35 @@ export const useNotificationsPage = (): UseNotificationsPageReturn => {
     const handleDeleteCancel = useCallback((): void => setDeleteDialog(CLOSED_DIALOG), []);
 
     const handleDeleteConfirm = useCallback(async (): Promise<void> => {
-        await dispatch(deleteNotificationThunk({ _id: deleteDialog.id }));
-        setDeleteDialog(CLOSED_DIALOG);
-    }, [dispatch, deleteDialog.id]);
+        try {
+            await dispatch(deleteNotificationThunk({ _id: deleteDialog.id }));
+            setDeleteDialog(CLOSED_DIALOG);
+        } catch (err) {
+            const message = await parseError(err, "Error inesperado al eliminar la notificación");
+            snackBarContext?.showSnackBar(message, AlertColor.Error);
+        }
+    }, [dispatch, deleteDialog.id, parseError, snackBarContext]);
 
     const handleDeleteAllRequest = useCallback((): void => setDeleteAllDialogOpen(true), []);
 
     const handleDeleteAllCancel = useCallback((): void => setDeleteAllDialogOpen(false), []);
 
     const handleDeleteAllConfirm = useCallback(async (): Promise<void> => {
-        await dispatch(deleteAllNotificationsThunk());
-        setDeleteAllDialogOpen(false);
-    }, [dispatch]);
+        try {
+            await dispatch(deleteAllNotificationsThunk());
+            setDeleteAllDialogOpen(false);
+        } catch (err) {
+            const message = await parseError(err, "Error inesperado al eliminar las notificaciones");
+            snackBarContext?.showSnackBar(message, AlertColor.Error);
+        }
+    }, [dispatch, parseError, snackBarContext]);
 
     const handleMarkAllAsRead = useCallback((): void => {
-        void dispatch(markAllNotificationsAsReadThunk(NotificationStatusEnum.Readed));
-    }, [dispatch]);
+        dispatch(markAllNotificationsAsReadThunk(NotificationStatusEnum.Readed)).catch(async (err: unknown) => {
+            const message = await parseError(err, "No se pudieron marcar las notificaciones como leídas");
+            snackBarContext?.showSnackBar(message, AlertColor.Error);
+        });
+    }, [dispatch, parseError, snackBarContext]);
 
     const columns = useMemo(
         () => buildColumnsForNotifications({
