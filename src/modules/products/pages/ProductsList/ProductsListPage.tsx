@@ -1,6 +1,8 @@
 import { type ReactNode } from "react";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import type { Product } from "@typings/product/productTypes";
 import DataTable from "../../../shared/components/DataTable/DataTable";
+import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useProducts } from "../../../../hooks/products/useProducts";
 
@@ -20,8 +22,13 @@ const ProductsListPage = (): ReactNode => {
 
     return (
         <AppLayout fullWidth>
+            <TableIconHeader
+                icon={<Inventory2OutlinedIcon />}
+                title="Productos"
+                subtitle="Gestioná el catálogo de productos de tu negocio."
+            />
+
             <DataTable<Product>
-                title={"Productos"}
                 rows={productsWithPresentations}
                 columns={columns}
                 loading={loading}

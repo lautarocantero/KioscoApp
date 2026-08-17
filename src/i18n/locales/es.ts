@@ -144,6 +144,7 @@ const es = {
     unreadBadgeLabel: "{{count}} notificaciones sin leer",
     title: "Notificaciones",
     subtitle: "Mantenete al tanto de lo que sucede en tu negocio.",
+    searchPlaceholder: "Buscar notificación...",
     markAllAsRead: "Marcar todas como leídas",
     deleteAll: "Eliminar todas",
     viewAll: "Ver todas las notificaciones",

@@ -27,6 +27,7 @@ export interface DataTableDeleteDialogConfig {
 
 export interface DataTableToolbarProps {
     search?: DataTableSearchConfig;
+    filters?: ReactNode;
     newItem?: DataTableNewItemConfig;
     extraActions?: ReactNode;
 }
@@ -51,6 +52,7 @@ export interface DataTableProps<T extends object>
     height?: number | string;
     title?: string;
     search?: DataTableSearchConfig;
+    filters?: ReactNode;
     newItem?: DataTableNewItemConfig;
     extraActions?: ReactNode;
     deleteDialog?: DataTableDeleteDialogConfig;
@@ -61,6 +63,7 @@ export interface DataTableProps<T extends object>
 export interface DataTableHeaderProps {
     title?: string;
     search?: DataTableSearchConfig;
+    filters?: ReactNode;
     newItem?: DataTableNewItemConfig;
     extraActions?: ReactNode;
 }
@@ -85,6 +88,27 @@ export interface GenericDataGridProps<T extends object>
 export interface PageHeaderProps {
   title: string;
   action?: React.ReactNode;
+}
+
+export type ChipColumnColor = "success" | "error" | "default" | "warning" | "info" | "primary" | "secondary";
+
+export interface TableIconHeaderProps {
+  icon: ReactNode;
+  title: string;
+  subtitle?: string;
+}
+
+export interface TableFilterTabOption<T extends string> {
+  value: T;
+  label: string;
+  count: number;
+}
+
+export interface TableFilterTabsProps<T extends string> {
+  ariaLabel: string;
+  value: T;
+  options: TableFilterTabOption<T>[];
+  onChange: (value: T) => void;
 }
 
 export interface RowActionsCellProps {

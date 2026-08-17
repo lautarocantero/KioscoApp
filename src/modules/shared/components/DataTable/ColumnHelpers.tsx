@@ -1,6 +1,7 @@
 // modules/shared/components/DataTable/columnHelpers.tsx
 import { Chip, Tooltip, Typography } from "@mui/material";
 import type { GridColDef, GridRenderCellParams, GridValidRowModel } from "@mui/x-data-grid";
+import type { ChipColumnColor } from "@typings/ui/dataTable.types";
 import { CellCenter } from "./CellCenter";
 import { formatDate } from "../../../../utils/formatter/formatDate";
 import { truncate } from "../../helpers/truncate";
@@ -36,10 +37,7 @@ export const truncatedTextColumn = <T extends GridValidRowModel>(
 export const chipColumn = <T extends GridValidRowModel>(
     base: Omit<GridColDef<T>, "renderCell">,
     getLabel: (value: unknown, row: T) => string,
-    getColor?: (
-        value: unknown,
-        row: T
-    ) => "success" | "error" | "default" | "warning" | "info" | "primary" | "secondary",
+    getColor?: (value: unknown, row: T) => ChipColumnColor,
     variant: "filled" | "outlined" = "outlined"
 ): GridColDef<T> => ({
     align: "center",

@@ -1,6 +1,8 @@
 import { type ReactNode } from "react";
+import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import type { Provider } from "@typings/provider/providerTypes";
 import DataTable from "../../../shared/components/DataTable/DataTable";
+import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useProviders } from "../../../../hooks/providers/useProviders";
 
@@ -20,8 +22,13 @@ const ProvidersListPage = (): ReactNode => {
 
     return (
         <AppLayout fullWidth>
-            <DataTable<Provider>
+            <TableIconHeader
+                icon={<LocalShippingOutlinedIcon />}
                 title="Proveedores"
+                subtitle="Administrá tus proveedores y distribuidores."
+            />
+
+            <DataTable<Provider>
                 rows={providers}
                 columns={columns}
                 loading={loading}

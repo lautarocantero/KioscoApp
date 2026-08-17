@@ -1,10 +1,10 @@
 import { type GridColDef } from "@mui/x-data-grid";
-import { Chip } from "@mui/material";
 
 import type { BuildColumnsForSellsArgs, ProductTicketType, SellTicketType } from "@typings/sells/sellTypes";
+import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import GenericListCell from "../../../../shared/components/DataTable/GenericListCell";
-import { dateColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
+import { chipColumn, dateColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
 import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
 import { SELL_STATUS_CONFIG } from "./sellStatusConfig";
 
@@ -43,33 +43,12 @@ export const buildColumnsForSells = ({
     },
     { field: "seller_name", headerName: "Vendedor", flex: 1, minWidth: 140, maxWidth: 200 },
     { field: "payment_method", headerName: "Método de pago", flex: 0.8, minWidth: 130, maxWidth: 180 },
-    {
-        field: "status",
-        headerName: "Estado",
-        flex: 0.7,
-        minWidth: 130,
-        maxWidth: 170,
-        align: "center",
-        headerAlign: "center",
-        renderCell: (params) => {
-            const config = SELL_STATUS_CONFIG[params.row.status];
-            return (
-                <CellCenter>
-                    <Chip
-                        label={config?.label ?? params.row.status}
-                        icon={config?.icon}
-                        size="small"
-                        sx={{
-                            color: config?.accent,
-                            borderColor: config?.accent,
-                            "& .MuiChip-icon": { color: config?.accent },
-                        }}
-                        variant="outlined"
-                    />
-                </CellCenter>
-            );
-        },
-    },
+    chipColumn<SellTicketType>(
+        { field: "status", headerName: "Estado", flex: 0.7, minWidth: 130, maxWidth: 170 },
+        (value) => SELL_STATUS_CONFIG[value as SellStatusEnum]?.label ?? String(value),
+        (value) => SELL_STATUS_CONFIG[value as SellStatusEnum]?.color ?? "default",
+        "filled",
+    ),
     {
         field: "total_amount",
         headerName: "Total",

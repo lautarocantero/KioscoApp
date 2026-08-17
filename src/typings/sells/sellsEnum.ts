@@ -20,3 +20,9 @@ export enum SellStatusEnum {
     Completada = 'completada',
     Parcial = 'parcial',
 }
+
+export enum SellFilterEnum {
+    All = 'all',
+    Completada = 'completada',
+    Parcial = 'parcial',
+}
