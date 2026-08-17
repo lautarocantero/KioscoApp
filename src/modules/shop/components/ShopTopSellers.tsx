@@ -1,5 +1,6 @@
 import { Box, Skeleton, Typography, useTheme, type Theme } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import type { ShopTopSellersProps } from "@typings/shop/shopComponentTypes";
 import { formatCurrency } from "../../cart/helpers/formatCurrency";
 import SellerStatusIndicator from "../../sellers/components/SellersList/SellerStatusIndicator";
@@ -9,6 +10,7 @@ const ACCENT_KEYS = ["violet", "pink", "green", "blue", "orange", "gold"] as con
 
 const ShopTopSellers = ({ topSellers, isLoading, error }: ShopTopSellersProps): React.ReactNode => {
     const theme = useTheme();
+    const { t } = useTranslation();
 
     return (
         <Box
@@ -33,7 +35,7 @@ const ShopTopSellers = ({ topSellers, isLoading, error }: ShopTopSellersProps): 
                 }}
             >
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                    Vendedores destacados
+                    {t("shop.topSellers.title")}
                 </Typography>
                 <Typography
                     component={RouterLink}
@@ -41,7 +43,7 @@ const ShopTopSellers = ({ topSellers, isLoading, error }: ShopTopSellersProps): 
                     variant="body2"
                     sx={(t: Theme) => ({ color: t.palette.primary.main, textDecoration: "none", fontWeight: 600 })}
                 >
-                    Ver todos →
+                    {t("shop.topSellers.viewAll")}
                 </Typography>
             </Box>
 
@@ -61,7 +63,7 @@ const ShopTopSellers = ({ topSellers, isLoading, error }: ShopTopSellersProps): 
 
             {!isLoading && topSellers.length === 0 && (
                 <Typography variant="body2" sx={(t: Theme) => ({ color: t.custom.darkWhite })}>
-                    Todavía no hay ventas registradas este mes.
+                    {t("shop.topSellers.empty")}
                 </Typography>
             )}
 
@@ -86,7 +88,7 @@ const ShopTopSellers = ({ topSellers, isLoading, error }: ShopTopSellersProps): 
                                     {formatCurrency(seller.totalAmount)}
                                 </Typography>
                                 <Typography variant="caption" sx={(t: Theme) => ({ color: t.custom.darkWhite })}>
-                                    {seller.ordersCount} {seller.ordersCount === 1 ? "pedido" : "pedidos"}
+                                    {t("shop.topSellers.orders", { count: seller.ordersCount })}
                                 </Typography>
                             </Box>
                         </Box>

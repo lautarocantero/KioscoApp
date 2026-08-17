@@ -66,6 +66,54 @@ const es = {
     fortnight: "Última quincena",
     month: "Último mes",
   },
+  shop: {
+    header: {
+      title: "Tienda",
+      subtitle: "Este es el resumen general de tu negocio.",
+    },
+    statsRow: {
+      ariaLabel: "Resumen por sección",
+    },
+    inventory: {
+      title: "Inventario",
+      subtitle: "Resumen de stock",
+      viewCatalog: "Ver catálogo →",
+      tiles: {
+        total: "Total productos",
+        withStock: "Con stock",
+        lowStock: "Stock bajo",
+        withoutStock: "Sin stock",
+      },
+      loadReceipt: "Cargar boleta",
+      downloadRestockReport: "Descargar boleta reposición",
+    },
+    lowStockList: {
+      title: "Productos con stock bajo",
+      empty: "Ningún producto está por debajo de su stock mínimo. 🎉",
+      severity: {
+        critical: "Crítico",
+        low: "Bajo",
+      },
+      showingCount: "Mostrando los {{shown}} más críticos de {{total}} productos con stock bajo.",
+    },
+    salesChart: {
+      title: "Ventas",
+      rangeAriaLabel: "Rango de fechas de ventas",
+    },
+    topSellers: {
+      title: "Vendedores destacados",
+      viewAll: "Ver todos →",
+      empty: "Todavía no hay ventas registradas este mes.",
+      orders_one: "{{count}} pedido",
+      orders_other: "{{count}} pedidos",
+    },
+    topProviders: {
+      title: "Proveedores destacados",
+      viewAll: "Ver todos ({{count}}) →",
+      empty: "Todavía no cargaste proveedores.",
+      noContact: "Sin contacto",
+    },
+  },
   presentationCategory: {
     food: "Comida",
     grocery: "Almacén",

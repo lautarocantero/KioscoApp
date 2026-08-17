@@ -5,6 +5,7 @@ import { useShopSalesSummary } from "../../../../hooks/shop/useShopSalesSummary"
 import { useShopFeaturedProviders } from "../../../../hooks/shop/useShopFeaturedProviders";
 import { useShopInventorySummary } from "../../../../hooks/shop/useShopInventorySummary";
 import { useShopLowStockPresentations } from "../../../../hooks/shop/useShopLowStockPresentations";
+import { useShopRestockReport } from "../../../../hooks/shop/useShopRestockReport";
 import AppLayout from "../../../shared/layout/AppLayout";
 import ShopHeader from "../../components/ShopHeader";
 import ShopStatsRow from "../../components/ShopStatsRow";
@@ -26,6 +27,7 @@ const ShopPage = (): React.ReactNode => {
     const featuredProviders = useShopFeaturedProviders();
     const inventorySummary = useShopInventorySummary();
     const lowStockPresentations = useShopLowStockPresentations();
+    const restockReport = useShopRestockReport();
 
     return (
         <AppLayout fullWidth noCenter>
@@ -53,6 +55,10 @@ const ShopPage = (): React.ReactNode => {
                     lowStockItemsTotal={lowStockPresentations.total}
                     isLoadingLowStockItems={lowStockPresentations.isLoading}
                     lowStockItemsError={lowStockPresentations.error}
+                    restockReport={{
+                        isDownloadDisabled: restockReport.isDownloadDisabled,
+                        handleDownload: restockReport.handleDownload,
+                    }}
                 />
             </Box>
 
