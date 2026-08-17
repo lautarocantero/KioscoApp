@@ -39,7 +39,7 @@ const NotificationsBell = (): React.ReactNode => {
                     boxShadow: `0 1px 3px ${alpha(theme.custom.black, 0.06)}`,
                 })}
             >
-                <Badge color="secondary" badgeContent={unreadCount} max={9}>
+                <Badge color="primary" badgeContent={unreadCount} max={9}>
                     <NotificationsNoneOutlinedIcon sx={(theme: Theme) => ({ color: theme.custom.fontColor })} />
                 </Badge>
             </IconButton>

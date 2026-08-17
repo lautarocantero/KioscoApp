@@ -66,21 +66,6 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
                 "&:focus-visible": { outline: `2px solid ${theme.palette.primary.main}`, outlineOffset: 2 },
             })}
         >
-            {isUnread && (
-                <Box
-                    aria-hidden
-                    sx={(theme: Theme) => ({
-                        position: "absolute",
-                        top: 8,
-                        right: 8,
-                        width: 7,
-                        height: 7,
-                        borderRadius: "50%",
-                        bgcolor: theme.palette.primary.main,
-                    })}
-                />
-            )}
-
             <Box
                 aria-hidden
                 sx={(theme: Theme) => ({
