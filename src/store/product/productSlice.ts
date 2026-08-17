@@ -13,6 +13,9 @@ const initialState: ProductState = {
     stats:               null,
     isLoadingStats:      false,
     statsError:          null,
+    allProducts:          [],
+    isLoadingAllProducts: false,
+    allProductsError:     null,
 }
 
 export const productSlice = createSlice({
@@ -78,6 +81,19 @@ export const productSlice = createSlice({
             state.products = [];
             state.errorMessage = null;
         },
+        checkingAllProducts: (state) => {
+            state.isLoadingAllProducts = true;
+            state.allProductsError = null;
+        },
+        setAllProducts: (state, action: PayloadAction<Product[]>) => {
+            state.allProducts = action.payload;
+            state.isLoadingAllProducts = false;
+            state.allProductsError = null;
+        },
+        setAllProductsError: (state, action: PayloadAction<string>) => {
+            state.isLoadingAllProducts = false;
+            state.allProductsError = action.payload;
+        },
     }
 });
 
@@ -94,6 +110,9 @@ export const {
     setStats,
     setStatsError,
     resetProducts,
+    checkingAllProducts,
+    setAllProducts,
+    setAllProductsError,
 } = productSlice.actions;
 
 export type RootState   = ReturnType<typeof store.getState>;

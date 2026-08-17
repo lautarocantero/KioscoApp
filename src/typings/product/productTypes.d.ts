@@ -104,6 +104,14 @@ export interface ProductState {
     stats: ProductStats | null,
     isLoadingStats: boolean,
     statsError: string | null,
+    // Catálogo completo de productos (todos, sin filtrar por stock) — usado
+    // por el reporte de reposición de /shop para resolver el nombre del
+    // producto padre de cada presentación. Separado de `products` (que
+    // según el thunk que lo llene puede ser "solo con stock" o "con
+    // presentaciones") para no pisarse entre sí.
+    allProducts: Product[];
+    isLoadingAllProducts: boolean;
+    allProductsError: string | null;
 }
 
 export type ProductStateError = Pick<ProductState, "errorMessage">;

@@ -1,11 +1,13 @@
 import { Box, Button, Skeleton, Typography, alpha, type Theme } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ReceiptIcon from "@mui/icons-material/Receipt";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import type { ShopInventoryPanelProps } from "@typings/shop/shopComponentTypes";
 import ShopLowStockList from "./ShopLowStockList";
 
 interface InventoryTile {
-    label: string;
+    labelKey: string;
     value: number | null;
     color: (theme: Theme) => string;
 }
@@ -21,12 +23,15 @@ const ShopInventoryPanel = ({
     lowStockItemsTotal,
     isLoadingLowStockItems,
     lowStockItemsError,
+    restockReport,
 }: ShopInventoryPanelProps): React.ReactNode => {
+    const { t } = useTranslation();
+
     const tiles: InventoryTile[] = [
-        { label: "Total productos", value: total, color: (t) => t.custom.fontColor },
-        { label: "Con stock", value: withStock, color: (t) => t.palette.success.main },
-        { label: "Stock bajo", value: lowStock, color: (t) => t.custom.accents.gold },
-        { label: "Sin stock", value: withoutStock, color: (t) => t.palette.error.main },
+        { labelKey: "shop.inventory.tiles.total", value: total, color: (t) => t.custom.fontColor },
+        { labelKey: "shop.inventory.tiles.withStock", value: withStock, color: (t) => t.palette.success.main },
+        { labelKey: "shop.inventory.tiles.lowStock", value: lowStock, color: (t) => t.custom.accents.gold },
+        { labelKey: "shop.inventory.tiles.withoutStock", value: withoutStock, color: (t) => t.palette.error.main },
     ];
 
     return (
@@ -45,7 +50,7 @@ const ShopInventoryPanel = ({
         >
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 0.5, gap: 1 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                    Inventario
+                    {t("shop.inventory.title")}
                 </Typography>
                 <Typography
                     component={RouterLink}
@@ -53,11 +58,11 @@ const ShopInventoryPanel = ({
                     variant="body2"
                     sx={(t: Theme) => ({ color: t.palette.primary.main, textDecoration: "none", fontWeight: 600 })}
                 >
-                    Ver catálogo →
+                    {t("shop.inventory.viewCatalog")}
                 </Typography>
             </Box>
             <Typography variant="caption" sx={(t: Theme) => ({ color: t.custom.darkWhite })}>
-                Resumen de stock
+                {t("shop.inventory.subtitle")}
             </Typography>
 
             {error && (
@@ -76,7 +81,7 @@ const ShopInventoryPanel = ({
             >
                 {tiles.map((tile) => (
                     <Box
-                        key={tile.label}
+                        key={tile.labelKey}
                         sx={(t: Theme) => ({
                             border: "1px solid",
                             borderColor: alpha(tile.color(t), 0.3),
@@ -87,7 +92,7 @@ const ShopInventoryPanel = ({
                         })}
                     >
                         <Typography variant="caption" sx={(t: Theme) => ({ color: t.custom.darkWhite, fontSize: "0.66rem" })}>
-                            {tile.label}
+                            {t(tile.labelKey)}
                         </Typography>
                         {isLoading ? (
                             <Skeleton variant="text" width={40} height={30} sx={{ mx: "auto" }} />
@@ -100,16 +105,27 @@ const ShopInventoryPanel = ({
                 ))}
             </Box>
 
-            <Button
-                component={RouterLink}
-                to="/receipts"
-                variant="outlined"
-                size="small"
-                startIcon={<ReceiptIcon />}
-                sx={{ mt: 2, alignSelf: "flex-start" }}
-            >
-                Cargar boleta
-            </Button>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
+                <Button
+                    component={RouterLink}
+                    to="/receipts"
+                    variant="outlined"
+                    size="small"
+                    startIcon={<ReceiptIcon />}
+                >
+                    {t("shop.inventory.loadReceipt")}
+                </Button>
+
+                <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<FileDownloadOutlinedIcon />}
+                    onClick={restockReport.handleDownload}
+                    disabled={restockReport.isDownloadDisabled}
+                >
+                    {t("shop.inventory.downloadRestockReport")}
+                </Button>
+            </Box>
 
             <ShopLowStockList
                 lowStock={lowStockItems}

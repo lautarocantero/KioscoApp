@@ -42,7 +42,7 @@ const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, isLoading, e
             >
                 <Box>
                     <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        Ventas
+                        {t("shop.salesChart.title")}
                     </Typography>
                     {isLoading ? (
                         <Skeleton variant="text" width={120} height={32} />
@@ -57,7 +57,7 @@ const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, isLoading, e
                     value={range}
                     onChange={handleRangeChange}
                     size="small"
-                    aria-label="Rango de fechas de ventas"
+                    aria-label={t("shop.salesChart.rangeAriaLabel")}
                     sx={{ alignSelf: { xs: "flex-start", sm: "center" }, minWidth: 160 }}
                 >
                     {RANGE_OPTIONS.map((option) => (

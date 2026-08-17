@@ -14,7 +14,7 @@ ShopPage
 ├── ShopStatsRow         (4 LinkCard: Ventas, Productos, Vendedores, Proveedores)
 ├── Grid
 │   ├── ShopSalesChart       (gráfico de ventas, rango elegible: 7/15/30 días)
-│   └── ShopInventoryPanel   (total / con stock / stock bajo / sin stock + botón "Cargar boleta")
+│   └── ShopInventoryPanel   (total / con stock / stock bajo / sin stock + botones "Cargar boleta" y "Descargar boleta reposición")
 │       └── ShopLowStockList (lista con scroll: presentaciones por debajo del mínimo)
 └── Grid
     ├── ShopTopSellers   (ranking de vendedores por ventas del mes)
@@ -37,6 +37,7 @@ ShopPage
 | Gráfico de ventas | ventas por día, rango elegible (7/15/30 días) | `GET /sell/get-sells` agregado client-side (`aggregateSellsByDay`) |
 | Inventario | total, con stock, stock bajo, sin stock | `GET /product/get-product-stats` + `GET /product/get-products-with-stock`, combinados en `useShopInventorySummary` |
 | Productos con stock bajo (lista) | nombre, stock actual, stock mínimo, severidad, top 20 más críticos de N reales | `GET /get-product-presentations` (antes sin usar, ver `useShopLowStockPresentations`) |
+| Boleta de reposición (PDF) | producto, presentación, stock actual/mínimo, reposición mínima, proveedor 1/2 (vacíos), **todas** las presentaciones bajo el mínimo | `GET /get-product-presentations` + `GET /get-products` cruzados (ver `useShopRestockReport`) |
 | Vendedores destacados | ventas del mes + pedidos + online/offline | mismo `GET /sell/get-sells` cruzado con `GET /seller/get-sellers` (`aggregateTopSellers`) |
 | Proveedores destacados | nombre, valoración (1-5), contacto | `GET /provider/get-providers` (`useProvidersListData`) |
 

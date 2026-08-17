@@ -66,6 +66,54 @@ const en = {
     fortnight: "Last fortnight",
     month: "Last month",
   },
+  shop: {
+    header: {
+      title: "Store",
+      subtitle: "This is the general overview of your business.",
+    },
+    statsRow: {
+      ariaLabel: "Overview by section",
+    },
+    inventory: {
+      title: "Inventory",
+      subtitle: "Stock summary",
+      viewCatalog: "View catalog →",
+      tiles: {
+        total: "Total products",
+        withStock: "In stock",
+        lowStock: "Low stock",
+        withoutStock: "Out of stock",
+      },
+      loadReceipt: "Upload receipt",
+      downloadRestockReport: "Download restock report",
+    },
+    lowStockList: {
+      title: "Low stock products",
+      empty: "No product is below its minimum stock. 🎉",
+      severity: {
+        critical: "Critical",
+        low: "Low",
+      },
+      showingCount: "Showing the {{shown}} most critical of {{total}} low stock products.",
+    },
+    salesChart: {
+      title: "Sales",
+      rangeAriaLabel: "Sales date range",
+    },
+    topSellers: {
+      title: "Top sellers",
+      viewAll: "View all →",
+      empty: "No sales recorded this month yet.",
+      orders_one: "{{count}} order",
+      orders_other: "{{count}} orders",
+    },
+    topProviders: {
+      title: "Top providers",
+      viewAll: "View all ({{count}}) →",
+      empty: "You haven't added any providers yet.",
+      noContact: "No contact",
+    },
+  },
   presentationCategory: {
     food: "Food",
     grocery: "Grocery",

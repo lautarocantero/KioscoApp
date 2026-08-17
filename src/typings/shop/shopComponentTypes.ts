@@ -4,6 +4,7 @@ import type {
   UseShopFeaturedProvidersReturn,
   UseShopInventorySummaryReturn,
   UseShopLowStockPresentationsReturn,
+  UseShopRestockReportReturn,
   UseShopSalesSummaryReturn,
 } from "./shopTypes";
 
@@ -31,6 +32,7 @@ export interface ShopInventoryPanelProps extends UseShopInventorySummaryReturn {
   lowStockItemsTotal: number;
   isLoadingLowStockItems: boolean;
   lowStockItemsError: string | null;
+  restockReport: Pick<UseShopRestockReportReturn, "isDownloadDisabled" | "handleDownload">;
 }
 
 export type ShopLowStockListProps = UseShopLowStockPresentationsReturn;

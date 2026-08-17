@@ -62,3 +62,25 @@ export interface UseShopLowStockPresentationsReturn {
   isLoading: boolean;
   error: string | null;
 }
+
+// Fila de la boleta de reposición (PDF): una presentación por debajo de su
+// stock mínimo, con la cantidad a comprar para llegar justo al mínimo.
+// provider1/provider2 quedan vacíos hasta que se incorporen proveedores
+// por presentación.
+export interface RestockReportRow {
+  productName: string;
+  presentationName: string;
+  currentStock: number;
+  minStock: number;
+  minRestock: number;
+  provider1: string;
+  provider2: string;
+}
+
+export interface UseShopRestockReportReturn {
+  rows: RestockReportRow[];
+  isLoading: boolean;
+  error: string | null;
+  isDownloadDisabled: boolean;
+  handleDownload: () => void;
+}

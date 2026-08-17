@@ -1,5 +1,6 @@
 import { Box, Rating, Skeleton, Typography, useTheme, type Theme } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import type { ShopTopProvidersProps } from "@typings/shop/shopComponentTypes";
 import ShopInitialAvatar from "./ShopInitialAvatar";
 
@@ -7,6 +8,7 @@ const ACCENT_KEYS = ["blue", "green", "gold", "violet", "orange", "pink"] as con
 
 const ShopTopProviders = ({ featured, total, isLoading, error }: ShopTopProvidersProps): React.ReactNode => {
     const theme = useTheme();
+    const { t } = useTranslation();
 
     return (
         <Box
@@ -31,7 +33,7 @@ const ShopTopProviders = ({ featured, total, isLoading, error }: ShopTopProvider
                 }}
             >
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                    Proveedores destacados
+                    {t("shop.topProviders.title")}
                 </Typography>
                 <Typography
                     component={RouterLink}
@@ -39,7 +41,7 @@ const ShopTopProviders = ({ featured, total, isLoading, error }: ShopTopProvider
                     variant="body2"
                     sx={(t: Theme) => ({ color: t.palette.primary.main, textDecoration: "none", fontWeight: 600 })}
                 >
-                    Ver todos ({total}) →
+                    {t("shop.topProviders.viewAll", { count: total })}
                 </Typography>
             </Box>
 
@@ -59,7 +61,7 @@ const ShopTopProviders = ({ featured, total, isLoading, error }: ShopTopProvider
 
             {!isLoading && featured.length === 0 && (
                 <Typography variant="body2" sx={(t: Theme) => ({ color: t.custom.darkWhite })}>
-                    Todavía no cargaste proveedores.
+                    {t("shop.topProviders.empty")}
                 </Typography>
             )}
 
@@ -77,7 +79,7 @@ const ShopTopProviders = ({ featured, total, isLoading, error }: ShopTopProvider
                                     {provider.name}
                                 </Typography>
                                 <Typography variant="caption" sx={(t: Theme) => ({ color: t.custom.darkWhite })} noWrap>
-                                    {provider.contact_phone || provider.contact_email || "Sin contacto"}
+                                    {provider.contact_phone || provider.contact_email || t("shop.topProviders.noContact")}
                                 </Typography>
                             </Box>
 

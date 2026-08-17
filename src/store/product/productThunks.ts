@@ -13,9 +13,13 @@ import {
     setStats,
     setStatsError,
     resetProducts,
+    checkingAllProducts,
+    setAllProducts,
+    setAllProductsError,
 } from "./productSlice";
 import { handleError }       from "../shared/handlerStoreError";
 import {
+    getProductsRequest,
     getProductsWithPresentationsRequest,
     searchProductsWithPresentationsRequest,
     getProductByIdRequest,
@@ -92,6 +96,28 @@ export const getProducts = () => {
 
         } catch (error: unknown) {
             dispatch(setError({ errorMessage: "No se pudieron obtener los productos" }));
+            handleError(error);
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 fetchAllProductsThunk                                               ║
+║ ⚠️  Uso: reporte de reposición de /shop, para resolver el nombre del   ║
+║     producto padre de cada presentación con stock bajo. GET /get-products║
+║     no filtra por stock ni trae presentations — es el listado liviano  ║
+║     completo, guardado aparte (`allProducts`) para no pisar `products` ║
+║     (que en /shop ya usa `getProductsWithStock`, un listado filtrado). ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const fetchAllProductsThunk = () => {
+    return async (dispatch: Dispatch): Promise<Product[] | undefined> => {
+        dispatch(checkingAllProducts());
+        try {
+            const products = await getProductsRequest();
+            dispatch(setAllProducts(products));
+            return products;
+        } catch (error: unknown) {
+            dispatch(setAllProductsError("No se pudieron cargar los productos"));
             handleError(error);
         }
     };
