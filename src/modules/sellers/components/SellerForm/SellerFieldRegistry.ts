@@ -1,7 +1,7 @@
 import type { FieldRegistry } from "@typings/shared/types/formCard.types";
 import type { SellerFormValues } from "@typings/seller/sellerTypes";
-import { AuthRoleEnum } from "@typings/auth/authEnums";
-import { ROLE_LABELS, ROLE_VALUES } from "@typings/seller/sellerLabels";
+import { AuthRoleEnum, ROLE_VALUES } from "@typings/auth/authEnums";
+import i18n from "@i18n/i18n";
 
 export const SELLER_FIELD_REGISTRY: FieldRegistry<SellerFormValues> = {
     name: {
@@ -26,7 +26,7 @@ export const SELLER_FIELD_REGISTRY: FieldRegistry<SellerFormValues> = {
         type: "select",
         multiple: false,
         options: ROLE_VALUES,
-        getOptionLabel: (v) => ROLE_LABELS[v as AuthRoleEnum],
+        getOptionLabel: (v) => i18n.t(`roles.${v as AuthRoleEnum}`),
         required: true,
     },
 };

@@ -27,4 +27,6 @@ export interface SidebarUserInfoProps {
   isExpanded: boolean;
 }
 
-export type SidebarUserSettingsProps = Pick<SidebarUserInfoProps, 'isExpanded'>;
+export type SidebarUserSettingsProps = Pick<SidebarUserInfoProps, 'isExpanded'> & {
+  onOpenSettings: () => void;
+};

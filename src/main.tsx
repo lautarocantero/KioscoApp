@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "./i18n/i18n";
 import StokoApp from "./StokoApp";
 import { BrowserRouter } from "react-router-dom";
 import { store, persistor } from "./store/store";

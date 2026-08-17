@@ -1,10 +1,12 @@
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, type Theme } from "@mui/material";
-import { PAYMENT_METHOD_OPTIONS } from "../../../../config/constants";
+import { useTranslation } from 'react-i18next';
+import { PAYMENT_METHOD_VALUES } from "@typings/sells/sellsEnum";
 import { useCartPaymentMethodForm } from '../../../../hooks/cart/useCartPaymentMethodForm';
 import type { CartPaymentMethodProps } from '@typings/cart/cartComponentTypes';
 
 const CartPaymentMethod = ({total}: CartPaymentMethodProps): React.ReactNode => {
+    const { t } = useTranslation();
     const { handleChange , values } = useCartPaymentMethodForm();
 
     if(total <= 0) return null;
@@ -67,8 +69,8 @@ const CartPaymentMethod = ({total}: CartPaymentMethodProps): React.ReactNode => 
                         gap: 0,
                     })}
                 >
-                    {PAYMENT_METHOD_OPTIONS.map(({ value, label }) => (
-                        <FormControlLabel key={value} value={value} control={<Radio />} label={label} />
+                    {PAYMENT_METHOD_VALUES.map((value) => (
+                        <FormControlLabel key={value} value={value} control={<Radio />} label={t(`paymentMethod.${value}`)} />
                     ))}
                 </RadioGroup>
             </FormControl>

@@ -1,6 +1,5 @@
 import * as Yup from "yup";
-import { AuthRoleEnum } from "@typings/auth/authEnums";
-import { ROLE_VALUES } from "@typings/seller/sellerLabels";
+import { AuthRoleEnum, ROLE_VALUES } from "@typings/auth/authEnums";
 import type { SellerWithRole } from "@typings/seller/sellerTypes";
 
 

@@ -30,7 +30,8 @@ AppSidebar
 │   ├── SidebarUserAvatar
 │   ├── SidebarUserInfo
 │   └── SidebarUserSettings
-└── SidebarLogout
+├── SidebarLogout
+└── SettingsModal (lazy, solo montado mientras está abierto)
 ```
 
 ---
@@ -54,6 +55,7 @@ Contiene:
 - `SidebarLinksList` para renderizar la lista de navegación
 - `SidebarUserData` para mostrar avatar y datos del usuario
 - `SidebarLogout` para el botón de cerrar sesión
+- `SettingsModal` (carga diferida con `React.lazy`/`Suspense`), controlado por `useSettingsModal` (`src/hooks/ui/useSettingsModal.ts`) y abierto desde el engranaje de `SidebarUserSettings` — ver [docs/components/SettingsModal.md](./SettingsModal.md)
 
 ---
 
@@ -192,7 +194,7 @@ Subcomponentes:
 
 - `SidebarUserAvatar`: avatar circular con inicial si no hay imagen
 - `SidebarUserInfo`: nombre + rol, visible solo si `isExpanded`
-- `SidebarUserSettings`: ícono de configuración que navega a `/account`
+- `SidebarUserSettings`: ícono de engranaje que dispara `onOpenSettings` (prop que baja desde `AppSidebar`) para abrir el modal de **Ajustes** — ver [docs/components/SettingsModal.md](./SettingsModal.md). Ya no navega a `/account`. **Siempre visible** (antes desaparecía con el sidebar colapsado): con `isExpanded` en `false`, `SidebarUserData` pasa a layout en columna y el engranaje se reordena (`order: -1`) para quedar arriba del avatar en vez de a la derecha del nombre.
 
 ### `useSidebarUserData`
 
@@ -249,8 +251,8 @@ Tipos principales:
 - `SubGroup` / `SubLink`
 - `SidebarLinksListProps`: props del listado principal
 - `SidebarNavItemProps`, `SidebarSubGroupProps`, `SidebarSubLinkProps`
-- `SidebarToggleProps`, `SidebarLogoutProps`, `SidebarUserDataProps`
-- `SidebarMobileDrawerProps`
+- `SidebarToggleProps`, `SidebarLogoutProps`, `SidebarUserDataProps` (incluye `onOpenSettings`)
+- `SidebarMobileDrawerProps` (incluye `onOpenSettings`)
 
 ---
 

@@ -1,10 +1,10 @@
 import { type GridColDef } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
 import ProductRowActionCell from "./ProductRowActionCell";
-import { MODEL_TYPE_LABELS, PRESENTATION_CATEGORY_LABELS } from "@typings/presentation/presentationLabels";
 import type { ModelType, PresentationCategory } from "@typings/presentation/presentationEnum";
 import { FALLBACK_PRODUCT_IMAGE } from "../../../../config/constants";
 import type { Product } from "@typings/product/productTypes";
+import i18n from "@i18n/i18n";
 
 
 export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
@@ -44,7 +44,7 @@ export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
       const presentation = row.presentations?.[0];
       if (!presentation) return "-";
       const modelTypeLabel = presentation.model_type
-        ? MODEL_TYPE_LABELS[presentation.model_type as ModelType] ?? presentation.model_type
+        ? i18n.t(`modelType.${presentation.model_type as ModelType}`, { defaultValue: presentation.model_type })
         : "";
       return `${modelTypeLabel}, ${presentation.model_size ?? ""}`.trim();
     },
@@ -60,7 +60,7 @@ export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
       const category = row.presentations?.[0]?.category;
       if (!category || category.length === 0) return "-";
       return category
-        .map((cat: any) => PRESENTATION_CATEGORY_LABELS[cat as PresentationCategory] ?? cat)
+        .map((cat: any) => i18n.t(`presentationCategory.${cat as PresentationCategory}`, { defaultValue: cat }))
         .join(", ");
     },
   },

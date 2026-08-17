@@ -1,8 +1,10 @@
+import { lazy, Suspense } from "react";
 import type { Theme } from "@mui/material";
 import { Box } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import SidebarLogout from "./components/SidebarLogout";
 import { useAppSidebar } from "./hooks/useAppSidebar";
+import { useSettingsModal } from "@hooks/ui/useSettingsModal";
 import { COLLAPSED_WIDTH, EXPANDED_WIDTH } from "../../../../../config/constants";
 import SidebarToggleComponent from "./components/SidebarToggle";
 import SidebarLinksList from "./components/SidebarLinksList";
@@ -12,6 +14,9 @@ import "animate.css";
 import SidebarToggleButtonMobile from "./components/SidebarToggleButtonMobile";
 import SidebarMobileDrawer from "./components/SidebarMobileDrawer";
 
+// Modal pesado y opcional (no hace falta en el primer render): se carga
+// solo cuando el usuario abre Ajustes.
+const SettingsModal = lazy(() => import("../../../../../modules/shared/components/SettingsModal/SettingsModal"));
 
 const AppSidebar = (): React.ReactNode => {
   const {
@@ -23,10 +28,11 @@ const AppSidebar = (): React.ReactNode => {
     getLinkMeta,
     isSubLinkActive,
     navigate,
-    isMobileOpen, 
+    isMobileOpen,
     setIsMobileOpen
   } = useAppSidebar();
-  
+
+  const { isOpen: isSettingsOpen, openSettings, closeSettings } = useSettingsModal();
 
   return (
     <>
@@ -42,6 +48,7 @@ const AppSidebar = (): React.ReactNode => {
         getLinkMeta={getLinkMeta}
         isSubLinkActive={isSubLinkActive}
         navigate={navigate}
+        onOpenSettings={openSettings}
       />
 
       {/* ── Espaciador: reserva el ancho fijo en el flujo, nunca cambia ── */}
@@ -88,10 +95,16 @@ const AppSidebar = (): React.ReactNode => {
           navigate={navigate}
         />
 
-        <SidebarUserData isExpanded={isExpanded} />
+        <SidebarUserData isExpanded={isExpanded} onOpenSettings={openSettings} />
 
         <SidebarLogout isHovered={isExpanded} onLogout={handleLogout} />
       </Box>
+
+      {isSettingsOpen && (
+        <Suspense fallback={null}>
+          <SettingsModal open={isSettingsOpen} onClose={closeSettings} />
+        </Suspense>
+      )}
     </>
   );
 };

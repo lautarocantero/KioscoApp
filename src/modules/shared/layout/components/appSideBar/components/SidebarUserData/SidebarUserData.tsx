@@ -8,7 +8,7 @@ import { useSidebarUserData } from "../../hooks/useSidebarUserData";
 import type { SidebarUserDataProps } from "@typings/ui/sidebar.types";
 
 
-const SidebarUserData = ({ isExpanded }: SidebarUserDataProps): React.ReactNode => {
+const SidebarUserData = ({ isExpanded, onOpenSettings }: SidebarUserDataProps): React.ReactNode => {
   const { userData, isLoading } = useSidebarUserData();
   const { avatarUrl, name, role } = userData ?? {};
 
@@ -18,17 +18,18 @@ const SidebarUserData = ({ isExpanded }: SidebarUserDataProps): React.ReactNode 
     <Box
       sx={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: isExpanded ? "row" : "column",
         alignItems: "center",
-        gap: 1.5,
+        justifyContent: "center",
+        gap: isExpanded ? 1.5 : 0.75,
         width: "100%",
-        px: 2,
+        px: isExpanded ? 2 : 0,
         py: 1,
       }}
     >
       <SidebarUserAvatar avatarUrl={avatarUrl} name={name} />
       <SidebarUserInfo name={name} role={role} isExpanded={isExpanded} />
-      <SidebarUserSettings isExpanded={isExpanded} />
+      <SidebarUserSettings isExpanded={isExpanded} onOpenSettings={onOpenSettings} />
     </Box>
   );
 };

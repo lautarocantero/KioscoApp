@@ -19,6 +19,13 @@ export interface ThemeContextType {
   setAppTheme: Dispatch<SetStateAction<boolean>>;
 }
 
+//────────────────────────────────────────── FontSize ─────────────────────────────────────────//
+
+export interface FontSizeContextType {
+  fontSize: number;
+  setFontSize: (fontSize: number) => void;
+}
+
 //────────────────────────────────────────── 🔖 OptionsCards 🔖 ─────────────────────────────────────────//
 
 export interface LinkDataResult {

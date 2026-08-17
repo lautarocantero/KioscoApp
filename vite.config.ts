@@ -11,6 +11,6 @@ export default defineConfig({
     setupFiles: ["./src/modules/shared/test/utils/setupTests.tsx"], 
   },
   server: {
-    port: 5173,
+    port: Number(process.env.PORT) || 5173,
     }
   })

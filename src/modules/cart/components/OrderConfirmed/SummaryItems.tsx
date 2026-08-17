@@ -2,10 +2,10 @@ import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import EventOutlinedIcon from '@mui/icons-material/EventOutlined';
-import { PAYMENT_METHOD_LABELS } from '@typings/sells/SellMethodLabels';
 import type { TicketSummaryType } from '@typings/sells/sellTypes';
 import type { SummaryItem } from '@typings/cart/cartComponentTypes';
 import { formatCurrency } from '../../helpers/formatCurrency';
+import i18n from '@i18n/i18n';
 
 
 export const getTicketSummaryItems = (ticketSummary: TicketSummaryType): SummaryItem[] => [
@@ -28,7 +28,7 @@ export const getTicketSummaryItems = (ticketSummary: TicketSummaryType): Summary
         icon: AccountBalanceWalletOutlinedIcon,
         iconColor: (theme) => theme?.palette?.primary?.main,
         label: 'Pago',
-        value: PAYMENT_METHOD_LABELS[ticketSummary.paymentMethod],
+        value: i18n.t(`paymentMethod.${ticketSummary.paymentMethod}`),
     },
     {
         id: 'date',

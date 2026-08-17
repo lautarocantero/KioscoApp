@@ -1,8 +1,8 @@
 import { Box, MenuItem, Select, Skeleton, Typography, useTheme, type Theme, type SelectChangeEvent } from "@mui/material";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useTranslation } from "react-i18next";
 import type { ShopSalesChartProps } from "@typings/shop/shopComponentTypes";
 import { ShopSalesRange } from "@typings/shop/shopEnums";
-import { SHOP_SALES_RANGE_LABELS } from "@typings/shop/shopLabels";
 import { formatCurrency } from "../../cart/helpers/formatCurrency";
 import ShopSalesChartTooltip from "./ShopSalesChartTooltip";
 
@@ -10,6 +10,7 @@ const RANGE_OPTIONS = Object.values(ShopSalesRange);
 
 const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, isLoading, error }: ShopSalesChartProps): React.ReactNode => {
     const theme = useTheme();
+    const { t } = useTranslation();
 
     const handleRangeChange = (event: SelectChangeEvent): void => {
         setRange(event.target.value as ShopSalesRange);
@@ -61,7 +62,7 @@ const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, isLoading, e
                 >
                     {RANGE_OPTIONS.map((option) => (
                         <MenuItem key={option} value={option}>
-                            {SHOP_SALES_RANGE_LABELS[option]}
+                            {t(`shopSalesRange.${option}`)}
                         </MenuItem>
                     ))}
                 </Select>

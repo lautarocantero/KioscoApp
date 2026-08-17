@@ -10,6 +10,10 @@ import { darkTheme } from "../../../../theme/mainTheme";
 import { ProductDialogContext } from "../../../cart/context/Product/ProductDialogContext";
 import { SnackBarContext } from "../../components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
+// Efecto lateral: inicializa i18next (mismo bootstrap que main.tsx) para
+// que useTranslation()/t() resuelvan strings reales en los tests, en vez
+// de devolver la key cruda por no haber Provider inicializado.
+import "@i18n/i18n";
 
 vi.mock("@hooks/auth/useGoogleAuth", () => ({
     useGoogleAuth: () => ({

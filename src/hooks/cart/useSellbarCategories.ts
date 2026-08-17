@@ -1,6 +1,6 @@
 import { useEffect, useState, type MouseEvent } from "react";
+import { useTranslation } from "react-i18next";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
-import { PRESENTATION_CATEGORY_LABELS } from "@typings/presentation/presentationLabels";
 import { AlertColor } from "../../typings/ui/ui";
 import { getAvailableCategoriesRequest } from "../../modules/presentations/api/presentationsApi";
 import type { UseCartBarCategoriesParams, UseCartBarCategoriesResult } from "@typings/cart/cartTypes";
@@ -13,6 +13,7 @@ import type { UseCartBarCategoriesParams, UseCartBarCategoriesResult } from "@ty
 
 
 export const useSellbarCategories = ({ showSnackBar }: UseCartBarCategoriesParams): UseCartBarCategoriesResult => {
+    const { t } = useTranslation();
     const [categoriesList, setCategoriesList] = useState<PresentationCategory[]>([]);
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<PresentationCategory | null>(null);
@@ -42,7 +43,7 @@ export const useSellbarCategories = ({ showSnackBar }: UseCartBarCategoriesParam
         handleCloseCategoryMenu();
     };
 
-    const getCategoryLabel = (category: PresentationCategory): string => PRESENTATION_CATEGORY_LABELS[category];
+    const getCategoryLabel = (category: PresentationCategory): string => t(`presentationCategory.${category}`);
 
     return {
         list: categoriesList,

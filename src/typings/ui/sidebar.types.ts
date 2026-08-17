@@ -52,7 +52,9 @@ export interface SidebarToggleProps {
   toggleSidebar: () => void;
 }
 
-export type SidebarUserDataProps = Pick<SidebarToggleProps, "isExpanded">;
+export interface SidebarUserDataProps extends Pick<SidebarToggleProps, "isExpanded"> {
+  onOpenSettings: () => void;
+}
 
 // ─── nav item / subgroup / sublink ────────────────────────────────────────
 
@@ -91,6 +93,7 @@ export interface SidebarMobileDrawerProps extends SidebarNavigationBaseProps {
   open: boolean;
   onClose: () => void;
   handleLogout: () => void;
+  onOpenSettings: () => void;
 }
 
 export interface SidebarToggleButtonMobileProps {

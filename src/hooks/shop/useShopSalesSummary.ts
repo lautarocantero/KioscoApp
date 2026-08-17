@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { UseShopSalesSummaryReturn } from "@typings/shop/shopTypes";
 import { ShopSalesRange } from "@typings/shop/shopEnums";
-import { SHOP_SALES_RANGE_DAYS } from "@typings/shop/shopLabels";
+import { SHOP_SALES_RANGE_DAYS } from "../../config/constants";
 import { useSellsListData } from "../sells/useSellsListData";
 import useSellersListData from "../sellers/useSellerListData";
 import { aggregateSellsByDay } from "../../modules/shop/helpers/aggregateSellsByDay";

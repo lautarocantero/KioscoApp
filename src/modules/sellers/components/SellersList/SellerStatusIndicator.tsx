@@ -1,9 +1,10 @@
 import { Box, Typography, type Theme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { SellerStatus } from "@typings/seller/sellerEnums";
-import { STATUS_LABELS } from "@typings/seller/sellerLabels";
 import type { SellerStatusIndicatorProps } from "@typings/seller/sellerTypes";
 
 const SellerStatusIndicator = ({ status }: SellerStatusIndicatorProps): React.ReactNode => {
+    const { t } = useTranslation();
     const isOnline = status === SellerStatus.Online;
 
     return (
@@ -19,7 +20,7 @@ const SellerStatusIndicator = ({ status }: SellerStatusIndicatorProps): React.Re
                 })}
             />
             <Typography variant="body2" noWrap>
-                {STATUS_LABELS[status] ?? status}
+                {t(`sellerStatus.${status}`, { defaultValue: status })}
             </Typography>
         </Box>
     );

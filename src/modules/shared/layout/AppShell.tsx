@@ -2,7 +2,6 @@
 import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import AppSidebar from "./components/appSideBar/Appsidebar";
-import LightMode from "../components/LightMode/LightMode";
 import SimpleSnackbar from "../components/SnackBar/SnackBarComponent";
 
 const AppShell = () => (
@@ -17,9 +16,8 @@ const AppShell = () => (
       flexDirection: "row",
     })}
   >
-    <Box sx={{ position: "absolute", top: 16, right: 16, zIndex: 10 }}>
-      <LightMode />
-    </Box>
+    {/* Reservado para la futura campana de notificaciones. */}
+    <Box sx={{ position: "absolute", top: 16, right: 16, zIndex: 10 }} />
 
     <AppSidebar />
 

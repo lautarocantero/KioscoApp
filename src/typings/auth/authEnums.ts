@@ -10,6 +10,8 @@ export enum AuthRoleEnum {
     Seller = 'seller',
 };
 
+export const ROLE_VALUES = Object.values(AuthRoleEnum);
+
 export enum VerifyEmailStatusEnum {
     Verifying = "verifying",
     Success = "success",

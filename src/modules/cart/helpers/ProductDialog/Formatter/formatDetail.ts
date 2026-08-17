@@ -1,8 +1,8 @@
 import type { PaymentDetail, ProductTicketWithStockType, PurchaseDateParts, SellEditFormValues, SoldProductRow } from "@typings/sells/sellTypes";
 import { MONTHS_ES } from "../../../../../config/constants";
 import { SellStatusEnum } from "@typings/sells/sellsEnum";
-import { PAYMENT_METHOD_LABELS } from "@typings/sells/SellMethodLabels";
 import { calculateItemAmount } from "../../../../shared/helpers/saleTypeHelper";
+import i18n from "@i18n/i18n";
 
 
 /*══════════ 📅 parsePurchaseDate ══════════╗
@@ -73,7 +73,7 @@ export const buildPaymentDetail = (values: SellEditFormValues): PaymentDetail =>
     const { date, time } = parsePurchaseDate(paymentTimestamp);
 
     return {
-        methodLabel: PAYMENT_METHOD_LABELS[values.payment_method],
+        methodLabel: i18n.t(`paymentMethod.${values.payment_method}`),
         approved: values.status === SellStatusEnum.Completada,
         reference: values._id,
         paymentDate: time ? `${date} ${time}` : date,

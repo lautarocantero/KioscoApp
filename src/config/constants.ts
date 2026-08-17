@@ -1,7 +1,7 @@
 import type { PresentationStatus } from "@typings/presentation/presentationEnum";
 import { PresentationStatusColors } from "@typings/presentation/presentationEnum";
-import { PAYMENT_METHOD_LABELS } from "@typings/sells/SellMethodLabels";
-import { PAYMENT_METHOD_VALUES, PaymentMethod, SellStatusEnum } from "@typings/sells/sellsEnum";
+import { SellStatusEnum } from "@typings/sells/sellsEnum";
+import { ShopSalesRange } from "@typings/shop/shopEnums";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -110,18 +110,29 @@ export const STATUS_CONFIG: Record<PresentationStatus,
 // ║ 🎨 CARRITO   🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️              ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export const PAYMENT_METHOD_OPTIONS: { value: PaymentMethod; label: string }[] =
-    PAYMENT_METHOD_VALUES.map((value) => ({
-        value,
-        label: PAYMENT_METHOD_LABELS[value],
-    }));
-
 export const SELL_STATUS_OPTIONS = [
     { value: SellStatusEnum.Completada, label: 'Abono total' },
     { value: SellStatusEnum.Parcial, label: 'Abono parcial' },
 ];
 
 export const PRODUCTS_EXHIBITOR_ANCHOR_ID = "seller-products-exhibitor";
+
+// Cantidad de días agregados por rango del gráfico de ventas de /shop.
+// No es un label (no hay texto), por eso vive acá y no en las traducciones.
+export const SHOP_SALES_RANGE_DAYS: Record<ShopSalesRange, number> = {
+    [ShopSalesRange.SevenDays]: 7,
+    [ShopSalesRange.Fortnight]: 15,
+    [ShopSalesRange.Month]: 30,
+};
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ ⚙️ AJUSTES  ⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️                     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export const FONT_SIZE_MIN = 12;
+export const FONT_SIZE_MAX = 24;
+export const FONT_SIZE_DEFAULT = 16;
+export const FONT_SIZE_STORAGE_KEY = "appFontSize";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🎨 BOLETAS   🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️              ║

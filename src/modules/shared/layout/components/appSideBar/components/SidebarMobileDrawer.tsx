@@ -17,6 +17,7 @@ const SidebarMobileDrawer = ({
     getLinkMeta,
     isSubLinkActive,
     navigate,
+    onOpenSettings,
 }: SidebarMobileDrawerProps): React.ReactNode => (
     <Drawer
         anchor="left"
@@ -55,7 +56,7 @@ const SidebarMobileDrawer = ({
             navigate={navigate}
         />
 
-        <SidebarUserData isExpanded />
+        <SidebarUserData isExpanded onOpenSettings={onOpenSettings} />
 
         <SidebarLogout isHovered onLogout={handleLogout} />
     </Drawer>

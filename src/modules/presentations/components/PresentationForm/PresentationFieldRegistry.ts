@@ -1,7 +1,7 @@
 import { PRESENTATION_CATEGORY_VALUES, PresentationCategory, SALE_TYPE_VALUES, ModelType, MODEL_TYPE_VALUES, ModelUnit, MODEL_UNIT_VALUES, type SaleType } from "@typings/presentation/presentationEnum";
-import { MODEL_TYPE_LABELS, MODEL_UNIT_LABELS, PRESENTATION_CATEGORY_LABELS, SALE_TYPE_LABELS } from "@typings/presentation/presentationLabels";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import type { FieldRegistry } from "@typings/shared/types/formCard.types";
+import i18n from "@i18n/i18n";
 
 const todayISODate = new Date().toISOString().slice(0, 10);
 
@@ -36,7 +36,7 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         type: "select",
         multiple: false,
         options: MODEL_TYPE_VALUES,
-        getOptionLabel: (v) => MODEL_TYPE_LABELS[v as ModelType],
+        getOptionLabel: (v) => i18n.t(`modelType.${v as ModelType}`),
         required: true,
     },
         model_size: {
@@ -53,7 +53,7 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         type: "select",
         multiple: false,
         options: MODEL_UNIT_VALUES,
-        getOptionLabel: (v) => MODEL_UNIT_LABELS[v as ModelUnit],
+        getOptionLabel: (v) => i18n.t(`modelUnit.${v as ModelUnit}`),
         required: true,
     },
     sale_type: {
@@ -62,7 +62,7 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         type: "select",
         multiple: false,
         options: SALE_TYPE_VALUES,
-        getOptionLabel: (v) => SALE_TYPE_LABELS[v as SaleType],
+        getOptionLabel: (v) => i18n.t(`saleType.${v as SaleType}`),
         required: true,
     },
     image_url: {
@@ -109,7 +109,7 @@ export const PRESENTATION_FIELD_REGISTRY: FieldRegistry<PresentationFormValues> 
         type: "select",
         multiple: true,
         options: PRESENTATION_CATEGORY_VALUES,
-        getOptionLabel: (c) => PRESENTATION_CATEGORY_LABELS[c as PresentationCategory],
+        getOptionLabel: (c) => i18n.t(`presentationCategory.${c as PresentationCategory}`),
         required: true,
     },
     is_perishable: {

@@ -1,24 +1,22 @@
 import { Brightness4, ModeNight } from "@mui/icons-material";
-import { useContext } from "react";
-import { ThemeContext } from "../../../../theme/ThemeContext";
 import { Box, type Theme } from "@mui/material";
+import { useThemeModeOption } from "@hooks/ui/useThemeModeOption";
+import { ThemeModeEnum } from "@typings/settings/settingsEnums";
 
 const THUMB_SIZE = 22;
 const GAP = 4;
 const PADDING = 3;
 
 const LightMode = () => {
-  const { appTheme, setAppTheme } = useContext(ThemeContext);
+  const { mode, setMode } = useThemeModeOption();
+  const appTheme = mode === ThemeModeEnum.Light;
 
   return (
     <Box
       role="switch"
       aria-checked={appTheme}
       aria-label="cambiar modo de tema"
-      onClick={() => {
-        setAppTheme((prev: boolean) => !prev);
-        localStorage.setItem("appTheme", JSON.stringify(!appTheme));
-      }}
+      onClick={() => setMode(appTheme ? ThemeModeEnum.Dark : ThemeModeEnum.Light)}
       sx={(theme: Theme) => ({
         position: "relative",
         display: "flex",
