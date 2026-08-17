@@ -139,6 +139,68 @@ const es = {
     debit: "Débito",
     credit: "Crédito",
   },
+  notifications: {
+    bellLabel: "Notificaciones",
+    unreadBadgeLabel: "{{count}} notificaciones sin leer",
+    title: "Notificaciones",
+    subtitle: "Mantenete al tanto de lo que sucede en tu negocio.",
+    markAllAsRead: "Marcar todas como leídas",
+    deleteAll: "Eliminar todas",
+    viewAll: "Ver todas las notificaciones",
+    empty: "No tenés notificaciones",
+    emptyImportant: "No hay ventas recientes",
+    emptyAlerts: "No hay alertas de stock",
+    emptyMessage: "No hay notificaciones registradas",
+    sections: {
+      important: "Importante",
+      more: "Más notificaciones",
+    },
+    filters: {
+      all: "Todas",
+      alerts: "Alertas",
+      news: "Novedades",
+    },
+    categories: {
+      lowStock: "Inventario",
+      sale: "Ventas",
+    },
+    status: {
+      unread: "No leída",
+      read: "Leída",
+    },
+    columns: {
+      message: "Notificación",
+      status: "Estado",
+      actions: "Acciones",
+    },
+    messages: {
+      lowStock: "{{productName}} necesita reposición ({{units}} unidades)",
+      lowStockDetail: "El stock actual ({{units}}) está por debajo del mínimo establecido ({{minStock}}).",
+      sale: "{{sellerName}} ha realizado una venta por {{amount}}",
+      saleDetail: "Venta registrada en el punto de venta.",
+    },
+    time: {
+      justNow: "Recién",
+      minutesAgo: "Hace {{count}} min",
+      hoursAgo: "Hace {{count}} h",
+      daysAgo: "Hace {{count}} d",
+    },
+    actions: {
+      markAsRead: "Marcar como leída",
+      markAsUnread: "Ya leída",
+      delete: "Eliminar notificación",
+    },
+    deleteDialog: {
+      title: "Eliminar notificación",
+      description: "¿Estás seguro de que querés eliminar esta notificación? Esta acción no se puede deshacer.",
+      confirm: "Eliminar",
+    },
+    deleteAllDialog: {
+      title: "Eliminar todas las notificaciones",
+      description: "¿Estás seguro de que querés eliminar todas las notificaciones? Esta acción no se puede deshacer.",
+      confirm: "Eliminar todas",
+    },
+  },
   // Mapea mensajes crudos del server (en inglés, tal cual los tira AuthModel)
   // a mensajes en español. Las keys deben matchear EXACTO el string que
   // devuelve el backend en response.data.message, normalizado a

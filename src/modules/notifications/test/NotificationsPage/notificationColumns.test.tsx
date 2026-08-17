@@ -1,0 +1,87 @@
+import { describe, it, expect, vi } from "vitest";
+import { screen, fireEvent } from "@testing-library/react";
+import type { GridRenderCellParams } from "@mui/x-data-grid";
+import i18n from "@i18n/i18n";
+import type { NotificationEntity } from "@typings/notifications/notificationTypes";
+import { NotificationStatusEnum, NotificationTypeEnum } from "@typings/notifications/notificationEnums";
+import { buildColumnsForNotifications } from "../../pages/NotificationsPage/components/notificationColumns";
+import { renderWithTheme } from "../../../shared/test/utils/setupTests";
+
+const buildNotification = (overrides: Partial<NotificationEntity> = {}): NotificationEntity => ({
+    _id: "notification-1",
+    type: NotificationTypeEnum.LowStock,
+    status: NotificationStatusEnum.NotReadYet,
+    createdAt: new Date().toISOString(),
+    payload: { presentationId: "p1", productName: "Fideo Matarazzo 500g", units: 5, minStock: 20 },
+    ...overrides,
+});
+
+const getColumn = (field: string) => {
+    const onDeleteRequest = vi.fn();
+    const onToggleRead = vi.fn();
+    const column = buildColumnsForNotifications({ onDeleteRequest, onToggleRead, t: i18n.t }).find((col) => col.field === field);
+    if (!column) throw new Error(`Column "${field}" not found`);
+    return { column, onDeleteRequest, onToggleRead };
+};
+
+const buildCellParams = (notification: NotificationEntity): GridRenderCellParams<NotificationEntity> =>
+    ({ row: notification } as GridRenderCellParams<NotificationEntity>);
+
+describe("buildColumnsForNotifications", () => {
+    it("define las columnas message, status y actions", () => {
+        const columns = buildColumnsForNotifications({ onDeleteRequest: vi.fn(), onToggleRead: vi.fn(), t: i18n.t });
+        expect(columns.map((c) => c.field)).toEqual(["message", "status", "actions"]);
+    });
+
+    describe("columna message", () => {
+        it("renderiza el mensaje corto de stock bajo", () => {
+            const { column } = getColumn("message");
+            const notification = buildNotification();
+
+            renderWithTheme(column.renderCell!(buildCellParams(notification)));
+
+            expect(screen.getByText("Fideo Matarazzo 500g necesita reposición (5 unidades)")).toBeInTheDocument();
+        });
+    });
+
+    describe("columna status", () => {
+        it("muestra 'No leída' para una notificación sin leer", () => {
+            const { column } = getColumn("status");
+            renderWithTheme(column.renderCell!(buildCellParams(buildNotification({ status: NotificationStatusEnum.NotReadYet }))));
+
+            expect(screen.getByText("No leída")).toBeInTheDocument();
+        });
+
+        it("muestra 'Leída' para una notificación ya leída", () => {
+            const { column } = getColumn("status");
+            renderWithTheme(column.renderCell!(buildCellParams(buildNotification({ status: NotificationStatusEnum.Readed }))));
+
+            expect(screen.getByText("Leída")).toBeInTheDocument();
+        });
+    });
+
+    describe("columna actions", () => {
+        it("llama a onToggleRead con el id al presionar el ojo", () => {
+            const { column, onToggleRead } = getColumn("actions");
+            const notification = buildNotification();
+
+            renderWithTheme(column.renderCell!(buildCellParams(notification)));
+            fireEvent.click(screen.getByLabelText("Marcar como leída"));
+
+            expect(onToggleRead).toHaveBeenCalledWith("notification-1");
+        });
+
+        it("llama a onDeleteRequest con id y título al presionar Eliminar", () => {
+            const { column, onDeleteRequest } = getColumn("actions");
+            const notification = buildNotification();
+
+            renderWithTheme(column.renderCell!(buildCellParams(notification)));
+            fireEvent.click(screen.getByLabelText("Eliminar"));
+
+            expect(onDeleteRequest).toHaveBeenCalledWith(
+                "notification-1",
+                "Fideo Matarazzo 500g necesita reposición (5 unidades)"
+            );
+        });
+    });
+});

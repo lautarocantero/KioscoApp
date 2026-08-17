@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import AppSidebar from "./components/appSideBar/Appsidebar";
 import SimpleSnackbar from "../components/SnackBar/SnackBarComponent";
+import NotificationsBell from "../components/NotificationsBell/NotificationsBell";
 
 const AppShell = () => (
   <Box
@@ -16,8 +17,9 @@ const AppShell = () => (
       flexDirection: "row",
     })}
   >
-    {/* Reservado para la futura campana de notificaciones. */}
-    <Box sx={{ position: "absolute", top: 16, right: 16, zIndex: 10 }} />
+    <Box sx={{ position: "absolute", top: 16, right: 16, zIndex: 10 }}>
+      <NotificationsBell />
+    </Box>
 
     <AppSidebar />
 

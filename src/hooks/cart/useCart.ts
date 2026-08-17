@@ -6,6 +6,7 @@ import { Currency, PaymentMethod, SellStatusEnum } from "../../typings/sells/sel
 import type { AppDispatch, RootState } from "../../store/cart/cartSlice";
 import { iva } from "../../config/constants";
 import { createSellThunk } from "../../store/sell/sellsThunks";
+import { fetchNotificationsThunk } from "../../store/notification/notificationThunks";
 import { createPdfTicket } from "../../modules/shared/helpers/createPdfTicket";
 import { cleanCartThunk, removeFromCartThunk, addOneUnitThunk, setQuantityThunk } from "../../store/cart/cartThunks";
 import { AlertColor } from "@typings/ui/ui";
@@ -135,6 +136,10 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
 
         localStorage.setItem('last_ticket', JSON.stringify(savedTicket));
         createPdfTicket(savedTicket);
+        // El back crea la notificación de venta (y la de stock bajo si corresponde)
+        // como efecto de create-sell; refrescamos acá para que el vendedor que
+        // vendió la vea en la campana al toque, sin esperar al polling.
+        void dispatch(fetchNotificationsThunk());
         await dispatch(cleanCartThunk());
         setSubtotalOverrides({});
         navigate('/cart-order-confirmed');

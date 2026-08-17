@@ -3,6 +3,7 @@ import { Box, IconButton, Tooltip } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import CookieIcon from '@mui/icons-material/Cookie';
 import type { RowActionsCellProps } from "@typings/ui/dataTable.types";
 
@@ -12,8 +13,19 @@ const RowActionsCell = ({
   onEdit,
   onDelete,
   onPresentations,
+  onToggleRead,
+  isRead,
+  toggleReadLabel = "Marcar como leída",
 }: RowActionsCellProps): React.ReactNode => (
   <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }} role="group" aria-label="Acciones de la fila">
+
+    {onToggleRead && (
+      <Tooltip title={toggleReadLabel}>
+        <IconButton size="small" color="secondary" onClick={onToggleRead} aria-label={toggleReadLabel}>
+          {isRead ? <VisibilityOffOutlinedIcon fontSize="small" /> : <VisibilityOutlinedIcon fontSize="small" />}
+        </IconButton>
+      </Tooltip>
+    )}
 
     {onPresentations && (
       <Tooltip title="Ver presentaciones">

@@ -89,4 +89,7 @@ export interface RowActionsCellProps {
   onEdit?: () => void;
   onDelete?: () => void;
   onPresentations?: () => void;
+  onToggleRead?: () => void;
+  isRead?: boolean;
+  toggleReadLabel?: string;
 }

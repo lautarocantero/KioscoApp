@@ -139,6 +139,68 @@ const en = {
     debit: "Debit",
     credit: "Credit",
   },
+  notifications: {
+    bellLabel: "Notifications",
+    unreadBadgeLabel: "{{count}} unread notifications",
+    title: "Notifications",
+    subtitle: "Stay on top of what's happening in your business.",
+    markAllAsRead: "Mark all as read",
+    deleteAll: "Delete all",
+    viewAll: "View all notifications",
+    empty: "You have no notifications",
+    emptyImportant: "No recent sales",
+    emptyAlerts: "No stock alerts",
+    emptyMessage: "No notifications recorded",
+    sections: {
+      important: "Important",
+      more: "More notifications",
+    },
+    filters: {
+      all: "All",
+      alerts: "Alerts",
+      news: "News",
+    },
+    categories: {
+      lowStock: "Inventory",
+      sale: "Sales",
+    },
+    status: {
+      unread: "Unread",
+      read: "Read",
+    },
+    columns: {
+      message: "Notification",
+      status: "Status",
+      actions: "Actions",
+    },
+    messages: {
+      lowStock: "{{productName}} needs restocking ({{units}} units)",
+      lowStockDetail: "Current stock ({{units}}) is below the minimum set ({{minStock}}).",
+      sale: "{{sellerName}} made a sale for {{amount}}",
+      saleDetail: "Sale recorded at the point of sale.",
+    },
+    time: {
+      justNow: "Just now",
+      minutesAgo: "{{count}} min ago",
+      hoursAgo: "{{count}} h ago",
+      daysAgo: "{{count}} d ago",
+    },
+    actions: {
+      markAsRead: "Mark as read",
+      markAsUnread: "Already read",
+      delete: "Delete notification",
+    },
+    deleteDialog: {
+      title: "Delete notification",
+      description: "Are you sure you want to delete this notification? This action can't be undone.",
+      confirm: "Delete",
+    },
+    deleteAllDialog: {
+      title: "Delete all notifications",
+      description: "Are you sure you want to delete all notifications? This action can't be undone.",
+      confirm: "Delete all",
+    },
+  },
   // Keys must match EXACTLY the lowercased/trimmed string the backend
   // returns in response.data.message (see translateAuthError in
   // store/shared/authErrorMessages.ts).

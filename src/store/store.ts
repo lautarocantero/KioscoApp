@@ -9,6 +9,7 @@ import sellSlice from "./sell/sellSlice";
 import sellerSlice from "./seller/sellerSlice";
 import presentationSlice from "./presentation/presentationSlice";
 import receiptSlice from "./receipt/receiptsSlice";
+import notificationSlice from "./notification/notificationSlice";
 import { initAuthHttpBridge } from "../hooks/auth/useLogoutHandler";
 
 
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
     receipt: receiptSlice,
     sell: sellSlice,
     seller: sellerSlice,
+    notification: notificationSlice,
 });
 
 export const store = configureStore({
