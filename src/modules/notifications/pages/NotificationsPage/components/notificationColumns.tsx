@@ -4,6 +4,7 @@ import type { BuildNotificationColumnsArgs, NotificationEntity } from "@typings/
 import { NotificationStatusEnum, NotificationTypeEnum } from "@typings/notifications/notificationEnums";
 import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCell";
 import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
+import { chipColumn } from "../../../../shared/components/DataTable/ColumnHelpers";
 import { getNotificationMessage } from "../../../helpers/getNotificationMessage";
 import { getRelativeTime } from "../../../helpers/getRelativeTime";
 import { getGoToDetailLabel } from "../../../helpers/getGoToDetailLabel";
@@ -89,41 +90,14 @@ export const buildColumnsForNotifications = ({
             );
         },
     },
-    {
-        field: "status",
-        headerName: t("notifications.columns.status"),
-        width: 140,
-        sortable: false,
-        renderCell: (params) => {
-            const isUnread = params.row.status === NotificationStatusEnum.NotReadYet;
-
-            return (
-                <CellCenter>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        {isUnread && (
-                            <Box
-                                aria-hidden
-                                sx={(theme: Theme) => ({
-                                    width: 8,
-                                    height: 8,
-                                    borderRadius: "50%",
-                                    bgcolor: theme.palette.primary.main,
-                                })}
-                            />
-                        )}
-                        <Typography
-                            variant="body2"
-                            sx={(theme: Theme) => ({
-                                color: isUnread ? theme.custom.fontColor : theme.custom.translucidFontColor,
-                            })}
-                        >
-                            {isUnread ? t("notifications.status.unread") : t("notifications.status.read")}
-                        </Typography>
-                    </Box>
-                </CellCenter>
-            );
-        },
-    },
+    // Mismo patrón que el estado de presentaciones (chipColumn: Chip "filled",
+    // color por valor, sin dot aparte) en vez de un render a medida.
+    chipColumn<NotificationEntity>(
+        { field: "status", headerName: t("notifications.columns.status"), width: 140, sortable: false },
+        (value) => (value === NotificationStatusEnum.NotReadYet ? t("notifications.status.unread") : t("notifications.status.read")),
+        (value) => (value === NotificationStatusEnum.NotReadYet ? "primary" : "default"),
+        "filled",
+    ),
     {
         field: "actions",
         headerName: t("notifications.columns.actions"),

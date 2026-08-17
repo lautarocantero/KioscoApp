@@ -1,4 +1,5 @@
 import { Box, IconButton, Tooltip, Typography, type Theme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -14,14 +15,14 @@ import { getGoToDetailLabel } from "../../../notifications/helpers/getGoToDetail
 const getAccentColor = (theme: Theme, type: NotificationTypeEnum): string =>
     type === NotificationTypeEnum.LowStock ? theme.custom.accents.gold : theme.custom.accents.green;
 
-// No leída: un paso más clara que el fondo noisy del contenedor, para
-// destacar. Leída: el mismo color que ese fondo, para "camuflarse" con
-// el contenedor en vez de seguir compitiendo visualmente.
-const getCardBackground = (theme: Theme, isUnread: boolean): string => {
-    const isLight = theme.palette.mode === "light";
-    if (isUnread) return isLight ? theme.custom.white : theme.custom.background;
-    return isLight ? theme.custom.lightBackground : theme.custom.darkBackground;
-};
+// No leída: un velo blanco translúcido por encima del noisy del contenedor
+// — aclara en los dos temas sin necesidad de adivinar qué token "es más
+// claro" en cada uno (los nombres lightBackground/darkBackground no son
+// simétricos entre temas: en el tema claro, lightBackground YA es el fondo
+// general, no un tono intermedio). Leída: transparente, así se ve
+// exactamente el mismo color que el contenedor (nada que adivinar).
+const getCardBackground = (theme: Theme, isUnread: boolean): string =>
+    isUnread ? alpha(theme.custom.white, 0.1) : "transparent";
 
 const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: NotificationListItemProps): React.ReactNode => {
     const { t } = useTranslation();
@@ -49,7 +50,7 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
             sx={(theme: Theme) => ({
                 position: "relative",
                 display: "flex",
-                alignItems: "center",
+                alignItems: "flex-start",
                 gap: 1,
                 mx: 2,
                 my: 0.5,
@@ -88,6 +89,7 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
                     justifyContent: "center",
                     width: 26,
                     height: 26,
+                    mt: 0.25,
                     borderRadius: "50%",
                     flexShrink: 0,
                     bgcolor: `${getAccentColor(theme, notification.type)}26`,
@@ -97,21 +99,22 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
                 {isLowStock ? <WarningAmberOutlinedIcon sx={{ fontSize: "0.9rem" }} /> : <ShoppingCartOutlinedIcon sx={{ fontSize: "0.9rem" }} />}
             </Box>
 
-            {/* mensaje 80% / (tiempo + acciones) 20%, para que el mensaje nunca se corte antes de tiempo */}
-            <Box sx={{ flex: 1, minWidth: 0, display: "flex", alignItems: "center", gap: 1 }}>
+            {/* mensaje 80% / (tiempo + acciones) 20%: el mensaje nunca trunca,
+                crece en alto (wrap) lo que haga falta para mostrarse entero */}
+            <Box sx={{ flex: 1, minWidth: 0, display: "flex", alignItems: "flex-start", gap: 1 }}>
                 <Typography
                     variant="body2"
-                    noWrap
                     sx={(theme: Theme) => ({
                         flex: "1 1 80%",
                         minWidth: 0,
+                        wordBreak: "break-word",
                         color: isUnread ? theme.custom.fontColor : theme.custom.translucidFontColor,
                     })}
                 >
                     {title}
                 </Typography>
 
-                <Box sx={{ flex: "0 0 20%", minWidth: "fit-content", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 0.25 }}>
+                <Box sx={{ flex: "0 0 20%", minWidth: "fit-content", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 0.5 }}>
                     <Typography
                         variant="caption"
                         noWrap
@@ -120,15 +123,15 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
                         {getRelativeTime(notification.createdAt, t)}
                     </Typography>
 
-                    <Box sx={{ display: "flex", gap: 0.25 }}>
+                    <Box sx={{ display: "flex", gap: 0.5 }}>
                         <Tooltip title={toggleReadLabel}>
                             <IconButton
                                 size="small"
                                 onClick={(event) => { event.stopPropagation(); handleToggle(); }}
                                 aria-label={toggleReadLabel}
-                                sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor, p: 0.25 })}
+                                sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor, p: 0.5 })}
                             >
-                                {isUnread ? <VisibilityOutlinedIcon sx={{ fontSize: "1rem" }} /> : <VisibilityOffOutlinedIcon sx={{ fontSize: "1rem" }} />}
+                                {isUnread ? <VisibilityOutlinedIcon sx={{ fontSize: "1.25rem" }} /> : <VisibilityOffOutlinedIcon sx={{ fontSize: "1.25rem" }} />}
                             </IconButton>
                         </Tooltip>
 
@@ -137,9 +140,9 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
                                 size="small"
                                 onClick={(event) => { event.stopPropagation(); onGoToDetail(notification); }}
                                 aria-label={goToDetailLabel}
-                                sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor, p: 0.25 })}
+                                sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor, p: 0.5 })}
                             >
-                                <ArrowForwardIcon sx={{ fontSize: "1rem" }} />
+                                <ArrowForwardIcon sx={{ fontSize: "1.25rem" }} />
                             </IconButton>
                         </Tooltip>
                     </Box>

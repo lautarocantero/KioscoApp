@@ -25,8 +25,10 @@ const getColumn = (field: string) => {
     return { column, onDeleteRequest, onToggleRead, onGoToDetail };
 };
 
+// El DataGrid real completa `value` desde `row[field]`; acá lo simulamos con
+// `status` (el único campo que `chipColumn` lee de `.value` en vez de `.row`).
 const buildCellParams = (notification: NotificationEntity): GridRenderCellParams<NotificationEntity> =>
-    ({ row: notification } as GridRenderCellParams<NotificationEntity>);
+    ({ row: notification, value: notification.status } as GridRenderCellParams<NotificationEntity>);
 
 describe("buildColumnsForNotifications", () => {
     it("define las columnas type, date, message, status y actions", () => {
