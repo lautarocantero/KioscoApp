@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import type { NotificationEntity } from "@typings/notifications/notificationTypes";
 import { NotificationFilterEnum } from "@typings/notifications/notificationEnums";
@@ -36,8 +37,6 @@ const NotificationsPage = (): ReactNode => {
         <AppLayout fullWidth>
             <NotificationsPageHeader />
 
-            <NotificationsFilterTabs filter={filter} counts={counts} onChange={setFilter} />
-
             <DataTable<NotificationEntity>
                 rows={rows}
                 columns={columns}
@@ -48,11 +47,14 @@ const NotificationsPage = (): ReactNode => {
                 height="35em"
                 getRowId={(row) => row._id}
                 extraActions={
-                    <NotificationsPageActions
-                        onMarkAllAsRead={handleMarkAllAsRead}
-                        onDeleteAll={handleDeleteAllRequest}
-                        disabled={counts[NotificationFilterEnum.All] === 0}
-                    />
+                    <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", width: "100%", gap: 2 }}>
+                        <NotificationsFilterTabs filter={filter} counts={counts} onChange={setFilter} />
+                        <NotificationsPageActions
+                            onMarkAllAsRead={handleMarkAllAsRead}
+                            onDeleteAll={handleDeleteAllRequest}
+                            disabled={counts[NotificationFilterEnum.All] === 0}
+                        />
+                    </Box>
                 }
                 deleteDialog={{
                     open: deleteDialog.open,

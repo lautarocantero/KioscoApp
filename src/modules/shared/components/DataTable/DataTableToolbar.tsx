@@ -33,7 +33,7 @@ const DataTableToolbar = ({ search, newItem, extraActions }: DataTableToolbarPro
             )}
 
             {extraActions && (
-                <Box sx={{ ml: { xs: "none", sm: newItem ? 0 : "auto" }, display: "flex", alignItems: "center", gap: 1.5 }}>
+                <Box sx={{ flex: newItem || search ? "0 0 auto" : 1, ml: { xs: "none", sm: newItem ? 0 : "auto" }, display: "flex", alignItems: "center", gap: 1.5 }}>
                     {extraActions}
                 </Box>
             )}

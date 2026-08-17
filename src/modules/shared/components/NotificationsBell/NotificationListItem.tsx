@@ -10,10 +10,18 @@ import { NotificationStatusEnum, NotificationTypeEnum } from "@typings/notificat
 import { getNotificationMessage } from "../../../notifications/helpers/getNotificationMessage";
 import { getRelativeTime } from "../../../notifications/helpers/getRelativeTime";
 import { getGoToDetailLabel } from "../../../notifications/helpers/getGoToDetailLabel";
-import { getNoisyBackgroundSx } from "../NoisyBackground/NoisyBackground";
 
 const getAccentColor = (theme: Theme, type: NotificationTypeEnum): string =>
     type === NotificationTypeEnum.LowStock ? theme.custom.accents.gold : theme.custom.accents.green;
+
+// No leída: un paso más clara que el fondo noisy del contenedor, para
+// destacar. Leída: el mismo color que ese fondo, para "camuflarse" con
+// el contenedor en vez de seguir compitiendo visualmente.
+const getCardBackground = (theme: Theme, isUnread: boolean): string => {
+    const isLight = theme.palette.mode === "light";
+    if (isUnread) return isLight ? theme.custom.white : theme.custom.background;
+    return isLight ? theme.custom.lightBackground : theme.custom.darkBackground;
+};
 
 const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: NotificationListItemProps): React.ReactNode => {
     const { t } = useTranslation();
@@ -39,9 +47,10 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
                 handleToggle();
             }}
             sx={(theme: Theme) => ({
+                position: "relative",
                 display: "flex",
-                flexDirection: "column",
-                gap: 0.25,
+                alignItems: "center",
+                gap: 1,
                 mx: 2,
                 my: 0.5,
                 px: 1.25,
@@ -49,12 +58,11 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
                 borderRadius: "8px",
                 borderLeft: "3px solid",
                 borderLeftColor: isUnread ? getAccentColor(theme, notification.type) : theme.custom.darkGray,
-                opacity: isUnread ? 1 : 0.65,
+                bgcolor: getCardBackground(theme, isUnread),
                 cursor: "pointer",
                 transition: "border-color 0.15s ease",
                 "&:hover": { borderLeftColor: getAccentColor(theme, notification.type) },
                 "&:focus-visible": { outline: `2px solid ${theme.palette.primary.main}`, outlineOffset: 2 },
-                ...getNoisyBackgroundSx({ theme }),
             })}
         >
             {isUnread && (
@@ -68,34 +76,34 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
                         height: 7,
                         borderRadius: "50%",
                         bgcolor: theme.palette.primary.main,
-                        zIndex: 1,
                     })}
                 />
             )}
 
-            <Box sx={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 1 }}>
-                <Box
-                    aria-hidden
-                    sx={(theme: Theme) => ({
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: 26,
-                        height: 26,
-                        borderRadius: "50%",
-                        flexShrink: 0,
-                        bgcolor: `${getAccentColor(theme, notification.type)}26`,
-                        color: getAccentColor(theme, notification.type),
-                    })}
-                >
-                    {isLowStock ? <WarningAmberOutlinedIcon sx={{ fontSize: "0.9rem" }} /> : <ShoppingCartOutlinedIcon sx={{ fontSize: "0.9rem" }} />}
-                </Box>
+            <Box
+                aria-hidden
+                sx={(theme: Theme) => ({
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 26,
+                    height: 26,
+                    borderRadius: "50%",
+                    flexShrink: 0,
+                    bgcolor: `${getAccentColor(theme, notification.type)}26`,
+                    color: getAccentColor(theme, notification.type),
+                })}
+            >
+                {isLowStock ? <WarningAmberOutlinedIcon sx={{ fontSize: "0.9rem" }} /> : <ShoppingCartOutlinedIcon sx={{ fontSize: "0.9rem" }} />}
+            </Box>
 
+            {/* mensaje 80% / (tiempo + acciones) 20%, para que el mensaje nunca se corte antes de tiempo */}
+            <Box sx={{ flex: 1, minWidth: 0, display: "flex", alignItems: "center", gap: 1 }}>
                 <Typography
                     variant="body2"
                     noWrap
                     sx={(theme: Theme) => ({
-                        flex: 1,
+                        flex: "1 1 80%",
                         minWidth: 0,
                         color: isUnread ? theme.custom.fontColor : theme.custom.translucidFontColor,
                     })}
@@ -103,36 +111,39 @@ const NotificationListItem = ({ notification, onToggleRead, onGoToDetail }: Noti
                     {title}
                 </Typography>
 
-                <Typography
-                    variant="caption"
-                    sx={(theme: Theme) => ({ flexShrink: 0, color: theme.custom.translucidFontColor })}
-                >
-                    {getRelativeTime(notification.createdAt, t)}
-                </Typography>
-            </Box>
-
-            <Box sx={{ position: "relative", zIndex: 1, display: "flex", justifyContent: "flex-end", gap: 0.25 }}>
-                <Tooltip title={toggleReadLabel}>
-                    <IconButton
-                        size="small"
-                        onClick={(event) => { event.stopPropagation(); handleToggle(); }}
-                        aria-label={toggleReadLabel}
-                        sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor, p: 0.5 })}
+                <Box sx={{ flex: "0 0 20%", minWidth: "fit-content", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 0.25 }}>
+                    <Typography
+                        variant="caption"
+                        noWrap
+                        sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor })}
                     >
-                        {isUnread ? <VisibilityOutlinedIcon fontSize="small" /> : <VisibilityOffOutlinedIcon fontSize="small" />}
-                    </IconButton>
-                </Tooltip>
+                        {getRelativeTime(notification.createdAt, t)}
+                    </Typography>
 
-                <Tooltip title={goToDetailLabel}>
-                    <IconButton
-                        size="small"
-                        onClick={(event) => { event.stopPropagation(); onGoToDetail(notification); }}
-                        aria-label={goToDetailLabel}
-                        sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor, p: 0.5 })}
-                    >
-                        <ArrowForwardIcon fontSize="small" />
-                    </IconButton>
-                </Tooltip>
+                    <Box sx={{ display: "flex", gap: 0.25 }}>
+                        <Tooltip title={toggleReadLabel}>
+                            <IconButton
+                                size="small"
+                                onClick={(event) => { event.stopPropagation(); handleToggle(); }}
+                                aria-label={toggleReadLabel}
+                                sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor, p: 0.25 })}
+                            >
+                                {isUnread ? <VisibilityOutlinedIcon sx={{ fontSize: "1rem" }} /> : <VisibilityOffOutlinedIcon sx={{ fontSize: "1rem" }} />}
+                            </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title={goToDetailLabel}>
+                            <IconButton
+                                size="small"
+                                onClick={(event) => { event.stopPropagation(); onGoToDetail(notification); }}
+                                aria-label={goToDetailLabel}
+                                sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor, p: 0.25 })}
+                            >
+                                <ArrowForwardIcon sx={{ fontSize: "1rem" }} />
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                </Box>
             </Box>
         </Box>
     );
