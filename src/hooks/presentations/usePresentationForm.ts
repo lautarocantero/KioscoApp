@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import type { FormikErrors } from "formik";
 import type {
     CreatedPresentationInterface,
@@ -18,8 +20,8 @@ import { usePresentationData } from "./usePresentationData";
 import { useFormSteps } from "../shared/useFormSteps";
 import { useErrorParser } from "../shared/useErrorParser";
 import { stepFieldsMap } from "../../modules/presentations/schema/PresentationFormSchema";
+import { getPresentationStepsLabels } from "../../modules/presentations/components/PresentationForm/presentationFormStepConfig";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
-import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../config/constants";
 import { WEIGHT_SALE_TYPE } from "@typings/presentation/presentationEnum";
 
 
@@ -34,7 +36,7 @@ const getMinStockValue = (values: Pick<PresentationFormValues, "sale_type" | "mi
         ? Number(values.min_stock.replace(/g$/, ""))
         : Number(values.min_stock);
 
-const buildStepsConfig = () => PRODUCTS_VARIANT_STEPS_LABELS.map((label) => ({ title: label, content: null }));
+const buildStepsConfig = (t: TFunction) => getPresentationStepsLabels(t).map((label) => ({ title: label, content: null }));
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 usePresentationCreate                       ║
@@ -42,6 +44,7 @@ const buildStepsConfig = () => PRODUCTS_VARIANT_STEPS_LABELS.map((label) => ({ t
 
 export function usePresentationCreate(): UsePresentationFormReturn {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const { product_id: productId } = useParams<{ product_id: string }>();
     const { productData, isLoading: loadingProduct, error: productError } = useProductData(productId);
     const dispatch = useDispatch<AppDispatch>();
@@ -53,7 +56,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
 
     const { parseError } = useErrorParser();
 
-    const { stepState, goToNext, goToPrev, goToStep, totalSteps } = useFormSteps(buildStepsConfig());
+    const { stepState, goToNext, goToPrev, goToStep, totalSteps } = useFormSteps(buildStepsConfig(t));
 
     const handleNextStep = async (
         validateForm: () => Promise<FormikErrors<PresentationFormValues>>,
@@ -95,14 +98,14 @@ export function usePresentationCreate(): UsePresentationFormReturn {
         // pero el body que se manda a la API (CreatePresentationBody) exige
         // un ModelUnit real.
         if (values.model_unit === "") {
-            setSubmitError("Debe seleccionar una unidad de medida");
+            setSubmitError(t("presentations.errors.selectUnit"));
             return;
         }
 
         setIsSubmitting(true);
         setSubmitError(null);
         const stockValue = getStockValue(values);
-        const minStockValue = getMinStockValue(values); 
+        const minStockValue = getMinStockValue(values);
 
         try {
             const now = new Date().toISOString();
@@ -124,6 +127,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
                 price:           values.price,
                 expiration_date: values.expiration_date,
                 category:        values.category,
+                providers:       values.providers,
                 created_at:      now,
                 updated_at:      now,
             };
@@ -136,7 +140,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
 
             setCreatedPresentation({ _id: created._id, name: values.name});
         } catch (error) {
-            const message = await parseError(error, "Error inesperado al crear la presentación");
+            const message = await parseError(error, t("presentations.errors.createUnexpected"));
             setSubmitError(message);
         } finally {
             setIsSubmitting(false);
@@ -205,6 +209,7 @@ export function usePresentationCreate(): UsePresentationFormReturn {
 
 export function usePresentationEdit(): UsePresentationEditFormReturn {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const { presentation_id: variantId } = useParams<{ presentation_id: string }>();
     const { product_id: productId } = useParams<{ product_id: string }>();
     const dispatch = useDispatch<AppDispatch>();
@@ -222,7 +227,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
 
     const { parseError } = useErrorParser();
 
-    const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(buildStepsConfig());
+    const { stepState, goToNext, goToPrev, totalSteps } = useFormSteps(buildStepsConfig(t));
 
     const handleNextStep = async (
         validateForm: () => Promise<FormikErrors<PresentationEditFormValues>>,
@@ -261,7 +266,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
 
         // 👇 Guard: narrowa model_unit de "ModelUnit | \"\"" a "ModelUnit"
         if (values.model_unit === "") {
-            setSubmitError("Debe seleccionar una unidad de medida");
+            setSubmitError(t("presentations.errors.selectUnit"));
             return;
         }
 
@@ -294,7 +299,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
 
             setUpdatedVariant({ _id: variantId, name: values.name });
         } catch (error) {
-            const message = await parseError(error, "Error inesperado al actualizar la presentación");
+            const message = await parseError(error, t("presentations.errors.updateUnexpected"));
             setSubmitError(message);
         } finally {
             setIsSubmitting(false);
@@ -341,6 +346,7 @@ export function usePresentationEdit(): UsePresentationEditFormReturn {
 ╚══════════════════════════════════════════════*/
 
 export const usePresentationFormHeader = (actionTitle: FormModeComplexEnum | undefined) => {
+    const { t } = useTranslation();
     const { product_id } = useParams<{ product_id: string }>();
     const { productData } = useProductData(product_id);
 
@@ -352,8 +358,10 @@ export const usePresentationFormHeader = (actionTitle: FormModeComplexEnum | und
     : null;
 
     const headerTitle = isCreate
-        ? `Crear presentación${truncatedName ? ` de ${truncatedName}` : ""}`
-        : "Editar presentación";
+        ? (truncatedName
+            ? t("presentations.form.header.createWithProduct", { product: truncatedName })
+            : t("presentations.form.header.createGeneric"))
+        : t("presentations.form.header.edit");
 
     return { isCreate, headerTitle, productId: product_id };
 };

@@ -34,6 +34,12 @@ export const presentationSlice = createSlice({
         removePresentationFromList: (state, action: PayloadAction<string>) => {
             state.presentations = state.presentations.filter((p) => p._id !== action.payload);
         },
+        // Reposición de stock desde la tabla: pisa solo `stock` de la fila afectada,
+        // sin depender de `selectedPresentation` (la tabla no lo tiene cargado).
+        patchPresentationStock: (state, action: PayloadAction<{ _id: string; stock: number }>) => {
+            const target = state.presentations.find((p) => p._id === action.payload._id);
+            if (target) target.stock = action.payload.stock;
+        },
         setError: (state, action: PayloadAction<PresentationStateError>) => {
             state.errorMessage = action.payload.errorMessage;
             state.isLoading = false;
@@ -68,6 +74,7 @@ export const {
     setPresentations,
     setSelectedPresentation,
     removePresentationFromList,
+    patchPresentationStock,
     setError,
     clearError,
     resetPresentations,

@@ -1,16 +1,30 @@
-import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
-import { getPriceLabel, isWeightSaleType } from "../../../shared/helpers/saleTypeHelper";
+import type { TFunction } from "i18next";
+import { getPresentationFieldRegistry } from "./PresentationFieldRegistry";
+import { isWeightSaleType } from "../../../shared/helpers/saleTypeHelper";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import type { FieldRegistry } from "@typings/shared/types/formCard.types";
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🔎 getPresentationStepsLabels                                         ║
+║ Labels traducidos de los pasos del wizard, en orden.                  ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const getPresentationStepsLabels = (t: TFunction): string[] => [
+  t("presentations.form.steps.identity"),
+  t("presentations.form.steps.identification"),
+  t("presentations.form.steps.format"),
+  t("presentations.form.steps.stock"),
+  t("presentations.form.steps.commercial"),
+  t("presentations.form.steps.providers"),
+];
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🔎 getIdentificationStepConfig                                        ║
 ║ Campos del 2do step del form (identificación: sku, barcode, imagen). ║
 ║ No depende de sale_type, no necesita override de registry.            ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-export const getIdentificationStepConfig = () => {
+export const getIdentificationStepConfig = (t: TFunction) => {
   const fields: (keyof PresentationFormValues)[] = ["sku", "barcode", "image_url"];
-  return { fields, registryOverride: PRESENTATION_FIELD_REGISTRY };
+  return { fields, registryOverride: getPresentationFieldRegistry(t) };
 };
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -18,7 +32,7 @@ export const getIdentificationStepConfig = () => {
 ║ Campos y overrides de registry para el 3er step del form              ║
 ║ (formato y tamaño), según si la presentación es por peso.             ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-export const getFormatStepConfig = (values: PresentationFormValues) => {
+export const getFormatStepConfig = (t: TFunction, values: PresentationFormValues) => {
   const isWeight = isWeightSaleType(values.sale_type);
 
   // model_type no aplica a "weight" (se valida como notRequired en el schema).
@@ -27,7 +41,7 @@ export const getFormatStepConfig = (values: PresentationFormValues) => {
     ? ["model_size", "model_unit"]
     : ["model_type", "model_size", "model_unit"];
 
-  return { isWeight, fields, registryOverride: PRESENTATION_FIELD_REGISTRY };
+  return { isWeight, fields, registryOverride: getPresentationFieldRegistry(t) };
 };
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -35,30 +49,31 @@ export const getFormatStepConfig = (values: PresentationFormValues) => {
 ║ Campos y overrides de registry para el 4to step del form (stock),    ║
 ║ según si la presentación es por peso.                                 ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-export const getStockStepConfig = (values: PresentationFormValues) => {
+export const getStockStepConfig = (t: TFunction, values: PresentationFormValues) => {
   const isWeight = isWeightSaleType(values.sale_type);
+  const registry = getPresentationFieldRegistry(t);
 
   // "stock" ahora vive siempre en este step, para ambos tipos de venta.
   const fields: (keyof PresentationFormValues)[] = ["stock", "min_stock"];
 
   const registryOverride: FieldRegistry<PresentationFormValues> = isWeight
     ? {
-        ...PRESENTATION_FIELD_REGISTRY,
+        ...registry,
         stock: {
-          ...PRESENTATION_FIELD_REGISTRY.stock,
-          label: "Cantidad en stock (gramos)",
-          placeholder: "Ej: 800",
-          tooltip: "Peso total disponible de este producto, en gramos.",
+          ...registry.stock,
+          label: t("presentations.form.fields.stock.labelWeight"),
+          placeholder: t("presentations.form.fields.stock.placeholderWeight"),
+          tooltip: t("presentations.form.fields.stock.tooltipWeight"),
         },
         min_stock: {
-          ...PRESENTATION_FIELD_REGISTRY.min_stock,
-          label: "Cantidad mínima de stock (gramos)",
-          tooltip: "Umbral mínimo de gramos a partir del cual se avisa que el stock es bajo",
+          ...registry.min_stock,
+          label: t("presentations.form.fields.min_stock.labelWeight"),
+          tooltip: t("presentations.form.fields.min_stock.tooltipWeight"),
           type: "text",
-          placeholder: "Ej: 250g",
+          placeholder: t("presentations.form.fields.min_stock.placeholderWeight"),
         },
       }
-    : PRESENTATION_FIELD_REGISTRY;
+    : registry;
 
   return { isWeight, fields, registryOverride };
 };
@@ -68,8 +83,9 @@ export const getStockStepConfig = (values: PresentationFormValues) => {
 ║ Campos y overrides de registry para el 5to step del form (datos      ║
 ║ comerciales), según si la presentación es por peso.                   ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-export const getPricingStepConfig = (values: PresentationFormValues) => {
+export const getPricingStepConfig = (t: TFunction, values: PresentationFormValues) => {
   const isWeight = isWeightSaleType(values.sale_type);
+  const registry = getPresentationFieldRegistry(t);
 
   const fields: (keyof PresentationFormValues)[] = values.is_perishable
     ? ["price", "is_perishable", "expiration_date"]
@@ -77,15 +93,14 @@ export const getPricingStepConfig = (values: PresentationFormValues) => {
 
   const registryOverride = isWeight
     ? {
-        ...PRESENTATION_FIELD_REGISTRY,
+        ...registry,
         price: {
-          ...PRESENTATION_FIELD_REGISTRY.price,
-          label: getPriceLabel(values.sale_type),
-          placeholder: "Ej: 1.50",
-          tooltip: "Precio de venta al público cada 100 gramos de esta presentación",
+          ...registry.price,
+          label: t("presentations.form.fields.price.labelWeight"),
+          tooltip: t("presentations.form.fields.price.tooltipWeight"),
         },
       }
-    : PRESENTATION_FIELD_REGISTRY;
+    : registry;
 
   return { isWeight, fields, registryOverride };
 };

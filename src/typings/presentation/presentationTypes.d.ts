@@ -1,4 +1,6 @@
 import type { CreatedProductInterface } from "@typings/product/productTypes";
+import type { TFunction } from "i18next";
+import type { RestockDialogState } from "@typings/ui/dialog.types";
 import type { ModelUnit, PresentationCategory, SaleType } from "./presentationEnum";
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -26,6 +28,8 @@ interface PresentationEntity {
     updated_at: string;
     is_perishable: boolean
     sale_type: SaleType;
+    // ids de ProviderEntity — proveedores asociados a esta presentación. Opcional: puede quedar vacío.
+    providers?: string[];
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -68,7 +72,8 @@ interface PresentationBaseFormValues {
     sku: string;
     stock: number;
     is_perishable: boolean
-    sale_type: SaleType; 
+    sale_type: SaleType;
+    providers?: string[];
 }
 
 // Formulario de CREACIÓN — idéntico a la base por ahora (sin campos extra de variante/stock)
@@ -193,6 +198,16 @@ export interface UsePresentationDetailStatusReturn {
     isNotExpired: boolean;
 }
 
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 🚚 PROVEEDORES DE LA PRESENTACIÓN 🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚  ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface UsePresentationProvidersFieldReturn {
+    providerOptions: string[];
+    loading: boolean;
+    getProviderLabel: (providerId: string) => string;
+}
+
 export interface UseCategorySelectorParams<C extends string> {
     value: C | null;
     onChange: (value: C | null) => void;
@@ -228,7 +243,9 @@ export interface UseCategorySelectorMultiResult<C extends string> {
 // Argumentos para construir las columnas del grid de presentations
 export type BuildColumnsArgs = {
     onDeleteRequest: (id: string, name: string) => void;
+    onRestockRequest: (presentation: Presentation) => void;
     navigate: ReturnType<typeof useNavigate>;
+    t: TFunction;
 };
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -247,6 +264,21 @@ export interface PresentationCreatedComponentProps {
 export interface UpdatedPresentationInterface {
     _id:  string;
     name: string;
+}
+
+// /*══════════════════════════════════════════════════════════════════════╗
+// ║ 📦 REPOSICIÓN DE STOCK 📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦📦     ║
+// ╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface UseRestockPresentationReturn {
+    restockDialog: RestockDialogState;
+    stockValue: number;
+    isSubmitting: boolean;
+    errorMessage: string | null;
+    handleRestockRequest: (presentation: Presentation) => void;
+    handleStockChange: (value: number) => void;
+    handleRestockCancel: () => void;
+    handleRestockConfirm: () => Promise<void>;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

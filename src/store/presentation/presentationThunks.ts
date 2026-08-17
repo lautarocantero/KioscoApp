@@ -6,6 +6,7 @@ import {
     setPresentations,
     setSelectedPresentation,
     removePresentationFromList,
+    patchPresentationStock,
     setError,
     resetPresentations,
     checkingAllPresentations,
@@ -270,6 +271,30 @@ export const editPresentation = (body: Partial<Presentation> & Pick<Presentation
             dispatch(setError({ errorMessage: "Error al actualizar la presentación" }));
             handleError(error);
             throw error; // mismo motivo que en editProduct
+        }
+    };
+};
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ 🚀 restockPresentation                                                 ║
+║ 📥 Entrada: _id de la presentación + nuevo valor de stock              ║
+║ ⚙️  Proceso:                                                            ║
+║   1. PUT /edit-presentation/:_id — solo el campo `stock`               ║
+║   2. A diferencia de editPresentation, NO depende de                   ║
+║      `selectedPresentation` (la tabla de listado no lo tiene cargado): ║
+║      pisa directamente la fila afectada en `presentations` por _id.    ║
+║ 📤 Salida: boolean (true si se actualizó correctamente)                ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+export const restockPresentation = ({ _id, stock }: Pick<Presentation, "_id" | "stock">) => {
+    return async (dispatch: Dispatch): Promise<boolean> => {
+        try {
+            await editPresentationRequest({ _id, stock, updated_at: new Date().toISOString() });
+            dispatch(patchPresentationStock({ _id, stock }));
+            return true;
+        } catch (error: unknown) {
+            dispatch(setError({ errorMessage: "Error al actualizar el stock de la presentación" }));
+            handleError(error);
+            return false;
         }
     };
 };

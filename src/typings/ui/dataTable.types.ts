@@ -121,4 +121,9 @@ export interface RowActionsCellProps {
   toggleReadLabel?: string;
   onGoToDetail?: () => void;
   goToDetailLabel?: string;
+  onRestock?: () => void;
+  restockLabel?: string;
+  deleteLabel?: string;
+  editLabel?: string;
+  viewLabel?: string;
 }

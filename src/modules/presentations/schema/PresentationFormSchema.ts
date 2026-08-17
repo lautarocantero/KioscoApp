@@ -1,5 +1,6 @@
 // PresentationFormSchema.ts
 import * as Yup from "yup";
+import type { TFunction } from "i18next";
 import type {
     ExistingPresentationInterface,
     PresentationFormValues,
@@ -35,6 +36,7 @@ export const getPresentationFormInitialValues = (): PresentationFormValues => ({
     is_perishable:   true,
     expiration_date: getTodayISODate(),
     category:        [],
+    providers:       [],
 });
 
 export const getPresentationEditInitialValues = (
@@ -57,6 +59,7 @@ export const getPresentationEditInitialValues = (
     is_perishable:   presentation?.is_perishable ?? true,
     expiration_date: presentation?.expiration_date  ?? getTodayISODate(),
     category:        presentation?.category         ?? [],
+    providers:       presentation?.providers        ?? [],
 });
 
 // alias para compatibilidad con PresentationDetailForm
@@ -64,74 +67,75 @@ export const getPresentationDetailInitialValues = getPresentationEditInitialValu
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
 
-const baseShape = {
-    name:       Yup.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100).required("Nombre requerido"),
-    description:       Yup.string().trim().min(2, "La descripcion debe tener al menos 2 caracteres").max(100).required("Descripcion requerida"),
-    sku:        Yup.string().min(2).max(50),
+const getBaseShape = (t: TFunction) => ({
+    name:       Yup.string().trim().min(2, t("presentations.validation.name.min")).max(100, t("presentations.validation.name.max")).required(t("presentations.validation.name.required")),
+    description:       Yup.string().trim().min(2, t("presentations.validation.description.min")).max(100, t("presentations.validation.description.max")).required(t("presentations.validation.description.required")),
+    sku:        Yup.string().min(2, t("presentations.validation.sku.min")).max(50, t("presentations.validation.sku.max")),
     barcode:    Yup.string()
         .test(
             "barcode-format",
-            "El código de barras debe tener entre 8 y 14 dígitos numéricos",
+            t("presentations.validation.barcode.format"),
             (value) => !value || BARCODE_REGEX.test(value),
         ),
     model_type: Yup.mixed<ModelType>()
-        .oneOf(MODEL_TYPE_VALUES, "Tipo de modelo inválido")
+        .oneOf(MODEL_TYPE_VALUES, t("presentations.validation.model_type.invalid"))
         .when('sale_type', {
             is: WEIGHT_SALE_TYPE,
             then: (schema) => schema.notRequired(),
-            otherwise: (schema) => schema.required("Tipo de modelo requerido"),
+            otherwise: (schema) => schema.required(t("presentations.validation.model_type.required")),
         }),
     model_size: Yup.number()
-        .typeError("Debe ser un número")
-        .integer("Debe ser un número entero")
-        .positive("Debe ser mayor a 0")
-        .required("Tamaño requerido"),
+        .typeError(t("presentations.validation.model_size.typeError"))
+        .integer(t("presentations.validation.model_size.integer"))
+        .positive(t("presentations.validation.model_size.positive"))
+        .required(t("presentations.validation.model_size.required")),
     model_unit: Yup.mixed<ModelUnit>()
-        .oneOf(MODEL_UNIT_VALUES, "Tipo de presentación inválido")
+        .oneOf(MODEL_UNIT_VALUES, t("presentations.validation.model_unit.invalid"))
         .when('sale_type', {
             is: WEIGHT_SALE_TYPE,
             then: (schema) => schema.notRequired(),
-            otherwise: (schema) => schema.required("Tipo de presentación requerido"),
+            otherwise: (schema) => schema.required(t("presentations.validation.model_unit.required")),
         }),
     sale_type: Yup.mixed<SaleType>()
-        .oneOf(SALE_TYPE_VALUES, "Tipo de venta inválido")
-        .required("Tipo de venta requerido"),
+        .oneOf(SALE_TYPE_VALUES, t("presentations.validation.sale_type.invalid"))
+        .required(t("presentations.validation.sale_type.required")),
     image_url:       Yup.string()
         .trim()
         .test(
             "valid-image-path",
-            "Debe ser una ruta relativa (ej: /images/foto.png) o una URL válida (https://...)",
+            t("presentations.validation.image_url.invalid"),
             (value) => !value || RELATIVE_OR_URL_REGEX.test(value),
         ),
     min_stock: Yup.string()
-        .required("Stock mínimo requerido")
-        .matches(/^\d+$/, "Debe ser un número entero")
+        .required(t("presentations.validation.min_stock.required"))
+        .matches(/^\d+$/, t("presentations.validation.min_stock.format"))
         .test(
             "min-stock-non-negative",
-            "No puede ser negativo",
+            t("presentations.validation.min_stock.nonNegative"),
             (value) => value === undefined || Number(value) >= 0,
         ),
     stock: Yup.number()
-        .integer("Debe ser un número entero")
-        .min(0, "No puede ser negativo")
-        .required("Stock requerido")
-        .typeError("Debe ser un número"),
-    price:           Yup.number().moreThan(0, "El precio debe ser mayor a 0").required("Precio requerido").typeError("Debe ser un número"),
-    is_perishable: Yup.boolean().required("Indicá si el producto es perecedero"),
+        .integer(t("presentations.validation.stock.integer"))
+        .min(0, t("presentations.validation.stock.nonNegative"))
+        .required(t("presentations.validation.stock.required"))
+        .typeError(t("presentations.validation.stock.typeError")),
+    price:           Yup.number().moreThan(0, t("presentations.validation.price.moreThan")).required(t("presentations.validation.price.required")).typeError(t("presentations.validation.price.typeError")),
+    is_perishable: Yup.boolean().required(t("presentations.validation.is_perishable.required")),
     expiration_date: Yup.date()
         .when('is_perishable', {
             is: true,
             then: (schema) => schema
-                .min(getStartOfToday(), "La fecha no puede ser anterior a hoy")
-                .required("Fecha de vencimiento requerida")
-                .typeError("Fecha inválida"),
+                .min(getStartOfToday(), t("presentations.validation.expiration_date.min"))
+                .required(t("presentations.validation.expiration_date.required"))
+                .typeError(t("presentations.validation.expiration_date.invalid")),
             otherwise: (schema) => schema.notRequired(),
         }),
     category: Yup.array().of(Yup.mixed<PresentationCategory>().oneOf(Object.values(PresentationCategory))),
-};
+    providers: Yup.array().of(Yup.string()),
+});
 
-export const presentationFormSchema = Yup.object(baseShape);
-export const presentationEditFormSchema = Yup.object(baseShape);
+export const getPresentationFormSchema = (t: TFunction) => Yup.object(getBaseShape(t));
+export const getPresentationEditFormSchema = (t: TFunction) => Yup.object(getBaseShape(t));
 
 // ── Step fields map ───────────────────────────────────────────────────────────
 
@@ -141,4 +145,5 @@ export const stepFieldsMap: Record<number, (keyof PresentationFormValues)[]> = {
     2: ["model_type", "model_size", "model_unit"],
     3: ["stock", "min_stock"],
     4: ["price", "is_perishable", "expiration_date"],
+    5: ["providers"],
 };

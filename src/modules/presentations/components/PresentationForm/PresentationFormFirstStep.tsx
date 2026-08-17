@@ -1,14 +1,15 @@
 import FormCard from "../../../shared/components/FormCard/FormCard";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
-import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import { useParams } from "react-router-dom";
 import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
 import { usePresentationFormHeader } from "../../../../hooks/presentations/usePresentationForm";
-import { PRESENTATION_FIELD_REGISTRY } from "./PresentationFieldRegistry";
+import { getPresentationFieldRegistry } from "./PresentationFieldRegistry";
+import { getPresentationStepsLabels } from "./presentationFormStepConfig";
 import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
@@ -16,36 +17,37 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 
 const PresentationFormFirstStep = (): ReactNode => {
     const theme = useTheme();
-    const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation(); 
+    const { t } = useTranslation();
+    const { actionTitle , currentStep, submitError, stepErrors  } = useFormNavigation();
     const { product_id } = useParams<{ product_id: string }>();
     const { isCreate, headerTitle } = usePresentationFormHeader(actionTitle);
+    const registry = getPresentationFieldRegistry(t);
 
     return (
-        <FormCard 
-            submitText={isCreate ? "Crear" : "Actualizar"} 
-            showButtons 
+        <FormCard
+            submitText={isCreate ? t("presentations.form.submit.create") : t("presentations.form.submit.update")}
+            showButtons
             header={{ title: headerTitle }}
             submitError={submitError}
             stepErrors={stepErrors}
-            multiStepHeader={{ 
-                stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS, 
-                currentStep 
+            multiStepHeader={{
+                stepsLabels: getPresentationStepsLabels(t),
+                currentStep
             }}
             accordion={{
-                title: "¿Qué son las presentaciones?",
-                content:
-                    "Son las distintas formas en las que se vende un mismo producto: cambia el envase, tamaño o variante, pero es el mismo producto. Por ejemplo, Coca-Cola es un solo producto que puede venir en lata, botella, versión light o retornable.",
+                title: t("presentations.form.accordion.title"),
+                content: t("presentations.form.accordion.content"),
                 bannerImage: {
                     src: "/images/productExample/presentations.jpg",
-                    alt: "Producto y presentaciones",
+                    alt: t("presentations.form.accordion.bannerAlt"),
                 },
             }}
             defaultBack={`/products/${product_id}/presentations`}
         >
             <FormFieldsRenderer<PresentationFormValues>
                 idPrefix="presentation"
-                sectionLabel="Identidad de la presentación"
-                registry={PRESENTATION_FIELD_REGISTRY}
+                sectionLabel={t("presentations.form.sections.identity")}
+                registry={registry}
                 fields={["sale_type", "name", "description", "category"]}
                 icons={{
                     sale_type: { icon: <SellOutlinedIcon fontSize="small" />, color: theme.custom.accents.blue },

@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type { PresentationFormProps } from "@typings/presentation/presentationComponentTypes";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
@@ -10,8 +11,8 @@ import PresentationEdited from "../../pages/PresentationEdit/components/Presenta
 import {
     getPresentationEditInitialValues,
     getPresentationFormInitialValues,
-    presentationEditFormSchema,
-    presentationFormSchema,
+    getPresentationEditFormSchema,
+    getPresentationFormSchema,
 } from "../../schema/PresentationFormSchema";
 import PresentationFormFirstStep from "./PresentationFormFirstStep";
 import PresentationFormSecondStep from "./PresentationFormSecondStep";
@@ -19,6 +20,7 @@ import PresentationFormFormatStep from "./PresentationFormThirdStep";
 import PresentationFormThirdStep from "./PresentationFormForthStep";
 import PresentationDetailFormComponent from "./PresentationDetailForm";
 import PresentationFormFourthStep from "./PresentationFormFifthStep";
+import PresentationFormProvidersStep from "./PresentationFormSixthStep";
 import PresentationSkeleton from "./PresentationSkeleton";
 import EmptyPresentation from "./EmptyPresentation";
 
@@ -28,6 +30,7 @@ const STEP_COMPONENTS = [
     PresentationFormFormatStep,
     PresentationFormThirdStep,
     PresentationFormFourthStep,
+    PresentationFormProvidersStep,
 ];
 
 const DETAIL_COMPONENTS = [PresentationDetailFormComponent];
@@ -35,8 +38,9 @@ const DETAIL_COMPONENTS = [PresentationDetailFormComponent];
 
 // ── Modo CREAR ────────────────────────────────────────────────────────────────
 const PresentationCreateForm = (): React.ReactNode => {
+    const { t } = useTranslation();
     const {
-        createdPresentation, 
+        createdPresentation,
         handleSubmit, 
         currentStep,
         totalSteps,
@@ -66,7 +70,7 @@ const PresentationCreateForm = (): React.ReactNode => {
     return (
             <Formik
                 initialValues={getPresentationFormInitialValues()}
-                validationSchema={presentationFormSchema}
+                validationSchema={getPresentationFormSchema(t)}
                 onSubmit={handleSubmit}
                 validateOnBlur={false}
                 validateOnChange={false}
@@ -100,6 +104,7 @@ const PresentationCreateForm = (): React.ReactNode => {
 
 // ── Modo EDITAR ───────────────────────────────────────────────────────────────
 const PresentationEditForm = (): React.ReactNode => {
+    const { t } = useTranslation();
     const {
         isLoadingEntity,
         editingVariant,
@@ -124,7 +129,7 @@ const PresentationEditForm = (): React.ReactNode => {
     return (
         <Formik
             initialValues={getPresentationEditInitialValues(editingVariant)}
-            validationSchema={presentationEditFormSchema}
+            validationSchema={getPresentationEditFormSchema(t)}
             onSubmit={handleEdit}
             validateOnBlur={false}
             validateOnChange={false}

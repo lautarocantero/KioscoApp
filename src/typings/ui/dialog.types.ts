@@ -44,3 +44,23 @@ export interface DeleteDialogProps {
     onConfirm: () => void;
     onCancel: () => void;
 }
+
+//─────────────────────────────── 📦 Restock 📦 ───────────────────────────────//
+
+export interface RestockDialogState {
+    open: boolean;
+    id: string;
+    name: string;
+    stock: number;
+    minStock: number;
+}
+
+export interface RestockDialogProps {
+    restockDialog: RestockDialogState;
+    stockValue: number;
+    isSubmitting: boolean;
+    errorMessage: string | null;
+    onStockChange: (value: number) => void;
+    onConfirm: () => void;
+    onCancel: () => void;
+}

@@ -1,13 +1,16 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { usePresentations } from "../../../../hooks/presentations/usePresentations";
 import AppLayout from "../../../../modules/shared/layout/AppLayout";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
+import RestockDialog from "./components/RestockDialog";
 
 
 const PresentationListPage = (): React.ReactNode => {
+    const { t } = useTranslation();
 
     const {
         productId,
@@ -21,6 +24,13 @@ const PresentationListPage = (): React.ReactNode => {
         searchTerm,
         setSearchTerm,
         columns,
+        restockDialog,
+        restockStockValue,
+        restockIsSubmitting,
+        restockErrorMessage,
+        handleRestockStockChange,
+        handleRestockCancel,
+        handleRestockConfirm,
     } = usePresentations();
 
 
@@ -28,8 +38,8 @@ const PresentationListPage = (): React.ReactNode => {
         <AppLayout fullWidth >
             <TableIconHeader
                 icon={<CategoryOutlinedIcon />}
-                title="Presentaciones"
-                subtitle="Variantes y presentaciones de este producto."
+                title={t("presentations.header.title")}
+                subtitle={t("presentations.header.subtitle")}
             />
 
             <DataTable<Presentation>
@@ -38,31 +48,42 @@ const PresentationListPage = (): React.ReactNode => {
                 loading={loading}
                 error={error}
                 onClearError={clearError}
-                emptyMessage="Este producto no tiene presentaciones registradas"
+                emptyMessage={t("presentations.table.emptyMessage")}
                 height={"35em"}
                 search={{
                     value: searchTerm,
                     onChange: setSearchTerm,
-                    placeholder: "600gr, pack x6...",
+                    placeholder: t("presentations.table.searchPlaceholder"),
                 }}
                 newItem={{
-                    label: "Nueva presentación",
+                    label: t("presentations.table.newItem"),
                     href: `/products/${productId}/presentation-create`,
                 }}
                 deleteDialog={{
                     open: deleteDialog.open,
-                    title: "Confirmar eliminación",
+                    title: t("presentations.deleteDialog.title"),
                     description: (
                         <>
-                            ¿Estás seguro de que querés eliminar la presentación{" "}
-                            <strong>{deleteDialog.name}</strong>? Esta acción no se puede deshacer.
+                            {t("presentations.deleteDialog.descriptionPrefix")}{" "}
+                            <strong>{deleteDialog.name}</strong>
+                            {t("presentations.deleteDialog.descriptionSuffix")}
                         </>
                     ),
-                    warningText: "Esta acción eliminará la presentación de forma permanente.",
-                    confirmLabel: "Eliminar",
+                    warningText: t("presentations.deleteDialog.warningText"),
+                    confirmLabel: t("presentations.deleteDialog.confirmLabel"),
                     onConfirm: () => void handleDeleteConfirm(),
                     onCancel: handleDeleteCancel,
                 }}
+            />
+
+            <RestockDialog
+                restockDialog={restockDialog}
+                stockValue={restockStockValue}
+                isSubmitting={restockIsSubmitting}
+                errorMessage={restockErrorMessage}
+                onStockChange={handleRestockStockChange}
+                onConfirm={() => void handleRestockConfirm()}
+                onCancel={handleRestockCancel}
             />
         </AppLayout>
     );

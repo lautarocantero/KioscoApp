@@ -12,6 +12,7 @@ function FormSelectorMulti<C extends string>({
     id = "category-selector",
     value: selected,
     onChange,
+    emptyOptionsLabel = "No hay más categorías disponibles",
 }: CategorySelectorMultiProps<C>): React.ReactNode {
     const { availableOptions, handleSelect, handleRemove } = useCategorySelectorMulti({categories, selected, onChange});
 
@@ -29,7 +30,7 @@ function FormSelectorMulti<C extends string>({
                 >
                     {availableOptions.length === 0 ? (
                         <MenuItem disabled value="">
-                            <Typography variant="body2">No hay más categorías disponibles</Typography>
+                            <Typography variant="body2">{emptyOptionsLabel}</Typography>
                         </MenuItem>
                     ) : (
                         availableOptions.map((category) => (

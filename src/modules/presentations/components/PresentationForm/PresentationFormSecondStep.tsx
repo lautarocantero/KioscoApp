@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import FormCard from "../../../shared/components/FormCard/FormCard";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
-import { PRODUCTS_VARIANT_STEPS_LABELS } from "../../../../config/constants";
 import QrCodeScannerOutlinedIcon from "@mui/icons-material/QrCodeScannerOutlined";
 import QrCode2OutlinedIcon from "@mui/icons-material/QrCode2Outlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
@@ -11,31 +11,32 @@ import { usePresentationFormHeader } from "../../../../hooks/presentations/usePr
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
 import ProductImagePreview from "../../../shared/components/Image/ProductImagePreview";
-import { getIdentificationStepConfig } from "./presentationFormStepConfig";
+import { getIdentificationStepConfig, getPresentationStepsLabels } from "./presentationFormStepConfig";
 
 
 const PresentationFormSecondStep = (): ReactNode => {
     const theme = useTheme();
+    const { t } = useTranslation();
     const { actionTitle, currentStep, submitError, stepErrors } = useFormNavigation();
     const { isCreate, headerTitle } = usePresentationFormHeader(actionTitle);
     const { values } = useFormikContext<PresentationFormValues>();
-    const { fields: identificationFields, registryOverride } = getIdentificationStepConfig();
+    const { fields: identificationFields, registryOverride } = getIdentificationStepConfig(t);
 
     return (
         <FormCard
-            submitText={isCreate ? "Crear" : "Actualizar"}
+            submitText={isCreate ? t("presentations.form.submit.create") : t("presentations.form.submit.update")}
             showButtons
             header={{ title: headerTitle }}
             submitError={submitError}
             stepErrors={stepErrors}
             multiStepHeader={{
-                stepsLabels: PRODUCTS_VARIANT_STEPS_LABELS,
+                stepsLabels: getPresentationStepsLabels(t),
                 currentStep
             }}
         >
             <FormFieldsRenderer<PresentationFormValues>
                 idPrefix="presentation"
-                sectionLabel="Identificación de la presentación"
+                sectionLabel={t("presentations.form.sections.identification")}
                 registry={registryOverride}
                 fields={identificationFields}
                 icons={{

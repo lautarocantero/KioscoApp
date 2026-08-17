@@ -70,6 +70,7 @@ export type CategorySelectorMultiProps<C extends string> = CategorySelectorBaseP
     mode: "multi";
     value: C[];
     onChange: (value: C[]) => void;
+    emptyOptionsLabel?: string;
 };
 
 export type CategorySelectorProps<C extends string> =

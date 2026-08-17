@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import type { AppDispatch } from "../../store/presentation/presentationSlice";
 import { clearError } from "../../store/presentation/presentationSlice";
 import { deletePresentation } from "../../store/presentation/presentationThunks";
 import { buildColumnsForPresentations } from "../../modules/presentations/pages/PresentationList/components/presentationColumns";
 import { usePresentationsListData } from "./usePresentationsListData";
+import { useRestockPresentation } from "./useRestockPresentation";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import { CLOSED_DIALOG } from "../../config/constants";
 import { useErrorParser } from "../shared/useErrorParser";
@@ -16,6 +18,7 @@ import { AlertColor } from "@typings/ui/ui";
 export const usePresentations = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const { t } = useTranslation();
     const { product_id } = useParams<{ product_id: string }>();
     const snackBarContext = useContext(SnackBarContext);
 
@@ -26,6 +29,8 @@ export const usePresentations = () => {
     const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
 
     const { parseError } = useErrorParser();
+
+    const restock = useRestockPresentation();
 
     const handleDeleteRequest = (id: string, name: string) =>
         setDeleteDialog({ open: true, id, name });
@@ -39,14 +44,16 @@ export const usePresentations = () => {
 
             setDeleteDialog(CLOSED_DIALOG);
         } catch (err) {
-            const message = await parseError(err, "Error inesperado al eliminar la presentación");
+            const message = await parseError(err, t("presentations.deleteDialog.errorUnexpected"));
             snackBarContext?.showSnackBar(message, AlertColor.Error);
         }
     };
 
     const columns = buildColumnsForPresentations({
         onDeleteRequest: handleDeleteRequest,
+        onRestockRequest: restock.handleRestockRequest,
         navigate,
+        t,
     });
 
     return {
@@ -61,5 +68,12 @@ export const usePresentations = () => {
         searchTerm,
         setSearchTerm,
         columns,
+        restockDialog: restock.restockDialog,
+        restockStockValue: restock.stockValue,
+        restockIsSubmitting: restock.isSubmitting,
+        restockErrorMessage: restock.errorMessage,
+        handleRestockStockChange: restock.handleStockChange,
+        handleRestockCancel: restock.handleRestockCancel,
+        handleRestockConfirm: restock.handleRestockConfirm,
     };
 };

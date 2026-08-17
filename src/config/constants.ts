@@ -2,7 +2,7 @@ import type { PresentationStatus } from "@typings/presentation/presentationEnum"
 import { PresentationStatusColors } from "@typings/presentation/presentationEnum";
 import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import { ShopSalesRange } from "@typings/shop/shopEnums";
-import type { DeleteDialogState } from "@typings/ui/dialog.types";
+import type { DeleteDialogState, RestockDialogState } from "@typings/ui/dialog.types";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🚀 APP  🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀                     ║
@@ -33,6 +33,8 @@ export const MIN_MOBILE_CARD_WIDTH = 260;
 export const FILTER_MIN_WIDTH = 220;
 
 export const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
+
+export const CLOSED_RESTOCK_DIALOG: RestockDialogState = { open: false, id: "", name: "", stock: 0, minStock: 0 };
 
 // formatea fecha
 
@@ -72,14 +74,6 @@ export const PRODUCTS_STEPS_LABELS = [
 
 export const PRODUCTS_EDIT_STEPS_LABELS = [
     "Editar Producto",
-];
-
-export const PRODUCTS_VARIANT_STEPS_LABELS = [
-    "Identidad",
-    "Identificación",
-    "Formato",
-    "Stock",
-    "Datos comerciales",
 ];
 
 export const stepsConfig = PRODUCTS_STEPS_LABELS.map((label) => ({
