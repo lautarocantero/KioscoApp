@@ -73,7 +73,7 @@ describe("NotificationListItem", () => {
             <NotificationListItem notification={notification} onToggleRead={onToggleRead} onGoToDetail={onGoToDetail} />
         );
 
-        fireEvent.click(screen.getByLabelText("Ver detalle"));
+        fireEvent.click(screen.getByLabelText("Ver venta"));
 
         expect(onGoToDetail).toHaveBeenCalledWith(notification);
         expect(onToggleRead).not.toHaveBeenCalled();

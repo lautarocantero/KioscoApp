@@ -169,7 +169,9 @@ const es = {
       read: "Leída",
     },
     columns: {
-      message: "Notificación",
+      type: "Tipo",
+      date: "Fecha",
+      message: "Mensaje",
       status: "Estado",
       actions: "Acciones",
     },
@@ -188,7 +190,8 @@ const es = {
     actions: {
       markAsRead: "Marcar como leída",
       markAsUnread: "Marcar como no leída",
-      viewDetail: "Ver detalle",
+      viewSale: "Ver venta",
+      viewPresentation: "Ver presentación",
       delete: "Eliminar notificación",
     },
     deleteDialog: {

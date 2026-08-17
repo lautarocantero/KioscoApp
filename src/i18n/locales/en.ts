@@ -169,7 +169,9 @@ const en = {
       read: "Read",
     },
     columns: {
-      message: "Notification",
+      type: "Type",
+      date: "Date",
+      message: "Message",
       status: "Status",
       actions: "Actions",
     },
@@ -188,7 +190,8 @@ const en = {
     actions: {
       markAsRead: "Mark as read",
       markAsUnread: "Mark as unread",
-      viewDetail: "View detail",
+      viewSale: "View sale",
+      viewPresentation: "View presentation",
       delete: "Delete notification",
     },
     deleteDialog: {

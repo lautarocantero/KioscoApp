@@ -31,7 +31,8 @@ NotificationsPage                          (/notifications)
 ├── NotificationsPageActions               (Marcar todas leídas / Eliminar todas)
 ├── NotificationsFilterTabs                (Todas / Alertas / Novedades, con contador)
 ├── DataTable<NotificationEntity>          (mismo componente que el resto de los listados)
-│   └── notificationColumns.tsx            (message / status / actions)
+│   ├── extraActions: NotificationsPageActions  (en el header de la tabla, mismo look que "+ Nuevo producto")
+│   └── notificationColumns.tsx            (type / date / message / status / actions)
 └── ConfirmDialog                          (confirmación de "borrar todas")
 ```
 
@@ -51,7 +52,9 @@ Archivos:
 | `modules/notifications/helpers/getNotificationMessage.ts` | Título/subtítulo del mensaje (compartido bell + tabla) |
 | `modules/notifications/helpers/getRelativeTime.ts` | "Hace 5 min" (compartido bell + tabla) |
 | `modules/notifications/helpers/groupNotificationsByFilter.ts` / `getNotificationFilterCounts.ts` | Filtro y contadores de los tabs |
-| `modules/notifications/helpers/getNotificationDetailRoute.ts` | Ruta de detalle (venta o presentación) de la flecha "Ver detalle" |
+| `modules/notifications/helpers/getNotificationDetailRoute.ts` | Ruta de detalle (venta o presentación) de la flecha |
+| `modules/notifications/helpers/getGoToDetailLabel.ts` | Texto del tooltip de la flecha ("Ver venta" / "Ver presentación") |
+| `modules/shared/components/DataTable/getTableActionButtonSx.ts` | Estilo del botón pill (mismo look que "+ Nuevo producto"), reutilizado por `DataTableToolbar` y por `NotificationsPageActions` |
 | `modules/notifications/api/notificationApi.ts` | Requests a `${API_URL}/notification` |
 | `hooks/notifications/useNotificationsData.ts` | Fetch + polling (compartido bell + página) |
 | `hooks/notifications/useNotificationsBell.ts` | Estado del popover + acciones rápidas |
@@ -74,11 +77,12 @@ Archivos:
 
 ## 5. Detalles de implementación
 
-- **Tarjeta por notificación**: cada `NotificationListItem` es su propio contenedor con borde de color (según `type`, atenuado cuando está leída), separado del resto por margen — no una fila corrida como una lista plana. El acento de color y el fondo tenue solo aparecen mientras está `not-read-yet`.
+- **Tarjeta por notificación, compacta**: cada `NotificationListItem` es un contenedor propio con fondo "noisy" (`getNoisyBackgroundSx`, mismo mixin que `ConfirmDialog`/`SettingsModal`/el propio `Popover` de la campana) y **solo** el borde izquierdo coloreado por `type` (nunca un tinte de fondo ni un borde completo) — atenuado (`theme.custom.darkGray`) cuando está leída. Título y tiempo relativo comparten una sola línea; la fila de acciones queda debajo. El único cambio entre leída/no leída es de color — nunca de `fontWeight`.
 - **Toggle de lectura bidireccional**: clickear en cualquier parte de la tarjeta (o el botón de ojo) invierte el estado actual (`not-read-yet` ↔ `readed`), vía `setNotificationReadStatusThunk`. La tarjeta es un `Box role="button"` con soporte de teclado (Enter/Espacio); los botones de acción hacen `stopPropagation` para no togglear dos veces.
-- **Acciones, abajo a la derecha**: ojo (marcar leída/no leída) y flecha (ir al detalle de la venta o la presentación, `getNotificationDetailRoute`) quedan alineados a la derecha, debajo de todo el texto — no arriba, para no competir con el título. Ambas se reutilizan en la tabla de `/notifications` vía `RowActionsCell` (`onToggleRead`/`isRead`/`toggleReadLabel` y `onGoToDetail`/`goToDetailLabel` opcionales), el único componente de acciones de fila del repo — en vez de crear uno paralelo.
+- **Acciones, abajo a la derecha, con tooltip**: ojo (marcar leída/no leída) y flecha (ir al detalle) quedan alineados a la derecha, debajo del texto. Ambos llevan `Tooltip` — el de la flecha es contextual (`getGoToDetailLabel`: "Ver venta" o "Ver presentación", no un genérico "Ver detalle"). Se reutilizan en la tabla de `/notifications` vía `RowActionsCell` (`onToggleRead`/`isRead`/`toggleReadLabel` y `onGoToDetail`/`goToDetailLabel` opcionales, ya con `Tooltip` incluido), el único componente de acciones de fila del repo — en vez de crear uno paralelo.
 - **Colores**: siempre `theme.custom.*`/`theme.palette.*`, nunca hex — `accents.gold` para stock bajo, `accents.green`/`palette.success` para ventas, mismo patrón que `getSeverityColor` en `ShopLowStockList.tsx`.
 - **"Marcar todas como leídas"**: solo se muestra si `unreadCount > 0` (no tiene sentido ofrecerlo si no hay nada para marcar). Ese texto y "Ver todas las notificaciones" usan `theme.typography.caption.fontSize` (la más chica del theme) — son acciones secundarias, no deben competir visualmente con el contenido.
+- **Acciones de la tabla, mismo look que "+ Nuevo producto"**: `NotificationsPageActions` (Marcar todas leídas / Eliminar todas) se monta vía el nuevo slot `extraActions` de `DataTable`/`DataTableHeader`/`DataTableToolbar` (prop opcional, no rompe ningún uso existente), en el mismo lugar donde otras tablas muestran su botón de "nuevo registro". Ambos botones comparten el estilo pill con el botón `newItem` de `DataTableToolbar` vía `getTableActionButtonSx(theme, color)` — `secondary` para marcar todas, `error` para eliminar todas — para no duplicar el `sx`.
 - **Carga diferida**: `NotificationsDropdown` se importa con `React.lazy` + `Suspense`, montado solo mientras el popover está abierto — mismo patrón que `SettingsModal`. `NotificationsBell` en sí no es lazy (es chico y siempre visible).
 - **Polling**: `useNotificationsData` re-consulta cada 45s mientras esté montada (campana o página). Además, `useCart.ts` dispara un fetch inmediato después de una venta exitosa para que quien vendió vea su propia notificación sin esperar al polling.
 - **i18n**: toda la sección usa `react-i18next` (namespace `notifications.*` en `src/i18n/locales/{es,en}.ts`), incluidos los mensajes interpolados (`{{productName}}`, `{{sellerName}}`, etc.).
@@ -96,5 +100,7 @@ Archivos:
 - `src/modules/notifications/test/helpers/groupNotificationsByFilter.test.ts`
 - `src/modules/notifications/test/helpers/getNotificationFilterCounts.test.ts`
 - `src/modules/notifications/test/helpers/getNotificationDetailRoute.test.ts`
+- `src/modules/notifications/test/helpers/getGoToDetailLabel.test.ts`
 - `src/modules/notifications/test/NotificationsPage/notificationColumns.test.tsx`
+- `src/modules/notifications/test/NotificationsPage/NotificationsPageActions.test.tsx`
 - `src/modules/shared/test/NotificationsBell/NotificationListItem.test.tsx`

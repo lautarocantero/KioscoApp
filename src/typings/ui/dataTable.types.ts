@@ -28,6 +28,7 @@ export interface DataTableDeleteDialogConfig {
 export interface DataTableToolbarProps {
     search?: DataTableSearchConfig;
     newItem?: DataTableNewItemConfig;
+    extraActions?: ReactNode;
 }
 
 export interface DataTableDeleteDialogProps {
@@ -51,6 +52,7 @@ export interface DataTableProps<T extends object>
     title?: string;
     search?: DataTableSearchConfig;
     newItem?: DataTableNewItemConfig;
+    extraActions?: ReactNode;
     deleteDialog?: DataTableDeleteDialogConfig;
     getRowId?: (row: T) => string;
     id?: string;
@@ -60,6 +62,7 @@ export interface DataTableHeaderProps {
     title?: string;
     search?: DataTableSearchConfig;
     newItem?: DataTableNewItemConfig;
+    extraActions?: ReactNode;
 }
 
 export interface GenericCellProps<T> {

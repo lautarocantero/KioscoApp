@@ -29,9 +29,18 @@ const buildCellParams = (notification: NotificationEntity): GridRenderCellParams
     ({ row: notification } as GridRenderCellParams<NotificationEntity>);
 
 describe("buildColumnsForNotifications", () => {
-    it("define las columnas message, status y actions", () => {
+    it("define las columnas type, date, message, status y actions", () => {
         const columns = buildColumnsForNotifications({ onDeleteRequest: vi.fn(), onToggleRead: vi.fn(), onGoToDetail: vi.fn(), t: i18n.t });
-        expect(columns.map((c) => c.field)).toEqual(["message", "status", "actions"]);
+        expect(columns.map((c) => c.field)).toEqual(["type", "date", "message", "status", "actions"]);
+    });
+
+    describe("columna type", () => {
+        it("muestra el chip de categoría según el tipo", () => {
+            const { column } = getColumn("type");
+
+            renderWithTheme(column.renderCell!(buildCellParams(buildNotification({ type: NotificationTypeEnum.LowStock }))));
+            expect(screen.getByText("Inventario")).toBeInTheDocument();
+        });
     });
 
     describe("columna message", () => {
@@ -86,7 +95,7 @@ describe("buildColumnsForNotifications", () => {
             const notification = buildNotification();
 
             renderWithTheme(column.renderCell!(buildCellParams(notification)));
-            fireEvent.click(screen.getByLabelText("Ver detalle"));
+            fireEvent.click(screen.getByLabelText("Ver presentación"));
 
             expect(onGoToDetail).toHaveBeenCalledWith(notification);
         });

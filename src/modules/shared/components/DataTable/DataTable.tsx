@@ -18,6 +18,7 @@ function DataTable<T extends object>({
     title,
     search,
     newItem,
+    extraActions,
     deleteDialog,
     getRowId,
     id,
@@ -25,7 +26,7 @@ function DataTable<T extends object>({
 }: DataTableProps<T>): React.ReactNode {
     return (
         <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2 }} id={id}>
-            <DataTableHeader title={title} search={search} newItem={newItem}/>
+            <DataTableHeader title={title} search={search} newItem={newItem} extraActions={extraActions}/>
             <DataTableErrorAlert error={error} onClose={onClearError}/>
             <GenericDataGrid<T>
                 rows={rows}

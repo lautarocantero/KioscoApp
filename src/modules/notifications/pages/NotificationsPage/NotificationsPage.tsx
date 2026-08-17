@@ -1,5 +1,4 @@
 import { type ReactNode } from "react";
-import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import type { NotificationEntity } from "@typings/notifications/notificationTypes";
 import { NotificationFilterEnum } from "@typings/notifications/notificationEnums";
@@ -35,14 +34,7 @@ const NotificationsPage = (): ReactNode => {
 
     return (
         <AppLayout fullWidth>
-            <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, alignItems: { xs: "flex-start", sm: "center" }, justifyContent: "space-between", width: "100%", gap: 2 }}>
-                <NotificationsPageHeader />
-                <NotificationsPageActions
-                    onMarkAllAsRead={handleMarkAllAsRead}
-                    onDeleteAll={handleDeleteAllRequest}
-                    disabled={counts[NotificationFilterEnum.All] === 0}
-                />
-            </Box>
+            <NotificationsPageHeader />
 
             <NotificationsFilterTabs filter={filter} counts={counts} onChange={setFilter} />
 
@@ -55,6 +47,13 @@ const NotificationsPage = (): ReactNode => {
                 emptyMessage={t("notifications.emptyMessage")}
                 height="35em"
                 getRowId={(row) => row._id}
+                extraActions={
+                    <NotificationsPageActions
+                        onMarkAllAsRead={handleMarkAllAsRead}
+                        onDeleteAll={handleDeleteAllRequest}
+                        disabled={counts[NotificationFilterEnum.All] === 0}
+                    />
+                }
                 deleteDialog={{
                     open: deleteDialog.open,
                     title: t("notifications.deleteDialog.title"),
