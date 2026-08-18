@@ -1,5 +1,6 @@
 import PrintIcon from '@mui/icons-material/Print';
 import { Box } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
 import PrimaryButtonComponent from "../../../shared/components/Buttons/PrimaryButtonComponent";
 import EmptyButton from "../../../shared/components/Buttons/EmptyButton";
@@ -7,6 +8,8 @@ import type { OrderConfirmedActionsProps } from '@typings/cart/cartComponentType
 
 
 const OrderConfirmedActionsComponent = ({ onPrintTicket, onNewSell, goToTicketDetail }: OrderConfirmedActionsProps): ReactNode => {
+    const { t } = useTranslation();
+
     return (
         <Box
             sx={{
@@ -27,14 +30,14 @@ const OrderConfirmedActionsComponent = ({ onPrintTicket, onNewSell, goToTicketDe
                 }}
             >
                 <PrimaryButtonComponent
-                    buttonText="Imprimir ticket"
+                    buttonText={t("cart.orderConfirmed.actions.printTicket")}
                     buttonOnClick={onPrintTicket}
                     buttonWidth="100%"
                     marginTop="0"
                     icon={<PrintIcon fontSize="small" sx={{ mr: 1 }} />}
                 />
                 <EmptyButton
-                    buttonText="+ Nueva compra"
+                    buttonText={t("cart.orderConfirmed.actions.newSell")}
                     buttonOnClick={onNewSell}
                     buttonWidth="100%"
                     color='main'
@@ -42,7 +45,7 @@ const OrderConfirmedActionsComponent = ({ onPrintTicket, onNewSell, goToTicketDe
             </Box>
 
             <EmptyButton
-                buttonText="Ver detalle de ticket"
+                buttonText={t("cart.orderConfirmed.actions.viewDetail")}
                 buttonOnClick={goToTicketDetail}
                 buttonWidth="100%"
             />

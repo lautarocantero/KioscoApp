@@ -1,19 +1,21 @@
 import { Box, Stack, Typography, type Theme } from "@mui/material";
 import React, { type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import type { ProductDialogSelectorHeaderComponent } from "@typings/cart/cartComponentTypes";
 import useProductDialogSelector from "@hooks/cart/useProductDialogSelector";
 
 const ProductDialogSelectorHeaderComponent = ({ products }: ProductDialogSelectorHeaderComponent): ReactNode => {
+  const { t } = useTranslation();
   const {
     isEmpty,
   } = useProductDialogSelector(products);
 
-  if (isEmpty) return (<Box><Typography>No se han encontrado Productos</Typography></Box>);
+  if (isEmpty) return (<Box><Typography>{t("cart.productDialog.selector.empty")}</Typography></Box>);
 
   return (
       <Stack direction={'row'} alignItems={'center'} gap={1}>
         <Typography sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, fontWeight: 'bold' })}>
-          Presentaciones
+          {t("cart.productDialog.selector.title")}
         </Typography>
         <Typography
           sx={(theme: Theme) => ({

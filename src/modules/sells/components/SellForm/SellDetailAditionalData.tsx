@@ -1,5 +1,7 @@
-import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
+import { Box, Divider, Grid, Stack, Typography, type Theme } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { Link as RouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import type { SellDetailAditionalDataProps } from "@typings/sells/SellComponentTypes";
 import SellDetailPendingBalance from "./SellDetailPendingBalance";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
@@ -16,7 +18,10 @@ const SellDetailAditionalData = ({
     sellId,
     pendingBalance,
     debtorName,
+    settlesSellId,
+    settledBySellId,
 }: SellDetailAditionalDataProps): ReactNode => {
+    const { t } = useTranslation();
 
     return (
         <Grid size={{ xs: 12, md: 6 }}>
@@ -39,7 +44,7 @@ const SellDetailAditionalData = ({
                             variant="subtitle1"
                             fontWeight={700}
                         >
-                            Información adicional
+                            {t("sells.detail.additionalData.heading")}
                         </Typography>
                     </Stack>
 
@@ -49,7 +54,7 @@ const SellDetailAditionalData = ({
                     >
                         <Stack direction="row" justifyContent="space-between">
                             <Typography component="dt" variant="body2" color="text.secondary">
-                                Subtotal
+                                {t("sells.detail.additionalData.subtotal")}
                             </Typography>
                             <Typography component="dd" variant="body2" sx={{ m: 0 }}>
                                 {formatAmount(subTotal)}
@@ -58,7 +63,7 @@ const SellDetailAditionalData = ({
 
                         <Stack direction="row" justifyContent="space-between">
                             <Typography component="dt" variant="body2" color="text.secondary">
-                                IVA ({ivaPercentage}%)
+                                {t("sells.detail.additionalData.iva", { percentage: ivaPercentage })}
                             </Typography>
                             <Typography component="dd" variant="body2" sx={{ m: 0 }}>
                                 {formatAmount(iva)}
@@ -69,7 +74,7 @@ const SellDetailAditionalData = ({
 
                         <Stack direction="row" justifyContent="space-between">
                             <Typography component="dt" variant="body2" fontWeight={700}>
-                                Total
+                                {t("sells.detail.additionalData.total")}
                             </Typography>
                             <Typography component="dd" variant="body2" fontWeight={700} sx={{ m: 0 }}>
                                 {formatAmount(total)}
@@ -78,7 +83,7 @@ const SellDetailAditionalData = ({
 
                         <Stack direction="row" justifyContent="space-between">
                             <Typography component="dt" variant="body2" color="text.secondary">
-                                Moneda
+                                {t("sells.detail.additionalData.currency")}
                             </Typography>
                             <Typography component="dd" variant="body2" sx={{ m: 0 }}>
                                 {currency}
@@ -87,7 +92,7 @@ const SellDetailAditionalData = ({
 
                         <Stack direction="row" justifyContent="space-between">
                             <Typography component="dt" variant="body2" color="text.secondary">
-                                ID de venta
+                                {t("sells.detail.additionalData.sellId")}
                             </Typography>
                             <Typography component="dd" variant="body2" sx={{ m: 0 }}>
                                 {sellId}
@@ -96,6 +101,60 @@ const SellDetailAditionalData = ({
                     </Box>
 
                     <SellDetailPendingBalance pendingBalance={pendingBalance} debtorName={debtorName}  />
+
+                    {settledBySellId && (
+                        <Box
+                            component="section"
+                            role="status"
+                            sx={(theme: Theme) => ({
+                                mt: 1,
+                                p: 1.5,
+                                borderRadius: 2,
+                                bgcolor: `${theme.palette.info.main}1A`,
+                                border: `1px solid ${theme.palette.info.main}`,
+                            })}
+                        >
+                            <Typography component="p" variant="body2" sx={(theme: Theme) => ({ color: theme.palette.info.main })}>
+                                {t("sells.detail.additionalData.settledNotice")}
+                            </Typography>
+                            <Typography
+                                component={RouterLink}
+                                to={`/sell/${settledBySellId}`}
+                                variant="body2"
+                                fontWeight={600}
+                                sx={(theme: Theme) => ({ color: theme.palette.info.main, textDecoration: "none", display: "inline-block", mt: 0.5 })}
+                            >
+                                {t("sells.detail.additionalData.viewSettlementSell")}
+                            </Typography>
+                        </Box>
+                    )}
+
+                    {settlesSellId && (
+                        <Box
+                            component="section"
+                            role="status"
+                            sx={(theme: Theme) => ({
+                                mt: 1,
+                                p: 1.5,
+                                borderRadius: 2,
+                                bgcolor: `${theme.palette.info.main}1A`,
+                                border: `1px solid ${theme.palette.info.main}`,
+                            })}
+                        >
+                            <Typography component="p" variant="body2" sx={(theme: Theme) => ({ color: theme.palette.info.main })}>
+                                {t("sells.detail.additionalData.settlementOfNotice")}
+                            </Typography>
+                            <Typography
+                                component={RouterLink}
+                                to={`/sell/${settlesSellId}`}
+                                variant="body2"
+                                fontWeight={600}
+                                sx={(theme: Theme) => ({ color: theme.palette.info.main, textDecoration: "none", display: "inline-block", mt: 0.5 })}
+                            >
+                                {t("sells.detail.additionalData.viewOriginalSell")}
+                            </Typography>
+                        </Box>
+                    )}
                 </NoisyCard>
         </Grid>
     );

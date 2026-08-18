@@ -1,6 +1,8 @@
 import PaidIcon from '@mui/icons-material/Paid';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, TextField, type Theme } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import { SELL_STATUS_OPTIONS } from "../../../../config/constants";
+import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
 import { useCartPaymentStatusForm } from '../../../../hooks/cart/useCartPaymentStatusForm';
 import type { CartPaymentStatusProps } from '@typings/cart/cartComponentTypes';
@@ -8,6 +10,7 @@ import type { ReactNode } from 'react';
 
 
 const CartPaymentStatus = ({total}: CartPaymentStatusProps): ReactNode => {
+    const { t } = useTranslation();
     const {
         values,
         errors,
@@ -50,7 +53,7 @@ const CartPaymentStatus = ({total}: CartPaymentStatusProps): ReactNode => {
                     })}
                 >
                     <PaidIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.secondary?.main })} />
-                    Estado del pago
+                    {t("cart.paymentStatus.label")}
                 </FormLabel>
                 <RadioGroup
                     value={values.status}
@@ -79,8 +82,13 @@ const CartPaymentStatus = ({total}: CartPaymentStatusProps): ReactNode => {
                         gap: 0,
                     })}
                 >
-                    {SELL_STATUS_OPTIONS.map(({ value, label }) => (
-                        <FormControlLabel key={value} value={value} control={<Radio />} label={label} />
+                    {SELL_STATUS_OPTIONS.map(({ value }) => (
+                        <FormControlLabel
+                            key={value}
+                            value={value}
+                            control={<Radio />}
+                            label={t(value === SellStatusEnum.Completada ? 'cart.paymentStatus.completada' : 'cart.paymentStatus.parcial')}
+                        />
                     ))}
                 </RadioGroup>
             </FormControl>
@@ -88,7 +96,7 @@ const CartPaymentStatus = ({total}: CartPaymentStatusProps): ReactNode => {
             {isPartial && (
                 <Grid container flexDirection="column" gap={1.5} sx={{ width: '100%', marginTop: '0.5em' }}>
                     <TextField
-                        label="Precio pagado"
+                        label={t("cart.paymentStatus.amountPaidLabel")}
                         type="number"
                         size="small"
                         sx={sharedSx}
@@ -97,12 +105,12 @@ const CartPaymentStatus = ({total}: CartPaymentStatusProps): ReactNode => {
                         onBlur={handleBlur}
                         name="amount_paid"
                         error={touched.amount_paid && !!errors.amount_paid}
-                        helperText={touched.amount_paid ? errors.amount_paid : `Máximo $${maxAmountPaid}`}
+                        helperText={touched.amount_paid ? errors.amount_paid : t("cart.paymentStatus.maxAmount", { amount: maxAmountPaid })}
                         slotProps={{ htmlInput: { max: maxAmountPaid, min: 0 } }}
                         fullWidth
                     />
                     <TextField
-                        label="Nombre del moroso"
+                        label={t("cart.paymentStatus.debtorNameLabel")}
                         type="text"
                         size="small"
                         sx={sharedSx}

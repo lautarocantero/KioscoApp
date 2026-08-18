@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 import { applyPlugin } from "jspdf-autotable";
 import type { RestockReportRow } from "@typings/shop/shopTypes";
+import i18n from "@i18n/i18n";
 
 declare module "jspdf" {
     interface jsPDF {
@@ -19,10 +20,10 @@ export const createRestockReportPdf = (rows: RestockReportRow[]): void => {
     const doc = new jsPDF();
 
     doc.setFontSize(16);
-    doc.text("Boleta de Reposición", 14, 20);
+    doc.text(i18n.t("shop.restockReportPdf.title"), 14, 20);
     doc.setFontSize(10);
-    doc.text(`Fecha: ${new Date().toLocaleString("es-AR")}hs`, 14, 28);
-    doc.text(`Presentaciones por debajo del stock mínimo: ${rows.length}`, 14, 34);
+    doc.text(i18n.t("shop.restockReportPdf.dateLabel", { date: new Date().toLocaleString("es-AR") }), 14, 28);
+    doc.text(i18n.t("shop.restockReportPdf.belowMinStockLabel", { count: rows.length }), 14, 34);
 
     const tableRows = rows.map((row) => [
         row.productName,
@@ -35,11 +36,19 @@ export const createRestockReportPdf = (rows: RestockReportRow[]): void => {
     ]);
 
     doc.autoTable({
-        head: [["Producto", "Presentación", "Stock actual", "Stock mínimo", "Reposición mínima", "Proveedor 1", "Proveedor 2"]],
+        head: [[
+            i18n.t("shop.restockReportPdf.columns.product"),
+            i18n.t("shop.restockReportPdf.columns.presentation"),
+            i18n.t("shop.restockReportPdf.columns.currentStock"),
+            i18n.t("shop.restockReportPdf.columns.minStock"),
+            i18n.t("shop.restockReportPdf.columns.minRestock"),
+            i18n.t("shop.restockReportPdf.columns.provider1"),
+            i18n.t("shop.restockReportPdf.columns.provider2"),
+        ]],
         body: tableRows,
         startY: 42,
     });
 
     const time = new Date().toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" }).replace(":", "h");
-    doc.save(`boleta_reposicion_${time}.pdf`);
+    doc.save(`${i18n.t("shop.restockReportPdf.fileNamePrefix")}_${time}.pdf`);
 };

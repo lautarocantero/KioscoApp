@@ -1,6 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, Tooltip, type Theme } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
 import type { CartProductRowActionCellProps } from '@typings/cart/cartComponentTypes';
 import { CartAmount } from '@typings/cart/cartEnums';
@@ -10,10 +11,11 @@ import { removeFromCartThunk } from '../../../../store/cart/cartThunks';
 
 const CartProductRowActionCell = ({ product }: CartProductRowActionCellProps): ReactNode => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
-      <Tooltip title="Eliminar producto del carrito">
+      <Tooltip title={t("cart.table.removeItemTooltip")}>
         <IconButton
           onClick={() => dispatch(removeFromCartThunk({ _id: product._id, amount: CartAmount.All }))}
           sx={(theme: Theme) => ({

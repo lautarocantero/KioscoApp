@@ -11,9 +11,10 @@ const handleAddProductDialogItemToCart = async ({
     quantity,
     dispatch,
     showSnackBar,
+    t,
 }: HandleAddProductDialogItemToCartInterface): Promise<boolean> => {
 
-    const validation: ValidationResultType = validateProductForCart({ Presentation: presentation, requiredStock: quantity });
+    const validation: ValidationResultType = validateProductForCart({ Presentation: presentation, requiredStock: quantity, t });
 
     if (!validation.valid && validation.message) {
         showSnackBar(validation.message, AlertColor.Error);
@@ -24,19 +25,19 @@ const handleAddProductDialogItemToCart = async ({
     const productTicketObject: ProductTicketWithStockType | undefined = formatProductTicket({ Presentation: presentation, requiredStock: quantity });
 
     if (!productTicketObject) {
-        showSnackBar(`Error agregando el producto al carrito`, AlertColor.Error);
+        showSnackBar(t("cart.snackbar.genericAddError"), AlertColor.Error);
         return false;
     }
 
     const productAdded: boolean = await dispatch(addToCartThunk({ productData: productTicketObject }));
 
     if (!productAdded) {
-        showSnackBar(`No se pudo agregar '${name}' al carrito`, AlertColor.Error);
+        showSnackBar(t("cart.snackbar.addToCartFailed", { name }), AlertColor.Error);
         return false;
     }
 
     const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
-    showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
+    showSnackBar(t("cart.snackbar.addedToCart", { name: nameEdited }), AlertColor.Success);
 
     return true;
 };

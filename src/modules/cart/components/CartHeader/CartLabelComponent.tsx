@@ -1,11 +1,12 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Grid, Typography, type Theme } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import type { CartLabelProps } from '@typings/cart/cartComponentTypes';
 import type { ReactNode } from 'react';
 
 
 const CartLabel = ({itemsCount}: CartLabelProps ): ReactNode => {
-
+    const { t } = useTranslation();
 
     return (
         <Grid size={12}>
@@ -19,7 +20,7 @@ const CartLabel = ({itemsCount}: CartLabelProps ): ReactNode => {
                             fontSize: theme?.typography?.h5?.fontSize,
                         })}
                     >
-                        Carrito{" "}
+                        {t("cart.header.title")}{" "}
                         <Box
                         component="span"
                         sx={(theme: Theme) => ({

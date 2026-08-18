@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useContext, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { SellFilterEnum } from "@typings/sells/sellsEnum";
 import type { UseSellsReturn } from "@typings/sells/sellTypes";
 import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { AppDispatch } from "../../store/sell/sellSlice";
 import { deleteSellThunk } from "../../store/sell/sellsThunks";
 import { useSellsListData } from "./useSellsListData";
+import { useSettleSellDebt } from "./useSettleSellDebt";
 import { buildColumnsForSells } from "../../modules/sells/pages/SellsList/components/sellColumns";
 import { getSellFilterCounts } from "../../modules/sells/helpers/getSellFilterCounts";
 import { filterSellsByStatus } from "../../modules/sells/helpers/filterSellsByStatus";
@@ -20,6 +22,7 @@ export const useSells = (): UseSellsReturn => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const snackBarContext = useContext(SnackBarContext);
+    const { t } = useTranslation();
 
     const { sells, loading, error, searchTerm, setSearchTerm } = useSellsListData();
 
@@ -31,6 +34,15 @@ export const useSells = (): UseSellsReturn => {
 
     const { parseError } = useErrorParser();
 
+    const {
+        settleDebtDialog,
+        isSubmitting: settleDebtIsSubmitting,
+        errorMessage: settleDebtErrorMessage,
+        handleSettleDebtRequest,
+        handleSettleDebtCancel,
+        handleSettleDebtConfirm,
+    } = useSettleSellDebt();
+
     const handleDeleteRequest = (id: string, name: string) => setDeleteDialog({ open: true, id, name });
     const handleDeleteCancel = () => setDeleteDialog(CLOSED_DIALOG);
 
@@ -41,12 +53,17 @@ export const useSells = (): UseSellsReturn => {
 
             setDeleteDialog(CLOSED_DIALOG);
         } catch (err) {
-            const message = await parseError(err, "Error inesperado al eliminar la venta");
+            const message = await parseError(err, t("sells.table.deleteDialog.errorUnexpected"));
             snackBarContext?.showSnackBar(message, AlertColor.Error);
         }
     };
 
-    const columns = buildColumnsForSells({ onDeleteRequest: handleDeleteRequest, navigate });
+    const columns = buildColumnsForSells({
+        onDeleteRequest: handleDeleteRequest,
+        onSettleDebtRequest: handleSettleDebtRequest,
+        navigate,
+        t,
+    });
 
     return {
         sells: filteredSells,
@@ -63,5 +80,10 @@ export const useSells = (): UseSellsReturn => {
         searchTerm,
         setSearchTerm,
         columns,
+        settleDebtDialog,
+        settleDebtIsSubmitting,
+        settleDebtErrorMessage,
+        handleSettleDebtCancel,
+        handleSettleDebtConfirm,
     };
 };

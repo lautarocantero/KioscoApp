@@ -1,10 +1,12 @@
 import BarcodeReaderIcon from '@mui/icons-material/BarcodeReader';
 import { Box, TextField, Tooltip, Typography, type Theme } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import type { BarcodeButtonComponentProps } from '@typings/cart/cartComponentTypes';
 import type { ReactNode } from 'react';
 
 
 export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps): ReactNode => {
+  const { t } = useTranslation();
 
   const {
     toggleShowInput,
@@ -17,7 +19,7 @@ export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps)
 
 
   return (
-    <Tooltip title="Usar lectora de código de barras">
+    <Tooltip title={t("cart.catalog.barcode.tooltip")}>
       <Box
         display="flex"
         alignItems="center"
@@ -62,7 +64,7 @@ export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps)
                   whiteSpace: 'nowrap',
                 })}
               >
-                Escanear
+                {t("cart.catalog.barcode.scanLabel")}
               </Typography>
             )}
             {showBarcodeInput && (
@@ -74,7 +76,7 @@ export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps)
                 size="small"
                 onKeyDown={onKeyDown}
                 onClick={(e) => e.stopPropagation()}
-                placeholder="Escanee aquí"
+                placeholder={t("cart.catalog.barcode.placeholder")}
                 focused={true}
                 sx={(theme: Theme) => ({
                   width: '10em',

@@ -1,4 +1,5 @@
 import { memo, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import type { ProductTicketWithStockType } from "@typings/sells/sellTypes";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import { Grid } from "@mui/system";
@@ -7,6 +8,7 @@ import type { CartProductTableProps } from "@typings/cart/cartComponentTypes";
 
 
 const CartProductTable = ({ cart, columns }: CartProductTableProps): ReactNode => {
+    const { t } = useTranslation();
 
     if (!cart) return null;
 
@@ -18,7 +20,7 @@ const CartProductTable = ({ cart, columns }: CartProductTableProps): ReactNode =
                 rows={cart}
                 columns={columns}
                 getRowId={(row) => row._id}
-                emptyMessage="No hay productos en el carrito"
+                emptyMessage={t("cart.table.emptyMessage")}
                 height="30em"
             />
         </Grid>

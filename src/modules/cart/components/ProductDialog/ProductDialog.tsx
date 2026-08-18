@@ -1,5 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, IconButton, type Theme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useTranslation } from "react-i18next";
 import ProductDialogContentComponent from "./ProductDialogContentComponent";
 import type { ReactNode } from "react";
 import useProductDialog from "@hooks/cart/useProductDialog";
@@ -7,6 +8,7 @@ import { getNoisyBackgroundSx } from "../../../shared/components/NoisyBackground
 
 
 const ProductDialog = (): ReactNode => {
+  const { t } = useTranslation();
   const {
     showModal,
     setShowModal,
@@ -25,7 +27,7 @@ const ProductDialog = (): ReactNode => {
     >
       <IconButton
         onClick={() => setShowModal(false)}
-        aria-label="Cerrar"
+        aria-label={t("cart.productDialog.close")}
         sx={(theme: Theme) => ({
           position: "absolute",
           top: 16,
@@ -59,13 +61,13 @@ const ProductDialog = (): ReactNode => {
       >
         <Button
           onClick={() => setShowModal(false)}
-          aria-label="Cerrar"
+          aria-label={t("cart.productDialog.close")}
           sx={(theme: Theme) => ({
             color: theme?.custom?.fontColor,
             fontSize: theme?.typography?.body2?.fontSize,
           })}
         >
-          Cerrar
+          {t("cart.productDialog.close")}
         </Button>
       </DialogActions>
     </Dialog>

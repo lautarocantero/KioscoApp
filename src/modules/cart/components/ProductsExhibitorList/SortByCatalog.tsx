@@ -1,12 +1,14 @@
 import { Box, Menu, MenuItem, Tooltip, Typography, type Theme } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
 import { ViewMode } from "@typings/cart/cartEnums";
 import type { SortByCatalogProps } from "@typings/cart/cartComponentTypes";
 import { useSortByCatalog } from "@hooks/cart/useSortByCatalogHeader";
 
 const SortByCatalog = ({viewMode}: SortByCatalogProps): ReactNode => {
-  
+  const { t } = useTranslation();
+
   const {
     anchorEl,
     isMenuOpen,
@@ -21,7 +23,7 @@ const SortByCatalog = ({viewMode}: SortByCatalogProps): ReactNode => {
 
   return (
     <Box sx={{ visibility: isVisible ? "visible" : "hidden" }}>
-      <Tooltip title="Ordenar productos">
+      <Tooltip title={t("cart.productsExhibitor.sort.tooltip")}>
         <Box
           onClick={onOpenMenu}
           display="flex"
@@ -57,9 +59,9 @@ const SortByCatalog = ({viewMode}: SortByCatalogProps): ReactNode => {
                 whiteSpace: "nowrap",
               })}
             >
-              Ordenar por:{" "}
+              {t("cart.productsExhibitor.sort.label")}{" "}
               <span>
-                {selectedLabel ?? "Nombre A-Z"}
+                {selectedLabel ?? t("cart.productsExhibitor.sort.options.name-asc")}
               </span>
             </Typography>
             <KeyboardArrowDownIcon
@@ -75,7 +77,7 @@ const SortByCatalog = ({viewMode}: SortByCatalogProps): ReactNode => {
       <Menu anchorEl={anchorEl} open={isMenuOpen} onClose={onCloseMenu}>
         {options.map((opt) => (
           <MenuItem key={opt.value} onClick={() => handleSelect(opt.value)}>
-            {opt.label}
+            {t(`cart.productsExhibitor.sort.options.${opt.value}`)}
           </MenuItem>
         ))}
       </Menu>

@@ -1,14 +1,18 @@
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Button, type Theme } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import type { ProductItemButtonProps } from '@typings/cart/cartComponentTypes';
 import type { ReactNode } from 'react';
 
 
-const ProductItemButton = ({ onClick }: ProductItemButtonProps): ReactNode => (
+const ProductItemButton = ({ onClick }: ProductItemButtonProps): ReactNode => {
+  const { t } = useTranslation();
+
+  return (
   <Button
     variant="contained"
     onClick={onClick}
-    aria-label="Agregar al carrito"
+    aria-label={t("cart.productItem.addButtonAriaLabel")}
     sx={(theme: Theme) => ({
       backgroundColor: theme?.custom?.darkMain,
       borderRadius: "0.5em",
@@ -24,6 +28,7 @@ const ProductItemButton = ({ onClick }: ProductItemButtonProps): ReactNode => (
       })}
     />
   </Button>
-);
+  );
+};
 
 export default ProductItemButton;

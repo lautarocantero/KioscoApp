@@ -1,5 +1,6 @@
 import { Box, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
 import type { ProductDialogHeaderProps } from "@typings/cart/cartComponentTypes";
 import { memo, useState, type ReactNode } from "react";
 
@@ -8,6 +9,7 @@ const FALLBACK_IMAGE = '/images/stocko_images/empty_product.png';
 const ProductDialogImageComponent = ({
     product
 }: ProductDialogHeaderProps): ReactNode => {
+    const { t } = useTranslation();
 
     const { name, image_url } = product;
 
@@ -34,7 +36,7 @@ const ProductDialogImageComponent = ({
                 component={'img'}
                 src={src}
                 onError={handleError}
-                alt={`${name} Image`}
+                alt={t("cart.productDialog.imageAlt", { name })}
                 sx={{
                     height: { xs: "15em", sm: "30em" },
                     width: { xs: "100%", sm: "8em" },

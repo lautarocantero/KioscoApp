@@ -1,4 +1,5 @@
 import { Box, Chip, Grid, Typography, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type { SellDetailInfoBarProps } from "@typings/sells/SellComponentTypes";
 import type { ReactNode } from "react";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
@@ -6,13 +7,14 @@ import { useSellInfoItems } from "../../../../hooks/sells/useSellInfoItems";
 
 const SellDetailInfoBar = (props: SellDetailInfoBarProps): ReactNode => {
     const theme = useTheme();
+    const { t } = useTranslation();
     const items = useSellInfoItems(props);
 
     return (
         <Grid size={12}>
             <NoisyCard
                 component="dl"
-                aria-label="Información general de la venta"
+                aria-label={t("sells.detail.info.ariaLabel")}
                 sx={{
                     p: 2,
                     m: 0,

@@ -3,6 +3,7 @@ import { MONTHS_ES } from "../../../../../config/constants";
 import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import { calculateItemAmount } from "../../../../shared/helpers/saleTypeHelper";
 import i18n from "@i18n/i18n";
+import { formatCurrency } from "../../formatCurrency";
 
 
 /*══════════ 📅 parsePurchaseDate ══════════╗
@@ -85,4 +86,4 @@ export const buildPaymentDetail = (values: SellEditFormValues): PaymentDetail =>
     };
 };
 
-export const formatAmount = (value: number): string => `$${value.toLocaleString("es-AR")}`;
+export const formatAmount = (value: number): string => formatCurrency(value);

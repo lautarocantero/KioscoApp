@@ -1,10 +1,13 @@
 // OrderConfirmedIconComponent.tsx
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, type Theme } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
 
 
 const OrderConfirmedIconComponent = (): ReactNode => {
+    const { t } = useTranslation();
+
     return (
         <Box
             sx={{
@@ -26,7 +29,7 @@ const OrderConfirmedIconComponent = (): ReactNode => {
                 <Box
                     component="img"
                     src="/images/stocko_images/stocko_recipt.png"
-                    alt="Pedido confirmado"
+                    alt={t("cart.orderConfirmed.imageAlt")}
                     sx={{
                         width: {
                             xs: '7em',

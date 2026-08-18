@@ -1,9 +1,11 @@
 import { Box, Grid, Typography, type Theme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { getNoisyBackgroundSx } from "../../../shared/components/NoisyBackground/NoisyBackground";
 import { type ReactNode } from "react";
 
 
 const CartEmptyComponent = (): ReactNode => {
+    const { t } = useTranslation();
 
     return (
         <Grid 
@@ -44,7 +46,7 @@ const CartEmptyComponent = (): ReactNode => {
                     <Box
                         component="img"
                         src="/images/stocko_images/empty_bag.png"
-                        alt="Carrito vacío"
+                        alt={t("cart.empty.imageAlt")}
                         sx={{
                             width: 80,
                             height: 80,
@@ -54,7 +56,7 @@ const CartEmptyComponent = (): ReactNode => {
                 </Box>
 
                 <Typography variant="h6" sx={{ fontWeight: 700, mb: '0.4em' }}>
-                    ¡Agrega productos al carrito!
+                    {t("cart.empty.title")}
                 </Typography>
 
                 <Typography
@@ -62,9 +64,9 @@ const CartEmptyComponent = (): ReactNode => {
                     color="text.secondary"
                     sx={{ maxWidth: 380, mb: '1.5em' }}
                 >
-                    Parece que aún no agregaste ningún producto. <br />
-                    Utiliza el escáner y agrega directamente, o <br />
-                    explora nuestro catálogo y encuentra lo que necesitas.
+                    {t("cart.empty.descriptionLine1")} <br />
+                    {t("cart.empty.descriptionLine2")} <br />
+                    {t("cart.empty.descriptionLine3")}
                 </Typography>
 
             </Grid>

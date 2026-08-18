@@ -40,7 +40,7 @@ const CartPaymentMethod = ({total}: CartPaymentMethodProps): React.ReactNode => 
                     })}
                 >
                     <CreditCardIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.secondary?.main })} />
-                    Método de pago
+                    {t("cart.paymentMethod.label")}
                 </FormLabel>
                 <RadioGroup
                     value={values.payment_method}

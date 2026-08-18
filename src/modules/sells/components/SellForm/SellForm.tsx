@@ -1,13 +1,14 @@
 import { Grid } from "@mui/material";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import { Formik } from "formik";
+import { useTranslation } from "react-i18next";
 import SellFormFirstStep from "./SellFormFirstStep";
 import { useParams } from "react-router-dom";
 import type { SellFormProps } from "@typings/sells/SellComponentTypes";
 import SellDetailFormComponent from "./SellDetailForm";
 import SellDetailSkeleton from "./SellDetailSkeleton";
 import EmptySellDetail from "./EmptySellDetail";
-import { getSellEditInitialValues, sellEditFormSchema } from "../../schema/SellFormSchema";
+import { getSellEditInitialValues, getSellEditFormSchema } from "../../schema/SellFormSchema";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import { useSellDetail, useSellEdit } from "../../../../hooks/sells/useSellsForm";
@@ -21,6 +22,7 @@ const DETAIL_COMPONENTS = [SellDetailFormComponent];
 
 // ── Modo EDITAR ───────────────────────────────────────────────────────────────
 const SellEditForm = (): React.ReactNode => {
+    const { t } = useTranslation();
     const {
         editingSell,
         isLoadingSell,
@@ -38,7 +40,7 @@ const SellEditForm = (): React.ReactNode => {
     } = useSellEdit();
 
     if (isLoadingSell) return <LoadingSpinnerComponent />;
-    if (!editingSell) return <NotEntityLoaded error={submitError} fallbackText="No se pudo cargar la venta" />;
+    if (!editingSell) return <NotEntityLoaded error={submitError} fallbackText={t("sells.edit.loadError")} />;
     if (updatedSellId) return (
         <SellEdited handleSeeDetail={handleSeeDetail} handleBackToSells={handleBackToSells} />
     );
@@ -46,7 +48,7 @@ const SellEditForm = (): React.ReactNode => {
     return (
         <Formik
             initialValues={getSellEditInitialValues(editingSell)}
-            validationSchema={sellEditFormSchema}
+            validationSchema={getSellEditFormSchema(t)}
             onSubmit={handleEdit}
             validateOnBlur={false}
             validateOnChange={false}

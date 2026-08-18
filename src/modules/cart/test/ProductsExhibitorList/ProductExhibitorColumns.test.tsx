@@ -4,6 +4,7 @@ import type { Product } from "../../../../typings/product/productTypes";
 import { buildColumnsForProductExhibitor } from "../../components/ProductsExhibitorList/ProductExhibitorColumns";
 import type { GridColDef } from "@mui/x-data-grid";
 import { renderWithTheme, renderWithProviders } from "../../../shared/test/utils/setupTests"; // 👈 ajustá el path
+import i18n from "@i18n/i18n";
 
 const buildProduct = (overrides: Partial<Product> = {}): Product =>
     ({
@@ -22,7 +23,7 @@ const buildProduct = (overrides: Partial<Product> = {}): Product =>
     } as Product);
 
 const getColumn = (field: string) => {
-    const column = buildColumnsForProductExhibitor().find((col) => col.field === field);
+    const column = buildColumnsForProductExhibitor(i18n.t.bind(i18n)).find((col) => col.field === field);
     if (!column) throw new Error(`Column "${field}" not found`);
     return column;
 };

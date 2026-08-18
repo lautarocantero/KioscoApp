@@ -26,14 +26,15 @@ export const useSellbarCategories = ({ showSnackBar }: UseCartBarCategoriesParam
                 const result: PresentationCategory[] = await getAvailableCategoriesRequest();
                 setCategoriesList(result ?? []);
             } catch (error: unknown) {
-                showSnackBar(`No se pudieron cargar las categorías`, AlertColor.Error);
+                showSnackBar(t("cart.snackbar.categoriesLoadFailed"), AlertColor.Error);
             } finally {
                 setIsLoadingCategories(false);
             }
         };
 
         void fetchCategories();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [t]);
 
     const handleOpenCategoryMenu = (event: MouseEvent<HTMLElement>) => setCategoryAnchorEl(event.currentTarget);
     const handleCloseCategoryMenu = () => setCategoryAnchorEl(null);

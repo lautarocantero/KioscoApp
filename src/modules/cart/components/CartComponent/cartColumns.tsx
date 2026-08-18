@@ -1,6 +1,7 @@
 import { type GridColDef } from "@mui/x-data-grid";
 import { Box, IconButton, Typography, type Theme } from "@mui/material";
 import type { ProductTicketWithStockType } from "@typings/sells/sellTypes";
+import type { TFunction } from "i18next";
 import { formatCurrency } from "../../helpers/formatCurrency";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -13,10 +14,11 @@ export const buildColumnsForCartProducts = (
   onDecrease: (_id: string) => void,
   onSubtotalChange: (_id: string, value: number) => void,
   onQuantityChange: (_id: string, value: number) => void,
+  t: TFunction,
 ): GridColDef<ProductTicketWithStockType>[] => [
   {
     field: "name",
-    headerName: "Producto",
+    headerName: t("cart.table.columns.product"),
     flex: 1.5,
     minWidth: 100,
     width: 300,
@@ -46,7 +48,7 @@ export const buildColumnsForCartProducts = (
   },
   {
     field: "price",
-    headerName: "Precio unitario",
+    headerName: t("cart.table.columns.unitPrice"),
     flex: 0.8,
     minWidth: 100,
     width: 140,
@@ -57,7 +59,7 @@ export const buildColumnsForCartProducts = (
   },
   {
     field: "stock",
-    headerName: "Stock",
+    headerName: t("cart.table.columns.stock"),
     flex: 0.6,
     minWidth: 80,
     width: 100,
@@ -75,7 +77,7 @@ export const buildColumnsForCartProducts = (
   },
   {
     field: "stock_required",
-    headerName: "Cantidad",
+    headerName: t("cart.table.columns.quantity"),
     flex: 1,
     minWidth: 100,
     width: 160,
@@ -107,7 +109,7 @@ export const buildColumnsForCartProducts = (
               variant="caption"
               sx={(theme: Theme) => ({ color: theme?.custom?.translucidWhite })}
             >
-              g
+              {t("cart.table.weightUnit")}
             </Typography>
           </Box>
         );
@@ -132,7 +134,7 @@ export const buildColumnsForCartProducts = (
   },
   {
     field: "subtotal",
-    headerName: "Subtotal",
+    headerName: t("cart.table.columns.subtotal"),
     flex: 0.8,
     minWidth: 100,
     width: 140,
@@ -150,7 +152,7 @@ export const buildColumnsForCartProducts = (
   },
   {
     field: "actions",
-    headerName: "Acciones",
+    headerName: t("cart.table.columns.actions"),
     minWidth: 100,
     width: 100,
     maxWidth: 100,

@@ -2,12 +2,14 @@ import { alpha, Box, Chip, Grid, Stack, Typography, type Theme } from "@mui/mate
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useTranslation } from "react-i18next";
 import type { SellDetailPaymentDataProps } from "@typings/sells/SellComponentTypes";
 import type { ReactNode } from "react";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 
 
 const SellDetailPaymentData = ({ payment }: SellDetailPaymentDataProps): ReactNode => {
+    const { t } = useTranslation();
     const { methodLabel, approved, reference, paymentDate } = payment;
 
     return (
@@ -20,7 +22,7 @@ const SellDetailPaymentData = ({ payment }: SellDetailPaymentDataProps): ReactNo
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                     <LocalAtmOutlinedIcon fontSize="small" aria-hidden="true" />
                     <Typography id="payment-data-heading" component="h2" variant="subtitle1" fontWeight={700}>
-                        Detalle de pago
+                        {t("sells.detail.paymentData.heading")}
                     </Typography>
                 </Stack>
 
@@ -39,11 +41,11 @@ const SellDetailPaymentData = ({ payment }: SellDetailPaymentDataProps): ReactNo
                             <Chip
                                 size="small"
                                 icon={<CheckCircleOutlineIcon fontSize="small" aria-hidden="true" />}
-                                label="Aprobado"
+                                label={t("sells.detail.paymentData.approved")}
                                 color="success"
                                 variant="outlined"
                                 role="status"
-                                aria-label="Estado del pago: aprobado"
+                                aria-label={t("sells.detail.paymentData.approvedAriaLabel")}
                             />
                         )}
                     </Stack>
@@ -51,7 +53,7 @@ const SellDetailPaymentData = ({ payment }: SellDetailPaymentDataProps): ReactNo
                     <Stack component="dl" spacing={1.5} sx={{ m: 0 }}>
                         <div>
                             <Typography component="dt" variant="caption" color="text.secondary">
-                                Referencia / Comprobante
+                                {t("sells.detail.paymentData.reference")}
                             </Typography>
                             <Typography component="dd" variant="body2" fontWeight={600} sx={{ m: 0 }}>
                                 {reference}
@@ -59,7 +61,7 @@ const SellDetailPaymentData = ({ payment }: SellDetailPaymentDataProps): ReactNo
                         </div>
                         <div>
                             <Typography component="dt" variant="caption" color="text.secondary">
-                                Fecha de pago
+                                {t("sells.detail.paymentData.paymentDate")}
                             </Typography>
                             <Typography component="dd" variant="body2" fontWeight={600} sx={{ m: 0 }}>
                                 {paymentDate}

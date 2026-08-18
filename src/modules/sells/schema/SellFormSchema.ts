@@ -1,5 +1,6 @@
 import type { SellEditFormValues, SellTicketType } from "@typings/sells/sellTypes";
 import { SellStatusEnum } from "@typings/sells/sellsEnum";
+import type { TFunction } from "i18next";
 import * as Yup from "yup";
 
 export const getSellEditInitialValues = (sell?: SellTicketType | null): SellEditFormValues => ({
@@ -17,14 +18,16 @@ export const getSellEditInitialValues = (sell?: SellTicketType | null): SellEdit
     status: sell?.status ?? SellStatusEnum.Completada,
     amount_paid: sell?.amount_paid ?? 0,
     debtor_name: sell?.debtor_name ?? "",
+    settles_sell_id: sell?.settles_sell_id ?? null,
+    settled_by_sell_id: sell?.settled_by_sell_id ?? null,
 });
 
-export const sellEditFormSchema = Yup.object({
-    purchase_date:  Yup.string().required("La fecha de compra es obligatoria"),
-    seller_name:    Yup.string().required("El nombre del vendedor es obligatorio"),
-    payment_method: Yup.string().required("El método de pago es obligatorio"),
-    sub_total:      Yup.number().required("El subtotal es obligatorio").min(0),
-    iva:            Yup.number().required("El IVA es obligatorio").min(0),
-    total_amount:   Yup.number().required("El total es obligatorio").min(0),
-    currency:       Yup.string().required("La moneda es obligatoria"),
+export const getSellEditFormSchema = (t: TFunction) => Yup.object({
+    purchase_date:  Yup.string().required(t("sells.validation.purchase_date.required")),
+    seller_name:    Yup.string().required(t("sells.validation.seller_name.required")),
+    payment_method: Yup.string().required(t("sells.validation.payment_method.required")),
+    sub_total:      Yup.number().required(t("sells.validation.sub_total.required")).min(0),
+    iva:            Yup.number().required(t("sells.validation.iva.required")).min(0),
+    total_amount:   Yup.number().required(t("sells.validation.total_amount.required")).min(0),
+    currency:       Yup.string().required(t("sells.validation.currency.required")),
 });

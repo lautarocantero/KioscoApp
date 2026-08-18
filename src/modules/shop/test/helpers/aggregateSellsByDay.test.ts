@@ -17,6 +17,8 @@ const sell = (purchase_date: string, total_amount: number): SellTicketType => ({
     status: "completada" as SellTicketType["status"],
     amount_paid: null,
     debtor_name: null,
+    settles_sell_id: null,
+    settled_by_sell_id: null,
 });
 
 // Ancla a mediodía local de hoy (no "ahora - N horas") para que restar

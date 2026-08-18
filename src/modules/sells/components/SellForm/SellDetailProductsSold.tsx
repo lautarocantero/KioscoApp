@@ -1,5 +1,6 @@
 import { alpha, Avatar, Box, Grid, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography, type Theme } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { useTranslation } from "react-i18next";
 import type { SellDetailProductsSoldProps } from "@typings/sells/SellComponentTypes";
 import { useSellDetailForm } from "../../../../hooks/sells/useSellDetailForm";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
@@ -8,6 +9,7 @@ import { formatWeightAwareQuantity } from "../../../shared/helpers/saleTypeHelpe
 
 const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): React.ReactNode => {
      const { goToPresentation } = useSellDetailForm();
+     const { t } = useTranslation();
 
     return (
         <Grid size={{ xs: 12 }}>
@@ -19,7 +21,7 @@ const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): Reac
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                     <ShoppingCartOutlinedIcon fontSize="small" aria-hidden="true" />
                     <Typography id="products-sold-heading" component="h2" variant="subtitle1" fontWeight={700}>
-                        Productos vendidos
+                        {t("sells.detail.productsSold.heading")}
                     </Typography>
                 </Stack>
 
@@ -36,7 +38,7 @@ const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): Reac
                 >
                     <Table
                         size="small"
-                        aria-label="Productos vendidos en esta venta"
+                        aria-label={t("sells.detail.productsSold.tableAriaLabel")}
                         sx={{
                             width: "100%",
                             minWidth: { xs: 520, md: "100%" },
@@ -45,10 +47,10 @@ const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): Reac
                     >
                         <TableHead>
                             <TableRow>
-                                <TableCell component="th" scope="col">Producto</TableCell>
-                                <TableCell component="th" scope="col" align="right">Cant.</TableCell>
-                                <TableCell component="th" scope="col" align="right">Precio unit.</TableCell>
-                                <TableCell component="th" scope="col" align="right">Subtotal</TableCell>
+                                <TableCell component="th" scope="col">{t("sells.detail.productsSold.columns.product")}</TableCell>
+                                <TableCell component="th" scope="col" align="right">{t("sells.detail.productsSold.columns.quantity")}</TableCell>
+                                <TableCell component="th" scope="col" align="right">{t("sells.detail.productsSold.columns.unitPrice")}</TableCell>
+                                <TableCell component="th" scope="col" align="right">{t("sells.detail.productsSold.columns.subtotal")}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -59,7 +61,7 @@ const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): Reac
                                     onClick={() => goToPresentation(product.productId, product.presentationId)}
                                     tabIndex={0}
                                     role="link"
-                                    aria-label={`Ver detalle de ${product.name}`}
+                                    aria-label={t("sells.detail.productsSold.rowAriaLabel", { name: product.name })}
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter" || e.key === " ") {
                                             e.preventDefault();
@@ -79,7 +81,7 @@ const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): Reac
                                             <Avatar
                                                 variant="rounded"
                                                 src={product.imageUrl || "/images/stocko_images/empty_product.png"}
-                                                alt={`Imagen de ${product.name}`}
+                                                alt={t("sells.detail.productsSold.imageAlt", { name: product.name })}
                                                 sx={{ width: 40, height: 40, flexShrink: 0 }}
                                             />
                                             <Box sx={{ minWidth: 0 }}>
@@ -92,7 +94,7 @@ const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): Reac
                                                     {product.name}
                                                 </Typography>
                                                 <Typography variant="caption" color="text.secondary" noWrap>
-                                                    SKU: {product.sku}
+                                                    {t("sells.detail.productsSold.skuLabel")} {product.sku}
                                                 </Typography>
                                             </Box>
                                         </Stack>

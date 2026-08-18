@@ -1,5 +1,7 @@
+import i18n from "@i18n/i18n";
+
 export const formatRelativeSaleSubtitle = (lastSaleAt: string | null): string => {
-    if (!lastSaleAt) return "Sin ventas registradas hoy";
+    if (!lastSaleAt) return i18n.t("cart.relativeSale.noSalesToday");
 
     const last = new Date(lastSaleAt);
     const now = new Date();
@@ -15,11 +17,11 @@ export const formatRelativeSaleSubtitle = (lastSaleAt: string | null): string =>
         minute: "2-digit",
     });
 
-    if (diffMin < 1) return "Última venta: recién";
-    if (diffMin < 60) return `Última venta hace ${diffMin} min`;
-    if (isToday) return `Última venta hoy a las ${time}`;
-    if (diffDays === 1) return `Última venta ayer a las ${time}`;
-    if (diffDays < 7) return `Última venta hace ${diffDays} días`;
+    if (diffMin < 1) return i18n.t("cart.relativeSale.justNow");
+    if (diffMin < 60) return i18n.t("cart.relativeSale.minutesAgo", { count: diffMin });
+    if (isToday) return i18n.t("cart.relativeSale.todayAt", { time });
+    if (diffDays === 1) return i18n.t("cart.relativeSale.yesterdayAt", { time });
+    if (diffDays < 7) return i18n.t("cart.relativeSale.daysAgo", { count: diffDays });
 
-    return `Última venta el ${last.toLocaleDateString("es-AR")}`;
+    return i18n.t("cart.relativeSale.onDate", { date: last.toLocaleDateString("es-AR") });
 };

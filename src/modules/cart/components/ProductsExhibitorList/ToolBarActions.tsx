@@ -3,6 +3,7 @@ import {
   Typography,
   type Theme,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
 import SortByCatalog from "./SortByCatalog";
 import ViewModeToggle from "./ViewModeToggle";
@@ -10,6 +11,7 @@ import type { ToolbarActionsProps } from "@typings/cart/cartComponentTypes";
 
 
 const ToolbarActions = ({ viewMode,setViewMode }: ToolbarActionsProps): ReactNode => {
+    const { t } = useTranslation();
 
     return (
 
@@ -45,7 +47,7 @@ const ToolbarActions = ({ viewMode,setViewMode }: ToolbarActionsProps): ReactNod
                         display: { xs: "none", sm: "block" },
                         })}
                     >
-                        Elegí cómo querés ver tus productos
+                        {t("cart.productsExhibitor.toolbar.viewModeHint")}
                     </Typography>
                     <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
                 </Box>

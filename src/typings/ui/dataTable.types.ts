@@ -123,6 +123,8 @@ export interface RowActionsCellProps {
   goToDetailLabel?: string;
   onRestock?: () => void;
   restockLabel?: string;
+  onSettleDebt?: () => void;
+  settleDebtLabel?: string;
   deleteLabel?: string;
   editLabel?: string;
   viewLabel?: string;

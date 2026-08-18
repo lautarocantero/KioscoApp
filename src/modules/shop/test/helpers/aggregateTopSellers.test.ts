@@ -23,6 +23,8 @@ const sell = (sellerId: string, sellerName: string, total: number, monthsAgo = 0
         status: "completada" as SellTicketType["status"],
         amount_paid: null,
         debtor_name: null,
+        settles_sell_id: null,
+        settled_by_sell_id: null,
     };
 };
 

@@ -1,5 +1,6 @@
 import { Box, Stack, Typography, type Theme } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { useTranslation } from "react-i18next";
 import type { SellDetailPendingBalanceProps } from "@typings/sells/SellComponentTypes";
 import { formatAmount } from "../../../cart/helpers/ProductDialog/Formatter/formatDetail";
 import type { ReactNode } from "react";
@@ -9,17 +10,18 @@ const SellDetailPendingBalance = ({
     pendingBalance,
     debtorName,
 }: SellDetailPendingBalanceProps): ReactNode => {
+    const { t } = useTranslation();
 
     if (pendingBalance === null) return null;
     if (pendingBalance <= 0) return null;
-    
+
 
     return (
         <Box
             component="section"
             role="status"
             aria-live="polite"
-            aria-label="Saldo pendiente de la venta"
+            aria-label={t("sells.detail.pendingBalance.ariaLabel")}
             sx={(theme: Theme) => ({
                 mt: 1,
                 p: 1.5,
@@ -41,7 +43,7 @@ const SellDetailPendingBalance = ({
                         fontWeight={600}
                         sx={(theme: Theme) => ({ color: theme.palette.warning.main })}
                     >
-                        Saldo pendiente
+                        {t("sells.settleDebtDialog.pendingBalanceLabel")}
                     </Typography>
                 </Stack>
                 <Typography
@@ -49,7 +51,7 @@ const SellDetailPendingBalance = ({
                     variant="body2"
                     fontWeight={700}
                     sx={(theme: Theme) => ({ color: theme.palette.warning.main })}
-                    aria-label={`Monto pendiente: ${formatAmount(pendingBalance)}`}
+                    aria-label={t("sells.detail.pendingBalance.amountAriaLabel", { amount: formatAmount(pendingBalance) })}
                 >
                     {formatAmount(pendingBalance)}
                 </Typography>
@@ -61,8 +63,8 @@ const SellDetailPendingBalance = ({
                 sx={{ mt: 0.5, display: "block" }}
             >
                 {debtorName
-                    ? `${debtorName} abonó parcialmente esta venta.`
-                    : "El cliente abonó parcialmente esta venta."}
+                    ? t("sells.detail.pendingBalance.descriptionWithDebtor", { debtorName })
+                    : t("sells.detail.pendingBalance.descriptionWithoutDebtor")}
             </Typography>
         </Box>
     );

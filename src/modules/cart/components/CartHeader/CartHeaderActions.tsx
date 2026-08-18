@@ -1,11 +1,13 @@
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import { Box } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
 import PrimaryButtonComponent from '../../../shared/components/Buttons/PrimaryButtonComponent';
 import type { CartHeaderActionsProps } from '@typings/cart/cartComponentTypes';
 
 
 const CartHeaderActions = ({ itemsCount, onClearCart }: CartHeaderActionsProps): ReactNode => {
+    const { t } = useTranslation();
     const hasItems = itemsCount > 0;
 
     return (
@@ -29,7 +31,7 @@ const CartHeaderActions = ({ itemsCount, onClearCart }: CartHeaderActionsProps):
 
             {hasItems && (
                 <PrimaryButtonComponent
-                    buttonText="Vaciar carrito"
+                    buttonText={t("cart.header.clearButton")}
                     buttonOnClick={onClearCart}
                     buttonColor="error"
                     buttonWidth="180px"

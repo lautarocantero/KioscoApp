@@ -1,8 +1,10 @@
 import { useState, type MouseEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { useProductsExhibitor } from "./useProductsExhibitor";
 import type { SortOption } from "@typings/cart/cartEnums";
 
 export const useSortByCatalog = () => {
+  const { t } = useTranslation();
   const { sort, handleSortChange, options } = useProductsExhibitor();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -15,7 +17,9 @@ export const useSortByCatalog = () => {
     onCloseMenu();
   };
 
-  const selectedLabel = options.find((opt) => opt.value === sort)?.label;
+  const selectedLabel = options.find((opt) => opt.value === sort)
+    ? t(`cart.productsExhibitor.sort.options.${sort}`)
+    : undefined;
 
   return {
     anchorEl,

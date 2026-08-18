@@ -1,6 +1,7 @@
 import type { FormikProps } from "formik";
 import type { AuthResetPasswordFormValues } from "@typings/auth/authTypes";
 import type { SettingsCategoryEnum, SettingsSectionEnum, ThemeModeEnum, LanguageEnum } from "./settingsEnums";
+import type { Currency } from "@typings/sells/sellsEnum";
 
 //─────────────────────────── 🔑 Cambio de contraseña 🔑 ───────────────────────────//
 
@@ -51,6 +52,11 @@ export interface UseLanguageOptionReturn {
 export interface UseFontSizeOptionReturn {
     fontSize: number;
     setFontSize: (fontSize: number) => void;
+}
+
+export interface UseCurrencyOptionReturn {
+    currency: Currency;
+    setCurrency: (currency: Currency) => void;
 }
 
 export interface UseAccountPasswordFormReturn {

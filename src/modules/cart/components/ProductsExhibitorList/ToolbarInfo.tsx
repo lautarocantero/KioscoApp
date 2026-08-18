@@ -4,6 +4,7 @@ import {
   type Theme,
 } from "@mui/material";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
 import type { ToolbarInfoProps } from "@typings/cart/cartComponentTypes";
 
@@ -11,6 +12,7 @@ import type { ToolbarInfoProps } from "@typings/cart/cartComponentTypes";
 const ToolbarInfo = ({
   totalCount,
 }: ToolbarInfoProps): ReactNode => {
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -46,13 +48,13 @@ const ToolbarInfo = ({
             noWrap
             sx={(theme: Theme) => ({ color: theme.custom?.white, lineHeight: 1.2 })}
         >
-            Catálogo de productos
+            {t("cart.productsExhibitor.toolbar.title")}
         </Typography>
         <Typography
             variant="caption"
             sx={(theme: Theme) => ({ color: theme.custom?.white })}
         >
-            {totalCount} productos disponibles
+            {t("cart.productsExhibitor.toolbar.availableCount", { count: totalCount })}
         </Typography>
     </Box>
     </Box>

@@ -9,6 +9,7 @@ import type { AppDispatch } from "../../store/cart/cartSlice";
 import type { PaymentMethod } from "@typings/sells/sellsEnum";
 import type { FormikErrors, FormikTouched } from "formik";
 import type { GridColDef } from "@mui/x-data-grid";
+import type { TFunction } from "i18next";
 
 export interface CartStateInterface {
     _id: string | null,
@@ -172,6 +173,7 @@ export interface HandleAddProductDialogItemToCartInterface {
     quantity: number;
     dispatch: AppDispatch;
     showSnackBar: (message: string, color: AlertColor) => void;
+    t: TFunction;
 }
 
 export interface UseCartReturn {

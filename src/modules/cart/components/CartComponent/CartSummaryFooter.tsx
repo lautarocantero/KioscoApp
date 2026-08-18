@@ -2,12 +2,14 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { alpha, Box, Link, Typography, type Theme } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import PrimaryButton from "../../../shared/components/Buttons/PrimaryButtonComponent";
 import type { ReactNode } from 'react';
 import type { CartSummaryFooterProps } from '@typings/cart/cartComponentTypes';
 
 
 const CartSummaryFooterComponent = ({ total, onBack, onGenerateTicket }: CartSummaryFooterProps): ReactNode => {
+    const { t } = useTranslation();
 
     if (total <= 0) return null;
 
@@ -40,7 +42,7 @@ const CartSummaryFooterComponent = ({ total, onBack, onGenerateTicket }: CartSum
                         fontSize: theme?.typography?.caption?.fontSize,
                     })}
                 >
-                    Revisa los productos y confirma el método de pago antes de continuar.
+                    {t("cart.summary.footerNotice")}
                 </Typography>
             </Box>
 
@@ -67,11 +69,11 @@ const CartSummaryFooterComponent = ({ total, onBack, onGenerateTicket }: CartSum
                         whiteSpace: 'nowrap',
                     })}
                 >
-                    <ArrowBackIcon fontSize="small" /> Volver a productos
+                    <ArrowBackIcon fontSize="small" /> {t("cart.summary.backToProducts")}
                 </Link>
 
                 <PrimaryButton
-                    buttonText="Hacer ticket"
+                    buttonText={t("cart.summary.generateTicket")}
                     buttonOnClick={() => onGenerateTicket?.()}
                     buttonWidth={{ xs: '100%', sm: '15em', md: "100%", lg: '15em' }}
                     marginTop="0"

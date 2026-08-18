@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import PointOfSaleOutlinedIcon from "@mui/icons-material/PointOfSaleOutlined";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
@@ -6,9 +7,12 @@ import TableFilterTabs from "../../../shared/components/DataTable/TableFilterTab
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useSells } from "../../../../hooks/sells/useSells";
 import type { Sell } from "@typings/sells/sellTypes";
-import { SELL_FILTER_LABELS, SELL_FILTER_OPTIONS } from "../../helpers/sellFilterOptions";
+import { SellFilterEnum } from "@typings/sells/sellsEnum";
+import { SELL_FILTER_OPTIONS } from "../../helpers/sellFilterOptions";
+import SettleDebtDialog from "./components/SettleDebtDialog";
 
 const SellsListPage = (): React.ReactNode => {
+    const { t } = useTranslation();
     const {
         sells,
         loading,
@@ -22,15 +26,20 @@ const SellsListPage = (): React.ReactNode => {
         filter,
         setFilter,
         counts,
-        columns
+        columns,
+        settleDebtDialog,
+        settleDebtIsSubmitting,
+        settleDebtErrorMessage,
+        handleSettleDebtCancel,
+        handleSettleDebtConfirm,
     } = useSells();
 
     return (
         <AppLayout fullWidth>
             <TableIconHeader
                 icon={<PointOfSaleOutlinedIcon />}
-                title="Ventas"
-                subtitle="Historial de ventas registradas en tu negocio."
+                title={t("sells.table.header.title")}
+                subtitle={t("sells.table.header.subtitle")}
             />
 
             <DataTable<Sell>
@@ -40,36 +49,44 @@ const SellsListPage = (): React.ReactNode => {
                 loading={loading}
                 error={error}
                 onClearError={clearError}
-                emptyMessage="No hay ventas registradas"
+                emptyMessage={t("sells.table.emptyMessage")}
                 height={"35em"}
-                search={{ value: searchTerm, onChange: setSearchTerm, placeholder: "Ticket o vendedor..." }}
+                search={{ value: searchTerm, onChange: setSearchTerm, placeholder: t("sells.table.searchPlaceholder") }}
                 newItem={{
-                    label: "Nueva venta",
+                    label: t("sells.table.newItem"),
                     href: "/new-sell",
                 }}
                 filters={
                     <TableFilterTabs
-                        ariaLabel="Ventas"
+                        ariaLabel={t("sells.table.header.title")}
                         value={filter}
                         onChange={setFilter}
                         options={SELL_FILTER_OPTIONS.map((option) => ({
                             value: option,
-                            label: SELL_FILTER_LABELS[option],
+                            label: option === SellFilterEnum.All ? t("sells.filters.all") : t(`sells.status.${option}`),
                             count: counts[option],
                         }))}
                     />
                 }
                 deleteDialog={{
                     open: deleteDialog.open,
-                    title: "Confirmar eliminación",
+                    title: t("sells.table.deleteDialog.title"),
                     description: (
-                        <>¿Estás seguro de que querés eliminar la venta <strong>{deleteDialog.name}</strong>? Esta acción no se puede deshacer.</>
+                        <>{t("sells.table.deleteDialog.descriptionPrefix")} <strong>{deleteDialog.name}</strong>{t("sells.table.deleteDialog.descriptionSuffix")}</>
                     ),
-                    warningText: "Esta acción eliminará la venta de forma permanente.",
-                    confirmLabel: "Eliminar",
+                    warningText: t("sells.table.deleteDialog.warningText"),
+                    confirmLabel: t("sells.table.deleteDialog.confirmLabel"),
                     onConfirm: () => void handleDeleteConfirm(),
                     onCancel: handleDeleteCancel,
                 }}
+            />
+
+            <SettleDebtDialog
+                settleDebtDialog={settleDebtDialog}
+                isSubmitting={settleDebtIsSubmitting}
+                errorMessage={settleDebtErrorMessage}
+                onConfirm={() => void handleSettleDebtConfirm()}
+                onCancel={handleSettleDebtCancel}
             />
         </AppLayout>
     );

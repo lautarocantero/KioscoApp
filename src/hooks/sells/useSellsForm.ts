@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { editSellThunk } from "../../store/sell/sellsThunks";
 import { useSellData } from "./useSellData";
 import type { SellEditFormValues } from "@typings/sells/sellTypes";
@@ -17,6 +18,7 @@ export const useSellEdit = () => {
     const { sell_id: sellId } = useParams<{ sell_id: string }>();
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const { sellData: editingSell, isLoading: isLoadingSell } = useSellData(sellId);
 
@@ -37,11 +39,11 @@ export const useSellEdit = () => {
         setSubmitError(null);
         try {
             const _id = await dispatch(editSellThunk({ data: values }));
-            if (!_id) throw new Error("No se pudo editar la venta");
+            if (!_id) throw new Error(t("sells.edit.submitFailed"));
 
             setUpdatedSellId(_id);
         } catch (err) {
-            const message = await parseError(err, "Error inesperado al editar la venta");
+            const message = await parseError(err, t("sells.edit.errorUnexpected"));
             setSubmitError(message);
         } finally {
             setIsSubmitting(false);

@@ -2,7 +2,9 @@ import type { CartFormValues, CreateSellResponse, ProductTicketType, ProductTick
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
-import { Currency, PaymentMethod, SellStatusEnum } from "../../typings/sells/sellsEnum";
+import { useTranslation } from "react-i18next";
+import { PaymentMethod, SellStatusEnum } from "../../typings/sells/sellsEnum";
+import { useCurrencyOption } from "../ui/useCurrencyOption";
 import type { AppDispatch, RootState } from "../../store/cart/cartSlice";
 import { iva } from "../../config/constants";
 import { createSellThunk } from "../../store/sell/sellsThunks";
@@ -18,11 +20,13 @@ import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/help
 
 
 export const useCart = (showSnackBar: (message: string, severity: AlertColor) => void): UseCartReturn => {
+    const { t } = useTranslation();
     const { _id, name } = useSelector((state: RootState) => state.auth);
     const cart: ProductTicketWithStockType[] = useSelector((state: RootState) => state.cart.cart);
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate: NavigateFunction = useNavigate();
+    const { currency } = useCurrencyOption();
 
     const [ticketSummary, setTicketSummary] = useState<TicketSummaryType | null>(null);
 
@@ -123,14 +127,16 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
             sub_total: productsTotalPrice,
             iva: ivaPercentage,
             total_amount: total,
-            currency: Currency?.Ars,
+            currency,
+            settles_sell_id: null,
+            settled_by_sell_id: null,
         }
 
         try {
             const response: CreateSellResponse | undefined = await dispatch(createSellThunk({ data: ticket }));
 
             if (!response) {
-                showSnackBar('No se pudo registrar la venta. Intentá nuevamente.', AlertColor.Error);
+                showSnackBar(t("cart.snackbar.createSellFailed"), AlertColor.Error);
                 return;
             }
 
@@ -146,10 +152,10 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
             setSubtotalOverrides({});
             navigate('/cart-order-confirmed');
         } catch (error) {
-            const message = await parseApiError(error, 'No se pudo registrar la venta. Intentá nuevamente.');
+            const message = await parseApiError(error, t("cart.snackbar.createSellFailed"));
             showSnackBar(message, AlertColor.Error);
         }
-    }, [cartWithSubtotals, productsTotalPrice, ivaPercentage, total, dispatch, navigate, showSnackBar]);
+    }, [cartWithSubtotals, productsTotalPrice, ivaPercentage, total, currency, dispatch, navigate, showSnackBar, t]);
 
     const printTicket = useCallback((): void => {
         const ticketString: string | null = localStorage.getItem('last_ticket');
@@ -195,8 +201,8 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     }, [ticketSummary, navigate]);
 
     const columns = useMemo(
-        () => buildColumnsForCartProducts(handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange, handleQuantityChange),
-        [handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange, handleQuantityChange]
+        () => buildColumnsForCartProducts(handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange, handleQuantityChange, t),
+        [handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange, handleQuantityChange, t]
     );
 
     return {

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { getSellByIdThunk, getTodaySellsCountThunk } from "../../store/sell/sellsThunks";
 import type { UseSellDataResult, UseSellStatsResult } from "@typings/sells/sellTypes";
 import type { LinkDataResult } from "@typings/ui/layout.types";
@@ -80,6 +81,7 @@ export const useSellStats = (): UseSellStatsResult => {
 
 // Adaptador para las cards de HomePageLinks / SidebarNavLinks
 export const useSellsLinkData = (): LinkDataResult => {
+    const { t } = useTranslation();
     const { todaySells, todaySellsAmount, lastSaleAt, isLoading, error } = useSellStats();
 
     const relativeTime = formatRelativeTime(lastSaleAt);
@@ -90,7 +92,7 @@ export const useSellsLinkData = (): LinkDataResult => {
         isLoading,
         error,
         subtitle: todaySells === 0 || !relativeTime
-            ? "Sin ventas hoy"
-            : `Hoy · ${relativeTime}`,
+            ? t("sells.stats.noSalesToday")
+            : t("sells.stats.todayWithTime", { time: relativeTime }),
     };
 };

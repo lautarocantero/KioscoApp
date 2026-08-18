@@ -62,6 +62,8 @@ export interface SellDetailAditionalDataProps {
     sellId: string;
     pendingBalance: number | null;
     debtorName: string | null;
+    settlesSellId: string | null;
+    settledBySellId: string | null;
 }
 
 export interface SellDetailPendingBalanceProps {

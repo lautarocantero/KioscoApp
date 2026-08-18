@@ -7,6 +7,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CookieIcon from '@mui/icons-material/Cookie';
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 import type { RowActionsCellProps } from "@typings/ui/dataTable.types";
 
 
@@ -22,6 +23,8 @@ const RowActionsCell = ({
   goToDetailLabel = "Ver detalle",
   onRestock,
   restockLabel = "Reponer stock",
+  onSettleDebt,
+  settleDebtLabel = "Saldar deuda",
   viewLabel = "Ver detalle",
   editLabel = "Editar",
   deleteLabel = "Eliminar",
@@ -72,6 +75,14 @@ const RowActionsCell = ({
       <Tooltip title={restockLabel}>
         <IconButton size="small" color="secondary" onClick={onRestock} aria-label={restockLabel}>
           <Inventory2OutlinedIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+    )}
+
+    {onSettleDebt && (
+      <Tooltip title={settleDebtLabel}>
+        <IconButton size="small" color="secondary" onClick={onSettleDebt} aria-label={settleDebtLabel}>
+          <PaidOutlinedIcon fontSize="small" />
         </IconButton>
       </Tooltip>
     )}

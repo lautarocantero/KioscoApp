@@ -64,3 +64,21 @@ export interface RestockDialogProps {
     onConfirm: () => void;
     onCancel: () => void;
 }
+
+//─────────────────────────────── 💰 Saldar deuda 💰 ───────────────────────────────//
+
+export interface SettleDebtDialogState {
+    open: boolean;
+    sellId: string;
+    debtorName: string | null;
+    currency: string;
+    pendingBalance: number;
+}
+
+export interface SettleDebtDialogProps {
+    settleDebtDialog: SettleDebtDialogState;
+    isSubmitting: boolean;
+    errorMessage: string | null;
+    onConfirm: () => void;
+    onCancel: () => void;
+}

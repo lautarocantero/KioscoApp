@@ -3,9 +3,9 @@ import type { SelectChangeEvent } from "@mui/material";
 import { SortOption } from "@typings/cart/cartEnums";
 import type { SortOption as SortOptionType } from "@typings/cart/cartEnums";
 
-export const SORT_OPTIONS: { value: SortOptionType; label: string }[] = [
-  { value: SortOption.NameAsc, label: "Nombre A-Z" },
-  { value: SortOption.NameDesc, label: "Nombre Z-A" },
+export const SORT_OPTIONS: { value: SortOptionType }[] = [
+  { value: SortOption.NameAsc },
+  { value: SortOption.NameDesc },
 ];
 
 export const useSortOptions = (onSortChange: (value: SortOption) => void) => {

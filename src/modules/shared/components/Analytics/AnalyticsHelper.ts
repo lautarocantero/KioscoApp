@@ -44,9 +44,3 @@ export const getChartTitle = (startDate?: string, endDate?: string, isWeight?: b
     if (!startDate || !endDate) return noun;
     return `${noun} entre ${startDate} y ${endDate}`;
 };
-
-export const currencyFmt = new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    maximumFractionDigits: 0,
-});

@@ -13,10 +13,11 @@ export const buildColumnsForProductDialog = ({
   handleQuantityChange,
   handleAddToCart,
   fallbackImage,
+  t,
 }: BuildColumnsForProductDialogInterface): GridColDef<Presentation>[] => [
   {
     field: "name",
-    headerName: "Presentación",
+    headerName: t("cart.productDialog.table.columns.presentation"),
     flex: 1.5,
     minWidth: 220,
     renderCell: (params) => {
@@ -44,7 +45,7 @@ export const buildColumnsForProductDialog = ({
   },
   {
     field: "stock",
-    headerName: "Stock",
+    headerName: t("cart.productDialog.table.columns.stock"),
     flex: 1,
     minWidth: 160,
     renderCell: (params) => {
@@ -64,7 +65,7 @@ export const buildColumnsForProductDialog = ({
   },
   {
     field: "quantity",
-    headerName: "Cant.",
+    headerName: t("cart.productDialog.table.columns.quantity"),
     minWidth: 110,
     width: 110,
     sortable: false,
@@ -74,7 +75,7 @@ export const buildColumnsForProductDialog = ({
       const isWeight = isWeightSaleType(params.row.sale_type);
       return (
         <NumberField
-          label={isWeight ? 'Gramos' : 'Cant.'}
+          label={isWeight ? t("cart.productDialog.table.columns.quantityWeight") : t("cart.productDialog.table.columns.quantity")}
           min={isWeight ? 100 : 1}
           step={isWeight ? 100 : 1}
           max={stock}
@@ -88,7 +89,7 @@ export const buildColumnsForProductDialog = ({
   },
   {
     field: "actions",
-    headerName: "Acciones",
+    headerName: t("cart.productDialog.table.columns.actions"),
     minWidth: 90,
     width: 90,
     sortable: false,

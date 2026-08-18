@@ -1,5 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { CreateSellResponse, CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, EditSellSanitizedPayloadInterface, GetSellByIdThunkInterface, Sell, SellTicketType } from "@typings/sells/sellTypes";
+import type { CreateSellApiPayloadType, CreateSellResponse, CreateSellSanitizedPayloadInterface, DeleteSellByIdThunkInterface, EditSellRequestPayloadType, EditSellSanitizedPayloadInterface, GetSellByIdThunkInterface, Sell, SellTicketType, SettleSellDebtThunkInterface } from "@typings/sells/sellTypes";
+import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import { deleteSellRequest, getSellByIdRequest, getSellsRequest, getTodaySellsCountRequest, postSellRequest, putSellRequest, searchSellsRequest } from "../../modules/sells/api/sellApi";
 import { handleError } from "../shared/handlerStoreError";
 import { checkingSells, removeSell, setError, setSells, setCurrentSell, checkingTodaySells, setTodaySellsCount, setTodaySellsError, setCurrentSellError, checkingCurrentSell } from "./sellSlice";
@@ -134,7 +135,83 @@ export const editSellThunk = ({ data }: EditSellSanitizedPayloadInterface) => {
         }
     };
 };
-    
+
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 💰 settleSellDebtThunk                                                    ║
+║                                                                            ║
+║ Salda una venta parcial en dos pasos:                                    ║
+║   1. Crea una segunda venta por el saldo pendiente, con los mismos       ║
+║      productos, marcada `skip_stock: true` para que el back no la        ║
+║      valide ni descuente contra stock existente. Se hace primero porque  ║
+║      necesitamos su _id para enlazarla desde la venta original.          ║
+║   2. Edita la venta original a status Completada (sin tocar productos/   ║
+║      montos/fecha/vendedor — se reenvían tal cual) y la enlaza con la    ║
+║      venta de saldo recién creada (`settled_by_sell_id`).                ║
+║ No es atómico (son 2 llamadas HTTP separadas): si el paso 2 falla luego  ║
+║ del 1, queda la venta de saldo creada pero la original sigue Parcial y   ║
+║ sin el link — habría que reintentar "saldar deuda" a mano en ese caso.   ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+export const settleSellDebtThunk = ({ sell, pendingBalance }: SettleSellDebtThunkInterface) => {
+    return async (dispatch: Dispatch): Promise<boolean> => {
+        try {
+            const settlementPayload: CreateSellApiPayloadType = {
+                purchase_date: new Date().toLocaleDateString('es-AR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                }),
+                seller_id: sell.seller_id,
+                seller_name: sell.seller_name,
+                payment_method: sell.payment_method,
+                products: sell.products,
+                sub_total: pendingBalance,
+                iva: 0,
+                total_amount: pendingBalance,
+                currency: sell.currency,
+                status: SellStatusEnum.Completada,
+                amount_paid: pendingBalance,
+                debtor_name: null,
+                skip_stock: true,
+                settles_sell_id: sell._id,
+            };
+
+            const createResponse: CreateSellResponse = await postSellRequest(settlementPayload);
+            if (!createResponse?._id) {
+                throw new Error('No se pudo registrar la venta del saldo abonado');
+            }
+
+            const editPayload: EditSellRequestPayloadType = {
+                _id: sell._id,
+                currency: sell.currency,
+                iva: sell.iva,
+                modification_date: new Date().toISOString(),
+                payment_method: sell.payment_method,
+                products: sell.products,
+                purchase_date: sell.purchase_date,
+                seller_id: sell.seller_id,
+                seller_name: sell.seller_name,
+                sub_total: sell.sub_total,
+                total_amount: sell.total_amount,
+                status: SellStatusEnum.Completada,
+                amount_paid: sell.total_amount,
+                debtor_name: null,
+                settled_by_sell_id: createResponse._id,
+            };
+
+            const editResponse = await putSellRequest(editPayload);
+            if (!editResponse?._id) {
+                throw new Error('No se pudo saldar la deuda de la venta');
+            }
+
+            dispatch(setError({ errorMessage: null }));
+            return true;
+        } catch (error: unknown) {
+            handleError(error);
+            return false;
+        }
+    };
+};
+
 //──────────────────────────────────────────── Delete ───────────────────────────────────────────//
 
 export const deleteSellThunk = ({ _id }: DeleteSellByIdThunkInterface) => {

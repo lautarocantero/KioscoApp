@@ -1,7 +1,9 @@
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { NavigateFunction } from "react-router-dom";
+import type { TFunction } from "i18next";
 import type { DialogContextType } from "../../ui/uiModules";
+import type { SettleDebtDialogState } from "@typings/ui/dialog.types";
 import type { PaymentMethod, SellFilterEnum, SellStatusEnum } from "./sellsEnum";
 import type { EspecificationsLeftProps } from "./SellComponentTypes";
 import type { ReactNode, MouseEvent, SetStateAction } from "react";
@@ -46,6 +48,10 @@ export type SellTicketType = Pick<SellEntityInterface,
         status: SellStatusEnum,
         amount_paid: number | null,
         debtor_name: string | null,
+        // Vínculo entre una venta parcial y la venta de saldo que la saldó
+        // (ver "saldar deuda"). Ambos null en una venta que nunca fue parcial.
+        settles_sell_id: string | null,
+        settled_by_sell_id: string | null,
     };
 
 export type Sell = SellEntityInterface;
@@ -81,6 +87,12 @@ export type CreateSellApiPayloadType = Omit<Sell, '_id' | 'modification_date'> &
     status: SellStatusEnum | undefined;
     amount_paid: number | null;
     debtor_name: string | null;
+    // Cuando es true, el back no valida ni descuenta stock para esta venta —
+    // usado por la venta de saldo que genera "saldar deuda" (ver settleSellDebtThunk).
+    skip_stock?: boolean;
+    // _id de la venta parcial que esta venta salda, cuando esta venta ES una
+    // venta de saldo generada por "saldar deuda".
+    settles_sell_id?: string | null;
 };
 
 export type DeleteSellApiPayloadType = Pick<Sell, '_id'>;
@@ -106,7 +118,9 @@ export interface SellEditFormValues {
     status: SellStatusEnum,
     amount_paid: number;
     debtor_name: string;
-    
+    settles_sell_id: string | null;
+    settled_by_sell_id: string | null;
+
 }
 
 export type SoldProductRow = {
@@ -205,6 +219,11 @@ export interface UseSellsReturn extends UseSellsListDataResult {
     setFilter: (filter: SellFilterEnum) => void;
     counts: Record<SellFilterEnum, number>;
     columns: GridColDef<SellTicketType>[];
+    settleDebtDialog: SettleDebtDialogState;
+    settleDebtIsSubmitting: boolean;
+    settleDebtErrorMessage: string | null;
+    handleSettleDebtCancel: () => void;
+    handleSettleDebtConfirm: () => Promise<void>;
 }
 
 
@@ -276,7 +295,16 @@ export type EditSellRequestPayloadType = Pick<Sell,
     'seller_name' |
     'sub_total' |
     'total_amount'
->;
+> & {
+    // Opcionales: solo se envían al saldar una deuda (ver settleSellDebtThunk),
+    // el resto de las ediciones de venta no los toca.
+    status?: SellStatusEnum;
+    amount_paid?: number | null;
+    debtor_name?: string | null;
+    // _id de la venta de saldo que saldó esta venta, cuando esta venta ES la
+    // venta original que pasó de parcial a completada.
+    settled_by_sell_id?: string | null;
+};
 
 export interface EditSellSanitizedPayloadInterface {
     data: EditSellRequestPayloadType;
@@ -293,7 +321,7 @@ export interface UseProductsExhibitorResult {
     setPage: (page: number) => void;
     sort: SortOption;
     handleSortChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    options: { value: SortOption; label: string }[];
+    options: { value: SortOption }[];
     viewMode: ViewMode;
     setViewMode: (mode: ViewMode) => void;
     gridSx: {
@@ -364,6 +392,7 @@ export type EvaluateStockType = Pick<EspecificationsLeftProps, 'presentations'>
 export interface validateProductSubmissionInterface {
     Presentation: Presentation | null;
     requiredStock: number;
+    t: TFunction;
 }
 
 export type ValidationResultType = { valid: boolean; message?: string, adjustedValue?: number };
@@ -389,6 +418,7 @@ export interface BuildColumnsForProductDialogInterface {
     handleQuantityChange: (presentationId: string, value: number | null) => void;
     handleAddToCart: (args: { presentation: Presentation; quantity: number }) => void;
     fallbackImage?: string;
+    t: TFunction;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -406,5 +436,21 @@ export type HandleDeleteSellType = Pick<SellEntityInterface, '_id'> & {
 
 export interface BuildColumnsForSellsArgs {
     onDeleteRequest: (id: string, name: string) => void;
+    onSettleDebtRequest: (sell: SellTicketType) => void;
     navigate: (path: string) => void;
+    t: TFunction;
+}
+
+export interface SettleSellDebtThunkInterface {
+    sell: SellTicketType;
+    pendingBalance: number;
+}
+
+export interface UseSettleSellDebtReturn {
+    settleDebtDialog: SettleDebtDialogState;
+    isSubmitting: boolean;
+    errorMessage: string | null;
+    handleSettleDebtRequest: (sell: SellTicketType) => void;
+    handleSettleDebtCancel: () => void;
+    handleSettleDebtConfirm: () => Promise<void>;
 }

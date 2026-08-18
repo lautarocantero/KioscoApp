@@ -1,8 +1,9 @@
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import FormCard from "../../../../modules/shared/components/FormCard/FormCard";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
-import { SELL_FIELD_REGISTRY } from "./SellFieldRegistry";
+import { getSellFieldRegistry } from "./SellFieldRegistry";
 import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
@@ -15,15 +16,17 @@ import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRe
 
 const SellFormFirstStep = (): React.ReactNode => {
     const theme = useTheme();
+    const { t } = useTranslation();
     const { actionTitle, submitError, stepErrors } = useFormNavigation();
     const isDetail = actionTitle === FormModeComplexEnum.Detail;
+    const registry = getSellFieldRegistry(t);
 
     return (
         <FormCard
-            submitText="Actualizar"
+            submitText={t("sells.form.submit")}
             showButtons={!isDetail}
             header={{
-                title: actionTitle === FormModeComplexEnum.Edit ? "Editar venta" : "Detalle de la venta",
+                title: actionTitle === FormModeComplexEnum.Edit ? t("sells.form.header.edit") : t("sells.form.header.detail"),
             }}
             submitError={submitError}
             stepErrors={stepErrors}
@@ -32,8 +35,8 @@ const SellFormFirstStep = (): React.ReactNode => {
         >
             <FormFieldsRenderer<SellEditFormValues>
                 idPrefix="sell"
-                sectionLabel="Datos de la venta"
-                registry={SELL_FIELD_REGISTRY}
+                sectionLabel={t("sells.form.sectionLabel")}
+                registry={registry}
                 fields={["purchase_date", "seller_name", "payment_method", "sub_total", "iva", "total_amount", "currency"]}
                 readOnly={isDetail}
                 icons={{

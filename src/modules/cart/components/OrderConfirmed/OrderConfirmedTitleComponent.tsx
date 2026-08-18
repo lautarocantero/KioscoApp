@@ -1,9 +1,12 @@
 // OrderConfirmedTitleComponent.tsx
 import { Box, Typography, type Theme } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
 
 
 const  OrderConfirmedTitleComponent = (): ReactNode => {
+    const { t } = useTranslation();
+
     return (
         <Box sx={{ textAlign: 'center', mb: '2em', }}>
             <Typography
@@ -16,7 +19,7 @@ const  OrderConfirmedTitleComponent = (): ReactNode => {
                     },
                 })}
             >
-                ¡Se ha creado tu{' '}
+                {t("cart.orderConfirmed.titlePrefix")}{' '}
                 <Typography
                     component={'span'}
                     sx={(theme: Theme) => ({
@@ -25,9 +28,9 @@ const  OrderConfirmedTitleComponent = (): ReactNode => {
                         fontSize: 'inherit',
                     })}
                 >
-                    ticket
+                    {t("cart.orderConfirmed.titleHighlight")}
                 </Typography>
-                !
+                {' '}{t("cart.orderConfirmed.titleSuffix")}
             </Typography>
             <Typography
                 sx={(theme: Theme) => ({
@@ -39,7 +42,7 @@ const  OrderConfirmedTitleComponent = (): ReactNode => {
                     mt: '0.3em',
                 })}
             >
-                Tu venta se ha registrado correctamente.
+                {t("cart.orderConfirmed.subtitle")}
             </Typography>
         </Box>
     )

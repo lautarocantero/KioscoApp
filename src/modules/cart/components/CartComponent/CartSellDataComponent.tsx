@@ -1,16 +1,19 @@
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import { Box, Grid, Typography, type Theme } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
 import CartPriceComponent from './CartPriceComponent';
 import type { CartSellDataComponentProps } from '@typings/cart/cartComponentTypes';
 
 
-const CartSellDataComponent = ({ 
+const CartSellDataComponent = ({
     productsTotalPrice,
     ivaPercentage,
     ivaAmount,
     total,
 }: CartSellDataComponentProps): ReactNode => {
+    const { t } = useTranslation();
+
     return (
         <Grid
             container
@@ -45,7 +48,7 @@ const CartSellDataComponent = ({
                 >
                     <DescriptionOutlinedIcon />
                 </Box>
-                Resumen de venta
+                {t("cart.summary.title")}
             </Typography>
 
             <CartPriceComponent

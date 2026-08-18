@@ -1,6 +1,7 @@
 import { Formik } from "formik";
 import { Grid } from "@mui/material";
 import { useContext, useMemo, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { useCart } from "@hooks/cart/useCart";
 import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
 import { cartFormSchema, getCartFormInitialValues } from "../../schema/CartFormSchema";
@@ -10,6 +11,7 @@ import CartProductTableComponent from "./CartProductTableComponent";
 import CartSummaryCardComponent from "./CartSumaryCardComponent";
 
 const CartComponent = (): ReactNode => {
+    const { t } = useTranslation();
     const { showSnackBar } = useContext(SnackBarContext)!;
 
     const {
@@ -25,7 +27,7 @@ const CartComponent = (): ReactNode => {
     } = useCart(showSnackBar);
 
     const initialValues = useMemo(() => getCartFormInitialValues(), []);
-    const validationSchema = useMemo(() => cartFormSchema(total), [total]);
+    const validationSchema = useMemo(() => cartFormSchema(total, t), [total, t]);
 
     return (
         <Grid

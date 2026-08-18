@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { addOneUnitThunk, addToCartThunk, selectPresentationThunk } from "../../store/cart/cartThunks";
 import type { Presentation } from "../../typings/presentation/presentationTypes";
 import { AlertColor } from "../../typings/ui/ui";
@@ -16,6 +17,7 @@ import type { ProductTicketWithStockType } from "@typings/sells/sellTypes";
 
 export const useSellbarBarcode = ({ cart, showSnackBar }: UseCartBarBarcodeParams): UseCartBarResult['barcode'] => {
     const dispatch = useDispatch<AppDispatch>();
+    const { t } = useTranslation();
 
     const [showBarcodeInput, setShowInput] = useState(false);
     const [barcode, setBarcode] = useState<string>("");
@@ -30,7 +32,7 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseCartBarBarcodeParam
         const prod: Presentation | undefined = await dispatch(getPresentationByBarcode(barcode));
 
         if (!prod) {
-            showSnackBar(`No se encontró el código de barras`, AlertColor.Error);
+            showSnackBar(t("cart.snackbar.barcodeNotFound"), AlertColor.Error);
             throw new Error("No se ha seleccionado un producto");
         }
 
@@ -54,7 +56,7 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseCartBarBarcodeParam
 
         if (product.stock <= 0) {
             setBarcode("");
-            showSnackBar(`Sin stock disponible`, AlertColor.Error);
+            showSnackBar(t("cart.snackbar.noStockAvailableForBarcode"), AlertColor.Error);
             return;
         }
 
@@ -66,7 +68,7 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseCartBarBarcodeParam
             await dispatch(addOneUnitThunk({ _id: productObject._id }));
             setBarcode("");
             const nameEdited: string = productObject.name.length > 25 ? `${productObject.name.slice(0, 25)}...` : productObject.name;
-            showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
+            showSnackBar(t("cart.snackbar.addedToCart", { name: nameEdited }), AlertColor.Success);
             return;
         }
 
@@ -100,14 +102,14 @@ export const useSellbarBarcode = ({ cart, showSnackBar }: UseCartBarBarcodeParam
 
         if (!wasAdded) {
             setBarcode("");
-            showSnackBar(`No se pudo agregar el producto al carrito`, AlertColor.Error);
+            showSnackBar(t("cart.snackbar.addToCartFailedGeneric"), AlertColor.Error);
             return;
         }
 
         const nameEdited: string = name.length > 25 ? `${name.slice(0, 25)}...` : name;
 
         setBarcode("");
-        showSnackBar(`Agregado '${nameEdited}' al carrito`, AlertColor.Success);
+        showSnackBar(t("cart.snackbar.addedToCart", { name: nameEdited }), AlertColor.Success);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

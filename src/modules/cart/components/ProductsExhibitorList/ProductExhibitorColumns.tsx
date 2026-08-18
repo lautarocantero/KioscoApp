@@ -1,5 +1,6 @@
 import { type GridColDef } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
+import type { TFunction } from "i18next";
 import ProductRowActionCell from "./ProductRowActionCell";
 import type { ModelType, PresentationCategory } from "@typings/presentation/presentationEnum";
 import { FALLBACK_PRODUCT_IMAGE } from "../../../../config/constants";
@@ -7,10 +8,10 @@ import type { Product } from "@typings/product/productTypes";
 import i18n from "@i18n/i18n";
 
 
-export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
+export const buildColumnsForProductExhibitor = (t: TFunction): GridColDef<Product>[] => [
   {
     field: "name",
-    headerName: "Producto",
+    headerName: t("cart.productsExhibitor.table.columns.product"),
     flex: 1.5,
     minWidth: 100,
     width: 300,
@@ -35,7 +36,7 @@ export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
   },
   {
     field: "presentation",
-    headerName: "Presentaciónes",
+    headerName: t("cart.productsExhibitor.table.columns.presentations"),
     flex: 1,
     minWidth: 100,
     width: 1200,
@@ -51,7 +52,7 @@ export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
   },
   {
     field: "category",
-    headerName: "Categoría",
+    headerName: t("cart.productsExhibitor.table.columns.category"),
     flex: 1,
     minWidth: 100,
     width: 250,
@@ -66,7 +67,7 @@ export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
   },
   {
     field: "stock",
-    headerName: "Stock",
+    headerName: t("cart.productsExhibitor.table.columns.stock"),
     flex: 0.6,
     minWidth: 100,
     width: 90,
@@ -77,7 +78,7 @@ export const buildColumnsForProductExhibitor = (): GridColDef<Product>[] => [
   },
   {
     field: "actions",
-    headerName: "Acciones",
+    headerName: t("cart.productsExhibitor.table.columns.actions"),
     minWidth: 100,
     width: 100,
     maxWidth: 100,

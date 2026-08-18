@@ -1,5 +1,6 @@
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { useDelegatedHandler } from "../shared/useDelegatedHandler";
 import type { AppDispatch } from "../../store/cart/cartSlice";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
@@ -11,6 +12,7 @@ import type { Product } from "@typings/product/productTypes";
 import handleAddProductDialogItemToCart from "../../modules/cart/components/ProductDialog/handleAddProductItemToCart";
 import { buildColumnsForProductDialog } from "../../modules/cart/components/ProductDialog/productDialogColumns";
 import type { RootState } from "../../store/cart/cartSlice";
+import { getConfiguredCurrency, getCurrencyIsoCode, getCurrencyLocale } from "../../modules/shared/helpers/getConfiguredCurrency";
 
 
 /*══════════════════════════════════════════════════════════════════════╗
@@ -29,6 +31,7 @@ import type { RootState } from "../../store/cart/cartSlice";
 const useProductDialogSelector = (products?: Presentation[], product?: Product,): UseProductDialogSelectorReturn => {
   const isEmpty = useMemo(() => (products?.length ?? 0) === 0, [products]);
 
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { showSnackBar } = useContext(SnackBarContext)!;
 
@@ -77,7 +80,7 @@ const useProductDialogSelector = (products?: Presentation[], product?: Product,)
       const availableStock = (presentation.stock ?? 0) - alreadyInCart;
 
       if (availableStock <= 0) {
-        showSnackBar(`No queda stock disponible de '${presentation.name}'`, AlertColor.Error);
+        showSnackBar(t("cart.snackbar.outOfStock", { name: presentation.name }), AlertColor.Error);
         return;
       }
 
@@ -85,7 +88,7 @@ const useProductDialogSelector = (products?: Presentation[], product?: Product,)
 
       if (quantityToAdd < quantity) {
         showSnackBar(
-          `Solo se agregaron ${quantityToAdd} unidades disponibles de '${presentation.name}'`,
+          t("cart.snackbar.partiallyAdded", { quantity: quantityToAdd, name: presentation.name }),
           AlertColor.Warning,
         );
       }
@@ -95,6 +98,7 @@ const useProductDialogSelector = (products?: Presentation[], product?: Product,)
         quantity: quantityToAdd,
         dispatch,
         showSnackBar,
+        t,
       });
 
       if (!wasAdded) return;
@@ -113,13 +117,17 @@ const useProductDialogSelector = (products?: Presentation[], product?: Product,)
       ]);
 
     },
-    [dispatch, showSnackBar, cart],
+    [dispatch, showSnackBar, cart, t],
   );
 
-  const formatter = useMemo(
-    () => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 2 }),
-    [],
-  );
+  const formatter = useMemo(() => {
+    const currency = getConfiguredCurrency();
+    return new Intl.NumberFormat(getCurrencyLocale(currency), {
+      style: "currency",
+      currency: getCurrencyIsoCode(currency),
+      minimumFractionDigits: 2,
+    });
+  }, []);
 
   //─── 🔎 total acumulado (precio × cantidad) de lo agregado en esta sesión de diálogo 🔎 ───
   const sessionTotal = useMemo(
@@ -134,8 +142,9 @@ const useProductDialogSelector = (products?: Presentation[], product?: Product,)
         handleQuantityChange,
         handleAddToCart,
         fallbackImage: product?.image_url,
+        t,
       }),
-    [getQuantity, handleQuantityChange, handleAddToCart, product?.image_url],
+    [getQuantity, handleQuantityChange, handleAddToCart, product?.image_url, t],
   );
 
   return {

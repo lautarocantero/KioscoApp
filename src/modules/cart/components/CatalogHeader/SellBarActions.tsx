@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
 import BarcodeButtonComponent from "./BarcodeButtonComponent";
 import CartButtonComponent from "./CartButtonComponent";
@@ -9,6 +10,7 @@ import { useSellbar } from "@hooks/cart/useSellBar";
 
 
 export const SellBarActions = (): ReactNode => {
+  const { t } = useTranslation();
   const { search, barcode, cart, categories } = useSellbar();
 
   return (
@@ -36,11 +38,11 @@ export const SellBarActions = (): ReactNode => {
         },
       }}
     >
-      <SellbarSection gridArea="search" title="Búsqueda">
+      <SellbarSection gridArea="search" title={t("cart.catalog.sections.search")}>
         <SellbarSearch search={search} />
       </SellbarSection>
 
-      <SellbarSection gridArea="quickactions" title="Acciones rápidas" flexContent>
+      <SellbarSection gridArea="quickactions" title={t("cart.catalog.sections.quickActions")} flexContent>
         <BarcodeButtonComponent barcode={barcode} />
         <SellbarFilter categories={categories} />
         <CartButtonComponent cart={cart} />

@@ -1,8 +1,12 @@
- 
-export const formatPrice = (price: number): string =>
-    new Intl.NumberFormat("es-AR", {
+import { getConfiguredCurrency, getCurrencyIsoCode, getCurrencyLocale } from "./getConfiguredCurrency";
+
+export const formatPrice = (price: number): string => {
+    const currency = getConfiguredCurrency();
+
+    return new Intl.NumberFormat(getCurrencyLocale(currency), {
         style: "currency",
-        currency: "ARS",
+        currency: getCurrencyIsoCode(currency),
         maximumFractionDigits: 0,
     }).format(price);
- 
+};
+

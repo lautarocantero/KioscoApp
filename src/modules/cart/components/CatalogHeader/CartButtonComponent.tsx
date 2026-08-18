@@ -1,15 +1,17 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Tooltip, Typography, type Theme } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import type { CartButtonComponentProps } from '@typings/cart/cartComponentTypes';
 import "animate.css";
 import type { ReactNode } from 'react';
 
 
 export const CartButtonComponent = ({ cart }: CartButtonComponentProps): ReactNode => {
+    const { t } = useTranslation();
     const { goToCart, count } = cart;
 
     return (
-      <Tooltip title="Ver Carrito">
+      <Tooltip title={t("cart.catalog.cartButton.tooltip")}>
         <Box
           display="flex"
           alignItems="center"

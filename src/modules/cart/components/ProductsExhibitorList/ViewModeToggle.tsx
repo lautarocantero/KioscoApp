@@ -2,15 +2,17 @@ import { Box, Tooltip, type Theme } from "@mui/material";
 import GridViewIcon from "@mui/icons-material/GridView";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
 import { ViewMode } from "@typings/cart/cartEnums";
 import type { ViewModeToggleProps } from "@typings/cart/cartComponentTypes";
 
 
 const ViewModeToggle = ({viewMode, setViewMode}: ViewModeToggleProps): ReactNode => {
-  
+  const { t } = useTranslation();
+
   return (
-    <Tooltip title="Cambiar vista">
+    <Tooltip title={t("cart.productsExhibitor.viewModeToggle.tooltip")}>
       <Box
         display="flex"
         flexDirection="row"

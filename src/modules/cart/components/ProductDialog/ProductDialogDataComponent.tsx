@@ -1,5 +1,6 @@
 import { Box, Typography, type Theme } from "@mui/material";
 import React, { type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Stack } from "@mui/system";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import type { DialogDataProps } from "@typings/cart/cartComponentTypes";
@@ -7,6 +8,7 @@ import useProductDialog from "@hooks/cart/useProductDialog";
 
 
 const ProductDialogDataComponent = ({ product, description }: DialogDataProps): ReactNode => {
+  const { t } = useTranslation();
   const { formattedTotalStock } = useProductDialog();
 
   const { name } = product;
@@ -44,7 +46,7 @@ const ProductDialogDataComponent = ({ product, description }: DialogDataProps): 
               color: theme.custom.translucidFontColor,
             })}
           >
-            Total en stock (todas las presentaciones)
+            {t("cart.productDialog.totalStockLabel")}
           </Typography>
         </Stack>
         <Typography

@@ -1,8 +1,8 @@
 import type { PresentationStatus } from "@typings/presentation/presentationEnum";
 import { PresentationStatusColors } from "@typings/presentation/presentationEnum";
-import { SellStatusEnum } from "@typings/sells/sellsEnum";
+import { Currency, SellStatusEnum } from "@typings/sells/sellsEnum";
 import { ShopSalesRange } from "@typings/shop/shopEnums";
-import type { DeleteDialogState, RestockDialogState } from "@typings/ui/dialog.types";
+import type { DeleteDialogState, RestockDialogState, SettleDebtDialogState } from "@typings/ui/dialog.types";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🚀 APP  🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀                     ║
@@ -15,6 +15,45 @@ export const REACT_APP_API_URL='https://kioscoappbackend.onrender.com'
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const iva = 0;
+
+export const CURRENCY_STORAGE_KEY = "shopCurrency";
+
+export const DEFAULT_CURRENCY = Currency.Ars;
+
+// Registro técnico por moneda: código ISO real (para Intl.NumberFormat) y locale
+// que da el formato/símbolo correcto. El nombre visible de cada moneda NO va acá,
+// vive en i18n (settings.myShop.currency.options.<code>) para poder traducirse.
+export const CURRENCY_OPTIONS: { value: Currency; isoCode: string; locale: string }[] = [
+    { value: Currency.Ars, isoCode: "ARS", locale: "es-AR" },
+    { value: Currency.Usd, isoCode: "USD", locale: "en-US" },
+    { value: Currency.Cad, isoCode: "CAD", locale: "en-CA" },
+    { value: Currency.Mxn, isoCode: "MXN", locale: "es-MX" },
+    { value: Currency.Brl, isoCode: "BRL", locale: "pt-BR" },
+    { value: Currency.Clp, isoCode: "CLP", locale: "es-CL" },
+    { value: Currency.Cop, isoCode: "COP", locale: "es-CO" },
+    { value: Currency.Pen, isoCode: "PEN", locale: "es-PE" },
+    { value: Currency.Uyu, isoCode: "UYU", locale: "es-UY" },
+    { value: Currency.Bob, isoCode: "BOB", locale: "es-BO" },
+    { value: Currency.Pyg, isoCode: "PYG", locale: "es-PY" },
+    { value: Currency.Ves, isoCode: "VES", locale: "es-VE" },
+    { value: Currency.Gtq, isoCode: "GTQ", locale: "es-GT" },
+    { value: Currency.Hnl, isoCode: "HNL", locale: "es-HN" },
+    { value: Currency.Nio, isoCode: "NIO", locale: "es-NI" },
+    { value: Currency.Crc, isoCode: "CRC", locale: "es-CR" },
+    { value: Currency.Pab, isoCode: "PAB", locale: "es-PA" },
+    { value: Currency.Dop, isoCode: "DOP", locale: "es-DO" },
+    { value: Currency.Gyd, isoCode: "GYD", locale: "en-GY" },
+    { value: Currency.Srd, isoCode: "SRD", locale: "nl-SR" },
+    { value: Currency.Ttd, isoCode: "TTD", locale: "en-TT" },
+    { value: Currency.Jmd, isoCode: "JMD", locale: "en-JM" },
+    { value: Currency.Bsd, isoCode: "BSD", locale: "en-BS" },
+    { value: Currency.Bbd, isoCode: "BBD", locale: "en-BB" },
+    { value: Currency.Bzd, isoCode: "BZD", locale: "en-BZ" },
+    { value: Currency.Htg, isoCode: "HTG", locale: "fr-HT" },
+    { value: Currency.Xcd, isoCode: "XCD", locale: "en-AG" },
+    { value: Currency.Awg, isoCode: "AWG", locale: "nl-AW" },
+    { value: Currency.Ang, isoCode: "ANG", locale: "nl-CW" },
+];
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🧱 LAYOUT  🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱                   ║
@@ -35,6 +74,8 @@ export const FILTER_MIN_WIDTH = 220;
 export const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
 export const CLOSED_RESTOCK_DIALOG: RestockDialogState = { open: false, id: "", name: "", stock: 0, minStock: 0 };
+
+export const CLOSED_SETTLE_DEBT_DIALOG: SettleDebtDialogState = { open: false, sellId: "", debtorName: null, currency: "", pendingBalance: 0 };
 
 // formatea fecha
 
@@ -104,9 +145,9 @@ export const STATUS_CONFIG: Record<PresentationStatus,
 // ║ 🎨 CARRITO   🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️              ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export const SELL_STATUS_OPTIONS = [
-    { value: SellStatusEnum.Completada, label: 'Abono total' },
-    { value: SellStatusEnum.Parcial, label: 'Abono parcial' },
+export const SELL_STATUS_OPTIONS: { value: SellStatusEnum }[] = [
+    { value: SellStatusEnum.Completada },
+    { value: SellStatusEnum.Parcial },
 ];
 
 export const PRODUCTS_EXHIBITOR_ANCHOR_ID = "seller-products-exhibitor";

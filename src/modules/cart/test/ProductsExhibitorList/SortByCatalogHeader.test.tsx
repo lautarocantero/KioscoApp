@@ -9,8 +9,8 @@ vi.mock("@hooks/cart/useSortByCatalogHeader");
 
 const mockedHook = vi.mocked(useSortByCatalog);
 const options = [
-  { value: "name_asc", label: "Nombre A-Z" },
-  { value: "price_desc", label: "Precio: mayor a menor" },
+  { value: "name-asc" },
+  { value: "name-desc" },
 ];
 
 describe("SortByCatalog", () => {
@@ -64,7 +64,7 @@ describe("SortByCatalog", () => {
       options,
     });
     render(<SortByCatalog viewMode={ViewMode.Grid} />);
-    await userEvent.click(screen.getByText("Precio: mayor a menor"));
-    expect(handleSelect).toHaveBeenCalledWith("price_desc");
+    await userEvent.click(screen.getByText("Nombre Z-A"));
+    expect(handleSelect).toHaveBeenCalledWith("name-desc");
   });
 });

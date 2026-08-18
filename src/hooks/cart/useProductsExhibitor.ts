@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import type { Product } from "@typings/product/productTypes";
 import type { UseProductsExhibitorResult } from "@typings/sells/sellTypes";
 import { setSort, setViewMode, setPage, type RootState, type AppDispatch } from "../../store/cart/cartSlice";
@@ -40,6 +41,7 @@ const sortProducts = (products: Product[], sort: SortOption): Product[] => {
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const useProductsExhibitor = (): UseProductsExhibitorResult => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { products, loading } = useSellerProductsListData();
 
@@ -80,7 +82,7 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
     padding: 2,
   } as const;
 
-  const columns = useMemo(() => buildColumnsForProductExhibitor(), []);
+  const columns = useMemo(() => buildColumnsForProductExhibitor(t), [t]);
 
   return {
     isEmpty: safeProducts.length === 0,

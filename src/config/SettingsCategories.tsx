@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import PaletteIcon from "@mui/icons-material/Palette";
+import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import type { SettingsCategoryDefinition } from "@typings/settings/settingsTypes";
 import { SettingsCategoryEnum, SettingsSectionEnum } from "@typings/settings/settingsEnums";
 import AccountInfoSection from "../modules/shared/components/SettingsModal/sections/AccountInfoSection";
@@ -8,6 +9,7 @@ import AccountPasswordSection from "../modules/shared/components/SettingsModal/s
 import AppearanceModeSection from "../modules/shared/components/SettingsModal/sections/AppearanceModeSection";
 import AppearanceLanguageSection from "../modules/shared/components/SettingsModal/sections/AppearanceLanguageSection";
 import AppearanceFontSizeSection from "../modules/shared/components/SettingsModal/sections/AppearanceFontSizeSection";
+import MyShopCurrencySection from "../modules/shared/components/SettingsModal/sections/MyShopCurrencySection";
 
 // `label`/`sections[].label` son claves de traducción ("settings.categories.*",
 // "settings.sections.*" en src/i18n/locales), no texto literal — se resuelven
@@ -32,6 +34,14 @@ export const SETTINGS_CATEGORIES: SettingsCategoryDefinition[] = [
       { id: SettingsSectionEnum.AppearanceFontSize, label: "settings.sections.appearanceFontSize" },
     ],
   },
+  {
+    id: SettingsCategoryEnum.MyShop,
+    label: "settings.categories.myShop",
+    icon: <StorefrontOutlinedIcon fontSize="small" />,
+    sections: [
+      { id: SettingsSectionEnum.MyShopCurrency, label: "settings.sections.myShopCurrency" },
+    ],
+  },
 ];
 
 export const SETTINGS_SECTION_COMPONENTS: Record<SettingsSectionEnum, ComponentType> = {
@@ -40,4 +50,5 @@ export const SETTINGS_SECTION_COMPONENTS: Record<SettingsSectionEnum, ComponentT
   [SettingsSectionEnum.AppearanceMode]: AppearanceModeSection,
   [SettingsSectionEnum.AppearanceLanguage]: AppearanceLanguageSection,
   [SettingsSectionEnum.AppearanceFontSize]: AppearanceFontSizeSection,
+  [SettingsSectionEnum.MyShopCurrency]: MyShopCurrencySection,
 };
