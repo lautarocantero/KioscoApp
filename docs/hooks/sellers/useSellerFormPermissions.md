@@ -9,7 +9,7 @@ Centraliza "quién puede editar qué" en el form de vendedor, para que `SellerFo
 Reglas actuales:
 - **Nombre**: editable por cualquiera.
 - **Email**: nunca editable (ni por admin).
-- **Rol**: solo admin.
+- **Rol**: solo admin **del kiosco activo** (rol por-kiosco, no global — ver [docs/features/multiKiosco.md](../../features/multiKiosco.md)).
 - **Badge informativo sobre el rol**: visible en modo Editar, oculto en modo Detalle.
 
 ## 📦 Firma
@@ -39,7 +39,7 @@ const { disabledFields, showRoleBadge } = useSellerFormPermissions(isDetail);
 ## ✨ Beneficios
 
 - 🧼 **`.tsx` limpio de lógica de negocio** — el componente solo decide renderizar, no calcula permisos.
-- 🔗 **Reusa `useIsAdmin`**, no duplica la comparación de rol.
+- 🔗 **Reusa [`useIsActiveKioscoAdmin`](../kiosco/useIsActiveKioscoAdmin.md)**, no duplica la comparación de rol.
 - 🧪 **Testeable sin montar el form completo** — ver `src/hooks/sellers/test/useSellerFormPermissions.test.ts`.
 
 ## 📚 Ver también

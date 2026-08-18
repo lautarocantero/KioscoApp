@@ -18,9 +18,13 @@ import RouteTracker from "./RouteTracker";
 import AppShell from "../modules/shared/layout/AppShell";
 import LoadingSpinnerComponent from "../modules/shared/components/LoadingSpinner";
 import { AuthStatus } from "@typings/auth/authEnums";
+import KioscoRoutes from "../modules/kiosco/routes/KioscoRoutes";
+import JoinKioscoPage from "../modules/kiosco/pages/JoinKioscoPage";
+import { useHandlePendingInviteCode } from "../hooks/kiosco/useHandlePendingInviteCode";
 
 const AppRouter = (): React.ReactNode => {
   const { status } = useSelector((state: RootState) => state.auth);
+  const { myKioscos, activeKioscoId } = useSelector((state: RootState) => state.kiosco);
   const location = useLocation();
   const lastRoute: string = localStorage.getItem("lastRoute") || "/new-sell";
   const safeRoute: string = lastRoute === "/" ? "/shop" : lastRoute;
@@ -31,34 +35,48 @@ const AppRouter = (): React.ReactNode => {
     dispatch(startCheckAuth());
   }, [dispatch]);
 
+  useHandlePendingInviteCode();
+
   if (status === AuthStatus.Checking) {
     return <LoadingSpinnerComponent />; // o null, o un spinner
   }
+
+  const hasActiveKiosco = myKioscos.some((k) => k._id === activeKioscoId);
 
   return (
     <>
       <RouteTracker />
       <Routes>
+        {/* Alcanzable logueado o no: useJoinKioscoAccess decide a dónde mandar. */}
+        <Route path="/join-kiosco" element={<JoinKioscoPage />} />
+
         {status === AuthStatus.Authenticated ? (
-          <Route element={<AppShell />}>
-            {ShopRoutes()}
-            {SellsRoutes()}
-            {CartRoutes()}
-            {SellerRoutes()}
-            {AccountRoutes()}
-            {ProviderRoutes()}
-            {ProductsRoutes()}
-            {ReceiptRoutes()}
-            {PresentationsRoutes()}
-            {NotificationRoutes()}
-            <Route path="*" element={<Navigate to={'/shop'} />} />
-          </Route>
+          <>
+            {KioscoRoutes()}
+            {hasActiveKiosco ? (
+              <Route element={<AppShell />}>
+                {ShopRoutes()}
+                {SellsRoutes()}
+                {CartRoutes()}
+                {SellerRoutes()}
+                {AccountRoutes()}
+                {ProviderRoutes()}
+                {ProductsRoutes()}
+                {ReceiptRoutes()}
+                {PresentationsRoutes()}
+                {NotificationRoutes()}
+                <Route path="*" element={<Navigate to={'/shop'} />} />
+              </Route>
+            ) : (
+              <Route path="*" element={<Navigate to={'/select-kiosco'} />} />
+            )}
+          </>
         ) : (
           <>{AuthRoutes()}</>
         )}
       </Routes>
 
-      {status === AuthStatus.Authenticated && location.pathname === "/" && (
+      {status === AuthStatus.Authenticated && hasActiveKiosco && location.pathname === "/" && (
         <Navigate to={safeRoute} replace />
       )}
     </>

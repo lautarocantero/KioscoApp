@@ -10,7 +10,9 @@ import sellerSlice from "./seller/sellerSlice";
 import presentationSlice from "./presentation/presentationSlice";
 import receiptSlice from "./receipt/receiptsSlice";
 import notificationSlice from "./notification/notificationSlice";
+import kioscoSlice from "./kiosco/kioscoSlice";
 import { initAuthHttpBridge } from "../hooks/auth/useLogoutHandler";
+import { initKioscoHttpBridge } from "../hooks/kiosco/useKioscoHttpBridge";
 
 
 
@@ -50,6 +52,7 @@ const rootReducer = combineReducers({
     sell: sellSlice,
     seller: sellerSlice,
     notification: notificationSlice,
+    kiosco: kioscoSlice,
 });
 
 export const store = configureStore({
@@ -68,3 +71,4 @@ export const persistor = persistStore(store);
 // circular: store → thunks → api → httpClient → store), así que se lo
 // conecta acá, una sola vez, ya con el store creado. Ver authHttpBridge.ts.
 initAuthHttpBridge(store.dispatch);
+initKioscoHttpBridge(store.getState);

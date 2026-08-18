@@ -107,6 +107,10 @@ export interface UseSellersReturn {
     searchTerm:           string;
     setSearchTerm:        (searchTerm: string) => void;
     columns:              GridColDef<Seller>[];
+    isAdmin:              boolean;
+    inviteModalOpen:      boolean;
+    openInviteModal:      () => void;
+    closeInviteModal:     () => void;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

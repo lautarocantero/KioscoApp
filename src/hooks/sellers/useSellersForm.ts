@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { EditSellerPayload, SellerFormValues } from "@typings/seller/sellerTypes";
 import { editSellerThunk } from "../../store/seller/sellerThunks";
-import { startEditAuthRole } from "../../store/auth/authThunks";
+import { updateKioscoMemberRoleThunk } from "../../store/kiosco/kioscoThunks";
 import { useSellerData } from "./useSellerData";
-import { useIsAdmin } from "../auth/useIsAdmin";
+import { useActiveKiosco } from "../kiosco/useActiveKiosco";
 import { useErrorParser } from "../shared/useErrorParser";
 import type { AppDispatch } from "../../store/seller/sellerSlice";
 
@@ -14,7 +14,7 @@ export function useSellerEdit() {
     const navigate = useNavigate();
     const { seller_id: sellerId } = useParams<{ seller_id: string }>();
     const dispatch = useDispatch<AppDispatch>();
-    const isAdmin = useIsAdmin();
+    const { activeKiosco, isAdmin } = useActiveKiosco();
 
     const { sellerData: editingSeller, isLoading: isLoadingSeller, error: loadError } = useSellerData(sellerId);
 
@@ -35,10 +35,11 @@ export function useSellerEdit() {
             const ok = await dispatch(editSellerThunk(sellerBody));
             if (!ok) throw new Error("No se pudo editar el vendedor");
 
-            // El rol vive en Auth, y solo un admin puede tocarlo (el select ya
-            // viene disabled para el resto). Solo pegamos si de verdad cambió.
-            if (isAdmin && values.rol !== editingSeller?.role) {
-                const roleOk = await dispatch(startEditAuthRole({ _id: sellerId, role: values.rol }));
+            // El rol vive en KioscoMembership (por-kiosco), y solo un admin
+            // puede tocarlo (el select ya viene disabled para el resto).
+            // Solo pegamos si de verdad cambió.
+            if (isAdmin && activeKiosco && values.rol !== editingSeller?.role) {
+                const roleOk = await dispatch(updateKioscoMemberRoleThunk(activeKiosco._id, sellerId, values.rol));
                 if (!roleOk) throw new Error("No se pudo actualizar el rol del vendedor");
             }
 

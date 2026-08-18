@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { AuthDeleteAccountApiPayload, AuthEditRoleApiPayload, AuthGoogleApiPayload, AuthLoginApiPayload, AuthRegisterApiPayload, AuthRequestPasswordResetApiPayload, AuthRequestPasswordResetApiResponse, AuthResetPasswordApiPayload } from "../../../typings/auth/authTypes";
+import type { AuthGoogleApiPayload, AuthLoginApiPayload, AuthRegisterApiPayload, AuthRequestPasswordResetApiPayload, AuthRequestPasswordResetApiResponse, AuthResetPasswordApiPayload } from "../../../typings/auth/authTypes";
 import { API_URL } from "../../../config/api";
 import { createHttpClient } from "../../shared/api/httpClient";
 
@@ -83,36 +83,20 @@ export const authResetPasswordRequest = async (data: AuthResetPasswordApiPayload
 };
 
 /*══════════════════════════════════════════════════════════════════════════╗
-║ 🛠️ PUT                                                                   ║
-╚══════════════════════════════════════════════════════════════════════════╝*/
-
-/*══════════════════════════════════════════════════════════════════════════╗
-║ 🎭 authEditRoleRequest                                                    ║
-║                                                                          ║
-║ El rol vive en Auth, no en Seller (ver seller.controller). El back       ║
-║ devuelve 403 si quien llama no es admin: acá solo pegamos, la protección ║
-║ real es del servidor.                                                    ║
-║ PUT /edit-auth                                                           ║
-╚══════════════════════════════════════════════════════════════════════════╝*/
-export const authEditRoleRequest = async (data: AuthEditRoleApiPayload) => {
-  const response = await authenticatedUrl.put("/edit-auth", data);
-  return response.data;
-};
-
-/*══════════════════════════════════════════════════════════════════════════╗
 ║ 🗑️ DELETE                                                                ║
 ╚══════════════════════════════════════════════════════════════════════════╝*/
 
 /*══════════════════════════════════════════════════════════════════════════╗
 ║ 🗑️ authDeleteAccountRequest                                              ║
 ║                                                                          ║
-║ Elimina la identidad Y hace cascada a Seller en el back (transacción).   ║
-║ Es el endpoint correcto para "eliminar un vendedor": DELETE /seller/     ║
-║ delete-seller solo borra el perfil y deja el login huérfano. Solo admin  ║
-║ (el back devuelve 403 si no).                                            ║
+║ Self-service: borra la cuenta propia (Auth + Seller + membresías de      ║
+║ kiosco en cascada, transacción en el back). El back deriva el _id de la  ║
+║ sesión — ya no acepta uno en el body. Para "sacar a un vendedor de MI    ║
+║ kiosco" (sin borrar su cuenta) usar removeKioscoMemberRequest en su      ║
+║ lugar (@modules/kiosco/api/kioscoApi).                                   ║
 ║ DELETE /delete-auth                                                      ║
 ╚══════════════════════════════════════════════════════════════════════════╝*/
-export const authDeleteAccountRequest = async (data: AuthDeleteAccountApiPayload) => {
-  const response = await authenticatedUrl.delete("/delete-auth", { data });
+export const authDeleteAccountRequest = async () => {
+  const response = await authenticatedUrl.delete("/delete-auth");
   return response.data;
 };

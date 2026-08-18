@@ -6,6 +6,7 @@ En este directorio están los documentos que describen la estructura y el propó
 
 - `store.md` — descripción general del store de Redux.
 - `auth.md` — auth slice y thunks.
+- `kiosco.md` — slice y thunks de kioscos (multi-tenant).
 - `presentation.md` — slice y thunks de presentaciones.
 - `product.md` — slice y thunks de productos.
 - `sell.md` — slice y thunks de ventas.

@@ -9,7 +9,7 @@ import useSellersListData from "./useSellerListData";
 import { buildColumnsForSellers } from "../../modules/sellers/pages/SellersList/components/SellerColumns";
 import { filterSellersBySearch } from "../../modules/sellers/helpers/filterSellersBySearch";
 import type { AppDispatch } from "../../store/seller/sellerSlice";
-import { useIsAdmin } from "../auth/useIsAdmin";
+import { useActiveKiosco } from "../kiosco/useActiveKiosco";
 import { useErrorParser } from "../shared/useErrorParser";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
@@ -17,13 +17,14 @@ import { AlertColor } from "@typings/ui/ui";
 export const useSellers = (): UseSellersReturn => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const isAdmin = useIsAdmin();
+    const { activeKiosco, isAdmin } = useActiveKiosco();
     const snackBarContext = useContext(SnackBarContext);
 
     const { sellers, loading, error, clearError } = useSellersListData();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
+    const [inviteModalOpen, setInviteModalOpen] = useState(false);
 
     const filteredSellers = useMemo(() => filterSellersBySearch(sellers, searchTerm), [sellers, searchTerm]);
 
@@ -35,8 +36,10 @@ export const useSellers = (): UseSellersReturn => {
     const handleDeleteCancel = () => setDeleteDialog(CLOSED_DIALOG);
 
     const handleDeleteConfirm = async () => {
+        if (!activeKiosco) return;
+
         try {
-            const deleted = await dispatch(deleteSellerThunk(deleteDialog.id));
+            const deleted = await dispatch(deleteSellerThunk(activeKiosco._id, deleteDialog.id));
             if (!deleted) throw new Error("No se pudo eliminar el vendedor");
 
             setDeleteDialog(CLOSED_DIALOG);
@@ -71,5 +74,9 @@ export const useSellers = (): UseSellersReturn => {
         searchTerm,
         setSearchTerm,
         columns,
+        isAdmin,
+        inviteModalOpen,
+        openInviteModal: () => setInviteModalOpen(true),
+        closeInviteModal: () => setInviteModalOpen(false),
     };
 };

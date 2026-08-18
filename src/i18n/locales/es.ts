@@ -110,6 +110,7 @@ const es = {
     header: {
       title: "Tienda",
       subtitle: "Este es el resumen general de tu negocio.",
+      changeKiosco: "Cambiar de Tienda",
     },
     statsRow: {
       ariaLabel: "Resumen por sección",
@@ -1081,6 +1082,46 @@ const es = {
     "invalid reset token": "El link para restablecer la contraseña no es válido",
     "reset token has expired": "El link para restablecer la contraseña expiró",
     "passwords do not match": "Las contraseñas no coinciden",
+  },
+
+  kiosco: {
+    selector: {
+      greeting: "¡Hola, {{name}}! 👋",
+      accessCount: "Tenés acceso a {{count}} kioscos.",
+      title: "Elegí a qué kiosco querés ingresar",
+      subtitle: "Seleccioná un negocio para continuar trabajando.",
+      card: {
+        sellers: "Vendedores",
+        salesToday: "Ventas hoy",
+        lastAccess: "Último acceso",
+        never: "Nunca",
+        today: "Hoy, {{time}} hs",
+        yesterday: "Ayer, {{time}} hs",
+        enter: "Ingresar al kiosco",
+        entering: "Ingresando...",
+      },
+      createRow: {
+        title: "Crear un nuevo kiosco",
+        subtitle: "Si querés empezar desde cero, creá tu propio negocio.",
+      },
+      joinRow: {
+        title: "Unirme a un kiosco existente",
+        subtitle: "Si ya recibiste una invitación, ingresá el código y unite al equipo.",
+      },
+    },
+  },
+
+  sellers: {
+    invite: {
+      close: "Cerrar",
+      title: "Agregar vendedor",
+      subtitle: "Compartí este código o link para sumar a alguien a tu kiosco.",
+      codeLabel: "Código de invitación",
+      linkLabel: "Link de invitación",
+      copyLink: "Copiar link",
+      copied: "¡Copiado!",
+      helperText: "Quien lo use se unirá como vendedor. Vos podés cambiarle el rol después.",
+    },
   },
 };
 

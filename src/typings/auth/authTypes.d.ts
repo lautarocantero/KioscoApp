@@ -4,8 +4,10 @@
 
 import type { FormikProps } from "formik";
 import type { checkingCredentials, login, logout } from "../../store/auth/authSlice";
-import type { AuthRoleEnum, ResetPasswordStatusEnum, VerifyEmailStatusEnum } from "./authEnums";
+import type { ResetPasswordStatusEnum, VerifyEmailStatusEnum } from "./authEnums";
 
+// El rol ya no vive en Auth: es por-kiosco (ver @typings/kioscoMembership en
+// el back, y KioscoWithStats.role en el front). Auth solo guarda identidad.
 interface AuthEntity {
     _id: string | null,
     name: string,
@@ -17,7 +19,6 @@ interface AuthEntity {
     status: AuthStatus,
     profilePhoto?: string | null,
     isVerified: boolean,
-    role: AuthRoleEnum,
 };
 
 // /*══════════════════════════════════════════════════════════════════════╗
@@ -43,7 +44,7 @@ export interface UseSidebarUserDataReturn {
 // ║ 🍕 SLICE  🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕🍕                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export type AuthLoginSlicePayload = Pick<Auth, '_id' | 'name' | 'email' | 'profilePhoto' | 'role' | 'isVerified'>
+export type AuthLoginSlicePayload = Pick<Auth, '_id' | 'name' | 'email' | 'profilePhoto' | 'isVerified'>
 
 export type AuthSliceErrorPayload = Pick<AuthSliceState, 'errorMessage'>;
 
@@ -83,7 +84,7 @@ export type AuthVerifyEmailApiPayload = {
 // backend ya no los expone ahí (nunca lo hizo, en rigor).
 export type AuthCheckAutResponse = Pick<Auth, '_id' | 'email' | 'password' | 'refreshToken' | 'name' >
 
-export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'name' | 'email' | 'profilePhoto' | 'role' | 'isVerified'>
+export type AuthCheckAuthDataResponse = Pick<Auth, '_id'| 'name' | 'email' | 'profilePhoto' | 'isVerified'>
 
 // ─── Recuperación de contraseña ───────────────────────────
 export type AuthRequestPasswordResetPayload = Pick<Auth, 'email'>;
@@ -132,15 +133,8 @@ export type AuthRequestPasswordResetApiPayload = AuthRequestPasswordResetPayload
 
 export type AuthResetPasswordApiPayload = AuthResetPasswordPayload;
 
-// Edición administrativa de rol: PUT /auth/edit-auth solo con { _id, role }.
-export type AuthEditRolePayload = { _id: string; role: AuthRoleEnum };
-
-export type AuthEditRoleApiPayload = AuthEditRolePayload;
-
-// Elimina Auth + Seller en cascada (transacción en el back).
-export type AuthDeleteAccountPayload = { _id: string };
-
-export type AuthDeleteAccountApiPayload = AuthDeleteAccountPayload;
+// La edición de rol ahora es por-kiosco: ver UpdateMemberRoleBody en
+// @typings/kiosco/kioscoTypes (PUT /kiosco/:kiosco_id/member/:user_id/role).
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 📝 FORMS  📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝📝     ║

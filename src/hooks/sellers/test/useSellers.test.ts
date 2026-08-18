@@ -31,8 +31,17 @@ describe("useSellers — visibilidad del borrado según rol", () => {
     const dispatch = vi.fn();
     const navigate = vi.fn();
 
+    const KIOSCO_ID = "kiosco-1";
+
     const mockRole = (role: AuthRoleEnum) => {
-        mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) => selectorFn({ auth: { role } }));
+        mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
+            selectorFn({
+                kiosco: {
+                    activeKioscoId: KIOSCO_ID,
+                    myKioscos: [{ _id: KIOSCO_ID, role }],
+                },
+            })
+        );
     };
 
     beforeEach(() => {

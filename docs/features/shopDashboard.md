@@ -1,5 +1,13 @@
 # Dashboard de `/shop` — Documentación
 
+> **Actualización (multi-kiosco):** el título ya no dice "Tienda" fijo —
+> muestra el nombre del kiosco activo (`useActiveKiosco`), con un botón
+> "Cambiar de Tienda" al lado que vuelve a `/select-kiosco`. Todos los
+> datos de esta página (ventas, productos, vendedores, proveedores) ya
+> estaban scoped al backend real; con multi-kiosco además quedan
+> aislados por kiosco activo (header `x-kiosco-id`, transparente para
+> estos hooks). Ver [docs/features/multiKiosco.md](multiKiosco.md).
+
 ## 1. Resumen
 
 `/shop` es el punto de entrada de la app (reemplazó a `/home`). Es un dashboard con datos reales del negocio, no un menú de links. Cada número que se muestra sale de un endpoint/estado real del store — no hay ningún dato mockeado o inventado.

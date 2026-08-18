@@ -12,9 +12,16 @@ vi.mock("react-redux", async () => {
 
 const mockedUseSelector = vi.mocked(useSelector);
 
+const KIOSCO_ID = "kiosco-1";
+
 const mockRole = (role: AuthRoleEnum) => {
     mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
-        selectorFn({ auth: { role } })
+        selectorFn({
+            kiosco: {
+                activeKioscoId: KIOSCO_ID,
+                myKioscos: [{ _id: KIOSCO_ID, role }],
+            },
+        })
     );
 };
 

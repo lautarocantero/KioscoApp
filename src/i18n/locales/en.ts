@@ -110,6 +110,7 @@ const en = {
     header: {
       title: "Store",
       subtitle: "This is the general overview of your business.",
+      changeKiosco: "Switch Store",
     },
     statsRow: {
       ariaLabel: "Overview by section",
@@ -1080,6 +1081,46 @@ const en = {
     "invalid reset token": "This password reset link isn't valid",
     "reset token has expired": "This password reset link has expired",
     "passwords do not match": "Passwords don't match",
+  },
+
+  kiosco: {
+    selector: {
+      greeting: "Hi, {{name}}! 👋",
+      accessCount: "You have access to {{count}} stores.",
+      title: "Choose which store you want to enter",
+      subtitle: "Select a business to keep working.",
+      card: {
+        sellers: "Sellers",
+        salesToday: "Sales today",
+        lastAccess: "Last access",
+        never: "Never",
+        today: "Today, {{time}}",
+        yesterday: "Yesterday, {{time}}",
+        enter: "Enter store",
+        entering: "Entering...",
+      },
+      createRow: {
+        title: "Create a new store",
+        subtitle: "Starting from scratch? Create your own business.",
+      },
+      joinRow: {
+        title: "Join an existing store",
+        subtitle: "Already got an invite? Enter the code and join the team.",
+      },
+    },
+  },
+
+  sellers: {
+    invite: {
+      close: "Close",
+      title: "Add seller",
+      subtitle: "Share this code or link to add someone to your store.",
+      codeLabel: "Invite code",
+      linkLabel: "Invite link",
+      copyLink: "Copy link",
+      copied: "Copied!",
+      helperText: "Whoever uses it joins as a seller. You can change their role afterward.",
+    },
   },
 };
 

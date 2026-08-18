@@ -13,16 +13,16 @@ beforeEach(cleanup);
 describe("RegisterFormInputs", () => {
   const mockSetFieldValue = vi.fn();
   const defaultProps = {
-    values: { username: "", email: "", password: "", repeatPassword: "" },
+    values: { name: "", email: "", password: "", repeatPassword: "" },
     setFieldValue: mockSetFieldValue,
     errors: {},
   };
 
   it("should call setFieldValue when typing in the username input", () => {
     const { container } = renderWithTheme(<RegisterFormInputs {...defaultProps} />);
-    const usernameInput = container.querySelector('input[name="username"]');
+    const usernameInput = container.querySelector('input[name="name"]');
     fireEvent.change(usernameInput, { target: { value: "lautaro" } });
-    expect(mockSetFieldValue).toHaveBeenCalledWith("username", "lautaro");
+    expect(mockSetFieldValue).toHaveBeenCalledWith("name", "lautaro");
   });
 
   it("should call setFieldValue when typing in the email input", () => {
@@ -75,7 +75,7 @@ describe("RegisterFormInputs", () => {
     const propsWithErrors = {
       ...defaultProps,
       errors: {
-        username: "Usuario requerido",
+        name: "Usuario requerido",
         email: "Email inválido",
         password: "Campo requerido",
         repeatPassword: "Las contraseñas no coinciden",

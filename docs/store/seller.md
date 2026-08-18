@@ -56,10 +56,17 @@ refetchear toda la lista.
   [docs/features/sellerRoleAndAccountDeletion.md](../features/sellerRoleAndAccountDeletion.md)).
 - `selectSellerThunk(seller)` / `clearSelectedSellerThunk()` — setean/
   limpian `selectedSeller` sin pegarle al backend.
-- `deleteSellerThunk(_id)` — pega a `authDeleteAccountRequest` (**no** a
-  `sellerApi`, a pesar del nombre): borra `Auth` + `Seller` en cascada vía
-  `DELETE /auth/delete-auth`. El nombre del thunk no cambió para no romper
-  a `useSellers.ts`, que ya lo consumía.
+- `deleteSellerThunk(kioscoId, _id)` — **actualizado por multi-kiosco.**
+  Antes borraba `Auth`+`Seller` en cascada vía `DELETE /auth/delete-auth`
+  (eliminaba la cuenta entera). Ahora solo saca al usuario del kiosco
+  activo: valida con `RemoveKioscoMemberSchema` (zod) y pega a
+  `DELETE /kiosco/:kioscoId/member/:userId` (`removeKioscoMemberRequest`
+  en `modules/kiosco/api/kioscoApi.ts`). La cuenta del vendedor **no** se
+  borra — puede seguir perteneciendo a otros kioscos. Solo un admin del
+  kiosco activo puede hacerlo (el backend también lo rechaza con 403). El
+  nombre del thunk no cambió para no romper a `useSellers.ts`, que ya lo
+  consumía — solo ganó un parámetro (`kioscoId`, viene de
+  `useActiveKiosco().activeKiosco._id`).
 
 ## ✨ Beneficios
 

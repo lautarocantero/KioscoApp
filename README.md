@@ -8,6 +8,7 @@ Sistema de gestión para kioscos y comercios minoristas. Aplicación web constru
 ## 📝 Descripción
 
 Stoko es una plataforma de administración para negocios pequeños, enfocada en:
+- **multi-kiosco**: cada usuario puede crear su propio kiosco o unirse a uno existente vía código de invitación, y pertenecer a varios kioscos a la vez — productos, presentaciones, proveedores, ventas y vendedores quedan completamente aislados por kiosco (ver [docs/features/multiKiosco.md](docs/features/multiKiosco.md))
 - registro y edición de productos y presentaciones
 - gestión de proveedores
 - control de ventas y carrito de venta
@@ -46,6 +47,7 @@ Stoko es una plataforma de administración para negocios pequeños, enfocada en:
 ### Módulos relevantes
 
 - `src/modules/auth/` — login, registro, recuperación de contraseña y verificación
+- `src/modules/kiosco/` — selección/creación/unión a kioscos (multi-tenant), invitaciones
 - `src/modules/account/` — gestión de perfil y suscripción
 - `src/modules/sells/` — ventas, nuevo ticket, detalle de venta
 - `src/modules/cart/` — carrito de venta y confirmación de pedido
@@ -57,13 +59,14 @@ Stoko es una plataforma de administración para negocios pequeños, enfocada en:
 
 ## 🚀 Funcionalidades actuales
 
-- Rutas protegidas para usuarios autenticados
-- Persistencia de sesión con `redux-persist`
+- Multi-kiosco: crear/unirse a kioscos, cambiar de kiosco activo, invitar vendedores por link
+- Rutas protegidas para usuarios autenticados (y sin kiosco activo)
+- Persistencia de sesión y de kiosco activo con `redux-persist`/`localStorage`
 - Soporte de tema claro/oscuro
 - Flujo completo de autenticación y registro
 - Carrito de ventas con ticket de confirmación
-- Gestión de productos, presentaciones y proveedores
-- Páginas de administración para vendedores, tiendas y roles
+- Gestión de productos, presentaciones y proveedores (scoped por kiosco)
+- Páginas de administración para vendedores, tiendas y roles (rol por-kiosco)
 
 ## 📦 Scripts disponibles
 
@@ -102,8 +105,15 @@ yarn dev
 
 ## 📚 Documentación adicional
 
-- `docs/` — notas, tareas y especificaciones internas
-- `src/documentation/` — documentación de hooks, módulos, router y store
+Toda la documentación técnica vive en [`docs/`](docs/) — no hay documentación en ningún otro directorio del repo:
+
+- `docs/features/` — features completos (multi-kiosco, dashboard de `/shop`, theme, notificaciones, roles, etc.)
+- `docs/hooks/` — un archivo por hook custom, organizado por dominio
+- `docs/store/` — slices y thunks de Redux
+- `docs/components/` — componentes reusables no triviales
+- `docs/schema/` — esquemas de validación (Yup/Zod)
+- `docs/helpers/` — funciones puras
+- `docs/usefull/` — tareas y notas internas
 
 ## 🛠️ Estado del proyecto
 

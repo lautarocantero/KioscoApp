@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthRoleEnum } from "@typings/auth/authEnums";
 import type { SellerWithRole } from "@typings/seller/sellerTypes";
+import type { KioscoWithStats } from "@typings/kiosco/kioscoTypes";
 import { useSellerEdit } from "../useSellersForm";
 import { useSellerData } from "../useSellerData";
 import { editSellerThunk } from "../../../store/seller/sellerThunks";
-import { startEditAuthRole } from "../../../store/auth/authThunks";
+import { updateKioscoMemberRoleThunk } from "../../../store/kiosco/kioscoThunks";
 
 vi.mock("react-redux", async () => {
     const actual = await vi.importActual("react-redux");
@@ -37,9 +38,9 @@ vi.mock("../../../store/seller/sellerThunks", async (importOriginal) => {
     return { ...actual, editSellerThunk: vi.fn(actual.editSellerThunk) };
 });
 
-vi.mock("../../../store/auth/authThunks", async (importOriginal) => {
-    const actual = await importOriginal<typeof import("../../../store/auth/authThunks")>();
-    return { ...actual, startEditAuthRole: vi.fn(actual.startEditAuthRole) };
+vi.mock("../../../store/kiosco/kioscoThunks", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("../../../store/kiosco/kioscoThunks")>();
+    return { ...actual, updateKioscoMemberRoleThunk: vi.fn(actual.updateKioscoMemberRoleThunk) };
 });
 
 const mockedUseDispatch = vi.mocked(useDispatch);
@@ -48,9 +49,10 @@ const mockedUseNavigate = vi.mocked(useNavigate);
 const mockedUseParams = vi.mocked(useParams);
 const mockedUseSellerData = vi.mocked(useSellerData);
 const mockedEditSellerThunk = vi.mocked(editSellerThunk);
-const mockedStartEditAuthRole = vi.mocked(startEditAuthRole);
+const mockedUpdateKioscoMemberRoleThunk = vi.mocked(updateKioscoMemberRoleThunk);
 
 const SELLER_ID = "seller-1";
+const KIOSCO_ID = "kiosco-1";
 
 const buildSeller = (overrides: Partial<SellerWithRole> = {}): SellerWithRole => ({
     _id: SELLER_ID,
@@ -63,12 +65,29 @@ const buildSeller = (overrides: Partial<SellerWithRole> = {}): SellerWithRole =>
     ...overrides,
 });
 
+const buildKiosco = (role: AuthRoleEnum): KioscoWithStats => ({
+    _id: KIOSCO_ID,
+    name: "Kiosco Centro",
+    address: "",
+    owner_id: "owner-1",
+    invite_code: "ABC123",
+    currency: "ARS",
+    created_at: "2026-01-01T00:00:00.000Z",
+    updated_at: "2026-01-01T00:00:00.000Z",
+    role,
+    sellers_count: 1,
+    sells_today_total: 0,
+    last_accessed_at: null,
+});
+
 describe("useSellerEdit", () => {
     const dispatch = vi.fn();
     const navigate = vi.fn();
 
     const mockRole = (role: AuthRoleEnum) => {
-        mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) => selectorFn({ auth: { role } }));
+        mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
+            selectorFn({ kiosco: { myKioscos: [buildKiosco(role)], activeKioscoId: KIOSCO_ID } })
+        );
     };
 
     beforeEach(() => {
@@ -93,11 +112,11 @@ describe("useSellerEdit", () => {
         });
 
         expect(mockedEditSellerThunk).toHaveBeenCalledWith({ _id: SELLER_ID, name: "Juan Nuevo" });
-        expect(mockedStartEditAuthRole).not.toHaveBeenCalled();
+        expect(mockedUpdateKioscoMemberRoleThunk).not.toHaveBeenCalled();
         expect(navigate).toHaveBeenCalledWith("/sellers");
     });
 
-    it("además edita el rol vía startEditAuthRole cuando quien edita es admin y el rol cambió", async () => {
+    it("además edita el rol vía updateKioscoMemberRoleThunk cuando quien edita es admin y el rol cambió", async () => {
         mockRole(AuthRoleEnum.Admin);
         dispatch.mockResolvedValueOnce(true).mockResolvedValueOnce(true);
         const { result } = renderHook(() => useSellerEdit());
@@ -106,11 +125,11 @@ describe("useSellerEdit", () => {
             await result.current.handleEdit({ name: "Juan", rol: AuthRoleEnum.Admin });
         });
 
-        expect(mockedStartEditAuthRole).toHaveBeenCalledWith({ _id: SELLER_ID, role: AuthRoleEnum.Admin });
+        expect(mockedUpdateKioscoMemberRoleThunk).toHaveBeenCalledWith(KIOSCO_ID, SELLER_ID, AuthRoleEnum.Admin);
         expect(navigate).toHaveBeenCalledWith("/sellers");
     });
 
-    it("no llama a startEditAuthRole si el rol no cambió, aunque quien edita sea admin", async () => {
+    it("no llama a updateKioscoMemberRoleThunk si el rol no cambió, aunque quien edita sea admin", async () => {
         mockRole(AuthRoleEnum.Admin);
         dispatch.mockResolvedValueOnce(true);
         const { result } = renderHook(() => useSellerEdit());
@@ -120,7 +139,7 @@ describe("useSellerEdit", () => {
             await result.current.handleEdit({ name: "Juan", rol: AuthRoleEnum.Seller });
         });
 
-        expect(mockedStartEditAuthRole).not.toHaveBeenCalled();
+        expect(mockedUpdateKioscoMemberRoleThunk).not.toHaveBeenCalled();
         expect(navigate).toHaveBeenCalledWith("/sellers");
     });
 

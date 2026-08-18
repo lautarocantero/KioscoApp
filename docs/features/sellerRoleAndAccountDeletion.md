@@ -6,6 +6,21 @@
 >
 > **Actualización:** el conteo de "en línea" mencionado más abajo ya no
 > está mockeado — ver [docs/features/sellerOnlineStatus.md](sellerOnlineStatus.md).
+>
+> **Actualización (multi-kiosco):** el modelo mental de este documento
+> quedó desactualizado por el feature multi-kiosco — ver
+> [docs/features/multiKiosco.md](multiKiosco.md) para el estado vigente.
+> En resumen: `role` **ya no vive en `Auth`**, se movió a
+> `KioscoMembership` (es por-kiosco, no global); `startEditAuthRole` y
+> `PUT /auth/edit-auth` con `role` se **eliminaron**, reemplazados por
+> `updateKioscoMemberRoleThunk` → `PUT /kiosco/:id/member/:userId/role`;
+> y "eliminar vendedor" **ya no borra la cuenta** (`DELETE
+> /auth/delete-auth`) — ahora solo saca al miembro del kiosco activo
+> (`DELETE /kiosco/:id/member/:userId`), su cuenta puede seguir viva en
+> otros kioscos. El resto del documento (mecanismo de `disabledFields`,
+> `SellerFormValues` vs `Seller`, decisiones de diseño de por qué el
+> guard vive donde vive) sigue siendo válido como contexto histórico de
+> *por qué* existen estas reglas de permisos.
 
 ## Índice
 
@@ -330,13 +345,14 @@ descartables creadas y borradas para no tocar datos reales:
 
 - [x] ~~El listado de vendedores muestra "Eliminar" a cualquier usuario~~ —
       resuelto, ver [Permisos por campo (actualización)](#permisos-por-campo-actualización).
+- [x] ~~`docs/hooks/sellers/useSellers.md` describe una versión vieja del
+      hook~~ — actualizado junto con el feature multi-kiosco (el hook real
+      ahora también expone `isAdmin`/`inviteModalOpen`, ver doc vigente).
 - [ ] 🟡 `email`/`password` en `/auth/edit-auth` no tienen ningún consumidor
       desde el front todavía (nadie edita su propio email/contraseña). El
-      endpoint está listo para eso, falta el flujo de UI.
-- [ ] 🟢 `docs/hooks/sellers/useSellers.md` describe una versión vieja del
-      hook (`{ sellers, loading, error, clearError }`) — el hook real
-      devuelve bastante más (`deleteDialog`, `columns`, etc). No se tocó
-      en esta pasada por no ser parte de lo que se estaba arreglando.
+      endpoint sigue existiendo para identidad (`email`/`password`); el
+      `role` que manejaba ese mismo endpoint se eliminó (ver actualización
+      al inicio del documento).
 
 ## Archivos tocados (referencia rápida)
 

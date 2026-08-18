@@ -1,13 +1,11 @@
-import axios from "axios";
 import { API_URL } from "../../../config/api";
+import { createHttpClient } from "../../shared/api/httpClient";
 import type { Seller, EditSellerPayload, SellerWithRole } from "../../../typings/seller/sellerTypes";
 
-const baseUrl = axios.create({
-    baseURL: `${API_URL}/seller`,
-    timeout: 5000,
-    headers: { "Content-Type": "application/json" },
-    withCredentials: true,
-});
+// Todos los endpoints de /seller ahora requieren pertenencia al kiosco
+// activo (ver requireKioscoContext en el back) — createHttpClient adjunta el
+// header x-kiosco-id automáticamente en cada request.
+const baseUrl = createHttpClient(`${API_URL}/seller`);
 
 /*══════════════════════════════════════════════════════════════════════════╗
 ║ 📥 GET                                                                    ║

@@ -1,10 +1,10 @@
 # 🪝 `useSellers`
 
-> Hook de React para obtener la lista de vendedores desde el store y mantener el estado de error.
+> Hook de React que orquesta la página de listado de vendedores (`/sellers`).
 
 ## 🎯 ¿Para qué sirve?
 
-Carga los vendedores disponibles y sincroniza el error interno con el estado del store, exponiendo los datos listos para la UI.
+Combina la carga de vendedores del kiosco activo con búsqueda, el diálogo de borrado, el gating admin-only de acciones, y el modal de invitación.
 
 ## 📦 Firma
 
@@ -14,36 +14,49 @@ useSellers(): {
   loading: boolean;
   error: string | null;
   clearError: () => void;
+  deleteDialog: DeleteDialogState;
+  handleDeleteRequest: (id: string, name: string) => void;
+  handleDeleteCancel: () => void;
+  handleDeleteConfirm: () => Promise<void>;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  columns: GridColDef[];
+  isAdmin: boolean;
+  inviteModalOpen: boolean;
+  openInviteModal: () => void;
+  closeInviteModal: () => void;
 }
 ```
 
-- No recibe parámetros.
-- Devuelve la lista de vendedores, el estado de carga, el error y un limpiador de errores.
+- `sellers` ya viene filtrado por `searchTerm` (`filterSellersBySearch`).
+- `isAdmin` sale de [`useActiveKiosco()`](../kiosco/useActiveKiosco.md) — es el rol del usuario logueado **en el kiosco activo**, no un rol global.
+- `columns` — resultado de `buildColumnsForSellers({ onDeleteRequest, onEditRequest, navigate })`. `onDeleteRequest` solo se pasa si `isAdmin` es `true`; si no, el botón "Eliminar" ni se renderiza en la tabla (el 403 del backend sigue siendo la protección real).
+- `handleDeleteConfirm` despacha `deleteSellerThunk(activeKiosco._id, deleteDialog.id)` — saca al vendedor del kiosco activo, no borra su cuenta (ver [docs/store/seller.md](../../store/seller.md)). Si `activeKiosco` es `null` no hace nada.
+- `inviteModalOpen`/`openInviteModal`/`closeInviteModal` — controlan [`InviteSellerModal`](../../components/InviteSellerModal.md), disparado por el header action "Agregar vendedor" (admin-only).
 
 ## 💡 Ejemplo
 
 ```tsx
-import { useSellers } from "../../hooks/sellers/useSellers";
+const {
+  sellers, columns, deleteDialog, handleDeleteConfirm, handleDeleteCancel,
+  searchTerm, setSearchTerm, isAdmin, inviteModalOpen, openInviteModal, closeInviteModal,
+} = useSellers();
 
-function SellersSelect() {
-  const { sellers, loading, error, clearError } = useSellers();
-
-  if (loading) return <p>Cargando vendedores...</p>;
-  if (error) return <p>{error}</p>;
-
-  return (
-    <select onFocus={clearError}>
-      {sellers.map((seller) => (
-        <option key={seller._id} value={seller._id}>{seller.name}</option>
-      ))}
-    </select>
-  );
-}
+<DataTable
+  rows={sellers}
+  columns={columns}
+  search={{ value: searchTerm, onChange: setSearchTerm }}
+  newItem={isAdmin ? { label: t("sellers.addSeller"), onClick: openInviteModal } : undefined}
+  deleteDialog={{ ...deleteDialog, onCancel: handleDeleteCancel, onConfirm: handleDeleteConfirm }}
+/>
+<InviteSellerModal open={inviteModalOpen} onClose={closeInviteModal} />
 ```
 
 ## ✨ Beneficios
 
-- 🧠 **Centraliza la carga de vendedores**.
-- 🔄 **Sincroniza errores del store con el hook**.
-- ♻️ **Permite limpiar errores desde la UI**.
-- ✅ **Facilita el reuso del estado de vendedores**.
+- 🔐 **Gating admin-only centralizado** — ni la tabla ni el modal de invitar aparecen para un vendedor no-admin.
+- 🏪 **Scoped al kiosco activo**: tanto el borrado como la invitación operan sobre `activeKiosco`, nunca sobre "todos los vendedores" globalmente.
+
+## Tests
+
+`src/hooks/sellers/test/useSellers.test.ts`

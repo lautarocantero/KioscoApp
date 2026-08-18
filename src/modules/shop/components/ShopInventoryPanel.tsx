@@ -1,10 +1,11 @@
-import { Box, Button, Skeleton, Typography, alpha, type Theme } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Box, Skeleton, Typography, alpha, type Theme } from "@mui/material";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import type { ShopInventoryPanelProps } from "@typings/shop/shopComponentTypes";
 import ShopLowStockList from "./ShopLowStockList";
+import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
 
 interface InventoryTile {
     labelKey: string;
@@ -26,6 +27,7 @@ const ShopInventoryPanel = ({
     restockReport,
 }: ShopInventoryPanelProps): React.ReactNode => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const tiles: InventoryTile[] = [
         { labelKey: "shop.inventory.tiles.total", value: total, color: (t) => t.custom.fontColor },
@@ -106,25 +108,24 @@ const ShopInventoryPanel = ({
             </Box>
 
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
-                <Button
-                    component={RouterLink}
-                    to="/receipts"
-                    variant="outlined"
-                    size="small"
-                    startIcon={<ReceiptIcon />}
-                >
-                    {t("shop.inventory.loadReceipt")}
-                </Button>
+                <PrimaryButtonComponent
+                    buttonText={t("shop.inventory.loadReceipt")}
+                    buttonOnClick={() => navigate("/receipts")}
+                    buttonWidth="auto"
+                    marginTop="0"
+                    padding={0.75}
+                    icon={<ReceiptIcon fontSize="small" sx={{ mr: 1 }} />}
+                />
 
-                <Button
-                    variant="outlined"
-                    size="small"
-                    startIcon={<FileDownloadOutlinedIcon />}
-                    onClick={restockReport.handleDownload}
+                <PrimaryButtonComponent
+                    buttonText={t("shop.inventory.downloadRestockReport")}
+                    buttonOnClick={restockReport.handleDownload}
+                    buttonWidth="auto"
+                    marginTop="0"
+                    padding={0.75}
                     disabled={restockReport.isDownloadDisabled}
-                >
-                    {t("shop.inventory.downloadRestockReport")}
-                </Button>
+                    icon={<FileDownloadOutlinedIcon fontSize="small" sx={{ mr: 1 }} />}
+                />
             </Box>
 
             <ShopLowStockList

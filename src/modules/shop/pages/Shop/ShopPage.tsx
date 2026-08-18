@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { useShopGreeting } from "../../../../hooks/shop/useShopGreeting";
+import { useActiveKiosco } from "../../../../hooks/kiosco/useActiveKiosco";
 import { useShopStatLinks } from "../../../../hooks/shop/useShopStatLinks";
 import { useShopSalesSummary } from "../../../../hooks/shop/useShopSalesSummary";
 import { useShopFeaturedProviders } from "../../../../hooks/shop/useShopFeaturedProviders";
@@ -22,6 +24,8 @@ const TWO_COLUMN_GRID_SX = {
 
 const ShopPage = (): React.ReactNode => {
     const { greeting } = useShopGreeting();
+    const { activeKiosco } = useActiveKiosco();
+    const navigate = useNavigate();
     const statLinks = useShopStatLinks();
     const salesSummary = useShopSalesSummary();
     const featuredProviders = useShopFeaturedProviders();
@@ -31,7 +35,11 @@ const ShopPage = (): React.ReactNode => {
 
     return (
         <AppLayout fullWidth noCenter>
-            <ShopHeader greeting={greeting} />
+            <ShopHeader
+                greeting={greeting}
+                kioscoName={activeKiosco?.name ?? ""}
+                onChangeKiosco={() => navigate("/select-kiosco")}
+            />
 
             <ShopStatsRow links={statLinks} />
 

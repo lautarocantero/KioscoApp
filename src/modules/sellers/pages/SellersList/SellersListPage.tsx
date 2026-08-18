@@ -5,6 +5,7 @@ import TableIconHeader from "../../../shared/components/DataTable/TableIconHeade
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useSellers } from "../../../../hooks/sellers/useSellers";
 import type { Seller } from "@typings/seller/sellerTypes";
+import InviteSellerModal from "../../components/InviteSellerModal/InviteSellerModal";
 
 const SellersListPage = (): ReactNode => {
     const {
@@ -18,6 +19,10 @@ const SellersListPage = (): ReactNode => {
         searchTerm,
         setSearchTerm,
         columns,
+        isAdmin,
+        inviteModalOpen,
+        openInviteModal,
+        closeInviteModal,
     } = useSellers();
 
     return (
@@ -37,6 +42,7 @@ const SellersListPage = (): ReactNode => {
                 emptyMessage="No hay vendedores registrados"
                 height={"35em"}
                 search={{ value: searchTerm, onChange: setSearchTerm, placeholder: "Nombre del vendedor..." }}
+                newItem={isAdmin ? { label: "Agregar vendedor", onClick: openInviteModal } : undefined}
                 deleteDialog={{
                     open: deleteDialog.open,
                     title: "Confirmar eliminación",
@@ -51,6 +57,8 @@ const SellersListPage = (): ReactNode => {
                     onCancel: handleDeleteCancel,
                 }}
             />
+
+            <InviteSellerModal open={inviteModalOpen} onClose={closeInviteModal} />
         </AppLayout>
     );
 };

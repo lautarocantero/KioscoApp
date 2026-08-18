@@ -18,9 +18,9 @@ import {
     getSellerByEmailRequest,
     editSellerRequest,
 } from "../../modules/sellers/api/sellerApi";
-import { authDeleteAccountRequest } from "../../modules/auth/api/authApi";
+import { removeKioscoMemberRequest } from "../../modules/kiosco/api/kioscoApi";
 import { EditSellerSchema } from "../../modules/sellers/schema/SellerSchema";
-import { DeleteAuthAccountSchema } from "../../modules/auth/schema/authAccountSchema";
+import { RemoveKioscoMemberSchema } from "../../modules/kiosco/schema/KioscoMemberSchema";
 
 
 export const fetchSellersThunk = () => {
@@ -112,18 +112,18 @@ export const clearSelectedSellerThunk = () => {
     };
 };
 
-// Borra la cuenta completa (Auth + Seller en cascada, ver authApi). Borrar
-// solo el perfil vía /seller/delete-seller deja el login huérfano.
-export const deleteSellerThunk = (_id: string) => {
+// Saca al vendedor del kiosco activo (no borra su cuenta global: puede
+// seguir perteneciendo a otros kioscos). Solo admin del kiosco activo.
+export const deleteSellerThunk = (kioscoId: string, _id: string) => {
     return async (dispatch: Dispatch): Promise<boolean> => {
-        const parsed = DeleteAuthAccountSchema.safeParse({ _id });
+        const parsed = RemoveKioscoMemberSchema.safeParse({ kioscoId, userId: _id });
         if (!parsed.success) {
             dispatch(setSellerError({ errorMessage: "No se ha proporcionado un _id." }));
             return false;
         }
 
         try {
-            await authDeleteAccountRequest({ _id });
+            await removeKioscoMemberRequest(kioscoId, _id);
             dispatch(removeSellerFromList({ _id }));
             return true;
         } catch (error: unknown) {

@@ -58,14 +58,19 @@ function SellerEditForm() {
 ## ⚙️ Comportamiento de `handleEdit`
 
 ```
-1. PUT /seller/edit-seller { _id, name }         → siempre
-2. si isAdmin && values.rol !== editingSeller.role:
-     PUT /auth/edit-auth { _id, role }           → solo si cambió
+1. PUT /seller/edit-seller { _id, name }                         → siempre
+2. si isAdmin && activeKiosco && values.rol !== editingSeller.role:
+     PUT /kiosco/:kioscoId/member/:sellerId/role { role }        → solo si cambió
 3. navigate("/sellers")
 ```
 
-`isAdmin` sale de `state.auth.role === AuthRoleEnum.Admin` (el usuario
-logueado, no el vendedor que se está editando). El backend igual valida
+`isAdmin` sale de [`useActiveKiosco()`](../kiosco/useActiveKiosco.md) — es
+el rol del usuario logueado **en el kiosco activo**, no el vendedor que se
+está editando ni un rol global. El paso 2 despacha
+`updateKioscoMemberRoleThunk(activeKiosco._id, sellerId, values.rol)`
+(`store/kiosco/kioscoThunks.ts`), que reemplazó al viejo
+`startEditAuthRole` cuando el rol se movió de `Auth` a `KioscoMembership`
+(ver [docs/store/auth.md](../../store/auth.md)). El backend igual valida
 esto de nuevo con un 403 si alguien lo saltea desde afuera de la UI — este
 hook no es la única barrera.
 

@@ -18,6 +18,10 @@ export const iva = 0;
 
 export const CURRENCY_STORAGE_KEY = "shopCurrency";
 
+export const ACTIVE_KIOSCO_STORAGE_KEY = "activeKioscoId";
+
+export const PENDING_INVITE_CODE_STORAGE_KEY = "pendingInviteCode";
+
 export const DEFAULT_CURRENCY = Currency.Ars;
 
 // Registro técnico por moneda: código ISO real (para Intl.NumberFormat) y locale

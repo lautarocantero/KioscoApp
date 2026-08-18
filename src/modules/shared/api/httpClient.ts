@@ -19,6 +19,22 @@ export const setLogoutHandler = (handler: LogoutHandler): void => {
 };
 
 /*══════════════════════════════════════════════════════════════════════════╗
+║ 🏪 KIOSCO HEADER (inyección tardía)                                       ║
+║                                                                          ║
+║ Mismo patrón que logoutHandlerRef: httpClient no conoce Redux, así que    ║
+║ el store le inyecta un getter una sola vez al arrancar. Cada request      ║
+║ scoped por kiosco (product, presentation, provider, sell, seller,        ║
+║ notification, receipts) depende de este header — sin él, el backend      ║
+║ responde 400 (ver requireKioscoContext).                                 ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+
+const activeKioscoIdGetterRef: { current: (() => string | null) | null } = { current: null };
+
+export const setActiveKioscoIdGetter = (getter: () => string | null): void => {
+  activeKioscoIdGetterRef.current = getter;
+};
+
+/*══════════════════════════════════════════════════════════════════════════╗
 ║ 🔁 REFRESH CLIENT                                                         ║
 ║                                                                          ║
 ║ Instancia dedicada solo para llamar a /auth/refresh. Vive separada de    ║
@@ -113,6 +129,14 @@ export const createHttpClient = (baseURL: string): AxiosInstance => {
     timeout: 5000,
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
+  });
+
+  instance.interceptors.request.use((config) => {
+    const kioscoId = activeKioscoIdGetterRef.current?.();
+    if (kioscoId) {
+      config.headers.set("x-kiosco-id", kioscoId);
+    }
+    return config;
   });
 
   return attachRefreshInterceptor(instance);

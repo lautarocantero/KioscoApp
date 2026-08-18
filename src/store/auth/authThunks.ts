@@ -1,14 +1,16 @@
 import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
-import { authCheckStatusRequest, authEditRoleRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authRequestPasswordResetRequest, authResetPasswordRequest } from "../../modules/auth/api/authApi";
+import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authRequestPasswordResetRequest, authResetPasswordRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
 import type {
-  AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthEditRolePayload, AuthGoogleRequestPayload,
+  AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthGoogleRequestPayload,
   AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthRequestPasswordResetPayload,
   AuthRequestPasswordResetResult,
   AuthResetPasswordPayload } from "../../typings/auth/authTypes";
 import { extractAuthErrorMessage, handleErrorWithAction, handleError } from "../shared/handlerStoreError";
-import { EditAuthRoleSchema } from "../../modules/auth/schema/authAccountSchema";
+import { setActiveKioscoId, setMyKioscos, resetKioscoState } from "../kiosco/kioscoSlice";
+import { ACTIVE_KIOSCO_STORAGE_KEY } from "../../config/constants";
+import type { KioscoWithStats } from "@typings/kiosco/kioscoTypes";
 
 
 export const startLoginWithEmailPassword = (
@@ -17,7 +19,7 @@ export const startLoginWithEmailPassword = (
     // Sin checkingCredentials() acá: ver nota en el bug de "se reinicia todo".
     return async (dispatch: Dispatch) => {
       try {
-        const { user } : { user: AuthPublic} = await authLoginRequest({ email, password, rememberMe });
+        const { user, myKioscos } : { user: AuthPublic; myKioscos: KioscoWithStats[] } = await authLoginRequest({ email, password, rememberMe });
 
         if (!user) {
           dispatch(logout({ errorMessage: 'No se recibió usuario válido' }));
@@ -28,14 +30,14 @@ export const startLoginWithEmailPassword = (
           email: user.email,
           name: user.name,
           profilePhoto: user.profilePhoto,
-          role: user.role,
           isVerified: user.isVerified,
           _id: user._id,
         }));
+        dispatch(setMyKioscos({ kioscos: myKioscos ?? [] }));
 
         return user as AuthPublic;
       } catch (error: unknown) {
-        handleErrorWithAction({error, dispatch, action: logout}); 
+        handleErrorWithAction({error, dispatch, action: logout});
       }
     };
 };
@@ -69,7 +71,7 @@ export const startGoogleLogin = (
 
     return async (dispatch: Dispatch) => {
       try {
-        const { user }: { user: AuthPublic } = await authGoogleRequest({ accessToken });
+        const { user, myKioscos }: { user: AuthPublic; myKioscos: KioscoWithStats[] } = await authGoogleRequest({ accessToken });
 
         if (!user) {
           dispatch(logout({ errorMessage: 'No se recibió usuario válido' }));
@@ -80,10 +82,10 @@ export const startGoogleLogin = (
           email: user.email,
           name: user.name,
           profilePhoto: user.profilePhoto,
-          role: user.role,
           isVerified: user.isVerified,
           _id: user._id,
         }));
+        dispatch(setMyKioscos({ kioscos: myKioscos ?? [] }));
 
         return user as AuthPublic;
       } catch (error: unknown) {
@@ -96,18 +98,24 @@ export const startLogout = (): ThunkAction<void, RootState, unknown, AuthActions
     return async(dispatch: Dispatch) => {
         try{
             await authLogoutRequest();
-            dispatch(logout({errorMessage: null}))
         } catch(error: unknown) {
             handleError(error);
+        } finally {
+            // Limpia sesión de auth Y de kiosco: la próxima cuenta que se
+            // loguee en este navegador no debe heredar el kiosco activo.
+            dispatch(logout({ errorMessage: null }));
+            dispatch(resetKioscoState());
+            dispatch(setActiveKioscoId({ kioscoId: null }));
+            localStorage.removeItem(ACTIVE_KIOSCO_STORAGE_KEY);
         }
     }
 }
 
-export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: number; data: AuthCheckAuthDataResponse }> | undefined>, RootState, unknown, AuthActionsType> => {
+export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: number; data: AuthCheckAuthDataResponse & { myKioscos: KioscoWithStats[] } }> | undefined>, RootState, unknown, AuthActionsType> => {
   return async (dispatch: Dispatch) => {
     try {
       const response = await authCheckStatusRequest();
-      const { status, data } : { status: number, data: AuthCheckAuthDataResponse} = response;
+      const { status, data } : { status: number, data: AuthCheckAuthDataResponse & { myKioscos: KioscoWithStats[] } } = response;
 
       if (status !== 200) {
         dispatch(logout({ errorMessage: null }));
@@ -118,10 +126,10 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: nu
         email: data.email,
         name: data.name,
         profilePhoto: data.profilePhoto,
-        role: data.role,
         isVerified: data.isVerified,
         _id: data._id,
       }));
+      dispatch(setMyKioscos({ kioscos: data.myKioscos ?? [] }));
 
       return response;
     } catch {
@@ -200,30 +208,5 @@ export const startResetPassword = (
     };
 };
 
-/*══════════ 🎮 startEditAuthRole ══════════╗
-║ 📥 Entrada: AuthEditRolePayload {_id, role}   ║
-║ ⚙️ Proceso: valida forma con zod y edita el   ║
-║    role en Auth. El back también devuelve 403 ║
-║    si quien llama no es admin — la validación ║
-║    de acá es de forma, no de autorización.    ║
-║    No toca el slice: casi siempre se está     ║
-║    editando el role de OTRO usuario.          ║
-║ 📤 Salida: boolean (éxito)                     ║
-╚════════════════════════════════════════════════╝*/
-export const startEditAuthRole = (
-  payload: AuthEditRolePayload
-): ThunkAction<Promise<boolean>, RootState, unknown, AuthActionsType> => {
-
-    return async (): Promise<boolean> => {
-      const parsed = EditAuthRoleSchema.safeParse(payload);
-      if (!parsed.success) return false;
-
-      try {
-        await authEditRoleRequest(payload);
-        return true;
-      } catch (error: unknown) {
-        handleError(error);
-        return false;
-      }
-    };
-};
+// La edición de rol de un vendedor ahora es por-kiosco — ver
+// updateKioscoMemberRoleThunk en store/kiosco/kioscoThunks.ts.

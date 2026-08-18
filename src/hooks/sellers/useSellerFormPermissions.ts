@@ -1,11 +1,11 @@
 import type { SellerFormValues, UseSellerFormPermissionsReturn } from "@typings/seller/sellerTypes";
-import { useIsAdmin } from "../auth/useIsAdmin";
+import { useIsActiveKioscoAdmin } from "../kiosco/useIsActiveKioscoAdmin";
 
 // Resuelve quién puede editar qué en el form de vendedor: nombre es libre,
-// email nunca se edita, rol es exclusivo de admin. Ver
+// email nunca se edita, rol es exclusivo de admin (del kiosco activo). Ver
 // docs/features/sellerRoleAndAccountDeletion.md para el detalle completo.
 export const useSellerFormPermissions = (isDetail: boolean): UseSellerFormPermissionsReturn => {
-    const isAdmin = useIsAdmin();
+    const isAdmin = useIsActiveKioscoAdmin();
 
     const disabledFields: (keyof SellerFormValues)[] = isAdmin ? ["email"] : ["email", "rol"];
 

@@ -10,6 +10,8 @@ import type {
 
 export interface ShopHeaderProps {
   greeting: string;
+  kioscoName: string;
+  onChangeKiosco: () => void;
 }
 
 export interface ShopInitialAvatarProps {

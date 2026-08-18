@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { store } from '../store';
-import { AuthRoleEnum, AuthStatus } from '../../typings/auth/authEnums';
+import { AuthStatus } from '../../typings/auth/authEnums';
 import type { AuthLoginSlicePayload, AuthSliceErrorPayload, AuthSliceState } from '../../typings/auth/authTypes';
 
 
@@ -13,7 +13,6 @@ const initialState: AuthSliceState = {
     isAuthenticated: false,
     profilePhoto: null,
     errorMessage: null,
-    role: AuthRoleEnum.Seller,
     isVerified: false,
 }
 
@@ -23,7 +22,7 @@ export const authSlice = createSlice({
     reducers: {
         login: (state: AuthSliceState, action: PayloadAction<AuthLoginSlicePayload>) => {
             const { payload } = action;
-            const { _id, name, email, profilePhoto, role, isVerified } = payload;
+            const { _id, name, email, profilePhoto, isVerified } = payload;
             state._id = _id;
             state.name = name ?? '';
             state.email = email ?? '';
@@ -31,7 +30,6 @@ export const authSlice = createSlice({
             state.isLoading = false;
             state.isAuthenticated = true;
             state.profilePhoto = profilePhoto ?? null;
-            state.role = role;
             state.isVerified = isVerified ?? false;
             state.errorMessage = null;
         },
@@ -45,7 +43,6 @@ export const authSlice = createSlice({
             state.name = '';
             state.profilePhoto = null;
             state._id = null;
-            state.role = AuthRoleEnum.Seller;
             state.isVerified = false;
             state.errorMessage = errorMessage ?? null;
         },
