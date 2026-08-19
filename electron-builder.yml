@@ -1,0 +1,18 @@
+appId: com.stocko.app
+productName: Stocko
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**
+  - dist-electron/**
+linux:
+  target: AppImage
+  icon: build/icon.png
+  category: Office
+win:
+  target: nsis
+  icon: build/icon.png
+mac:
+  target: dmg
+  icon: build/icon.png
