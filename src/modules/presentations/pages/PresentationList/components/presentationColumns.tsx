@@ -6,6 +6,7 @@ import { formatPrice } from "../../../../shared/helpers/formarPrice";
 import { centeredTextColumn, chipColumn, priceColumn, truncatedTextColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
 import { STATUS_CONFIG } from "../../../../../config/constants";
 import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
+import { clampStock } from "../../../../../utils/formatter/clampStock";
 
 export const buildColumnsForPresentations = ({
     onDeleteRequest,
@@ -56,7 +57,7 @@ export const buildColumnsForPresentations = ({
             maxWidth: 200,
             type: "number",
         },
-        (value) => String(value ?? 0),
+        (value) => String(clampStock((value as number) ?? 0)),
         (value, row) => ((value as number) <= (row.min_stock ?? 0) ? "error" : "success"),
         "filled"
     ),

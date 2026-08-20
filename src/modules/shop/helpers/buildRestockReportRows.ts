@@ -1,6 +1,7 @@
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { Product } from "@typings/product/productTypes";
 import type { RestockReportRow } from "@typings/shop/shopTypes";
+import { clampStock } from "../../../utils/formatter/clampStock";
 
 // Mismo criterio de "más crítico primero" que getLowStockPresentations
 // (menor ratio stock/mínimo, con el stock más negativo primero en caso de
@@ -29,7 +30,7 @@ export const buildRestockReportRows = (
         .map((presentation) => ({
             productName: productNameById.get(presentation.product_id) ?? "",
             presentationName: presentation.name,
-            currentStock: presentation.stock,
+            currentStock: clampStock(presentation.stock),
             minStock: presentation.min_stock,
             minRestock: Math.max(presentation.min_stock - presentation.stock, 0),
             provider1: "",

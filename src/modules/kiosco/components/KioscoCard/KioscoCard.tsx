@@ -157,7 +157,14 @@ const KioscoCard = ({ kiosco, colorIndex, entering, onEnter }: KioscoCardProps):
                             variant="body2"
                             sx={{ fontWeight: 700, color: isHovered ? theme.custom.white : undefined }}
                         >
-                            {formatPrice(kiosco.sells_today_total)}
+                            {/* TODO(temp-mock-screenshot): Kiosco Norte ya tiene ventas reales; el resto sigue
+                                mockeado hasta terminar las capturas. Revertir a formatPrice(kiosco.sells_today_total)
+                                para todos los kioscos cuando ya no haga falta. */}
+                            {formatPrice(
+                                kiosco.name === "Kiosco Norte"
+                                    ? kiosco.sells_today_total
+                                    : [84200, 156900, 42350, 231800][colorIndex % 4]
+                            )}
                         </Typography>
                     </Box>
                 </Stack>

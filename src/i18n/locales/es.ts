@@ -1123,6 +1123,85 @@ const es = {
       helperText: "Quien lo use se unirá como vendedor. Vos podés cambiarle el rol después.",
     },
   },
+
+  landing: {
+    nav: {
+      features: "Funciones",
+      resources: "Recursos",
+      login: "Iniciar sesion",
+      register: "Registrarse",
+    },
+    hero: {
+      badge: "Tu kiosco, en orden.",
+      titleStart: "Gestioná tu kiosco de forma ",
+      titleHighlight: "simple",
+      subtitle: "Ventas, productos, stock, proveedores y boletas. Todo tu negocio en un solo lugar.",
+      download: "Descargar",
+      openInBrowser: "Abrir en el navegador",
+      previewAlt: "Vista previa del panel de control de Stocko",
+    },
+    showcase: {
+      productsStock: {
+        badge: "Todo tu inventario bajo control.",
+        titleStart: "Productos y ",
+        titleHighlight: "stock",
+        titleEnd: " siempre al día",
+        subtitle: "Controlá tus productos, presentaciones y stock en tiempo real. Evitá faltantes y optimizá tus compras.",
+        bullets: {
+          manageProducts: "Gestión de productos",
+          multiplePresentations: "Múltiples presentaciones",
+          lowStockAlerts: "Alertas de stock bajo",
+        },
+        mediaAlt: "Vista previa de la gestión de productos y stock en Stocko",
+      },
+      sellsReports: {
+        badge: "Tomá mejores decisiones.",
+        titleStart: "Ventas y reportes ",
+        titleHighlight: "inteligentes",
+        titleEnd: "",
+        subtitle: "Analizá el rendimiento de tu kiosco con métricas claras y fáciles de entender.",
+        bullets: {
+          realtimeReports: "Reportes en tiempo real",
+          sellsHistory: "Historial de ventas",
+          sellerAnalysis: "Análisis por vendedor",
+        },
+        mediaAlt: "Vista previa de reportes y ventas en Stocko",
+      },
+      receiptsProviders: {
+        badge: "Compras más simples.",
+        titleStart: "Gestioná boletas y ",
+        titleHighlight: "proveedores",
+        titleEnd: "",
+        subtitle: "Registrá tus compras, controlá costos y llevá un historial ordenado.",
+        bullets: {
+          fastReceiptUpload: "Carga rápida de boletas",
+          providerControl: "Control de proveedores",
+          historyAlwaysAvailable: "Historial siempre disponible",
+        },
+        mediaAlt: "Vista previa de la gestión de boletas y proveedores en Stocko",
+      },
+      multiKiosco: {
+        badge: "Crece sin límites.",
+        titleStart: "Múltiples kioscos en ",
+        titleHighlight: "un solo lugar",
+        titleEnd: "",
+        subtitle: "Administrá todos tus kioscos y tu equipo desde una única cuenta.",
+        bullets: {
+          multipleKioscosOneAccount: "Varios kioscos, una cuenta",
+          sellerManagement: "Gestión de vendedores",
+          rolePermissions: "Permisos por rol",
+        },
+        mediaAlt: "Vista previa de la gestión de múltiples kioscos en Stocko",
+      },
+    },
+    download: {
+      title: "Llevá Stocko a tu escritorio",
+      subtitle: "Descargá la app de escritorio y gestioná tu kiosco sin depender del navegador.",
+      windows: "Windows",
+      linux: "Linux",
+      action: "Descargar",
+    },
+  },
 };
 
 export default es;

@@ -1,5 +1,6 @@
 import type { validateProductSubmissionInterface, ValidationResultType } from "@typings/sells/sellTypes";
 import { isWeightSaleType } from "../../../../shared/helpers/saleTypeHelper";
+import { clampStock } from "../../../../../utils/formatter/clampStock";
 
 const validateProductForCart = ({ Presentation, requiredStock, t }: validateProductSubmissionInterface): ValidationResultType => {
     if (!Presentation) {
@@ -21,9 +22,10 @@ const validateProductForCart = ({ Presentation, requiredStock, t }: validateProd
     }
 
     if (Presentation.stock < requiredStock) {
+      const availableStock = clampStock(Presentation.stock);
       const stockLabel = isWeight
-        ? `${Presentation.stock}${t("cart.table.weightUnit")}`
-        : `${Presentation.stock} ${t("cart.productDialog.validation.unitsSuffix")}`;
+        ? `${availableStock}${t("cart.table.weightUnit")}`
+        : `${availableStock} ${t("cart.productDialog.validation.unitsSuffix")}`;
       return { valid: false, message: t("cart.productDialog.validation.stockAvailable", { stock: stockLabel }) };
     }
 

@@ -1,6 +1,7 @@
 // helpers/presentation/saleType.ts
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { SALE_TYPE_VALUES } from "@typings/presentation/presentationEnum";
+import { clampStock } from "../../../utils/formatter/clampStock";
 
 export const GRAMS_PER_WEIGHT_UNIT = 100;
 
@@ -11,16 +12,19 @@ export const isWeightSaleType = (saleType?: string): boolean =>
 ║ 🔎 formatStockQuantity                                                ║
 ║ Formatea un valor YA EXPRESADO EN UNIDADES REALES (gramos reales para ║
 ║ weight, unidades reales para unit) — sirve para stock Y stock_required║
+║ El stock nunca se muestra negativo, aunque el dato de origen lo esté. ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
-export const formatStockQuantity = (value: number | string, saleType?: string): string =>
-  isWeightSaleType(saleType) ? `${value}g` : `${value}`;
+export const formatStockQuantity = (value: number | string, saleType?: string): string => {
+  const clamped = clampStock(Number(value));
+  return isWeightSaleType(saleType) ? `${clamped}g` : `${clamped}`;
+};
 
 export const getTotalPresentationsStock = (presentations?: Presentation[]): number =>
   (presentations ?? []).reduce((acc: number, p: Presentation) => {
     if (isWeightSaleType(p?.sale_type)) {
-      return acc + ((p?.stock ?? 0) > 0 ? 1 : 0);
+      return acc + (clampStock(p?.stock ?? 0) > 0 ? 1 : 0);
     }
-    return acc + (p?.stock ?? 0);
+    return acc + clampStock(p?.stock ?? 0);
   }, 0);
 
 export const formatWeightAwareQuantity = (quantity: number, saleType?: string): string => {

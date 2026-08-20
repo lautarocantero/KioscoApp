@@ -11,14 +11,14 @@ const AuthRoutes = ():React.ReactNode => {
 
     return (
         <>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/check-email" element={<CheckEmailPage />} />
             <Route path="/verify-email" element={<VerificationPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/tems-conditions" element={<TermsConditionsPage />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/login" />} />
         </>
     )
 }

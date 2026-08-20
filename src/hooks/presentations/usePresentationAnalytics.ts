@@ -7,6 +7,7 @@ import { mapPresentationAnalytics } from "../../modules/shared/components/Analyt
 import type { AnalyticsFiltersInterface, PresentationAnalyticsRaw, UsePresentationAnalyticsOptions } from "@typings/shared/types/useAnalytics.types";
 import type { AppDispatch, RootState } from "../../store/presentation/presentationSlice";
 import { fetchPresentationAnalytics, fetchPresentationById } from "../../store/presentation/presentationThunks";
+import { clampStock } from "../../utils/formatter/clampStock";
 
 const getDefaultDateRange = () => ({
     start_date: dayjs().subtract(1, "month").format("YYYY-MM-DD"),
@@ -64,7 +65,7 @@ export function usePresentationAnalytics(presentationId?: string, options: UsePr
         void dispatch(fetchPresentationById(appliedPresentationId));
     }, [appliedPresentationId, currentStockOverride, dispatch]);
 
-    const currentStock = currentStockOverride ?? selectedPresentation?.stock ?? 0;
+    const currentStock = clampStock(currentStockOverride ?? selectedPresentation?.stock ?? 0);
 
     const analyticsData = useMemo(
         () => (analytics ? mapPresentationAnalytics({ raw: analytics, title, subtitle, currentStock, saleType, theme }) : null),

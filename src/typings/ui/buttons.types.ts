@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 
 export type ResponsiveWidth = string | { xs?: string; sm?: string; md?: string; lg?: string };
 
+export type ButtonFontSize = "body1" | "body2";
+
 export interface PrimaryButtonComponentProps {
   buttonText: string;
   buttonOnClick: () => void;
@@ -15,7 +17,13 @@ export interface PrimaryButtonComponentProps {
   marginTop?: string,
   icon?: ReactNode,
   disabled?: boolean;
+  fontSize?: ButtonFontSize;
 }
+
+export type OutlinedButtonComponentProps = Pick<
+  PrimaryButtonComponentProps,
+  "buttonText" | "buttonOnClick" | "buttonWidth" | "buttonType" | "icon" | "disabled" | "dataTestId" | "padding" | "fontSize"
+>;
 
 export interface EmptyButtonProps {
   buttonText: string;

@@ -15,6 +15,7 @@ import type { Presentation } from '@typings/presentation/presentationTypes';
 import type { Product } from '@typings/product/productTypes';
 import type { PresentationCategory } from '@typings/presentation/presentationEnum';
 import { isWeightSaleType } from '../../modules/shared/helpers/saleTypeHelper';
+import { clampStock } from '../../utils/formatter/clampStock';
 
 const initialState: CartStateInterface = {
     _id: null,
@@ -75,9 +76,9 @@ export const cartSlice = createSlice({
 
             const item = state.cart[productIndex];
             const step = isWeightSaleType(item.sale_type) ? 100 : 1;
-            const maxAvailable = item.stock ?? Infinity;
+            const maxAvailable = item.stock === undefined ? Infinity : clampStock(item.stock);
 
-            state.cart[productIndex].stock_required = Math.min(item.stock_required + step, maxAvailable);
+            state.cart[productIndex].stock_required = Math.max(0, Math.min(item.stock_required + step, maxAvailable));
         },
         // 🆕 setea una cantidad EXACTA (no relativa) para un producto del carrito.
         // Uso: EXCLUSIVO de productos por peso, cuando el usuario tipea directamente
@@ -90,8 +91,8 @@ export const cartSlice = createSlice({
             if (productIndex === -1) return;
 
             const item = state.cart[productIndex];
-            const maxAvailable = item.stock ?? Infinity;
-            const safeValue = Math.min(Math.max(0, stock_required), maxAvailable);
+            const maxAvailable = item.stock === undefined ? Infinity : clampStock(item.stock);
+            const safeValue = Math.max(0, Math.min(stock_required, maxAvailable));
 
             if (safeValue <= 0) {
                 state.cart = state.cart.filter((cartItem) => cartItem._id !== String(_id));

@@ -1122,6 +1122,85 @@ const en = {
       helperText: "Whoever uses it joins as a seller. You can change their role afterward.",
     },
   },
+
+  landing: {
+    nav: {
+      features: "Features",
+      resources: "Resources",
+      login: "Log in",
+      register: "Sign up",
+    },
+    hero: {
+      badge: "Your store, in order.",
+      titleStart: "Manage your store the ",
+      titleHighlight: "simple",
+      subtitle: "Sales, products, stock, suppliers and receipts. Your whole business in one place.",
+      download: "Download",
+      openInBrowser: "Open in browser",
+      previewAlt: "Preview of the Stocko dashboard",
+    },
+    showcase: {
+      productsStock: {
+        badge: "Your whole inventory under control.",
+        titleStart: "Products and ",
+        titleHighlight: "stock",
+        titleEnd: " always up to date",
+        subtitle: "Track your products, presentations and stock in real time. Avoid shortages and optimize your purchases.",
+        bullets: {
+          manageProducts: "Product management",
+          multiplePresentations: "Multiple presentations",
+          lowStockAlerts: "Low stock alerts",
+        },
+        mediaAlt: "Preview of product and stock management in Stocko",
+      },
+      sellsReports: {
+        badge: "Make better decisions.",
+        titleStart: "Sales and ",
+        titleHighlight: "smart",
+        titleEnd: " reports",
+        subtitle: "Analyze your store's performance with clear, easy-to-understand metrics.",
+        bullets: {
+          realtimeReports: "Real-time reports",
+          sellsHistory: "Sales history",
+          sellerAnalysis: "Per-seller analysis",
+        },
+        mediaAlt: "Preview of sales and reports in Stocko",
+      },
+      receiptsProviders: {
+        badge: "Simpler purchases.",
+        titleStart: "Manage receipts and ",
+        titleHighlight: "suppliers",
+        titleEnd: "",
+        subtitle: "Log your purchases, control costs and keep an organized history.",
+        bullets: {
+          fastReceiptUpload: "Fast receipt uploads",
+          providerControl: "Supplier control",
+          historyAlwaysAvailable: "History always available",
+        },
+        mediaAlt: "Preview of receipt and supplier management in Stocko",
+      },
+      multiKiosco: {
+        badge: "Grow without limits.",
+        titleStart: "Multiple stores in ",
+        titleHighlight: "one place",
+        titleEnd: "",
+        subtitle: "Manage all your stores and your team from a single account.",
+        bullets: {
+          multipleKioscosOneAccount: "Multiple stores, one account",
+          sellerManagement: "Seller management",
+          rolePermissions: "Role-based permissions",
+        },
+        mediaAlt: "Preview of multi-store management in Stocko",
+      },
+    },
+    download: {
+      title: "Bring Stocko to your desktop",
+      subtitle: "Download the desktop app and manage your store without relying on a browser.",
+      windows: "Windows",
+      linux: "Linux",
+      action: "Download",
+    },
+  },
 };
 
 export default en;
