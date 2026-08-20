@@ -12,6 +12,7 @@ import SellerRoutes from "../modules/sellers/routes/SellerRoutes";
 import ShopRoutes from "../modules/shop/routes/ShopRoutes";
 import ReceiptRoutes from "../modules/receipt/ReceiptRoutes";
 import NotificationRoutes from "../modules/notifications/routes/NotificationRoutes";
+import MembershipRoutes from "../modules/membership/routes/MembershipRoutes";
 import type { AppDispatch, RootState } from "../store/auth/authSlice";
 import { startCheckAuth } from "../store/auth/authThunks";
 import RouteTracker from "./RouteTracker";
@@ -65,6 +66,7 @@ const AppRouter = (): React.ReactNode => {
                 {ReceiptRoutes()}
                 {PresentationsRoutes()}
                 {NotificationRoutes()}
+                {MembershipRoutes()}
                 <Route path="*" element={<Navigate to={'/shop'} />} />
               </Route>
             ) : (

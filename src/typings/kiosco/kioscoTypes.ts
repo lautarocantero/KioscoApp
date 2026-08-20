@@ -3,6 +3,7 @@
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 import type { AuthRoleEnum } from "@typings/auth/authEnums";
+import type { KioscoPlanEnum, KioscoPlanStatusEnum } from "@typings/membership/membershipEnums";
 
 // Espejo exacto de KioscoEntity en el back (@typings/kiosco).
 interface KioscoEntity {
@@ -12,6 +13,9 @@ interface KioscoEntity {
     owner_id: string;
     invite_code: string;
     currency: string;
+    plan: KioscoPlanEnum;
+    plan_status: KioscoPlanStatusEnum;
+    mp_preapproval_id: string | null;
     created_at: string;
     updated_at: string;
 }

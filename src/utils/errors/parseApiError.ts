@@ -1,3 +1,6 @@
+import axios from "axios";
+import { ZodError } from "zod";
+
 type StatusMessageMap = Record<number, string>;
 
 const STATUS_MESSAGES: StatusMessageMap = {
@@ -65,9 +68,32 @@ export async function parseApiError(
         return getStatusMessage(error.status);
     }
 
+    // ── La respuesta del back no matchea el schema esperado (ver *ApiSchema.ts) ──
+    // error.message de un ZodError es el dump JSON crudo de los issues: nunca
+    // se lo queremos mostrar tal cual al usuario.
+    if (error instanceof ZodError) {
+        return "La respuesta del servidor no tiene el formato esperado. Intentá nuevamente.";
+    }
+
     // ── Sin conexión, CORS, servidor caído ──────────────────────────────
     if (error instanceof TypeError && isNetworkError(error.message)) {
         return "No se pudo conectar con el servidor. Verificá tu conexión a internet.";
+    }
+
+    // ── Error de axios (llamadas directas a *Api.ts sin pasar por un thunk): ──
+    // axios.message es genérico ("Request failed with status code 400"), el
+    // mensaje real que arma handleControllerError viaja en response.data.message.
+    if (axios.isAxiosError(error)) {
+        if (!error.response) {
+            return "No se pudo conectar con el servidor. Verificá tu conexión a internet.";
+        }
+
+        const backendMessage = error.response.data?.message;
+        if (typeof backendMessage === "string" && backendMessage.trim().length > 0) {
+            return backendMessage;
+        }
+
+        return getStatusMessage(error.response.status);
     }
 
     // ── Error estándar (el que arman los thunks: message del backend o "Error {status}") ──

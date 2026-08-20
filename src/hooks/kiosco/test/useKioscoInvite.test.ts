@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, waitFor, act } from "@testing-library/react";
 import type { InviteInfo, KioscoWithStats } from "@typings/kiosco/kioscoTypes";
 import { AuthRoleEnum } from "@typings/auth/authEnums";
+import { KioscoPlanEnum, KioscoPlanStatusEnum } from "@typings/membership/membershipEnums";
 import { useKioscoInvite } from "../useKioscoInvite";
 import { getInviteInfoRequest } from "../../../modules/kiosco/api/kioscoApi";
 import { useActiveKiosco } from "../useActiveKiosco";
@@ -24,6 +25,9 @@ const buildKiosco = (): KioscoWithStats => ({
     owner_id: "owner-1",
     invite_code: "ABC123",
     currency: "ARS",
+    plan: KioscoPlanEnum.Stocko,
+    plan_status: KioscoPlanStatusEnum.Active,
+    mp_preapproval_id: null,
     created_at: "2026-01-01T00:00:00.000Z",
     updated_at: "2026-01-01T00:00:00.000Z",
     role: AuthRoleEnum.Admin,

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import { renderWithTheme } from "../utils/setupTests";
 import SettingsModal from "../../components/SettingsModal/SettingsModal";
 
@@ -22,7 +23,11 @@ describe("SettingsModal", () => {
     const user = userEvent.setup();
     const onClose = vi.fn();
 
-    renderWithTheme(<SettingsModal open onClose={onClose} />);
+    renderWithTheme(
+      <MemoryRouter>
+        <SettingsModal open onClose={onClose} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText("Ajustes")).toBeInTheDocument();
     expect(screen.getByTestId("section-account-info")).toBeInTheDocument();

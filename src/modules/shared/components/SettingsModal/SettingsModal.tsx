@@ -4,12 +4,14 @@ import SettingsModalHeader from "./SettingsModalHeader";
 import SettingsModalSidebar from "./SettingsModalSidebar";
 import SettingsModalContent from "./SettingsModalContent";
 import { useSettingsNavigation } from "./hooks/useSettingsNavigation";
+import { useCloseSettingsModalOnNavigate } from "./hooks/useCloseSettingsModalOnNavigate";
 import { SETTINGS_CATEGORIES } from "../../../../config/SettingsCategories";
 import { getNoisyBackgroundSx } from "../NoisyBackground/NoisyBackground";
 import type { SettingsModalProps } from "@typings/settings/settingsComponentTypes";
 
 const SettingsModal = ({ open, onClose }: SettingsModalProps): React.ReactNode => {
   const { activeSection, setActiveSection } = useSettingsNavigation();
+  useCloseSettingsModalOnNavigate(open, onClose);
 
   return (
     <Dialog

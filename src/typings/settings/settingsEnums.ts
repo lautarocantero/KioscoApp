@@ -5,6 +5,7 @@ export enum SettingsCategoryEnum {
     Account = "account",
     Appearance = "appearance",
     MyShop = "my-shop",
+    Membership = "membership",
 };
 
 {/*─────────────────── 🔎 Secciones 🔎 ───────────────────*/}
@@ -16,6 +17,7 @@ export enum SettingsSectionEnum {
     AppearanceLanguage = "appearance-language",
     AppearanceFontSize = "appearance-font-size",
     MyShopCurrency = "my-shop-currency",
+    MembershipPlan = "membership-plan",
 };
 
 {/*─────────────────── 🔎 Apariencia 🔎 ───────────────────*/}
