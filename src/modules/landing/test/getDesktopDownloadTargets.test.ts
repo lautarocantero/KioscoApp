@@ -13,6 +13,17 @@ describe("getDesktopDownloadTargets", () => {
     targets.forEach((target) => {
       expect(target.href).toMatch(/^https:\/\//);
       expect(target.Icon).toBeDefined();
+      expect(target.descriptionKey).toMatch(/^landing\.download\./);
     });
+  });
+
+  it("marca a Windows como target primario y a Linux como secundario", () => {
+    const targets = getDesktopDownloadTargets();
+
+    const windows = targets.find((target) => target.os === OperatingSystemEnum.Windows)!;
+    const linux = targets.find((target) => target.os === OperatingSystemEnum.Linux)!;
+
+    expect(windows.isPrimary).toBe(true);
+    expect(linux.isPrimary).toBe(false);
   });
 });

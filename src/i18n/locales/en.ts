@@ -1198,7 +1198,15 @@ const en = {
       subtitle: "Download the desktop app and manage your store without relying on a browser.",
       windows: "Windows",
       linux: "Linux",
+      windowsDescription: "Compatible with Windows 10 and 11",
+      linuxDescription: "Compatible with Ubuntu, Debian and more",
       action: "Download",
+      actionFor: "Download for {{os}}",
+      trust: {
+        secure: { title: "Safe and reliable", subtitle: "No viruses or malware" },
+        fastInstall: { title: "Fast install", subtitle: "Just a few steps" },
+        autoUpdates: { title: "Automatic updates", subtitle: "Always up to date" },
+      },
     },
   },
 };

@@ -1,8 +1,11 @@
 import type {
   DesktopDownloadTarget,
   LandingAccentKey,
+  LandingDotGridSide,
+  LandingDownloadTrustPoint,
   LandingFeatureShowcaseBullet,
   LandingFeatureShowcaseItem,
+  LandingMediaDecoration,
   LandingNavLink,
 } from "./landingTypes";
 
@@ -26,12 +29,35 @@ export interface LandingFeatureShowcaseBulletsProps {
 }
 
 export interface LandingFeatureShowcaseMediaProps {
-  src: string;
   alt: string;
   videoSrc: string;
+  accentColor: string;
+  decorations?: LandingMediaDecoration[];
+}
+
+export interface LandingMediaDecorationImageProps {
+  decoration: LandingMediaDecoration;
 }
 
 export interface LandingFeatureShowcaseRowProps {
   item: LandingFeatureShowcaseItem;
   reverse: boolean;
+}
+
+export interface LandingFeatureShowcaseBandProps extends LandingFeatureShowcaseRowProps {
+  nextFillColor: string;
+  waveVariant: number;
+}
+
+export interface LandingWaveDividerProps {
+  fillColor: string;
+  variant?: number;
+}
+
+export interface LandingDownloadTrustRowProps {
+  points: LandingDownloadTrustPoint[];
+}
+
+export interface LandingDotGridDecorationProps {
+  side: LandingDotGridSide;
 }

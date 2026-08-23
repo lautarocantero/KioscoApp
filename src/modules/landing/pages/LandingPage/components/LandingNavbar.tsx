@@ -8,7 +8,6 @@ import LandingBrandmark from "./LandingBrandmark";
 import LandingLanguageSelect from "./LandingLanguageSelect";
 import OutlinedButtonComponent from "../../../../shared/components/Buttons/OutlinedButtonComponent";
 import PrimaryButtonComponent from "../../../../shared/components/Buttons/PrimaryButtonComponent";
-import { getSectionBackgroundSx } from "../../../helpers/getLandingBackgroundPatterns";
 
 const LandingNavbar = (): React.ReactNode => {
   const { t } = useTranslation();
@@ -20,13 +19,16 @@ const LandingNavbar = (): React.ReactNode => {
     <Box
       component="header"
       sx={(theme: Theme) => ({
-        position: "sticky",
+        position: "fixed",
         top: 0,
+        left: 0,
+        right: 0,
         zIndex: 10,
         width: "100%",
         boxSizing: "border-box",
         borderColor: theme?.custom?.darkGray,
-        ...getSectionBackgroundSx(theme),
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
       })}
     >
       <Stack

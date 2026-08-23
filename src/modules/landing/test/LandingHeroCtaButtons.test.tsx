@@ -37,9 +37,18 @@ describe("LandingHeroCtaButtons", () => {
     expect(navigate).toHaveBeenCalledWith("/login");
   });
 
-  it("no navega al hacer click en 'Descargar' (todavía sin implementar)", async () => {
+  it("hace scroll a la sección de recursos/descarga al hacer click en 'Descargar'", async () => {
+    const section = document.createElement("div");
+    section.id = "landing-download";
+    section.scrollIntoView = vi.fn();
+    document.body.appendChild(section);
+
     renderComponent();
     await userEvent.click(screen.getByTestId("landing-hero-download"));
+
+    expect(section.scrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
     expect(navigate).not.toHaveBeenCalled();
+
+    document.body.removeChild(section);
   });
 });

@@ -23,6 +23,20 @@ vi.mock("@hooks/auth/useGoogleAuth", () => ({
     }),
 }));
 
+// jsdom no implementa IntersectionObserver — mock mínimo para que los
+// componentes que lo usan (ej. animaciones on-scroll) no rompan en tests.
+class IntersectionObserverMock implements IntersectionObserver {
+    readonly root: Element | Document | null = null;
+    readonly rootMargin: string = "";
+    readonly thresholds: ReadonlyArray<number> = [];
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = vi.fn();
+    takeRecords = vi.fn(() => []);
+}
+
+vi.stubGlobal("IntersectionObserver", IntersectionObserverMock);
+
 //─── 🔎 Tema de prueba (tema real de la app) 🔎 ───
 export const testTheme = darkTheme;
 

@@ -20,7 +20,10 @@ const LandingFeatureShowcaseBullets = ({ bullets, accent }: LandingFeatureShowca
           >
             <Icon sx={{ fontSize: 16, color: accentColor }} />
           </Stack>
-          <Typography variant="body2" sx={{ color: (theme: Theme) => theme?.custom?.white, fontWeight: 500 }}>
+          <Typography
+            variant="body2"
+            sx={{ color: (theme: Theme) => theme?.custom?.white, fontWeight: 500, fontSize: { md: "1rem" } }}
+          >
             {t(labelKey)}
           </Typography>
         </Stack>

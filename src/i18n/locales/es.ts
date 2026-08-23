@@ -1199,7 +1199,15 @@ const es = {
       subtitle: "Descargá la app de escritorio y gestioná tu kiosco sin depender del navegador.",
       windows: "Windows",
       linux: "Linux",
+      windowsDescription: "Compatible con Windows 10 y 11",
+      linuxDescription: "Compatible con Ubuntu, Debian y más",
       action: "Descargar",
+      actionFor: "Descargar para {{os}}",
+      trust: {
+        secure: { title: "Seguro y confiable", subtitle: "Sin virus ni malware" },
+        fastInstall: { title: "Instalación rápida", subtitle: "En pocos pasos" },
+        autoUpdates: { title: "Actualizaciones automáticas", subtitle: "Siempre al día" },
+      },
     },
   },
 };

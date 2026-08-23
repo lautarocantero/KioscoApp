@@ -6,7 +6,7 @@ import { darkTheme } from "../../../theme/mainTheme";
 import LandingFeatureShowcaseRow from "../pages/LandingPage/components/LandingFeatureShowcaseRow";
 import { getLandingFeatureShowcase } from "../helpers/getLandingFeatureShowcase";
 
-const [productsStockItem] = getLandingFeatureShowcase();
+const productsStockItem = getLandingFeatureShowcase().find((item) => item.badgeKey.includes("productsStock"))!;
 
 describe("LandingFeatureShowcaseRow", () => {
   it("renderiza el badge, el título completo, el subtítulo y los 3 bullets", () => {

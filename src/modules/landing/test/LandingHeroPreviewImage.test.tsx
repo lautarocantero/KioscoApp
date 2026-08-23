@@ -10,4 +10,11 @@ describe("LandingHeroPreviewImage", () => {
     const image = screen.getByRole("img", { name: "Vista previa del panel de control de Stocko" });
     expect(image).toHaveAttribute("src", "/images/backgroundImages/Stocko_representation.png");
   });
+
+  it("aplica una animación de flotación a la imagen", () => {
+    render(<LandingHeroPreviewImage />);
+
+    const image = screen.getByRole("img", { name: "Vista previa del panel de control de Stocko" });
+    expect(getComputedStyle(image).animation).toContain("infinite");
+  });
 });

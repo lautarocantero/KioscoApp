@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import type { SvgIconProps } from "@mui/material";
-import type { OperatingSystemEnum } from "./landingEnums";
+import type { LandingDecorationPosition, OperatingSystemEnum } from "./landingEnums";
 
 export type LandingAccentKey = "violet" | "green" | "blue" | "orange" | "pink" | "gold";
 
@@ -12,13 +12,28 @@ export type LandingNavLink = {
 export type DesktopDownloadTarget = {
   os: OperatingSystemEnum;
   labelKey: string;
+  descriptionKey: string;
   Icon: ComponentType<SvgIconProps>;
   href: string;
+  isPrimary: boolean;
 };
 
 export type LandingFeatureShowcaseBullet = {
   Icon: ComponentType<SvgIconProps>;
   labelKey: string;
+};
+
+export type LandingDownloadTrustPoint = {
+  Icon: ComponentType<SvgIconProps>;
+  titleKey: string;
+  subtitleKey: string;
+};
+
+export type LandingDotGridSide = "left" | "right";
+
+export type LandingMediaDecoration = {
+  src: string;
+  position: LandingDecorationPosition;
 };
 
 export type LandingFeatureShowcaseItem = {
@@ -28,8 +43,8 @@ export type LandingFeatureShowcaseItem = {
   titleEndKey: string;
   subtitleKey: string;
   accent: LandingAccentKey;
-  mediaSrc: string;
   mediaVideoSrc: string;
   mediaAltKey: string;
+  mediaDecorations: LandingMediaDecoration[];
   bullets: LandingFeatureShowcaseBullet[];
 };

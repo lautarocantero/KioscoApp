@@ -33,11 +33,6 @@ const ShopPage = (): React.ReactNode => {
     const lowStockPresentations = useShopLowStockPresentations();
     const restockReport = useShopRestockReport();
 
-    // TODO(temp-mock-screenshot): Kiosco Norte ya tiene ventas reales cargadas;
-    // el resto sigue mockeado hasta terminar las capturas del landing. Revertir
-    // a `salesSummary.periodTotal` para todos los kioscos cuando ya no haga falta.
-    const displayedPeriodTotal = activeKiosco?.name === "Kiosco Norte" ? salesSummary.periodTotal : 128450;
-
     return (
         <AppLayout fullWidth noCenter>
             <ShopHeader
@@ -51,7 +46,7 @@ const ShopPage = (): React.ReactNode => {
             <Box sx={TWO_COLUMN_GRID_SX}>
                 <ShopSalesChart
                     dailySales={salesSummary.dailySales}
-                    periodTotal={displayedPeriodTotal}
+                    periodTotal={salesSummary.periodTotal}
                     range={salesSummary.range}
                     setRange={salesSummary.setRange}
                     isLoading={salesSummary.isLoading}

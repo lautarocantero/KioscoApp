@@ -1,18 +1,19 @@
 import { describe, it, expect } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme } from "../../../theme/mainTheme";
+import { LandingDecorationPosition } from "@typings/landing/landingEnums";
 import LandingFeatureShowcaseMedia from "../pages/LandingPage/components/LandingFeatureShowcaseMedia";
 
-const IMAGE_SRC = "/images/backgroundImages/Stocko_representation.png";
-const VIDEO_SRC = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+const VIDEO_SRC = "/files/video/film.mp4";
 const ALT = "Vista previa de Stocko";
+const ACCENT_COLOR = "#A78BFA";
 
 describe("LandingFeatureShowcaseMedia", () => {
-  it("arranca mostrando el video sin controles ni loop, y sin mostrar la imagen", () => {
+  it("reproduce el video en loop, sin controles ni forma de pausarlo", () => {
     render(
       <ThemeProvider theme={darkTheme}>
-        <LandingFeatureShowcaseMedia src={IMAGE_SRC} alt={ALT} videoSrc={VIDEO_SRC} />
+        <LandingFeatureShowcaseMedia alt={ALT} videoSrc={VIDEO_SRC} accentColor={ACCENT_COLOR} />
       </ThemeProvider>
     );
 
@@ -20,21 +21,48 @@ describe("LandingFeatureShowcaseMedia", () => {
     expect(video.tagName).toBe("VIDEO");
     expect(video).toHaveAttribute("src", VIDEO_SRC);
     expect(video).not.toHaveAttribute("controls");
-    expect(video.loop).toBe(false);
-    expect(screen.queryByRole("img", { name: ALT })).not.toBeInTheDocument();
+    expect(video.loop).toBe(true);
   });
 
-  it("al terminar el video, lo reemplaza por la imagen ya existente", () => {
-    render(
+  it("renderiza una decoración a cada lado cuando se pasan por parámetro", () => {
+    const { container } = render(
       <ThemeProvider theme={darkTheme}>
-        <LandingFeatureShowcaseMedia src={IMAGE_SRC} alt={ALT} videoSrc={VIDEO_SRC} />
+        <LandingFeatureShowcaseMedia
+          alt={ALT}
+          videoSrc={VIDEO_SRC}
+          accentColor={ACCENT_COLOR}
+          decorations={[
+            { src: "/images/icons/decoration/2boxes.png", position: LandingDecorationPosition.BottomLeft },
+            { src: "/images/icons/decoration/3boxes.png", position: LandingDecorationPosition.BottomRight },
+          ]}
+        />
       </ThemeProvider>
     );
 
-    fireEvent.ended(screen.getByLabelText(ALT));
+    const decorationImages = container.querySelectorAll('img[aria-hidden="true"]');
+    expect(decorationImages).toHaveLength(2);
+    expect(decorationImages[0]).toHaveAttribute("src", "/images/icons/decoration/2boxes.png");
+    expect(decorationImages[1]).toHaveAttribute("src", "/images/icons/decoration/3boxes.png");
+  });
 
-    const image = screen.getByRole("img", { name: ALT });
-    expect(image).toHaveAttribute("src", IMAGE_SRC);
-    expect(screen.queryByLabelText(ALT, { selector: "video" })).not.toBeInTheDocument();
+  it("no renderiza ninguna decoración si no se pasan", () => {
+    const { container } = render(
+      <ThemeProvider theme={darkTheme}>
+        <LandingFeatureShowcaseMedia alt={ALT} videoSrc={VIDEO_SRC} accentColor={ACCENT_COLOR} />
+      </ThemeProvider>
+    );
+
+    expect(container.querySelectorAll('img[aria-hidden="true"]')).toHaveLength(0);
+  });
+
+  it("usa el accentColor recibido como color de borde del marco", () => {
+    const { container } = render(
+      <ThemeProvider theme={darkTheme}>
+        <LandingFeatureShowcaseMedia alt={ALT} videoSrc={VIDEO_SRC} accentColor={ACCENT_COLOR} />
+      </ThemeProvider>
+    );
+
+    const frame = container.querySelector("video")?.parentElement;
+    expect(frame).toHaveStyle({ borderColor: ACCENT_COLOR });
   });
 });

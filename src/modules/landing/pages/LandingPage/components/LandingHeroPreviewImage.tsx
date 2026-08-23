@@ -1,5 +1,13 @@
 import { Box, type Theme } from "@mui/material";
+import { keyframes } from "@emotion/react";
 import { useTranslation } from "react-i18next";
+
+// Vaivén sutil de flotación, como si la imagen ondeara — se desactiva
+// automáticamente si el usuario prefiere menos movimiento en pantalla.
+const floatKeyframes = keyframes`
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+`;
 
 const LandingHeroPreviewImage = (): React.ReactNode => {
   const { t } = useTranslation();
@@ -27,6 +35,8 @@ const LandingHeroPreviewImage = (): React.ReactNode => {
           height: "auto",
           display: "block",
           objectFit: "contain",
+          animation: `${floatKeyframes} 5s ease-in-out infinite`,
+          "@media (prefers-reduced-motion: reduce)": { animation: "none" },
         }}
       />
     </Box>

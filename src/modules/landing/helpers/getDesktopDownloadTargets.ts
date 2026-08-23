@@ -8,13 +8,17 @@ export const getDesktopDownloadTargets = (): DesktopDownloadTarget[] => [
   {
     os: OperatingSystemEnum.Windows,
     labelKey: "landing.download.windows",
+    descriptionKey: "landing.download.windowsDescription",
     Icon: WindowsLogoIcon,
     href: STOCKO_RELEASES_URL,
+    isPrimary: true,
   },
   {
     os: OperatingSystemEnum.Linux,
     labelKey: "landing.download.linux",
+    descriptionKey: "landing.download.linuxDescription",
     Icon: LinuxLogoIcon,
     href: STOCKO_RELEASES_URL,
+    isPrimary: false,
   },
 ];
