@@ -3,6 +3,7 @@ import { PresentationStatusColors } from "@typings/presentation/presentationEnum
 import { Currency, SellStatusEnum } from "@typings/sells/sellsEnum";
 import { ShopSalesRange } from "@typings/shop/shopEnums";
 import type { DeleteDialogState, RestockDialogState, SettleDebtDialogState } from "@typings/ui/dialog.types";
+import { getPublicAssetUrl } from "../modules/shared/helpers/getPublicAssetUrl";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🚀 APP  🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀                     ║
@@ -213,4 +214,4 @@ export const RECEIPT_MAX_SIZE = "10 MB";
 // ║ 🎨 IMAGENES   🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️              ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export const FALLBACK_PRODUCT_IMAGE = "/images/stocko_images/empty_product.png";
+export const FALLBACK_PRODUCT_IMAGE = getPublicAssetUrl("images/stocko_images/empty_product.png");

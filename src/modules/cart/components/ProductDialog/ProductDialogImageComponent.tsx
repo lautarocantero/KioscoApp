@@ -3,8 +3,9 @@ import { alpha } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 import type { ProductDialogHeaderProps } from "@typings/cart/cartComponentTypes";
 import { memo, useState, type ReactNode } from "react";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
-const FALLBACK_IMAGE = '/images/stocko_images/empty_product.png';
+const FALLBACK_IMAGE = getPublicAssetUrl("images/stocko_images/empty_product.png");
 
 const ProductDialogImageComponent = ({
     product

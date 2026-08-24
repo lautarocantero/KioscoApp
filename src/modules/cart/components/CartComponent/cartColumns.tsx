@@ -8,6 +8,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CartProductRowActionCell from "./CartProductRowActionCell";
 import { formatStockQuantity, isWeightSaleType } from "../../../shared/helpers/saleTypeHelper";
 import EditableNumberCell from "../../../shared/components/DataTable/EditableNumberCell";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
 export const buildColumnsForCartProducts = (
   onIncrease: (_id: string) => void,
@@ -27,7 +28,7 @@ export const buildColumnsForCartProducts = (
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, height: "100%" }}>
         <Box
           component="img"
-          src={params.row.image_url || "/images/stocko_images/empty_product.png"}
+          src={params.row.image_url || getPublicAssetUrl("images/stocko_images/empty_product.png")}
           alt={params.row.name}
           sx={{ width: 32, height: 32, objectFit: "contain", borderRadius: "0.4em" }}
         />

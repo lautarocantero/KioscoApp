@@ -12,6 +12,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
 import ProductImagePreview from "../../../shared/components/Image/ProductImagePreview";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
 const ProductFormFirstStep = (): React.ReactNode => {
     const theme = useTheme();
@@ -41,7 +42,7 @@ const ProductFormFirstStep = (): React.ReactNode => {
                           title: t("products.form.accordion.title"),
                           content: t("products.form.accordion.content"),
                           bannerImage: {
-                              src: "/images/productExample/ilustration.png",
+                              src: getPublicAssetUrl("images/productExample/ilustration.png"),
                               alt: t("products.form.accordion.bannerAlt"),
                           },
                       }

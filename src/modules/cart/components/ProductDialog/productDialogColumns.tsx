@@ -7,6 +7,7 @@ import { isWeightSaleType } from "../../../shared/helpers/saleTypeHelper";
 import { getStockStatus } from "../../../shared/helpers/stockHandler";
 import NumberField from "../../../shared/components/NumberField/NumberField";
 import { clampStock } from "../../../../utils/formatter/clampStock";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
 
 export const buildColumnsForProductDialog = ({
@@ -25,7 +26,7 @@ export const buildColumnsForProductDialog = ({
       const imageSrc =
         params.row.image_url
         || fallbackImage
-        || '/images/stocko_images/empty_product.png';
+        || getPublicAssetUrl("images/stocko_images/empty_product.png");
 
       return (
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, height: "100%" }}>

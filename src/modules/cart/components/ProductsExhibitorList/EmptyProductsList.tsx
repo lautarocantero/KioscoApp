@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import type { EmptyProductListProps } from "@typings/sells/SellComponentTypes";
 import type { ReactNode } from "react";
 import EmptyStateCard from "../../../shared/components/EmptyStateCard/EmptyStateCard";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
 
 const EmptyProductsList = ({isEmpty}: EmptyProductListProps ): ReactNode => {
@@ -12,7 +13,7 @@ const EmptyProductsList = ({isEmpty}: EmptyProductListProps ): ReactNode => {
 
     return (
         <EmptyStateCard
-            imageSrc="/images/stocko_images/empty_product_list.png"
+            imageSrc={getPublicAssetUrl("images/stocko_images/empty_product_list.png")}
             imageAlt={t("cart.productsExhibitor.empty.imageAlt")}
             title={t("cart.productsExhibitor.empty.title")}
             description={

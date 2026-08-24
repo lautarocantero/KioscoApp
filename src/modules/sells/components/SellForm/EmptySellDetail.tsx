@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import EmptyStateCard from "../../../shared/components/EmptyStateCard/EmptyStateCard";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 import type { ReactNode } from "react";
 
 const EmptySellDetail = (): ReactNode => {
@@ -9,7 +10,7 @@ const EmptySellDetail = (): ReactNode => {
 
     return (
         <EmptyStateCard
-            imageSrc="/images/stocko_images/empty_box.png"
+            imageSrc={getPublicAssetUrl("images/stocko_images/empty_box.png")}
             imageAlt={t("sells.empty.imageAlt")}
             title={t("sells.empty.title")}
             description={

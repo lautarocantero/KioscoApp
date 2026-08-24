@@ -13,6 +13,7 @@ import { getPresentationStepsLabels } from "./presentationFormStepConfig";
 import FormFieldsRenderer from "../../../shared/components/FormCard/FormFieldsRenderer";
 import type { PresentationFormValues } from "@typings/presentation/presentationTypes";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
 
 const PresentationFormFirstStep = (): ReactNode => {
@@ -38,7 +39,7 @@ const PresentationFormFirstStep = (): ReactNode => {
                 title: t("presentations.form.accordion.title"),
                 content: t("presentations.form.accordion.content"),
                 bannerImage: {
-                    src: "/images/productExample/presentations.jpg",
+                    src: getPublicAssetUrl("images/productExample/presentations.jpg"),
                     alt: t("presentations.form.accordion.bannerAlt"),
                 },
             }}

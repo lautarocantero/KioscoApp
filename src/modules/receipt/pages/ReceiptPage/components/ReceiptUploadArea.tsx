@@ -4,6 +4,7 @@ import NoisyCard from "../../../../shared/components/Cards/NoisyCard";
 import PrimaryButtonComponent from "../../../../shared/components/Buttons/PrimaryButtonComponent";
 import { useReceiptUploadArea } from "@hooks/receipt/useReceiptUploadArea";
 import type { ReceiptUploadAreaProps } from "@typings/receipt/receiptComponentTypes";
+import { getPublicAssetUrl } from "../../../../shared/helpers/getPublicAssetUrl";
 
 const ReceiptUploadArea = ({
     acceptedFormats,
@@ -115,7 +116,7 @@ const ReceiptUploadArea = ({
                     buttonText="Descargar plantilla"
                     buttonOnClick={() => {
                         const link = document.createElement("a");
-                        link.href = "/files/receiptTemplate.xls";
+                        link.href = getPublicAssetUrl("files/receiptTemplate.xls");
                         link.download = "plantilla-boletas.xls";
                         link.click();
                     }}

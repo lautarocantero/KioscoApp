@@ -11,29 +11,30 @@ import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import type { LandingFeatureShowcaseItem, LandingMediaDecoration } from "@typings/landing/landingTypes";
 import { LandingDecorationPosition } from "@typings/landing/landingEnums";
+import { getPublicAssetUrl } from "../../shared/helpers/getPublicAssetUrl";
 
-const PRODUCTS_STOCK_VIDEO_SRC = "/files/video/landing-products-section.mp4";
-const SELLS_REPORTS_VIDEO_SRC = "/files/video/landing-sells-section.mp4";
-const RECEIPTS_PROVIDERS_VIDEO_SRC = "/files/video/landing-receipts-section.mp4";
-const MULTI_KIOSCO_VIDEO_SRC = "/files/video/landing-kiosco-selection.mp4";
+const PRODUCTS_STOCK_VIDEO_SRC = getPublicAssetUrl("files/video/landing-products-section.mp4");
+const SELLS_REPORTS_VIDEO_SRC = getPublicAssetUrl("files/video/landing-sells-section.mp4");
+const RECEIPTS_PROVIDERS_VIDEO_SRC = getPublicAssetUrl("files/video/landing-receipts-section.mp4");
+const MULTI_KIOSCO_VIDEO_SRC = getPublicAssetUrl("files/video/landing-kiosco-selection.mp4");
 
 // Decoraciones genéricas (cajas) para las features que no tienen un ícono temático propio.
 const STOCKO_SHOWCASE_MEDIA_DECORATIONS: LandingMediaDecoration[] = [
-  { src: "/images/icons/decoration/2boxes.png", position: LandingDecorationPosition.BottomLeft },
-  { src: "/images/icons/decoration/3boxes.png", position: LandingDecorationPosition.BottomRight },
+  { src: getPublicAssetUrl("images/icons/decoration/2boxes.png"), position: LandingDecorationPosition.BottomLeft },
+  { src: getPublicAssetUrl("images/icons/decoration/3boxes.png"), position: LandingDecorationPosition.BottomRight },
 ];
 
 const RECEIPTS_PROVIDERS_DECORATIONS: LandingMediaDecoration[] = [
-  { src: "/images/icons/decoration/receipt.png", position: LandingDecorationPosition.BottomRight },
+  { src: getPublicAssetUrl("images/icons/decoration/receipt.png"), position: LandingDecorationPosition.BottomRight },
 ];
 
 const MULTI_KIOSCO_MEDIA_DECORATIONS: LandingMediaDecoration[] = [
-  { src: "/images/icons/decoration/kiosco.png", position: LandingDecorationPosition.BottomLeft },
+  { src: getPublicAssetUrl("images/icons/decoration/kiosco.png"), position: LandingDecorationPosition.BottomLeft },
 ];
 
 const SELLS_REPORTS_MEDIA_DECORATIONS: LandingMediaDecoration[] = [
-  { src: "/images/icons/decoration/sells.png", position: LandingDecorationPosition.BottomLeft },
-  { src: "/images/icons/decoration/reports.png", position: LandingDecorationPosition.BottomRight },
+  { src: getPublicAssetUrl("images/icons/decoration/sells.png"), position: LandingDecorationPosition.BottomLeft },
+  { src: getPublicAssetUrl("images/icons/decoration/reports.png"), position: LandingDecorationPosition.BottomRight },
 ];
 
 export const getLandingFeatureShowcase = (): LandingFeatureShowcaseItem[] => [

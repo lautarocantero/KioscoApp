@@ -2,6 +2,7 @@ import { Box, type Theme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { keyframes } from "@emotion/react";
 import { useTranslation } from "react-i18next";
+import { getPublicAssetUrl } from "../../../../shared/helpers/getPublicAssetUrl";
 
 // Vaivén sutil de flotación, como si la imagen ondeara — se desactiva
 // automáticamente si el usuario prefiere menos movimiento en pantalla.
@@ -39,7 +40,7 @@ const LandingHeroPreviewImage = (): React.ReactNode => {
       />
       <Box
         component="img"
-        src="/images/backgroundImages/Stocko_representation.png"
+        src={getPublicAssetUrl("images/backgroundImages/Stocko_representation.png")}
         alt={t("landing.hero.previewAlt")}
         sx={{
           position: "relative",

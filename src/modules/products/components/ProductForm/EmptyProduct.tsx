@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import EmptyStateCard from "../../../shared/components/EmptyStateCard/EmptyStateCard";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
 const EmptyProduct = (): React.ReactNode => {
     const navigate = useNavigate();
@@ -8,7 +9,7 @@ const EmptyProduct = (): React.ReactNode => {
 
     return (
         <EmptyStateCard
-            imageSrc="/images/stocko_images/empty_box.png"
+            imageSrc={getPublicAssetUrl("images/stocko_images/empty_box.png")}
             imageAlt={t("products.empty.imageAlt")}
             title={t("products.empty.title")}
             description={
