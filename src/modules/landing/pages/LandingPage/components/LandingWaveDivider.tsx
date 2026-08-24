@@ -10,7 +10,9 @@ const NOISE_BASE_FREQUENCY = 0.85;
 const NOISE_OCTAVES = 3;
 const NOISE_OPACITY = 0.06;
 
-const LandingWaveDivider = ({ fillColor, variant = 0 }: LandingWaveDividerProps): React.ReactNode => {
+const DEFAULT_HEIGHT = { xs: "60px", md: "110px" };
+
+const LandingWaveDivider = ({ fillColor, variant = 0, height = DEFAULT_HEIGHT }: LandingWaveDividerProps): React.ReactNode => {
   const uid = useId().replace(/:/g, "");
   const clipPathId = `landing-wave-clip-${uid}`;
   const noiseFilterId = `landing-wave-noise-${uid}`;
@@ -36,7 +38,7 @@ const LandingWaveDivider = ({ fillColor, variant = 0 }: LandingWaveDividerProps)
         sx={{
           display: "block",
           width: "100%",
-          height: { xs: "60px", md: "110px" },
+          height,
           color: fillColor,
         }}
       >

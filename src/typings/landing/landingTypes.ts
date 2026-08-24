@@ -14,6 +14,7 @@ export type DesktopDownloadTarget = {
   labelKey: string;
   descriptionKey: string;
   Icon: ComponentType<SvgIconProps>;
+  illustrationSrc: string;
   href: string;
   isPrimary: boolean;
 };
@@ -30,6 +31,8 @@ export type LandingDownloadTrustPoint = {
 };
 
 export type LandingDotGridSide = "left" | "right";
+
+export type LandingResponsiveHeight = { xs: string; md: string };
 
 export type LandingMediaDecoration = {
   src: string;

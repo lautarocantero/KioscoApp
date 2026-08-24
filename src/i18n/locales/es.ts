@@ -1130,6 +1130,7 @@ const es = {
       resources: "Recursos",
       login: "Iniciar sesion",
       register: "Registrarse",
+      goToTop: "Ir al inicio",
     },
     hero: {
       badge: "Tu kiosco, en orden.",
@@ -1195,7 +1196,9 @@ const es = {
       },
     },
     download: {
-      title: "Llevá Stocko a tu escritorio",
+      titleStart: "Llevá ",
+      titleHighlight: "Stocko",
+      titleEnd: " a tu escritorio",
       subtitle: "Descargá la app de escritorio y gestioná tu kiosco sin depender del navegador.",
       windows: "Windows",
       linux: "Linux",

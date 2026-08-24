@@ -1,11 +1,14 @@
-import { Box, Button, Stack, Typography, type Theme } from "@mui/material";
+import { Box, Button, Stack, Typography, useTheme, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import type { LandingDownloadOsCardProps } from "@typings/landing/landingComponentTypes";
+import LandingWaveDivider from "./LandingWaveDivider";
+
+const CARD_WAVE_HEIGHT = { xs: "28px", md: "36px" };
 
 const LandingDownloadOsCard = ({ target }: LandingDownloadOsCardProps): React.ReactNode => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { Icon } = target;
   const osLabel = t(target.labelKey);
 
@@ -14,47 +17,60 @@ const LandingDownloadOsCard = ({ target }: LandingDownloadOsCardProps): React.Re
       sx={(theme: Theme) => ({
         position: "relative",
         overflow: "hidden",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
         backgroundColor: theme.palette.common.white,
         border: "1px solid",
         borderColor: theme.custom.lightGray,
         borderRadius: "20px",
         padding: "1.75em",
+        paddingBottom: "2.5em",
         boxShadow: `0 20px 40px -24px ${theme.custom.black}40`,
       })}
     >
-      <Icon
-        aria-hidden="true"
-        sx={(theme: Theme) => ({
-          position: "absolute",
-          top: "-0.5em",
-          right: "-0.5em",
-          fontSize: "7em",
-          color: theme.custom.lightGray,
-          pointerEvents: "none",
-        })}
-      />
+      <Stack spacing={2.5} justifyContent="space-between" sx={{ position: "relative", flex: 1 }}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1.5}>
+          <Stack direction="row" alignItems="center" spacing={1.5} sx={{ minWidth: 0 }}>
+            <Stack
+              alignItems="center"
+              justifyContent="center"
+              sx={(theme: Theme) => ({
+                width: 48,
+                height: 48,
+                flexShrink: 0,
+                borderRadius: "12px",
+                backgroundColor: theme.palette.primary.main,
+                boxShadow: `0 10px 16px -6px ${theme.palette.primary.main}99`,
+              })}
+            >
+              <Icon sx={{ color: (theme: Theme) => theme.palette.common.white }} />
+            </Stack>
 
-      <Stack spacing={2} sx={{ position: "relative" }}>
-        <Stack
-          alignItems="center"
-          justifyContent="center"
-          sx={(theme: Theme) => ({
-            width: 44,
-            height: 44,
-            borderRadius: "12px",
-            backgroundColor: theme.palette.primary.main,
-          })}
-        >
-          <AppsRoundedIcon sx={{ color: (theme: Theme) => theme.palette.common.white }} />
-        </Stack>
+            <Stack spacing={0.25}>
+              <Typography variant="h6" sx={{ color: (theme: Theme) => theme.custom.black, fontWeight: 700 }}>
+                {osLabel}
+              </Typography>
+              <Typography variant="body2" sx={{ color: (theme: Theme) => theme.custom.blackTranslucid }}>
+                {t(target.descriptionKey)}
+              </Typography>
+            </Stack>
+          </Stack>
 
-        <Stack spacing={0.5}>
-          <Typography variant="h6" sx={{ color: (theme: Theme) => theme.custom.black, fontWeight: 700 }}>
-            {osLabel}
-          </Typography>
-          <Typography variant="body2" sx={{ color: (theme: Theme) => theme.custom.blackTranslucid }}>
-            {t(target.descriptionKey)}
-          </Typography>
+          <Box
+            component="img"
+            src={target.illustrationSrc}
+            alt=""
+            aria-hidden="true"
+            sx={{
+              flexShrink: 0,
+              width: "4.5em",
+              height: "4.5em",
+              objectFit: "contain",
+              opacity: 0.35,
+              pointerEvents: "none",
+            }}
+          />
         </Stack>
 
         <Button
@@ -80,19 +96,7 @@ const LandingDownloadOsCard = ({ target }: LandingDownloadOsCardProps): React.Re
         </Button>
       </Stack>
 
-      <Box
-        aria-hidden="true"
-        sx={(theme: Theme) => ({
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: 0,
-          height: 0,
-          borderStyle: "solid",
-          borderWidth: "0 0 32px 32px",
-          borderColor: `transparent transparent ${theme.palette.primary.main} transparent`,
-        })}
-      />
+      <LandingWaveDivider fillColor={theme.palette.primary.main} height={CARD_WAVE_HEIGHT} />
     </Box>
   );
 };

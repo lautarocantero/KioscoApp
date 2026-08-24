@@ -16,6 +16,6 @@ describe("LandingPage", () => {
     expect(screen.getByText("Ventas, productos, stock, proveedores y boletas. Todo tu negocio en un solo lugar.")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Productos y stock siempre al día" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Múltiples kioscos en un solo lugar" })).toBeInTheDocument();
-    expect(screen.getByText("Llevá Stocko a tu escritorio")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Llevá Stocko a tu escritorio" })).toBeInTheDocument();
   });
 });

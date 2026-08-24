@@ -42,4 +42,32 @@ describe("LandingDownloadOsCard", () => {
     expect(windowsButton.className).toContain("MuiButton-contained");
     expect(linuxButton.className).toContain("MuiButton-outlined");
   });
+
+  it("renderiza la onda decorativa violeta al pie de la card", () => {
+    const { container } = render(
+      <ThemeProvider theme={darkTheme}>
+        <LandingDownloadOsCard target={windowsTarget} />
+      </ThemeProvider>
+    );
+
+    const svg = container.querySelector('svg[viewBox="0 0 1440 120"]') as SVGElement;
+    expect(svg).toBeInTheDocument();
+    expect(getComputedStyle(svg).color).toBe("rgb(166, 92, 255)");
+  });
+
+  it("renderiza la imagen ilustrativa propia de cada sistema operativo", () => {
+    const { container: windowsContainer } = render(
+      <ThemeProvider theme={darkTheme}>
+        <LandingDownloadOsCard target={windowsTarget} />
+      </ThemeProvider>
+    );
+    const { container: linuxContainer } = render(
+      <ThemeProvider theme={darkTheme}>
+        <LandingDownloadOsCard target={linuxTarget} />
+      </ThemeProvider>
+    );
+
+    expect(windowsContainer.querySelector("img")).toHaveAttribute("src", windowsTarget.illustrationSrc);
+    expect(linuxContainer.querySelector("img")).toHaveAttribute("src", linuxTarget.illustrationSrc);
+  });
 });

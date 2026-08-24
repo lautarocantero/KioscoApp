@@ -12,7 +12,7 @@ import PrimaryButtonComponent from "../../../../shared/components/Buttons/Primar
 const LandingNavbar = (): React.ReactNode => {
   const { t } = useTranslation();
   const { goToLogin, goToRegister } = useLandingNavigation();
-  const { scrollToSection } = useScrollToSection();
+  const { scrollToSection, scrollToTop } = useScrollToSection();
   const links = getLandingNavLinks();
 
   return (
@@ -37,7 +37,21 @@ const LandingNavbar = (): React.ReactNode => {
         justifyContent="space-between"
         sx={{ maxWidth: "1280px", margin: "0 auto", padding: { xs: "1em 1.25em", md: "1em 2em" } }}
       >
-        <LandingBrandmark />
+        <Box
+          component="button"
+          type="button"
+          onClick={scrollToTop}
+          aria-label={t("landing.nav.goToTop")}
+          sx={{
+            display: "inline-flex",
+            background: "none",
+            border: "none",
+            padding: 0,
+            cursor: "pointer",
+          }}
+        >
+          <LandingBrandmark />
+        </Box>
 
         <LandingNavLinks links={links} onLinkClick={scrollToSection} />
 

@@ -7,6 +7,7 @@ import type {
   LandingFeatureShowcaseItem,
   LandingMediaDecoration,
   LandingNavLink,
+  LandingResponsiveHeight,
 } from "./landingTypes";
 
 export interface LandingNavLinksProps {
@@ -52,6 +53,7 @@ export interface LandingFeatureShowcaseBandProps extends LandingFeatureShowcaseR
 export interface LandingWaveDividerProps {
   fillColor: string;
   variant?: number;
+  height?: LandingResponsiveHeight;
 }
 
 export interface LandingDownloadTrustRowProps {

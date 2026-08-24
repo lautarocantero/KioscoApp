@@ -6,5 +6,9 @@ export const useScrollToSection = () => {
     element.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  return { scrollToSection };
+  const scrollToTop = (): void => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return { scrollToSection, scrollToTop };
 };

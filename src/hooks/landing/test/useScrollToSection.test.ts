@@ -21,4 +21,13 @@ describe("useScrollToSection", () => {
     const { result } = renderHook(() => useScrollToSection());
     expect(() => result.current.scrollToSection("missing-section")).not.toThrow();
   });
+
+  it("hace scroll al tope de la página", () => {
+    window.scrollTo = vi.fn();
+    const { result } = renderHook(() => useScrollToSection());
+
+    result.current.scrollToTop();
+
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "smooth" });
+  });
 });

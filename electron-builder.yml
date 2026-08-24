@@ -10,6 +10,7 @@ linux:
   target: AppImage
   icon: build/icon.png
   category: Office
+  syncDesktopName: true
 win:
   target: nsis
   icon: build/icon.png

@@ -1,7 +1,10 @@
 {
   "name": "stoko",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Stocko — gestión de kioscos: ventas, productos, stock, proveedores y boletas.",
+  "author": "Stocko",
+  "desktopName": "Stocko.desktop",
   "type": "module",
   "main": "dist-electron/main.js",
   "scripts": {

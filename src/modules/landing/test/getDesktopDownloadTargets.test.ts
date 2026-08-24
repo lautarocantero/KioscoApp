@@ -14,6 +14,7 @@ describe("getDesktopDownloadTargets", () => {
       expect(target.href).toMatch(/^https:\/\//);
       expect(target.Icon).toBeDefined();
       expect(target.descriptionKey).toMatch(/^landing\.download\./);
+      expect(target.illustrationSrc).toMatch(/^\/images\/icons\/decoration\/.+\.png$/);
     });
   });
 

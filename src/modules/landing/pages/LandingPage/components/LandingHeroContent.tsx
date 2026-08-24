@@ -16,10 +16,19 @@ const LandingHeroContent = (): React.ReactNode => {
           color: (theme: Theme) => theme?.custom?.white,
           fontWeight: 700,
           textAlign: { xs: "center", md: "left" },
+          fontSize: { xs: "2.25rem", md: "3.5rem" },
         }}
       >
         {t("landing.hero.titleStart")}
-        <Typography component="span" variant="h2" sx={{ color: (theme: Theme) => theme?.palette?.primary?.main, fontWeight: 700 }}>
+        <Typography
+          component="span"
+          variant="h2"
+          sx={{
+            color: (theme: Theme) => theme?.custom?.accents?.gold,
+            fontWeight: 800,
+            fontSize: { xs: "2.25rem", md: "3.5rem" },
+          }}
+        >
           {t("landing.hero.titleHighlight")}
         </Typography>
       </Typography>
@@ -30,6 +39,7 @@ const LandingHeroContent = (): React.ReactNode => {
           color: (theme: Theme) => theme?.custom?.darkWhite,
           textAlign: { xs: "center", md: "left" },
           maxWidth: "480px",
+          fontSize: { xs: "1.1rem", md: "1.3rem" },
         }}
       >
         {t("landing.hero.subtitle")}

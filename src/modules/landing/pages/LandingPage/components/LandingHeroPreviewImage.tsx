@@ -1,4 +1,5 @@
 import { Box, type Theme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { keyframes } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 
@@ -14,6 +15,17 @@ const LandingHeroPreviewImage = (): React.ReactNode => {
 
   return (
     <Box sx={{ position: "relative", width: "100%", maxWidth: "760px" }}>
+      <Box
+        aria-hidden="true"
+        sx={{
+          position: "absolute",
+          inset: "18%",
+          backgroundColor: (theme: Theme) => alpha(theme.palette.common.white, 0.08),
+          transform: "rotate(45deg)",
+          borderRadius: "24px",
+          pointerEvents: "none",
+        }}
+      />
       <Box
         aria-hidden="true"
         sx={{

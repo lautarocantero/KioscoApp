@@ -26,10 +26,14 @@ const LandingDownloadSection = (): React.ReactNode => {
       <LandingDotGridDecoration side="left" />
       <LandingDotGridDecoration side="right" />
 
-      <Stack spacing={5} alignItems="center" sx={{ position: "relative", maxWidth: "840px", margin: "0 auto" }}>
+      <Stack spacing={5} alignItems="center" sx={{ position: "relative", maxWidth: "960px", margin: "0 auto" }}>
         <Stack spacing={1.5} alignItems="center" sx={{ textAlign: "center" }}>
           <Typography component="h2" variant="h3" sx={{ color: (theme: Theme) => theme?.custom?.black, fontWeight: 700 }}>
-            {t("landing.download.title")}
+            {t("landing.download.titleStart")}
+            <Typography component="span" variant="h3" sx={{ color: (theme: Theme) => theme?.palette?.primary?.main, fontWeight: 700 }}>
+              {t("landing.download.titleHighlight")}
+            </Typography>
+            {t("landing.download.titleEnd")}
           </Typography>
           <Typography variant="body1" sx={{ color: (theme: Theme) => theme?.custom?.blackTranslucid }}>
             {t("landing.download.subtitle")}

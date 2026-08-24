@@ -43,8 +43,20 @@ describe("LandingNavbar", () => {
     expect(navigate).toHaveBeenCalledWith("/register");
   });
 
-  it("muestra el nombre de marca Stocko", () => {
+  it("muestra el nombre de marca Stocko siempre visible", () => {
     renderComponent();
-    expect(screen.getAllByRole("img", { name: "Stocko" }).length).toBeGreaterThan(0);
+    const [brandmarkRoot] = screen.getAllByRole("img", { name: "Stocko" });
+
+    expect(brandmarkRoot).toBeInTheDocument();
+    expect(getComputedStyle(brandmarkRoot.parentElement as HTMLElement).opacity).not.toBe("0");
+  });
+
+  it("hace scroll al tope de la página al hacer click en el brandmark", async () => {
+    window.scrollTo = vi.fn();
+    renderComponent();
+
+    await userEvent.click(screen.getByRole("button", { name: "Ir al inicio" }));
+
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "smooth" });
   });
 });

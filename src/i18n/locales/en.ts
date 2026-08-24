@@ -1129,6 +1129,7 @@ const en = {
       resources: "Resources",
       login: "Log in",
       register: "Sign up",
+      goToTop: "Go to top",
     },
     hero: {
       badge: "Your store, in order.",
@@ -1194,7 +1195,9 @@ const en = {
       },
     },
     download: {
-      title: "Bring Stocko to your desktop",
+      titleStart: "Bring ",
+      titleHighlight: "Stocko",
+      titleEnd: " to your desktop",
       subtitle: "Download the desktop app and manage your store without relying on a browser.",
       windows: "Windows",
       linux: "Linux",
