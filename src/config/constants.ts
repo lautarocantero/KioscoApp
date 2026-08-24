@@ -11,8 +11,6 @@ import { getPublicAssetUrl } from "../modules/shared/helpers/getPublicAssetUrl";
 
 export const REACT_APP_API_URL='https://kioscoappbackend.onrender.com'
 
-export const STOCKO_RELEASES_URL = 'https://github.com/lautarocantero/KioscoApp/releases'
-
 // Descarga directa del asset del último release publicado — el nombre de
 // cada asset (ver artifactName en electron-builder.yml) tiene que
 // mantenerse fijo entre releases para que estos links no se rompan con
@@ -24,6 +22,9 @@ export const STOCKO_RELEASES_URL = 'https://github.com/lautarocantero/KioscoApp/
 // alternativa portable para otras distros.
 export const STOCKO_LINUX_DEB_DOWNLOAD_URL = 'https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Linux.deb'
 export const STOCKO_LINUX_APPIMAGE_DOWNLOAD_URL = 'https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Linux.AppImage'
+
+// Instalador NSIS de Windows (ver artifactName en electron-builder.yml).
+export const STOCKO_WINDOWS_DOWNLOAD_URL = 'https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Windows.exe'
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🏪 NEGOCIO  🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪                  ║

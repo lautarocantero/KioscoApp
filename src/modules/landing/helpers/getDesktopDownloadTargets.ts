@@ -3,7 +3,7 @@ import type { DesktopDownloadTarget } from "@typings/landing/landingTypes";
 import {
   STOCKO_LINUX_APPIMAGE_DOWNLOAD_URL,
   STOCKO_LINUX_DEB_DOWNLOAD_URL,
-  STOCKO_RELEASES_URL,
+  STOCKO_WINDOWS_DOWNLOAD_URL,
 } from "../../../config/constants";
 import WindowsLogoIcon from "../pages/LandingPage/components/icons/WindowsLogoIcon";
 import LinuxLogoIcon from "../pages/LandingPage/components/icons/LinuxLogoIcon";
@@ -16,10 +16,9 @@ export const getDesktopDownloadTargets = (): DesktopDownloadTarget[] => [
     descriptionKey: "landing.download.windowsDescription",
     Icon: WindowsLogoIcon,
     illustrationSrc: getPublicAssetUrl("images/icons/decoration/windows.png"),
-    // Todavía no hay instalador de Windows: manda a la página de releases.
-    href: STOCKO_RELEASES_URL,
+    href: STOCKO_WINDOWS_DOWNLOAD_URL,
     isPrimary: true,
-    opensInNewTab: true,
+    opensInNewTab: false,
   },
   {
     os: OperatingSystemEnum.Linux,

@@ -9,10 +9,14 @@ producto y el login se movió a `/login`.
 Objetivo: presentar Stocko y ofrecer dos caminos claros:
 
 - **Iniciar sesión / crear kiosco** → versión web (`/login`, `/register`).
-- **Descargar la app de escritorio** → sección de descarga con los 3
-  instaladores (Windows/macOS/Linux), hoy apuntando a la página de
-  releases de GitHub (`STOCKO_RELEASES_URL` en `src/config/constants.ts`)
-  hasta que exista publicación automática de builds de Electron.
+- **Descargar la app de escritorio** → sección de descarga con instaladores
+  reales para Windows (`Stocko-Windows.exe`, NSIS) y Linux (`.deb`/
+  `.AppImage`), descargados directo del último release de GitHub
+  (`STOCKO_WINDOWS_DOWNLOAD_URL`, `STOCKO_LINUX_DEB_DOWNLOAD_URL`,
+  `STOCKO_LINUX_APPIMAGE_DOWNLOAD_URL` en `src/config/constants.ts`). Cada
+  nombre de asset se fija con `artifactName` en `electron-builder.yml` para
+  que el link `releases/latest/download/<nombre>` nunca se rompa entre
+  releases. macOS todavía no está publicado.
 
 ## Rutas
 

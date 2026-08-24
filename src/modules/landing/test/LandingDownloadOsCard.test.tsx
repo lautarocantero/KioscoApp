@@ -21,7 +21,7 @@ describe("LandingDownloadOsCard", () => {
 
     const link = screen.getByRole("link", { name: "Descargar para Windows" });
     expect(link).toHaveAttribute("href", windowsTarget.href);
-    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).not.toHaveAttribute("target");
   });
 
   it("usa un botón lleno para el target primario y contorneado para el secundario", () => {
