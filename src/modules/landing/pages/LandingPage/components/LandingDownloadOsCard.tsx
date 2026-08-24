@@ -76,8 +76,8 @@ const LandingDownloadOsCard = ({ target }: LandingDownloadOsCardProps): React.Re
         <Button
           component="a"
           href={target.href}
-          target="_blank"
-          rel="noopener noreferrer"
+          target={target.opensInNewTab ? "_blank" : undefined}
+          rel={target.opensInNewTab ? "noopener noreferrer" : undefined}
           aria-label={t("landing.download.actionFor", { os: osLabel })}
           variant={target.isPrimary ? "contained" : "outlined"}
           startIcon={<DownloadOutlinedIcon />}

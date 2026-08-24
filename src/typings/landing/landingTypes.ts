@@ -17,6 +17,9 @@ export type DesktopDownloadTarget = {
   illustrationSrc: string;
   href: string;
   isPrimary: boolean;
+  // true: href es la página de releases (navegación, se abre en pestaña
+  // nueva). false: href es un asset directo (dispara descarga, misma pestaña).
+  opensInNewTab: boolean;
 };
 
 export type LandingFeatureShowcaseBullet = {

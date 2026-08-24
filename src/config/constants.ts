@@ -12,6 +12,11 @@ export const REACT_APP_API_URL='https://kioscoappbackend.onrender.com'
 
 export const STOCKO_RELEASES_URL = 'https://github.com/lautarocantero/KioscoApp/releases'
 
+// Descarga directa del asset del último release publicado — el nombre del
+// asset (ver artifactName en electron-builder.yml) tiene que mantenerse
+// fijo entre releases para que este link no se rompa con cada versión.
+export const STOCKO_LINUX_DOWNLOAD_URL = 'https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Linux.AppImage'
+
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🏪 NEGOCIO  🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪                  ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/

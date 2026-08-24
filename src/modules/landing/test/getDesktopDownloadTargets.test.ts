@@ -27,4 +27,17 @@ describe("getDesktopDownloadTargets", () => {
     expect(windows.isPrimary).toBe(true);
     expect(linux.isPrimary).toBe(false);
   });
+
+  it("Linux descarga el asset directo del último release; Windows todavía manda a la página de releases", () => {
+    const targets = getDesktopDownloadTargets();
+
+    const windows = targets.find((target) => target.os === OperatingSystemEnum.Windows)!;
+    const linux = targets.find((target) => target.os === OperatingSystemEnum.Linux)!;
+
+    expect(windows.opensInNewTab).toBe(true);
+    expect(windows.href).toBe("https://github.com/lautarocantero/KioscoApp/releases");
+
+    expect(linux.opensInNewTab).toBe(false);
+    expect(linux.href).toBe("https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Linux.AppImage");
+  });
 });

@@ -70,4 +70,17 @@ describe("LandingDownloadOsCard", () => {
     expect(windowsContainer.querySelector("img")).toHaveAttribute("src", windowsTarget.illustrationSrc);
     expect(linuxContainer.querySelector("img")).toHaveAttribute("src", linuxTarget.illustrationSrc);
   });
+
+  it("Linux descarga el archivo directo en la misma pestaña, sin target=_blank", () => {
+    render(
+      <ThemeProvider theme={darkTheme}>
+        <LandingDownloadOsCard target={linuxTarget} />
+      </ThemeProvider>
+    );
+
+    const link = screen.getByRole("link", { name: "Descargar para Linux" });
+    expect(link).toHaveAttribute("href", linuxTarget.href);
+    expect(link).not.toHaveAttribute("target");
+    expect(link).not.toHaveAttribute("rel");
+  });
 });
