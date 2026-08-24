@@ -17,7 +17,7 @@ const AppShell = () => (
       flexDirection: "row",
     })}
   >
-    <Box sx={{ position: "absolute", top: 16, right: 16, zIndex: 10 }}>
+    <Box sx={{ position: "absolute", top: 16, right: 28, zIndex: 10 }}>
       <NotificationsBell />
     </Box>
 

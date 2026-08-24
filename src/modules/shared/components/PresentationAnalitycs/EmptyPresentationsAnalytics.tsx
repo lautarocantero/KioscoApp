@@ -1,16 +1,17 @@
 import "dayjs/locale/es";
 import { useNavigate, useParams } from "react-router-dom";
 import EmptyStateCard from "../EmptyStateCard/EmptyStateCard";
+import { getPublicAssetUrl } from "../../helpers/getPublicAssetUrl";
 
 
 const EmptyPresentationAnalytics = (): React.ReactNode => {
-    
+
     const { product_id: productIdFromUrl } = useParams<{ product_id: string }>();
     const navigate = useNavigate();
 
     return (
         <EmptyStateCard
-            imageSrc="/images/stocko_images/empty_box.png"
+            imageSrc={getPublicAssetUrl("images/stocko_images/empty_box.png")}
             imageAlt="Vista previa de la imagen"
             title="No hay presentaciones disponibles"
             description={

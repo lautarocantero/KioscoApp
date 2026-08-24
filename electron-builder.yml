@@ -7,12 +7,23 @@ files:
   - dist/**
   - dist-electron/**
 linux:
-  target: AppImage
+  target:
+    - deb
+    - AppImage
   icon: build/icon.png
   category: Office
+  syncDesktopName: true
+  # Nombre fijo (sin versión) para que el link de descarga directa del
+  # landing (releases/latest/download/<nombre>) nunca se rompa entre
+  # releases — GitHub resuelve ese path contra el asset del último
+  # release publicado, pero exige que el nombre del archivo coincida.
+  artifactName: "Stocko-Linux.${ext}"
 win:
   target: nsis
   icon: build/icon.png
+  # Mismo motivo que en linux.artifactName: nombre fijo para que el link
+  # de descarga directa del landing no se rompa entre releases.
+  artifactName: "Stocko-Windows.${ext}"
 mac:
   target: dmg
   icon: build/icon.png

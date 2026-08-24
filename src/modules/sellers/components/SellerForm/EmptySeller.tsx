@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import EmptyStateCard from "../../../shared/components/EmptyStateCard/EmptyStateCard";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 import type { ReactNode } from "react";
 
 const EmptySeller = (): ReactNode => {
@@ -7,7 +8,7 @@ const EmptySeller = (): ReactNode => {
 
     return (
         <EmptyStateCard
-            imageSrc="/images/stocko_images/empty_box.png"
+            imageSrc={getPublicAssetUrl("images/stocko_images/empty_box.png")}
             imageAlt="No se encontró el vendedor"
             title="No se encontró el vendedor"
             description={

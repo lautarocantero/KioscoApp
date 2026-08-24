@@ -6,6 +6,8 @@ import type { Presentation } from "@typings/presentation/presentationTypes";
 import { isWeightSaleType } from "../../../shared/helpers/saleTypeHelper";
 import { getStockStatus } from "../../../shared/helpers/stockHandler";
 import NumberField from "../../../shared/components/NumberField/NumberField";
+import { clampStock } from "../../../../utils/formatter/clampStock";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
 
 export const buildColumnsForProductDialog = ({
@@ -24,7 +26,7 @@ export const buildColumnsForProductDialog = ({
       const imageSrc =
         params.row.image_url
         || fallbackImage
-        || '/images/stocko_images/empty_product.png';
+        || getPublicAssetUrl("images/stocko_images/empty_product.png");
 
       return (
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, height: "100%" }}>
@@ -49,7 +51,7 @@ export const buildColumnsForProductDialog = ({
     flex: 1,
     minWidth: 160,
     renderCell: (params) => {
-      const stock = params.row.stock ?? 0;
+      const stock = clampStock(params.row.stock ?? 0);
       const minStock = params.row.min_stock ?? 0;
       const isWeight = isWeightSaleType(params.row.sale_type);
       const status = getStockStatus({stock, minStock});
@@ -71,7 +73,7 @@ export const buildColumnsForProductDialog = ({
     sortable: false,
     filterable: false,
     renderCell: (params) => {
-      const stock = params.row.stock ?? 0;
+      const stock = clampStock(params.row.stock ?? 0);
       const isWeight = isWeightSaleType(params.row.sale_type);
       return (
         <NumberField
@@ -97,7 +99,7 @@ export const buildColumnsForProductDialog = ({
     align: "center",
     headerAlign: "center",
     renderCell: (params) => {
-      const stock = params.row.stock ?? 0;
+      const stock = clampStock(params.row.stock ?? 0);
       const quantity = getQuantity(String(params.row._id));
       const canAdd = stock > 0 && quantity > 0;
       return (

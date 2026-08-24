@@ -22,6 +22,7 @@ import { AuthStatus } from "@typings/auth/authEnums";
 import KioscoRoutes from "../modules/kiosco/routes/KioscoRoutes";
 import JoinKioscoPage from "../modules/kiosco/pages/JoinKioscoPage";
 import { useHandlePendingInviteCode } from "../hooks/kiosco/useHandlePendingInviteCode";
+import LandingRoutes from "../modules/landing/routes/LandingRoutes";
 
 const AppRouter = (): React.ReactNode => {
   const { status } = useSelector((state: RootState) => state.auth);
@@ -74,7 +75,10 @@ const AppRouter = (): React.ReactNode => {
             )}
           </>
         ) : (
-          <>{AuthRoutes()}</>
+          <>
+            {LandingRoutes()}
+            {AuthRoutes()}
+          </>
         )}
       </Routes>
 

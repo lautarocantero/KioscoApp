@@ -12,6 +12,7 @@ const PrimaryButtonComponent = ({
   marginTop = '1.5em',
   icon = null,
   disabled = false,
+  fontSize = "body2",
 }: PrimaryButtonComponentProps): React.ReactNode => {
   return (
     <Button
@@ -26,7 +27,7 @@ const PrimaryButtonComponent = ({
         borderRadius: "0.4em",
         padding: padding,
         textTransform: "none",
-        fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
+        fontSize: (theme: Theme) => theme?.typography?.[fontSize]?.fontSize,
       }}
       onClick={buttonOnClick}
       type={buttonType}

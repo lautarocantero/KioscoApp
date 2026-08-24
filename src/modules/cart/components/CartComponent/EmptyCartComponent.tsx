@@ -1,6 +1,7 @@
 import { Box, Grid, Typography, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { getNoisyBackgroundSx } from "../../../shared/components/NoisyBackground/NoisyBackground";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 import { type ReactNode } from "react";
 
 
@@ -45,7 +46,7 @@ const CartEmptyComponent = (): ReactNode => {
                 >
                     <Box
                         component="img"
-                        src="/images/stocko_images/empty_bag.png"
+                        src={getPublicAssetUrl("images/stocko_images/empty_bag.png")}
                         alt={t("cart.empty.imageAlt")}
                         sx={{
                             width: 80,

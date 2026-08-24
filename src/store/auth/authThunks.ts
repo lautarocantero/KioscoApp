@@ -7,7 +7,7 @@ import type {
   AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthRequestPasswordResetPayload,
   AuthRequestPasswordResetResult,
   AuthResetPasswordPayload } from "../../typings/auth/authTypes";
-import { extractAuthErrorMessage, handleErrorWithAction, handleError } from "../shared/handlerStoreError";
+import { extractAuthErrorMessage, handleErrorWithAction } from "../shared/handlerStoreError";
 import { setActiveKioscoId, setMyKioscos, resetKioscoState } from "../kiosco/kioscoSlice";
 import { ACTIVE_KIOSCO_STORAGE_KEY } from "../../config/constants";
 import type { KioscoWithStats } from "@typings/kiosco/kioscoTypes";
@@ -94,12 +94,20 @@ export const startGoogleLogin = (
     };
 };
 
-export const startLogout = (): ThunkAction<void, RootState, unknown, AuthActionsType> => {
-    return async(dispatch: Dispatch) => {
-        try{
+// Devuelve si el logout en el server salió bien. Antes, un fallo acá
+// (ej. el back no llega a revocar la cookie) quedaba silencioso: se
+// relanzaba como promise rejection sin catch en el caller y el usuario
+// veía la sesión "cerrada" en el tab actual sin enterarse de que el
+// server pudo no haber invalidado nada.
+export const startLogout = (): ThunkAction<Promise<boolean>, RootState, unknown, AuthActionsType> => {
+    return async (dispatch: Dispatch): Promise<boolean> => {
+        let serverLogoutSucceeded = true;
+
+        try {
             await authLogoutRequest();
-        } catch(error: unknown) {
-            handleError(error);
+        } catch (error: unknown) {
+            serverLogoutSucceeded = false;
+            console.error("No se pudo cerrar sesión en el server:", error);
         } finally {
             // Limpia sesión de auth Y de kiosco: la próxima cuenta que se
             // loguee en este navegador no debe heredar el kiosco activo.
@@ -108,6 +116,8 @@ export const startLogout = (): ThunkAction<void, RootState, unknown, AuthActions
             dispatch(setActiveKioscoId({ kioscoId: null }));
             localStorage.removeItem(ACTIVE_KIOSCO_STORAGE_KEY);
         }
+
+        return serverLogoutSucceeded;
     }
 }
 

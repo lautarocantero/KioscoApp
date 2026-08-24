@@ -7,6 +7,7 @@ import type {
 } from "@typings/presentation/presentationTypes";
 import { MODEL_TYPE_VALUES, MODEL_UNIT_VALUES, ModelType, ModelUnit, PresentationCategory, SALE_TYPE_VALUES, WEIGHT_SALE_TYPE, type SaleType } from "@typings/presentation/presentationEnum";
 import { BARCODE_REGEX, RELATIVE_OR_URL_REGEX } from "../../../config/constants";
+import { clampStock } from "../../../utils/formatter/clampStock";
 
 const getTodayISODate = () => new Date().toISOString().slice(0, 10);
 const getStartOfToday = () => {
@@ -54,7 +55,7 @@ export const getPresentationEditInitialValues = (
     image_url:       presentation?.image_url        ?? "",
     product_id:      presentation?.product_id       ?? "",
     min_stock:       String(presentation?.min_stock ?? ""),
-    stock:           presentation?.stock             ?? 0,
+    stock:           clampStock(presentation?.stock ?? 0),
     price:           presentation?.price             ?? 0,
     is_perishable:   presentation?.is_perishable ?? true,
     expiration_date: presentation?.expiration_date  ?? getTodayISODate(),

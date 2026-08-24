@@ -57,7 +57,13 @@ export const useAppSidebar = () => {
     toggleSection(link.url);
   }, [navigate, toggleSection, isExpanded]);
 
-  const handleLogout = useCallback(() => dispatch(startLogout()), [dispatch]);
+  // navigate("/") explícito: sin esto, el logout solo limpiaba el estado y
+  // dejaba al usuario en la URL protegida en la que estaba, a merced de que
+  // el re-render de AppRouter lo mandara a algún lado por su cuenta.
+  const handleLogout = useCallback(async () => {
+    await dispatch(startLogout());
+    navigate("/");
+  }, [dispatch, navigate]);
  
   const getLinkMeta = useCallback((link: NavLinkInterface) => ({
     subGroups: NAV_SUBGROUPS[link.url] ?? [],

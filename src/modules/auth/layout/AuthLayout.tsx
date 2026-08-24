@@ -4,13 +4,14 @@ import type { PropsWithChildren } from "react";
 import React, { useContext } from "react";
 import { ThemeContext } from "../../../theme/ThemeContext";
 import LoginAppBar from "./LoginAppBar/LoginAppBar";
+import { getPublicAssetUrl } from "../../shared/helpers/getPublicAssetUrl";
 
 const AuthLayout = ({ children }: PropsWithChildren): React.ReactNode => {
   const { appTheme }: { appTheme: boolean } = useContext(ThemeContext);
 
-  const backgroundUrl: string = `url(/images/backgroundImages/${
-    !appTheme ? "black" : "white"
-  }BackgroundImage.jpg)`;
+  const backgroundUrl: string = `url(${getPublicAssetUrl(
+    `images/backgroundImages/${!appTheme ? "black" : "white"}BackgroundImage.jpg`
+  )})`;
 
   if (!children || React.Children.count(children) === 0)
     return <Typography>No children Loaded...</Typography>;

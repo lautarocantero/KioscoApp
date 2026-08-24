@@ -3,12 +3,28 @@ import { PresentationStatusColors } from "@typings/presentation/presentationEnum
 import { Currency, SellStatusEnum } from "@typings/sells/sellsEnum";
 import { ShopSalesRange } from "@typings/shop/shopEnums";
 import type { DeleteDialogState, RestockDialogState, SettleDebtDialogState } from "@typings/ui/dialog.types";
+import { getPublicAssetUrl } from "../modules/shared/helpers/getPublicAssetUrl";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🚀 APP  🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export const REACT_APP_API_URL='https://kioscoappbackend.onrender.com'
+
+// Descarga directa del asset del último release publicado — el nombre de
+// cada asset (ver artifactName en electron-builder.yml) tiene que
+// mantenerse fijo entre releases para que estos links no se rompan con
+// cada versión nueva.
+//
+// .deb es la opción principal para Ubuntu/Debian: se instala con dpkg,
+// sin depender de libfuse2 (que Ubuntu 22.04+ ya no trae por defecto y
+// rompe el AppImage con un error silencioso). El AppImage queda como
+// alternativa portable para otras distros.
+export const STOCKO_LINUX_DEB_DOWNLOAD_URL = 'https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Linux.deb'
+export const STOCKO_LINUX_APPIMAGE_DOWNLOAD_URL = 'https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Linux.AppImage'
+
+// Instalador NSIS de Windows (ver artifactName en electron-builder.yml).
+export const STOCKO_WINDOWS_DOWNLOAD_URL = 'https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Windows.exe'
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🏪 NEGOCIO  🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪🏪                  ║
@@ -74,6 +90,9 @@ export const MOBILE_SIDE_PADDING = 32;
 export const MIN_MOBILE_CARD_WIDTH = 260;
 
 export const FILTER_MIN_WIDTH = 220;
+
+export const KIOSCO_CARD_WIDTH = 340;
+export const KIOSCO_CAROUSEL_GAP = 24;
 
 export const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 
@@ -196,4 +215,4 @@ export const RECEIPT_MAX_SIZE = "10 MB";
 // ║ 🎨 IMAGENES   🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️🎨🖼️              ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export const FALLBACK_PRODUCT_IMAGE = "/images/stocko_images/empty_product.png";
+export const FALLBACK_PRODUCT_IMAGE = getPublicAssetUrl("images/stocko_images/empty_product.png");

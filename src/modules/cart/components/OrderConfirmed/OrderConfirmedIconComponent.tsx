@@ -3,6 +3,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, type Theme } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
 
 const OrderConfirmedIconComponent = (): ReactNode => {
@@ -28,7 +29,7 @@ const OrderConfirmedIconComponent = (): ReactNode => {
             >
                 <Box
                     component="img"
-                    src="/images/stocko_images/stocko_recipt.png"
+                    src={getPublicAssetUrl("images/stocko_images/stocko_recipt.png")}
                     alt={t("cart.orderConfirmed.imageAlt")}
                     sx={{
                         width: {

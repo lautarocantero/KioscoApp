@@ -15,6 +15,7 @@ const CardCarousel = ({
     hintText,
     showDots = true,
     showArrows = true,
+    nextArrowPosition = "afterActiveCard",
     sx,
 }: CardCarouselProps): React.ReactNode => {
     const {
@@ -75,7 +76,7 @@ const CardCarousel = ({
                         sx={(theme: Theme) => ({
                             position: "absolute",
                             top: "50%",
-                            left: activeWidth - 20,
+                            ...(nextArrowPosition === "viewportEdge" ? { right: -20 } : { left: activeWidth - 20 }),
                             transform: "translateY(-50%)",
                             width: 40,
                             height: 40,

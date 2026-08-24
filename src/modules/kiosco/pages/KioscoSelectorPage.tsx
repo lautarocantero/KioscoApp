@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, Typography, type Theme } from "@mui/material";
+import { Box, Stack, Typography, type Theme } from "@mui/material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
@@ -11,6 +11,8 @@ import type { RootState } from "../../../store/auth/authSlice";
 import KioscoCard from "../components/KioscoCard/KioscoCard";
 import KioscoCardSkeleton from "../components/KioscoCard/KioscoCardSkeleton";
 import KioscoSelectorActionRow from "../components/KioscoSelectorActionRow/KioscoSelectorActionRow";
+import CardCarousel from "../../shared/components/Cards/CardCarousel";
+import { KIOSCO_CARD_WIDTH, KIOSCO_CAROUSEL_GAP } from "../../../config/constants";
 
 const KioscoSelectorPage = (): React.ReactNode => {
     const { t } = useTranslation();
@@ -63,27 +65,37 @@ const KioscoSelectorPage = (): React.ReactNode => {
                 </Typography>
 
                 {loading && kioscos.length === 0 ? (
-                    <Grid container spacing={3} sx={{ mb: 4 }}>
-                        {[0, 1, 2].map((index) => (
-                            <Grid key={index} size={{ xs: 12, sm: 6, md: 4 }}>
-                                <KioscoCardSkeleton />
-                            </Grid>
-                        ))}
-                    </Grid>
+                    <Box sx={{ mb: 4 }}>
+                        <CardCarousel
+                            defaultCardWidth={KIOSCO_CARD_WIDTH}
+                            gap={KIOSCO_CAROUSEL_GAP}
+                            maxViewportWidth="100%"
+                            showArrows={false}
+                            showDots={false}
+                            items={[0, 1, 2].map((index) => ({ id: `skeleton-${index}`, content: <KioscoCardSkeleton /> }))}
+                        />
+                    </Box>
                 ) : (
                     kioscos.length > 0 && (
-                        <Grid container spacing={3} sx={{ mb: 4 }}>
-                            {kioscos.map((kiosco, index) => (
-                                <Grid key={kiosco._id} size={{ xs: 12, sm: 6, md: 4 }}>
-                                    <KioscoCard
-                                        kiosco={kiosco}
-                                        colorIndex={index}
-                                        entering={entering === kiosco._id}
-                                        onEnter={() => handleEnterKiosco(kiosco)}
-                                    />
-                                </Grid>
-                            ))}
-                        </Grid>
+                        <Box sx={{ mb: 4 }}>
+                            <CardCarousel
+                                defaultCardWidth={KIOSCO_CARD_WIDTH}
+                                gap={KIOSCO_CAROUSEL_GAP}
+                                maxViewportWidth="100%"
+                                nextArrowPosition="viewportEdge"
+                                items={kioscos.map((kiosco, index) => ({
+                                    id: kiosco._id,
+                                    content: (
+                                        <KioscoCard
+                                            kiosco={kiosco}
+                                            colorIndex={index}
+                                            entering={entering === kiosco._id}
+                                            onEnter={() => handleEnterKiosco(kiosco)}
+                                        />
+                                    ),
+                                }))}
+                            />
+                        </Box>
                     )
                 )}
 

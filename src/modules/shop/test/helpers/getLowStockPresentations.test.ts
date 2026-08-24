@@ -44,6 +44,12 @@ describe("getLowStockPresentations", () => {
         expect(result[0].ratio).toBe(0);
     });
 
+    it("nunca expone un stock negativo, aunque el dato real lo sea", () => {
+        const result = getLowStockPresentations([presentation("1", "Sobrevendido", -3, 10)]);
+
+        expect(result[0].stock).toBe(0);
+    });
+
     it("prioriza el stock más negativo dentro de los empatados en ratio 0", () => {
         const result = getLowStockPresentations([
             presentation("1", "Menos negativo", -1, 10),

@@ -6,6 +6,7 @@ import { useSellDetailForm } from "../../../../hooks/sells/useSellDetailForm";
 import NoisyCard from "../../../shared/components/Cards/NoisyCard";
 import { formatAmount } from "../../../cart/helpers/ProductDialog/Formatter/formatDetail";
 import { formatWeightAwareQuantity } from "../../../shared/helpers/saleTypeHelper";
+import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
 
 const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): React.ReactNode => {
      const { goToPresentation } = useSellDetailForm();
@@ -80,7 +81,7 @@ const SellDetailProductsSold = ({ products }: SellDetailProductsSoldProps): Reac
                                         <Stack direction="row" spacing={1.5} alignItems="center">
                                             <Avatar
                                                 variant="rounded"
-                                                src={product.imageUrl || "/images/stocko_images/empty_product.png"}
+                                                src={product.imageUrl || getPublicAssetUrl("images/stocko_images/empty_product.png")}
                                                 alt={t("sells.detail.productsSold.imageAlt", { name: product.name })}
                                                 sx={{ width: 40, height: 40, flexShrink: 0 }}
                                             />
