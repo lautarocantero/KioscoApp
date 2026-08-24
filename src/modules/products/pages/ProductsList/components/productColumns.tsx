@@ -4,6 +4,7 @@ import RowActionsCell from "../../../../shared/components/DataTable/RowActionsCe
 import GenericListCell from "../../../../shared/components/DataTable/GenericListCell";
 import { dateColumn, truncatedTextColumn } from "../../../../../modules/shared/components/DataTable/ColumnHelpers";
 import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
+import { clampStock } from "../../../../../utils/formatter/clampStock";
 
 export const buildColumnsForProducts = ({
     onDeleteRequest,
@@ -48,7 +49,7 @@ export const buildColumnsForProducts = ({
                     const label = `${p.model_type} ${p.model_size}`;
                     return label.length > 20 ? `${label.slice(0, 20)}…` : label;
                 }}
-                getTooltipLine={(p) => `${p.model_type} ${p.model_size} · ${p.stock} u. · ${p.sku}`}
+                getTooltipLine={(p) => `${p.model_type} ${p.model_size} · ${clampStock(p.stock)} u. · ${p.sku}`}
                 getKey={(p, i) => `${p.sku}-${i}`}
             />
         ),

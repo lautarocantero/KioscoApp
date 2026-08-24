@@ -1,0 +1,144 @@
+# 🏠 Landing page — Documentación técnica
+
+## Resumen
+
+Página pública (`/`) que ve cualquier visitante **no logueado** en `stocko.com`.
+Antes, `/` renderizaba directamente `LoginPage`; ahora `/` es una landing de
+producto y el login se movió a `/login`.
+
+Objetivo: presentar Stocko y ofrecer dos caminos claros:
+
+- **Iniciar sesión / crear kiosco** → versión web (`/login`, `/register`).
+- **Descargar la app de escritorio** → sección de descarga con los 3
+  instaladores (Windows/macOS/Linux), hoy apuntando a la página de
+  releases de GitHub (`STOCKO_RELEASES_URL` en `src/config/constants.ts`)
+  hasta que exista publicación automática de builds de Electron.
+
+## Rutas
+
+| Ruta      | Antes      | Ahora         |
+|-----------|------------|---------------|
+| `/`       | `LoginPage`| `LandingPage` |
+| `/login`  | (no existía)| `LoginPage`  |
+
+`src/router/AppRouter.tsx` monta `LandingRoutes()` junto a `AuthRoutes()`
+cuando el usuario no está autenticado. `AuthRoutes` ya redirigía enlaces
+internos (ej. `CheckEmailContent`) a `/login`, así que este cambio también
+corrige un link que antes no coincidía con ninguna ruta.
+
+## Estructura
+
+```
+src/modules/landing/
+  pages/LandingPage/
+    LandingPage.tsx              → compone Navbar + Hero + Features + Download + Footer
+    components/                  → un componente por responsabilidad (solo presentación)
+  helpers/                       → datos puros (features, nav links, targets de descarga, accent color)
+  routes/LandingRoutes.tsx
+
+src/hooks/landing/
+  useLandingNavigation.ts        → goToLogin / goToRegister / goToJoinKiosco
+  useScrollToSection.ts          → scroll suave a secciones de la propia página
+
+src/typings/landing/
+  landingTypes.ts, landingComponentTypes.ts, landingEnums.ts
+```
+
+`LandingPage` fuerza `darkTheme` (vía `ThemeProvider` de `@emotion/react`)
+independientemente del modo claro/oscuro elegido por el usuario, ya que es
+una página de marca que no depende de preferencias de la app autenticada.
+Todos los colores salen de `theme.custom` — no hay hex inventados.
+
+### Fondos: hero con imagen, resto en blanco
+
+`getLandingBackgroundPatterns.ts` expone dos helpers:
+
+- `getHeroBackgroundImageSx(theme)` → fondo del Hero (imagen de marca
+  `public/images/backgroundImages/background-landing.png`, `cover`).
+- `getWhiteSectionBackgroundSx(theme)` → fondo `theme.palette.common.white`
+  para Features y Download, marcando la transición de color violeta → blanco.
+
+`LandingWaveDivider.tsx` dibuja el SVG decorativo (onda) reutilizado en
+cada transición de color: al pie del Hero (hacia la primera feature) y al
+pie de cada `LandingFeatureShowcaseBand.tsx` (hacia la feature siguiente,
+o hacia el blanco de Download en la última). Recibe `fillColor` — nunca
+hardcodea un color — así cada instancia se funde con la sección que sigue.
+También recibe `variant` (número): `getLandingWavePath.ts` guarda varios
+patrones de curva distintos y cicla entre ellos según el índice de la
+band, para que las ondas no se repitan todas iguales a lo largo de la
+página. La onda no es un `fill` plano: un `<clipPath>` la recorta con la
+forma curva y, dentro, un `<rect>` con `feTurbulence` (mismos parámetros
+que `getNoisyBackgroundSx`: `baseFrequency 0.85`, `numOctaves 3`,
+`feColorMatrix saturate 0`, `mixBlendMode screen`) le suma la misma
+textura noisy que usan las bands — un `background-image` CSS tileado no
+se puede recortar a una forma curva, por eso el ruido se genera nativo
+dentro del propio SVG. Los ids de `clipPath`/`filter` se generan con
+`useId()` (sanitizado sin `:`) para que dos instancias en la misma página
+no se pisen. La imagen del Hero (`LandingHeroPreviewImage.tsx`) tiene una
+animación de flotación sutil (CSS `@keyframes`, vía `@emotion/react`),
+desactivada automáticamente con `prefers-reduced-motion: reduce`.
+
+### Bands de features: cada feature ocupa toda su sección con su color
+
+`LandingFeaturesSection.tsx` ya no tiene un fondo propio: renderiza una
+`LandingFeatureShowcaseBand.tsx` por feature, una detrás de otra, sin
+espaciado entre ellas — cada band es full-bleed (ocupa todo el ancho, con
+bastante padding vertical — `paddingBlock` 4.5em/7.5em — para dar aire
+entre una feature y la siguiente) y usa
+`getLandingFeatureBandBackgroundColor(theme, accent)` (en
+`getLandingFeatureBandBackgroundColor.ts`) para teñir la base oscura común
+(`#1f1c2c`) con el color de acento propio de esa feature, vía CSS
+`color-mix()`, pasado como `backgroundColor` a `getNoisyBackgroundSx`. El
+resultado: el color de cada feature ocupa todo el espacio disponible de su
+sección (sin blanco de por medio) en vez de limitarse a una card.
+`getLandingFeatureBandNextFillColor.ts` resuelve, para cada índice, el
+color de la band siguiente (o el blanco de Download si es la última) que
+recibe el `LandingWaveDivider` al pie de cada band.
+`LandingFeatureShowcaseRow.tsx` quedó como layout de contenido puro (badge,
+título, bullets, media) sin fondo ni borde propios — el color vive en la
+band que lo envuelve. En pantallas md+ el título, subtítulo y bullets usan
+un tamaño de fuente algo mayor (`fontSize` en el `sx` de cada uno) que en
+mobile.
+
+`getLandingFeatureShowcase.ts` define las decoraciones (`mediaDecorations`)
+por feature: multiKiosco y sellsReports usan íconos temáticos propios
+(`kiosco.png`, `sells.png`, `reports.png`); productsStock y
+receiptsProviders siguen usando el par genérico de cajas
+(`2boxes.png`/`3boxes.png`).
+
+### Download/Recursos: cards de sistema operativo + botón del hero
+
+El CTA "Descargar" del Hero (`LandingHeroCtaButtons.tsx`) ya no es un
+no-op: usa `useScrollToSection` para llevar al usuario a
+`#landing-download` — la misma sección a la que apunta el link "Recursos"
+del nav — porque ahí viven los botones reales de descarga por sistema
+operativo.
+
+`LandingDownloadOsCard.tsx` es la card por SO: fondo blanco
+(`theme.palette.common.white`), badge cuadrado violeta con un ícono
+genérico de app arriba a la izquierda, el logo del SO (`WindowsLogoIcon` /
+`LinuxLogoIcon`) grande y pálido (`theme.custom.lightGray`) como decoración
+de fondo arriba a la derecha, nombre + descripción del SO, un botón de
+descarga (`variant="contained"` si `target.isPrimary`, si no
+`variant="outlined"` — Windows es el target primario) y un triángulo
+violeta ("flag") recortado en la esquina inferior izquierda vía
+`border`. `getDesktopDownloadTargets.ts` agrega `descriptionKey` e
+`isPrimary` a cada `DesktopDownloadTarget`.
+
+`LandingDownloadTrustRow.tsx` + `getLandingDownloadTrustPoints.ts` arman
+la fila de 3 puntos de confianza bajo las cards (seguro y confiable,
+instalación rápida, actualizaciones automáticas), cada uno con ícono +
+título + subtítulo.
+
+`LandingDotGridDecoration.tsx` dibuja el patrón de puntos decorativo a los
+costados de la sección (`radial-gradient` con `theme.palette.primary.main`
+a baja opacidad, recortado con `mask-image` para que se desvanezca hacia
+el centro) — puramente decorativo, `aria-hidden`, oculto en mobile.
+
+## Pendiente / fuera de alcance
+
+- Publicación real de instaladores por sistema operativo (hoy los 3
+  botones de descarga apuntan a la misma página de releases).
+- Sección de precios: se omitió a propósito para no inventar valores de
+  negocio; si se define un modelo de precios, agregar `landing.pricing.*`
+  en `src/i18n/locales/{es,en}.ts` y un nuevo item de nav.

@@ -76,6 +76,11 @@ describe("buildRestockReportRows", () => {
         expect(rows[0].minRestock).toBe(15);
     });
 
+    it("nunca muestra un currentStock negativo, aunque el dato real lo esté", () => {
+        const rows = buildRestockReportRows([presentation("1", "500g", -5, 10)], [product("p1", "Fideos")]);
+        expect(rows[0].currentStock).toBe(0);
+    });
+
     it("deja provider1 y provider2 vacíos (todavía no hay proveedores por presentación)", () => {
         const rows = buildRestockReportRows([presentation("1", "500g", 2, 10)], [product("p1", "Fideos")]);
         expect(rows[0].provider1).toBe("");

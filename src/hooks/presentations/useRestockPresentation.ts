@@ -9,6 +9,7 @@ import { CLOSED_RESTOCK_DIALOG } from "../../config/constants";
 import { useErrorParser } from "../shared/useErrorParser";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
+import { clampStock } from "../../utils/formatter/clampStock";
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 useRestockPresentation                       ║
@@ -29,12 +30,13 @@ export const useRestockPresentation = (): UseRestockPresentationReturn => {
 
     const handleRestockRequest = (presentation: Presentation) => {
         setErrorMessage(null);
-        setStockValue(presentation.stock);
+        const currentStock = clampStock(presentation.stock);
+        setStockValue(currentStock);
         setRestockDialog({
             open: true,
             id: presentation._id,
             name: presentation.name,
-            stock: presentation.stock,
+            stock: currentStock,
             minStock: presentation.min_stock,
         });
     };

@@ -6,6 +6,7 @@ import type { ModelType, PresentationCategory } from "@typings/presentation/pres
 import { FALLBACK_PRODUCT_IMAGE } from "../../../../config/constants";
 import type { Product } from "@typings/product/productTypes";
 import i18n from "@i18n/i18n";
+import { clampStock } from "../../../../utils/formatter/clampStock";
 
 
 export const buildColumnsForProductExhibitor = (t: TFunction): GridColDef<Product>[] => [
@@ -74,7 +75,7 @@ export const buildColumnsForProductExhibitor = (t: TFunction): GridColDef<Produc
     maxWidth: 1000,
     align: "center",
     headerAlign: "center",
-    valueGetter: (_value, row) => row.presentations?.[0]?.stock ?? 0,
+    valueGetter: (_value, row) => clampStock(row.presentations?.[0]?.stock ?? 0),
   },
   {
     field: "actions",
