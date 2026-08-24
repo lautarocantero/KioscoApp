@@ -94,6 +94,22 @@ const LandingDownloadOsCard = ({ target }: LandingDownloadOsCardProps): React.Re
         >
           {t("landing.download.actionFor", { os: osLabel })}
         </Button>
+
+        {target.secondaryDownload && (
+          <Typography
+            component="a"
+            href={target.secondaryDownload.href}
+            variant="caption"
+            sx={{
+              textAlign: "center",
+              color: (theme: Theme) => theme.custom.blackTranslucid,
+              textDecoration: "underline",
+              "&:hover": { color: (theme: Theme) => theme.palette.primary.main },
+            }}
+          >
+            {t(target.secondaryDownload.labelKey)}
+          </Typography>
+        )}
       </Stack>
 
       <LandingWaveDivider fillColor={theme.palette.primary.main} height={CARD_WAVE_HEIGHT} />

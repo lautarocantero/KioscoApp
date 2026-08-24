@@ -28,7 +28,7 @@ describe("getDesktopDownloadTargets", () => {
     expect(linux.isPrimary).toBe(false);
   });
 
-  it("Linux descarga el asset directo del último release; Windows todavía manda a la página de releases", () => {
+  it("Linux descarga el .deb directo del último release; Windows todavía manda a la página de releases", () => {
     const targets = getDesktopDownloadTargets();
 
     const windows = targets.find((target) => target.os === OperatingSystemEnum.Windows)!;
@@ -38,6 +38,16 @@ describe("getDesktopDownloadTargets", () => {
     expect(windows.href).toBe("https://github.com/lautarocantero/KioscoApp/releases");
 
     expect(linux.opensInNewTab).toBe(false);
-    expect(linux.href).toBe("https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Linux.AppImage");
+    expect(linux.href).toBe("https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Linux.deb");
+  });
+
+  it("Linux ofrece el AppImage como alternativa secundaria", () => {
+    const targets = getDesktopDownloadTargets();
+    const linux = targets.find((target) => target.os === OperatingSystemEnum.Linux)!;
+
+    expect(linux.secondaryDownload?.href).toBe(
+      "https://github.com/lautarocantero/KioscoApp/releases/latest/download/Stocko-Linux.AppImage"
+    );
+    expect(linux.secondaryDownload?.labelKey).toBe("landing.download.appImageAlternative");
   });
 });

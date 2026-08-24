@@ -83,4 +83,25 @@ describe("LandingDownloadOsCard", () => {
     expect(link).not.toHaveAttribute("target");
     expect(link).not.toHaveAttribute("rel");
   });
+
+  it("ofrece el link secundario del AppImage cuando el target lo define", () => {
+    render(
+      <ThemeProvider theme={darkTheme}>
+        <LandingDownloadOsCard target={linuxTarget} />
+      </ThemeProvider>
+    );
+
+    const secondaryLink = screen.getByRole("link", { name: "¿Otra distro? Descargá el AppImage" });
+    expect(secondaryLink).toHaveAttribute("href", linuxTarget.secondaryDownload?.href);
+  });
+
+  it("no renderiza link secundario cuando el target no lo define", () => {
+    render(
+      <ThemeProvider theme={darkTheme}>
+        <LandingDownloadOsCard target={windowsTarget} />
+      </ThemeProvider>
+    );
+
+    expect(screen.queryByText("¿Otra distro? Descargá el AppImage")).not.toBeInTheDocument();
+  });
 });

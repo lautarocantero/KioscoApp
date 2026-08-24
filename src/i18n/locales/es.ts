@@ -1206,6 +1206,7 @@ const es = {
       linuxDescription: "Compatible con Ubuntu, Debian y más",
       action: "Descargar",
       actionFor: "Descargar para {{os}}",
+      appImageAlternative: "¿Otra distro? Descargá el AppImage",
       trust: {
         secure: { title: "Seguro y confiable", subtitle: "Sin virus ni malware" },
         fastInstall: { title: "Instalación rápida", subtitle: "En pocos pasos" },

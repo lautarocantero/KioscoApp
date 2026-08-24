@@ -9,6 +9,11 @@ export type LandingNavLink = {
   targetId: string;
 };
 
+export type DesktopDownloadTargetSecondaryDownload = {
+  href: string;
+  labelKey: string;
+};
+
 export type DesktopDownloadTarget = {
   os: OperatingSystemEnum;
   labelKey: string;
@@ -20,6 +25,9 @@ export type DesktopDownloadTarget = {
   // true: href es la página de releases (navegación, se abre en pestaña
   // nueva). false: href es un asset directo (dispara descarga, misma pestaña).
   opensInNewTab: boolean;
+  // Formato alternativo de instalación (ej. AppImage para distros que no
+  // son Ubuntu/Debian), como link chico bajo el botón principal.
+  secondaryDownload?: DesktopDownloadTargetSecondaryDownload;
 };
 
 export type LandingFeatureShowcaseBullet = {

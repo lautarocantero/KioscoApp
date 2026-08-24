@@ -3,7 +3,10 @@
   "private": true,
   "version": "0.1.0",
   "description": "Stocko — gestión de kioscos: ventas, productos, stock, proveedores y boletas.",
-  "author": "Stocko",
+  "author": {
+    "name": "Stocko",
+    "email": "lautaroncantero@gmail.com"
+  },
   "desktopName": "Stocko.desktop",
   "type": "module",
   "main": "dist-electron/main.js",

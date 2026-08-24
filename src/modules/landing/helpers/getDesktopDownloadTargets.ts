@@ -1,6 +1,10 @@
 import { OperatingSystemEnum } from "@typings/landing/landingEnums";
 import type { DesktopDownloadTarget } from "@typings/landing/landingTypes";
-import { STOCKO_LINUX_DOWNLOAD_URL, STOCKO_RELEASES_URL } from "../../../config/constants";
+import {
+  STOCKO_LINUX_APPIMAGE_DOWNLOAD_URL,
+  STOCKO_LINUX_DEB_DOWNLOAD_URL,
+  STOCKO_RELEASES_URL,
+} from "../../../config/constants";
 import WindowsLogoIcon from "../pages/LandingPage/components/icons/WindowsLogoIcon";
 import LinuxLogoIcon from "../pages/LandingPage/components/icons/LinuxLogoIcon";
 
@@ -22,9 +26,15 @@ export const getDesktopDownloadTargets = (): DesktopDownloadTarget[] => [
     descriptionKey: "landing.download.linuxDescription",
     Icon: LinuxLogoIcon,
     illustrationSrc: "/images/icons/decoration/linux.png",
-    // Asset directo del último release: dispara la descarga del AppImage.
-    href: STOCKO_LINUX_DOWNLOAD_URL,
+    // .deb como opción principal: se instala con dpkg, sin depender de
+    // libfuse2 (que Ubuntu 22.04+ ya no trae y rompe el AppImage en
+    // silencio). El AppImage queda como alternativa portable.
+    href: STOCKO_LINUX_DEB_DOWNLOAD_URL,
     isPrimary: false,
     opensInNewTab: false,
+    secondaryDownload: {
+      href: STOCKO_LINUX_APPIMAGE_DOWNLOAD_URL,
+      labelKey: "landing.download.appImageAlternative",
+    },
   },
 ];
