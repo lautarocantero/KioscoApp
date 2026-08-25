@@ -95,7 +95,7 @@ const LandingDownloadOsCard = ({ target }: LandingDownloadOsCardProps): React.Re
           {t("landing.download.actionFor", { os: osLabel })}
         </Button>
 
-        {target.secondaryDownload && (
+        {target.secondaryDownload ? (
           <Typography
             component="a"
             href={target.secondaryDownload.href}
@@ -108,6 +108,15 @@ const LandingDownloadOsCard = ({ target }: LandingDownloadOsCardProps): React.Re
             }}
           >
             {t(target.secondaryDownload.labelKey)}
+          </Typography>
+        ) : (
+          // Reserva el mismo espacio que el link de descarga alternativa
+          // (invisible, no interactivo): sin esto, el botón de descarga de
+          // esta card queda más abajo que el de una card que sí tiene texto
+          // debajo, porque el Stack tiene un elemento menos para repartir
+          // con justifyContent="space-between".
+          <Typography aria-hidden="true" variant="caption" sx={{ textAlign: "center", visibility: "hidden" }}>
+            &nbsp;
           </Typography>
         )}
       </Stack>
