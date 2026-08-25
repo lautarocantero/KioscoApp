@@ -33,6 +33,10 @@ export type DesktopDownloadTarget = {
 export type LandingFeatureShowcaseBullet = {
   Icon: ComponentType<SvgIconProps>;
   labelKey: string;
+  // Si está prendido, el bullet se resalta con el color de acento de la
+  // sección y dispara `onBulletClick` (ver LandingFeatureShowcaseBullets.tsx).
+  // Hoy solo lo usa "Permisos por rol" para abrir RolesPermissionsDialog.
+  isClickable?: boolean;
 };
 
 export type LandingDownloadTrustPoint = {

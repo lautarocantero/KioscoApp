@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Stack, Typography, useTheme, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import "animate.css";
 import type { LandingFeatureShowcaseRowProps } from "@typings/landing/landingComponentTypes";
 import { getLandingAccentColor } from "../../../helpers/getLandingAccentColor";
 import { useScrollInAnimation } from "../../../../../hooks/landing/useScrollInAnimation";
+import RolesPermissionsDialog from "../../../../shared/components/RolesPermissionsDialog/RolesPermissionsDialog";
 import LandingFeatureShowcaseBadge from "./LandingFeatureShowcaseBadge";
 import LandingFeatureShowcaseBullets from "./LandingFeatureShowcaseBullets";
 import LandingFeatureShowcaseMedia from "./LandingFeatureShowcaseMedia";
@@ -13,6 +15,8 @@ const LandingFeatureShowcaseRow = ({ item, reverse }: LandingFeatureShowcaseRowP
   const theme = useTheme();
   const accentColor = getLandingAccentColor(theme, item.accent);
   const { ref, hasEntered } = useScrollInAnimation<HTMLDivElement>();
+  const [rolesInfoOpen, setRolesInfoOpen] = useState(false);
+  const hasRolesPermissionsBullet = item.bullets.some((bullet) => bullet.isClickable);
 
   return (
     <Stack
@@ -58,7 +62,11 @@ const LandingFeatureShowcaseRow = ({ item, reverse }: LandingFeatureShowcaseRowP
           {t(item.subtitleKey)}
         </Typography>
 
-        <LandingFeatureShowcaseBullets bullets={item.bullets} accent={item.accent} />
+        <LandingFeatureShowcaseBullets
+          bullets={item.bullets}
+          accent={item.accent}
+          onBulletClick={hasRolesPermissionsBullet ? () => setRolesInfoOpen(true) : undefined}
+        />
       </Stack>
 
       <LandingFeatureShowcaseMedia
@@ -67,6 +75,10 @@ const LandingFeatureShowcaseRow = ({ item, reverse }: LandingFeatureShowcaseRowP
         decorations={item.mediaDecorations}
         accentColor={accentColor}
       />
+
+      {hasRolesPermissionsBullet && (
+        <RolesPermissionsDialog open={rolesInfoOpen} onClose={() => setRolesInfoOpen(false)} />
+      )}
     </Stack>
   );
 };
