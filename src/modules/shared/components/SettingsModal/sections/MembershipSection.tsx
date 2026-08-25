@@ -1,12 +1,10 @@
 import { Box, Button, Skeleton, Typography, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { useMembershipStatus } from "../../../../../hooks/membership/useMembershipStatus";
+import { useMembershipSection } from "../../../../../hooks/membership/useMembershipSection";
 
 const MembershipSection = (): React.ReactNode => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
-    const { status, loading, error } = useMembershipStatus();
+    const { status, loading, error, goToPlans } = useMembershipSection();
 
     return (
         <Box component="section" aria-labelledby="settings-membership-heading">
@@ -44,7 +42,7 @@ const MembershipSection = (): React.ReactNode => {
                 )}
 
                 <Button
-                    onClick={() => navigate("/membership/plans")}
+                    onClick={goToPlans}
                     variant="outlined"
                     disabled={loading}
                     sx={(theme: Theme) => ({

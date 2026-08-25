@@ -25,6 +25,10 @@ export type OutlinedButtonComponentProps = Pick<
   "buttonText" | "buttonOnClick" | "buttonWidth" | "buttonType" | "icon" | "disabled" | "dataTestId" | "padding" | "fontSize"
 >;
 
+export interface BackButtonProps {
+  align?: "left" | "center";
+}
+
 export interface EmptyButtonProps {
   buttonText: string;
   buttonOnClick: () => void;

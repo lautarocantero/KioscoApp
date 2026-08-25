@@ -62,3 +62,47 @@ export interface UseMembershipCheckoutPlanReturn {
     loading: boolean;
     error: string | null;
 }
+
+// Página Settings > Membresía: la fila "plan actual + botón Cambiar plan".
+export interface UseMembershipSectionReturn {
+    status: MembershipStatus | null;
+    loading: boolean;
+    error: string | null;
+    goToPlans: () => void;
+}
+
+// Página /membership/plans: status actual + las 3 cards de tier.
+export interface UseMembershipPlansPageReturn {
+    status: MembershipStatus | null;
+    statusLoading: boolean;
+    statusError: string | null;
+    plans: MembershipPlanWithFeatures[];
+    plansLoading: boolean;
+    plansError: string | null;
+    selectPlan: (plan: KioscoPlanEnum) => void;
+    isPlanCurrent: (plan: KioscoPlanEnum) => boolean;
+}
+
+// Página /membership/checkout/:plan.
+export interface UseMembershipCheckoutPageReturn {
+    plan: KioscoPlanEnum | null;
+    planDefinition: MembershipPlanWithFeatures | null;
+    loading: boolean;
+    error: string | null;
+    isSubmitting: boolean;
+    checkoutError: string | null;
+    pay: () => void;
+}
+
+// Página /membership/checkout/result: status + vista derivada (nombre del
+// plan ya traducido, y a qué mensaje/estado corresponde).
+export interface UseMembershipCheckoutResultReturn {
+    status: MembershipStatus | null;
+    loading: boolean;
+    error: string | null;
+    refetch: () => void;
+    planName: string;
+    isActive: boolean;
+    isCancelled: boolean;
+    goToShop: () => void;
+}

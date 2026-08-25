@@ -7,16 +7,14 @@ import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlin
 import AppLayout from "../../shared/layout/AppLayout";
 import BackButton from "../../shared/components/Buttons/BackButton";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
-import { useMembershipCheckoutPlan } from "../../../hooks/membership/useMembershipCheckoutPlan";
-import { useMembershipCheckout } from "../../../hooks/membership/useMembershipCheckout";
+import { useMembershipCheckoutPage } from "../../../hooks/membership/useMembershipCheckoutPage";
 import { formatMembershipPrice } from "../helpers/formatMembershipPrice";
 import PaymentMethodRow from "../components/PaymentMethodRow";
 
 const MembershipCheckoutPage = (): React.ReactNode => {
     const { t } = useTranslation();
     const { plan: planParam } = useParams<{ plan: string }>();
-    const { plan, planDefinition, loading, error } = useMembershipCheckoutPlan(planParam);
-    const { isSubmitting, error: checkoutError, startCheckout } = useMembershipCheckout();
+    const { plan, planDefinition, loading, error, isSubmitting, checkoutError, pay } = useMembershipCheckoutPage(planParam);
 
     return (
         <AppLayout>
@@ -118,7 +116,7 @@ const MembershipCheckoutPage = (): React.ReactNode => {
 
                         <PrimaryButtonComponent
                             buttonText={t("membership.checkout.payButton")}
-                            buttonOnClick={() => startCheckout(planDefinition.id)}
+                            buttonOnClick={pay}
                             buttonWidth="100%"
                             disabled={isSubmitting}
                             dataTestId="membership-checkout-pay-button"

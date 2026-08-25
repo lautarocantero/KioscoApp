@@ -1,19 +1,12 @@
 import { Box, Skeleton, Stack, Typography, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import AppLayout from "../../shared/layout/AppLayout";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
-import { useMembershipStatus } from "../../../hooks/membership/useMembershipStatus";
-import { KioscoPlanStatusEnum } from "@typings/membership/membershipEnums";
+import { useMembershipCheckoutResult } from "../../../hooks/membership/useMembershipCheckoutResult";
 
 const MembershipCheckoutResultPage = (): React.ReactNode => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
-    const { status, loading, error, refetch } = useMembershipStatus();
-
-    const planName = status ? t(`membership.plans.names.${status.plan}`) : "";
-    const isActive = status?.plan_status === KioscoPlanStatusEnum.Active;
-    const isCancelled = status?.plan_status === KioscoPlanStatusEnum.Cancelled;
+    const { status, loading, error, refetch, planName, isActive, isCancelled, goToShop } = useMembershipCheckoutResult();
 
     return (
         <AppLayout>
@@ -49,7 +42,7 @@ const MembershipCheckoutResultPage = (): React.ReactNode => {
                     )}
                     <PrimaryButtonComponent
                         buttonText={t("membership.checkoutResult.backToSettings")}
-                        buttonOnClick={() => navigate("/shop")}
+                        buttonOnClick={goToShop}
                         buttonColor="default"
                     />
                 </Stack>

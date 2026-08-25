@@ -2,9 +2,10 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Grid, type Theme } from "@mui/material";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import type { BackButtonProps } from "@typings/ui/buttons.types";
 
 
-const BackButton = (): React.ReactNode => {
+const BackButton = ({ align = "center" }: BackButtonProps): React.ReactNode => {
     const navigate = useNavigate();
     return (
         <Grid
@@ -12,7 +13,7 @@ const BackButton = (): React.ReactNode => {
                 borderRadius: "1em",
                 width: "100%",
                 height: '3.5em',
-                textAlign: 'center',
+                textAlign: align,
                 alignContent: 'center',
             })}>
             <Button 
