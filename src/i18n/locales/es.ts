@@ -172,6 +172,105 @@ const es = {
     admin: "Administrador",
     seller: "Vendedor",
   },
+  permissions: {
+    adminOnly: "Solo disponible para el administrador",
+  },
+  rolesPermissions: {
+    triggerLabel: "¿Qué puede hacer un vendedor?",
+    dialogTitle: "Roles y permisos",
+    dialogSubtitle: "Esto es lo que puede hacer cada rol hoy en Stocko.",
+    adminBadge: "Admin",
+    bothBadge: "Ambos",
+    domains: {
+      kiosco: {
+        title: "Kiosco",
+        actions: {
+          create: "Crear un kiosco",
+          join: "Unirse a un kiosco por código",
+          switch: "Cambiar de kiosco activo",
+          invite: "Ver / copiar código de invitación",
+          changeRole: "Cambiar el rol de un miembro",
+        },
+      },
+      products: {
+        title: "Productos",
+        actions: {
+          create: "Crear producto",
+          edit: "Editar producto",
+          delete: "Eliminar producto",
+          view: "Ver / listar / buscar productos",
+          stats: "Ver estadísticas de productos",
+        },
+      },
+      presentations: {
+        title: "Presentaciones",
+        actions: {
+          create: "Crear presentación",
+          edit: "Editar presentación",
+          delete: "Eliminar presentación",
+          restock: "Reponer stock",
+          view: "Ver detalle y analíticas",
+          providers: "Asociar proveedores",
+        },
+      },
+      providers: {
+        title: "Proveedores",
+        actions: {
+          create: "Crear proveedor",
+          edit: "Editar proveedor",
+          delete: "Eliminar proveedor",
+          view: "Ver / listar / buscar proveedores",
+          stats: "Ver estadísticas de proveedores",
+        },
+      },
+      sells: {
+        title: "Ventas / Caja",
+        actions: {
+          sell: "Armar carrito y cobrar",
+          view: "Ver listado y detalle de ventas",
+          edit: "Editar una venta",
+          delete: "Eliminar una venta",
+          settleDebt: "Saldar deuda de una venta parcial",
+        },
+      },
+      receipts: {
+        title: "Comprobantes",
+        actions: {
+          upload: "Subir y confirmar comprobante",
+        },
+      },
+      sellers: {
+        title: "Vendedores",
+        actions: {
+          invite: "Invitar vendedor",
+          view: "Listar y ver detalle de vendedores",
+          editOwnName: "Editar el propio nombre",
+          editOtherName: "Editar el nombre de otro vendedor",
+          editRole: "Editar el rol de un vendedor",
+          remove: "Eliminar vendedor del kiosco",
+        },
+      },
+      dashboard: {
+        title: "Dashboard",
+        actions: {
+          view: "Ver todo el contenido del dashboard",
+          changeRange: "Cambiar el rango de fechas del gráfico de ventas",
+        },
+      },
+      membership: {
+        title: "Membresía / Suscripción",
+        actions: {
+          manage: "Ver planes, estado y pagar la membresía",
+        },
+      },
+      settings: {
+        title: "Configuración",
+        actions: {
+          personal: "Tema, idioma, fuente, contraseña",
+        },
+      },
+    },
+  },
   sellerStatus: {
     online: "En línea",
     offline: "Desconectado",

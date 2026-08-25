@@ -28,6 +28,8 @@ const RowActionsCell = ({
   viewLabel = "Ver detalle",
   editLabel = "Editar",
   deleteLabel = "Eliminar",
+  deleteDisabled = false,
+  deleteDisabledReason,
 }: RowActionsCellProps): React.ReactNode => (
   <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }} role="group" aria-label="Acciones de la fila">
 
@@ -88,10 +90,18 @@ const RowActionsCell = ({
     )}
 
     {onDelete && (
-      <Tooltip title={deleteLabel}>
-        <IconButton size="small" color="error" onClick={onDelete} aria-label={deleteLabel}>
-          <DeleteOutlineIcon fontSize="small" />
-        </IconButton>
+      <Tooltip title={deleteDisabled ? deleteDisabledReason ?? deleteLabel : deleteLabel}>
+        <span>
+          <IconButton
+            size="small"
+            color="error"
+            onClick={onDelete}
+            aria-label={deleteLabel}
+            disabled={deleteDisabled}
+          >
+            <DeleteOutlineIcon fontSize="small" />
+          </IconButton>
+        </span>
       </Tooltip>
     )}
   </Box>

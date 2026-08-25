@@ -8,17 +8,23 @@ import type { SellEditFormValues } from "@typings/sells/sellTypes";
 import { usePrintSellTicket } from "./usePrintSellTicket";
 import type { AppDispatch } from "../../store/sell/sellSlice";
 import { useErrorParser } from "../shared/useErrorParser";
+import { useIsActiveKioscoAdmin } from "../kiosco/useIsActiveKioscoAdmin";
 
 
 /*══════════════════════════════════════════════╗
 ║ 🪝 useSellEdit                             ║
 ╚══════════════════════════════════════════════*/
 
+// Editar una venta cerrada es exclusivo de admin (modificar el historial es
+// sensible). Hoy no hay ningún botón que dispare esta ruta (ver comentario
+// en sellColumns.tsx), pero /sell/:id/sell-edit sigue siendo accesible por
+// URL directa — `isAdmin` deja a SellForm.tsx bloquear ese acceso.
 export const useSellEdit = () => {
     const { sell_id: sellId } = useParams<{ sell_id: string }>();
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const isAdmin = useIsActiveKioscoAdmin();
 
     const { sellData: editingSell, isLoading: isLoadingSell } = useSellData(sellId);
 
@@ -59,6 +65,7 @@ export const useSellEdit = () => {
     return {
         editingSell,
         isLoadingSell,
+        isAdmin,
         updatedSellId,
         handleEdit,
         currentStep,

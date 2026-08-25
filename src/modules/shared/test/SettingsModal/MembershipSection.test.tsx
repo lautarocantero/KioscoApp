@@ -6,10 +6,13 @@ import { KioscoPlanEnum, KioscoPlanStatusEnum } from "@typings/membership/member
 import { renderWithTheme } from "../utils/setupTests";
 import MembershipSection from "../../components/SettingsModal/sections/MembershipSection";
 import { useMembershipStatus } from "../../../../hooks/membership/useMembershipStatus";
+import { useIsActiveKioscoAdmin } from "../../../../hooks/kiosco/useIsActiveKioscoAdmin";
 
 vi.mock("../../../../hooks/membership/useMembershipStatus", () => ({
     useMembershipStatus: vi.fn(),
 }));
+
+vi.mock("../../../../hooks/kiosco/useIsActiveKioscoAdmin");
 
 vi.mock("react-router-dom", async () => {
     const actual = await vi.importActual("react-router-dom");
@@ -18,10 +21,12 @@ vi.mock("react-router-dom", async () => {
 
 const mockedUseMembershipStatus = vi.mocked(useMembershipStatus);
 const mockedUseNavigate = vi.mocked(useNavigate);
+const mockedUseIsActiveKioscoAdmin = vi.mocked(useIsActiveKioscoAdmin);
 
 describe("MembershipSection", () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        mockedUseIsActiveKioscoAdmin.mockReturnValue(true);
     });
 
     it("muestra el nombre del plan actual y un botón 'Cambiar plan'", () => {
@@ -78,5 +83,25 @@ describe("MembershipSection", () => {
         );
 
         expect(screen.getByRole("alert")).toHaveTextContent("No se pudo obtener el estado de tu membresía");
+    });
+
+    it("seller (no admin): no muestra el plan ni el botón, solo el aviso de acceso restringido", () => {
+        mockedUseIsActiveKioscoAdmin.mockReturnValue(false);
+        mockedUseMembershipStatus.mockReturnValue({
+            status: { plan: KioscoPlanEnum.Stocko, plan_status: KioscoPlanStatusEnum.Active, next_payment_date: null },
+            loading: false,
+            error: null,
+            refetch: vi.fn(),
+        });
+
+        renderWithTheme(
+            <MemoryRouter>
+                <MembershipSection />
+            </MemoryRouter>
+        );
+
+        expect(screen.getByText("Solo disponible para el administrador")).toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: "Cambiar plan" })).not.toBeInTheDocument();
+        expect(screen.queryByText("Stocko")).not.toBeInTheDocument();
     });
 });

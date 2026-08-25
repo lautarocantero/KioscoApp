@@ -83,9 +83,10 @@ export interface UseSellerDataReturn {
 // está mirando. Resueltas acá (no en el .tsx) porque son lógica de negocio,
 // no un simple condicional de render.
 export interface UseSellerFormPermissionsReturn {
-    isAdmin:        boolean;
-    disabledFields: (keyof SellerFormValues)[];
-    showRoleBadge:  boolean;
+    isAdmin:               boolean;
+    disabledFields:        (keyof SellerFormValues)[];
+    disabledFieldsTooltip: Partial<Record<keyof SellerFormValues, string>>;
+    showRoleBadge:         boolean;
 }
 
 export interface UseSellersListDataReturn {
@@ -118,10 +119,10 @@ export interface UseSellersReturn {
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export interface BuildSellerColumnsArgs {
-    // undefined: quien ve la tabla no es admin, no puede eliminar (ver useSellers).
-    onDeleteRequest?: (id: string, name: string) => void;
-    onEditRequest:    (seller: Seller) => void;
-    navigate:         NavigateFunction;
+    onDeleteRequest: (id: string, name: string) => void;
+    onEditRequest:   (seller: Seller) => void;
+    navigate:        NavigateFunction;
+    isAdmin:         boolean;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

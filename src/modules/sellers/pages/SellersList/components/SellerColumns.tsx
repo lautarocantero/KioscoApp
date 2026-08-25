@@ -11,6 +11,7 @@ export const buildColumnsForSellers = ({
     onDeleteRequest,
     onEditRequest,
     navigate,
+    isAdmin,
 }: BuildSellerColumnsArgs): GridColDef<Seller>[] => [
     { field: "name", headerName: "Nombre", flex: 1.5, minWidth: 150 },
     { field: "email", headerName: "Email", flex: 1, minWidth: 200 },
@@ -41,7 +42,9 @@ export const buildColumnsForSellers = ({
                 <RowActionsCell
                     onView={() => navigate(`/seller/${params.row._id}`)}
                     onEdit={() => onEditRequest(params.row)}
-                    onDelete={onDeleteRequest ? () => onDeleteRequest(params.row._id, params.row.name) : undefined}
+                    onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
+                    deleteDisabled={!isAdmin}
+                    deleteDisabledReason="Solo disponible para el administrador"
                 />
             </CellCenter>
         ),

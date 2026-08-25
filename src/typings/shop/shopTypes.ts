@@ -26,6 +26,7 @@ export interface UseShopSalesSummaryReturn {
   periodTotal: number;
   range: ShopSalesRange;
   setRange: (range: ShopSalesRange) => void;
+  canChangeRange: boolean;
   topSellers: TopSellerSummary[];
   isLoading: boolean;
   error: string | null;

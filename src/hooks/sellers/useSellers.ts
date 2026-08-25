@@ -56,10 +56,13 @@ export const useSellers = (): UseSellersReturn => {
 
     const columns = buildColumnsForSellers({
         // El borrado elimina Auth+Seller en cascada: solo un admin puede
-        // hacerlo (el back también lo rechaza con 403 si no lo es).
-        onDeleteRequest: isAdmin ? handleDeleteRequest : undefined,
+        // hacerlo (el back también lo rechaza con 403 si no lo es). El
+        // botón siempre se pasa; queda disabled+tooltip para no-admin
+        // (mismo patrón que productos/presentaciones/proveedores).
+        onDeleteRequest: handleDeleteRequest,
         onEditRequest: handleEditRequest,
         navigate,
+        isAdmin,
     });
 
     return {

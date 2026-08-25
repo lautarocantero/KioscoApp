@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { act } from "react";
 import { SellerStatus } from "@typings/seller/sellerEnums";
 import { ShopSalesRange } from "@typings/shop/shopEnums";
+import { AuthRoleEnum } from "@typings/auth/authEnums";
 import type { SellTicketType } from "@typings/sells/sellTypes";
 import type { Seller } from "@typings/seller/sellerTypes";
 import { useShopSalesSummary } from "../useShopSalesSummary";
+
+const KIOSCO_ID = "kiosco-1";
 
 vi.mock("react-redux", async () => {
     const actual = await vi.importActual("react-redux");
@@ -26,11 +29,16 @@ describe("useShopSalesSummary", () => {
         sellers = [] as Pick<Seller, "_id" | "user_status">[],
         sellersLoading = false,
         sellersError = null as string | null,
+        role = AuthRoleEnum.Admin,
     }) => {
         mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
             selectorFn({
                 sell: { sells, isLoading: sellsLoading, errorMessage: sellsError },
                 seller: { sellers, isLoading: sellersLoading, errorMessage: sellersError },
+                kiosco: {
+                    activeKioscoId: KIOSCO_ID,
+                    myKioscos: [{ _id: KIOSCO_ID, role }],
+                },
             })
         );
     };
@@ -94,6 +102,24 @@ describe("useShopSalesSummary", () => {
         expect(result.current.range).toBe(ShopSalesRange.Month);
         expect(result.current.dailySales).toHaveLength(30);
         expect(result.current.periodTotal).toBe(1000);
+    });
+
+    it("admin del kiosco activo: canChangeRange es true", () => {
+        mockState({ role: AuthRoleEnum.Admin });
+        const { result } = renderHook(() => useShopSalesSummary());
+
+        expect(result.current.canChangeRange).toBe(true);
+    });
+
+    it("seller: canChangeRange es false y setRange no cambia el rango (no-op)", () => {
+        mockState({ role: AuthRoleEnum.Seller });
+        const { result } = renderHook(() => useShopSalesSummary());
+
+        expect(result.current.canChangeRange).toBe(false);
+
+        act(() => result.current.setRange(ShopSalesRange.Month));
+
+        expect(result.current.range).toBe(ShopSalesRange.SevenDays);
     });
 
     it("propaga isLoading si cualquiera de las dos fuentes está cargando", () => {

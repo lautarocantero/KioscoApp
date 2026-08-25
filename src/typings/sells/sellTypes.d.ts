@@ -439,6 +439,7 @@ export interface BuildColumnsForSellsArgs {
     onSettleDebtRequest: (sell: SellTicketType) => void;
     navigate: (path: string) => void;
     t: TFunction;
+    isAdmin: boolean;
 }
 
 export interface SettleSellDebtThunkInterface {

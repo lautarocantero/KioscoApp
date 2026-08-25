@@ -16,6 +16,7 @@ export const buildColumnsForSells = ({
     onSettleDebtRequest,
     navigate,
     t,
+    isAdmin,
 }: BuildColumnsForSellsArgs): GridColDef<SellTicketType>[] => [
     dateColumn<SellTicketType>({ field: "purchase_date", headerName: t("sells.table.columns.date"), width: 130 }),
     {
@@ -87,6 +88,8 @@ export const buildColumnsForSells = ({
                     settleDebtLabel={t("sells.settleDebtDialog.actionLabel")}
                     onDelete={() => onDeleteRequest(params.row._id, params.row._id)}
                     deleteLabel={t("sells.table.actions.delete")}
+                    deleteDisabled={!isAdmin}
+                    deleteDisabledReason={t("permissions.adminOnly")}
                 />
             </CellCenter>
         ),

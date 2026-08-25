@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useProviders } from "../useProviders";
 import useProvidersListData from "../useProviderListData";
 import { buildColumnsForProviders } from "../../../modules/providers/pages/ProvidersList/components/providerColumns";
+import { useIsActiveKioscoAdmin } from "../../kiosco/useIsActiveKioscoAdmin";
 
 vi.mock("react-redux", async () => {
     const actual = await vi.importActual("react-redux");
@@ -18,11 +19,13 @@ vi.mock("react-router-dom", async () => {
 
 vi.mock("../useProviderListData");
 vi.mock("../../../modules/providers/pages/ProvidersList/components/providerColumns");
+vi.mock("../../kiosco/useIsActiveKioscoAdmin");
 
 const mockedUseDispatch = vi.mocked(useDispatch);
 const mockedUseNavigate = vi.mocked(useNavigate);
 const mockedUseProvidersListData = vi.mocked(useProvidersListData);
 const mockedBuildColumns = vi.mocked(buildColumnsForProviders);
+const mockedUseIsActiveKioscoAdmin = vi.mocked(useIsActiveKioscoAdmin);
 
 describe("useProviders", () => {
     const dispatch = vi.fn();
@@ -40,6 +43,7 @@ describe("useProviders", () => {
             setSearchTerm: vi.fn(),
         });
         mockedBuildColumns.mockReturnValue([]);
+        mockedUseIsActiveKioscoAdmin.mockReturnValue(true);
     });
 
     it("el diálogo de borrado arranca cerrado", () => {
@@ -88,12 +92,22 @@ describe("useProviders", () => {
         expect(result.current.deleteDialog.open).toBe(false);
     });
 
-    it("arma las columnas pasando onDeleteRequest y navigate", () => {
+    it("arma las columnas pasando onDeleteRequest, navigate e isAdmin", () => {
         renderHook(() => useProviders());
 
         expect(mockedBuildColumns).toHaveBeenCalledWith({
             onDeleteRequest: expect.any(Function),
             navigate,
+            isAdmin: true,
         });
+    });
+
+    it("propaga isAdmin=false cuando el usuario no es admin del kiosco activo", () => {
+        mockedUseIsActiveKioscoAdmin.mockReturnValue(false);
+        renderHook(() => useProviders());
+
+        expect(mockedBuildColumns).toHaveBeenCalledWith(
+            expect.objectContaining({ isAdmin: false })
+        );
     });
 });

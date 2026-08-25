@@ -14,10 +14,10 @@ const buildProvider = (overrides: Partial<Provider> = {}): Provider => ({
     ...overrides,
 });
 
-const getColumn = (field: string) => {
+const getColumn = (field: string, isAdmin = true) => {
     const onDeleteRequest = vi.fn();
     const navigate = vi.fn();
-    const column = buildColumnsForProviders({ onDeleteRequest, navigate }).find((col) => col.field === field);
+    const column = buildColumnsForProviders({ onDeleteRequest, navigate, isAdmin }).find((col) => col.field === field);
     if (!column) throw new Error(`Column "${field}" not found`);
     return { column, onDeleteRequest, navigate };
 };
@@ -27,7 +27,7 @@ const buildCellParams = (provider: Provider): GridRenderCellParams<Provider> =>
 
 describe("buildColumnsForProviders", () => {
     it("define las columnas básicas con sus headerName", () => {
-        const columns = buildColumnsForProviders({ onDeleteRequest: vi.fn(), navigate: vi.fn() });
+        const columns = buildColumnsForProviders({ onDeleteRequest: vi.fn(), navigate: vi.fn(), isAdmin: true });
 
         expect(columns.map((c) => c.field)).toEqual(["name", "valoration", "contact_phone", "contact_email", "actions"]);
         expect(columns.find((c) => c.field === "name")?.headerName).toBe("Nombre");
@@ -67,14 +67,32 @@ describe("buildColumnsForProviders", () => {
             expect(navigate).toHaveBeenCalledWith("/provider/provider-1/provider-edit");
         });
 
-        it("llama a onDeleteRequest con id y nombre al presionar Eliminar", () => {
-            const { column, onDeleteRequest } = getColumn("actions");
+        it("admin: llama a onDeleteRequest con id y nombre al presionar Eliminar", () => {
+            const { column, onDeleteRequest } = getColumn("actions", true);
             const provider = buildProvider();
 
             renderWithTheme(column.renderCell!(buildCellParams(provider)));
-            fireEvent.click(screen.getByLabelText("Eliminar"));
+            const deleteButton = screen.getByRole("button", { name: "Eliminar" });
+
+            expect(deleteButton).not.toBeDisabled();
+            fireEvent.click(deleteButton);
 
             expect(onDeleteRequest).toHaveBeenCalledWith("provider-1", "Distribuidora QA");
+        });
+
+        it("seller (no admin): el botón Eliminar aparece disabled con tooltip", async () => {
+            const { column, onDeleteRequest } = getColumn("actions", false);
+            const provider = buildProvider();
+
+            renderWithTheme(column.renderCell!(buildCellParams(provider)));
+            const deleteButton = screen.getByRole("button", { name: "Eliminar" });
+
+            expect(deleteButton).toBeDisabled();
+            fireEvent.click(deleteButton);
+            expect(onDeleteRequest).not.toHaveBeenCalled();
+
+            fireEvent.mouseOver(deleteButton);
+            expect(await screen.findByText("Solo disponible para el administrador")).toBeInTheDocument();
         });
     });
 });

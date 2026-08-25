@@ -237,6 +237,7 @@ export interface BuildColumnsArgs {
     onDeleteRequest: (id: string, name: string) => void;
     navigate:        NavigateFunction;
     t:               TFunction;
+    isAdmin:         boolean;
 }
 
 // /*══════════════════════════════════════════════════════════════════════╗

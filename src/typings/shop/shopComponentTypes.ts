@@ -23,7 +23,7 @@ export interface ShopStatsRowProps {
   links: OptionLink[];
 }
 
-export type ShopSalesChartProps = Pick<UseShopSalesSummaryReturn, "dailySales" | "periodTotal" | "range" | "setRange" | "isLoading" | "error">;
+export type ShopSalesChartProps = Pick<UseShopSalesSummaryReturn, "dailySales" | "periodTotal" | "range" | "setRange" | "canChangeRange" | "isLoading" | "error">;
 
 export type ShopTopSellersProps = Pick<UseShopSalesSummaryReturn, "topSellers" | "isLoading" | "error">;
 

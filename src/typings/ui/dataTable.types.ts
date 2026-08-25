@@ -126,6 +126,8 @@ export interface RowActionsCellProps {
   onSettleDebt?: () => void;
   settleDebtLabel?: string;
   deleteLabel?: string;
+  deleteDisabled?: boolean;
+  deleteDisabledReason?: string;
   editLabel?: string;
   viewLabel?: string;
 }

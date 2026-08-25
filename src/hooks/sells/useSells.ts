@@ -16,6 +16,7 @@ import { CLOSED_DIALOG } from "../../config/constants";
 import { useErrorParser } from "../shared/useErrorParser";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
+import { useIsActiveKioscoAdmin } from "../kiosco/useIsActiveKioscoAdmin";
 
 
 export const useSells = (): UseSellsReturn => {
@@ -23,6 +24,7 @@ export const useSells = (): UseSellsReturn => {
     const dispatch = useDispatch<AppDispatch>();
     const snackBarContext = useContext(SnackBarContext);
     const { t } = useTranslation();
+    const isAdmin = useIsActiveKioscoAdmin();
 
     const { sells, loading, error, searchTerm, setSearchTerm } = useSellsListData();
 
@@ -63,6 +65,7 @@ export const useSells = (): UseSellsReturn => {
         onSettleDebtRequest: handleSettleDebtRequest,
         navigate,
         t,
+        isAdmin,
     });
 
     return {
