@@ -15,6 +15,7 @@ function FormFieldsRenderer<T extends object>({
     icons,
     readOnly = false,
     disabledFields,
+    disabledTooltip,
     sectionLabel,
     idPrefix,
     renderBeforeField,
@@ -140,7 +141,10 @@ function FormFieldsRenderer<T extends object>({
                     <Grid key={String(fieldKey)} spacing={{ xs: 12, sm: 12 }}>
                         {renderBeforeField?.[fieldKey]}
                         <FieldWithIcon iconConfig={icons?.[fieldKey]}>
-                            <Tooltip title={config.tooltip} placement="top-start">
+                            <Tooltip
+                                title={isFieldDisabled ? disabledTooltip?.[fieldKey] ?? config.tooltip : config.tooltip}
+                                placement="top-start"
+                            >
                                 <TextField
                                     id={inputId}
                                     name={String(fieldKey)}

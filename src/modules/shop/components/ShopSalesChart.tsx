@@ -1,4 +1,4 @@
-import { Box, MenuItem, Select, Skeleton, Typography, useTheme, type Theme, type SelectChangeEvent } from "@mui/material";
+import { Box, MenuItem, Select, Skeleton, Tooltip as MuiTooltip, Typography, useTheme, type Theme, type SelectChangeEvent } from "@mui/material";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { useTranslation } from "react-i18next";
 import type { ShopSalesChartProps } from "@typings/shop/shopComponentTypes";
@@ -8,7 +8,7 @@ import ShopSalesChartTooltip from "./ShopSalesChartTooltip";
 
 const RANGE_OPTIONS = Object.values(ShopSalesRange);
 
-const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, isLoading, error }: ShopSalesChartProps): React.ReactNode => {
+const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, canChangeRange, isLoading, error }: ShopSalesChartProps): React.ReactNode => {
     const theme = useTheme();
     const { t } = useTranslation();
 
@@ -53,19 +53,24 @@ const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, isLoading, e
                     )}
                 </Box>
 
-                <Select
-                    value={range}
-                    onChange={handleRangeChange}
-                    size="small"
-                    aria-label={t("shop.salesChart.rangeAriaLabel")}
-                    sx={{ alignSelf: { xs: "flex-start", sm: "center" }, minWidth: 160 }}
-                >
-                    {RANGE_OPTIONS.map((option) => (
-                        <MenuItem key={option} value={option}>
-                            {t(`shopSalesRange.${option}`)}
-                        </MenuItem>
-                    ))}
-                </Select>
+                <MuiTooltip title={canChangeRange ? "" : t("permissions.adminOnly")}>
+                    <span>
+                        <Select
+                            value={range}
+                            onChange={handleRangeChange}
+                            size="small"
+                            disabled={!canChangeRange}
+                            aria-label={t("shop.salesChart.rangeAriaLabel")}
+                            sx={{ alignSelf: { xs: "flex-start", sm: "center" }, minWidth: 160 }}
+                        >
+                            {RANGE_OPTIONS.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {t(`shopSalesRange.${option}`)}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </span>
+                </MuiTooltip>
             </Box>
 
             {error && (

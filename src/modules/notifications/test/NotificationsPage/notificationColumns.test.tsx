@@ -109,7 +109,7 @@ describe("buildColumnsForNotifications", () => {
             const notification = buildNotification();
 
             renderWithTheme(column.renderCell!(buildCellParams(notification)));
-            fireEvent.click(screen.getByLabelText("Eliminar"));
+            fireEvent.click(screen.getByRole("button", { name: "Eliminar" }));
 
             expect(onDeleteRequest).toHaveBeenCalledWith(
                 "notification-1",

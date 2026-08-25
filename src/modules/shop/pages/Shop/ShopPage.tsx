@@ -49,6 +49,7 @@ const ShopPage = (): React.ReactNode => {
                     periodTotal={salesSummary.periodTotal}
                     range={salesSummary.range}
                     setRange={salesSummary.setRange}
+                    canChangeRange={salesSummary.canChangeRange}
                     isLoading={salesSummary.isLoading}
                     error={salesSummary.error}
                 />

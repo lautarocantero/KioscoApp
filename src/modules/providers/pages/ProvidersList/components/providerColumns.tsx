@@ -7,6 +7,7 @@ import { CellCenter } from "../../../../shared/components/DataTable/CellCenter";
 export const buildColumnsForProviders = ({
     onDeleteRequest,
     navigate,
+    isAdmin,
 }: BuildProviderColumnsArgs): GridColDef<Provider>[] => [
     { field: "name", headerName: "Nombre", flex: 1.3, minWidth: 160 },
     {
@@ -39,6 +40,8 @@ export const buildColumnsForProviders = ({
                     onView={() => navigate(`/provider/${params.row._id}`)}
                     onEdit={() => navigate(`/provider/${params.row._id}/provider-edit`)}
                     onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
+                    deleteDisabled={!isAdmin}
+                    deleteDisabledReason="Solo disponible para el administrador"
                 />
             </CellCenter>
         ),

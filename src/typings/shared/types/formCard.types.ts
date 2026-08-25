@@ -56,6 +56,7 @@ export interface FormFieldsRendererProps<T extends object> {
     icons?: Partial<Record<keyof T, IconConfig>>;
     readOnly?: boolean;
     disabledFields?: (keyof T)[];
+    disabledTooltip?: Partial<Record<keyof T, string>>;
     sectionLabel: string;
     idPrefix: string;
     renderBeforeField?: Partial<Record<keyof T, ReactNode>>;

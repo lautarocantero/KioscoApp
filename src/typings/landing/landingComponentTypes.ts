@@ -27,6 +27,7 @@ export interface LandingFeatureShowcaseBadgeProps {
 export interface LandingFeatureShowcaseBulletsProps {
   bullets: LandingFeatureShowcaseBullet[];
   accent: LandingAccentKey;
+  onBulletClick?: () => void;
 }
 
 export interface LandingFeatureShowcaseMediaProps {

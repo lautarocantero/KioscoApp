@@ -12,6 +12,7 @@ import { CLOSED_DIALOG } from "../../config/constants";
 import { useErrorParser } from "../shared/useErrorParser";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
+import { useIsActiveKioscoAdmin } from "../kiosco/useIsActiveKioscoAdmin";
 
 
 export const useProducts = (): UseProductsReturn => {
@@ -19,6 +20,7 @@ export const useProducts = (): UseProductsReturn => {
     const dispatch = useDispatch<AppDispatch>();
     const snackBarContext = useContext(SnackBarContext);
     const { t } = useTranslation();
+    const isAdmin = useIsActiveKioscoAdmin();
 
 
     const { products, loading, error, searchTerm, setSearchTerm } = useProductsListData();
@@ -42,7 +44,7 @@ export const useProducts = (): UseProductsReturn => {
         }
     };
 
-    const columns = buildColumnsForProducts({ onDeleteRequest: handleDeleteRequest, navigate, t });
+    const columns = buildColumnsForProducts({ onDeleteRequest: handleDeleteRequest, navigate, t, isAdmin });
 
     return {
         productsWithPresentations: products,

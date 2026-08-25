@@ -25,6 +25,10 @@ Toda la data (`inviteInfo`, `loading`, `error`, `copied`) y el handler de copiad
 | `error` | `Alert severity="error"` con el mensaje |
 | `inviteInfo` listo | código + link (readOnly) + botón "Copiar link" (cambia a "¡Copiado!" con ícono de check tras el click) |
 
+## Link "¿Qué puede hacer un vendedor?"
+
+Siempre visible al pie del modal (independiente del estado de `inviteInfo`). Abre [RolesPermissionsDialog](RolesPermissionsDialog.md) con la matriz completa de qué puede hacer cada rol — es el momento natural en que un admin decide si invitar a alguien y necesita saber qué le va a poder delegar. El estado de apertura (`rolesInfoOpen`) es un `useState` local al componente (mismo patrón que `PasswordField.tsx`): es un toggle de UI puro, no hay lógica de negocio que resolver.
+
 ## Ejemplo de uso
 
 ```tsx

@@ -53,6 +53,7 @@ const renderRatingForm = (initialValue = 0) =>
 const renderForm = (
     disabledFields: (keyof TestValues)[] = [],
     renderBeforeField?: Partial<Record<keyof TestValues, React.ReactNode>>,
+    disabledTooltip?: Partial<Record<keyof TestValues, string>>,
 ) =>
     renderWithTheme(
         <Formik initialValues={{ name: "Juan", rol: "seller" }} onSubmit={() => {}}>
@@ -63,6 +64,7 @@ const renderForm = (
                 fields={["name", "rol"]}
                 disabledFields={disabledFields}
                 renderBeforeField={renderBeforeField}
+                disabledTooltip={disabledTooltip}
             />
         </Formik>
     );
@@ -87,6 +89,24 @@ describe("FormFieldsRenderer — disabledFields", () => {
 
         expect(getByRole("textbox", { name: "Nombre" })).toBeDisabled();
         expect(getByRole("combobox")).not.toHaveAttribute("aria-disabled");
+    });
+});
+
+describe("FormFieldsRenderer — disabledTooltip", () => {
+    it("usa el tooltip por defecto del campo cuando no está disabled", async () => {
+        const { getByRole, findByText } = renderForm([], undefined, { name: "Solo para admins" });
+
+        fireEvent.mouseOver(getByRole("textbox", { name: "Nombre" }));
+
+        expect(await findByText("Nombre")).toBeInTheDocument();
+    });
+
+    it("usa el tooltip override cuando el campo está disabled", async () => {
+        const { getByRole, findByText } = renderForm(["name"], undefined, { name: "Solo para admins" });
+
+        fireEvent.mouseOver(getByRole("textbox", { name: "Nombre" }));
+
+        expect(await findByText("Solo para admins")).toBeInTheDocument();
     });
 });
 

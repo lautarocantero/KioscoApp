@@ -11,11 +11,13 @@ import { buildColumnsForProviders } from "../../modules/providers/pages/Provider
 import { useErrorParser } from "../shared/useErrorParser";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
+import { useIsActiveKioscoAdmin } from "../kiosco/useIsActiveKioscoAdmin";
 
 export const useProviders = (): UseProvidersReturn => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const snackBarContext = useContext(SnackBarContext);
+    const isAdmin = useIsActiveKioscoAdmin();
 
     const { providers, loading, error, searchTerm, setSearchTerm } = useProvidersListData();
 
@@ -40,7 +42,7 @@ export const useProviders = (): UseProvidersReturn => {
         }
     };
 
-    const columns = buildColumnsForProviders({ onDeleteRequest: handleDeleteRequest, navigate });
+    const columns = buildColumnsForProviders({ onDeleteRequest: handleDeleteRequest, navigate, isAdmin });
 
     return {
         providers,

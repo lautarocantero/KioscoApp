@@ -10,6 +10,7 @@ export const buildColumnsForProducts = ({
     onDeleteRequest,
     navigate,
     t,
+    isAdmin,
 }: BuildColumnsArgs): GridColDef<Product>[] => [
     {
         field: "name",
@@ -79,6 +80,8 @@ export const buildColumnsForProducts = ({
                     onView={() => navigate(`/product/${params.row._id}`)}
                     onEdit={() => navigate(`/product/${params.row._id}/product-edit`)}
                     onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
+                    deleteDisabled={!isAdmin}
+                    deleteDisabledReason={t("permissions.adminOnly")}
                 />
             </CellCenter>
         ),

@@ -51,7 +51,7 @@ export const getLandingFeatureShowcase = (): LandingFeatureShowcaseItem[] => [
     bullets: [
       { Icon: StorefrontOutlinedIcon, labelKey: "landing.showcase.multiKiosco.bullets.multipleKioscosOneAccount" },
       { Icon: GroupOutlinedIcon, labelKey: "landing.showcase.multiKiosco.bullets.sellerManagement" },
-      { Icon: AdminPanelSettingsOutlinedIcon, labelKey: "landing.showcase.multiKiosco.bullets.rolePermissions" },
+      { Icon: AdminPanelSettingsOutlinedIcon, labelKey: "landing.showcase.multiKiosco.bullets.rolePermissions", isClickable: true },
     ],
   },
   {

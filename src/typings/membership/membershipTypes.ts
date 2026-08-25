@@ -69,6 +69,7 @@ export interface UseMembershipSectionReturn {
     loading: boolean;
     error: string | null;
     goToPlans: () => void;
+    isAdmin: boolean;
 }
 
 // Página /membership/plans: status actual + las 3 cards de tier.
@@ -81,6 +82,7 @@ export interface UseMembershipPlansPageReturn {
     plansError: string | null;
     selectPlan: (plan: KioscoPlanEnum) => void;
     isPlanCurrent: (plan: KioscoPlanEnum) => boolean;
+    isAdmin: boolean;
 }
 
 // Página /membership/checkout/:plan.
@@ -92,6 +94,7 @@ export interface UseMembershipCheckoutPageReturn {
     isSubmitting: boolean;
     checkoutError: string | null;
     pay: () => void;
+    isAdmin: boolean;
 }
 
 // Página /membership/checkout/result: status + vista derivada (nombre del
@@ -105,4 +108,5 @@ export interface UseMembershipCheckoutResultReturn {
     isActive: boolean;
     isCancelled: boolean;
     goToShop: () => void;
+    isAdmin: boolean;
 }

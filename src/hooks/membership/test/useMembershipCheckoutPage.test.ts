@@ -5,6 +5,7 @@ import type { MembershipPlanWithFeatures } from "@typings/membership/membershipT
 import { useMembershipCheckoutPage } from "../useMembershipCheckoutPage";
 import { useMembershipCheckoutPlan } from "../useMembershipCheckoutPlan";
 import { useMembershipCheckout } from "../useMembershipCheckout";
+import { useIsActiveKioscoAdmin } from "../../kiosco/useIsActiveKioscoAdmin";
 
 vi.mock("../useMembershipCheckoutPlan", () => ({
     useMembershipCheckoutPlan: vi.fn(),
@@ -14,8 +15,11 @@ vi.mock("../useMembershipCheckout", () => ({
     useMembershipCheckout: vi.fn(),
 }));
 
+vi.mock("../../kiosco/useIsActiveKioscoAdmin");
+
 const mockedUseMembershipCheckoutPlan = vi.mocked(useMembershipCheckoutPlan);
 const mockedUseMembershipCheckout = vi.mocked(useMembershipCheckout);
+const mockedUseIsActiveKioscoAdmin = vi.mocked(useIsActiveKioscoAdmin);
 
 const buildPlan = (): MembershipPlanWithFeatures => ({
     id: KioscoPlanEnum.SuperStocko,
@@ -29,6 +33,17 @@ const buildPlan = (): MembershipPlanWithFeatures => ({
 describe("useMembershipCheckoutPage", () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        mockedUseIsActiveKioscoAdmin.mockReturnValue(true);
+    });
+
+    it("expone isAdmin=false cuando el usuario es seller del kiosco activo", () => {
+        mockedUseIsActiveKioscoAdmin.mockReturnValue(false);
+        mockedUseMembershipCheckoutPlan.mockReturnValue({ plan: null, planDefinition: null, loading: false, error: null });
+        mockedUseMembershipCheckout.mockReturnValue({ isSubmitting: false, error: null, startCheckout: vi.fn() });
+
+        const { result } = renderHook(() => useMembershipCheckoutPage(undefined));
+
+        expect(result.current.isAdmin).toBe(false);
     });
 
     it("pay() dispara startCheckout con el id del plan resuelto", () => {

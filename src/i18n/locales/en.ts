@@ -172,6 +172,105 @@ const en = {
     admin: "Admin",
     seller: "Seller",
   },
+  permissions: {
+    adminOnly: "Only available to the administrator",
+  },
+  rolesPermissions: {
+    triggerLabel: "What can a seller do?",
+    dialogTitle: "Roles and permissions",
+    dialogSubtitle: "This is what each role can do in Stocko today.",
+    adminBadge: "Admin",
+    bothBadge: "Both",
+    domains: {
+      kiosco: {
+        title: "Kiosco",
+        actions: {
+          create: "Create a kiosco",
+          join: "Join a kiosco with a code",
+          switch: "Switch the active kiosco",
+          invite: "View / copy the invite code",
+          changeRole: "Change a member's role",
+        },
+      },
+      products: {
+        title: "Products",
+        actions: {
+          create: "Create a product",
+          edit: "Edit a product",
+          delete: "Delete a product",
+          view: "View / list / search products",
+          stats: "View product stats",
+        },
+      },
+      presentations: {
+        title: "Presentations",
+        actions: {
+          create: "Create a presentation",
+          edit: "Edit a presentation",
+          delete: "Delete a presentation",
+          restock: "Restock",
+          view: "View details and analytics",
+          providers: "Link providers",
+        },
+      },
+      providers: {
+        title: "Providers",
+        actions: {
+          create: "Create a provider",
+          edit: "Edit a provider",
+          delete: "Delete a provider",
+          view: "View / list / search providers",
+          stats: "View provider stats",
+        },
+      },
+      sells: {
+        title: "Sales / Register",
+        actions: {
+          sell: "Build the cart and charge",
+          view: "View sales list and details",
+          edit: "Edit a sale",
+          delete: "Delete a sale",
+          settleDebt: "Settle a partial sale's debt",
+        },
+      },
+      receipts: {
+        title: "Receipts",
+        actions: {
+          upload: "Upload and confirm a receipt",
+        },
+      },
+      sellers: {
+        title: "Sellers",
+        actions: {
+          invite: "Invite a seller",
+          view: "List and view seller details",
+          editOwnName: "Edit their own name",
+          editOtherName: "Edit another seller's name",
+          editRole: "Edit a seller's role",
+          remove: "Remove a seller from the kiosco",
+        },
+      },
+      dashboard: {
+        title: "Dashboard",
+        actions: {
+          view: "View all dashboard content",
+          changeRange: "Change the sales chart's date range",
+        },
+      },
+      membership: {
+        title: "Membership / Subscription",
+        actions: {
+          manage: "View plans, status, and pay for the membership",
+        },
+      },
+      settings: {
+        title: "Settings",
+        actions: {
+          personal: "Theme, language, font, password",
+        },
+      },
+    },
+  },
   sellerStatus: {
     online: "Online",
     offline: "Offline",

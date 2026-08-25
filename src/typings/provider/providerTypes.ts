@@ -120,4 +120,5 @@ export interface ProviderStats {
 export interface BuildProviderColumnsArgs {
     onDeleteRequest:  (id: string, name: string) => void;
     navigate:         NavigateFunction;
+    isAdmin:          boolean;
 }

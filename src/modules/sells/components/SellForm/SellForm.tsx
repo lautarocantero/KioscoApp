@@ -26,6 +26,7 @@ const SellEditForm = (): React.ReactNode => {
     const {
         editingSell,
         isLoadingSell,
+        isAdmin,
         updatedSellId,
         handleEdit,
         currentStep,
@@ -39,6 +40,7 @@ const SellEditForm = (): React.ReactNode => {
         handleBackToSells,
     } = useSellEdit();
 
+    if (!isAdmin) return <NotEntityLoaded fallbackText={t("permissions.adminOnly")} />;
     if (isLoadingSell) return <LoadingSpinnerComponent />;
     if (!editingSell) return <NotEntityLoaded error={submitError} fallbackText={t("sells.edit.loadError")} />;
     if (updatedSellId) return (

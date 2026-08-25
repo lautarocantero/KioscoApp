@@ -27,7 +27,7 @@ const mockedUseNavigate = vi.mocked(useNavigate);
 const mockedUseSellersListData = vi.mocked(useSellersListData);
 const mockedBuildColumns = vi.mocked(buildColumnsForSellers);
 
-describe("useSellers — visibilidad del borrado según rol", () => {
+describe("useSellers — permiso de borrado según rol", () => {
     const dispatch = vi.fn();
     const navigate = vi.fn();
 
@@ -57,21 +57,21 @@ describe("useSellers — visibilidad del borrado según rol", () => {
         mockedBuildColumns.mockReturnValue([]);
     });
 
-    it("no pasa onDeleteRequest a las columnas cuando el usuario no es admin", () => {
+    it("seller: siempre pasa onDeleteRequest, con isAdmin=false (el botón queda disabled+tooltip)", () => {
         mockRole(AuthRoleEnum.Seller);
         renderHook(() => useSellers());
 
         expect(mockedBuildColumns).toHaveBeenCalledWith(
-            expect.objectContaining({ onDeleteRequest: undefined })
+            expect.objectContaining({ onDeleteRequest: expect.any(Function), isAdmin: false })
         );
     });
 
-    it("pasa onDeleteRequest a las columnas cuando el usuario es admin", () => {
+    it("admin: pasa onDeleteRequest con isAdmin=true", () => {
         mockRole(AuthRoleEnum.Admin);
         renderHook(() => useSellers());
 
         expect(mockedBuildColumns).toHaveBeenCalledWith(
-            expect.objectContaining({ onDeleteRequest: expect.any(Function) })
+            expect.objectContaining({ onDeleteRequest: expect.any(Function), isAdmin: true })
         );
     });
 });

@@ -13,13 +13,17 @@ vi.mock("react-redux", async () => {
 const mockedUseSelector = vi.mocked(useSelector);
 
 const KIOSCO_ID = "kiosco-1";
+const CURRENT_USER_ID = "user-1";
 
-const mockRole = (role: AuthRoleEnum) => {
+const mockRole = (role: AuthRoleEnum, currentUserId: string | null = CURRENT_USER_ID) => {
     mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
         selectorFn({
             kiosco: {
                 activeKioscoId: KIOSCO_ID,
                 myKioscos: [{ _id: KIOSCO_ID, role }],
+            },
+            auth: {
+                _id: currentUserId,
             },
         })
     );
@@ -30,20 +34,33 @@ describe("useSellerFormPermissions", () => {
         vi.clearAllMocks();
     });
 
-    it("admin: solo email queda disabled", () => {
+    it("admin: solo email queda disabled (puede editar nombre de cualquiera)", () => {
         mockRole(AuthRoleEnum.Admin);
-        const { result } = renderHook(() => useSellerFormPermissions(false));
+        const { result } = renderHook(() => useSellerFormPermissions(false, "otro-vendedor-id"));
 
         expect(result.current.isAdmin).toBe(true);
         expect(result.current.disabledFields).toEqual(["email"]);
+        expect(result.current.disabledFieldsTooltip).toEqual({});
     });
 
-    it("seller: email y rol quedan disabled", () => {
+    it("seller editando su propio perfil: email y rol quedan disabled, nombre editable", () => {
         mockRole(AuthRoleEnum.Seller);
-        const { result } = renderHook(() => useSellerFormPermissions(false));
+        const { result } = renderHook(() => useSellerFormPermissions(false, CURRENT_USER_ID));
 
         expect(result.current.isAdmin).toBe(false);
         expect(result.current.disabledFields).toEqual(["email", "rol"]);
+        expect(result.current.disabledFieldsTooltip).toEqual({});
+    });
+
+    it("seller editando el perfil de otro vendedor: además queda disabled el nombre, con tooltip", () => {
+        mockRole(AuthRoleEnum.Seller);
+        const { result } = renderHook(() => useSellerFormPermissions(false, "otro-vendedor-id"));
+
+        expect(result.current.isAdmin).toBe(false);
+        expect(result.current.disabledFields).toEqual(["email", "rol", "name"]);
+        expect(result.current.disabledFieldsTooltip).toEqual({
+            name: "Solo disponible para el administrador",
+        });
     });
 
     it("muestra el badge de rol en modo Editar (isDetail=false)", () => {

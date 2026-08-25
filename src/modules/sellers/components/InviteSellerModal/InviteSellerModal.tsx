@@ -1,4 +1,5 @@
-import { Alert, Box, Button, Dialog, DialogContent, IconButton, Skeleton, Stack, TextField, Typography, type Theme } from "@mui/material";
+import { useState } from "react";
+import { Alert, Box, Button, Dialog, DialogContent, IconButton, Link, Skeleton, Stack, TextField, Typography, type Theme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
@@ -7,10 +8,12 @@ import { alpha } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 import type { InviteSellerModalProps } from "@typings/kiosco/kioscoComponentTypes";
 import { useKioscoInvite } from "../../../../hooks/kiosco/useKioscoInvite";
+import RolesPermissionsDialog from "../../../shared/components/RolesPermissionsDialog/RolesPermissionsDialog";
 
 const InviteSellerModal = ({ open, onClose }: InviteSellerModalProps): React.ReactNode => {
     const { t } = useTranslation();
     const { inviteInfo, loading, error, copied, handleCopy } = useKioscoInvite(open);
+    const [rolesInfoOpen, setRolesInfoOpen] = useState(false);
 
     return (
         <Dialog
@@ -99,7 +102,19 @@ const InviteSellerModal = ({ open, onClose }: InviteSellerModalProps): React.Rea
                         </Typography>
                     </Stack>
                 ) : null}
+
+                <Link
+                    component="button"
+                    type="button"
+                    variant="caption"
+                    onClick={() => setRolesInfoOpen(true)}
+                    sx={(theme: Theme) => ({ display: "block", mt: 2, color: theme.custom.lightMain })}
+                >
+                    {t("rolesPermissions.triggerLabel")}
+                </Link>
             </DialogContent>
+
+            <RolesPermissionsDialog open={rolesInfoOpen} onClose={() => setRolesInfoOpen(false)} />
         </Dialog>
     );
 };

@@ -13,6 +13,7 @@ import { CLOSED_DIALOG } from "../../config/constants";
 import { useErrorParser } from "../shared/useErrorParser";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
+import { useIsActiveKioscoAdmin } from "../kiosco/useIsActiveKioscoAdmin";
 
 
 export const usePresentations = () => {
@@ -21,6 +22,7 @@ export const usePresentations = () => {
     const { t } = useTranslation();
     const { product_id } = useParams<{ product_id: string }>();
     const snackBarContext = useContext(SnackBarContext);
+    const isAdmin = useIsActiveKioscoAdmin();
 
     // ── data fetching delegado, mismo patrón que useProductEdit → useProductData ──
     const { presentations, loading, error, searchTerm, setSearchTerm } =
@@ -54,6 +56,7 @@ export const usePresentations = () => {
         onRestockRequest: restock.handleRestockRequest,
         navigate,
         t,
+        isAdmin,
     });
 
     return {

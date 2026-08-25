@@ -246,6 +246,7 @@ export type BuildColumnsArgs = {
     onRestockRequest: (presentation: Presentation) => void;
     navigate: ReturnType<typeof useNavigate>;
     t: TFunction;
+    isAdmin: boolean;
 };
 
 // /*══════════════════════════════════════════════════════════════════════╗

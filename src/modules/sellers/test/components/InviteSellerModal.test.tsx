@@ -118,4 +118,21 @@ describe("InviteSellerModal", () => {
 
         expect(onClose).toHaveBeenCalledTimes(1);
     });
+
+    it("abre el diálogo de roles y permisos al hacer click en el link informativo", () => {
+        mockedUseKioscoInvite.mockReturnValue({
+            inviteInfo: INVITE_INFO,
+            loading: false,
+            error: null,
+            copied: false,
+            handleCopy: vi.fn(),
+        });
+
+        renderWithTheme(<InviteSellerModal open={true} onClose={vi.fn()} />);
+
+        expect(screen.queryByText("Roles y permisos")).not.toBeInTheDocument();
+        fireEvent.click(screen.getByText("¿Qué puede hacer un vendedor?"));
+
+        expect(screen.getByText("Roles y permisos")).toBeInTheDocument();
+    });
 });

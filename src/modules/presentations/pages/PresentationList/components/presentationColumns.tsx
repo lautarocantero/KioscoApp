@@ -13,6 +13,7 @@ export const buildColumnsForPresentations = ({
     onRestockRequest,
     navigate,
     t,
+    isAdmin,
 }: BuildColumnsArgs): GridColDef<Presentation>[] => [
     centeredTextColumn<Presentation>({
         field: "sku",
@@ -109,6 +110,8 @@ export const buildColumnsForPresentations = ({
                             editLabel={t("presentations.table.actions.edit")}
                             deleteLabel={t("presentations.table.actions.delete")}
                             onDelete={() => onDeleteRequest(params.row._id, params.row.name)}
+                            deleteDisabled={!isAdmin}
+                            deleteDisabledReason={t("permissions.adminOnly")}
                         />
                     </CellCenter>
         ),

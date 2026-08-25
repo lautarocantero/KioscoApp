@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import { useFormNavigation } from "../../../shared/context/FormNavigationContext";
 import FormCard from "../../../shared/components/FormCard/FormCard";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
@@ -15,8 +16,9 @@ import type { ReactNode } from "react";
 const SellerFormFirstStep = (): ReactNode => {
     const theme = useTheme();
     const { actionTitle, submitError, stepErrors } = useFormNavigation();
+    const { seller_id: sellerId } = useParams<{ seller_id: string }>();
     const isDetail = actionTitle === FormModeComplexEnum.Detail;
-    const { disabledFields, showRoleBadge } = useSellerFormPermissions(isDetail);
+    const { disabledFields, disabledFieldsTooltip, showRoleBadge } = useSellerFormPermissions(isDetail, sellerId);
 
     return (
         <FormCard
@@ -39,6 +41,7 @@ const SellerFormFirstStep = (): ReactNode => {
                 fields={["name", "email", "rol"]}
                 readOnly={isDetail}
                 disabledFields={disabledFields}
+                disabledTooltip={disabledFieldsTooltip}
                 renderBeforeField={showRoleBadge ? { rol: <RoleAdminOnlyBadge /> } : undefined}
                 icons={{
                     name: { icon: <PersonOutlineOutlinedIcon fontSize="small" />, color: theme.custom.accents.violet },
