@@ -3,9 +3,11 @@
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
 import type { AuthRoleEnum } from "@typings/auth/authEnums";
-import type { KioscoPlanEnum, KioscoPlanStatusEnum } from "@typings/membership/membershipEnums";
 
-// Espejo exacto de KioscoEntity en el back (@typings/kiosco).
+// Espejo exacto de KioscoEntity en el back (@typings/kiosco). El plan de
+// suscripción (KioscoPlanEnum) NO vive acá: es de la cuenta (Auth), no del
+// kiosco — ver @typings/membership. Un usuario paga un único plan que
+// aplica a todos los kioscos donde participa.
 interface KioscoEntity {
     _id: string;
     name: string;
@@ -13,9 +15,6 @@ interface KioscoEntity {
     owner_id: string;
     invite_code: string;
     currency: string;
-    plan: KioscoPlanEnum;
-    plan_status: KioscoPlanStatusEnum;
-    mp_preapproval_id: string | null;
     created_at: string;
     updated_at: string;
 }

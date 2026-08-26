@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { KioscoPlanEnum, KioscoPlanStatusEnum } from "@typings/membership/membershipEnums";
 import { useMembershipCheckoutResult } from "../useMembershipCheckoutResult";
 import { useMembershipStatus } from "../useMembershipStatus";
-import { useIsActiveKioscoAdmin } from "../../kiosco/useIsActiveKioscoAdmin";
 
 vi.mock("react-router-dom", async () => {
     const actual = await vi.importActual("react-router-dom");
@@ -15,31 +14,18 @@ vi.mock("../useMembershipStatus", () => ({
     useMembershipStatus: vi.fn(),
 }));
 
-vi.mock("../../kiosco/useIsActiveKioscoAdmin");
-
 const mockedUseNavigate = vi.mocked(useNavigate);
 const mockedUseMembershipStatus = vi.mocked(useMembershipStatus);
-const mockedUseIsActiveKioscoAdmin = vi.mocked(useIsActiveKioscoAdmin);
 
 describe("useMembershipCheckoutResult", () => {
     beforeEach(() => {
         vi.clearAllMocks();
         mockedUseNavigate.mockReturnValue(vi.fn());
-        mockedUseIsActiveKioscoAdmin.mockReturnValue(true);
-    });
-
-    it("expone isAdmin=false cuando el usuario es seller del kiosco activo", () => {
-        mockedUseIsActiveKioscoAdmin.mockReturnValue(false);
-        mockedUseMembershipStatus.mockReturnValue({ status: null, loading: false, error: null, refetch: vi.fn() });
-
-        const { result } = renderHook(() => useMembershipCheckoutResult());
-
-        expect(result.current.isAdmin).toBe(false);
     });
 
     it("isActive es true y planName está traducido cuando el plan quedó activo", () => {
         mockedUseMembershipStatus.mockReturnValue({
-            status: { plan: KioscoPlanEnum.SuperStocko, plan_status: KioscoPlanStatusEnum.Active, next_payment_date: null },
+            status: { plan: KioscoPlanEnum.Deluxe, plan_status: KioscoPlanStatusEnum.Active, next_payment_date: null },
             loading: false,
             error: null,
             refetch: vi.fn(),
@@ -49,12 +35,12 @@ describe("useMembershipCheckoutResult", () => {
 
         expect(result.current.isActive).toBe(true);
         expect(result.current.isCancelled).toBe(false);
-        expect(result.current.planName).toBe("Super Stocko");
+        expect(result.current.planName).toBe("Stocko Deluxe");
     });
 
     it("isCancelled es true cuando la suscripción quedó cancelada", () => {
         mockedUseMembershipStatus.mockReturnValue({
-            status: { plan: KioscoPlanEnum.Stocko, plan_status: KioscoPlanStatusEnum.Cancelled, next_payment_date: null },
+            status: { plan: KioscoPlanEnum.Standard, plan_status: KioscoPlanStatusEnum.Cancelled, next_payment_date: null },
             loading: false,
             error: null,
             refetch: vi.fn(),
@@ -68,7 +54,7 @@ describe("useMembershipCheckoutResult", () => {
 
     it("ni isActive ni isCancelled mientras el pago está pendiente (esperando webhook)", () => {
         mockedUseMembershipStatus.mockReturnValue({
-            status: { plan: KioscoPlanEnum.Stocko, plan_status: KioscoPlanStatusEnum.PendingPayment, next_payment_date: null },
+            status: { plan: KioscoPlanEnum.Standard, plan_status: KioscoPlanStatusEnum.PendingPayment, next_payment_date: null },
             loading: false,
             error: null,
             refetch: vi.fn(),

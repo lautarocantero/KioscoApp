@@ -2,7 +2,6 @@ import { Box, Typography, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import AppLayout from "../../shared/layout/AppLayout";
 import BackButton from "../../shared/components/Buttons/BackButton";
-import NotEntityLoaded from "../../shared/components/NoContent/NotEntityLoaded";
 import { useMembershipPlansPage } from "../../../hooks/membership/useMembershipPlansPage";
 import MembershipCurrentPlanSummary from "../components/MembershipCurrentPlanSummary";
 import MembershipPlanCard from "../components/MembershipPlanCard";
@@ -10,15 +9,7 @@ import MembershipPlanCardSkeleton from "../components/MembershipPlanCardSkeleton
 
 const MembershipPlansPage = (): React.ReactNode => {
     const { t } = useTranslation();
-    const { status, statusLoading, statusError, plans, plansLoading, plansError, selectPlan, isPlanCurrent, isAdmin } = useMembershipPlansPage();
-
-    if (!isAdmin) {
-        return (
-            <AppLayout fullWidth>
-                <NotEntityLoaded fallbackText={t("permissions.adminOnly")} />
-            </AppLayout>
-        );
-    }
+    const { status, statusLoading, statusError, plans, plansLoading, plansError, selectPlan, isPlanCurrent } = useMembershipPlansPage();
 
     return (
         <AppLayout fullWidth>
@@ -45,7 +36,7 @@ const MembershipPlansPage = (): React.ReactNode => {
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, alignItems: "stretch" }}>
                     {plansLoading
-                        ? Array.from({ length: 3 }).map((_, index) => <MembershipPlanCardSkeleton key={index} />)
+                        ? Array.from({ length: 2 }).map((_, index) => <MembershipPlanCardSkeleton key={index} />)
                         : plans.map((plan) => (
                               <MembershipPlanCard
                                   key={plan.id}

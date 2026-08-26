@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from "vitest";
 import { screen, fireEvent } from "@testing-library/react";
 import { AuthRoleEnum } from "@typings/auth/authEnums";
 import type { KioscoWithStats } from "@typings/kiosco/kioscoTypes";
-import { KioscoPlanEnum, KioscoPlanStatusEnum } from "@typings/membership/membershipEnums";
 import { renderWithTheme } from "../../../shared/test/utils/setupTests";
 import KioscoCard from "../../components/KioscoCard/KioscoCard";
 
@@ -13,9 +12,6 @@ const buildKiosco = (overrides: Partial<KioscoWithStats> = {}): KioscoWithStats 
     owner_id: "owner-1",
     invite_code: "ABC123",
     currency: "ARS",
-    plan: KioscoPlanEnum.Stocko,
-    plan_status: KioscoPlanStatusEnum.Active,
-    mp_preapproval_id: null,
     created_at: "2026-01-01T00:00:00.000Z",
     updated_at: "2026-01-01T00:00:00.000Z",
     role: AuthRoleEnum.Admin,

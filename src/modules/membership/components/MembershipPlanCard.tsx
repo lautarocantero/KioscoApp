@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import { Box, Chip, List, ListItem, ListItemIcon, ListItemText, Typography, type Theme } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { useTranslation } from "react-i18next";
 import { KioscoPlanEnum } from "@typings/membership/membershipEnums";
@@ -11,9 +10,8 @@ import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButto
 import { formatMembershipPrice } from "../helpers/formatMembershipPrice";
 
 const PLAN_ICONS: Record<KioscoPlanEnum, ReactNode> = {
-    [KioscoPlanEnum.Stocko]: <Inventory2OutlinedIcon fontSize="small" />,
-    [KioscoPlanEnum.SuperStocko]: <DiamondOutlinedIcon fontSize="small" />,
-    [KioscoPlanEnum.MaxiStocko]: <WorkspacePremiumIcon fontSize="small" />,
+    [KioscoPlanEnum.Standard]: <Inventory2OutlinedIcon fontSize="small" />,
+    [KioscoPlanEnum.Deluxe]: <WorkspacePremiumIcon fontSize="small" />,
 };
 
 const MembershipPlanCard = ({ plan, isCurrent, isSubmitting, onSelect }: MembershipPlanCardProps): React.ReactNode => {

@@ -40,7 +40,7 @@ describe("parseApiError", () => {
     });
 
     it("devuelve un mensaje legible (no el dump JSON crudo) cuando el error es un ZodError", async () => {
-        const schema = z.object({ plan: z.enum(["stocko", "super_stocko", "maxi_stocko"]) });
+        const schema = z.object({ plan: z.enum(["standard", "deluxe"]) });
         const result = schema.safeParse({ plan: "unknown-plan" });
         if (result.success) throw new Error("expected safeParse to fail");
 

@@ -2,20 +2,11 @@ import { Box, Skeleton, Stack, Typography, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import AppLayout from "../../shared/layout/AppLayout";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
-import NotEntityLoaded from "../../shared/components/NoContent/NotEntityLoaded";
 import { useMembershipCheckoutResult } from "../../../hooks/membership/useMembershipCheckoutResult";
 
 const MembershipCheckoutResultPage = (): React.ReactNode => {
     const { t } = useTranslation();
-    const { status, loading, error, refetch, planName, isActive, isCancelled, goToShop, isAdmin } = useMembershipCheckoutResult();
-
-    if (!isAdmin) {
-        return (
-            <AppLayout>
-                <NotEntityLoaded fallbackText={t("permissions.adminOnly")} />
-            </AppLayout>
-        );
-    }
+    const { status, loading, error, refetch, planName, isActive, isCancelled, goToShop } = useMembershipCheckoutResult();
 
     return (
         <AppLayout>

@@ -3,7 +3,6 @@ import { renderHook, act } from "@testing-library/react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { JoinKioscoFormValues, Kiosco } from "@typings/kiosco/kioscoTypes";
-import { KioscoPlanEnum, KioscoPlanStatusEnum } from "@typings/membership/membershipEnums";
 import { useJoinKiosco } from "../useJoinKiosco";
 import { joinKioscoThunk } from "../../../store/kiosco/kioscoThunks";
 
@@ -35,9 +34,6 @@ const buildKiosco = (): Kiosco => ({
     owner_id: "owner-1",
     invite_code: "ABC123",
     currency: "ARS",
-    plan: KioscoPlanEnum.Stocko,
-    plan_status: KioscoPlanStatusEnum.Active,
-    mp_preapproval_id: null,
     created_at: "2026-01-01T00:00:00.000Z",
     updated_at: "2026-01-01T00:00:00.000Z",
 });

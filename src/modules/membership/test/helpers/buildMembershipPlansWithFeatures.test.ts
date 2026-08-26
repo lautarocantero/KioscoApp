@@ -4,8 +4,8 @@ import type { MembershipPlanDefinition } from "@typings/membership/membershipTyp
 import { buildMembershipPlansWithFeatures } from "../../helpers/buildMembershipPlansWithFeatures";
 
 const buildPlan = (overrides: Partial<MembershipPlanDefinition> = {}): MembershipPlanDefinition => ({
-    id: KioscoPlanEnum.Stocko,
-    name: "Stocko",
+    id: KioscoPlanEnum.Standard,
+    name: "Stocko Standard",
     price: 9999,
     currency_id: "ARS",
     ...overrides,
@@ -14,30 +14,28 @@ const buildPlan = (overrides: Partial<MembershipPlanDefinition> = {}): Membershi
 describe("buildMembershipPlansWithFeatures", () => {
     it("ordena los planes según MEMBERSHIP_PLAN_ORDER sin importar el orden de llegada del back", () => {
         const raw = [
-            buildPlan({ id: KioscoPlanEnum.MaxiStocko, name: "Maxi Stocko" }),
-            buildPlan({ id: KioscoPlanEnum.Stocko, name: "Stocko" }),
-            buildPlan({ id: KioscoPlanEnum.SuperStocko, name: "Super Stocko" }),
+            buildPlan({ id: KioscoPlanEnum.Deluxe, name: "Stocko Deluxe" }),
+            buildPlan({ id: KioscoPlanEnum.Standard, name: "Stocko Standard" }),
         ];
 
         const result = buildMembershipPlansWithFeatures(raw);
 
         expect(result.map((plan) => plan.id)).toEqual([
-            KioscoPlanEnum.Stocko,
-            KioscoPlanEnum.SuperStocko,
-            KioscoPlanEnum.MaxiStocko,
+            KioscoPlanEnum.Standard,
+            KioscoPlanEnum.Deluxe,
         ]);
     });
 
-    it("marca Super Stocko como el plan popular", () => {
-        const raw = [buildPlan({ id: KioscoPlanEnum.SuperStocko })];
+    it("marca Stocko Deluxe como el plan popular", () => {
+        const raw = [buildPlan({ id: KioscoPlanEnum.Deluxe })];
 
         const result = buildMembershipPlansWithFeatures(raw);
 
         expect(result[0].isPopular).toBe(true);
     });
 
-    it("no marca como popular a los otros tiers", () => {
-        const raw = [buildPlan({ id: KioscoPlanEnum.Stocko }), buildPlan({ id: KioscoPlanEnum.MaxiStocko })];
+    it("no marca como popular al otro tier", () => {
+        const raw = [buildPlan({ id: KioscoPlanEnum.Standard })];
 
         const result = buildMembershipPlansWithFeatures(raw);
 
@@ -45,7 +43,7 @@ describe("buildMembershipPlansWithFeatures", () => {
     });
 
     it("agrega las claves de traducción de features de cada tier", () => {
-        const raw = [buildPlan({ id: KioscoPlanEnum.Stocko })];
+        const raw = [buildPlan({ id: KioscoPlanEnum.Standard })];
 
         const result = buildMembershipPlansWithFeatures(raw);
 
@@ -54,7 +52,7 @@ describe("buildMembershipPlansWithFeatures", () => {
     });
 
     it("omite un tier si el back no lo devolvió", () => {
-        const raw = [buildPlan({ id: KioscoPlanEnum.Stocko })];
+        const raw = [buildPlan({ id: KioscoPlanEnum.Standard })];
 
         const result = buildMembershipPlansWithFeatures(raw);
 

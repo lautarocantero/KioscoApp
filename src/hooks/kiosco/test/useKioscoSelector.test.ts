@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { KioscoWithStats } from "@typings/kiosco/kioscoTypes";
 import { AuthRoleEnum } from "@typings/auth/authEnums";
-import { KioscoPlanEnum, KioscoPlanStatusEnum } from "@typings/membership/membershipEnums";
 import { useKioscoSelector } from "../useKioscoSelector";
 import { fetchMyKioscosThunk, selectKioscoThunk } from "../../../store/kiosco/kioscoThunks";
 import { clearKioscoError } from "../../../store/kiosco/kioscoSlice";
@@ -47,9 +46,6 @@ const buildKiosco = (overrides: Partial<KioscoWithStats> = {}): KioscoWithStats 
     owner_id: "owner-1",
     invite_code: "ABC123",
     currency: "ARS",
-    plan: KioscoPlanEnum.Stocko,
-    plan_status: KioscoPlanStatusEnum.Active,
-    mp_preapproval_id: null,
     created_at: "2026-01-01T00:00:00.000Z",
     updated_at: "2026-01-01T00:00:00.000Z",
     role: AuthRoleEnum.Admin,

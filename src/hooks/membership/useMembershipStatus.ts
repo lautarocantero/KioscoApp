@@ -1,24 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 import type { MembershipStatus, UseMembershipStatusReturn } from "@typings/membership/membershipTypes";
 import { getMembershipStatusRequest } from "../../modules/membership/api/membershipApi";
-import { useActiveKiosco } from "../kiosco/useActiveKiosco";
 import { useErrorParser } from "../shared/useErrorParser";
 
-// Plan/estado de suscripción del kiosco activo. refetch() se usa en la
-// página de resultado del checkout para reflejar el plan apenas el webhook
-// de Mercado Pago lo actualiza.
+// Plan/estado de suscripción de la CUENTA autenticada (no del kiosco activo:
+// un usuario paga un único plan que aplica a todos los kioscos donde
+// participa). refetch() se usa en la página de resultado del checkout para
+// reflejar el plan apenas el webhook de Mercado Pago lo actualiza.
 export const useMembershipStatus = (): UseMembershipStatusReturn => {
-    const { activeKiosco } = useActiveKiosco();
     const [status, setStatus] = useState<MembershipStatus | null>(null);
     const [loading, setLoading] = useState(true);
     const { message: error, parseError, clearError } = useErrorParser();
 
     const fetchStatus = useCallback((): void => {
-        if (!activeKiosco) {
-            setLoading(false);
-            return;
-        }
-
         setLoading(true);
         clearError();
 
@@ -26,7 +20,7 @@ export const useMembershipStatus = (): UseMembershipStatusReturn => {
             .then((result) => setStatus(result))
             .catch((err: unknown) => parseError(err, "No se pudo obtener el estado de tu membresía"))
             .finally(() => setLoading(false));
-    }, [activeKiosco, parseError, clearError]);
+    }, [parseError, clearError]);
 
     useEffect(() => {
         fetchStatus();

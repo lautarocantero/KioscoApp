@@ -6,11 +6,11 @@ import { renderWithTheme } from "../../../shared/test/utils/setupTests";
 import MembershipPlanCard from "../../components/MembershipPlanCard";
 
 const buildPlan = (overrides: Partial<MembershipPlanWithFeatures> = {}): MembershipPlanWithFeatures => ({
-    id: KioscoPlanEnum.SuperStocko,
-    name: "Super Stocko",
+    id: KioscoPlanEnum.Deluxe,
+    name: "Stocko Deluxe",
     price: 15000,
     currency_id: "ARS",
-    featureKeys: ["membership.features.superSellers", "membership.features.superKioscos"],
+    featureKeys: ["membership.features.deluxeSellers", "membership.features.deluxeKioscos"],
     isPopular: true,
     ...overrides,
 });
@@ -21,9 +21,9 @@ describe("MembershipPlanCard", () => {
             <MembershipPlanCard plan={buildPlan()} isCurrent={false} isSubmitting={false} onSelect={vi.fn()} />
         );
 
-        expect(screen.getByText("Super Stocko")).toBeInTheDocument();
+        expect(screen.getByText("Stocko Deluxe")).toBeInTheDocument();
         expect(screen.getByText("Más elegido")).toBeInTheDocument();
-        expect(screen.getByText("Hasta 5 vendedores")).toBeInTheDocument();
+        expect(screen.getByText("Vendedores ilimitados")).toBeInTheDocument();
     });
 
     it("no muestra el badge cuando el plan no es popular", () => {
@@ -40,9 +40,9 @@ describe("MembershipPlanCard", () => {
             <MembershipPlanCard plan={buildPlan()} isCurrent={false} isSubmitting={false} onSelect={onSelect} />
         );
 
-        fireEvent.click(screen.getByTestId("membership-select-super_stocko"));
+        fireEvent.click(screen.getByTestId("membership-select-deluxe"));
 
-        expect(onSelect).toHaveBeenCalledWith(KioscoPlanEnum.SuperStocko);
+        expect(onSelect).toHaveBeenCalledWith(KioscoPlanEnum.Deluxe);
     });
 
     it("deshabilita el botón y muestra 'Plan actual' cuando isCurrent es true", () => {
@@ -50,7 +50,7 @@ describe("MembershipPlanCard", () => {
             <MembershipPlanCard plan={buildPlan()} isCurrent isSubmitting={false} onSelect={vi.fn()} />
         );
 
-        const button = screen.getByTestId("membership-select-super_stocko");
+        const button = screen.getByTestId("membership-select-deluxe");
         expect(button).toBeDisabled();
         expect(screen.getByText("Plan actual")).toBeInTheDocument();
     });

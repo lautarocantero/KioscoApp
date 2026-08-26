@@ -2,6 +2,15 @@ import type { SubGroup } from "@typings/ui/sidebar.types";
 
 
 export const NAV_SUBGROUPS: Record<string, SubGroup[]> = {
+  "/shop": [
+    {
+      groupLabel: "Tienda",
+      links: [
+        { label: "Resumen",        url: "/shop" },
+        { label: "Reporte mensual", url: "/shop/stadistics" },
+      ],
+    },
+  ],
   "/sells": [
     {
       groupLabel: "Ventas",
