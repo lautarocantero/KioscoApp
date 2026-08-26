@@ -7,7 +7,6 @@ import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlin
 import AppLayout from "../../shared/layout/AppLayout";
 import BackButton from "../../shared/components/Buttons/BackButton";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
-import NotEntityLoaded from "../../shared/components/NoContent/NotEntityLoaded";
 import { useMembershipCheckoutPage } from "../../../hooks/membership/useMembershipCheckoutPage";
 import { formatMembershipPrice } from "../helpers/formatMembershipPrice";
 import PaymentMethodRow from "../components/PaymentMethodRow";
@@ -15,15 +14,7 @@ import PaymentMethodRow from "../components/PaymentMethodRow";
 const MembershipCheckoutPage = (): React.ReactNode => {
     const { t } = useTranslation();
     const { plan: planParam } = useParams<{ plan: string }>();
-    const { plan, planDefinition, loading, error, isSubmitting, checkoutError, pay, isAdmin } = useMembershipCheckoutPage(planParam);
-
-    if (!isAdmin) {
-        return (
-            <AppLayout>
-                <NotEntityLoaded fallbackText={t("permissions.adminOnly")} />
-            </AppLayout>
-        );
-    }
+    const { plan, planDefinition, loading, error, isSubmitting, checkoutError, pay } = useMembershipCheckoutPage(planParam);
 
     return (
         <AppLayout>

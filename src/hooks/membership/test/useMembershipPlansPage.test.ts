@@ -6,7 +6,6 @@ import type { MembershipPlanWithFeatures } from "@typings/membership/membershipT
 import { useMembershipPlansPage } from "../useMembershipPlansPage";
 import { useMembershipStatus } from "../useMembershipStatus";
 import { useMembershipPlans } from "../useMembershipPlans";
-import { useIsActiveKioscoAdmin } from "../../kiosco/useIsActiveKioscoAdmin";
 
 vi.mock("react-router-dom", async () => {
     const actual = await vi.importActual("react-router-dom");
@@ -21,12 +20,9 @@ vi.mock("../useMembershipPlans", () => ({
     useMembershipPlans: vi.fn(),
 }));
 
-vi.mock("../../kiosco/useIsActiveKioscoAdmin");
-
 const mockedUseNavigate = vi.mocked(useNavigate);
 const mockedUseMembershipStatus = vi.mocked(useMembershipStatus);
 const mockedUseMembershipPlans = vi.mocked(useMembershipPlans);
-const mockedUseIsActiveKioscoAdmin = vi.mocked(useIsActiveKioscoAdmin);
 
 const buildPlan = (id: KioscoPlanEnum): MembershipPlanWithFeatures => ({
     id,
@@ -40,44 +36,33 @@ const buildPlan = (id: KioscoPlanEnum): MembershipPlanWithFeatures => ({
 describe("useMembershipPlansPage", () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        mockedUseIsActiveKioscoAdmin.mockReturnValue(true);
         mockedUseMembershipPlans.mockReturnValue({
-            plans: [buildPlan(KioscoPlanEnum.Stocko), buildPlan(KioscoPlanEnum.SuperStocko)],
+            plans: [buildPlan(KioscoPlanEnum.Standard), buildPlan(KioscoPlanEnum.Deluxe)],
             loading: false,
             error: null,
         });
-    });
-
-    it("expone isAdmin=false cuando el usuario es seller del kiosco activo", () => {
-        mockedUseIsActiveKioscoAdmin.mockReturnValue(false);
-        mockedUseNavigate.mockReturnValue(vi.fn());
-        mockedUseMembershipStatus.mockReturnValue({ status: null, loading: false, error: null, refetch: vi.fn() });
-
-        const { result } = renderHook(() => useMembershipPlansPage());
-
-        expect(result.current.isAdmin).toBe(false);
     });
 
     it("selectPlan navega al checkout del plan elegido", () => {
         const navigate = vi.fn();
         mockedUseNavigate.mockReturnValue(navigate);
         mockedUseMembershipStatus.mockReturnValue({
-            status: { plan: KioscoPlanEnum.Stocko, plan_status: KioscoPlanStatusEnum.Active, next_payment_date: null },
+            status: { plan: KioscoPlanEnum.Standard, plan_status: KioscoPlanStatusEnum.Active, next_payment_date: null },
             loading: false,
             error: null,
             refetch: vi.fn(),
         });
 
         const { result } = renderHook(() => useMembershipPlansPage());
-        result.current.selectPlan(KioscoPlanEnum.SuperStocko);
+        result.current.selectPlan(KioscoPlanEnum.Deluxe);
 
-        expect(navigate).toHaveBeenCalledWith("/membership/checkout/super_stocko");
+        expect(navigate).toHaveBeenCalledWith("/membership/checkout/deluxe");
     });
 
     it("isPlanCurrent es true solo para el plan activo del kiosco", () => {
         mockedUseNavigate.mockReturnValue(vi.fn());
         mockedUseMembershipStatus.mockReturnValue({
-            status: { plan: KioscoPlanEnum.SuperStocko, plan_status: KioscoPlanStatusEnum.Active, next_payment_date: null },
+            status: { plan: KioscoPlanEnum.Deluxe, plan_status: KioscoPlanStatusEnum.Active, next_payment_date: null },
             loading: false,
             error: null,
             refetch: vi.fn(),
@@ -85,8 +70,8 @@ describe("useMembershipPlansPage", () => {
 
         const { result } = renderHook(() => useMembershipPlansPage());
 
-        expect(result.current.isPlanCurrent(KioscoPlanEnum.SuperStocko)).toBe(true);
-        expect(result.current.isPlanCurrent(KioscoPlanEnum.Stocko)).toBe(false);
+        expect(result.current.isPlanCurrent(KioscoPlanEnum.Deluxe)).toBe(true);
+        expect(result.current.isPlanCurrent(KioscoPlanEnum.Standard)).toBe(false);
     });
 
     it("expone plans/status con sus loading y error tal como los devuelven los hooks base", () => {

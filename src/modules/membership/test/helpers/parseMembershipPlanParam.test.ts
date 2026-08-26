@@ -4,7 +4,7 @@ import { parseMembershipPlanParam } from "../../helpers/parseMembershipPlanParam
 
 describe("parseMembershipPlanParam", () => {
     it("acepta un tier válido", () => {
-        expect(parseMembershipPlanParam("super_stocko")).toBe(KioscoPlanEnum.SuperStocko);
+        expect(parseMembershipPlanParam("deluxe")).toBe(KioscoPlanEnum.Deluxe);
     });
 
     it("rechaza un string que no es un tier", () => {

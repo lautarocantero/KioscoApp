@@ -34,10 +34,10 @@ describe("useMembershipCheckout", () => {
         const { result } = renderHook(() => useMembershipCheckout());
 
         await act(async () => {
-            await result.current.startCheckout(KioscoPlanEnum.SuperStocko);
+            await result.current.startCheckout(KioscoPlanEnum.Deluxe);
         });
 
-        expect(mockedCreateMembershipCheckoutRequest).toHaveBeenCalledWith(KioscoPlanEnum.SuperStocko);
+        expect(mockedCreateMembershipCheckoutRequest).toHaveBeenCalledWith(KioscoPlanEnum.Deluxe);
         expect(window.location.href).toBe("https://www.mercadopago.com/checkout/123");
     });
 
@@ -47,7 +47,7 @@ describe("useMembershipCheckout", () => {
         const { result } = renderHook(() => useMembershipCheckout());
 
         await act(async () => {
-            await result.current.startCheckout(KioscoPlanEnum.Stocko);
+            await result.current.startCheckout(KioscoPlanEnum.Standard);
         });
 
         await waitFor(() => expect(result.current.isSubmitting).toBe(false));
@@ -63,7 +63,7 @@ describe("useMembershipCheckout", () => {
         const { result } = renderHook(() => useMembershipCheckout());
 
         act(() => {
-            result.current.startCheckout(KioscoPlanEnum.Stocko);
+            result.current.startCheckout(KioscoPlanEnum.Standard);
         });
 
         await waitFor(() => expect(result.current.isSubmitting).toBe(true));

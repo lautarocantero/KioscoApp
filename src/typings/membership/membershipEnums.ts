@@ -2,9 +2,8 @@
 // (@typings/membership/enums). No confundir con KioscoMembership: eso es
 // la relación usuario↔kiosco, esto es el tier de suscripción del kiosco.
 export enum KioscoPlanEnum {
-    Stocko = "stocko",
-    SuperStocko = "super_stocko",
-    MaxiStocko = "maxi_stocko",
+    Standard = "standard",
+    Deluxe = "deluxe",
 }
 
 export enum KioscoPlanStatusEnum {

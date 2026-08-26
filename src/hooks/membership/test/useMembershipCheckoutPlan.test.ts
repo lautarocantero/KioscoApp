@@ -32,23 +32,23 @@ describe("useMembershipCheckoutPlan", () => {
 
     it("resuelve planDefinition cuando el tier existe en la lista de planes", () => {
         mockedUseMembershipPlans.mockReturnValue({
-            plans: [buildPlan(KioscoPlanEnum.Stocko), buildPlan(KioscoPlanEnum.SuperStocko)],
+            plans: [buildPlan(KioscoPlanEnum.Standard), buildPlan(KioscoPlanEnum.Deluxe)],
             loading: false,
             error: null,
         });
 
-        const { result } = renderHook(() => useMembershipCheckoutPlan("super_stocko"));
+        const { result } = renderHook(() => useMembershipCheckoutPlan("deluxe"));
 
-        expect(result.current.plan).toBe(KioscoPlanEnum.SuperStocko);
-        expect(result.current.planDefinition?.id).toBe(KioscoPlanEnum.SuperStocko);
+        expect(result.current.plan).toBe(KioscoPlanEnum.Deluxe);
+        expect(result.current.planDefinition?.id).toBe(KioscoPlanEnum.Deluxe);
     });
 
     it("planDefinition es null mientras los planes todavía están cargando", () => {
         mockedUseMembershipPlans.mockReturnValue({ plans: [], loading: true, error: null });
 
-        const { result } = renderHook(() => useMembershipCheckoutPlan("stocko"));
+        const { result } = renderHook(() => useMembershipCheckoutPlan("standard"));
 
-        expect(result.current.plan).toBe(KioscoPlanEnum.Stocko);
+        expect(result.current.plan).toBe(KioscoPlanEnum.Standard);
         expect(result.current.planDefinition).toBeNull();
         expect(result.current.loading).toBe(true);
     });

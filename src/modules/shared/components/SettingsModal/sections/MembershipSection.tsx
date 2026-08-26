@@ -4,7 +4,7 @@ import { useMembershipSection } from "../../../../../hooks/membership/useMembers
 
 const MembershipSection = (): React.ReactNode => {
     const { t } = useTranslation();
-    const { status, loading, error, goToPlans, isAdmin } = useMembershipSection();
+    const { status, loading, error, goToPlans } = useMembershipSection();
 
     return (
         <Box component="section" aria-labelledby="settings-membership-heading">
@@ -17,53 +17,45 @@ const MembershipSection = (): React.ReactNode => {
                 {t("settings.sections.membershipPlan")}
             </Typography>
 
-            {!isAdmin && (
-                <Typography sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor })}>
-                    {t("permissions.adminOnly")}
-                </Typography>
-            )}
-
-            {isAdmin && error && (
+            {error && (
                 <Typography role="alert" sx={(theme: Theme) => ({ color: theme.custom.errorDark, mb: 2 })}>
                     {error}
                 </Typography>
             )}
 
-            {isAdmin && (
-                <Box
+            <Box
+                sx={(theme: Theme) => ({
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 2,
+                    py: 1.5,
+                    borderBottom: `1px solid ${theme.custom.darkGray}`,
+                })}
+            >
+                {loading || !status ? (
+                    <Skeleton variant="text" width={120} sx={{ fontSize: "0.9rem" }} />
+                ) : (
+                    <Typography component="span" sx={(theme: Theme) => ({ color: theme.custom.fontColor, fontWeight: 600, fontSize: "0.9rem" })}>
+                        {t(`membership.plans.names.${status.plan}`)}
+                    </Typography>
+                )}
+
+                <Button
+                    onClick={goToPlans}
+                    variant="outlined"
+                    disabled={loading}
                     sx={(theme: Theme) => ({
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        gap: 2,
-                        py: 1.5,
-                        borderBottom: `1px solid ${theme.custom.darkGray}`,
+                        textTransform: "none",
+                        fontWeight: 600,
+                        borderRadius: "8px",
+                        borderColor: theme.custom.darkGray,
+                        color: theme.custom.fontColor,
                     })}
                 >
-                    {loading || !status ? (
-                        <Skeleton variant="text" width={120} sx={{ fontSize: "0.9rem" }} />
-                    ) : (
-                        <Typography component="span" sx={(theme: Theme) => ({ color: theme.custom.fontColor, fontWeight: 600, fontSize: "0.9rem" })}>
-                            {t(`membership.plans.names.${status.plan}`)}
-                        </Typography>
-                    )}
-
-                    <Button
-                        onClick={goToPlans}
-                        variant="outlined"
-                        disabled={loading}
-                        sx={(theme: Theme) => ({
-                            textTransform: "none",
-                            fontWeight: 600,
-                            borderRadius: "8px",
-                            borderColor: theme.custom.darkGray,
-                            color: theme.custom.fontColor,
-                        })}
-                    >
-                        {t("membership.currentPlan.changePlanButton")}
-                    </Button>
-                </Box>
-            )}
+                    {t("membership.currentPlan.changePlanButton")}
+                </Button>
+            </Box>
         </Box>
     );
 };
