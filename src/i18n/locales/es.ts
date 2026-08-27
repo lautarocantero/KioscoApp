@@ -225,6 +225,7 @@ const es = {
           edit: "Editar una venta",
           delete: "Eliminar una venta",
           settleDebt: "Saldar deuda de una venta parcial",
+          changeRange: "Cambiar el período de la banda de contexto de Ventas",
         },
       },
       receipts: {
@@ -377,6 +378,72 @@ const es = {
     status: {
       completada: "Completada",
       parcial: "Parcial",
+    },
+    contextBand: {
+      period: {
+        ariaLabel: "Período de la banda de contexto",
+        options: {
+          today: "Hoy",
+          sevenDays: "7 días",
+          thirtyDays: "30 días",
+          thisMonth: "Este mes",
+        },
+        comparison: {
+          today: "comparado con ayer",
+          sevenDays: "comparado con la semana anterior",
+          thirtyDays: "comparado con el período anterior",
+          thisMonth: "comparado con el mes anterior",
+        },
+      },
+      kpis: {
+        sales: { label: "Ventas" },
+        ticketsCount: { label: "Tickets", subLabel: "{{count}} por día" },
+        averageTicket: { label: "Ticket promedio", subLabel: "{{count}} prod./ticket" },
+        toCollect: {
+          label: "A cobrar",
+          chip: "{{count}} parciales",
+          chip_one: "{{count}} parcial",
+        },
+      },
+      sparkline: {
+        title: "Últimos 14 días",
+        bestDay: "mejor: {{label}}",
+        ariaLabel: "Ventas de los últimos 14 días, mejor día {{best}}",
+      },
+      facts: {
+        dominantPaymentMethod: {
+          label: "Medio dominante",
+          value: "{{method}} · {{pct}}% de las ventas",
+        },
+        peakHour: {
+          label: "Hora pico",
+          value: "{{start}}–{{end}} h · 1 de cada {{ratio}} tickets",
+        },
+        topSeller: {
+          label: "Vendedor del período",
+          value: "{{name}} · {{amount}}",
+        },
+        empty: "—",
+      },
+      viewMonthlyReport: "Ver reporte mensual →",
+      empty: "Sin ventas en este período",
+      partialsAlert: {
+        prefix: "{{count}} ventas parciales sin saldar por",
+        prefix_one: "{{count}} venta parcial sin saldar por",
+        suffix: "· la más antigua lleva {{days}}",
+        daysLabel: "{{count}} días",
+        daysLabel_one: "{{count}} día",
+        viewButton: "Ver parciales",
+      },
+      csv: {
+        exportButton: "Exportar CSV",
+        date: "Fecha",
+        ticket: "Ticket",
+        seller: "Vendedor",
+        paymentMethod: "Medio de pago",
+        status: "Estado",
+        total: "Total",
+      },
     },
     settleDebtDialog: {
       title: "Saldar deuda",

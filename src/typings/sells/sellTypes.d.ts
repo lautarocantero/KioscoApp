@@ -5,8 +5,9 @@ import type { TFunction } from "i18next";
 import type { DialogContextType } from "../../ui/uiModules";
 import type { SettleDebtDialogState } from "@typings/ui/dialog.types";
 import type { PaymentMethod, SellFilterEnum, SellStatusEnum } from "./sellsEnum";
+import type { UseSellsContextBandReturn } from "./types";
 import type { EspecificationsLeftProps } from "./SellComponentTypes";
-import type { ReactNode, MouseEvent, SetStateAction } from "react";
+import type { ReactNode, MouseEvent, SetStateAction, RefObject } from "react";
 import type { SelectChangeEvent } from "@mui/material";
 import type { GridColDef } from "@mui/x-data-grid";
 import type { SortOption, ViewMode } from "../../modules/sells/components/ProductsExhibitorList/ProductToolbar";
@@ -209,7 +210,7 @@ export interface UseSellsListDataResult {
 }
 
 
-export interface UseSellsReturn extends UseSellsListDataResult {
+export interface UseSellsReturn extends UseSellsListDataResult, UseSellsContextBandReturn {
     deleteDialog: DeleteDialogState;
     clearError: () => void;
     handleDeleteRequest: (id: string, name: string) => void;
@@ -224,6 +225,8 @@ export interface UseSellsReturn extends UseSellsListDataResult {
     settleDebtErrorMessage: string | null;
     handleSettleDebtCancel: () => void;
     handleSettleDebtConfirm: () => Promise<void>;
+    handleViewPartials: () => void;
+    partialsFilterChipRef: RefObject<HTMLDivElement | null>;
 }
 
 

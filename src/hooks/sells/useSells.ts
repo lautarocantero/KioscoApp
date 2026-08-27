@@ -8,7 +8,9 @@ import type { DeleteDialogState } from "@typings/ui/dialog.types";
 import type { AppDispatch } from "../../store/sell/sellSlice";
 import { deleteSellThunk } from "../../store/sell/sellsThunks";
 import { useSellsListData } from "./useSellsListData";
+import { useSellsContextBand } from "./useSellsContextBand";
 import { useSettleSellDebt } from "./useSettleSellDebt";
+import { useFocusFirstField } from "../shared/useFocusFirstField";
 import { buildColumnsForSells } from "../../modules/sells/pages/SellsList/components/sellColumns";
 import { getSellFilterCounts } from "../../modules/sells/helpers/getSellFilterCounts";
 import { filterSellsByStatus } from "../../modules/sells/helpers/filterSellsByStatus";
@@ -35,9 +37,21 @@ export const useSells = (): UseSellsReturn => {
     // montar, cambiar el filtro después no reescribe la URL.
     const [filter, setFilter] = useState<SellFilterEnum>(() => parseSellFilterParam(searchParams.get("filter")));
     const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
+    const [viewPartialsRequestId, setViewPartialsRequestId] = useState(0);
 
     const counts = useMemo(() => getSellFilterCounts(sells), [sells]);
     const filteredSells = useMemo(() => filterSellsByStatus(sells, filter), [sells, filter]);
+    const contextBand = useSellsContextBand(sells, isAdmin);
+
+    const partialsFilterChipRef = useFocusFirstField<HTMLDivElement>(
+        viewPartialsRequestId || undefined,
+        viewPartialsRequestId === 0
+    );
+
+    const handleViewPartials = (): void => {
+        setFilter(SellFilterEnum.Parcial);
+        setViewPartialsRequestId((id) => id + 1);
+    };
 
     const { parseError } = useErrorParser();
 
@@ -93,5 +107,8 @@ export const useSells = (): UseSellsReturn => {
         settleDebtErrorMessage,
         handleSettleDebtCancel,
         handleSettleDebtConfirm,
+        handleViewPartials,
+        partialsFilterChipRef,
+        ...contextBand,
     };
 };

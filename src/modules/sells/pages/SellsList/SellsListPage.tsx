@@ -1,15 +1,23 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
+import { Button } from "@mui/material";
 import PointOfSaleOutlinedIcon from "@mui/icons-material/PointOfSaleOutlined";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
 import TableFilterTabs from "../../../shared/components/DataTable/TableFilterTabs";
+import { getTableActionButtonSx } from "../../../shared/components/DataTable/getTableActionButtonSx";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useSells } from "../../../../hooks/sells/useSells";
 import type { Sell } from "@typings/sells/sellTypes";
 import { SellFilterEnum } from "@typings/sells/sellsEnum";
+import { SELLS_PERIOD_VALUES } from "@typings/sells/enums";
 import { SELL_FILTER_OPTIONS } from "../../helpers/sellFilterOptions";
+import { formatSellsPeriodRangeLabel } from "../../helpers/formatSellsPeriodRangeLabel";
+import { exportSellsToCsv } from "../../helpers/exportSellsToCsv";
 import SettleDebtDialog from "./components/SettleDebtDialog";
+import SellsContextBand from "./components/SellsContextBand";
 
 const SellsListPage = (): React.ReactNode => {
     const { t } = useTranslation();
@@ -32,6 +40,18 @@ const SellsListPage = (): React.ReactNode => {
         settleDebtErrorMessage,
         handleSettleDebtCancel,
         handleSettleDebtConfirm,
+        handleViewPartials,
+        partialsFilterChipRef,
+        period,
+        setPeriod,
+        periodAvailability,
+        periodRange,
+        kpis,
+        sparkline,
+        sparklineBestDay,
+        facts,
+        partialsAlert,
+        hasSellsInPeriod,
     } = useSells();
 
     return (
@@ -40,6 +60,23 @@ const SellsListPage = (): React.ReactNode => {
                 icon={<PointOfSaleOutlinedIcon />}
                 title={t("sells.table.header.title")}
                 subtitle={t("sells.table.header.subtitle")}
+            />
+
+            <SellsContextBand
+                period={period}
+                periodOptions={SELLS_PERIOD_VALUES}
+                periodAvailability={periodAvailability}
+                onPeriodChange={setPeriod}
+                rangeLabel={formatSellsPeriodRangeLabel(period, periodRange, t)}
+                kpis={kpis}
+                sparkline={sparkline}
+                sparklineBestDay={sparklineBestDay}
+                facts={facts}
+                partialsAlert={partialsAlert}
+                hasSellsInPeriod={hasSellsInPeriod}
+                loading={loading}
+                error={error}
+                onViewPartials={handleViewPartials}
             />
 
             <DataTable<Sell>
@@ -56,11 +93,23 @@ const SellsListPage = (): React.ReactNode => {
                     label: t("sells.table.newItem"),
                     href: "/new-sell",
                 }}
+                extraActions={
+                    <Button
+                        onClick={() => exportSellsToCsv(sells, `ventas-${dayjs().format("YYYY-MM-DD")}.csv`, t)}
+                        disabled={loading || sells.length === 0}
+                        disableElevation
+                        startIcon={<FileDownloadOutlinedIcon sx={{ fontSize: "1.1rem" }} />}
+                        sx={(theme) => getTableActionButtonSx(theme, "primary")}
+                    >
+                        {t("sells.contextBand.csv.exportButton")}
+                    </Button>
+                }
                 filters={
                     <TableFilterTabs
                         ariaLabel={t("sells.table.header.title")}
                         value={filter}
                         onChange={setFilter}
+                        firstTabRef={partialsFilterChipRef}
                         options={SELL_FILTER_OPTIONS.map((option) => ({
                             value: option,
                             label: option === SellFilterEnum.All ? t("sells.filters.all") : t(`sells.status.${option}`),

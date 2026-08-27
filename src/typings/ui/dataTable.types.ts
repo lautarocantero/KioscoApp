@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 import type { GridColDef, DataGridProps } from "@mui/x-data-grid";
 
 export interface DataTableSearchConfig {
@@ -109,6 +109,10 @@ export interface TableFilterTabsProps<T extends string> {
   value: T;
   options: TableFilterTabOption<T>[];
   onChange: (value: T) => void;
+  // Ref opcional al chip de la primera opción — usado por flujos que llegan
+  // con un filtro ya aplicado (ej. "Ver parciales" de la banda de contexto
+  // de /sells) para mover el foco de teclado al filtro recién activado.
+  firstTabRef?: RefObject<HTMLDivElement | null>;
 }
 
 export interface RowActionsCellProps {
