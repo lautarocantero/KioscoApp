@@ -225,6 +225,7 @@ const en = {
           edit: "Edit a sale",
           delete: "Delete a sale",
           settleDebt: "Settle a partial sale's debt",
+          changeRange: "Change the Sales context band period",
         },
       },
       receipts: {
@@ -377,6 +378,72 @@ const en = {
     status: {
       completada: "Completed",
       parcial: "Partial",
+    },
+    contextBand: {
+      period: {
+        ariaLabel: "Context band period",
+        options: {
+          today: "Today",
+          sevenDays: "7 days",
+          thirtyDays: "30 days",
+          thisMonth: "This month",
+        },
+        comparison: {
+          today: "compared to yesterday",
+          sevenDays: "compared to the previous week",
+          thirtyDays: "compared to the previous period",
+          thisMonth: "compared to last month",
+        },
+      },
+      kpis: {
+        sales: { label: "Sales" },
+        ticketsCount: { label: "Tickets", subLabel: "{{count}} per day" },
+        averageTicket: { label: "Average ticket", subLabel: "{{count}} prod./ticket" },
+        toCollect: {
+          label: "To collect",
+          chip: "{{count}} partials",
+          chip_one: "{{count}} partial",
+        },
+      },
+      sparkline: {
+        title: "Last 14 days",
+        bestDay: "best: {{label}}",
+        ariaLabel: "Sales for the last 14 days, best day {{best}}",
+      },
+      facts: {
+        dominantPaymentMethod: {
+          label: "Dominant method",
+          value: "{{method}} · {{pct}}% of sales",
+        },
+        peakHour: {
+          label: "Peak hour",
+          value: "{{start}}–{{end}} h · 1 in {{ratio}} tickets",
+        },
+        topSeller: {
+          label: "Top seller",
+          value: "{{name}} · {{amount}}",
+        },
+        empty: "—",
+      },
+      viewMonthlyReport: "View monthly report →",
+      empty: "No sales in this period",
+      partialsAlert: {
+        prefix: "{{count}} unsettled partial sales for",
+        prefix_one: "{{count}} unsettled partial sale for",
+        suffix: "· the oldest is {{days}} old",
+        daysLabel: "{{count}} days",
+        daysLabel_one: "{{count}} day",
+        viewButton: "View partials",
+      },
+      csv: {
+        exportButton: "Export CSV",
+        date: "Date",
+        ticket: "Ticket",
+        seller: "Seller",
+        paymentMethod: "Payment method",
+        status: "Status",
+        total: "Total",
+      },
     },
     settleDebtDialog: {
       title: "Settle debt",

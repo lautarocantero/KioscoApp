@@ -56,6 +56,7 @@ export const ROLES_PERMISSIONS_MATRIX: RolePermissionDomain[] = [
             { labelKey: "rolesPermissions.domains.sells.actions.edit", adminOnly: true },
             { labelKey: "rolesPermissions.domains.sells.actions.delete", adminOnly: true },
             { labelKey: "rolesPermissions.domains.sells.actions.settleDebt", adminOnly: false },
+            { labelKey: "rolesPermissions.domains.sells.actions.changeRange", adminOnly: true },
         ],
     },
     {
