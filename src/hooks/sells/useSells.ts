@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,7 @@ import { useSettleSellDebt } from "./useSettleSellDebt";
 import { buildColumnsForSells } from "../../modules/sells/pages/SellsList/components/sellColumns";
 import { getSellFilterCounts } from "../../modules/sells/helpers/getSellFilterCounts";
 import { filterSellsByStatus } from "../../modules/sells/helpers/filterSellsByStatus";
+import { parseSellFilterParam } from "../../modules/sells/helpers/parseSellFilterParam";
 import { CLOSED_DIALOG } from "../../config/constants";
 import { useErrorParser } from "../shared/useErrorParser";
 import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
@@ -25,10 +26,14 @@ export const useSells = (): UseSellsReturn => {
     const snackBarContext = useContext(SnackBarContext);
     const { t } = useTranslation();
     const isAdmin = useIsActiveKioscoAdmin();
+    const [searchParams] = useSearchParams();
 
     const { sells, loading, error, searchTerm, setSearchTerm } = useSellsListData();
 
-    const [filter, setFilter] = useState<SellFilterEnum>(SellFilterEnum.All);
+    // Permite llegar con un filtro ya activado (ej. "Ver morosos" del
+    // reporte mensual navega a /sells?filter=parcial) — solo se lee al
+    // montar, cambiar el filtro después no reescribe la URL.
+    const [filter, setFilter] = useState<SellFilterEnum>(() => parseSellFilterParam(searchParams.get("filter")));
     const [deleteDialog, setDeleteDialog] = useState<DeleteDialogState>(CLOSED_DIALOG);
 
     const counts = useMemo(() => getSellFilterCounts(sells), [sells]);

@@ -1,6 +1,6 @@
 import { Box, Typography, useTheme, type Theme } from "@mui/material";
 import type { DailySalesBarChartProps } from "@typings/ui/analytics.types";
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
+import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
 import CustomTooltip from "./CustomToolTip";
 import { getChartTitle } from "./AnalyticsHelper";
 
@@ -31,7 +31,7 @@ const DailySalesBarChart = ({
 
             <Box sx={{ width: "100%", height: 220 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={data} margin={{ top: 8, right: 4, left: -20, bottom: 0 }}>
+                    <LineChart data={data} margin={{ top: 8, right: 4, left: -20, bottom: 0 }}>
                         <CartesianGrid vertical={false} stroke={theme.custom.white} />
                         <XAxis
                             dataKey="date"
@@ -45,9 +45,16 @@ const DailySalesBarChart = ({
                             axisLine={false}
                             tickLine={false}
                         />
-                        <Tooltip content={<CustomTooltip theme={theme} />} cursor={{ fill: theme.custom.darkGray }} />
-                        <Bar dataKey="units" fill={theme.palette.primary.main} radius={[4, 4, 0, 0]} maxBarSize={14} />
-                    </BarChart>
+                        <Tooltip content={<CustomTooltip theme={theme} />} cursor={{ stroke: theme.custom.darkGray }} />
+                        <Line
+                            type="linear"
+                            dataKey="units"
+                            stroke={theme.palette.primary.main}
+                            strokeWidth={2}
+                            dot={{ r: 2.5, fill: theme.palette.primary.main, strokeWidth: 0 }}
+                            activeDot={{ r: 5 }}
+                        />
+                    </LineChart>
                 </ResponsiveContainer>
             </Box>
         </Box>

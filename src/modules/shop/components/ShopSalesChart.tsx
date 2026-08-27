@@ -1,5 +1,5 @@
 import { Box, MenuItem, Select, Skeleton, Tooltip as MuiTooltip, Typography, useTheme, type Theme, type SelectChangeEvent } from "@mui/material";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { useTranslation } from "react-i18next";
 import type { ShopSalesChartProps } from "@typings/shop/shopComponentTypes";
 import { ShopSalesRange } from "@typings/shop/shopEnums";
@@ -84,7 +84,7 @@ const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, canChangeRan
                     <Skeleton variant="rounded" width="100%" height="100%" />
                 ) : (
                     <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={dailySales} margin={{ top: 8, right: 4, left: -20, bottom: 0 }}>
+                        <LineChart data={dailySales} margin={{ top: 8, right: 4, left: -20, bottom: 0 }}>
                             <CartesianGrid vertical={false} stroke={theme.custom.white} />
                             <XAxis
                                 dataKey="label"
@@ -97,9 +97,16 @@ const ShopSalesChart = ({ dailySales, periodTotal, range, setRange, canChangeRan
                                 axisLine={false}
                                 tickLine={false}
                             />
-                            <Tooltip content={ShopSalesChartTooltip} cursor={{ fill: theme.custom.darkGray }} />
-                            <Bar dataKey="total" fill={theme.palette.primary.main} radius={[4, 4, 0, 0]} maxBarSize={32} />
-                        </BarChart>
+                            <Tooltip content={ShopSalesChartTooltip} cursor={{ stroke: theme.custom.darkGray }} />
+                            <Line
+                                type="linear"
+                                dataKey="total"
+                                stroke={theme.palette.primary.main}
+                                strokeWidth={2}
+                                dot={{ r: 2.5, fill: theme.palette.primary.main, strokeWidth: 0 }}
+                                activeDot={{ r: 5 }}
+                            />
+                        </LineChart>
                     </ResponsiveContainer>
                 )}
             </Box>

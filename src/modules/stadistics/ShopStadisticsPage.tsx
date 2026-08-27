@@ -1,80 +1,114 @@
-import { Box, Skeleton, Stack, Typography, type Theme } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { Box, type SelectChangeEvent } from "@mui/material";
 import AppLayout from "../shared/layout/AppLayout";
-import BackButton from "../shared/components/Buttons/BackButton";
-import { useShopMonthlyReport } from "../../hooks/stadistics/useShopMonthlyReport";
-import { formatCurrency } from "../cart/helpers/formatCurrency";
+import { useActiveKiosco } from "../../hooks/kiosco/useActiveKiosco";
+import { useIsActiveKioscoAdmin } from "../../hooks/kiosco/useIsActiveKioscoAdmin";
+import { useShopMonthlyReportDetail } from "../../hooks/stadistics/useShopMonthlyReportDetail";
+import { useShopMonthlyReportPdf } from "../../hooks/stadistics/useShopMonthlyReportPdf";
+import { ReportCompareWith } from "@typings/stadistics/stadisticsEnums";
 import { formatReportMonth } from "./helpers/formatReportMonth";
+import { buildMonthOptions } from "./helpers/buildMonthOptions";
+import { monthKeyToLabel } from "./helpers/monthKeyToLabel";
+import { getCurrentMonthKey } from "./helpers/getCurrentMonthKey";
+import { getCompareAvailability } from "./helpers/getCompareAvailability";
+import ShopMonthlyReportHeader from "./components/ShopMonthlyReportHeader";
+import ShopMonthlyReportKpiRow from "./components/ShopMonthlyReportKpiRow";
+import ShopMonthlyReportDailyChart from "./components/ShopMonthlyReportDailyChart";
+import ShopMonthlyReportSellers from "./components/ShopMonthlyReportSellers";
+import ShopMonthlyReportPaymentMethods from "./components/ShopMonthlyReportPaymentMethods";
+import ShopMonthlyReportHourly from "./components/ShopMonthlyReportHourly";
+import ShopMonthlyReportStockAlerts from "./components/ShopMonthlyReportStockAlerts";
+import ShopMonthlyReportCurrentAccount from "./components/ShopMonthlyReportCurrentAccount";
+import ShopMonthlyReportFooter from "./components/ShopMonthlyReportFooter";
 
-const STAT_CARD_SX = (theme: Theme) => ({
-    flex: 1,
-    minWidth: 180,
-    border: "1px solid",
-    borderColor: theme.custom.darkGray,
-    borderRadius: "12px",
-    padding: 2.5,
-});
+const TWO_COLUMN_GRID_SX = {
+    display: "grid",
+    gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+    gap: 2,
+} as const;
 
 const ShopStadisticsPage = (): React.ReactNode => {
-    const { t } = useTranslation();
-    const { report, isLoading, error } = useShopMonthlyReport();
+    const { activeKiosco } = useActiveKiosco();
+    const isAdmin = useIsActiveKioscoAdmin();
+    const [month, setMonth] = useState(getCurrentMonthKey());
+    const [compareWith, setCompareWith] = useState(ReportCompareWith.PreviousMonth);
+
+    const { report, isLoading, error } = useShopMonthlyReportDetail(month, compareWith);
+    const kioscoName = activeKiosco?.name ?? "";
+    const pdf = useShopMonthlyReportPdf(report, kioscoName, isLoading);
+
+    const monthOptions = buildMonthOptions(report?.meta.availableMonths ?? [month]);
+    const monthLabel = report ? formatReportMonth(report.month) : monthKeyToLabel(month);
+    const comparisonMonthLabel = report?.comparisonMonth ? formatReportMonth(report.comparisonMonth) : null;
+    const compareAvailability = getCompareAvailability(Boolean(report?.meta.canCompare), isAdmin);
+
+    const handleMonthChange = (event: SelectChangeEvent): void => setMonth(event.target.value);
+    const handleCompareChange = (event: SelectChangeEvent): void => setCompareWith(event.target.value as ReportCompareWith);
 
     return (
         <AppLayout fullWidth>
-            <Box component="section" aria-labelledby="shop-stadistics-heading" sx={{ width: "100%" }}>
-                <Typography id="shop-stadistics-heading" component="h1" variant="h4" sx={(theme: Theme) => ({ color: theme.custom.fontColor, mb: 1 })}>
-                    {t("stadistics.heading")}
-                </Typography>
-                <Typography sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor, mb: 3 })}>
-                    {report ? t("stadistics.subtitle", { month: formatReportMonth(report.month) }) : t("stadistics.description")}
-                </Typography>
+            <Box component="section" aria-label="Reporte mensual" sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2.5 }}>
+                <ShopMonthlyReportHeader
+                    kioscoName={kioscoName}
+                    monthLabel={monthLabel}
+                    comparisonLabel={comparisonMonthLabel}
+                    daysInMonth={report?.meta.daysInMonth ?? null}
+                    monthOptions={monthOptions}
+                    selectedMonth={month}
+                    onMonthChange={handleMonthChange}
+                    canChangeMonth={monthOptions.length > 1}
+                    compareWith={compareWith}
+                    onCompareChange={handleCompareChange}
+                    canCompare={compareAvailability.canCompare}
+                    compareDisabledReason={compareAvailability.disabledReason}
+                    onDownloadPdf={pdf.handleDownload}
+                    isDownloadDisabled={pdf.isDownloadDisabled}
+                    isLoading={isLoading}
+                />
 
-                {error && (
-                    <Typography role="alert" sx={(theme: Theme) => ({ color: theme.custom.errorDark, mb: 2 })}>
-                        {error}
-                    </Typography>
-                )}
+                <ShopMonthlyReportKpiRow
+                    summary={report?.summary ?? null}
+                    compareWith={compareWith}
+                    comparisonMonthLabel={comparisonMonthLabel}
+                    isLoading={isLoading}
+                    error={error}
+                />
 
-                <Stack direction="row" flexWrap="wrap" gap={2}>
-                    {isLoading || !report ? (
-                        <>
-                            <Skeleton variant="rounded" width={220} height={96} />
-                            <Skeleton variant="rounded" width={220} height={96} />
-                            <Skeleton variant="rounded" width={220} height={96} />
-                        </>
-                    ) : (
-                        <>
-                            <Box sx={STAT_CARD_SX}>
-                                <Typography variant="caption" sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor })}>
-                                    {t("stadistics.totalSales")}
-                                </Typography>
-                                <Typography variant="h5" sx={(theme: Theme) => ({ color: theme.custom.fontColor, fontWeight: 700 })}>
-                                    {report.totalSales}
-                                </Typography>
-                            </Box>
+                <ShopMonthlyReportDailyChart
+                    dailySales={report?.dailySales ?? []}
+                    dailySalesSummary={report?.dailySalesSummary ?? null}
+                    isLoading={isLoading}
+                    error={error}
+                />
 
-                            <Box sx={STAT_CARD_SX}>
-                                <Typography variant="caption" sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor })}>
-                                    {t("stadistics.totalRevenue")}
-                                </Typography>
-                                <Typography variant="h5" sx={(theme: Theme) => ({ color: theme.custom.fontColor, fontWeight: 700 })}>
-                                    {formatCurrency(report.totalRevenue)}
-                                </Typography>
-                            </Box>
+                <Box sx={TWO_COLUMN_GRID_SX}>
+                    <ShopMonthlyReportSellers
+                        sellers={report?.sellers ?? []}
+                        sellersNote={report?.sellersNote ?? null}
+                        canViewAmounts={isAdmin}
+                        isLoading={isLoading}
+                        error={error}
+                    />
+                    <ShopMonthlyReportPaymentMethods
+                        paymentMethods={report?.paymentMethods ?? []}
+                        isLoading={isLoading}
+                        error={error}
+                    />
+                </Box>
 
-                            <Box sx={STAT_CARD_SX}>
-                                <Typography variant="caption" sx={(theme: Theme) => ({ color: theme.custom.translucidFontColor })}>
-                                    {t("stadistics.averageTicket")}
-                                </Typography>
-                                <Typography variant="h5" sx={(theme: Theme) => ({ color: theme.custom.fontColor, fontWeight: 700 })}>
-                                    {formatCurrency(report.averageTicket)}
-                                </Typography>
-                            </Box>
-                        </>
-                    )}
-                </Stack>
+                <ShopMonthlyReportHourly
+                    hourlyBuckets={report?.hourlyBuckets ?? []}
+                    hourlySummary={report?.hourlySummary ?? null}
+                    isLoading={isLoading}
+                    error={error}
+                />
 
-                <BackButton align="left" />
+                <Box sx={TWO_COLUMN_GRID_SX}>
+                    <ShopMonthlyReportStockAlerts stockAlerts={report?.stockAlerts ?? null} isLoading={isLoading} error={error} />
+                    <ShopMonthlyReportCurrentAccount currentAccount={report?.currentAccount ?? null} isLoading={isLoading} error={error} />
+                </Box>
+
+                <ShopMonthlyReportFooter kioscoName={kioscoName} generatedAt={report?.meta.generatedAt ?? null} />
             </Box>
         </AppLayout>
     );

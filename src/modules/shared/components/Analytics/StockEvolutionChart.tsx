@@ -79,7 +79,7 @@ const StockEvolutionChart = ({ data, isLoading }: StockEvolutionChartProps): Rea
                                 cursor={{ stroke: theme?.palette?.primary?.main, strokeWidth: 1 }}
                             />
                             <Area
-                                type="monotone"
+                                type="linear"
                                 dataKey="stock"
                                 stroke={theme?.custom?.lightMain}
                                 strokeWidth={2}
