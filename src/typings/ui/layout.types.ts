@@ -46,7 +46,9 @@ export interface OptionLink {
   subtitle?: string;
   useData?: () => LinkDataResult;
   formatValue?: (value: string | number | null | undefined) => string;
-  disabled?: boolean; 
+  disabled?: boolean;
+  /** Acción única del panel de sección del sidebar (ex sublink "Crear"). */
+  action?: { label: string; url: string };
 }
 
 export type LinkCardArrowProps = object;

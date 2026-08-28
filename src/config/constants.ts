@@ -79,9 +79,13 @@ export const CURRENCY_OPTIONS: { value: Currency; isoCode: string; locale: strin
 // ║ 🧱 LAYOUT  🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱                   ║
 // ╚══════════════════════════════════════════════════════════════════════╝*/
 
-export const COLLAPSED_WIDTH = "72px";
-export const EXPANDED_WIDTH = "220px";
+// Riel fijo (siempre visible) y panel flotante de sección del sidebar.
+export const SIDEBAR_RAIL_WIDTH = "72px";
+export const SIDEBAR_PANEL_WIDTH = "258px";
 
+// Persiste si el panel de sección está visible u oculto (el riel nunca se
+// colapsa, así que ya no representa "expandido/colapsado" sino "panel
+// abierto/cerrado").
 export const SIDEBAR_STORAGE_KEY = "sidebar-expanded";
 
 export const DRAG_THRESHOLD_PX = 80;
@@ -174,6 +178,12 @@ export const SELL_STATUS_OPTIONS: { value: SellStatusEnum }[] = [
 ];
 
 export const PRODUCTS_EXHIBITOR_ANCHOR_ID = "seller-products-exhibitor";
+
+// IDs de DOM usados por useSellShortcuts (atajos / F2 F9 de /new-sell) para
+// ubicar sus targets, mismo patrón que PRODUCTS_EXHIBITOR_ANCHOR_ID.
+export const SELL_SEARCH_INPUT_ID = "sell-search-input";
+export const SELL_BARCODE_TOGGLE_ID = "sell-barcode-toggle";
+export const CART_GENERATE_TICKET_BUTTON_ID = "cart-generate-ticket-button";
 
 // Cantidad de días agregados por rango del gráfico de ventas de /shop.
 // No es un label (no hay texto), por eso vive acá y no en las traducciones.

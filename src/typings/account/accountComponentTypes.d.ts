@@ -17,16 +17,6 @@ export interface UserData {
 }
 
 export interface SidebarUserAvatarProps {
-  avatarUrl?: string;
-  name: string;
+  onClick: () => void;
+  isActive: boolean;
 }
-
-export interface SidebarUserInfoProps {
-  name: string;
-  role: string;
-  isExpanded: boolean;
-}
-
-export type SidebarUserSettingsProps = Pick<SidebarUserInfoProps, 'isExpanded'> & {
-  onOpenSettings: () => void;
-};

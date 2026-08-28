@@ -1,101 +1,123 @@
 import type { ReactNode } from "react";
 import type { NavigateFunction } from "react-router-dom";
+import type { OptionLink } from "@typings/ui/layout.types";
+import type { KioscoWithStats } from "@typings/kiosco/kioscoTypes";
+import type { UserData } from "@typings/account/accountComponentTypes";
 
+// ─── riel (siempre visible, nunca se colapsa) ─────────────────────────────
 
-export interface SidebarThemeProps {
-  isHovered: boolean;
+export interface SidebarSellButtonProps {
+  isActive: boolean;
+  onClick: () => void;
+  variant?: "rail" | "fab";
 }
 
+export interface SidebarRailItemProps {
+  link: OptionLink;
+  isActive: boolean;
+  onClick: (link: OptionLink) => void;
+}
+
+export interface SidebarKioscoSwitcherProps {
+  name: string;
+  initials: string;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+// ─── panel flotante de sección ────────────────────────────────────────────
+
+/** Destino de navegación dentro de la sección activa (ex sub-link). */
 export interface SubLink {
   label: string;
   url: string;
+  count?: string | number;
 }
 
-export interface SubGroup {
-  groupLabel: string;
-  links: SubLink[];
+export type NavDestinationsMap = Record<string, SubLink[]>;
+
+export interface SidebarSectionHeaderProps {
+  link: OptionLink;
 }
 
-export interface NavLinkInterface {
-  url: string;
-  description: string;
-  icon: ReactNode;
-  subGroups?: SubGroup[];
+export interface SidebarSectionActionProps {
+  action: NonNullable<OptionLink["action"]>;
+  onNavigate: (url: string) => void;
 }
 
-// ─── shapes reutilizables ─────────────────────────────────────────────────
-
-/** Metadata derivada de un NavLinkInterface (retorno de getLinkMeta). */
-export interface LinkMeta {
-  subGroups: SubGroup[];
-  hasSubGroups: boolean;
-  isActive: boolean;
-  isOpen: boolean;
-}
-
-/** Handlers de navegación por url, compartidos entre item y subgrupo. */
-export interface SidebarNavigationHandlers {
+export interface SidebarSectionLinksProps {
+  destinations: SubLink[];
   isSubLinkActive: (url: string) => boolean;
   onNavigate: (url: string) => void;
 }
 
-export type NavLinkClickHandler = (link: NavLinkInterface) => void;
+export interface SidebarPanelToggleProps {
+  onClick: () => void;
+}
 
-// ─── logout / toggle ──────────────────────────────────────────────────────
-
-export interface SidebarLogoutProps extends SidebarThemeProps {
+export interface SidebarUserMenuProps {
+  userData: UserData;
+  onOpenSettings: () => void;
   onLogout: () => void;
 }
 
-export interface SidebarToggleProps {
-  isExpanded: boolean;
-  toggleSidebar: () => void;
+export interface UseSidebarLogoutConfirmReturn {
+  isOpen: boolean;
+  requestLogout: () => void;
+  cancelLogout: () => void;
+  confirmLogout: () => void;
 }
 
-export interface SidebarUserDataProps extends Pick<SidebarToggleProps, "isExpanded"> {
+export interface SidebarPanelProps {
+  isOpen: boolean;
+  activeLink?: OptionLink;
+  destinations: SubLink[];
+  isSubLinkActive: (url: string) => boolean;
+  onNavigate: (url: string) => void;
   onOpenSettings: () => void;
+  onLogout: () => void;
+  onClosePanel: () => void;
 }
 
-// ─── nav item / subgroup / sublink ────────────────────────────────────────
+// ─── tienda activa / selector de kioscos ──────────────────────────────────
 
-export interface SidebarNavItemProps extends SidebarThemeProps, LinkMeta, SidebarNavigationHandlers {
-  link: NavLinkInterface;
-  onRowClick: NavLinkClickHandler;
+export interface UseSidebarKioscoCardReturn {
+  activeKiosco: KioscoWithStats | null;
+  kioscos: KioscoWithStats[];
+  loading: boolean;
+  error: string | null;
+  entering: string | null;
+  isListOpen: boolean;
+  toggleList: () => void;
+  handleSelect: (kiosco: KioscoWithStats) => void;
 }
-
-export interface SidebarSubGroupProps extends SidebarThemeProps, SidebarNavigationHandlers {
-  group: SubGroup;
-}
-
-export interface SidebarSubLinkProps {
-  subLink: SubLink;
-  isActive: boolean;
-  onClick: (url: string) => void;
-}
-
-export type SidebarExpandMoreProps = Pick<SidebarNavItemProps, "isHovered" | "isOpen" | "hasSubGroups">;
-
-export type SidebarCollapseProps = Pick<SidebarNavItemProps,"hasSubGroups" | "isOpen" | "isHovered" | "subGroups" | "isSubLinkActive" | "onNavigate">;
 
 // ─── listado de navegación (base compartida por desktop y mobile) ────────
 
 export interface SidebarNavigationBaseProps {
-  navLinks: NavLinkInterface[];
-  handleNavClick: NavLinkClickHandler;
-  getLinkMeta: (link: NavLinkInterface) => LinkMeta;
+  navLinks: OptionLink[];
+  isLinkActive: (link: OptionLink) => boolean;
+  handleNavClick: (link: OptionLink) => void;
   isSubLinkActive: (url: string) => boolean;
   navigate: NavigateFunction;
 }
-
-export type SidebarLinksListProps = Pick<SidebarToggleProps, "isExpanded"> & SidebarNavigationBaseProps;
 
 export interface SidebarMobileDrawerProps extends SidebarNavigationBaseProps {
   open: boolean;
   onClose: () => void;
   handleLogout: () => void;
   onOpenSettings: () => void;
+  onSellClick: () => void;
+  isSellActive: boolean;
 }
 
 export interface SidebarToggleButtonMobileProps {
   onOpen: () => void;
+}
+
+export interface SidebarMobileNavRowProps {
+  icon: ReactNode;
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
 }

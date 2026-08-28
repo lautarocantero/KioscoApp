@@ -2,13 +2,7 @@
 
 ## 1. Resumen rápido
 
-`AppSidebar` es el componente de navegación lateral principal de la aplicación. Se renderiza desde `src/modules/shared/layout/AppShell.tsx` y se encarga de:
-
-- mostrar los links de navegación principales
-- manejar el estado de expansión / colapso del sidebar
-- mostrar datos del usuario y acceso rápido a configuración
-- ofrecer un botón de cierre de sesión
-- adaptarse a desktop y mobile con un drawer lateral
+`AppSidebar` es el componente de navegación lateral principal de la aplicación. Se renderiza desde `src/modules/shared/layout/AppShell.tsx`. Arquitectura: **riel de íconos fijo** (72px, nunca se colapsa) + **panel flotante de sección** que aparece por encima del contenido sin empujarlo, con **Vender** como botón permanente fuera de ambos.
 
 **¿Dónde se usa?**
 - `src/modules/shared/layout/AppShell.tsx`
@@ -17,20 +11,24 @@
 
 ```
 AppSidebar
-├── SidebarToggleButtonMobile
-├── SidebarMobileDrawer
-├── SidebarToggle
-├── SidebarLinksList
-│   ├── SidebarNavItem
-│   │   ├── SidebarExpandMore
-│   │   ├── SidebarExpandedList
-│   │   │   ├── SidebarSubGroup
-│   │   │   │   └── SidebarSubLink
-├── SidebarUserData
-│   ├── SidebarUserAvatar
-│   ├── SidebarUserInfo
-│   └── SidebarUserSettings
-├── SidebarLogout
+├── SidebarToggleButtonMobile        (mobile)
+├── SidebarSellButton (variant="fab") (mobile)
+├── SidebarMobileDrawer              (mobile)
+│   ├── SidebarMobileNavRow × (1 + N)
+│   ├── SidebarKioscoCard
+│   └── SidebarUserMenu
+├── [riel] <nav>
+│   ├── SidebarSellButton (variant="rail")
+│   ├── SidebarRailItem × N          (uno por SidebarNavLinks)
+│   ├── SidebarKioscoSwitcher
+│   └── SidebarUserAvatar
+├── SidebarPanel                     (overlay, position: fixed)
+│   ├── SidebarKioscoCard
+│   ├── SidebarSectionHeader         (si hay sección activa)
+│   ├── SidebarSectionAction         (si la sección trae action)
+│   ├── SidebarSectionLinks
+│   ├── SidebarUserMenu
+│   └── SidebarPanelToggle
 └── SettingsModal (lazy, solo montado mientras está abierto)
 ```
 
@@ -40,22 +38,10 @@ AppSidebar
 
 Archivo: `src/modules/shared/layout/components/appSideBar/Appsidebar.tsx`
 
-`AppSidebar` actúa como un contenedor visual fijo en escritorio y como launcher del drawer en móvil.
-
-Comportamiento principal:
-
-- `SidebarToggleButtonMobile` muestra el botón de menú solo en `xs`.
-- `SidebarMobileDrawer` se abre en pantallas pequeñas usando `Drawer` de MUI.
-- En desktop, el sidebar es un `Box` con `position: fixed` y ancho variable.
-- El ancho se guarda y restaura desde `localStorage` usando la clave `SIDEBAR_STORAGE_KEY`.
-
-Contiene:
-
-- `SidebarToggleComponent` para alternar entre expandido y colapsado
-- `SidebarLinksList` para renderizar la lista de navegación
-- `SidebarUserData` para mostrar avatar y datos del usuario
-- `SidebarLogout` para el botón de cerrar sesión
-- `SettingsModal` (carga diferida con `React.lazy`/`Suspense`), controlado por `useSettingsModal` (`src/hooks/ui/useSettingsModal.ts`) y abierto desde el engranaje de `SidebarUserSettings` — ver [docs/components/SettingsModal.md](./SettingsModal.md)
+- El riel es un `Box` `position: fixed`, ancho fijo `SIDEBAR_RAIL_WIDTH` (72px) — **nunca cambia de ancho**, así que nunca hay reflow del layout. El layout reserva ese ancho con un spacer invisible.
+- `SidebarPanel` es un overlay `position: fixed` que entra/sale con `transform: translateX`, apoyado justo a la derecha del riel. Su visibilidad (`isPanelOpen`) se persiste en `localStorage` con `SIDEBAR_STORAGE_KEY`.
+- `SidebarSellButton` es el único punto de entrada al catálogo (`/new-sell`): vive arriba del riel en desktop, y como FAB flotante fuera del drawer en mobile. También se activa con el atajo de teclado `V` (`useSidebarShortcut`).
+- En mobile, `SidebarMobileDrawer` reemplaza riel + panel por una única columna (ver sección 8).
 
 ---
 
@@ -63,32 +49,30 @@ Contiene:
 
 Archivo: `src/modules/shared/layout/components/appSideBar/hooks/useAppSidebar.ts`
 
-Este hook encapsula la lógica de navegación y estado del sidebar.
-
 ### Estado que maneja
 
-- `isExpanded`: si el sidebar está expandido o colapsado. Se inicializa leyendo `localStorage`.
-- `openSection`: link actualmente expandido en el menú al tener subgrupos.
+- `isPanelOpen`: si el panel de sección está visible. Se inicializa leyendo `localStorage` y se persiste en cada cambio.
 - `isMobileOpen`: control de apertura del drawer en mobile.
 
-### Funciones clave
+### Funciones y valores clave
 
-- `toggleSidebar()`: invierte `isExpanded` y guarda la nueva preferencia en `localStorage`.
-- `handleNavClick(link)`: si el link tiene subgrupos, abre/cierra el grupo; si no, navega.
+- `togglePanel()` / `closePanel()`: abren/cierran el panel y persisten la preferencia.
+- `handleNavClick(link)`: navega a `link.url` y abre el panel si estaba cerrado (si ya estaba abierto, se queda abierto mostrando la nueva sección).
+- `handleSellClick()`: navega a `/new-sell`. Registrado también contra `useSidebarShortcut` para el atajo `V`.
 - `handleLogout()`: despacha `startLogout()`.
-- `getLinkMeta(link)`: devuelve metadata derivada de cada link:
-  - `subGroups`
-  - `hasSubGroups`
-  - `isActive`
-  - `isOpen`
-- `isSubLinkActive(url)`: compara `location.pathname` con la URL de sublink.
+- `activeLink`: el `OptionLink` de `SidebarNavLinks` cuya `url` matchea `location.pathname` — ya no hay `openSection` ni acordeón, la sección activa se deriva directo de la ruta. Queda `undefined` en `/new-sell` (Vender no es un ítem del riel).
+- `destinations`: `NAV_DESTINATIONS[activeLink.url]` — los destinos de la sección activa.
+- `isLinkActive(link)` / `isSubLinkActive(url)`: comparan contra `location.pathname`.
+- `isSellActive`: `true` cuando `location.pathname` empieza con `/new-sell`.
+- `navLinks`: de `useSidebarNavLinks()` (`SidebarNavLinks` + `useData` real por sección).
 
 ### Dependencias
 
 - `useNavigate` y `useLocation` de `react-router-dom`
 - `useDispatch` de `react-redux`
-- `SidebarNavLinks` de `src/config/Links.tsx`
-- `NAV_SUBGROUPS` de `src/modules/shared/layout/components/appSideBar/helper/NavSubGroups.ts`
+- `useSidebarNavLinks` (`src/config/Links.tsx` + `useShopStatLinks.dataHooksByUrl`)
+- `useSidebarShortcut` (atajo de teclado `V`)
+- `NAV_DESTINATIONS` de `src/modules/shared/layout/components/appSideBar/helper/NavDestinations.ts`
 
 ---
 
@@ -96,147 +80,53 @@ Este hook encapsula la lógica de navegación y estado del sidebar.
 
 Archivo: `src/config/Links.tsx`
 
-La lista principal es `SidebarNavLinks` y contiene objetos con:
+`SidebarNavLinks: OptionLink[]` (tipo compartido con el resto del layout, `src/typings/ui/layout.types.ts`) — ya no incluye Catálogo (es el botón fijo Vender). Orden por frecuencia de uso: Ventas · Boletas · Productos · Proveedores · Tienda · Vendedores.
 
-- `description`: texto del link
-- `icon`: ícono ReactNode
-- `url`: ruta de navegación
-- `subtitle` / `value`: información adicional opcional
-- `subGroups` opcional disponible a través de `NAV_SUBGROUPS`
-
-Ejemplo de link:
-
-```tsx
-{
-  description: "Productos",
-  icon: <CategoryIcon />,
-  url: "/products",
-  value: "48",
-  subtitle: "3 con stock bajo",
-}
-```
-
-`/shop` es el punto de entrada de la app (ver [docs/features/shopDashboard.md](../features/shopDashboard.md)): la fila de stats de `/shop` (`useShopStatLinks`, ver [docs/hooks/shop/useShopStatLinks.md](../hooks/shop/useShopStatLinks.md)) parte de este mismo `SidebarNavLinks`.
+Cada link puede traer:
+- `subtitle`: texto estático de fallback, usado cuando no hay `useData`.
+- `action?: { label, url }`: CTA único de la sección (ex sublink "Crear"), renderizado por `SidebarSectionAction`.
+- `useData`: asignado por `useSidebarNavLinks` para las secciones con hook de stats real (Ventas, Productos, Proveedores, Vendedores) — mismo mapeo (`dataHooksByUrl`) que usa `useShopStatLinks` para la fila de `/shop`.
 
 ---
 
-## 5. Lista de navegación: `SidebarLinksList`
+## 5. Riel: `SidebarSellButton`, `SidebarRailItem`, `SidebarKioscoSwitcher`, `SidebarUserAvatar`
 
-Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarLinksList.tsx`
+Todos en `src/modules/shared/layout/components/appSideBar/components/`. El riel nunca se expande: siempre muestra solo íconos, con `Tooltip` para el texto y una barra lateral (`SidebarRailItem`) para marcar la sección activa.
 
-Recibe metadata y handlers desde el hook. Renderiza cada item usando `SidebarNavItem`.
-
-Props principales:
-
-- `isExpanded`: controla si el sidebar está desplegado
-- `navLinks`: array de links
-- `handleNavClick`: callback al clicar un item
-- `getLinkMeta`: obtiene estado `isActive`, `isOpen`, `hasSubGroups`
-- `isSubLinkActive`: determina si un sublink es activo
-- `navigate`: función de navegación
+- **`SidebarSellButton`**: botón circular fijo, `variant="rail"` (desktop) o `"fab"` (mobile). Ver [doc](./appSideBar/SidebarSellButton.md).
+- **`SidebarRailItem`**: un ítem por `navLink`. Ver [doc](./appSideBar/SidebarRailItem.md).
+- **`SidebarKioscoSwitcher`**: ícono + iniciales de la tienda activa, abre el panel. Ver [doc](./appSideBar/SidebarKioscoSwitcher.md).
+- **`SidebarUserAvatar`**: se resuelve solo con `useSidebarUserData()`, abre el panel. Ver [doc](./appSideBar/SidebarUserAvatar.md).
 
 ---
 
-## 6. Items y sublinks
+## 6. Panel: `SidebarPanel` y su contenido
 
-### `SidebarNavItem`
-
-Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarNavItem.tsx`
-
-Renderiza un botón de navegación principal. Su comportamiento:
-
-- muestra solo el icono cuando `isHovered` es falso (sidebar colapsado)
-- muestra descripción cuando `isHovered` es verdadero (sidebar expandido)
-- usa `Tooltip` para mostrar el texto en hover cuando está colapsado
-- cambia estilos si `isActive`
-- incluye `SidebarExpandMore` para indicar subgrupos
-- renderiza `SidebarExpandedList` para sublinks
-
-### `SidebarExpandMore`
-
-Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarExpandMore.tsx`
-
-Muestra el indicador de flecha / estado de expansión solo si el item tiene subgrupos.
-
-### `SidebarExpandedList`
-
-Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarExpandedList.tsx`
-
-Renderiza la lista de subgrupos dentro de un `Collapse` cuando el item está abierto y el sidebar está expandido.
-
-### `SidebarSubGroup`
-
-Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarSubGroup.tsx`
-
-Agrupa sublinks bajo un título de grupo. Solo se muestra cuando el sidebar está expandido.
-
-### `SidebarSubLink`
-
-Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarSubLink.tsx`
-
-Renderiza el link secundario dentro del grupo. Cambia color y peso cuando está activo.
+- **`SidebarPanel`** (contenedor overlay) — [doc](./appSideBar/SidebarPanel.md).
+- **`SidebarKioscoCard`** ("tienda activa" + lista desplegable de otras tiendas) — [doc](./appSideBar/SidebarKioscoCard.md), hook: [useSidebarKioscoCard](../hooks/appSideBar/useSidebarKioscoCard.md).
+- **`SidebarSectionHeader`** (título + subtítulo con dato real, vía `useLinkCard`) — [doc](./appSideBar/SidebarSectionHeader.md).
+- **`SidebarSectionAction`** (CTA único de la sección) — [doc](./appSideBar/SidebarSectionAction.md).
+- **`SidebarSectionLinks`** (destinos de la sección, ex `SidebarSubGroup`/`SidebarSubLink`) — [doc](./appSideBar/SidebarSectionLinks.md).
+- **`SidebarUserMenu`** (Ajustes / Cuenta / Plan / Cerrar sesión — absorbe lo que antes eran `SidebarUserInfo` + `SidebarUserSettings` + `SidebarLogout`) — [doc](./appSideBar/SidebarUserMenu.md).
+- **`SidebarPanelToggle`** ("Ocultar panel") — [doc](./appSideBar/SidebarPanelToggle.md).
 
 ---
 
-## 7. Usuario y acciones rápidas
+## 7. Destinos por sección: `NAV_DESTINATIONS`
 
-### `SidebarUserData`
+Archivo: `src/modules/shared/layout/components/appSideBar/helper/NavDestinations.ts` (ex `NavSubGroups.ts` — ya no hay `groupLabel`: el panel ya tiene un solo grupo, el de la sección activa).
 
-Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarUserData/SidebarUserData.tsx`
-
-Muestra el bloque de usuario cuando existe un usuario autenticado.
-
-- usa `useSidebarUserData()` para leer datos de Redux
-- si está cargando o no hay usuario, no renderiza nada
-- muestra avatar, nombre, rol y botón de configuración
-
-Subcomponentes:
-
-- `SidebarUserAvatar`: avatar circular con inicial si no hay imagen
-- `SidebarUserInfo`: nombre + rol, visible solo si `isExpanded`
-- `SidebarUserSettings`: ícono de engranaje que dispara `onOpenSettings` (prop que baja desde `AppSidebar`) para abrir el modal de **Ajustes** — ver [docs/components/SettingsModal.md](./SettingsModal.md). Ya no navega a `/account`. **Siempre visible** (antes desaparecía con el sidebar colapsado): con `isExpanded` en `false`, `SidebarUserData` pasa a layout en columna y el engranaje se reordena (`order: -1`) para quedar arriba del avatar en vez de a la derecha del nombre.
-
-### `useSidebarUserData`
-
-Archivo: `src/modules/shared/layout/components/appSideBar/hooks/useSidebarUserData.ts`
-
-Lee el estado `auth` de Redux y normaliza los datos:
-
-- devuelve `userData` con `id`, `name`, `role`, `avatarUrl`, `email`
-- si `isLoading`, no hay usuario autenticado o falta `_id`, devuelve `null`
-
-### `SidebarLogout`
-
-Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarLogout.tsx`
-
-Botón para cerrar sesión.
-
-- muestra texto solo cuando el sidebar está expandido
-- usa tooltip cuando el sidebar está colapsado
-- invoca `onLogout` al hacer click
+Solo lista destinos con una ruta real (`/categories-list`, `/shop/stadistics`) para no linkear a nada. El resto de la información imaginada en la propuesta de rediseño (ej. "Ventas de hoy", "Parciales sin cerrar", "Stock bajo") todavía no existe como vista/filtro navegable — sumarla acá a medida que esas rutas se construyan.
 
 ---
 
-## 8. Mobile
-
-### `SidebarToggleButtonMobile`
-
-Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarToggleButtonMobile.tsx`
-
-Es el botón de menú que aparece únicamente en móviles. Abre el drawer lateral.
-
-### `SidebarMobileDrawer`
+## 8. Mobile: `SidebarMobileDrawer`
 
 Archivo: `src/modules/shared/layout/components/appSideBar/components/SidebarMobileDrawer.tsx`
 
-Versión móvil del sidebar. Incluye:
+El riel + panel flotante no tienen sentido en una pantalla angosta, así que en mobile el drawer sigue siendo una única columna: Vender (`SidebarMobileNavRow`), los links del riel, `SidebarKioscoCard` y `SidebarUserMenu` — reusando los mismos componentes que usa el panel de escritorio, sin duplicar su lógica. Ver [doc](./appSideBar/SidebarMobileDrawer.md).
 
-- close button
-- `SidebarLinksList` con `isExpanded` forzado a `true`
-- `SidebarUserData`
-- `SidebarLogout`
-
-Al clicar un link, cierra el drawer inmediatamente.
+Vender también vive como FAB (`SidebarSellButton variant="fab"`) fuera del drawer, siempre visible.
 
 ---
 
@@ -244,32 +134,28 @@ Al clicar un link, cierra el drawer inmediatamente.
 
 Archivo: `src/typings/ui/sidebar.types.ts`
 
-Tipos principales:
-
-- `SidebarThemeProps`: `isHovered`
-- `NavLinkInterface`: estructura del link de navegación
-- `SubGroup` / `SubLink`
-- `SidebarLinksListProps`: props del listado principal
-- `SidebarNavItemProps`, `SidebarSubGroupProps`, `SidebarSubLinkProps`
-- `SidebarToggleProps`, `SidebarLogoutProps`, `SidebarUserDataProps` (incluye `onOpenSettings`)
-- `SidebarMobileDrawerProps` (incluye `onOpenSettings`)
+El sidebar trabaja directamente con `OptionLink` (`src/typings/ui/layout.types.ts`) en vez de un `NavLinkInterface` propio — ya no hace falta el cast forzado que tenía el `useAppSidebar` anterior. Tipos propios: `SubLink`/`NavDestinationsMap` (destinos de sección), `UseSidebarKioscoCardReturn`, y un props interface por componente nuevo del riel/panel.
 
 ---
 
 ## 10. Consideraciones importantes
 
-- El estado expandido del sidebar se persiste en `localStorage` con la clave `SIDEBAR_STORAGE_KEY`.
-- El sidebar desktop es `position: fixed` y no empuja el contenido; el layout reserva ancho con un spacer invisible.
-- Los ítems de navegación usan `location.pathname.startsWith(link.url)` para determinar el link activo.
-- Los sublinks usan `location.pathname === url` para marcar el sublink exacto.
-- En la versión colapsada, los textos no se muestran, pero los tooltips revelan las descripciones.
-- La experiencia móvil utiliza `Drawer` y fuerza el sidebar expandido internamente.
+- El riel nunca se colapsa — la sección activa siempre se ve (barra lateral en `SidebarRailItem`), incluso con el panel cerrado.
+- La visibilidad del panel se persiste en `localStorage` con `SIDEBAR_STORAGE_KEY` (misma clave que usaba el viejo "expandido/colapsado").
+- `activeLink` usa `location.pathname.startsWith(link.url)`; `isSubLinkActive` usa igualdad exacta.
+- `SidebarSectionHeader` debe montarse con `key={activeLink.url}` — reusa `useLinkCard`, que llama a un hook distinto según `link.useData`; sin ese remount al cambiar de sección se rompen las reglas de hooks.
+- El fondo translúcido del panel se deriva de `alpha(theme.custom.darkBackground, 0.85)` en vez del `rgba(38,29,60,.72)` fijo de la propuesta original, para no inventar un hex fuera del theme (`CLAUDE.md`, regla 4).
 
 ---
 
 ## 11. Cómo extender o modificar
 
-- Para agregar un nuevo link, edita `SidebarNavLinks` en `src/config/Links.tsx`.
-- Para agregar sublinks, define `NAV_SUBGROUPS` en `src/modules/shared/layout/components/appSideBar/helper/NavSubGroups.ts`.
-- Para cambiar el orden de los links, modifica el arreglo `SidebarNavLinks`.
-- Para cambiar el color de fondo o animaciones, revisa `getNoisyBackgroundSx` en `src/modules/shared/components/NoisyBackground/NoisyBackground.tsx`.
+- Para agregar/reordenar un link del riel, edita `SidebarNavLinks` en `src/config/Links.tsx`.
+- Para agregar destinos de sección, edita `NAV_DESTINATIONS` en `helper/NavDestinations.ts` — solo con rutas reales.
+- Para el CTA de una sección, agregá `action: { label, url }` al link en `Links.tsx`.
+- Para que una sección muestre un subtítulo con dato real, sumá su hook a `dataHooksByUrl` en `src/hooks/shop/useShopStatLinks.ts` (compartido con `useSidebarNavLinks`).
+- Para cambiar el fondo/blur del panel, revisá `SidebarPanel.tsx`. Para el del riel, `getNoisyBackgroundSx` en `src/modules/shared/components/NoisyBackground/NoisyBackground.tsx`.
+
+## 12. Pendiente de definir
+
+Ver `Sidebar Stocko.md` (propuesta original) sección 7 — todavía sin resolver: permisos por rol (qué ve un vendedor), búsqueda en el listado de tiendas para multi-tienda (>5 tiendas), y estados vacíos dedicados por sección (tienda recién creada, sin proveedores, etc).

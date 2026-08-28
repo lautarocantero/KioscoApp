@@ -10,43 +10,15 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import type { OptionLink } from "@typings/ui/layout.types";
 import GroupIcon from '@mui/icons-material/Group';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import stocoLogo from "../../public/images/logo/StocoLogoalt.png";
 
-const KioscoLink: OptionLink = {
-  description: "Catalogo",
-  icon: (
-    <img
-      src={stocoLogo}
-      alt="Stocko"
-      width={32}
-      height={32}
-      style={{ objectFit: "contain" }}
-    />
-  ),
-  url: "/new-sell",
-};
-
+// Orden por frecuencia de uso — "Vender" ya no vive acá: es el botón fijo
+// del riel del sidebar (ver SidebarSellButton), con acceso directo a
+// /new-sell desde cualquier sección.
 export const SidebarNavLinks: OptionLink[] = [
-  KioscoLink,
-  {
-    description: "Tienda",
-    icon: <StoreIcon />,
-    url: "/shop",
-    subtitle: "Resumen general del negocio",
-  },
   {
     description: "Ventas",
     icon: <PointOfSaleIcon />,
     url: "/sells",
-    value: "12",
-    subtitle: "Hoy · última hace 20 min",
-  },
-  {
-    description: "Productos",
-    icon: <CategoryIcon />,
-    url: "/products",
-    value: "48",
-    subtitle: "3 con stock bajo",
   },
   {
     description: "Boletas",
@@ -55,16 +27,29 @@ export const SidebarNavLinks: OptionLink[] = [
     subtitle: "Carga de boletas y actualizaciones",
   },
   {
-    description: "Vendedores",
-    icon: <GroupIcon />,
-    url: "/sellers",
-    subtitle: "",
+    description: "Productos",
+    icon: <CategoryIcon />,
+    url: "/products",
+    action: { label: "Nuevo producto", url: "/product-create" },
   },
   {
     description: "Proveedores",
     icon: <LocalShippingIcon />,
     url: "/providers",
-    subtitle: "",
+    subtitle: "Gestión de proveedores",
+    action: { label: "Nuevo proveedor", url: "/provider-create" },
+  },
+  {
+    description: "Tienda",
+    icon: <StoreIcon />,
+    url: "/shop",
+    subtitle: "Resumen general del negocio",
+  },
+  {
+    description: "Vendedores",
+    icon: <GroupIcon />,
+    url: "/sellers",
+    action: { label: "Invitar vendedor", url: "/sellers" },
   },
 ];
 

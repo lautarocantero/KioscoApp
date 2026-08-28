@@ -1,13 +1,18 @@
-import { useState, useCallback } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../../../../store/user/userSlice";
 import { startLogout } from "../../../../../../store/auth/authThunks";
-import { SidebarNavLinks } from "../../../../../../config/Links";
-import { NAV_SUBGROUPS } from "../helper/NavSubGroups";
-import type { NavLinkInterface } from "@typings/ui/sidebar.types";
+import type { OptionLink } from "@typings/ui/layout.types";
+import { NAV_DESTINATIONS } from "../helper/NavDestinations";
 import { SIDEBAR_STORAGE_KEY } from "../../../../../../config/constants";
+import { useSidebarNavLinks } from "./useSidebarNavLinks";
+import { useSidebarShortcut } from "./useSidebarShortcut";
 
+const SELL_URL = "/new-sell";
+
+const isLinkActive = (link: OptionLink, pathname: string): boolean =>
+  link.url !== "/" && pathname.startsWith(link.url);
 
 export const useAppSidebar = () => {
 
@@ -16,46 +21,39 @@ export const useAppSidebar = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const navLinks = SidebarNavLinks as NavLinkInterface[];
+  const navLinks = useSidebarNavLinks();
 
-  const [openSection, setOpenSection] = useState<string | null>(null);
-  const [isExpanded, setIsExpanded] = useState<boolean>(() => {
+  const [isPanelOpen, setIsPanelOpen] = useState<boolean>(() => {
     const stored = localStorage.getItem(SIDEBAR_STORAGE_KEY);
     return stored === "true";
   });
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  const toggleSidebar = useCallback(() => {
-    setIsExpanded((prev) => {
-      const next = !prev;
-      localStorage.setItem(SIDEBAR_STORAGE_KEY, String(next));
-      return next;
-    });
+  const setPanelOpen = useCallback((next: boolean) => {
+    setIsPanelOpen(next);
+    localStorage.setItem(SIDEBAR_STORAGE_KEY, String(next));
   }, []);
 
+  const togglePanel = useCallback(() => {
+    setPanelOpen(!isPanelOpen);
+  }, [isPanelOpen, setPanelOpen]);
 
-  const toggleSection = (url: string) => {
-    if (!isExpanded) return;
-    setOpenSection((prev) => (prev === url ? null : url));
-  };
+  const closePanel = useCallback(() => setPanelOpen(false), [setPanelOpen]);
 
-  const handleNavClick = useCallback((link: NavLinkInterface) => {
-    const hasSubGroups = !!NAV_SUBGROUPS[link.url]?.length;
+  // Vender es el único punto de entrada al catálogo: atajo global "V"
+  // (ignorado si el foco está en un input), visible desde cualquier sección.
+  const handleSellClick = useCallback(() => navigate(SELL_URL), [navigate]);
+  useSidebarShortcut(handleSellClick);
 
-    if (!hasSubGroups) {
-      navigate(link.url);
-      return;
-    }
-
-    if (!isExpanded) {
-      setIsExpanded(true);
-      localStorage.setItem(SIDEBAR_STORAGE_KEY, "true");
-      setOpenSection(link.url);
-      return;
-    }
-
-    toggleSection(link.url);
-  }, [navigate, toggleSection, isExpanded]);
+  // La sección activa se deriva de location.pathname — ya no hay acordeón
+  // que abrir/cerrar, así que navegar y abrir el panel son dos pasos
+  // independientes: el click siempre navega, y solo abre el panel si
+  // estaba cerrado (si ya está abierto, se queda abierto mostrando la
+  // nueva sección).
+  const handleNavClick = useCallback((link: OptionLink) => {
+    navigate(link.url);
+    if (!isPanelOpen) setPanelOpen(true);
+  }, [navigate, isPanelOpen, setPanelOpen]);
 
   // navigate("/") explícito: sin esto, el logout solo limpiaba el estado y
   // dejaba al usuario en la URL protegida en la que estaba, a merced de que
@@ -64,26 +62,38 @@ export const useAppSidebar = () => {
     await dispatch(startLogout());
     navigate("/");
   }, [dispatch, navigate]);
- 
-  const getLinkMeta = useCallback((link: NavLinkInterface) => ({
-    subGroups: NAV_SUBGROUPS[link.url] ?? [],
-    hasSubGroups: !!NAV_SUBGROUPS[link.url]?.length,
-    isActive: location.pathname.startsWith(link.url) && link.url !== "/",
-    isOpen: openSection === link.url,
-  }), [location.pathname, openSection]);
+
+  const activeLink = useMemo(
+    () => navLinks.find((link) => isLinkActive(link, location.pathname)),
+    [navLinks, location.pathname]
+  );
+
+  const destinations = useMemo(
+    () => NAV_DESTINATIONS[activeLink?.url ?? ""] ?? [],
+    [activeLink]
+  );
+
+  const isSellActive = location.pathname.startsWith(SELL_URL);
 
   const isSubLinkActive = useCallback((url: string) => location.pathname === url, [location.pathname]);
 
+  const isLinkActiveFn = useCallback((link: OptionLink) => isLinkActive(link, location.pathname), [location.pathname]);
+
   return {
-    isExpanded,
+    isPanelOpen,
+    togglePanel,
+    closePanel,
     navLinks,
-    toggleSidebar,
+    activeLink,
+    destinations,
+    isLinkActive: isLinkActiveFn,
+    isSellActive,
+    handleSellClick,
     handleNavClick,
     handleLogout,
-    getLinkMeta,
     isSubLinkActive,
     navigate,
-    isMobileOpen, 
-    setIsMobileOpen
+    isMobileOpen,
+    setIsMobileOpen,
   };
 };
