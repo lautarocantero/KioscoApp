@@ -578,16 +578,16 @@ const es = {
       clearButton: "Vaciar carrito",
     },
     catalog: {
-      sections: {
-        search: "Búsqueda",
-        quickActions: "Acciones rápidas",
-      },
       search: {
-        placeholder: "Buscar...",
+        placeholder: "Buscar producto, presentación, SKU o código — Enter lo agrega al carrito",
+        ariaLabel: "Buscar producto, presentación, SKU o código",
+        clearAriaLabel: "Limpiar búsqueda",
+        shortcutsHint: "/ Buscar · F2 Escanear · F9 Generar ticket",
       },
-      filter: {
-        label: "Categoría",
-        clearLabel: "Todas",
+      searchResult: {
+        sku: "SKU: {{sku}}",
+        addAriaLabel: "Agregar {{name}} al carrito",
+        empty: "No se encontraron presentaciones",
       },
       barcode: {
         tooltip: "Usar lectora de código de barras",
@@ -598,10 +598,15 @@ const es = {
         tooltip: "Ver Carrito",
       },
     },
+    stockStatus: {
+      low: "{{stock}} u · bajo",
+      ok: "{{stock}} u",
+      weight: "{{stock}}g",
+    },
     productsExhibitor: {
       toolbar: {
         title: "Catálogo de productos",
-        availableCount: "{{count}} productos disponibles",
+        availableCount: "{{count}} productos · {{presentations}} presentaciones",
         viewModeHint: "Elegí cómo querés ver tus productos",
       },
       sort: {
@@ -614,6 +619,20 @@ const es = {
       },
       viewModeToggle: {
         tooltip: "Cambiar vista",
+      },
+      categoryChips: {
+        allLabel: "Todas",
+      },
+      denseList: {
+        emptyMessage: "No hay presentaciones",
+        columns: {
+          product: "Producto",
+          presentation: "Presentación",
+          sku: "SKU",
+          category: "Categoría",
+          price: "Precio",
+          actions: "Acciones",
+        },
       },
       empty: {
         imageAlt: "Vista previa de la imagen",
@@ -633,8 +652,12 @@ const es = {
     },
     productItem: {
       addButtonAriaLabel: "Agregar al carrito",
-      stockLabel: "Stock: {{stock}}",
       fallbackName: "Presentación",
+      detailAriaLabel: "Ver detalle de {{name}}",
+      noPresentations: "Sin presentaciones",
+      presentationRow: {
+        addAriaLabel: "Agregar {{name}}",
+      },
     },
     productDialog: {
       close: "Cerrar",

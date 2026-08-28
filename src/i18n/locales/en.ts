@@ -578,16 +578,16 @@ const en = {
       clearButton: "Clear cart",
     },
     catalog: {
-      sections: {
-        search: "Search",
-        quickActions: "Quick actions",
-      },
       search: {
-        placeholder: "Search...",
+        placeholder: "Search product, presentation, SKU or code — Enter adds it to the cart",
+        ariaLabel: "Search product, presentation, SKU or code",
+        clearAriaLabel: "Clear search",
+        shortcutsHint: "/ Search · F2 Scan · F9 Generate ticket",
       },
-      filter: {
-        label: "Category",
-        clearLabel: "All",
+      searchResult: {
+        sku: "SKU: {{sku}}",
+        addAriaLabel: "Add {{name}} to cart",
+        empty: "No presentations found",
       },
       barcode: {
         tooltip: "Use barcode scanner",
@@ -598,10 +598,15 @@ const en = {
         tooltip: "View cart",
       },
     },
+    stockStatus: {
+      low: "{{stock}} u · low",
+      ok: "{{stock}} u",
+      weight: "{{stock}}g",
+    },
     productsExhibitor: {
       toolbar: {
         title: "Product catalog",
-        availableCount: "{{count}} products available",
+        availableCount: "{{count}} products · {{presentations}} presentations",
         viewModeHint: "Choose how you want to view your products",
       },
       sort: {
@@ -614,6 +619,20 @@ const en = {
       },
       viewModeToggle: {
         tooltip: "Change view",
+      },
+      categoryChips: {
+        allLabel: "All",
+      },
+      denseList: {
+        emptyMessage: "No presentations",
+        columns: {
+          product: "Product",
+          presentation: "Presentation",
+          sku: "SKU",
+          category: "Category",
+          price: "Price",
+          actions: "Actions",
+        },
       },
       empty: {
         imageAlt: "Image preview",
@@ -633,8 +652,12 @@ const en = {
     },
     productItem: {
       addButtonAriaLabel: "Add to cart",
-      stockLabel: "Stock: {{stock}}",
       fallbackName: "Presentation",
+      detailAriaLabel: "View {{name}} detail",
+      noPresentations: "No presentations",
+      presentationRow: {
+        addAriaLabel: "Add {{name}}",
+      },
     },
     productDialog: {
       close: "Close",

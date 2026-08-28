@@ -2,34 +2,28 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import SellBarActions from "../../components/CatalogHeader/SellBarActions";
 import { useSellbar } from "@hooks/cart/useSellBar";
+import { usePresentationSearch } from "@hooks/cart/usePresentationSearch";
+import type { BarcodeButtonComponentProps, CartButtonComponentProps, PresentationSearchBarProps } from "@typings/cart/cartComponentTypes";
 
 vi.mock("@hooks/cart/useSellBar");
+vi.mock("@hooks/cart/usePresentationSearch");
 
 vi.mock("../../components/CatalogHeader/BarcodeButtonComponent", () => ({
-  default: (props: any) => <div data-testid="barcode-btn">{JSON.stringify(!!props.barcode)}</div>,
-}));
-vi.mock("../../components/CatalogHeader/SellBarFilter", () => ({
-  default: (props: any) => <div data-testid="sellbar-filter">{JSON.stringify(!!props.categories)}</div>,
+  default: (props: BarcodeButtonComponentProps) => <div data-testid="barcode-btn">{JSON.stringify(!!props.barcode)}</div>,
 }));
 vi.mock("../../components/CatalogHeader/CartButtonComponent", () => ({
-  default: (props: any) => <div data-testid="cart-btn">{JSON.stringify(!!props.cart)}</div>,
+  default: (props: CartButtonComponentProps) => <div data-testid="cart-btn">{JSON.stringify(!!props.cart)}</div>,
 }));
-vi.mock("../../components/CatalogHeader/SellBarSearch", () => ({
-  default: (props: any) => <div data-testid="sellbar-search">{JSON.stringify(!!props.search)}</div>,
+vi.mock("../../components/CatalogHeader/PresentationSearchBar", () => ({
+  default: (props: PresentationSearchBarProps) => <div data-testid="presentation-search-bar">{JSON.stringify(!!props.search)}</div>,
 }));
 
 const mockedUseSellbar = vi.mocked(useSellbar);
+const mockedUsePresentationSearch = vi.mocked(usePresentationSearch);
 
 describe("SellBarActions", () => {
   beforeEach(() => {
     mockedUseSellbar.mockReturnValue({
-      search: {
-        value: "",
-        onChange: vi.fn(),
-        onClear: vi.fn(),
-        exactMatch: false,
-        onToggleExactMatch: vi.fn(),
-      },
       barcode: {
         showBarcodeInput: false,
         value: "",
@@ -39,28 +33,25 @@ describe("SellBarActions", () => {
         onKeyDown: vi.fn(),
       },
       cart: { count: 0, goToCart: vi.fn() },
-      categories: {
-        list: [],
-        isLoading: false,
-        selected: null,
-        selectedLabel: null,
-        getLabel: vi.fn(),
-        anchorEl: null,
-        isMenuOpen: false,
-        onOpenMenu: vi.fn(),
-        onCloseMenu: vi.fn(),
-        onSelect: vi.fn(),
-      },
+    });
+
+    mockedUsePresentationSearch.mockReturnValue({
+      query: "",
+      onQueryChange: vi.fn(),
+      results: [],
+      highlightedIndex: 0,
+      isOpen: false,
+      onKeyDown: vi.fn(),
+      onHighlight: vi.fn(),
+      onSelect: vi.fn(),
+      onClear: vi.fn(),
     });
   });
 
-  it("renderiza las secciones de búsqueda y acciones rápidas con los datos del hook", () => {
+  it("renderiza el buscador de presentaciones, el escáner y el botón de carrito", () => {
     render(<SellBarActions />);
-    expect(screen.getByText("Búsqueda")).toBeInTheDocument();
-    expect(screen.getByText("Acciones rápidas")).toBeInTheDocument();
-    expect(screen.getByTestId("sellbar-search")).toHaveTextContent("true");
+    expect(screen.getByTestId("presentation-search-bar")).toHaveTextContent("true");
     expect(screen.getByTestId("barcode-btn")).toHaveTextContent("true");
-    expect(screen.getByTestId("sellbar-filter")).toHaveTextContent("true");
     expect(screen.getByTestId("cart-btn")).toHaveTextContent("true");
   });
 });

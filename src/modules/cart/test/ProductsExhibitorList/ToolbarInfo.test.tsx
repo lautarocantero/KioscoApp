@@ -5,20 +5,20 @@ import ToolbarInfo from "../../components/ProductsExhibitorList/ToolbarInfo";
 
 describe("ToolbarInfo", () => {
     it("renderiza el título fijo", () => {
-        renderWithTheme(<ToolbarInfo totalCount={5} />);
+        renderWithTheme(<ToolbarInfo totalCount={5} presentationsCount={8} />);
 
         expect(screen.getByText("Catálogo de productos")).toBeInTheDocument();
     });
 
-    it("muestra el totalCount recibido", () => {
-        renderWithTheme(<ToolbarInfo totalCount={12} />);
+    it("muestra totalCount y presentationsCount recibidos", () => {
+        renderWithTheme(<ToolbarInfo totalCount={12} presentationsCount={30} />);
 
-        expect(screen.getByText("12 productos disponibles")).toBeInTheDocument();
+        expect(screen.getByText("12 productos · 30 presentaciones")).toBeInTheDocument();
     });
 
-    it("muestra 0 productos disponibles cuando totalCount es 0", () => {
-        renderWithTheme(<ToolbarInfo totalCount={0} />);
+    it("muestra 0 en ambos contadores cuando no hay datos", () => {
+        renderWithTheme(<ToolbarInfo totalCount={0} presentationsCount={0} />);
 
-        expect(screen.getByText("0 productos disponibles")).toBeInTheDocument();
+        expect(screen.getByText("0 productos · 0 presentaciones")).toBeInTheDocument();
     });
 });

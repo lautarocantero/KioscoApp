@@ -3,6 +3,7 @@ import { Box, TextField, Tooltip, Typography, type Theme } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 import type { BarcodeButtonComponentProps } from '@typings/cart/cartComponentTypes';
 import type { ReactNode } from 'react';
+import { SELL_BARCODE_TOGGLE_ID } from '../../../../config/constants';
 
 
 export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps): ReactNode => {
@@ -21,17 +22,19 @@ export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps)
   return (
     <Tooltip title={t("cart.catalog.barcode.tooltip")}>
       <Box
+        id={SELL_BARCODE_TOGGLE_ID}
         display="flex"
         alignItems="center"
         justifyContent="center"
         onClick={toggleShowInput}
         sx={(theme: Theme) => ({
-          flex: 1,
+          flex: '0 0 auto',
           position: 'relative',
           cursor: 'pointer',
           border: `1px solid ${theme?.custom?.darkGray}`,
           borderRadius: "8px",
-          width: "100%",
+          height: "3.25em",
+          px: "0.6em",
           '&:hover': {
                 backgroundColor: theme?.custom?.darkBackground,
           }

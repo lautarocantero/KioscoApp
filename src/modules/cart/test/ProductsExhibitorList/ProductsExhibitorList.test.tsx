@@ -5,6 +5,7 @@ import { ViewMode } from "@typings/cart/cartEnums";
 import type { Product } from "@typings/product/productTypes";
 import ProductsExhibitorList from "../../components/ProductsExhibitorList/ProductsExhibitorList";
 import type { ProductsExhibitorListProps } from "@typings/cart/cartComponentTypes";
+import type { PresentationRow } from "@typings/cart/cartTypes";
 
 vi.mock("../../components/ProductItem/ProductItemComponent", () => ({
     default: vi.fn(() => <div data-testid="product-item" />),
@@ -17,6 +18,9 @@ vi.mock("../../components/ProductsExhibitorList/EmptyProductsList", () => ({
 }));
 vi.mock("../../components/ProductsExhibitorList/ProductExhibitorTable", () => ({
     default: vi.fn(() => <div data-testid="product-exhibitor-table" />),
+}));
+vi.mock("../../components/ProductsExhibitorList/DensePresentationList", () => ({
+    default: vi.fn(({ rows }: { rows: unknown[] }) => <div data-testid="dense-presentation-list">{rows.length}</div>),
 }));
 
 const buildProduct = (overrides: Partial<Product> = {}): Product =>
@@ -38,13 +42,16 @@ describe("ProductsExhibitorList", () => {
       rowGap: 2 as const,
       columnGap: 2 as const,
       width: "100%" as const,
+      padding: 2 as const,
   };
 
-    const baseProps: Pick<ProductsExhibitorListProps, "products" | "paginatedProducts" | "gridSx" | "columns"> = {
+    const baseProps: Pick<ProductsExhibitorListProps, "products" | "paginatedProducts" | "gridSx" | "columns" | "presentationRows" | "onAddPresentation"> = {
         products: [],
         paginatedProducts: [],
         gridSx,
         columns: [],
+        presentationRows: [],
+        onAddPresentation: vi.fn(),
     };
 
     beforeEach(() => {
@@ -120,7 +127,7 @@ describe("ProductsExhibitorList", () => {
         expect(screen.queryByTestId("product-item")).not.toBeInTheDocument();
     });
 
-    it("no renderiza listado cuando viewMode es Collapsed", () => {
+    it("renderiza DensePresentationList cuando viewMode es Collapsed", () => {
         const products = [buildProduct()];
 
         renderWithTheme(
@@ -132,9 +139,11 @@ describe("ProductsExhibitorList", () => {
                 isEmpty={false}
                 columns={[]}
                 gridSx={gridSx}
+                presentationRows={[{ key: "1:1" } as unknown as PresentationRow]}
             />
         );
 
+        expect(screen.getByTestId("dense-presentation-list")).toHaveTextContent("1");
         expect(screen.queryByTestId("product-item")).not.toBeInTheDocument();
         expect(screen.queryByTestId("product-exhibitor-table")).not.toBeInTheDocument();
     });

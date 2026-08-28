@@ -4,7 +4,7 @@ import type { CartAmount, SortOption, ViewMode } from "./cartEnums";
 import type { Product, ProductWithPresentations } from "@typings/product/productTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
-import type { RefObject, MouseEvent } from "react";
+import type { RefObject, MouseEvent, KeyboardEvent } from "react";
 import type { AppDispatch } from "../../store/cart/cartSlice";
 import type { PaymentMethod } from "@typings/sells/sellsEnum";
 import type { FormikErrors, FormikTouched } from "formik";
@@ -94,13 +94,6 @@ export interface setQuantityThunkInterface {
 export type CartError = Pick<CartStateInterface, 'errorMessage'>;
 
 export interface UseCartBarResult {
-    search: {
-        value: string;
-        onChange: (value: string) => void;
-        onClear: () => void;
-        exactMatch: boolean;
-        onToggleExactMatch: () => void;
-    };
     barcode: {
         showBarcodeInput: boolean;
         value: string;
@@ -112,18 +105,6 @@ export interface UseCartBarResult {
     cart: {
         count: number | undefined;
         goToCart: () => void;
-    };
-    categories: {
-        list: PresentationCategory[];
-        isLoading: boolean;
-        selected: PresentationCategory | null;
-        selectedLabel: string | null;
-        getLabel: (category: PresentationCategory) => string;
-        anchorEl: HTMLElement | null;
-        isMenuOpen: boolean;
-        onOpenMenu: (event: MouseEvent<HTMLElement>) => void;
-        onCloseMenu: () => void;
-        onSelect: (category: PresentationCategory | null) => void;
     };
 }
 
@@ -140,9 +121,54 @@ export interface UseCartBarCategoriesParams {
     showSnackBar: (message: string, severity: AlertColor) => void;
 }
 
-export type UseCartBarCategoriesResult = UseCartBarResult['categories'] & {
-    selectedCategory: PresentationCategory | null;
-};
+export interface UseCartBarCategoriesResult {
+    list: PresentationCategory[];
+    isLoading: boolean;
+    selected: PresentationCategory | null;
+    selectedLabel: string | null;
+    getLabel: (category: PresentationCategory) => string;
+    anchorEl: HTMLElement | null;
+    isMenuOpen: boolean;
+    onOpenMenu: (event: MouseEvent<HTMLElement>) => void;
+    onCloseMenu: () => void;
+    onSelect: (category: PresentationCategory | null) => void;
+}
+
+export interface PresentationRow {
+    key: string;
+    productId: string;
+    presentationId: string;
+    product: string;
+    presentation: string;
+    category: string;
+    sku: string;
+    price: number;
+    stock: number;
+    minStock: number;
+    isWeight: boolean;
+    presentationData: Presentation;
+}
+
+export interface UsePresentationSearchReturn {
+    query: string;
+    onQueryChange: (value: string) => void;
+    results: PresentationRow[];
+    highlightedIndex: number;
+    isOpen: boolean;
+    onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
+    onHighlight: (index: number) => void;
+    onSelect: (row: PresentationRow) => void;
+    onClear: () => void;
+}
+
+export interface UseProductItemReturn {
+    handleSelect: () => void;
+    handleAddPresentation: (presentation: Presentation) => void;
+}
+
+export interface UseProductStockReturn {
+    totalStock: number;
+}
 
 export interface UseCartPresentationPickerReturn {
     productSelected: ProductWithPresentations | null;
@@ -191,7 +217,10 @@ export interface UseCartReturn {
     goBackToSell: () => void;
     goToNewSell: () => void;
     goToTicketDetail: () => void;
-    columns: GridColDef<ProductTicketWithStockType>[]
+    handleIncreaseProduct: (_id: string) => void;
+    handleDecreaseProduct: (_id: string) => void;
+    handleSubtotalChange: (_id: string, value: number) => void;
+    handleQuantityChange: (_id: string, value: number) => void;
 }
 
 export interface useCartPaymentMethodFormReturn {

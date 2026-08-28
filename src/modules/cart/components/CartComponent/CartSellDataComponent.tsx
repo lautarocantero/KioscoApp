@@ -21,8 +21,6 @@ const CartSellDataComponent = ({
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
-                position: { md: 'sticky' },
-                top: { md: '2em' },
             })}
         >
             <Typography

@@ -1,7 +1,8 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@typings/product/productTypes";
+import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { UseProductsExhibitorResult } from "@typings/sells/sellTypes";
 import { setSort, setViewMode, setPage, type RootState, type AppDispatch } from "../../store/cart/cartSlice";
 import { SortOption, ViewMode } from "@typings/cart/cartEnums";
@@ -9,6 +10,10 @@ import { PAGE_SIZE_PRODUCT_EXHIBITOR } from "../../config/constants";
 import { useSortOptions } from "./useSortOptions";
 import { useSellerProductsListData } from "./useSellerProductListData";
 import { buildColumnsForProductExhibitor } from "../../modules/cart/components/ProductsExhibitorList/ProductExhibitorColumns";
+import { buildPresentationRows } from "../../modules/cart/helpers/buildPresentationRows";
+import { getDefaultAddQuantity } from "../../modules/shared/helpers/saleTypeHelper";
+import handleAddProductDialogItemToCart from "../../modules/cart/components/ProductDialog/handleAddProductItemToCart";
+import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackBarContext";
 
 
 //─── 🔎 Ordena el array de productos según la opción de sort activa 🔎 ───
@@ -43,6 +48,7 @@ const sortProducts = (products: Product[], sort: SortOption): Product[] => {
 export const useProductsExhibitor = (): UseProductsExhibitorResult => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
+  const { showSnackBar } = useContext(SnackBarContext)!;
   const { products, loading } = useSellerProductsListData();
 
   const sort = useSelector((state: RootState) => state.cart.sort);
@@ -63,19 +69,14 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
     return sortedProducts.slice(start, start + PAGE_SIZE_PRODUCT_EXHIBITOR);
   }, [sortedProducts, page]);
 
-  //─── 🔎 estilos responsivos: grilla en "Grid", columna única en "List" 🔎 ───
+  //─── 🔎 estilos responsivos: grilla auto-fill en "Grid", columna única en "List" 🔎 ───
+  // minmax(240px, 1fr) en vez de un conteo de columnas fijo por breakpoint:
+  // las cards ya no tienen maxWidth/height fija (presentaciones inline con
+  // alto variable), así que el grid se auto-ajusta al ancho disponible.
   const gridSx = {
     display: viewMode === ViewMode.Grid ? "grid" : "flex",
     flexDirection: viewMode === ViewMode.List ? "column" : undefined,
-    gridTemplateColumns:
-      viewMode === ViewMode.Grid
-        ? {
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(4, 1fr)",
-            md: "repeat(5, 1fr)",
-            lg: "repeat(8, 1fr)",
-          }
-        : undefined,
+    gridTemplateColumns: viewMode === ViewMode.Grid ? "repeat(auto-fill, minmax(240px, 1fr))" : undefined,
     rowGap: 2,
     columnGap: 2,
     width: "100%",
@@ -83,6 +84,19 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
   } as const;
 
   const columns = useMemo(() => buildColumnsForProductExhibitor(t), [t]);
+
+  //─── 🔎 índice de presentaciones para la vista de lista densa (ViewMode.Collapsed) 🔎 ───
+  const presentationRows = useMemo(() => buildPresentationRows(sortedProducts, t), [sortedProducts, t]);
+
+  const handleAddPresentation = (presentation: Presentation): void => {
+    void handleAddProductDialogItemToCart({
+      presentation,
+      quantity: getDefaultAddQuantity(presentation.sale_type),
+      dispatch,
+      showSnackBar,
+      t,
+    });
+  };
 
   return {
     isEmpty: safeProducts.length === 0,
@@ -100,5 +114,7 @@ export const useProductsExhibitor = (): UseProductsExhibitorResult => {
     setViewMode: (v) => dispatch(setViewMode(v)),
     gridSx,
     columns,
+    presentationRows,
+    handleAddPresentation,
   };
 };

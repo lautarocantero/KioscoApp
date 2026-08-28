@@ -4,6 +4,7 @@ import EmptyProductsList from "./EmptyProductsList";
 import type { ReactNode } from "react";
 import { ViewMode } from "@typings/cart/cartEnums";
 import ProductExhibitorTable from "./ProductExhibitorTable";
+import DensePresentationList from "./DensePresentationList";
 import type { ProductsExhibitorListProps } from "@typings/cart/cartComponentTypes";
 import type { Product } from "@typings/product/productTypes";
 import ProductItemComponent from "../ProductItem/ProductItemComponent";
@@ -16,6 +17,8 @@ const ProductsExhibitorList = ({
   isEmpty = false,
   gridSx,
   columns,
+  presentationRows,
+  onAddPresentation,
 }: ProductsExhibitorListProps): ReactNode => {
 
   if (isLoading) return <ProductsSkeletons isLoading={isLoading} gridSx={gridSx}/>;
@@ -27,7 +30,7 @@ const ProductsExhibitorList = ({
   }
 
   if (viewMode === ViewMode.Collapsed) {
-    return null;
+    return <DensePresentationList rows={presentationRows} onAdd={onAddPresentation} />;
   }
 
   return (

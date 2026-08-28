@@ -1,4 +1,4 @@
-import { Grid, type Theme } from "@mui/material";
+import { Box } from "@mui/material";
 import { memo, type ReactNode } from 'react';
 import CartLabel from "./CartLabelComponent";
 import type { CartHeaderProps } from "@typings/cart/cartComponentTypes";
@@ -9,19 +9,18 @@ const CartHeaderComponent = ({ itemsCount, onClearCart }: CartHeaderProps): Reac
 
 
     return (
-        <Grid
-            container
-            size={{ xs: 12, md: 8 }}
-            sx={(theme: Theme) => ({
-                mb: "2em", 
-                rowGap: "1em", 
-                borderTop:  `0.1em solid ${theme?.custom?.darkGray}`,
-                paddingTop: "1em"
-            })}
+        <Box
+            component="header"
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                rowGap: "1em",
+                width: "100%",
+            }}
         >
             <CartLabel itemsCount={itemsCount} />
             <CartHeaderActions itemsCount={itemsCount} onClearCart={onClearCart} />
-        </Grid>
+        </Box>
     )
 }
 

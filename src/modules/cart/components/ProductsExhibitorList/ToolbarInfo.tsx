@@ -11,6 +11,7 @@ import type { ToolbarInfoProps } from "@typings/cart/cartComponentTypes";
 
 const ToolbarInfo = ({
   totalCount,
+  presentationsCount,
 }: ToolbarInfoProps): ReactNode => {
   const { t } = useTranslation();
 
@@ -54,7 +55,7 @@ const ToolbarInfo = ({
             variant="caption"
             sx={(theme: Theme) => ({ color: theme.custom?.white })}
         >
-            {t("cart.productsExhibitor.toolbar.availableCount", { count: totalCount })}
+            {t("cart.productsExhibitor.toolbar.availableCount", { count: totalCount, presentations: presentationsCount })}
         </Typography>
     </Box>
     </Box>

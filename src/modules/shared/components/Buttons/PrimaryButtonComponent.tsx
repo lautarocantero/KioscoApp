@@ -13,9 +13,11 @@ const PrimaryButtonComponent = ({
   icon = null,
   disabled = false,
   fontSize = "body2",
+  id,
 }: PrimaryButtonComponentProps): React.ReactNode => {
   return (
     <Button
+      id={id}
       sx={{
         backgroundColor: (theme: Theme) =>
           buttonColor === "default"

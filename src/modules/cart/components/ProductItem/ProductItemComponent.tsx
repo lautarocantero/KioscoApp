@@ -1,59 +1,58 @@
-import { Box, Tooltip, type Theme } from "@mui/material";
+import { Box, Typography, type Theme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
-import ProductItemImage from "./ProductItemImage";
+import ProductItemAvatar from "./ProductItemAvatar";
 import ProductItemData from "./ProductItemData";
-import ProductItemButton from "./ProductItemButton";
 import { useProductItem } from "../../../../hooks/cart/useProductItem";
 import type { ProductItemProps } from "@typings/cart/cartComponentTypes";
 
 
 const ProductItemComponent = ({ product }: ProductItemProps): ReactNode => {
+  const { t } = useTranslation();
   const { name, presentations } = product;
-  const { handleSelect } = useProductItem(product);
+  const { handleSelect, handleAddPresentation } = useProductItem(product);
+  const displayName = name || t("cart.productItem.fallbackName");
 
   return (
-    <Tooltip title={name}>
+    <Box
+      component="article"
+      sx={(theme: Theme) => ({
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.6em",
+        border: `1px solid ${theme.custom?.darkGray}`,
+        borderRadius: "0.8em",
+        color: theme?.custom?.fontColor,
+        width: "100%",
+        padding: "0.8em",
+      })}
+    >
       <Box
-        sx={(theme: Theme) => ({
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          border: `1px solid ${theme.custom?.blackTranslucid}`,
-          borderRadius: "0.8em",
-          color: theme?.custom?.fontColor,
-          width: "100%",
-          maxWidth: "220px",
-          height: { xs: "250px", md: "260px", lg: "280px" },
-          overflow: "hidden",
-          m: "auto",
-        })}
+        onClick={handleSelect}
+        role="button"
+        tabIndex={0}
+        aria-label={t("cart.productItem.detailAriaLabel", { name: displayName })}
+        onKeyDown={(event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          handleSelect();
+        }}
+        sx={{ display: "flex", alignItems: "center", gap: "0.6em", cursor: "pointer" }}
       >
-        <ProductItemImage
-          source={product?.image_url}
-          name={name}
-          onClick={handleSelect}
-        />
-
-        <Box
+        <ProductItemAvatar name={displayName} />
+        <Typography
+          noWrap
           sx={(theme: Theme) => ({
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.6em",
-            padding: "0.8em 1em",
-            backgroundColor: theme?.custom?.blackTranslucid,
-            backdropFilter: "blur(3px)",
-            WebkitBackdropFilter: "blur(3px)",
+            color: theme?.custom?.fontColor,
+            fontWeight: 700,
+            fontSize: theme?.typography?.body2?.fontSize,
           })}
         >
-          <ProductItemData name={name} presentations={presentations} />
-          <ProductItemButton onClick={handleSelect} />
-        </Box>
+          {displayName}
+        </Typography>
       </Box>
-    </Tooltip>
+
+      <ProductItemData presentations={presentations} onAddPresentation={handleAddPresentation} />
+    </Box>
   );
 };
 

@@ -13,7 +13,6 @@ import { createPdfTicket } from "../../modules/shared/helpers/createPdfTicket";
 import { cleanCartThunk, removeFromCartThunk, addOneUnitThunk, setQuantityThunk } from "../../store/cart/cartThunks";
 import { parseApiError } from "../../utils/errors/parseApiError";
 import { AlertColor } from "@typings/ui/ui";
-import { buildColumnsForCartProducts } from "../../modules/cart/components/CartComponent/cartColumns";
 import type { UseCartReturn } from "@typings/cart/cartTypes";
 import { CartAmount } from "@typings/cart/cartEnums";
 import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/helpers/saleTypeHelper";
@@ -200,11 +199,6 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         navigate(`/sell/${ticketSummary.sellId}`);
     }, [ticketSummary, navigate]);
 
-    const columns = useMemo(
-        () => buildColumnsForCartProducts(handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange, handleQuantityChange, t),
-        [handleIncreaseProduct, handleDecreaseProduct, handleSubtotalChange, handleQuantityChange, t]
-    );
-
     return {
         cart: cartWithSubtotals,
         productsTotalPrice,
@@ -220,6 +214,9 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         goBackToSell,
         goToNewSell,
         goToTicketDetail,
-        columns,
+        handleIncreaseProduct,
+        handleDecreaseProduct,
+        handleSubtotalChange,
+        handleQuantityChange,
     };
 };

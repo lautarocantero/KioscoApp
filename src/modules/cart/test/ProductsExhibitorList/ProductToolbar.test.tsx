@@ -12,35 +12,39 @@ vi.mock("../../components/ProductsExhibitorList/ToolbarInfo", () => ({
 vi.mock("../../components/ProductsExhibitorList/ToolBarActions", () => ({
     default: vi.fn(() => <div data-testid="toolbar-actions" />),
 }));
+vi.mock("../../components/ProductsExhibitorList/CategoryChipsRow", () => ({
+    default: vi.fn(() => <div data-testid="category-chips-row" />),
+}));
 
 describe("ProductsToolbar", () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
-    it("renderiza ToolbarInfo y ToolbarActions", () => {
+    it("renderiza ToolbarInfo, ToolbarActions y las chips de categoría", () => {
         renderWithTheme(
-            <ProductsToolbar totalCount={10} viewMode={ViewMode.Grid} setViewMode={vi.fn()} />
+            <ProductsToolbar totalCount={10} presentationsCount={20} viewMode={ViewMode.Grid} setViewMode={vi.fn()} />
         );
 
         expect(screen.getByTestId("toolbar-info")).toBeInTheDocument();
         expect(screen.getByTestId("toolbar-actions")).toBeInTheDocument();
+        expect(screen.getByTestId("category-chips-row")).toBeInTheDocument();
     });
 
-    it("pasa totalCount a ToolbarInfo", () => {
+    it("pasa totalCount y presentationsCount a ToolbarInfo", () => {
         renderWithTheme(
-            <ProductsToolbar totalCount={25} viewMode={ViewMode.Grid} setViewMode={vi.fn()} />
+            <ProductsToolbar totalCount={25} presentationsCount={40} viewMode={ViewMode.Grid} setViewMode={vi.fn()} />
         );
 
         const props = vi.mocked(ToolbarInfo).mock.calls.at(-1)?.[0];
-        expect(props).toEqual(expect.objectContaining({ totalCount: 25 }));
+        expect(props).toEqual(expect.objectContaining({ totalCount: 25, presentationsCount: 40 }));
     });
 
     it("pasa viewMode y setViewMode a ToolbarActions", () => {
         const setViewMode = vi.fn();
 
         renderWithTheme(
-            <ProductsToolbar totalCount={10} viewMode={ViewMode.List} setViewMode={setViewMode} />
+            <ProductsToolbar totalCount={10} presentationsCount={15} viewMode={ViewMode.List} setViewMode={setViewMode} />
         );
 
         const props = vi.mocked(ToolbarActions).mock.calls.at(-1)?.[0];

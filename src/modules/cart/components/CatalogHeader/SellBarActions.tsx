@@ -1,52 +1,29 @@
 import { Box } from "@mui/material";
-import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
 import BarcodeButtonComponent from "./BarcodeButtonComponent";
 import CartButtonComponent from "./CartButtonComponent";
-import SellbarSection from "./SellBarSection";
-import SellbarSearch from "./SellBarSearch";
-import SellbarFilter from "./SellBarFilter";
+import PresentationSearchBar from "./PresentationSearchBar";
 import { useSellbar } from "@hooks/cart/useSellBar";
+import { usePresentationSearch } from "@hooks/cart/usePresentationSearch";
 
 
 export const SellBarActions = (): ReactNode => {
-  const { t } = useTranslation();
-  const { search, barcode, cart, categories } = useSellbar();
+  const { barcode, cart } = useSellbar();
+  const search = usePresentationSearch();
 
   return (
     <Box
       sx={{
-        display: "grid",
+        display: "flex",
+        alignItems: "center",
         width: "100%",
-        marginTop: "4px",
         gap: "0.75em",
         flexShrink: 0,
-
-        gridTemplateColumns: {
-          xs: "1fr",
-          sm: "repeat(3, 1fr)",
-        },
-        gridTemplateAreas: {
-          xs: `
-            "search"
-            "quickactions"
-          `,
-          sm: `
-            "search       search       search"
-            "quickactions quickactions quickactions"
-          `,
-        },
       }}
     >
-      <SellbarSection gridArea="search" title={t("cart.catalog.sections.search")}>
-        <SellbarSearch search={search} />
-      </SellbarSection>
-
-      <SellbarSection gridArea="quickactions" title={t("cart.catalog.sections.quickActions")} flexContent>
-        <BarcodeButtonComponent barcode={barcode} />
-        <SellbarFilter categories={categories} />
-        <CartButtonComponent cart={cart} />
-      </SellbarSection>
+      <PresentationSearchBar search={search} />
+      <BarcodeButtonComponent barcode={barcode} />
+      <CartButtonComponent cart={cart} />
     </Box>
   );
 };

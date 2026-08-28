@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import PrimaryButton from "../../../shared/components/Buttons/PrimaryButtonComponent";
 import type { ReactNode } from 'react';
 import type { CartSummaryFooterProps } from '@typings/cart/cartComponentTypes';
+import { CART_GENERATE_TICKET_BUTTON_ID } from '../../../../config/constants';
 
 
 const CartSummaryFooterComponent = ({ total, onBack, onGenerateTicket }: CartSummaryFooterProps): ReactNode => {
@@ -73,6 +74,7 @@ const CartSummaryFooterComponent = ({ total, onBack, onGenerateTicket }: CartSum
                 </Link>
 
                 <PrimaryButton
+                    id={CART_GENERATE_TICKET_BUTTON_ID}
                     buttonText={t("cart.summary.generateTicket")}
                     buttonOnClick={() => onGenerateTicket?.()}
                     buttonWidth={{ xs: '100%', sm: '15em', md: "100%", lg: '15em' }}

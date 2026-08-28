@@ -10,9 +10,9 @@ vi.mock("../../components/CartHeader/CartHeaderComponent", () => ({
     <div data-testid="cart-header-component">Header:{itemsCount}</div>
   ),
 }));
-vi.mock("../../components/CartComponent/CartProductTableComponent", () => ({
+vi.mock("../../components/CartComponent/CartItemsList", () => ({
   default: ({ cart }: { cart: unknown[] }) => (
-    <div data-testid="cart-table-component">Table:{cart.length}</div>
+    <div data-testid="cart-items-list">Items:{cart.length}</div>
   ),
 }));
 vi.mock("../../components/CartComponent/CartSumaryCardComponent", () => ({
@@ -22,7 +22,7 @@ vi.mock("../../components/CartComponent/CartSumaryCardComponent", () => ({
 const mockedUseCart = vi.mocked(useCart);
 
 describe("CartComponent", () => {
-  it("renderiza el header, la tabla y el resumen del carrito", () => {
+  it("renderiza el header, la lista de items y el resumen del carrito", () => {
     mockedUseCart.mockReturnValue({
       cart: [{ _id: "1" }, { _id: "2" }],
       productsTotalPrice: 120,
@@ -32,19 +32,22 @@ describe("CartComponent", () => {
       generateTicket: vi.fn(),
       handleClearCart: vi.fn(),
       goBackToSell: vi.fn(),
-      columns: [],
+      handleIncreaseProduct: vi.fn(),
+      handleDecreaseProduct: vi.fn(),
+      handleSubtotalChange: vi.fn(),
+      handleQuantityChange: vi.fn(),
       ticketSummary: null,
       printTicket: vi.fn(),
       goToNewSell: vi.fn(),
       goToTicketDetail: vi.fn(),
       totalUnits: 2,
       paymentMethodRef: { current: null },
-    } as any);
+    } as unknown as ReturnType<typeof useCart>);
 
     renderWithTheme(<CartComponent />);
 
     expect(screen.getByTestId("cart-header-component")).toHaveTextContent("Header:2");
-    expect(screen.getByTestId("cart-table-component")).toHaveTextContent("Table:2");
+    expect(screen.getByTestId("cart-items-list")).toHaveTextContent("Items:2");
     expect(screen.getByTestId("cart-summary-card")).toBeInTheDocument();
   });
 });

@@ -1,19 +1,31 @@
 import type { Product, ProductEntity } from "@typings/product/productTypes";
 import type { CartSide, ViewMode } from "./cartEnums";
-import type { UseCartBarResult } from "./cartTypes";
+import type { PresentationRow, UseCartBarResult, UsePresentationSearchReturn } from "./cartTypes";
 import type { GridColDef } from "@mui/x-data-grid";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { DialogVariantDataType, ProductTicketType, ProductTicketWithStockType, TicketSummaryType } from "@typings/sells/sellTypes";
+import type { DialogVariantDataType, ProductTicketType, ProductTicketWithStockType, TicketSummaryType, UseProductsExhibitorResult } from "@typings/sells/sellTypes";
 import type { SvgIconProps, Theme } from "@mui/material";
 import type { ComponentType } from "react";
 
-export interface CartBarFilterProps {
-    categories: UseCartBarResult["categories"];
+export interface PresentationSearchBarProps {
+    search: UsePresentationSearchReturn;
 }
 
-export interface CartBarSearchProps {
-    search: UseCartBarResult["search"];
+export interface PresentationSearchResultRowProps {
+    row: PresentationRow;
+    isHighlighted: boolean;
+    onSelect: (row: PresentationRow) => void;
+    onMouseEnter: () => void;
 }
+
+export interface DensePresentationListProps {
+    rows: PresentationRow[];
+    onAdd: (presentation: Presentation) => void;
+}
+
+export type DensePresentationRowProps = {
+    row: PresentationRow;
+} & Pick<DensePresentationListProps, 'onAdd'>;
 
 export interface BarcodeButtonComponentProps {
     barcode: UseCartBarResult["barcode"];
@@ -25,11 +37,12 @@ export interface CartButtonComponentProps {
 
 export interface ProductsToolbarProps {
     totalCount: number;
-    viewMode: ViewMode, 
+    presentationsCount: number;
+    viewMode: ViewMode,
     setViewMode: (mode: ViewMode) => void,
 }
 
-export type ToolbarInfoProps = Pick<ProductsToolbarProps, 'totalCount'>
+export type ToolbarInfoProps = Pick<ProductsToolbarProps, 'totalCount' | 'presentationsCount'>
 
 export type ToolbarActionsProps = Pick<ProductsToolbarProps, 'viewMode' | 'setViewMode'>
 
@@ -40,19 +53,9 @@ export interface ProductsExhibitorListProps {
     isLoading?: boolean;
     isEmpty?: boolean;
     columns: GridColDef<ProductEntity>[];
-    gridSx: {
-        readonly display: "flex" | "grid";
-        readonly flexDirection: "column" | undefined;
-        readonly gridTemplateColumns: {
-            xs: string;
-            sm: string;
-            md: string;
-            lg: string;
-        } | undefined;
-        readonly rowGap: 2;
-        readonly columnGap: 2;
-        readonly width: "100%";
-    }
+    gridSx: UseProductsExhibitorResult['gridSx'];
+    presentationRows: PresentationRow[];
+    onAddPresentation: (presentation: Presentation) => void;
 }
 
 export interface ProductsPaginationProps {
@@ -87,9 +90,14 @@ export interface ProductItemProps {
     viewMode?: ViewMode;
 };
 
-export interface ProductItemImage {
-    source: string | undefined,
-    name: string | undefined,
+export interface ProductItemAvatarProps {
+    name: string | undefined;
+    onClick?: () => void;
+}
+
+export interface ProductItemPresentationRowProps {
+    presentation: Presentation;
+    onAdd: (presentation: Presentation) => void;
 }
 
 export interface EspecificationsLeftProps {
@@ -98,11 +106,9 @@ export interface EspecificationsLeftProps {
     image: string | undefined;
 }
 
-export type ItemDataProps = Pick<EspecificationsLeftProps, 'name' | 'presentations'>;
-
-export interface ProductItemChipProps {
-    totalStock: number;
-}
+export type ItemDataProps = Pick<EspecificationsLeftProps, 'presentations'> & {
+    onAddPresentation: (presentation: Presentation) => void;
+};
 
 export type EspecificationsRightProps = Pick<ProductItemProps, 'product'>;
 
@@ -113,10 +119,6 @@ export type ItemQuantityHandlerProps = Pick<EspecificationsLeftProps, 'presentat
 export interface QuantityChipProps {
   color: string,
   label: string,
-}
-
-export interface ProductItemImageProps extends ProductItemImage {
-    onClick?: () => void;
 }
 
 export interface ProductItemButtonProps {
@@ -220,9 +222,19 @@ export type CartLabelProps = Pick<CartHeaderProps, "itemsCount">
 
 export type CartHeaderActionsProps = CartHeaderProps;
 
-export interface CartProductTableProps {
-    cart: ProductTicketWithStockType[], 
-    columns: GridColDef<ProductTicketWithStockType>[]
+export interface CartItemHandlers {
+    onIncrease: (_id: string) => void;
+    onDecrease: (_id: string) => void;
+    onSubtotalChange: (_id: string, value: number) => void;
+    onQuantityChange: (_id: string, value: number) => void;
+}
+
+export interface CartLineItemProps extends CartItemHandlers {
+    product: ProductTicketWithStockType;
+}
+
+export interface CartItemsListProps extends CartItemHandlers {
+    cart: ProductTicketWithStockType[];
 }
 
 export type CartSummaryCardProps = {

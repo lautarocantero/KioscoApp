@@ -18,3 +18,9 @@ export enum CartSide {
     Left = 'left',
     Right = 'right',
 }
+
+export enum StockStatus {
+    Low = 'low',
+    Ok = 'ok',
+    Weight = 'weight',
+}

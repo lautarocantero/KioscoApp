@@ -13,6 +13,7 @@ import type { GridColDef } from "@mui/x-data-grid";
 import type { SortOption, ViewMode } from "../../modules/sells/components/ProductsExhibitorList/ProductToolbar";
 import type { AppDispatch } from "../../store/presentation/presentationSlice";
 import type { SaleType } from "@typings/presentation/presentationEnum";
+import type { PresentationRow } from "@typings/cart/cartTypes";
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ 🔒 BASE PRINCIPAL 🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒🔒                     ║
@@ -330,18 +331,15 @@ export interface UseProductsExhibitorResult {
     gridSx: {
         readonly display: "flex" | "grid";
         readonly flexDirection: "column" | undefined;
-        readonly gridTemplateColumns: {
-            xs: string;
-            sm: string;
-            md: string;
-            lg: string;
-        } | undefined;
+        readonly gridTemplateColumns: string | undefined;
         readonly rowGap: 2;
         readonly columnGap: 2;
         readonly width: "100%";
         readonly padding: 2;
     };
     columns: GridColDef<ProductEntity>[];
+    presentationRows: PresentationRow[];
+    handleAddPresentation: (presentation: Presentation) => void;
 }
 
 export interface UseSellStatsResult {

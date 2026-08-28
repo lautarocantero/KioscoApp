@@ -33,8 +33,10 @@ const buildHookReturn = (overrides: Partial<ReturnType<typeof useProductsExhibit
         setViewMode: vi.fn(),
         gridSx: {},
         columns: [],
+        presentationRows: [],
+        handleAddPresentation: vi.fn(),
         ...overrides,
-    } as any);
+    }) as ReturnType<typeof useProductsExhibitor>;
 
 describe("ProductsExhibitorComponent", () => {
     beforeEach(() => {
@@ -64,7 +66,7 @@ describe("ProductsExhibitorComponent", () => {
         const ProductsExhibitorList = (await import("../../components/ProductsExhibitorList/ProductsExhibitorList")).default;
         const products = [{ _id: "1", name: "Coca Cola" }];
         mockedHook.mockReturnValue(
-            buildHookReturn({ products: products as any, loading: true, isEmpty: false })
+            buildHookReturn({ products: products as ReturnType<typeof useProductsExhibitor>["products"], loading: true, isEmpty: false })
         );
 
         renderWithTheme(<ProductsExhibitorComponent />);

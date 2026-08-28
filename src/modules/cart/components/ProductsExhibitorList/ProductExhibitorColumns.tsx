@@ -2,11 +2,12 @@ import { type GridColDef } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
 import type { TFunction } from "i18next";
 import ProductRowActionCell from "./ProductRowActionCell";
-import type { ModelType, PresentationCategory } from "@typings/presentation/presentationEnum";
 import { FALLBACK_PRODUCT_IMAGE } from "../../../../config/constants";
 import type { Product } from "@typings/product/productTypes";
 import i18n from "@i18n/i18n";
 import { clampStock } from "../../../../utils/formatter/clampStock";
+import { formatPresentationVariantLabel } from "../../helpers/formatPresentationVariantLabel";
+import { formatPresentationCategoryLabel } from "../../helpers/formatPresentationCategoryLabel";
 
 
 export const buildColumnsForProductExhibitor = (t: TFunction): GridColDef<Product>[] => [
@@ -45,10 +46,7 @@ export const buildColumnsForProductExhibitor = (t: TFunction): GridColDef<Produc
     valueGetter: (_value, row) => {
       const presentation = row.presentations?.[0];
       if (!presentation) return "-";
-      const modelTypeLabel = presentation.model_type
-        ? i18n.t(`modelType.${presentation.model_type as ModelType}`, { defaultValue: presentation.model_type })
-        : "";
-      return `${modelTypeLabel}, ${presentation.model_size ?? ""}`.trim();
+      return formatPresentationVariantLabel(presentation, i18n.t);
     },
   },
   {
@@ -59,11 +57,8 @@ export const buildColumnsForProductExhibitor = (t: TFunction): GridColDef<Produc
     width: 250,
     maxWidth: 1000,
     valueGetter: (_value, row) => {
-      const category = row.presentations?.[0]?.category;
-      if (!category || category.length === 0) return "-";
-      return category
-        .map((cat: any) => i18n.t(`presentationCategory.${cat as PresentationCategory}`, { defaultValue: cat }))
-        .join(", ");
+      const label = formatPresentationCategoryLabel(row.presentations?.[0]?.category, i18n.t);
+      return label || "-";
     },
   },
   {

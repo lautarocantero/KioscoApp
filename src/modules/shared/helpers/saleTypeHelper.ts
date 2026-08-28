@@ -8,6 +8,11 @@ export const GRAMS_PER_WEIGHT_UNIT = 100;
 export const isWeightSaleType = (saleType?: string): boolean =>
   saleType === SALE_TYPE_VALUES[1];
 
+// Cantidad por defecto al agregar una presentación de un solo click (buscador,
+// card inline, lista densa): 1 unidad, o 100g (un paso) si es venta por peso.
+export const getDefaultAddQuantity = (saleType?: string): number =>
+  isWeightSaleType(saleType) ? GRAMS_PER_WEIGHT_UNIT : 1;
+
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🔎 formatStockQuantity                                                ║
 ║ Formatea un valor YA EXPRESADO EN UNIDADES REALES (gramos reales para ║

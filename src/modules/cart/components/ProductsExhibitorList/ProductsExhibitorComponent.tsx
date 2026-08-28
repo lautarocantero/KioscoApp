@@ -20,6 +20,8 @@ const ProductsExhibitorComponent = (): ReactNode => {
     setViewMode,
     gridSx,
     columns,
+    presentationRows,
+    handleAddPresentation,
   } = useProductsExhibitor();
 
   return (
@@ -32,7 +34,12 @@ const ProductsExhibitorComponent = (): ReactNode => {
         scrollMarginTop: "1em",
       }}
     >
-      <ProductsToolbar totalCount={totalCount} viewMode={viewMode} setViewMode={setViewMode} />
+      <ProductsToolbar
+        totalCount={totalCount}
+        presentationsCount={presentationRows.length}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+      />
       <ProductsExhibitorList
         products={products}
         paginatedProducts={paginatedProducts}
@@ -41,6 +48,8 @@ const ProductsExhibitorComponent = (): ReactNode => {
         isEmpty={isEmpty}
         columns={columns}
         gridSx={gridSx}
+        presentationRows={presentationRows}
+        onAddPresentation={handleAddPresentation}
       />
       {viewMode === ViewMode.Grid && (
         <ProductsPagination page={page} count={pageCount} onChange={setPage} />

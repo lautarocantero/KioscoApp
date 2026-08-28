@@ -18,6 +18,7 @@ export interface PrimaryButtonComponentProps {
   icon?: ReactNode,
   disabled?: boolean;
   fontSize?: ButtonFontSize;
+  id?: string;
 }
 
 export type OutlinedButtonComponentProps = Pick<

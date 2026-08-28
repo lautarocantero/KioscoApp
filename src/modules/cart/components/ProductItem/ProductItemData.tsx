@@ -1,31 +1,25 @@
 import { Box, Typography, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
-import ProductItemChip from "./ProductItemChip";
-import { useProductStock } from "../../../../hooks/cart/useProductItem";
 import type { ItemDataProps } from "@typings/cart/cartComponentTypes";
+import ProductItemPresentationRow from "./ProductItemPresentationRow";
 
-const ProductItemData = ({ name, presentations = [] }: ItemDataProps): ReactNode => {
+const ProductItemData = ({ presentations = [], onAddPresentation }: ItemDataProps): ReactNode => {
   const { t } = useTranslation();
-  const { totalStock }  = useProductStock(presentations);
-  const displayName = name || t("cart.productItem.fallbackName");
+
+  if (presentations.length === 0) {
+    return (
+      <Typography variant="caption" sx={(theme: Theme) => ({ color: theme.custom?.darkWhite })}>
+        {t("cart.productItem.noPresentations")}
+      </Typography>
+    );
+  }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: "0.1em" }}>
-      <Typography
-        sx={(theme: Theme) => ({
-          color: theme?.custom?.white,
-          fontWeight: 700,
-          fontSize: theme?.typography?.body1?.fontSize,
-          lineHeight: 1.2,
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-        })}
-      >
-        {displayName}
-      </Typography>
-      <ProductItemChip totalStock={totalStock} />
+    <Box component="ul" sx={{ m: 0, p: 0, maxHeight: "9em", overflowY: "auto" }}>
+      {presentations.map((presentation) => (
+        <ProductItemPresentationRow key={presentation._id || presentation.sku} presentation={presentation} onAdd={onAddPresentation} />
+      ))}
     </Box>
   );
 };

@@ -7,12 +7,7 @@ import { SKELETON_COUNT } from "../../../../config/constants";
 const gridSx = {
     display: "grid" as const,
     flexDirection: undefined,
-    gridTemplateColumns: {
-        xs: "repeat(1, 1fr)",
-        sm: "repeat(4, 1fr)",
-        md: "repeat(5, 1fr)",
-        lg: "repeat(8, 1fr)",
-    },
+    gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
     rowGap: 2 as const,
     columnGap: 2 as const,
     width: "100%" as const,
