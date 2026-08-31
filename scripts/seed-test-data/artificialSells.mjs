@@ -29,6 +29,7 @@ const buildLineItem = (presentation) => {
 
   return {
     _id: presentation.id,
+    product_id: presentation.productId,
     sku: presentation.sku,
     name: presentation.name,
     description: presentation.description ?? "",
