@@ -190,7 +190,14 @@ const main = async () => {
     });
     const succeededSells = sellResults.filter((r) => r.ok);
     const failedSells = sellResults.filter((r) => !r.ok);
-    console.log(`   ✓ ${succeededSells.length}/${sellsCount} ventas creadas${failedSells.length ? `, ${failedSells.length} fallaron (posible falta de stock)` : ""}`);
+    console.log(`   ✓ ${succeededSells.length}/${sellsCount} ventas creadas${failedSells.length ? `, ${failedSells.length} fallaron` : ""}`);
+    if (failedSells.length) {
+      const uniqueErrors = [...new Set(failedSells.map((f) => f.error.message))];
+      for (const message of uniqueErrors.slice(0, 10)) {
+        const count = failedSells.filter((f) => f.error.message === message).length;
+        console.log(`     - (${count}x) ${message}`);
+      }
+    }
   }
 
   console.log(`
