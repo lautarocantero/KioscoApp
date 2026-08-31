@@ -1,8 +1,8 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { z } from "zod";
-import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectPresentationThunkInterface, SelectProductThunkInterface, CartStateInterface, setQuantityThunkInterface } from "../../typings/cart/cartTypes";
+import type { addOneUnitThunkInterface, AddToCartThunkInterface, removeFromCartInterface, SelectPresentationThunkInterface, SelectProductThunkInterface, CartStateInterface } from "../../typings/cart/cartTypes";
 import { handleError } from "../shared/handlerStoreError";
-import { addToCartAction, addUnitAction, cleanCart, removeFromCart, resetProducts, setError, setExactMatch, setPresentationSelected, setProducts, setProductSelected, setQuantityAction, setSearchTerm, setSelectedCategory, startLoadingProducts } from "./cartSlice";
+import { addToCartAction, addUnitAction, cleanCart, removeFromCart, resetProducts, setError, setExactMatch, setPresentationSelected, setProducts, setProductSelected, setSearchTerm, setSelectedCategory, startLoadingProducts } from "./cartSlice";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import { resetPresentations, setPresentations, startLoadingPresentations } from "./cartSlice";
 import { getPresentationsWithStockByProductIdRequest } from "../../modules/presentations/api/presentationsApi";
@@ -115,21 +115,6 @@ export const addOneUnitThunk = ({_id}: addOneUnitThunkInterface ) => {
 
         try{
             dispatch(addUnitAction({ _id: _id}));
-        } catch (error: unknown) {
-            handleError(error);
-        }
-    }
-}
-
-export const setQuantityThunk = ({ _id, stock_required }: setQuantityThunkInterface) => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        if (!_id) {
-            dispatch(setError({ errorMessage: "No se ha proporcionado un producto."}));
-            return;
-        }
-
-        try {
-            dispatch(setQuantityAction({ _id, stock_required }));
         } catch (error: unknown) {
             handleError(error);
         }

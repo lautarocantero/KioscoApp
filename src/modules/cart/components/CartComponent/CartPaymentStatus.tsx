@@ -1,13 +1,13 @@
 import PaidIcon from '@mui/icons-material/Paid';
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, TextField, type Theme } from "@mui/material";
+import { Grid, TextField, type Theme } from "@mui/material";
 import { useTranslation } from 'react-i18next';
-import { SELL_STATUS_OPTIONS } from "../../../../config/constants";
 import { SellStatusEnum } from "@typings/sells/sellsEnum";
 import { sharedSx } from "../../../shared/components/sharedSx/sharedSx";
 import { useCartPaymentStatusForm } from '../../../../hooks/cart/useCartPaymentStatusForm';
 import type { CartPaymentStatusProps } from '@typings/cart/cartComponentTypes';
 import type { ReactNode } from 'react';
-
+import CartSectionLabel from './CartSectionLabel';
+import CartChipToggleGroup from './CartChipToggleGroup';
 
 const CartPaymentStatus = ({total}: CartPaymentStatusProps): ReactNode => {
     const { t } = useTranslation();
@@ -18,80 +18,27 @@ const CartPaymentStatus = ({total}: CartPaymentStatusProps): ReactNode => {
         isPartial,
         maxAmountPaid,
         setFieldValue,
-        handleStatusChange,
+        setStatus,
         handleAmountPaidChange,
         handleBlur,
+        options,
     } = useCartPaymentStatusForm(total);
 
     if (total <= 0) return null;
 
     return (
-        <Grid
-            container
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            gap={0.5}
-            sx={(theme: Theme) => ({
-                borderTop: `1px solid ${theme?.custom?.translucidFontColor}`,
-                marginTop: '1em',
-                paddingTop: '1em',
-                width: '100%',
-            })}
-        >
-            <FormControl component="fieldset" sx={{ width: '100%' }}>
-                <FormLabel
-                    component="legend"
-                    sx={(theme: Theme) => ({
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 0.8,
-                        textAlign: 'left',
-                        color: theme?.custom?.fontColor,
-                        fontWeight: 600,
-                        marginBottom: '0.3em',
-                    })}
-                >
-                    <PaidIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.secondary?.main })} />
-                    {t("cart.paymentStatus.label")}
-                </FormLabel>
-                <RadioGroup
-                    value={values.status}
-                    onChange={handleStatusChange}
-                    sx={(theme: Theme) => ({
-                        '& .MuiFormControlLabel-root': {
-                            color: theme?.custom?.fontColor,
-                            marginLeft: 0,
-                            marginBottom: '-0.4em',
-                        },
-                        '& .MuiFormControlLabel-label': {
-                            fontSize: theme?.typography?.body2?.fontSize,
-                        },
-                        '& .MuiRadio-root': {
-                            color: theme?.custom?.translucidWhite,
-                            padding: '0.4em',
-                        },
-                        '& .MuiSvgIcon-root': {
-                            fontSize: '1.1rem',
-                        },
-                        '& .MuiRadio-root.Mui-checked': {
-                            color: theme?.palette?.secondary?.main,
-                        },
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 0,
-                    })}
-                >
-                    {SELL_STATUS_OPTIONS.map(({ value }) => (
-                        <FormControlLabel
-                            key={value}
-                            value={value}
-                            control={<Radio />}
-                            label={t(value === SellStatusEnum.Completada ? 'cart.paymentStatus.completada' : 'cart.paymentStatus.parcial')}
-                        />
-                    ))}
-                </RadioGroup>
-            </FormControl>
+        <Grid container display="flex" flexDirection="column" gap={1} sx={{ width: '100%' }}>
+            <CartSectionLabel
+                icon={<PaidIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.secondary?.main })} />}
+                label={t("cart.paymentStatus.label")}
+            />
+
+            <CartChipToggleGroup
+                ariaLabel={t("cart.paymentStatus.label")}
+                value={values.status ?? SellStatusEnum.Completada}
+                onChange={(value) => setStatus(value as SellStatusEnum)}
+                options={options}
+            />
 
             {isPartial && (
                 <Grid container flexDirection="column" gap={1.5} sx={{ width: '100%', marginTop: '0.5em' }}>

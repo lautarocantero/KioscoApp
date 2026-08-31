@@ -1,9 +1,9 @@
-import BarcodeReaderIcon from '@mui/icons-material/BarcodeReader';
-import { Box, TextField, Tooltip, Typography, type Theme } from "@mui/material";
+import { alpha, Box, TextField, Tooltip, Typography, type Theme } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 import type { BarcodeButtonComponentProps } from '@typings/cart/cartComponentTypes';
 import type { ReactNode } from 'react';
 import { SELL_BARCODE_TOGGLE_ID } from '../../../../config/constants';
+import BarcodeIcon from '../../../shared/components/Icons/BarcodeIcon';
 
 
 export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps): ReactNode => {
@@ -23,20 +23,38 @@ export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps)
     <Tooltip title={t("cart.catalog.barcode.tooltip")}>
       <Box
         id={SELL_BARCODE_TOGGLE_ID}
+        role="button"
+        tabIndex={0}
+        aria-label={t("cart.catalog.barcode.scanLabel")}
         display="flex"
         alignItems="center"
         justifyContent="center"
         onClick={toggleShowInput}
+        onKeyDown={(event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          toggleShowInput();
+        }}
         sx={(theme: Theme) => ({
           flex: '0 0 auto',
           position: 'relative',
           cursor: 'pointer',
-          border: `1px solid ${theme?.custom?.darkGray}`,
-          borderRadius: "8px",
+          border: `1px solid ${theme?.custom?.lightMain}`,
+          borderRadius: "12px",
+          // Fondo fijo (no sigue el modo claro/oscuro), igual que la barra
+          // de búsqueda: este botón está pensado como una "pill" blanca
+          // sobre el header, siempre con el mismo contraste violeta/blanco.
+          backgroundColor: theme?.custom?.white,
           height: "3.25em",
-          px: "0.6em",
+          // Ocupa el espacio que dejó libre el botón de carrito (eliminado):
+          // antes era ancho de contenido, ahora tiene un piso más grande.
+          // En mobile queda solo el ícono (ver label más abajo), así que no
+          // fuerza el mismo ancho — si no, empuja el buscador a un tamaño
+          // inusable en una pantalla angosta.
+          minWidth: { xs: "3.5em", sm: "13em" },
+          px: { xs: "0.8em", sm: "1.1em" },
           '&:hover': {
-                backgroundColor: theme?.custom?.darkBackground,
+                backgroundColor: alpha(theme.palette.primary.main, 0.12),
           }
         })}
       >
@@ -51,7 +69,7 @@ export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps)
               height: "2em",
             }}
           >
-              <BarcodeReaderIcon
+              <BarcodeIcon
                 sx={(theme: Theme) => ({
                   color: theme?.palette.primary.main,
                   fontSize: theme?.typography?.body1?.fontSize,
@@ -62,6 +80,7 @@ export const BarcodeButtonComponent = ({ barcode }: BarcodeButtonComponentProps)
               <Typography
                 className="barcode-label"
                 sx={(theme: Theme) => ({
+                  display: { xs: 'none', sm: 'block' },
                   color: theme?.palette.primary.main,
                   fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
                   whiteSpace: 'nowrap',

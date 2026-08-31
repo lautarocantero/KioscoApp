@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import type { ReactNode } from "react";
 import ToolbarInfo from "./ToolbarInfo";
-import ToolbarActions from "./ToolBarActions";
+import ViewModeToggle from "./ViewModeToggle";
 import CategoryChipsRow from "./CategoryChipsRow";
 import type { ProductsToolbarProps } from "@typings/cart/cartComponentTypes";
 
@@ -16,36 +16,21 @@ const ProductsToolbar = ({
     setViewMode,
 }: ProductsToolbarProps): ReactNode => {
 
-
   return (
     <Box
       sx={(theme: Theme) => ({
         display: "flex",
-        flexDirection: "column",
+        alignItems: "center",
         width: "100%",
         gap: 1.5,
-        mb: 2,
-        px: { xs: 2, sm: 3 },
-        py: 2,
-        backgroundColor: theme.custom?.darkMain,
+        px: { xs: 2, sm: 1.75 },
+        py: 1.25,
+        borderBottom: `1px solid ${theme.custom?.darkGray}`,
       })}
     >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: { xs: "flex-start", md: "center" },
-          justifyContent: "space-between",
-          width: "100%",
-          gap: { xs: 2, md: 0 },
-        }}
-      >
-        <ToolbarInfo totalCount={totalCount} presentationsCount={presentationsCount} />
-
-        <ToolbarActions viewMode={viewMode} setViewMode={setViewMode}/>
-      </Box>
-
       <CategoryChipsRow />
+      <ToolbarInfo totalCount={totalCount} presentationsCount={presentationsCount} />
+      <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
     </Box>
   );
 };

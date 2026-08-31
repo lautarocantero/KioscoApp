@@ -1,14 +1,13 @@
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
 import BarcodeButtonComponent from "./BarcodeButtonComponent";
-import CartButtonComponent from "./CartButtonComponent";
 import PresentationSearchBar from "./PresentationSearchBar";
 import { useSellbar } from "@hooks/cart/useSellBar";
 import { usePresentationSearch } from "@hooks/cart/usePresentationSearch";
 
 
 export const SellBarActions = (): ReactNode => {
-  const { barcode, cart } = useSellbar();
+  const { barcode } = useSellbar();
   const search = usePresentationSearch();
 
   return (
@@ -23,7 +22,6 @@ export const SellBarActions = (): ReactNode => {
     >
       <PresentationSearchBar search={search} />
       <BarcodeButtonComponent barcode={barcode} />
-      <CartButtonComponent cart={cart} />
     </Box>
   );
 };

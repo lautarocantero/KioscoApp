@@ -9,14 +9,14 @@ const ProductItemData = ({ presentations = [], onAddPresentation }: ItemDataProp
 
   if (presentations.length === 0) {
     return (
-      <Typography variant="caption" sx={(theme: Theme) => ({ color: theme.custom?.darkWhite })}>
+      <Typography variant="caption" sx={(theme: Theme) => ({ color: theme.custom?.darkWhite, padding: "0.7em 0.8em" })}>
         {t("cart.productItem.noPresentations")}
       </Typography>
     );
   }
 
   return (
-    <Box component="ul" sx={{ m: 0, p: 0, maxHeight: "9em", overflowY: "auto" }}>
+    <Box component="ul" sx={{ m: 0, p: 0, px: "0.8em", maxHeight: "9em", overflowY: "auto" }}>
       {presentations.map((presentation) => (
         <ProductItemPresentationRow key={presentation._id || presentation.sku} presentation={presentation} onAdd={onAddPresentation} />
       ))}

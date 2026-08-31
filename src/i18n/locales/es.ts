@@ -575,7 +575,18 @@ const es = {
   cart: {
     header: {
       title: "Carrito",
-      clearButton: "Vaciar carrito",
+      itemsBadge: "{{count}} ítems",
+      emptyBadge: "vacío",
+      clearButton: "Vaciar",
+    },
+    page: {
+      title: "Nueva venta",
+      subtitle: "{{kiosco}} · {{seller}} · {{date}}",
+      shortcuts: {
+        search: "buscar",
+        scan: "escáner",
+        checkout: "cobrar",
+      },
     },
     catalog: {
       search: {
@@ -594,9 +605,6 @@ const es = {
         scanLabel: "Escanear",
         placeholder: "Escanee aquí",
       },
-      cartButton: {
-        tooltip: "Ver Carrito",
-      },
     },
     stockStatus: {
       low: "{{stock}} u · bajo",
@@ -605,23 +613,17 @@ const es = {
     },
     productsExhibitor: {
       toolbar: {
-        title: "Catálogo de productos",
         availableCount: "{{count}} productos · {{presentations}} presentaciones",
-        viewModeHint: "Elegí cómo querés ver tus productos",
-      },
-      sort: {
-        tooltip: "Ordenar productos",
-        label: "Ordenar por:",
-        options: {
-          "name-asc": "Nombre A-Z",
-          "name-desc": "Nombre Z-A",
-        },
       },
       viewModeToggle: {
         tooltip: "Cambiar vista",
+        gridLabel: "Grilla",
+        denseLabel: "Lista",
       },
       categoryChips: {
         allLabel: "Todas",
+        scrollLeftAriaLabel: "Ver categorías anteriores",
+        scrollRightAriaLabel: "Ver más categorías",
       },
       denseList: {
         emptyMessage: "No hay presentaciones",
@@ -691,6 +693,12 @@ const es = {
     table: {
       emptyMessage: "No hay productos en el carrito",
       weightUnit: "g",
+      unitSuffix: "u",
+      per100gSuffix: "/100 g",
+      itemDiscountLabel: "Desc",
+      itemDiscountAriaLabel: "Descuento por ítem",
+      decreaseAriaLabel: "Restar",
+      increaseAriaLabel: "Sumar",
       removeItemTooltip: "Eliminar producto del carrito",
       columns: {
         product: "Producto",
@@ -702,17 +710,17 @@ const es = {
       },
     },
     summary: {
-      title: "Resumen de venta",
-      products: "Productos",
-      productsWithCount: "Productos ({{count}})",
+      subtotal: "Subtotal",
+      discountLabel: "Descuento",
+      discountAriaLabel: "Descuento global",
+      noteAriaLabel: "Nota",
+      notePlaceholder: "Nota de la venta (opcional)",
       iva: "IVA ({{percentage}}%)",
-      total: "Total a cobrar",
-      footerNotice: "Revisa los productos y confirma el método de pago antes de continuar.",
-      backToProducts: "Volver a productos",
-      generateTicket: "Hacer ticket",
+      total: "Total",
+      generateTicket: "Generar ticket",
     },
     paymentMethod: {
-      label: "Método de pago",
+      label: "Forma de pago",
     },
     paymentStatus: {
       label: "Estado del pago",

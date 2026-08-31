@@ -45,18 +45,23 @@ const PresentationSearchBar = ({ search }: PresentationSearchBarProps): ReactNod
           sx={(theme: Theme) => ({
             flex: 1,
             fontSize: "0.95rem",
-            color: theme.custom?.fontColor,
+            // El fondo de esta barra es siempre theme.custom.white (fijo, no
+            // sigue el modo claro/oscuro), así que el texto no puede usar
+            // theme.custom.fontColor: en tema oscuro ese token es casi
+            // blanco y queda invisible sobre el fondo. custom.black es
+            // oscuro en ambos temas, garantiza contraste siempre.
+            color: theme.custom?.black,
           })}
         />
 
         {query ? (
           <IconButton size="small" onClick={onClear} aria-label={t("cart.catalog.search.clearAriaLabel")}>
-            <ClearIcon fontSize="small" sx={(theme: Theme) => ({ color: theme.custom?.darkWhite })} />
+            <ClearIcon fontSize="small" sx={(theme: Theme) => ({ color: theme.custom?.black })} />
           </IconButton>
         ) : (
           <Typography
             variant="caption"
-            sx={(theme: Theme) => ({ color: theme.custom?.translucidFontColor, flexShrink: 0, display: { xs: "none", md: "block" } })}
+            sx={(theme: Theme) => ({ color: theme.custom?.blackTranslucid, flexShrink: 0, display: { xs: "none", md: "block" } })}
           >
             {t("cart.catalog.search.shortcutsHint")}
           </Typography>

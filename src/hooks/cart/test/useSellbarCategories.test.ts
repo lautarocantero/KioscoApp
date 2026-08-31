@@ -61,6 +61,17 @@ describe("useSellbarCategories", () => {
     expect(result.current.list).toEqual([PresentationCategory.Dairy]);
   });
 
+  it("ordena las categorías alfabéticamente por su label traducido, no por el valor crudo del enum", async () => {
+    // Bakery -> "Panadería", Dairy -> "Lácteos": por enum ya vienen en ese
+    // orden (bakery < dairy), pero por label debería invertirse (L < P).
+    mockedGetAvailableCategories.mockResolvedValue([PresentationCategory.Bakery, PresentationCategory.Dairy]);
+
+    const { result } = renderHook(() => useSellbarCategories({ showSnackBar }));
+
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.list).toEqual([PresentationCategory.Dairy, PresentationCategory.Bakery]);
+  });
+
   it("muestra un snackbar de error si falla la carga de categorías", async () => {
     mockedGetAvailableCategories.mockRejectedValueOnce(new Error("network"));
 

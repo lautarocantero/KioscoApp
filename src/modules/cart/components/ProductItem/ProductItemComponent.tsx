@@ -19,12 +19,11 @@ const ProductItemComponent = ({ product }: ProductItemProps): ReactNode => {
       sx={(theme: Theme) => ({
         display: "flex",
         flexDirection: "column",
-        gap: "0.6em",
         border: `1px solid ${theme.custom?.darkGray}`,
         borderRadius: "0.8em",
         color: theme?.custom?.fontColor,
         width: "100%",
-        padding: "0.8em",
+        overflow: "hidden",
       })}
     >
       <Box
@@ -36,7 +35,14 @@ const ProductItemComponent = ({ product }: ProductItemProps): ReactNode => {
           if (event.key !== "Enter" && event.key !== " ") return;
           handleSelect();
         }}
-        sx={{ display: "flex", alignItems: "center", gap: "0.6em", cursor: "pointer" }}
+        sx={(theme: Theme) => ({
+          display: "flex",
+          alignItems: "center",
+          gap: "0.6em",
+          cursor: "pointer",
+          padding: "0.7em 0.8em",
+          borderBottom: `1px solid ${theme.custom?.darkGray}`,
+        })}
       >
         <ProductItemAvatar name={displayName} />
         <Typography

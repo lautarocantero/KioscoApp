@@ -4,7 +4,7 @@ import type { CartItemsListProps } from "@typings/cart/cartComponentTypes";
 import CartLineItem from "./CartLineItem";
 import CartEmptyComponent from "./EmptyCartComponent";
 
-const CartItemsList = ({ cart, onIncrease, onDecrease, onSubtotalChange, onQuantityChange }: CartItemsListProps): ReactNode => {
+const CartItemsList = ({ cart, onIncrease, onDecrease, onItemDiscountChange }: CartItemsListProps): ReactNode => {
   if (cart.length === 0) return <CartEmptyComponent />;
 
   return (
@@ -15,8 +15,7 @@ const CartItemsList = ({ cart, onIncrease, onDecrease, onSubtotalChange, onQuant
           product={product}
           onIncrease={onIncrease}
           onDecrease={onDecrease}
-          onSubtotalChange={onSubtotalChange}
-          onQuantityChange={onQuantityChange}
+          onItemDiscountChange={onItemDiscountChange}
         />
       ))}
     </Box>

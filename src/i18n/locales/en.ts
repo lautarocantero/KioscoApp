@@ -575,7 +575,18 @@ const en = {
   cart: {
     header: {
       title: "Cart",
-      clearButton: "Clear cart",
+      itemsBadge: "{{count}} items",
+      emptyBadge: "empty",
+      clearButton: "Clear",
+    },
+    page: {
+      title: "New sale",
+      subtitle: "{{kiosco}} · {{seller}} · {{date}}",
+      shortcuts: {
+        search: "search",
+        scan: "scan",
+        checkout: "checkout",
+      },
     },
     catalog: {
       search: {
@@ -594,9 +605,6 @@ const en = {
         scanLabel: "Scan",
         placeholder: "Scan here",
       },
-      cartButton: {
-        tooltip: "View cart",
-      },
     },
     stockStatus: {
       low: "{{stock}} u · low",
@@ -605,23 +613,17 @@ const en = {
     },
     productsExhibitor: {
       toolbar: {
-        title: "Product catalog",
         availableCount: "{{count}} products · {{presentations}} presentations",
-        viewModeHint: "Choose how you want to view your products",
-      },
-      sort: {
-        tooltip: "Sort products",
-        label: "Sort by:",
-        options: {
-          "name-asc": "Name A-Z",
-          "name-desc": "Name Z-A",
-        },
       },
       viewModeToggle: {
         tooltip: "Change view",
+        gridLabel: "Grid",
+        denseLabel: "List",
       },
       categoryChips: {
         allLabel: "All",
+        scrollLeftAriaLabel: "Show previous categories",
+        scrollRightAriaLabel: "Show more categories",
       },
       denseList: {
         emptyMessage: "No presentations",
@@ -691,6 +693,12 @@ const en = {
     table: {
       emptyMessage: "No products in the cart",
       weightUnit: "g",
+      unitSuffix: "u",
+      per100gSuffix: "/100 g",
+      itemDiscountLabel: "Disc",
+      itemDiscountAriaLabel: "Discount per item",
+      decreaseAriaLabel: "Decrease",
+      increaseAriaLabel: "Increase",
       removeItemTooltip: "Remove product from cart",
       columns: {
         product: "Product",
@@ -702,14 +710,14 @@ const en = {
       },
     },
     summary: {
-      title: "Sale summary",
-      products: "Products",
-      productsWithCount: "Products ({{count}})",
+      subtotal: "Subtotal",
+      discountLabel: "Discount",
+      discountAriaLabel: "Global discount",
+      noteAriaLabel: "Note",
+      notePlaceholder: "Sale note (optional)",
       iva: "Tax ({{percentage}}%)",
-      total: "Total to charge",
-      footerNotice: "Review the products and confirm the payment method before continuing.",
-      backToProducts: "Back to products",
-      generateTicket: "Create ticket",
+      total: "Total",
+      generateTicket: "Generate ticket",
     },
     paymentMethod: {
       label: "Payment method",

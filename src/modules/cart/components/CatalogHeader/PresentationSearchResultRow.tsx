@@ -83,6 +83,9 @@ const PresentationSearchResultRow = ({
           if (!isDisabled) onSelect(row);
         }}
         sx={(theme: Theme) => ({
+          width: "1.75em",
+          height: "1.75em",
+          borderRadius: "8px",
           backgroundColor: theme.palette.primary.main,
           color: theme.custom?.white,
           "&:hover": { backgroundColor: theme.palette.primary.dark },

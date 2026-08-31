@@ -3,6 +3,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithTheme } from "../../../shared/test/utils/setupTests";
 import CartLineItem from "../../components/CartComponent/CartLineItem";
+import { formatCurrency } from "../../helpers/formatCurrency";
 import type { ProductTicketWithStockType } from "@typings/sells/sellTypes";
 
 vi.mock("../../components/CartComponent/CartProductRowActionCell", () => ({
@@ -28,47 +29,60 @@ const buildProduct = (overrides: Partial<ProductTicketWithStockType> = {}): Prod
   ...overrides,
 });
 
+const handlers = { onIncrease: vi.fn(), onDecrease: vi.fn(), onItemDiscountChange: vi.fn() };
+
 describe("CartLineItem", () => {
   it("muestra nombre, variante y precio unitario", () => {
-    renderWithTheme(
-      <CartLineItem product={buildProduct()} onIncrease={vi.fn()} onDecrease={vi.fn()} onSubtotalChange={vi.fn()} onQuantityChange={vi.fn()} />
-    );
+    renderWithTheme(<CartLineItem product={buildProduct()} {...handlers} />);
     expect(screen.getByText("Coca Cola")).toBeInTheDocument();
   });
 
-  it("muestra stepper +/- para venta por unidad y llama a onIncrease/onDecrease", async () => {
+  it("muestra el stepper +/- para venta por unidad y llama a onIncrease/onDecrease", async () => {
     const onIncrease = vi.fn();
     const onDecrease = vi.fn();
-    renderWithTheme(
-      <CartLineItem product={buildProduct()} onIncrease={onIncrease} onDecrease={onDecrease} onSubtotalChange={vi.fn()} onQuantityChange={vi.fn()} />
-    );
+    renderWithTheme(<CartLineItem product={buildProduct()} {...handlers} onIncrease={onIncrease} onDecrease={onDecrease} />);
 
-    const buttons = screen.getAllByRole("button");
-    await userEvent.click(buttons[0]);
-    await userEvent.click(buttons[1]);
+    await userEvent.click(screen.getByLabelText("Restar"));
+    await userEvent.click(screen.getByLabelText("Sumar"));
 
     expect(onDecrease).toHaveBeenCalledWith("1");
     expect(onIncrease).toHaveBeenCalledWith("1");
   });
 
-  it("muestra input editable de gramos (no stepper) para venta por peso", () => {
+  it("muestra la cantidad en gramos para venta por peso, con el mismo stepper", () => {
     renderWithTheme(
       <CartLineItem
         product={buildProduct({ sale_type: "weight" as ProductTicketWithStockType["sale_type"], stock_required: 300 })}
-        onIncrease={vi.fn()}
-        onDecrease={vi.fn()}
-        onSubtotalChange={vi.fn()}
-        onQuantityChange={vi.fn()}
+        {...handlers}
       />
     );
 
-    expect(screen.getByText("g")).toBeInTheDocument();
+    expect(screen.getByText("300 g")).toBeInTheDocument();
+  });
+
+  it("agrega el sufijo /100 g al precio para venta por peso", () => {
+    renderWithTheme(
+      <CartLineItem
+        product={buildProduct({ sale_type: "weight" as ProductTicketWithStockType["sale_type"], price: 1180 })}
+        {...handlers}
+      />
+    );
+
+    const expectedText = `Botella, 500 · ${formatCurrency(1180)} /100 g`;
+    expect(screen.getByText((_, node) => node?.textContent === expectedText)).toBeInTheDocument();
+  });
+
+  it("llama a onItemDiscountChange al tipear en el input de descuento", async () => {
+    const onItemDiscountChange = vi.fn();
+    renderWithTheme(<CartLineItem product={buildProduct({ _id: "1" })} {...handlers} onItemDiscountChange={onItemDiscountChange} />);
+
+    await userEvent.type(screen.getByRole("textbox", { name: "Descuento por ítem" }), "5");
+
+    expect(onItemDiscountChange).toHaveBeenCalledWith("1", "5");
   });
 
   it("delega la eliminación en CartProductRowActionCell", () => {
-    renderWithTheme(
-      <CartLineItem product={buildProduct({ _id: "42" })} onIncrease={vi.fn()} onDecrease={vi.fn()} onSubtotalChange={vi.fn()} onQuantityChange={vi.fn()} />
-    );
+    renderWithTheme(<CartLineItem product={buildProduct({ _id: "42" })} {...handlers} />);
     expect(screen.getByTestId("remove-cell")).toHaveTextContent("42");
   });
 });

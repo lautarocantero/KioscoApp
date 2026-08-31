@@ -20,9 +20,13 @@ describe("CartSummaryCardComponent", () => {
   it("renderiza la banda de totales y el pie fijo como hermanos (no anidados)", () => {
     renderWithTheme(
       <CartSummaryCardComponent
-        onBack={vi.fn()}
         onGenerateTicket={vi.fn()}
         productsTotalPrice={100}
+        discountAmount={0}
+        globalDiscount="0"
+        onGlobalDiscountChange={vi.fn()}
+        note=""
+        onNoteChange={vi.fn()}
         ivaPercentage={21}
         ivaAmount={21}
         total={121}

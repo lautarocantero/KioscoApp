@@ -28,7 +28,7 @@ const product = (id: string): ProductTicketWithStockType => ({
   stock: 10,
 });
 
-const handlers = { onIncrease: vi.fn(), onDecrease: vi.fn(), onSubtotalChange: vi.fn(), onQuantityChange: vi.fn() };
+const handlers = { onIncrease: vi.fn(), onDecrease: vi.fn(), onItemDiscountChange: vi.fn() };
 
 describe("CartItemsList", () => {
   it("muestra el estado vacío cuando el carrito no tiene items", () => {

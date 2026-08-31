@@ -1,4 +1,4 @@
-import { Box, type Theme } from "@mui/material";
+import { alpha, Box, type Theme } from "@mui/material";
 import { Fragment, memo, type ReactNode } from 'react';
 import CartPaymentMethod from './CartPaymentMethod';
 import CartSellDataComponent from './CartSellDataComponent';
@@ -12,9 +12,13 @@ import type { CartSummaryCardProps } from "@typings/cart/cartComponentTypes";
 ║ — la banda de totales scrollea si no entra, el pie nunca.             ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 const CartSummaryCardComponent = ({
-    onBack,
     onGenerateTicket,
     productsTotalPrice,
+    discountAmount,
+    globalDiscount,
+    onGlobalDiscountChange,
+    note,
+    onNoteChange,
     ivaPercentage,
     ivaAmount,
     total,
@@ -28,28 +32,32 @@ const CartSummaryCardComponent = ({
                     minHeight: 0,
                     overflowY: 'auto',
                     borderTop: `1px solid ${theme.custom?.darkGray}`,
-                    pt: '1em',
+                    backgroundColor: alpha(theme.palette.primary.main, 0.04),
+                    padding: '0.9em',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 1,
+                    gap: 1.2,
                 })}
             >
-                <CartSellDataComponent
-                    productsTotalPrice={productsTotalPrice}
-                    ivaPercentage={ivaPercentage}
-                    ivaAmount={ivaAmount}
-                    total={total}
-                />
-
                 <CartPaymentMethod total={total} />
 
                 <CartPaymentStatus total={total} />
+
+                <CartSellDataComponent
+                    productsTotalPrice={productsTotalPrice}
+                    discountAmount={discountAmount}
+                    globalDiscount={globalDiscount}
+                    onGlobalDiscountChange={onGlobalDiscountChange}
+                    note={note}
+                    onNoteChange={onNoteChange}
+                    ivaPercentage={ivaPercentage}
+                    ivaAmount={ivaAmount}
+                />
             </Box>
 
-            <Box sx={{ flex: '0 0 auto', pt: 1 }}>
+            <Box sx={{ flex: '0 0 auto', p: '0.9em' }}>
                 <CartSummaryFooterComponent
                     total={total}
-                    onBack={onBack}
                     onGenerateTicket={onGenerateTicket}
                 />
             </Box>

@@ -77,6 +77,10 @@ export type ProductTicketWithStockType = ProductTicketType & {
     product_id: string;
     stock: number;
     subtotal?: number;
+    // % de descuento por ítem (0-100), decorado client-side en useCart —
+    // igual que subtotal, nunca viaja tal cual al back (se aplica antes de
+    // armar sub_total/total_amount del ticket, ver formula en useCart).
+    discountPercentage?: number;
 };
 
 // /*══════════════════════════════════════════════════════════════════════╗

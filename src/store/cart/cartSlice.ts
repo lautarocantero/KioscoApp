@@ -6,7 +6,6 @@ import {
     type CartRemoveFromCartActionPayload,
     type CartSetPresentationSlicePayload,
     type CartSetProductSlicePayload,
-    type CartSetQuantityActionPayload,
     type CartStateInterface
 } from '../../typings/cart/cartTypes';
 import type { store } from '../store';
@@ -79,27 +78,6 @@ export const cartSlice = createSlice({
             const maxAvailable = item.stock === undefined ? Infinity : clampStock(item.stock);
 
             state.cart[productIndex].stock_required = Math.max(0, Math.min(item.stock_required + step, maxAvailable));
-        },
-        // 🆕 setea una cantidad EXACTA (no relativa) para un producto del carrito.
-        // Uso: EXCLUSIVO de productos por peso, cuando el usuario tipea directamente
-        // la cantidad de gramos en vez de usar los steppers +/-.
-        setQuantityAction: (state: CartStateInterface, action: PayloadAction<CartSetQuantityActionPayload>) => {
-            const { payload } = action;
-            const { _id, stock_required } = payload;
-
-            const productIndex = state.cart.findIndex(item => item._id === String(_id));
-            if (productIndex === -1) return;
-
-            const item = state.cart[productIndex];
-            const maxAvailable = item.stock === undefined ? Infinity : clampStock(item.stock);
-            const safeValue = Math.max(0, Math.min(stock_required, maxAvailable));
-
-            if (safeValue <= 0) {
-                state.cart = state.cart.filter((cartItem) => cartItem._id !== String(_id));
-                return;
-            }
-
-            state.cart[productIndex].stock_required = safeValue;
         },
         removeFromCart: (state: CartStateInterface, action: PayloadAction<CartRemoveFromCartActionPayload>) => {
             const { payload } = action;
@@ -178,7 +156,6 @@ export const {
   setPresentationSelected,
   addToCartAction,
   addUnitAction,
-  setQuantityAction,
   removeFromCart,
   cleanCart,
   setError,

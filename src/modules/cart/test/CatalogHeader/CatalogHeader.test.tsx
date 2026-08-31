@@ -10,6 +10,14 @@ vi.mock("../../components/CatalogHeader/SellBarActions", () => ({
   default: () => <div data-testid="sell-bar-actions" />,
 }));
 
+vi.mock("../../components/CatalogHeader/SellPageHeader", () => ({
+  default: () => <div data-testid="sell-page-header" />,
+}));
+
+vi.mock("@hooks/cart/useSellPageHeader", () => ({
+  useSellPageHeader: () => ({ kioscoName: "", sellerName: "", dateLabel: "" }),
+}));
+
 describe("CatalogHeader", () => {
   it("renderiza NoisyCard con SellBarActions dentro", () => {
     render(<CatalogHeader />);

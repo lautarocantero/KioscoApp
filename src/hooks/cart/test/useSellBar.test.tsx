@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { useSelector } from "react-redux";
 import { useSellbar } from "../useSellBar";
-import { useSellbarCart } from "../useSellbarCart";
 import { useSellbarBarcode } from "../useSellbarBarcode";
 import { SnackBarContext } from "../../../modules/shared/components/SnackBar/SnackBarContext";
 import { AlertColor } from "@typings/ui/ui";
@@ -11,11 +10,9 @@ import type { CartStateInterface } from "@typings/cart/cartTypes";
 import { SortOption, ViewMode } from "@typings/cart/cartEnums";
 
 vi.mock("react-redux");
-vi.mock("../useSellbarCart");
 vi.mock("../useSellbarBarcode");
 
 const mockedUseSelector = vi.mocked(useSelector);
-const mockedUseSellbarCart = vi.mocked(useSellbarCart);
 const mockedUseSellbarBarcode = vi.mocked(useSellbarBarcode);
 
 const showSnackBar = vi.fn();
@@ -68,7 +65,6 @@ const mockSelector = (cartOverrides: Partial<CartStateInterface> = {}) => {
 describe("useSellbar", () => {
   beforeEach(() => {
     mockSelector();
-    mockedUseSellbarCart.mockReturnValue({ count: 0, goToCart: vi.fn() });
     mockedUseSellbarBarcode.mockReturnValue({
       showBarcodeInput: false,
       value: "",
@@ -79,10 +75,9 @@ describe("useSellbar", () => {
     });
   });
 
-  it("expone barcode y cart resueltos por sus hooks dedicados", () => {
+  it("expone barcode resuelto por su hook dedicado", () => {
     const { result } = renderHook(() => useSellbar(), { wrapper });
 
-    expect(result.current.cart).toEqual({ count: 0, goToCart: expect.any(Function) });
     expect(result.current.barcode.showBarcodeInput).toBe(false);
   });
 

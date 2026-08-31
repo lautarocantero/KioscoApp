@@ -1,5 +1,5 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, IconButton, Tooltip, type Theme } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton, Tooltip, type Theme } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
@@ -14,23 +14,20 @@ const CartProductRowActionCell = ({ product }: CartProductRowActionCellProps): R
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
-      <Tooltip title={t("cart.table.removeItemTooltip")}>
-        <IconButton
-          onClick={() => dispatch(removeFromCartThunk({ _id: product._id, amount: CartAmount.All }))}
-          sx={(theme: Theme) => ({
-            backgroundColor: theme?.palette?.primary?.main,
-            border: `1px solid ${theme?.custom?.translucidWhite}`,
-            borderRadius: '0.3em',
-            width: '1.6em',
-            height: '1.6em',
-            '&:hover': { backgroundColor: theme?.custom?.translucidWhite },
-          })}
-        >
-          <DeleteIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.custom?.white })} />
-        </IconButton>
-      </Tooltip>
-    </Box>
+    <Tooltip title={t("cart.table.removeItemTooltip")}>
+      <IconButton
+        size="small"
+        onClick={() => dispatch(removeFromCartThunk({ _id: product._id, amount: CartAmount.All }))}
+        sx={(theme: Theme) => ({
+          flexShrink: 0,
+          p: "0.2em",
+          color: theme.custom?.darkWhite,
+          "&:hover": { backgroundColor: theme.custom?.errorLight, color: theme.palette.error.main },
+        })}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Tooltip>
   );
 };
 

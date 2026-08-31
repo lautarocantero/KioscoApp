@@ -6,7 +6,8 @@ import type { AlertColor } from "@typings/ui/ui";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
 import type { RefObject, MouseEvent, KeyboardEvent } from "react";
 import type { AppDispatch } from "../../store/cart/cartSlice";
-import type { PaymentMethod } from "@typings/sells/sellsEnum";
+import type { cartFormSchema } from "../../modules/cart/schema/CartFormSchema";
+import type { PaymentMethod, SellStatusEnum } from "@typings/sells/sellsEnum";
 import type { FormikErrors, FormikTouched } from "formik";
 import type { GridColDef } from "@mui/x-data-grid";
 import type { TFunction } from "i18next";
@@ -81,16 +82,6 @@ export type removeFromCartInterface = Pick<CartStateInterface, '_id'> & {
     amount: CartAmount,
 }
 
-export interface CartSetQuantityActionPayload {
-  _id: string;
-  stock_required: number;
-}
-
-export interface setQuantityThunkInterface {
-  _id: string;
-  stock_required: number;
-}
-
 export type CartError = Pick<CartStateInterface, 'errorMessage'>;
 
 export interface UseCartBarResult {
@@ -102,10 +93,6 @@ export interface UseCartBarResult {
         onChange: (value: string) => void;
         onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     };
-    cart: {
-        count: number | undefined;
-        goToCart: () => void;
-    };
 }
 
 export interface UseCartBarBarcodeParams {
@@ -115,7 +102,11 @@ export interface UseCartBarBarcodeParams {
 
 export type UseCartBarBarcodeResult = UseCartBarResult['barcode'];
 
-export type UseCartBarCartResult = UseCartBarResult['cart'];
+export interface UseSellPageHeaderResult {
+    kioscoName: string;
+    sellerName: string;
+    dateLabel: string;
+}
 
 export interface UseCartBarCategoriesParams {
     showSnackBar: (message: string, severity: AlertColor) => void;
@@ -202,9 +193,31 @@ export interface HandleAddProductDialogItemToCartInterface {
     t: TFunction;
 }
 
+export interface UseCartFormikResult {
+    initialValues: CartFormValues;
+    validationSchema: ReturnType<typeof cartFormSchema>;
+}
+
+export interface CartTotalsLineInput {
+    lineBase: number;
+    itemDiscountPercentage: number;
+}
+
+export interface CartTotalsResult {
+    lines: number[];
+    subtotal: number;
+    discountAmount: number;
+    net: number;
+    ivaAmount: number;
+    total: number;
+}
+
 export interface UseCartReturn {
     cart: ProductTicketWithStockType[];
     productsTotalPrice: number;
+    discountAmount: number;
+    globalDiscount: string;
+    note: string;
     ivaPercentage: number;
     ivaAmount: number;
     total: number;
@@ -214,18 +227,24 @@ export interface UseCartReturn {
     generateTicket: (formValues: CartFormValues) => Promise<void>;
     printTicket: () => void;
     handleClearCart: () => void;
-    goBackToSell: () => void;
     goToNewSell: () => void;
     goToTicketDetail: () => void;
     handleIncreaseProduct: (_id: string) => void;
     handleDecreaseProduct: (_id: string) => void;
-    handleSubtotalChange: (_id: string, value: number) => void;
-    handleQuantityChange: (_id: string, value: number) => void;
+    handleItemDiscountChange: (_id: string, value: string) => void;
+    handleGlobalDiscountChange: (value: string) => void;
+    handleNoteChange: (value: string) => void;
+}
+
+export interface CartChipOption {
+    value: string;
+    label: string;
 }
 
 export interface useCartPaymentMethodFormReturn {
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    setPaymentMethod: (value: PaymentMethod) => void,
     values: CartFormValues,
+    options: CartChipOption[],
 }
 
 export interface useCartPaymentStatusFormReturn {
@@ -235,10 +254,11 @@ export interface useCartPaymentStatusFormReturn {
     touched: FormikTouched<CartFormValues>;
     isPartial: boolean;
     maxAmountPaid: number;
-    handleStatusChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    setStatus: (value: SellStatusEnum) => void;
     handleAmountPaidChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleBlur: {
         (e: React.FocusEvent<any, Element>): void;
         <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
     };
+    options: CartChipOption[];
 }

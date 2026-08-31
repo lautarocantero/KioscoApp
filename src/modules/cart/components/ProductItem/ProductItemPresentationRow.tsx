@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Box, IconButton, Typography, type Theme } from "@mui/material";
+import { alpha, Box, IconButton, Typography, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
 import type { ProductItemPresentationRowProps } from "@typings/cart/cartComponentTypes";
@@ -24,13 +24,16 @@ const ProductItemPresentationRow = ({ presentation, onAdd }: ProductItemPresenta
   return (
     <Box
       component="li"
-      sx={{
+      sx={(theme: Theme) => ({
         display: "flex",
         alignItems: "center",
         gap: 1,
         listStyle: "none",
-        py: 0.4,
-      }}
+        py: 0.6,
+        "&:not(:last-of-type)": {
+          borderBottom: `1px solid ${theme.custom?.darkGray}`,
+        },
+      })}
     >
       <Typography variant="caption" noWrap sx={(theme: Theme) => ({ color: theme.custom?.fontColor, flex: 1, minWidth: 0 })}>
         {formatPresentationVariantLabel(presentation, t)}
@@ -50,9 +53,16 @@ const ProductItemPresentationRow = ({ presentation, onAdd }: ProductItemPresenta
         aria-label={t("cart.productItem.presentationRow.addAriaLabel", { name: presentation.name })}
         onClick={() => onAdd(presentation)}
         sx={(theme: Theme) => ({
-          p: "0.15em",
+          flexShrink: 0,
+          width: "1.75em",
+          height: "1.75em",
+          p: 0,
+          border: `1px solid ${theme.custom?.lightMain}`,
+          borderRadius: "8px",
+          backgroundColor: alpha(theme.palette.primary.main, 0.08),
           color: theme.palette.primary.main,
-          "&.Mui-disabled": { color: theme.custom?.darkGray },
+          "&:hover": { backgroundColor: theme.palette.primary.main, color: theme.custom?.white },
+          "&.Mui-disabled": { border: `1px solid ${theme.custom?.darkGray}`, color: theme.custom?.darkGray },
         })}
       >
         <AddIcon fontSize="inherit" />

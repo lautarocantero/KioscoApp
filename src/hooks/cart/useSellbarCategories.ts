@@ -7,6 +7,7 @@ import { getAvailableCategoriesRequest } from "../../modules/presentations/api/p
 import type { UseCartBarCategoriesParams, UseCartBarCategoriesResult } from "@typings/cart/cartTypes";
 import type { AppDispatch, RootState } from "../../store/cart/cartSlice";
 import { setSelectedCategoryThunk } from "../../store/cart/cartThunks";
+import { sortCategoriesAlphabetically } from "../../modules/cart/helpers/sortCategoriesAlphabetically";
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ 🏷️ useSellbarCategories                                               ║
@@ -33,7 +34,8 @@ export const useSellbarCategories = ({ showSnackBar }: UseCartBarCategoriesParam
             setIsLoadingCategories(true);
             try {
                 const result: PresentationCategory[] = await getAvailableCategoriesRequest();
-                setCategoriesList(result ?? []);
+                const sorted = sortCategoriesAlphabetically(result ?? [], (category) => t(`presentationCategory.${category}`));
+                setCategoriesList(sorted);
             } catch {
                 showSnackBar(t("cart.snackbar.categoriesLoadFailed"), AlertColor.Error);
             } finally {

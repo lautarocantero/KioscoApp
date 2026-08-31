@@ -3,14 +3,14 @@ import { screen } from "@testing-library/react";
 import { renderWithTheme } from "../../../shared/test/utils/setupTests";
 import { ViewMode } from "@typings/cart/cartEnums";
 import ToolbarInfo from "../../components/ProductsExhibitorList/ToolbarInfo";
-import ToolbarActions from "../../components/ProductsExhibitorList/ToolBarActions";
+import ViewModeToggle from "../../components/ProductsExhibitorList/ViewModeToggle";
 import ProductsToolbar from "../../components/ProductsExhibitorList/ProductToolbar";
 
 vi.mock("../../components/ProductsExhibitorList/ToolbarInfo", () => ({
     default: vi.fn(() => <div data-testid="toolbar-info" />),
 }));
-vi.mock("../../components/ProductsExhibitorList/ToolBarActions", () => ({
-    default: vi.fn(() => <div data-testid="toolbar-actions" />),
+vi.mock("../../components/ProductsExhibitorList/ViewModeToggle", () => ({
+    default: vi.fn(() => <div data-testid="view-mode-toggle" />),
 }));
 vi.mock("../../components/ProductsExhibitorList/CategoryChipsRow", () => ({
     default: vi.fn(() => <div data-testid="category-chips-row" />),
@@ -21,14 +21,14 @@ describe("ProductsToolbar", () => {
         vi.clearAllMocks();
     });
 
-    it("renderiza ToolbarInfo, ToolbarActions y las chips de categoría", () => {
+    it("renderiza las chips de categoría, el resumen y el toggle de vista en una sola fila", () => {
         renderWithTheme(
             <ProductsToolbar totalCount={10} presentationsCount={20} viewMode={ViewMode.Grid} setViewMode={vi.fn()} />
         );
 
-        expect(screen.getByTestId("toolbar-info")).toBeInTheDocument();
-        expect(screen.getByTestId("toolbar-actions")).toBeInTheDocument();
         expect(screen.getByTestId("category-chips-row")).toBeInTheDocument();
+        expect(screen.getByTestId("toolbar-info")).toBeInTheDocument();
+        expect(screen.getByTestId("view-mode-toggle")).toBeInTheDocument();
     });
 
     it("pasa totalCount y presentationsCount a ToolbarInfo", () => {
@@ -40,14 +40,14 @@ describe("ProductsToolbar", () => {
         expect(props).toEqual(expect.objectContaining({ totalCount: 25, presentationsCount: 40 }));
     });
 
-    it("pasa viewMode y setViewMode a ToolbarActions", () => {
+    it("pasa viewMode y setViewMode a ViewModeToggle", () => {
         const setViewMode = vi.fn();
 
         renderWithTheme(
-            <ProductsToolbar totalCount={10} presentationsCount={15} viewMode={ViewMode.List} setViewMode={setViewMode} />
+            <ProductsToolbar totalCount={10} presentationsCount={15} viewMode={ViewMode.Collapsed} setViewMode={setViewMode} />
         );
 
-        const props = vi.mocked(ToolbarActions).mock.calls.at(-1)?.[0];
-        expect(props).toEqual(expect.objectContaining({ viewMode: ViewMode.List, setViewMode }));
+        const props = vi.mocked(ViewModeToggle).mock.calls.at(-1)?.[0];
+        expect(props).toEqual(expect.objectContaining({ viewMode: ViewMode.Collapsed, setViewMode }));
     });
 });

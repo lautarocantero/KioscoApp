@@ -1,15 +1,17 @@
 import type { Product, ProductEntity } from "@typings/product/productTypes";
-import type { CartSide, ViewMode } from "./cartEnums";
-import type { PresentationRow, UseCartBarResult, UsePresentationSearchReturn } from "./cartTypes";
+import type { ViewMode } from "./cartEnums";
+import type { CartChipOption, PresentationRow, UseCartBarResult, UsePresentationSearchReturn, UseSellPageHeaderResult } from "./cartTypes";
 import type { GridColDef } from "@mui/x-data-grid";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { DialogVariantDataType, ProductTicketType, ProductTicketWithStockType, TicketSummaryType, UseProductsExhibitorResult } from "@typings/sells/sellTypes";
 import type { SvgIconProps, Theme } from "@mui/material";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 export interface PresentationSearchBarProps {
     search: UsePresentationSearchReturn;
 }
+
+export type SellPageHeaderProps = UseSellPageHeaderResult;
 
 export interface PresentationSearchResultRowProps {
     row: PresentationRow;
@@ -31,10 +33,6 @@ export interface BarcodeButtonComponentProps {
     barcode: UseCartBarResult["barcode"];
 }
 
-export interface CartButtonComponentProps {
-    cart: UseCartBarResult["cart"];
-}
-
 export interface ProductsToolbarProps {
     totalCount: number;
     presentationsCount: number;
@@ -43,8 +41,6 @@ export interface ProductsToolbarProps {
 }
 
 export type ToolbarInfoProps = Pick<ProductsToolbarProps, 'totalCount' | 'presentationsCount'>
-
-export type ToolbarActionsProps = Pick<ProductsToolbarProps, 'viewMode' | 'setViewMode'>
 
 export interface ProductsExhibitorListProps {
     products: Product[];
@@ -75,10 +71,6 @@ export interface ProductRowActionCellProps {
 }
 
 export type  ProductsSkeletonsProps = Pick<ProductsExhibitorListProps, 'isLoading' | 'gridSx'>;
-
-export interface SortByCatalogProps {
-    viewMode: ViewMode;
-}
 
 export interface ViewModeToggleProps {
     viewMode: ViewMode, 
@@ -166,67 +158,27 @@ export interface ProductDialogTableTotalProps {
 
 export type DialogDataPriceProps = Pick <DialogDataProps, 'values'>
 
-export interface CartProductListProps {
-    cart: ProductTicketType[],
-}
 export interface CartPriceProps {
     productsTotalPrice: number,
+    discountAmount: number,
+    globalDiscount: string,
+    onGlobalDiscountChange: (value: string) => void,
     ivaPercentage: number,
     ivaAmount: number,
-    total: number,
 }
-export interface CartPriceLabelProps {
-  label: string
-  nestedLabel?: string
-  nestedValue?: string
-  labelStyles?: (theme: Theme) => object
-  nestedStyles?: (theme: Theme) => object
-}
-export interface CartProductItemProps {
-    product: ProductTicketType,
-}
-export interface CartProductItemDataProps {
-    name: string | undefined,
-    size: string | undefined,
-    units: string | undefined,
-    price: string | undefined,
-}
-export interface CartProductItemImageProps {
-    image: string | undefined,
-    name: string | undefined,
-}
-export interface CartProductButtonsProps {
-    _id: string,
-}
-export interface CartProductButtonProps {
-    icon : React.ReactNode, 
-    side: CartSide, 
-    action: () => void
-}
-export interface DisplayDataComponentProps {
-    nameEdited: string,
-    size: string,
-    units: string,
-    price: string,
-}
-export interface CartButtonsComponentProps {
-    generateTicket: () => void,
-}
-
 export type CartHeaderProps = {
     itemsCount: number;
     onClearCart: () => void;
 }
 
-export type CartLabelProps = Pick<CartHeaderProps, "itemsCount">
+export type CartCountBadgeProps = Pick<CartHeaderProps, "itemsCount">
 
 export type CartHeaderActionsProps = CartHeaderProps;
 
 export interface CartItemHandlers {
     onIncrease: (_id: string) => void;
     onDecrease: (_id: string) => void;
-    onSubtotalChange: (_id: string, value: number) => void;
-    onQuantityChange: (_id: string, value: number) => void;
+    onItemDiscountChange: (_id: string, value: string) => void;
 }
 
 export interface CartLineItemProps extends CartItemHandlers {
@@ -239,8 +191,12 @@ export interface CartItemsListProps extends CartItemHandlers {
 
 export type CartSummaryCardProps = {
     onGenerateTicket?: () => void;
-    onBack: () => void;
     productsTotalPrice: number,
+    discountAmount: number,
+    globalDiscount: string,
+    onGlobalDiscountChange: (value: string) => void,
+    note: string,
+    onNoteChange: (value: string) => void,
     ivaPercentage: number,
     ivaAmount: number,
     total: number,
@@ -252,16 +208,19 @@ export interface CartPaymentMethodProps {
 
 export interface CartPaymentStatusProps extends CartPaymentMethodProps{};
 
-export type CartSellDataComponentProps = Pick<CartSummaryCardProps, 
+export type CartSellDataComponentProps = Pick<CartSummaryCardProps,
     'productsTotalPrice'|
+    'discountAmount'|
+    'globalDiscount'|
+    'onGlobalDiscountChange'|
+    'note'|
+    'onNoteChange'|
     'ivaPercentage'|
-    'ivaAmount'|
-    'total'
+    'ivaAmount'
 >;
 
 export interface CartSummaryFooterProps {
     total: number,
-    onBack: CartSummaryCardProps['onBack'];
     onGenerateTicket: CartSummaryCardProps['onGenerateTicket'];
 }
 
@@ -269,11 +228,32 @@ export type CartProductRowActionCellProps = {
     product: ProductTicketType;
 }
 
+export interface CartSectionLabelProps {
+    icon: ReactNode;
+    label: string;
+}
+
+export interface CartChipToggleGroupProps {
+    options: CartChipOption[];
+    value: string;
+    onChange: (value: string) => void;
+    ariaLabel: string;
+}
+
+export interface CartGlobalDiscountRowProps {
+    globalDiscount: string;
+    onGlobalDiscountChange: (value: string) => void;
+    discountAmount: number;
+}
+
+export interface CartNoteInputProps {
+    note: string;
+    onNoteChange: (value: string) => void;
+}
+
 export interface CartPriceRowProps {
-    label: string, 
-    value: string, 
-    valueColor?: (theme: Theme) => string, 
-    bold?: boolean,
+    label: string,
+    value: string,
 }
 
 export type SummaryItem = {

@@ -1,87 +1,51 @@
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { alpha, Box, Link, Typography, type Theme } from "@mui/material";
+import { Box, Button, Typography, type Theme } from "@mui/material";
 import { useTranslation } from 'react-i18next';
-import PrimaryButton from "../../../shared/components/Buttons/PrimaryButtonComponent";
 import type { ReactNode } from 'react';
 import type { CartSummaryFooterProps } from '@typings/cart/cartComponentTypes';
 import { CART_GENERATE_TICKET_BUTTON_ID } from '../../../../config/constants';
+import { formatCurrency } from '../../helpers/formatCurrency';
 
 
-const CartSummaryFooterComponent = ({ total, onBack, onGenerateTicket }: CartSummaryFooterProps): ReactNode => {
+const CartSummaryFooterComponent = ({ total, onGenerateTicket }: CartSummaryFooterProps): ReactNode => {
     const { t } = useTranslation();
-
-    if (total <= 0) return null;
+    const isEmpty = total <= 0;
 
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: { xs: 'center', sm: 'flex-end', md: 'center', lg: 'flex-end' },
-                gap: 2,
-                width: '100%',
-            }}
-        >
-            <Box
-                sx={(theme: Theme) => ({
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: 1,
-                    backgroundColor: alpha(theme?.palette?.primary?.main, 0.12),
-                    borderRadius: '0.8em',
-                    padding: '0.8em 1em',
-                    margin: "auto",
-                    width: { xs: '100%', lg: "15em" },
-                })}
-            >
-                <ShieldOutlinedIcon fontSize="small" sx={(theme: Theme) => ({ color: theme?.palette?.primary?.main, mt: '0.1em' })} />
-                <Typography
-                    sx={(theme: Theme) => ({
-                        color: theme?.custom?.fontColor,
-                        fontSize: theme?.typography?.caption?.fontSize,
-                    })}
-                >
-                    {t("cart.summary.footerNotice")}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
+            <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+                <Typography sx={(theme: Theme) => ({ fontSize: theme.typography?.body2?.fontSize, fontWeight: 600, color: theme.custom?.darkWhite })}>
+                    {t("cart.summary.total")}
+                </Typography>
+                <Typography sx={(theme: Theme) => ({ fontSize: "1.75rem", fontWeight: 700, letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums", color: theme.custom?.fontColor })}>
+                    {formatCurrency(total)}
                 </Typography>
             </Box>
 
-            <Box
-                sx={{
+            <Button
+                id={CART_GENERATE_TICKET_BUTTON_ID}
+                onClick={() => onGenerateTicket?.()}
+                disabled={isEmpty}
+                sx={(theme: Theme) => ({
                     display: 'flex',
-                    flexDirection: { xs: 'column-reverse', sm: 'row', md: 'column-reverse', lg: 'row' },
                     alignItems: 'center',
-                    justifyContent: { xs: 'center', sm: 'space-between', md: 'center', lg: 'space-between' },
-                    gap: 2,
-                    width: { xs: '100%' },
-                }}
+                    justifyContent: 'center',
+                    gap: '0.6em',
+                    width: '100%',
+                    padding: '0.8em 1em',
+                    borderRadius: '10px',
+                    textTransform: 'none',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.custom?.white,
+                    boxShadow: `0 4px 12px ${theme.palette.primary.main}48`,
+                    '&:hover': { backgroundColor: theme.palette.primary.dark },
+                    '&.Mui-disabled': { opacity: 0.45, color: theme.custom?.white },
+                })}
             >
-                <Link
-                    onClick={onBack}
-                    underline="hover"
-                    sx={(theme: Theme) => ({
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 0.5,
-                        color: theme?.custom?.translucidFontColor,
-                        cursor: 'pointer',
-                        fontSize: theme?.typography?.body2?.fontSize,
-                        whiteSpace: 'nowrap',
-                    })}
-                >
-                    <ArrowBackIcon fontSize="small" /> {t("cart.summary.backToProducts")}
-                </Link>
-
-                <PrimaryButton
-                    id={CART_GENERATE_TICKET_BUTTON_ID}
-                    buttonText={t("cart.summary.generateTicket")}
-                    buttonOnClick={() => onGenerateTicket?.()}
-                    buttonWidth={{ xs: '100%', sm: '15em', md: "100%", lg: '15em' }}
-                    marginTop="0"
-                    icon={<ReceiptLongIcon fontSize="small" />}
-                />
-            </Box>
+                {t("cart.summary.generateTicket")}
+                <Box component="span" sx={{ fontSize: '0.7rem', opacity: 0.8 }}>F9</Box>
+            </Button>
         </Box>
     )
 }

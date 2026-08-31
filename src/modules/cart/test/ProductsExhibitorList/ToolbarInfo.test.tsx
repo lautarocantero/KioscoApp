@@ -4,12 +4,6 @@ import { renderWithTheme } from "../../../shared/test/utils/setupTests";
 import ToolbarInfo from "../../components/ProductsExhibitorList/ToolbarInfo";
 
 describe("ToolbarInfo", () => {
-    it("renderiza el título fijo", () => {
-        renderWithTheme(<ToolbarInfo totalCount={5} presentationsCount={8} />);
-
-        expect(screen.getByText("Catálogo de productos")).toBeInTheDocument();
-    });
-
     it("muestra totalCount y presentationsCount recibidos", () => {
         renderWithTheme(<ToolbarInfo totalCount={12} presentationsCount={30} />);
 

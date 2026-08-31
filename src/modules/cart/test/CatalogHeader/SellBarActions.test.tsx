@@ -3,16 +3,13 @@ import { render, screen } from "@testing-library/react";
 import SellBarActions from "../../components/CatalogHeader/SellBarActions";
 import { useSellbar } from "@hooks/cart/useSellBar";
 import { usePresentationSearch } from "@hooks/cart/usePresentationSearch";
-import type { BarcodeButtonComponentProps, CartButtonComponentProps, PresentationSearchBarProps } from "@typings/cart/cartComponentTypes";
+import type { BarcodeButtonComponentProps, PresentationSearchBarProps } from "@typings/cart/cartComponentTypes";
 
 vi.mock("@hooks/cart/useSellBar");
 vi.mock("@hooks/cart/usePresentationSearch");
 
 vi.mock("../../components/CatalogHeader/BarcodeButtonComponent", () => ({
   default: (props: BarcodeButtonComponentProps) => <div data-testid="barcode-btn">{JSON.stringify(!!props.barcode)}</div>,
-}));
-vi.mock("../../components/CatalogHeader/CartButtonComponent", () => ({
-  default: (props: CartButtonComponentProps) => <div data-testid="cart-btn">{JSON.stringify(!!props.cart)}</div>,
 }));
 vi.mock("../../components/CatalogHeader/PresentationSearchBar", () => ({
   default: (props: PresentationSearchBarProps) => <div data-testid="presentation-search-bar">{JSON.stringify(!!props.search)}</div>,
@@ -32,7 +29,6 @@ describe("SellBarActions", () => {
         onChange: vi.fn(),
         onKeyDown: vi.fn(),
       },
-      cart: { count: 0, goToCart: vi.fn() },
     });
 
     mockedUsePresentationSearch.mockReturnValue({
@@ -48,10 +44,9 @@ describe("SellBarActions", () => {
     });
   });
 
-  it("renderiza el buscador de presentaciones, el escáner y el botón de carrito", () => {
+  it("renderiza el buscador de presentaciones y el escáner", () => {
     render(<SellBarActions />);
     expect(screen.getByTestId("presentation-search-bar")).toHaveTextContent("true");
     expect(screen.getByTestId("barcode-btn")).toHaveTextContent("true");
-    expect(screen.getByTestId("cart-btn")).toHaveTextContent("true");
   });
 });
