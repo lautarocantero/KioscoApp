@@ -19,7 +19,8 @@
     "electron:dev": "ELECTRON=1 vite",
     "electron:build": "tsc -b && ELECTRON=1 vite build && electron-builder",
     "debug-mode": "/snap/bin/chromium --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug --no-first-run --disable-extensions",
-    "seed:test-data": "node scripts/seed-test-data/index.mjs"
+    "seed:test-data": "node scripts/seed-test-data/index.mjs",
+    "seed:full-demo": "node scripts/seed-test-data/fullDemo.mjs"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-rc.0",

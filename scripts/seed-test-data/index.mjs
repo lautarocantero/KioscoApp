@@ -4,6 +4,10 @@
 // real con qué probar /new-sell (o cualquier otra pantalla) sin tocar datos
 // existentes de dev ni de producción.
 //
+// Para un demo más completo (plan, rol, varios kioscos/vendedores, ventas
+// artificiales) ver fullDemo.mjs — este script es la versión liviana:
+// 1 cuenta + 1 kiosco + catálogo.
+//
 // Uso:
 //   node scripts/seed-test-data/index.mjs --env=dev
 //   node scripts/seed-test-data/index.mjs --env=prod --yes-production
@@ -17,10 +21,13 @@
 import { ApiClient } from "./apiClient.mjs";
 import { buildSampleCatalog } from "./sampleCatalog.mjs";
 import { loadFileCatalog } from "./fileCatalog.mjs";
+import { seedCatalog } from "./seedCatalog.mjs";
 
+// SEED_DEV_API_URL / SEED_PROD_API_URL permiten apuntar a otro puerto/host
+// sin tocar el código (o pasar --api-url= directamente).
 const ENV_API_URLS = {
-  dev: "http://localhost:3000",
-  prod: "https://kioscoappbackend.onrender.com",
+  dev: process.env.SEED_DEV_API_URL ?? "http://localhost:3000",
+  prod: process.env.SEED_PROD_API_URL ?? "https://kioscoappbackend.onrender.com",
 };
 
 const DEFAULT_FILE_CATALOG_LIMIT = 200;
@@ -65,6 +72,8 @@ const parseArgs = (argv) => {
 const printHelp = () => {
   console.log(`
 Crea cuenta + kiosco + catálogo de prueba pegándole a la API real.
+Para plan/rol/varios kioscos y vendedores/ventas artificiales, ver:
+  npm run seed:full-demo
 
 Opciones:
   --env=dev|prod         Backend a usar (dev=localhost:3000, prod=deploy real)
@@ -99,83 +108,6 @@ const isLocalHost = (url) => {
   return hostname === "localhost" || hostname === "127.0.0.1";
 };
 
-const createPresentationForm = ({ presentation, productId, timestamp }) => {
-  const form = new FormData();
-  const fields = {
-    name: presentation.name,
-    description: presentation.description ?? "",
-    brand: presentation.brand ?? "",
-    image_url: presentation.image_url ?? "",
-    product_id: productId,
-    sku: presentation.sku,
-    barcode: presentation.barcode ?? "",
-    model_type: presentation.model_type,
-    model_size: presentation.model_size,
-    model_unit: presentation.model_unit,
-    is_perishable: presentation.is_perishable ?? false,
-    sale_type: presentation.sale_type,
-    min_stock: presentation.min_stock,
-    stock: presentation.stock,
-    price: presentation.price,
-    expiration_date: presentation.expiration_date ?? "",
-    created_at: timestamp,
-    updated_at: timestamp,
-  };
-
-  for (const [key, value] of Object.entries(fields)) {
-    form.append(key, String(value));
-  }
-  for (const category of presentation.category ?? []) {
-    form.append("category", category);
-  }
-
-  return form;
-};
-
-// Pool de concurrencia mínimo: corre `worker` sobre `items` con a lo sumo
-// `concurrency` en simultáneo, sin abortar el resto si un item falla.
-const runPool = async (items, concurrency, worker) => {
-  const results = [];
-  let cursor = 0;
-
-  const runners = Array.from({ length: Math.min(concurrency, items.length) }, async () => {
-    while (cursor < items.length) {
-      const index = cursor;
-      cursor += 1;
-      try {
-        const value = await worker(items[index], index);
-        results[index] = { ok: true, value };
-      } catch (error) {
-        results[index] = { ok: false, error, item: items[index] };
-      }
-    }
-  });
-
-  await Promise.all(runners);
-  return results;
-};
-
-const createProductWithPresentations = async (client, product, timestamp) => {
-  const { _id: productId } = await client.postJson("/product/create-product", {
-    name: product.name,
-    description: product.description,
-    brand: product.brand,
-    image_url: "",
-    created_at: timestamp,
-    updated_at: timestamp,
-    presentations: [],
-  });
-
-  const createdPresentations = [];
-  for (const presentation of product.presentations) {
-    const form = createPresentationForm({ presentation, productId, timestamp });
-    const { _id: presentationId } = await client.postForm("/presentation/create-presentation", form);
-    createdPresentations.push({ id: presentationId, name: presentation.name });
-  }
-
-  return { id: productId, name: product.name, presentations: createdPresentations };
-};
-
 const loadCatalog = (args) => {
   if (args.catalog === "sample") {
     return { total: null, products: buildSampleCatalog(args.prefix) };
@@ -205,12 +137,10 @@ const seed = async (args) => {
     console.log(`→ Catálogo: ${catalog.products.length} de ${catalog.total} productos disponibles${args.all ? " (--all)" : ""}\n`);
   }
 
-  const timestamp = new Date().toISOString();
-  const runId = randomToken();
-  const email = args.email ?? `stocko.qa+${runId}@example.com`;
+  const email = args.email ?? `stocko.qa+${randomToken()}@example.com`;
   const password = args.password ?? generatePassword();
   const name = args.name ?? "QA Tester";
-  const kioscoName = args.kioscoName ?? `${args.prefix} Kiosco QA ${runId}`;
+  const kioscoName = args.kioscoName ?? `${args.prefix} Kiosco QA ${randomToken()}`;
 
   const client = new ApiClient(apiUrl);
 
@@ -235,19 +165,12 @@ const seed = async (args) => {
 
   console.log(`4/4 Cargando catálogo (${catalog.products.length} productos, concurrencia ${args.concurrency})...`);
 
-  let done = 0;
-  const results = await runPool(catalog.products, args.concurrency, async (product) => {
-    const created = await createProductWithPresentations(client, product, timestamp);
-    done += 1;
-    if (done % 25 === 0 || done === catalog.products.length) {
-      console.log(`   ... ${done}/${catalog.products.length}`);
-    }
-    return created;
+  const { succeeded, failed, presentations } = await seedCatalog(client, catalog.products, {
+    concurrency: args.concurrency,
+    onProgress: (done, total) => {
+      if (done % 25 === 0 || done === total) console.log(`   ... ${done}/${total}`);
+    },
   });
-
-  const succeeded = results.filter((r) => r.ok);
-  const failed = results.filter((r) => !r.ok);
-  const presentationCount = succeeded.reduce((sum, r) => sum + r.value.presentations.length, 0);
 
   console.log(`
 ✅ Listo. Datos de prueba creados en ${apiUrl}:
@@ -256,7 +179,7 @@ const seed = async (args) => {
   Password:    ${password}
   Kiosco:      ${kioscoName} (${kiosco._id})
   Productos:   ${succeeded.length} ok${failed.length ? `, ${failed.length} fallaron` : ""}
-  Presentaciones: ${presentationCount}
+  Presentaciones: ${presentations.length}
 
 Iniciá sesión con ese email/password en la app apuntando a este mismo backend.
 `);
