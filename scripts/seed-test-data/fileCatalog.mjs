@@ -2,6 +2,10 @@
 // al mismo shape que sampleCatalog.mjs (producto + [presentaciones]) — acá
 // cada fila del archivo de origen es un producto con una única presentación,
 // porque el POS de origen no agrupa variantes bajo un producto padre.
+//
+// El backend rechaza name/description/brand vacíos (Validation.stringValidation
+// los trata como "no provisto") — por eso product y presentation llevan
+// `description` no vacía, y el producto lleva `brand` no vacía.
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -21,11 +25,12 @@ const shuffle = (array) => {
 
 const toProductJob = (row, namePrefix) => ({
   name: namePrefix ? `${namePrefix} ${row.name}` : row.name,
-  description: "",
-  brand: "",
+  description: `${row.name} — categoría ${row.category}`,
+  brand: "Sin marca especificada",
   presentations: [
     {
       name: "Presentación única",
+      description: `Presentación única de ${row.name}`,
       sku: row.sku,
       barcode: row.barcode,
       model_type: "other",

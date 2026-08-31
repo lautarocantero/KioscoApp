@@ -168,7 +168,13 @@ const main = async () => {
     },
   });
   console.log(`   ✓ ${seededProducts.length}/${catalogProducts.length} productos (de ${catalogTotal} disponibles), ${presentations.length} presentaciones`);
-  if (failedProducts.length) console.log(`   ✗ ${failedProducts.length} productos fallaron`);
+  if (failedProducts.length) {
+    console.log(`   ✗ ${failedProducts.length} productos fallaron`);
+    for (const f of failedProducts.slice(0, 20)) {
+      console.log(`     - ${f.item.name}: ${f.error.message}`);
+    }
+    if (failedProducts.length > 20) console.log(`     ... y ${failedProducts.length - 20} más`);
+  }
 
   if (presentations.length === 0) {
     console.log("\n⚠️  No hay presentaciones creadas — no se pueden generar ventas artificiales. Termino acá.");
