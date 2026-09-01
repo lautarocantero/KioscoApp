@@ -227,13 +227,31 @@ export interface UseCartReturn {
     generateTicket: (formValues: CartFormValues) => Promise<void>;
     printTicket: () => void;
     handleClearCart: () => void;
-    goToNewSell: () => void;
     goToTicketDetail: () => void;
     handleIncreaseProduct: (_id: string) => void;
     handleDecreaseProduct: (_id: string) => void;
     handleItemDiscountChange: (_id: string, value: string) => void;
     handleGlobalDiscountChange: (value: string) => void;
     handleNoteChange: (value: string) => void;
+    isSaleConfirmedModalOpen: boolean;
+    saleConfirmedModalProgress: number;
+    saleConfirmedModalRemainingSeconds: number;
+    isSaleConfirmedModalPaused: boolean;
+    closeSaleConfirmedModal: () => void;
+    pauseSaleConfirmedModal: () => void;
+    resumeSaleConfirmedModal: () => void;
+}
+
+export interface UseSaleConfirmedModalReturn {
+    isOpen: boolean;
+    // 0..100, tiempo restante hasta el auto-cierre
+    progress: number;
+    remainingSeconds: number;
+    isPaused: boolean;
+    open: () => void;
+    close: () => void;
+    pause: () => void;
+    resume: () => void;
 }
 
 export interface CartChipOption {

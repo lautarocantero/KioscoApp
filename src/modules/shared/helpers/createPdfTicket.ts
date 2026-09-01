@@ -63,5 +63,11 @@ export const createPdfTicket = (ticket: SellTicketType): void => {
   const seller = ticket.seller_name.replace(/\s+/g, "_").toLowerCase();
   const time = new Date().toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" }).replace(":", "h");
 
+  // doc.save() dispara la descarga clickeando un <a> temporal, lo que le
+  // roba el foco a lo que el usuario tenía enfocado (ej. el buscador de
+  // productos) — lo restauramos después para que la descarga no interrumpa
+  // el flujo de venta.
+  const previouslyFocusedElement = document.activeElement as HTMLElement | null;
   doc.save(`comprobante_venta_${seller}_${time}_id:${ticket._id}.pdf`);
+  previouslyFocusedElement?.focus?.();
 };

@@ -17,6 +17,7 @@ export enum SettingsSectionEnum {
     AppearanceLanguage = "appearance-language",
     AppearanceFontSize = "appearance-font-size",
     MyShopCurrency = "my-shop-currency",
+    MyShopDownloadPdf = "my-shop-download-pdf",
     MembershipPlan = "membership-plan",
 };
 

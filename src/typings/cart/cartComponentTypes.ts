@@ -4,8 +4,7 @@ import type { CartChipOption, PresentationRow, UseCartBarResult, UsePresentation
 import type { GridColDef } from "@mui/x-data-grid";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { DialogVariantDataType, ProductTicketType, ProductTicketWithStockType, TicketSummaryType, UseProductsExhibitorResult } from "@typings/sells/sellTypes";
-import type { SvgIconProps, Theme } from "@mui/material";
-import type { ComponentType, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export interface PresentationSearchBarProps {
     search: UsePresentationSearchReturn;
@@ -256,22 +255,42 @@ export interface CartPriceRowProps {
     value: string,
 }
 
-export type SummaryItem = {
+export interface SaleConfirmedModalProps {
+    open: boolean;
+    progress: number;
+    remainingSeconds: number;
+    isPaused: boolean;
+    ticketSummary: TicketSummaryType | null;
+    onClose: () => void;
+    onPause: () => void;
+    onResume: () => void;
+    onPrintTicket: () => void;
+    goToTicketDetail: () => void;
+}
+
+export type SaleConfirmedModalHeaderProps = Pick<SaleConfirmedModalProps, 'onClose'>;
+
+export interface SaleConfirmedModalSummaryProps {
+    ticketSummary: TicketSummaryType;
+}
+
+export type SaleConfirmedModalActionsProps = Pick<SaleConfirmedModalProps,
+    'onPrintTicket' |
+    'goToTicketDetail' |
+    'remainingSeconds' |
+    'isPaused'
+>;
+
+export interface SaleConfirmedSummaryRow {
     id: string;
-    icon: ComponentType<SvgIconProps>;
-    iconColor: (theme: Theme) => string;
     label: string;
     value: string;
 }
 
-export interface TicketSummaryDetailsProps {
-    ticketSummary: TicketSummaryType | null;
-}
-
-export interface OrderConfirmedActionsProps {
-    onPrintTicket: () => void;
-    onNewSell: () => void;
-    goToTicketDetail: () => void;
+export interface SaleConfirmedSummaryFields {
+    formattedTotal: string;
+    formattedChange: string;
+    rows: SaleConfirmedSummaryRow[];
 }
 
 export interface ManualDownloadNoticeProps {

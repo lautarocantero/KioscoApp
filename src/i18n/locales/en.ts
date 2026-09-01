@@ -17,6 +17,7 @@ const en = {
       appearanceLanguage: "Language",
       appearanceFontSize: "Text size",
       myShopCurrency: "Currency",
+      myShopDownloadPdf: "Receipt downloads",
       membershipPlan: "Plan and billing",
     },
     account: {
@@ -91,6 +92,14 @@ const en = {
           xcd: "East Caribbean Dollar (XCD)",
           awg: "Aruban Florin (AWG)",
           ang: "Netherlands Antillean Guilder (ANG)",
+        },
+      },
+      downloadPdf: {
+        heading: "Receipt downloads",
+        description: "Choose whether the PDF receipt downloads automatically after each sale.",
+        options: {
+          enabled: "Download automatically",
+          disabled: "Don't download automatically",
         },
       },
     },
@@ -738,25 +747,26 @@ const en = {
       descriptionLine3: "browse our catalog and find what you need.",
     },
     orderConfirmed: {
-      imageAlt: "Order confirmed",
-      titlePrefix: "Your",
-      titleHighlight: "ticket",
-      titleSuffix: "has been created!",
-      subtitle: "Your sale has been registered successfully.",
-      savedNotice: {
-        title: "Ticket saved automatically",
-        subtitle: "You can print it or start a new sale.",
+      imageAlt: "Sale confirmed",
+      modal: {
+        title: "Sale registered!",
+        subtitle: "Ticket saved and stock updated",
+        closeAriaLabel: "Close",
       },
       summary: {
-        products: "Products",
         total: "Total",
-        paymentMethod: "Payment",
+        change: "Change",
+        ticketNumber: "Ticket #",
         date: "Date",
+        seller: "Seller",
       },
       actions: {
         printTicket: "Print ticket",
-        newSell: "+ New sale",
         viewDetail: "View ticket detail",
+      },
+      autoClose: {
+        countdown: "Closes automatically in {{seconds}}s",
+        paused: "Paused — mouse is over the modal",
       },
     },
     snackbar: {
