@@ -59,7 +59,7 @@ const SidebarSellButton = ({ isActive, onClick, variant = "rail" }: SidebarSellB
       >
         <Box
           component="img"
-          src={getPublicAssetUrl("images/logo/StocoLogoalt.png")}
+          src={getPublicAssetUrl("images/logo/StockoLogo.png")}
           alt=""
           sx={{ width: isFab ? 32 : 22, height: isFab ? 32 : 22, objectFit: "contain" }}
         />

@@ -1,5 +1,5 @@
 import { Box, Typography, type Theme } from "@mui/material";
-import stocoLogo from "../../../../../../../public/images/logo/StocoLogoalt.png";
+import stocoLogo from "../../../../../../../public/images/logo/StockoLogo.png";
 
 const StockoTitle = (): React.ReactNode => (
   <Box

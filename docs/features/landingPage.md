@@ -2,9 +2,12 @@
 
 ## Resumen
 
-Página pública (`/`) que ve cualquier visitante **no logueado** en `stocko.com`.
-Antes, `/` renderizaba directamente `LoginPage`; ahora `/` es una landing de
-producto y el login se movió a `/login`.
+Página pública (`/landing`) que ve cualquier visitante **no logueado** en
+`stocko.com` que llegue a ese link (campañas, redes, etc.). La raíz (`/`)
+ya no es la landing: para un visitante no logueado no coincide con ninguna
+ruta propia y cae en el catch-all de `AuthRoutes` (`path="*"`), que
+redirige a `/login` — así que `/` sigue siendo, en la práctica, la entrada
+directa a la app.
 
 Objetivo: presentar Stocko y ofrecer dos caminos claros:
 
@@ -20,14 +23,15 @@ Objetivo: presentar Stocko y ofrecer dos caminos claros:
 
 ## Rutas
 
-| Ruta      | Antes      | Ahora         |
-|-----------|------------|---------------|
-| `/`       | `LoginPage`| `LandingPage` |
-| `/login`  | (no existía)| `LoginPage`  |
+| Ruta        | Antes         | Ahora                              |
+|-------------|---------------|-------------------------------------|
+| `/`         | `LoginPage`   | sin match propio → redirige a `/login` (catch-all de `AuthRoutes`) |
+| `/landing`  | (no existía)  | `LandingPage`                      |
+| `/login`    | (no existía)  | `LoginPage`                        |
 
 `src/router/AppRouter.tsx` monta `LandingRoutes()` junto a `AuthRoutes()`
 cuando el usuario no está autenticado. `AuthRoutes` ya redirigía enlaces
-internos (ej. `CheckEmailContent`) a `/login`, así que este cambio también
+internos (ej. `CheckEmailContent`) a `/login`, así que ese cambio también
 corrige un link que antes no coincidía con ninguna ruta.
 
 ## Estructura
@@ -78,9 +82,18 @@ textura noisy que usan las bands — un `background-image` CSS tileado no
 se puede recortar a una forma curva, por eso el ruido se genera nativo
 dentro del propio SVG. Los ids de `clipPath`/`filter` se generan con
 `useId()` (sanitizado sin `:`) para que dos instancias en la misma página
-no se pisen. La imagen del Hero (`LandingHeroPreviewImage.tsx`) tiene una
-animación de flotación sutil (CSS `@keyframes`, vía `@emotion/react`),
-desactivada automáticamente con `prefers-reduced-motion: reduce`.
+no se pisen.
+
+`LandingHeroPreviewImage.tsx` muestra, sobre un halo radial (`theme.palette.primary.main`
+difuminado con `blur`), la captura del panel de Stocko
+(`images/backgroundImages/Stocko_representation.png`) con la mascota de
+Stocko superpuesta abajo a la izquierda (`LandingHeroMascotImage.tsx`,
+`images/stocko_images/stocko-mascot.png`, puramente decorativa,
+`aria-hidden`). Ambas imágenes son estáticas, sin animación.
+`LandingHeroContent.tsx` ya no tiene badge ni subtítulo: el título va
+seguido directo de `LandingHeroBenefits.tsx`, una lista de 4 beneficios
+(ícono de check + texto) que trae `getLandingHeroBenefits.ts`.
+`LandingHeroBadge.tsx` se eliminó por quedar sin uso.
 
 ### Bands de features: cada feature ocupa toda su sección con su color
 
@@ -98,17 +111,31 @@ sección (sin blanco de por medio) en vez de limitarse a una card.
 `getLandingFeatureBandNextFillColor.ts` resuelve, para cada índice, el
 color de la band siguiente (o el blanco de Download si es la última) que
 recibe el `LandingWaveDivider` al pie de cada band.
-`LandingFeatureShowcaseRow.tsx` quedó como layout de contenido puro (badge,
-título, bullets, media) sin fondo ni borde propios — el color vive en la
-band que lo envuelve. En pantallas md+ el título, subtítulo y bullets usan
-un tamaño de fuente algo mayor (`fontSize` en el `sx` de cada uno) que en
-mobile.
 
-`getLandingFeatureShowcase.ts` define las decoraciones (`mediaDecorations`)
-por feature: multiKiosco y sellsReports usan íconos temáticos propios
-(`kiosco.png`, `sells.png`, `reports.png`); productsStock y
-receiptsProviders siguen usando el par genérico de cajas
-(`2boxes.png`/`3boxes.png`).
+`LandingFeatureShowcaseRow.tsx` es puro layout apilado (una columna, sin
+fondo ni borde propios — el color vive en la band que lo envuelve) que
+compone, de arriba a abajo:
+
+1. `LandingFeatureShowcaseHeader.tsx` — badge + título + descripción + línea
+   de ahorro, en una fila que alterna de lado según `reverse` en md+ y se
+   apila en mobile. El badge (`LandingFeatureShowcaseBadge.tsx`, ej.
+   "Proveedores") es el título de la sección: se muestra grande, en el color
+   de acento de la feature y con opacidad baja, como un rótulo de fondo
+   antes del título real. `LandingFeatureShowcaseSaves.tsx` sólo dibuja la
+   línea "Te ahorra: …", con el ícono y el texto en `theme.palette.success.main`.
+2. `LandingFeatureShowcaseMedia.tsx` — el video a todo el ancho del
+   contenedor (ya no comparte fila con el texto), sin más decoración que
+   `LandingFeatureShowcaseMediaWatermark.tsx` (el isotipo de Stocko, fijo
+   abajo a la derecha del marco).
+3. `LandingFeatureShowcaseItems.tsx` — grilla de 3 columnas (1 en mobile)
+   de `LandingFeatureShowcaseItemCard.tsx` (ícono + label + detail); es el
+   reemplazo del viejo listado de bullets. Cada `LandingFeatureShowcaseItem`
+   (en `landingTypes.ts`) trae `items: LandingFeatureShowcaseGridItem[]`
+   con `labelKey`/`detailKey` propios y un `savesKey` para la línea de
+   ahorro del header. Igual que antes, si algún item trae `isClickable`
+   (hoy sólo "Permisos por rol" de multiKiosco) se renderiza como botón
+   accesible y dispara `RolesPermissionsDialog` — la lógica de abrir/cerrar
+   ese diálogo sigue viviendo en `LandingFeatureShowcaseRow.tsx`.
 
 ### Download/Recursos: cards de sistema operativo + botón del hero
 

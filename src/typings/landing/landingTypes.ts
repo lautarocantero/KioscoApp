@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import type { SvgIconProps } from "@mui/material";
-import type { LandingDecorationPosition, OperatingSystemEnum } from "./landingEnums";
+import type { OperatingSystemEnum } from "./landingEnums";
 
 export type LandingAccentKey = "violet" | "green" | "blue" | "orange" | "pink" | "gold";
 
@@ -30,11 +30,12 @@ export type DesktopDownloadTarget = {
   secondaryDownload?: DesktopDownloadTargetSecondaryDownload;
 };
 
-export type LandingFeatureShowcaseBullet = {
+export type LandingFeatureShowcaseGridItem = {
   Icon: ComponentType<SvgIconProps>;
   labelKey: string;
-  // Si está prendido, el bullet se resalta con el color de acento de la
-  // sección y dispara `onBulletClick` (ver LandingFeatureShowcaseBullets.tsx).
+  detailKey: string;
+  // Si está prendido, la card se resalta con el color de acento de la
+  // sección y dispara `onItemClick` (ver LandingFeatureShowcaseItems.tsx).
   // Hoy solo lo usa "Permisos por rol" para abrir RolesPermissionsDialog.
   isClickable?: boolean;
 };
@@ -45,14 +46,13 @@ export type LandingDownloadTrustPoint = {
   subtitleKey: string;
 };
 
+export type LandingHeroBenefit = {
+  labelKey: string;
+};
+
 export type LandingDotGridSide = "left" | "right";
 
 export type LandingResponsiveHeight = { xs: string; md: string };
-
-export type LandingMediaDecoration = {
-  src: string;
-  position: LandingDecorationPosition;
-};
 
 export type LandingFeatureShowcaseItem = {
   badgeKey: string;
@@ -60,9 +60,11 @@ export type LandingFeatureShowcaseItem = {
   titleHighlightKey: string;
   titleEndKey: string;
   subtitleKey: string;
+  // Texto de lo que esa feature le evita al usuario (ver
+  // LandingFeatureShowcaseSaves.tsx), interpolado en "landing.showcase.saves".
+  savesKey: string;
   accent: LandingAccentKey;
   mediaVideoSrc: string;
   mediaAltKey: string;
-  mediaDecorations: LandingMediaDecoration[];
-  bullets: LandingFeatureShowcaseBullet[];
+  items: LandingFeatureShowcaseGridItem[];
 };

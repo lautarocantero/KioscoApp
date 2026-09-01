@@ -18,7 +18,7 @@ describe("LandingFeatureShowcaseBand", () => {
       </ThemeProvider>
     );
 
-    expect(screen.getByRole("heading", { name: "Productos y stock siempre al día" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Cargás la mercadería una sola vez" })).toBeInTheDocument();
   });
 
   it("tiñe el fondo de toda la band (no solo una card) con el color de acento propio de cada feature", () => {

@@ -1,14 +1,14 @@
 import { Stack, Typography, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import LandingHeroBadge from "./LandingHeroBadge";
+import { getLandingHeroBenefits } from "../../../helpers/getLandingHeroBenefits";
+import LandingHeroBenefits from "./LandingHeroBenefits";
 
 const LandingHeroContent = (): React.ReactNode => {
   const { t } = useTranslation();
+  const benefits = getLandingHeroBenefits();
 
   return (
-    <Stack spacing={3} alignItems={{ xs: "center", md: "flex-start" }} sx={{ flex: 1, minWidth: 0 }}>
-      <LandingHeroBadge />
-
+    <Stack spacing={4} alignItems={{ xs: "center", md: "flex-start" }} sx={{ flex: 1, minWidth: 0 }}>
       <Typography
         component="h1"
         variant="h2"
@@ -16,7 +16,8 @@ const LandingHeroContent = (): React.ReactNode => {
           color: (theme: Theme) => theme?.custom?.white,
           fontWeight: 700,
           textAlign: { xs: "center", md: "left" },
-          fontSize: { xs: "2.25rem", md: "3.5rem" },
+          fontSize: { xs: "2.25rem", md: "3.6rem" },
+          lineHeight: 1.06,
         }}
       >
         {t("landing.hero.titleStart")}
@@ -26,24 +27,14 @@ const LandingHeroContent = (): React.ReactNode => {
           sx={{
             color: (theme: Theme) => theme?.custom?.accents?.gold,
             fontWeight: 800,
-            fontSize: { xs: "2.25rem", md: "3.5rem" },
+            fontSize: { xs: "2.25rem", md: "3.6rem" },
           }}
         >
           {t("landing.hero.titleHighlight")}
         </Typography>
       </Typography>
 
-      <Typography
-        variant="body1"
-        sx={{
-          color: (theme: Theme) => theme?.custom?.darkWhite,
-          textAlign: { xs: "center", md: "left" },
-          maxWidth: "480px",
-          fontSize: { xs: "1.1rem", md: "1.3rem" },
-        }}
-      >
-        {t("landing.hero.subtitle")}
-      </Typography>
+      <LandingHeroBenefits benefits={benefits} />
     </Stack>
   );
 };
