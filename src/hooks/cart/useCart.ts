@@ -5,8 +5,10 @@ import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { PaymentMethod, SellStatusEnum } from "../../typings/sells/sellsEnum";
 import { useCurrencyOption } from "../ui/useCurrencyOption";
+import { useDownloadPdfOption } from "../ui/useDownloadPdfOption";
+import { useSaleConfirmedModal } from "./useSaleConfirmedModal";
 import type { AppDispatch, RootState } from "../../store/cart/cartSlice";
-import { iva } from "../../config/constants";
+import { iva, SALE_CONFIRMED_MODAL_AUTO_CLOSE_MS, SELL_SEARCH_INPUT_ID } from "../../config/constants";
 import { createSellThunk } from "../../store/sell/sellsThunks";
 import { fetchNotificationsThunk } from "../../store/notification/notificationThunks";
 import { createPdfTicket } from "../../modules/shared/helpers/createPdfTicket";
@@ -19,6 +21,20 @@ import { calculateItemAmount, isWeightSaleType } from "../../modules/shared/help
 import { calculateCartTotals } from "../../modules/cart/helpers/calculateCartTotals";
 import { sanitizePercentageInput } from "../../modules/cart/helpers/clampPercentage";
 
+const buildTicketSummary = (ticket: SellTicketType): TicketSummaryType => ({
+    sellId: ticket._id,
+    ticketNumber: ticket._id,
+    date: ticket.purchase_date,
+    total: ticket.total_amount,
+    productsCount: ticket.products.reduce(
+        (count, product) => count + (isWeightSaleType(product.sale_type) ? 1 : product.stock_required),
+        0
+    ),
+    paymentMethod: ticket.payment_method,
+    sellerName: ticket.seller_name,
+    change: Math.max(0, (ticket.amount_paid ?? ticket.total_amount) - ticket.total_amount),
+});
+
 
 export const useCart = (showSnackBar: (message: string, severity: AlertColor) => void): UseCartReturn => {
     const { t } = useTranslation();
@@ -28,6 +44,17 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     const dispatch = useDispatch<AppDispatch>();
     const navigate: NavigateFunction = useNavigate();
     const { currency } = useCurrencyOption();
+    const { downloadPdfAfterSale } = useDownloadPdfOption();
+    const {
+        isOpen: isSaleConfirmedModalOpen,
+        progress: saleConfirmedModalProgress,
+        remainingSeconds: saleConfirmedModalRemainingSeconds,
+        isPaused: isSaleConfirmedModalPaused,
+        open: openSaleConfirmedModal,
+        close: closeSaleConfirmedModalTimer,
+        pause: pauseSaleConfirmedModal,
+        resume: resumeSaleConfirmedModal,
+    } = useSaleConfirmedModal(SALE_CONFIRMED_MODAL_AUTO_CLOSE_MS);
 
     const [ticketSummary, setTicketSummary] = useState<TicketSummaryType | null>(null);
 
@@ -92,19 +119,7 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         const ticketString: string | null = localStorage.getItem('last_ticket');
         if (!ticketString) return;
 
-        const ticket: SellTicketType = JSON.parse(ticketString);
-
-        setTicketSummary({
-            sellId: ticket._id,
-            ticketNumber: ticket._id,
-            date: ticket.purchase_date,
-            total: ticket.total_amount,
-            productsCount: ticket.products.reduce(
-                (count, product) => count + (isWeightSaleType(product.sale_type) ? 1 : product.stock_required),
-                0
-            ),
-            paymentMethod: ticket.payment_method,
-        });
+        setTicketSummary(buildTicketSummary(JSON.parse(ticketString)));
     }, []);
 
     const handleItemDiscountChange = useCallback((_id: string, value: string): void => {
@@ -159,19 +174,20 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
             const savedTicket: SellTicketType = { ...ticket, _id: response._id };
 
             localStorage.setItem('last_ticket', JSON.stringify(savedTicket));
-            createPdfTicket(savedTicket);
+            if (downloadPdfAfterSale) createPdfTicket(savedTicket);
             // El back crea la notificación de venta (y la de stock bajo si corresponde)
             // como efecto de create-sell; refrescamos acá para que el vendedor que
             // vendió la vea en la campana al toque, sin esperar al polling.
             void dispatch(fetchNotificationsThunk());
             await dispatch(cleanCartThunk());
             resetDiscountsAndNote();
-            navigate('/cart-order-confirmed');
+            setTicketSummary(buildTicketSummary(savedTicket));
+            openSaleConfirmedModal();
         } catch (error) {
             const message = await parseApiError(error, t("cart.snackbar.createSellFailed"));
             showSnackBar(message, AlertColor.Error);
         }
-    }, [cartWithSubtotals, totals.net, ivaPercentage, total, currency, dispatch, navigate, showSnackBar, t, resetDiscountsAndNote, _id, name]);
+    }, [cartWithSubtotals, totals.net, ivaPercentage, total, currency, dispatch, downloadPdfAfterSale, openSaleConfirmedModal, showSnackBar, t, resetDiscountsAndNote, _id, name]);
 
     const printTicket = useCallback((): void => {
         const ticketString: string | null = localStorage.getItem('last_ticket');
@@ -179,6 +195,13 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         const ticket: SellTicketType = JSON.parse(ticketString);
         createPdfTicket(ticket);
     }, []);
+
+    // Al cerrar el modal de venta confirmada, el foco vuelve al buscador de
+    // productos para poder empezar la próxima venta sin tocar el mouse.
+    const closeSaleConfirmedModal = useCallback((): void => {
+        closeSaleConfirmedModalTimer();
+        document.getElementById(SELL_SEARCH_INPUT_ID)?.focus();
+    }, [closeSaleConfirmedModalTimer]);
 
     const handleClearCart = useCallback((): void => {
         dispatch(cleanCartThunk());
@@ -192,10 +215,6 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
     const handleIncreaseProduct = useCallback((_id: string): void => {
         dispatch(addOneUnitThunk({ _id }));
     }, [dispatch]);
-
-    const goToNewSell = useCallback((): void => {
-        navigate('/new-sell');
-    }, [navigate]);
 
     const goToTicketDetail = useCallback((): void => {
         if (!ticketSummary) return;
@@ -217,11 +236,17 @@ export const useCart = (showSnackBar: (message: string, severity: AlertColor) =>
         generateTicket,
         printTicket,
         handleClearCart,
-        goToNewSell,
         goToTicketDetail,
         handleIncreaseProduct,
         handleDecreaseProduct,
         handleItemDiscountChange,
+        isSaleConfirmedModalOpen,
+        saleConfirmedModalProgress,
+        saleConfirmedModalRemainingSeconds,
+        isSaleConfirmedModalPaused,
+        closeSaleConfirmedModal,
+        pauseSaleConfirmedModal,
+        resumeSaleConfirmedModal,
         handleGlobalDiscountChange,
         handleNoteChange,
     };

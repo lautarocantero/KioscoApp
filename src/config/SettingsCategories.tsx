@@ -11,6 +11,7 @@ import AppearanceModeSection from "../modules/shared/components/SettingsModal/se
 import AppearanceLanguageSection from "../modules/shared/components/SettingsModal/sections/AppearanceLanguageSection";
 import AppearanceFontSizeSection from "../modules/shared/components/SettingsModal/sections/AppearanceFontSizeSection";
 import MyShopCurrencySection from "../modules/shared/components/SettingsModal/sections/MyShopCurrencySection";
+import MyShopDownloadPdfSection from "../modules/shared/components/SettingsModal/sections/MyShopDownloadPdfSection";
 import MembershipSection from "../modules/shared/components/SettingsModal/sections/MembershipSection";
 
 // `label`/`sections[].label` son claves de traducción ("settings.categories.*",
@@ -42,6 +43,7 @@ export const SETTINGS_CATEGORIES: SettingsCategoryDefinition[] = [
     icon: <StorefrontOutlinedIcon fontSize="small" />,
     sections: [
       { id: SettingsSectionEnum.MyShopCurrency, label: "settings.sections.myShopCurrency" },
+      { id: SettingsSectionEnum.MyShopDownloadPdf, label: "settings.sections.myShopDownloadPdf" },
     ],
   },
   {
@@ -61,5 +63,6 @@ export const SETTINGS_SECTION_COMPONENTS: Record<SettingsSectionEnum, ComponentT
   [SettingsSectionEnum.AppearanceLanguage]: AppearanceLanguageSection,
   [SettingsSectionEnum.AppearanceFontSize]: AppearanceFontSizeSection,
   [SettingsSectionEnum.MyShopCurrency]: MyShopCurrencySection,
+  [SettingsSectionEnum.MyShopDownloadPdf]: MyShopDownloadPdfSection,
   [SettingsSectionEnum.MembershipPlan]: MembershipSection,
 };

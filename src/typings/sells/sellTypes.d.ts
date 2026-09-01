@@ -254,6 +254,9 @@ export type TicketSummaryType = {
     total: number;
     productsCount: number;
     paymentMethod: PaymentMethod;
+    sellerName: string;
+    // vuelto = amount_paid - total_amount (nunca negativo)
+    change: number;
 }
 
 

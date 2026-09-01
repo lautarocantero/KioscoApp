@@ -18,6 +18,9 @@ vi.mock("../../components/CartComponent/CartItemsList", () => ({
 vi.mock("../../components/CartComponent/CartSumaryCardComponent", () => ({
   default: () => <div data-testid="cart-summary-card" />,
 }));
+vi.mock("../../components/SaleConfirmed/SaleConfirmedModal", () => ({
+  default: () => <div data-testid="sale-confirmed-modal" />,
+}));
 
 const mockedUseCart = vi.mocked(useCart);
 
@@ -41,10 +44,16 @@ describe("CartComponent", () => {
       handleNoteChange: vi.fn(),
       ticketSummary: null,
       printTicket: vi.fn(),
-      goToNewSell: vi.fn(),
       goToTicketDetail: vi.fn(),
       totalUnits: 2,
       paymentMethodRef: { current: null },
+      isSaleConfirmedModalOpen: false,
+      saleConfirmedModalProgress: 100,
+      saleConfirmedModalRemainingSeconds: 4,
+      isSaleConfirmedModalPaused: false,
+      closeSaleConfirmedModal: vi.fn(),
+      pauseSaleConfirmedModal: vi.fn(),
+      resumeSaleConfirmedModal: vi.fn(),
     } as unknown as ReturnType<typeof useCart>);
 
     renderWithTheme(<CartComponent />);

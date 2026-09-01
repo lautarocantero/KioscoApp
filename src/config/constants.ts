@@ -34,6 +34,10 @@ export const iva = 0;
 
 export const CURRENCY_STORAGE_KEY = "shopCurrency";
 
+export const DOWNLOAD_PDF_AFTER_SALE_STORAGE_KEY = "downloadPdfAfterSale";
+
+export const DEFAULT_DOWNLOAD_PDF_AFTER_SALE = true;
+
 export const ACTIVE_KIOSCO_STORAGE_KEY = "activeKioscoId";
 
 export const PENDING_INVITE_CODE_STORAGE_KEY = "pendingInviteCode";
@@ -178,6 +182,10 @@ export const SELL_STATUS_OPTIONS: { value: SellStatusEnum }[] = [
 ];
 
 export const PRODUCTS_EXHIBITOR_ANCHOR_ID = "seller-products-exhibitor";
+
+// Tiempo que permanece abierto el modal de venta confirmada en /new-sell
+// antes de auto-cerrarse (se pausa mientras el mouse está encima).
+export const SALE_CONFIRMED_MODAL_AUTO_CLOSE_MS = 4000;
 
 // IDs de DOM usados por useSellShortcuts (atajos / F2 F9 de /new-sell) para
 // ubicar sus targets, mismo patrón que PRODUCTS_EXHIBITOR_ANCHOR_ID.

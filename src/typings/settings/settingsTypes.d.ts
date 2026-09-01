@@ -59,6 +59,11 @@ export interface UseCurrencyOptionReturn {
     setCurrency: (currency: Currency) => void;
 }
 
+export interface UseDownloadPdfOptionReturn {
+    downloadPdfAfterSale: boolean;
+    setDownloadPdfAfterSale: (downloadPdfAfterSale: boolean) => void;
+}
+
 export interface UseAccountPasswordFormReturn {
     formik: FormikProps<AccountPasswordFormValues>;
     isSubmitting: boolean;

@@ -8,6 +8,7 @@ import { PRODUCTS_EXHIBITOR_ANCHOR_ID } from "../../../../config/constants";
 import CartHeaderComponent from "../CartHeader/CartHeaderComponent";
 import CartItemsList from "./CartItemsList";
 import CartSummaryCardComponent from "./CartSumaryCardComponent";
+import SaleConfirmedModal from "../SaleConfirmed/SaleConfirmedModal";
 
 const CartComponent = (): ReactNode => {
     const { showSnackBar } = useContext(SnackBarContext)!;
@@ -22,12 +23,22 @@ const CartComponent = (): ReactNode => {
         ivaAmount,
         total,
         generateTicket,
+        printTicket,
         handleClearCart,
         handleIncreaseProduct,
         handleDecreaseProduct,
         handleItemDiscountChange,
         handleGlobalDiscountChange,
         handleNoteChange,
+        ticketSummary,
+        goToTicketDetail,
+        isSaleConfirmedModalOpen,
+        saleConfirmedModalProgress,
+        saleConfirmedModalRemainingSeconds,
+        isSaleConfirmedModalPaused,
+        closeSaleConfirmedModal,
+        pauseSaleConfirmedModal,
+        resumeSaleConfirmedModal,
     } = useCart(showSnackBar);
 
     const { initialValues, validationSchema } = useCartFormik(total);
@@ -99,6 +110,19 @@ const CartComponent = (): ReactNode => {
                     />
                 )}
             </Formik>
+
+            <SaleConfirmedModal
+                open={isSaleConfirmedModalOpen}
+                progress={saleConfirmedModalProgress}
+                remainingSeconds={saleConfirmedModalRemainingSeconds}
+                isPaused={isSaleConfirmedModalPaused}
+                ticketSummary={ticketSummary}
+                onClose={closeSaleConfirmedModal}
+                onPause={pauseSaleConfirmedModal}
+                onResume={resumeSaleConfirmedModal}
+                onPrintTicket={printTicket}
+                goToTicketDetail={goToTicketDetail}
+            />
         </Box>
     )
 };

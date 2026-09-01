@@ -17,6 +17,7 @@ const es = {
       appearanceLanguage: "Idioma",
       appearanceFontSize: "Tamaño del texto",
       myShopCurrency: "Moneda",
+      myShopDownloadPdf: "Descarga de comprobantes",
       membershipPlan: "Plan y facturación",
     },
     account: {
@@ -91,6 +92,14 @@ const es = {
           xcd: "Dólar del Caribe Oriental (XCD)",
           awg: "Florín arubeño (AWG)",
           ang: "Florín antillano neerlandés (ANG)",
+        },
+      },
+      downloadPdf: {
+        heading: "Descarga de comprobantes",
+        description: "Elegí si el comprobante en PDF se descarga automáticamente después de cada venta.",
+        options: {
+          enabled: "Descargar automáticamente",
+          disabled: "No descargar automáticamente",
         },
       },
     },
@@ -738,25 +747,26 @@ const es = {
       descriptionLine3: "explora nuestro catálogo y encuentra lo que necesitas.",
     },
     orderConfirmed: {
-      imageAlt: "Pedido confirmado",
-      titlePrefix: "¡Se ha creado tu",
-      titleHighlight: "ticket",
-      titleSuffix: "!",
-      subtitle: "Tu venta se ha registrado correctamente.",
-      savedNotice: {
-        title: "Ticket guardado automáticamente",
-        subtitle: "Puedes imprimirlo o iniciar una nueva venta.",
+      imageAlt: "Venta confirmada",
+      modal: {
+        title: "¡Venta registrada!",
+        subtitle: "Ticket guardado y stock actualizado",
+        closeAriaLabel: "Cerrar",
       },
       summary: {
-        products: "Productos",
         total: "Total",
-        paymentMethod: "Pago",
+        change: "Vuelto",
+        ticketNumber: "N° de ticket",
         date: "Fecha",
+        seller: "Vendedor",
       },
       actions: {
         printTicket: "Imprimir ticket",
-        newSell: "+ Nueva compra",
         viewDetail: "Ver detalle de ticket",
+      },
+      autoClose: {
+        countdown: "Se cierra solo en {{seconds}}s",
+        paused: "Pausado — el mouse está sobre el modal",
       },
     },
     snackbar: {
