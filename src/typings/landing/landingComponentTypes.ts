@@ -3,9 +3,9 @@ import type {
   LandingAccentKey,
   LandingDotGridSide,
   LandingDownloadTrustPoint,
-  LandingFeatureShowcaseBullet,
+  LandingFeatureShowcaseGridItem,
   LandingFeatureShowcaseItem,
-  LandingMediaDecoration,
+  LandingHeroBenefit,
   LandingNavLink,
   LandingResponsiveHeight,
 } from "./landingTypes";
@@ -24,21 +24,27 @@ export interface LandingFeatureShowcaseBadgeProps {
   accent: LandingAccentKey;
 }
 
-export interface LandingFeatureShowcaseBulletsProps {
-  bullets: LandingFeatureShowcaseBullet[];
+export interface LandingFeatureShowcaseItemsProps {
+  items: LandingFeatureShowcaseGridItem[];
   accent: LandingAccentKey;
-  onBulletClick?: () => void;
+  onItemClick?: () => void;
+}
+
+export interface LandingFeatureShowcaseItemCardProps extends Pick<LandingFeatureShowcaseGridItem, "Icon" | "isClickable"> {
+  label: string;
+  detail: string;
+  accent: LandingAccentKey;
+  onClick?: () => void;
+}
+
+export interface LandingFeatureShowcaseSavesProps {
+  text: string;
 }
 
 export interface LandingFeatureShowcaseMediaProps {
   alt: string;
   videoSrc: string;
   accentColor: string;
-  decorations?: LandingMediaDecoration[];
-}
-
-export interface LandingMediaDecorationImageProps {
-  decoration: LandingMediaDecoration;
 }
 
 export interface LandingFeatureShowcaseRowProps {
@@ -59,6 +65,10 @@ export interface LandingWaveDividerProps {
 
 export interface LandingDownloadTrustRowProps {
   points: LandingDownloadTrustPoint[];
+}
+
+export interface LandingHeroBenefitsProps {
+  benefits: LandingHeroBenefit[];
 }
 
 export interface LandingDotGridDecorationProps {

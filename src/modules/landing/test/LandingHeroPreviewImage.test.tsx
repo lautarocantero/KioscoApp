@@ -7,14 +7,16 @@ describe("LandingHeroPreviewImage", () => {
   it("renderiza la imagen de representación de Stocko con su alt descriptivo", () => {
     render(<LandingHeroPreviewImage />);
 
-    const image = screen.getByRole("img", { name: "Vista previa del panel de control de Stocko" });
+    const image = screen.getByRole("img", { name: "Panel de control de Stocko en una tableta" });
     expect(image).toHaveAttribute("src", "/images/backgroundImages/Stocko_representation.png");
   });
 
-  it("aplica una animación de flotación a la imagen", () => {
-    render(<LandingHeroPreviewImage />);
+  it("renderiza la mascota como decoración oculta a lectores de pantalla", () => {
+    const { container } = render(<LandingHeroPreviewImage />);
 
-    const image = screen.getByRole("img", { name: "Vista previa del panel de control de Stocko" });
-    expect(getComputedStyle(image).animation).toContain("infinite");
+    const mascot = container.querySelector('img[aria-hidden="true"]');
+    expect(mascot).toBeInTheDocument();
+    expect(mascot).toHaveAttribute("alt", "");
+    expect(mascot).toHaveAttribute("src", expect.stringContaining("stocko-mascot.png"));
   });
 });

@@ -1,15 +1,7 @@
 import { Box, type Theme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { keyframes } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 import { getPublicAssetUrl } from "../../../../shared/helpers/getPublicAssetUrl";
-
-// Vaivén sutil de flotación, como si la imagen ondeara — se desactiva
-// automáticamente si el usuario prefiere menos movimiento en pantalla.
-const floatKeyframes = keyframes`
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
-`;
+import LandingHeroMascotImage from "./LandingHeroMascotImage";
 
 const LandingHeroPreviewImage = (): React.ReactNode => {
   const { t } = useTranslation();
@@ -20,21 +12,10 @@ const LandingHeroPreviewImage = (): React.ReactNode => {
         aria-hidden="true"
         sx={{
           position: "absolute",
-          inset: "18%",
-          backgroundColor: (theme: Theme) => alpha(theme.palette.common.white, 0.08),
-          transform: "rotate(45deg)",
-          borderRadius: "24px",
-          pointerEvents: "none",
-        }}
-      />
-      <Box
-        aria-hidden="true"
-        sx={{
-          position: "absolute",
-          inset: "6%",
+          inset: "-4% 0 8% -6%",
           background: (theme: Theme) =>
-            `radial-gradient(ellipse 60% 55% at 50% 55%, ${theme.palette.primary.main}b3 0%, ${theme.palette.primary.main}59 45%, transparent 75%)`,
-          filter: "blur(30px)",
+            `radial-gradient(ellipse 58% 52% at 52% 50%, ${theme.palette.primary.main}cc 0%, ${theme.palette.primary.main}5c 46%, transparent 76%)`,
+          filter: "blur(34px)",
           pointerEvents: "none",
         }}
       />
@@ -44,14 +25,14 @@ const LandingHeroPreviewImage = (): React.ReactNode => {
         alt={t("landing.hero.previewAlt")}
         sx={{
           position: "relative",
+          zIndex: 1,
           width: "100%",
           height: "auto",
           display: "block",
           objectFit: "contain",
-          animation: `${floatKeyframes} 5s ease-in-out infinite`,
-          "@media (prefers-reduced-motion: reduce)": { animation: "none" },
         }}
       />
+      <LandingHeroMascotImage />
     </Box>
   );
 };

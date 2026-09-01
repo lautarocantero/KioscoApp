@@ -4,7 +4,7 @@ import { getPublicAssetUrl } from "../../../../shared/helpers/getPublicAssetUrl"
 const LandingBrandmark = (): React.ReactNode => (
   <Stack direction="row" alignItems="center" justifyContent={"center"} component="span" role="img" aria-label="Stocko">
     <img
-      src={getPublicAssetUrl("images/logo/StocoLogoalt.png")}
+      src={getPublicAssetUrl("images/logo/StockoLogo.png")}
       alt="Stocko"
       width={42}
       height={42}

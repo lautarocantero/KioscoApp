@@ -10,20 +10,23 @@ const productsStockItem = getLandingFeatureShowcase().find((item) => item.badgeK
 const multiKioscoItem = getLandingFeatureShowcase().find((item) => item.badgeKey.includes("multiKiosco"))!;
 
 describe("LandingFeatureShowcaseRow", () => {
-  it("renderiza el badge, el título completo, el subtítulo y los 3 bullets", () => {
+  it("renderiza el badge, el título completo, la descripción, el ahorro y los 3 items", () => {
     render(
       <ThemeProvider theme={darkTheme}>
         <LandingFeatureShowcaseRow item={productsStockItem} reverse={false} />
       </ThemeProvider>
     );
 
-    expect(screen.getByText("Todo tu inventario bajo control.")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Productos y stock siempre al día" })).toBeInTheDocument();
+    expect(screen.getByText("Stock")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Cargás la mercadería una sola vez" })).toBeInTheDocument();
     expect(
-      screen.getByText("Controlá tus productos, presentaciones y stock en tiempo real. Evitá faltantes y optimizá tus compras.")
+      screen.getByText(
+        "El stock se descuenta solo con cada venta y te avisa antes de que falte lo que más sale. Un mismo producto puede venderse por unidad, pack o caja."
+      )
     ).toBeInTheDocument();
-    expect(screen.getByText("Gestión de productos")).toBeInTheDocument();
-    expect(screen.getByText("Múltiples presentaciones")).toBeInTheDocument();
+    expect(screen.getByText("Te ahorra: Contar góndola y perder ventas por faltantes")).toBeInTheDocument();
+    expect(screen.getByText("Alta de productos en un minuto")).toBeInTheDocument();
+    expect(screen.getByText("Varias presentaciones")).toBeInTheDocument();
     expect(screen.getByText("Alertas de stock bajo")).toBeInTheDocument();
   });
 
@@ -38,19 +41,19 @@ describe("LandingFeatureShowcaseRow", () => {
     expect(video).toHaveAttribute("src", productsStockItem.mediaVideoSrc);
   });
 
-  it("no monta RolesPermissionsDialog en items sin bullets clickeables", () => {
+  it("no monta RolesPermissionsDialog en items sin cards clickeables", () => {
     render(
       <ThemeProvider theme={darkTheme}>
         <LandingFeatureShowcaseRow item={productsStockItem} reverse={false} />
       </ThemeProvider>
     );
 
-    fireEvent.click(screen.getByText("Gestión de productos"));
+    fireEvent.click(screen.getByText("Alta de productos en un minuto"));
 
     expect(screen.queryByText("Roles y permisos")).not.toBeInTheDocument();
   });
 
-  it("multi-kiosco: clickear el bullet 'Permisos por rol' abre RolesPermissionsDialog", () => {
+  it("multi-kiosco: clickear la card 'Permisos por rol' abre RolesPermissionsDialog", () => {
     render(
       <ThemeProvider theme={darkTheme}>
         <LandingFeatureShowcaseRow item={multiKioscoItem} reverse={false} />

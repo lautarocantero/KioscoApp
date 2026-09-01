@@ -5,7 +5,7 @@ import LandingPage from "../pages/LandingPage/LandingPage";
 const LandingRoutes = (): ReactNode => {
   return (
     <>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/landing" element={<LandingPage />} />
     </>
   );
 };

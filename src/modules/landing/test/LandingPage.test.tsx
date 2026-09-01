@@ -13,9 +13,10 @@ describe("LandingPage", () => {
     );
 
     expect(screen.getAllByRole("img", { name: "Stocko" }).length).toBeGreaterThan(0);
-    expect(screen.getByText("Ventas, productos, stock, proveedores y boletas. Todo tu negocio en un solo lugar.")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Productos y stock siempre al día" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Múltiples kioscos en un solo lugar" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Stock y ventas en un solo lugar" })).toBeInTheDocument();
+    expect(screen.getByText("El stock se actualiza solo con cada venta")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Cargás la mercadería una sola vez" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Varios kioscos, una sola cuenta" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Llevá Stocko a tu escritorio" })).toBeInTheDocument();
   });
 });

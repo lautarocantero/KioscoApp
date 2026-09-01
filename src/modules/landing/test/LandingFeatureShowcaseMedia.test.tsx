@@ -2,7 +2,6 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme } from "../../../theme/mainTheme";
-import { LandingDecorationPosition } from "@typings/landing/landingEnums";
 import LandingFeatureShowcaseMedia from "../pages/LandingPage/components/LandingFeatureShowcaseMedia";
 
 const VIDEO_SRC = "/files/video/film.mp4";
@@ -24,35 +23,15 @@ describe("LandingFeatureShowcaseMedia", () => {
     expect(video.loop).toBe(true);
   });
 
-  it("renderiza una decoración a cada lado cuando se pasan por parámetro", () => {
-    const { container } = render(
-      <ThemeProvider theme={darkTheme}>
-        <LandingFeatureShowcaseMedia
-          alt={ALT}
-          videoSrc={VIDEO_SRC}
-          accentColor={ACCENT_COLOR}
-          decorations={[
-            { src: "/images/icons/decoration/2boxes.png", position: LandingDecorationPosition.BottomLeft },
-            { src: "/images/icons/decoration/3boxes.png", position: LandingDecorationPosition.BottomRight },
-          ]}
-        />
-      </ThemeProvider>
-    );
-
-    const decorationImages = container.querySelectorAll('img[aria-hidden="true"]');
-    expect(decorationImages).toHaveLength(2);
-    expect(decorationImages[0]).toHaveAttribute("src", "/images/icons/decoration/2boxes.png");
-    expect(decorationImages[1]).toHaveAttribute("src", "/images/icons/decoration/3boxes.png");
-  });
-
-  it("no renderiza ninguna decoración si no se pasan", () => {
+  it("no renderiza ninguna decoración más allá de la marca de agua fija", () => {
     const { container } = render(
       <ThemeProvider theme={darkTheme}>
         <LandingFeatureShowcaseMedia alt={ALT} videoSrc={VIDEO_SRC} accentColor={ACCENT_COLOR} />
       </ThemeProvider>
     );
 
-    expect(container.querySelectorAll('img[aria-hidden="true"]')).toHaveLength(0);
+    expect(container.querySelectorAll('img[aria-hidden="true"]')).toHaveLength(1);
+    expect(container.querySelector('img[aria-hidden="true"]')).toHaveAttribute("src", expect.stringContaining("StocoLogoCircle.png"));
   });
 
   it("usa el accentColor recibido como color de borde del marco", () => {
