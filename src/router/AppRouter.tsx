@@ -17,7 +17,7 @@ import type { AppDispatch, RootState } from "../store/auth/authSlice";
 import { startCheckAuth } from "../store/auth/authThunks";
 import RouteTracker from "./RouteTracker";
 import AppShell from "../modules/shared/layout/AppShell";
-import LoadingSpinnerComponent from "../modules/shared/components/LoadingSpinner";
+import LoadingScreen from "../modules/shared/components/LoadingScreen/LoadingScreen";
 import { AuthStatus } from "@typings/auth/authEnums";
 import KioscoRoutes from "../modules/kiosco/routes/KioscoRoutes";
 import JoinKioscoPage from "../modules/kiosco/pages/JoinKioscoPage";
@@ -40,7 +40,7 @@ const AppRouter = (): React.ReactNode => {
   useHandlePendingInviteCode();
 
   if (status === AuthStatus.Checking) {
-    return <LoadingSpinnerComponent />; // o null, o un spinner
+    return <LoadingScreen />;
   }
 
   const hasActiveKiosco = myKioscos.some((k) => k._id === activeKioscoId);

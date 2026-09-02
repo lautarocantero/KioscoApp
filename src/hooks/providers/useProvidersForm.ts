@@ -84,5 +84,5 @@ export function useProviderEdit(): UseProviderEditReturn {
         }
     };
 
-    return { editingProvider, isLoadingProvider, isSubmitting, submitError, handleEdit };
+    return { providerId, editingProvider, isLoadingProvider, isSubmitting, submitError, handleEdit };
 }

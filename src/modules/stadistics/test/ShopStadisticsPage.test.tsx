@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { screen } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { act, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import ShopStadisticsPage from "../ShopStadisticsPage";
 import { useShopMonthlyReportDetail } from "../../../hooks/stadistics/useShopMonthlyReportDetail";
@@ -46,45 +46,65 @@ const buildReport = (overrides: Partial<MonthlyReportDetail> = {}): MonthlyRepor
 
 const renderPage = () => renderWithTheme(<MemoryRouter><ShopStadisticsPage /></MemoryRouter>);
 
+// useInitialPageLoading difiere su primer chequeo un tick (ver su doc) para
+// no cerrar el LoadingScreen antes de que el fetch real arranque. En estos
+// tests, al no haber una transición real de isLoading, alcanza con avanzar
+// timers falsos ese tick para que resuelva de forma determinística.
+const resolveInitialLoading = async () => {
+    await act(async () => {
+        vi.advanceTimersByTime(0);
+    });
+};
+
 describe("ShopStadisticsPage", () => {
     beforeEach(() => {
+        vi.useFakeTimers();
         vi.clearAllMocks();
         mockedUseActiveKiosco.mockReturnValue({ activeKiosco: { _id: "k1", name: "Kiosco Calle Fleming" } as never, isAdmin: true });
         mockedUseIsActiveKioscoAdmin.mockReturnValue(true);
         mockedUseShopMonthlyReportPdf.mockReturnValue({ isDownloadDisabled: false, handleDownload: vi.fn() });
     });
 
-    it("muestra el encabezado con el kiosco activo mientras carga", () => {
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    it("muestra el LoadingScreen mientras carga, sin adelantar el contenido del reporte", async () => {
         mockedUseShopMonthlyReportDetail.mockReturnValue({ report: null, isLoading: true, error: null });
 
         renderPage();
+        await resolveInitialLoading();
 
-        expect(screen.getByText(/Kiosco Calle Fleming/)).toBeInTheDocument();
+        expect(screen.getByRole("progressbar")).toBeInTheDocument();
+        expect(screen.queryByText(/Kiosco Calle Fleming/)).not.toBeInTheDocument();
         expect(screen.queryByText("Ventas del mes")).not.toBeInTheDocument();
     });
 
-    it("muestra los KPIs una vez cargado el reporte", () => {
+    it("muestra los KPIs una vez cargado el reporte", async () => {
         mockedUseShopMonthlyReportDetail.mockReturnValue({ report: buildReport(), isLoading: false, error: null });
 
         renderPage();
+        await resolveInitialLoading();
 
         expect(screen.getByText("Ventas del mes")).toBeInTheDocument();
         expect(screen.getByText("3.214")).toBeInTheDocument();
     });
 
-    it("muestra el mensaje de error si el reporte falla", () => {
+    it("muestra el mensaje de error si el reporte falla", async () => {
         mockedUseShopMonthlyReportDetail.mockReturnValue({ report: null, isLoading: false, error: "No se pudo obtener el detalle del reporte del mes" });
 
         renderPage();
+        await resolveInitialLoading();
 
         expect(screen.getAllByRole("alert")[0]).toHaveTextContent("No se pudo obtener el detalle del reporte del mes");
     });
 
-    it("vendedor (no admin): la sección de vendedores queda oculta detrás del aviso de permisos", () => {
+    it("vendedor (no admin): la sección de vendedores queda oculta detrás del aviso de permisos", async () => {
         mockedUseIsActiveKioscoAdmin.mockReturnValue(false);
         mockedUseShopMonthlyReportDetail.mockReturnValue({ report: buildReport(), isLoading: false, error: null });
 
         renderPage();
+        await resolveInitialLoading();
 
         expect(screen.getByText("Solo disponible para el administrador")).toBeInTheDocument();
     });

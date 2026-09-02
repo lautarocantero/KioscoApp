@@ -24,6 +24,9 @@ export const sellerSlice = createSlice({
         startLoadingSellers: (state: SellerSliceState) => {
             state.isLoading = true;
         },
+        stopLoadingSellers: (state: SellerSliceState) => {
+            state.isLoading = false;
+        },
         setSellers: (state: SellerSliceState, action: PayloadAction<SetSellersPayload>) => {
             state.sellers = action.payload.sellers;
             state.isLoading = false;
@@ -67,6 +70,7 @@ export const sellerSlice = createSlice({
 
 export const {
     startLoadingSellers,
+    stopLoadingSellers,
     setSellers,
     resetSellers,
     setSelectedSeller,

@@ -244,6 +244,7 @@ export function useProductEdit(): UseProductsEditFormReturn {
     };
 
     return {
+        productId,
         editingProduct,
         updatedProduct,
         isLoadingProduct,

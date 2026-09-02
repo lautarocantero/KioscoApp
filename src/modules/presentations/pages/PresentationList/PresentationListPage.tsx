@@ -7,6 +7,8 @@ import AppLayout from "../../../../modules/shared/layout/AppLayout";
 import DataTable from "../../../shared/components/DataTable/DataTable";
 import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
 import RestockDialog from "./components/RestockDialog";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 
 const PresentationListPage = (): React.ReactNode => {
@@ -32,7 +34,9 @@ const PresentationListPage = (): React.ReactNode => {
         handleRestockCancel,
         handleRestockConfirm,
     } = usePresentations();
+    const isPageLoading = useInitialPageLoading(loading, productId);
 
+    if (isPageLoading) return <LoadingScreen label="Cargando presentaciones..." />;
 
     return (
         <AppLayout fullWidth >

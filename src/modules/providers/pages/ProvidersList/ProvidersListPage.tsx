@@ -5,6 +5,8 @@ import DataTable from "../../../shared/components/DataTable/DataTable";
 import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useProviders } from "../../../../hooks/providers/useProviders";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 const ProvidersListPage = (): ReactNode => {
     const {
@@ -19,6 +21,9 @@ const ProvidersListPage = (): ReactNode => {
         setSearchTerm,
         columns,
     } = useProviders();
+    const isPageLoading = useInitialPageLoading(loading);
+
+    if (isPageLoading) return <LoadingScreen label="Cargando proveedores..." />;
 
     return (
         <AppLayout fullWidth>

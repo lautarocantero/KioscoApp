@@ -1,13 +1,15 @@
 import { Box, type Theme } from "@mui/material";
 import type { ReactNode } from "react";
 import { useJoinKioscoAccess } from "../../../hooks/kiosco/useJoinKioscoAccess";
-import LoadingSpinnerComponent from "../../shared/components/LoadingSpinner";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../shared/components/LoadingScreen/LoadingScreen";
 import JoinKioscoForm from "../components/JoinKioscoForm/JoinKioscoForm";
 
 const JoinKioscoPage = (): ReactNode => {
     const { isChecking } = useJoinKioscoAccess();
+    const isPageLoading = useInitialPageLoading(isChecking);
 
-    if (isChecking) return <LoadingSpinnerComponent />;
+    if (isPageLoading) return <LoadingScreen />;
 
     return (
         <Box

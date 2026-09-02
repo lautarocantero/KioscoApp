@@ -63,6 +63,7 @@ export const useSellEdit = () => {
     const handleBackToSells = () => navigate("/sells");
 
     return {
+        sellId,
         editingSell,
         isLoadingSell,
         isAdmin,

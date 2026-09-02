@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
-import SellerSkeleton from "./SellerSkeleton";
 import EmptySeller from "./EmptySeller";
 import { useSellerEdit } from "../../../../hooks/sellers/useSellersForm";
 import { useSellerData } from "../../../../hooks/sellers/useSellerData";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 import {
     getSellerEditInitialValues,
     sellerEditFormSchema,
@@ -18,9 +19,10 @@ const STEP_COMPONENTS = [SellerFormFirstStep];
 
 // ── Modo EDITAR ───────────────────────────────────────────────────────────────
 const SellerEditForm = (): React.ReactNode => {
-    const { editingSeller, isLoadingSeller, isSubmitting, submitError, handleEdit } = useSellerEdit();
+    const { sellerId, editingSeller, isLoadingSeller, isSubmitting, submitError, handleEdit } = useSellerEdit();
+    const isPageLoading = useInitialPageLoading(isLoadingSeller, sellerId);
 
-    if (isLoadingSeller) return <SellerSkeleton />;
+    if (isPageLoading) return <LoadingScreen label="Cargando vendedor..." fullViewport={false} />;
     if (!editingSeller) return <EmptySeller />;
 
     return (
@@ -60,8 +62,9 @@ const SellerEditForm = (): React.ReactNode => {
 const SellerDetailForm = (): React.ReactNode => {
     const { seller_id: sellerId } = useParams<{ seller_id: string }>();
     const { sellerData: viewingEntity, isLoading: isLoadingEntity } = useSellerData(sellerId);
+    const isPageLoading = useInitialPageLoading(isLoadingEntity, sellerId);
 
-    if (isLoadingEntity) return <SellerSkeleton />;
+    if (isPageLoading) return <LoadingScreen label="Cargando vendedor..." fullViewport={false} />;
     if (!viewingEntity) return <EmptySeller />;
 
     return (

@@ -10,6 +10,8 @@ import { getTableActionButtonSx } from "../../../shared/components/DataTable/get
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useProducts } from "../../../../hooks/products/useProducts";
 import { useShopRestockReport } from "../../../../hooks/shop/useShopRestockReport";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 const ProductsListPage = (): ReactNode => {
     const { t } = useTranslation();
@@ -26,6 +28,9 @@ const ProductsListPage = (): ReactNode => {
         columns,
     } = useProducts();
     const restockReport = useShopRestockReport();
+    const isPageLoading = useInitialPageLoading(loading);
+
+    if (isPageLoading) return <LoadingScreen label="Cargando productos..." />;
 
     return (
         <AppLayout fullWidth>

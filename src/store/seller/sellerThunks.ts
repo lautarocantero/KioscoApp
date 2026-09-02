@@ -3,6 +3,7 @@ import { handleError } from "../shared/handlerStoreError";
 import type { Seller, SellerWithRole, EditSellerPayload } from "../../typings/seller/sellerTypes";
 import {
     startLoadingSellers,
+    stopLoadingSellers,
     setSellers,
     resetSellers,
     setSelectedSeller,
@@ -44,10 +45,13 @@ export const fetchSellerByIdThunk = (_id: string) => {
             dispatch(setSellerError({ errorMessage: "No se ha proporcionado un _id." }));
             return;
         }
+        dispatch(startLoadingSellers());
         try {
             const sellers = await getSellerByIdRequest(_id);
+            dispatch(stopLoadingSellers());
             return sellers;
         } catch (error: unknown) {
+            dispatch(stopLoadingSellers());
             dispatch(setSellerError({ errorMessage: "No se pudo obtener el vendedor" }));
             handleError(error);
         }

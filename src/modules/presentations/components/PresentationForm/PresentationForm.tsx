@@ -21,8 +21,9 @@ import PresentationFormThirdStep from "./PresentationFormForthStep";
 import PresentationDetailFormComponent from "./PresentationDetailForm";
 import PresentationFormFourthStep from "./PresentationFormFifthStep";
 import PresentationFormProvidersStep from "./PresentationFormSixthStep";
-import PresentationSkeleton from "./PresentationSkeleton";
 import EmptyPresentation from "./EmptyPresentation";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 const STEP_COMPONENTS = [
     PresentationFormFirstStep,
@@ -106,6 +107,7 @@ const PresentationCreateForm = (): React.ReactNode => {
 const PresentationEditForm = (): React.ReactNode => {
     const { t } = useTranslation();
     const {
+        variantId,
         isLoadingEntity,
         editingVariant,
         updatedPresentation,
@@ -121,8 +123,9 @@ const PresentationEditForm = (): React.ReactNode => {
         handleBackToPresentations,
         handleBackToProducts,
     } = usePresentationEdit();
+    const isPageLoading = useInitialPageLoading(isLoadingEntity, variantId);
 
-    if (isLoadingEntity) return <PresentationSkeleton />;
+    if (isPageLoading) return <LoadingScreen label="Cargando presentación..." fullViewport={false} />;
     if (!editingVariant) return <EmptyPresentation />;
     if (updatedPresentation)  return <PresentationEdited updatedPresentation={updatedPresentation} handleSeeDetail={handleSeeDetail} handleBackToPresentations={handleBackToPresentations} handleBackToProducts={handleBackToProducts} />;
 
@@ -165,12 +168,14 @@ const PresentationEditForm = (): React.ReactNode => {
 // ── Modo DETALLE ─────────────────────────────────────────────────────────────
 const PresentationDetailForm = (): React.ReactNode => {
     const {
+        variantId,
         editingVariant: variant,
         isLoadingEntity,
         submitError,
     } = usePresentationEdit();
+    const isPageLoading = useInitialPageLoading(isLoadingEntity, variantId);
 
-    if (isLoadingEntity) return <PresentationSkeleton />;
+    if (isPageLoading) return <LoadingScreen label="Cargando presentación..." fullViewport={false} />;
     if (!variant) return <EmptyPresentation />;
 
     return (

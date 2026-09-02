@@ -171,6 +171,7 @@ export interface UseProductsFormReturn
 export interface UseProductsEditFormReturn
     extends Omit<UseFormStateBase<UpdatedProductInterface>, "createdProduct" | "setCreatedProduct">,
             UseFormStepsBase {
+    productId:         string | undefined;
     editingProduct:    ExistingProductInterface | null;
     updatedProduct:    UpdatedProductInterface | null;
     isLoadingProduct:  boolean;

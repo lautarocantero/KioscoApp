@@ -3,10 +3,15 @@ import { useTranslation } from "react-i18next";
 import AppLayout from "../../shared/layout/AppLayout";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
 import { useMembershipCheckoutResult } from "../../../hooks/membership/useMembershipCheckoutResult";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../shared/components/LoadingScreen/LoadingScreen";
 
 const MembershipCheckoutResultPage = (): React.ReactNode => {
     const { t } = useTranslation();
     const { status, loading, error, refetch, planName, isActive, isCancelled, goToShop } = useMembershipCheckoutResult();
+    const isPageLoading = useInitialPageLoading(loading);
+
+    if (isPageLoading) return <LoadingScreen label="Cargando estado del plan..." />;
 
     return (
         <AppLayout>

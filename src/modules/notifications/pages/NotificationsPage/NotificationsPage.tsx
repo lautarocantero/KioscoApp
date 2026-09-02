@@ -8,6 +8,8 @@ import TableIconHeader from "../../../shared/components/DataTable/TableIconHeade
 import TableFilterTabs from "../../../shared/components/DataTable/TableFilterTabs";
 import AppLayout from "../../../shared/layout/AppLayout";
 import ConfirmDialog from "../../../shared/components/ConfirmDialog/ConfirmDialog";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 import { useNotificationsPage } from "../../../../hooks/notifications/useNotificationsPage";
 import NotificationsPageActions from "./components/NotificationsPageActions";
 import { NOTIFICATION_FILTER_LABEL_KEYS, NOTIFICATION_FILTER_OPTIONS } from "../../helpers/notificationFilterOptions";
@@ -35,6 +37,9 @@ const NotificationsPage = (): ReactNode => {
         handleDeleteAllConfirm,
         handleMarkAllAsRead,
     } = useNotificationsPage();
+    const isPageLoading = useInitialPageLoading(loading);
+
+    if (isPageLoading) return <LoadingScreen label="Cargando notificaciones..." />;
 
     return (
         <AppLayout fullWidth>

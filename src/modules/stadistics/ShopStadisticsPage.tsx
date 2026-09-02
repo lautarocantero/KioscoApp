@@ -5,6 +5,8 @@ import { useActiveKiosco } from "../../hooks/kiosco/useActiveKiosco";
 import { useIsActiveKioscoAdmin } from "../../hooks/kiosco/useIsActiveKioscoAdmin";
 import { useShopMonthlyReportDetail } from "../../hooks/stadistics/useShopMonthlyReportDetail";
 import { useShopMonthlyReportPdf } from "../../hooks/stadistics/useShopMonthlyReportPdf";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../shared/components/LoadingScreen/LoadingScreen";
 import { ReportCompareWith } from "@typings/stadistics/stadisticsEnums";
 import { formatReportMonth } from "./helpers/formatReportMonth";
 import { buildMonthOptions } from "./helpers/buildMonthOptions";
@@ -36,6 +38,9 @@ const ShopStadisticsPage = (): React.ReactNode => {
     const { report, isLoading, error } = useShopMonthlyReportDetail(month, compareWith);
     const kioscoName = activeKiosco?.name ?? "";
     const pdf = useShopMonthlyReportPdf(report, kioscoName, isLoading);
+    const isPageLoading = useInitialPageLoading(isLoading);
+
+    if (isPageLoading) return <LoadingScreen label="Cargando reporte..." />;
 
     const monthOptions = buildMonthOptions(report?.meta.availableMonths ?? [month]);
     const monthLabel = report ? formatReportMonth(report.month) : monthKeyToLabel(month);

@@ -8,6 +8,8 @@ import AppLayout from "../../shared/layout/AppLayout";
 import BackButton from "../../shared/components/Buttons/BackButton";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
 import { useMembershipCheckoutPage } from "../../../hooks/membership/useMembershipCheckoutPage";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../shared/components/LoadingScreen/LoadingScreen";
 import { formatMembershipPrice } from "../helpers/formatMembershipPrice";
 import PaymentMethodRow from "../components/PaymentMethodRow";
 
@@ -15,6 +17,9 @@ const MembershipCheckoutPage = (): React.ReactNode => {
     const { t } = useTranslation();
     const { plan: planParam } = useParams<{ plan: string }>();
     const { plan, planDefinition, loading, error, isSubmitting, checkoutError, pay } = useMembershipCheckoutPage(planParam);
+    const isPageLoading = useInitialPageLoading(loading, planParam);
+
+    if (isPageLoading) return <LoadingScreen label="Cargando plan..." />;
 
     return (
         <AppLayout>

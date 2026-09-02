@@ -9,6 +9,8 @@ import TableIconHeader from "../../../shared/components/DataTable/TableIconHeade
 import TableFilterTabs from "../../../shared/components/DataTable/TableFilterTabs";
 import { getTableActionButtonSx } from "../../../shared/components/DataTable/getTableActionButtonSx";
 import AppLayout from "../../../shared/layout/AppLayout";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 import { useSells } from "../../../../hooks/sells/useSells";
 import type { Sell } from "@typings/sells/sellTypes";
 import { SellFilterEnum } from "@typings/sells/sellsEnum";
@@ -53,6 +55,9 @@ const SellsListPage = (): React.ReactNode => {
         partialsAlert,
         hasSellsInPeriod,
     } = useSells();
+    const isPageLoading = useInitialPageLoading(loading);
+
+    if (isPageLoading) return <LoadingScreen label="Cargando ventas..." />;
 
     return (
         <AppLayout fullWidth>

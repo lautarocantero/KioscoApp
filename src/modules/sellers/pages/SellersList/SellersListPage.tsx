@@ -6,6 +6,8 @@ import AppLayout from "../../../shared/layout/AppLayout";
 import { useSellers } from "../../../../hooks/sellers/useSellers";
 import type { Seller } from "@typings/seller/sellerTypes";
 import InviteSellerModal from "../../components/InviteSellerModal/InviteSellerModal";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 const SellersListPage = (): ReactNode => {
     const {
@@ -24,6 +26,9 @@ const SellersListPage = (): ReactNode => {
         openInviteModal,
         closeInviteModal,
     } = useSellers();
+    const isPageLoading = useInitialPageLoading(loading);
+
+    if (isPageLoading) return <LoadingScreen label="Cargando vendedores..." />;
 
     return (
         <AppLayout fullWidth>

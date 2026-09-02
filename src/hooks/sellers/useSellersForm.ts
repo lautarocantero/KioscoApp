@@ -53,6 +53,7 @@ export function useSellerEdit() {
     };
 
     return {
+        sellerId,
         editingSeller,
         isLoadingSeller,
         isSubmitting,

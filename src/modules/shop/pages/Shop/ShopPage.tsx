@@ -9,6 +9,9 @@ import { useShopInventorySummary } from "../../../../hooks/shop/useShopInventory
 import { useShopLowStockPresentations } from "../../../../hooks/shop/useShopLowStockPresentations";
 import { useShopRestockReport } from "../../../../hooks/shop/useShopRestockReport";
 import AppLayout from "../../../shared/layout/AppLayout";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import { combineLoadingFlags } from "../../../shared/helpers/combineLoadingFlags";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 import ShopHeader from "../../components/ShopHeader";
 import ShopStatsRow from "../../components/ShopStatsRow";
 import ShopSalesChart from "../../components/ShopSalesChart";
@@ -32,6 +35,16 @@ const ShopPage = (): React.ReactNode => {
     const inventorySummary = useShopInventorySummary();
     const lowStockPresentations = useShopLowStockPresentations();
     const restockReport = useShopRestockReport();
+    const isPageLoading = useInitialPageLoading(
+        combineLoadingFlags(
+            salesSummary.isLoading,
+            inventorySummary.isLoading,
+            lowStockPresentations.isLoading,
+            featuredProviders.isLoading
+        )
+    );
+
+    if (isPageLoading) return <LoadingScreen label="Cargando tienda..." />;
 
     return (
         <AppLayout fullWidth noCenter>

@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { FormModeComplexEnum } from "@typings/shared/sharedEnums";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
-import ProviderSkeleton from "./ProviderSkeleton";
 import EmptyProvider from "./EmptyProvider";
 import { useProviderCreate, useProviderEdit } from "../../../../hooks/providers/useProvidersForm";
 import { useProviderData } from "../../../../hooks/providers/useProviderData";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 import {
     getProviderEditInitialValues,
     getProviderFormInitialValues,
@@ -57,9 +58,10 @@ const ProviderCreateForm = (): React.ReactNode => {
 
 // ── Modo EDITAR ───────────────────────────────────────────────────────────────
 const ProviderEditForm = (): React.ReactNode => {
-    const { editingProvider, isLoadingProvider, isSubmitting, submitError, handleEdit } = useProviderEdit();
+    const { providerId, editingProvider, isLoadingProvider, isSubmitting, submitError, handleEdit } = useProviderEdit();
+    const isPageLoading = useInitialPageLoading(isLoadingProvider, providerId);
 
-    if (isLoadingProvider) return <ProviderSkeleton />;
+    if (isPageLoading) return <LoadingScreen label="Cargando proveedor..." fullViewport={false} />;
     if (!editingProvider) return <EmptyProvider />;
 
     return (
@@ -99,8 +101,9 @@ const ProviderEditForm = (): React.ReactNode => {
 const ProviderDetailForm = (): React.ReactNode => {
     const { provider_id: providerId } = useParams<{ provider_id: string }>();
     const { providerData: viewingEntity, isLoading: isLoadingEntity } = useProviderData(providerId);
+    const isPageLoading = useInitialPageLoading(isLoadingEntity, providerId);
 
-    if (isLoadingEntity) return <ProviderSkeleton />;
+    if (isPageLoading) return <LoadingScreen label="Cargando proveedor..." fullViewport={false} />;
     if (!viewingEntity) return <EmptyProvider />;
 
     return (

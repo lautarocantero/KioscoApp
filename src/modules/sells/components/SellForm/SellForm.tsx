@@ -6,13 +6,13 @@ import SellFormFirstStep from "./SellFormFirstStep";
 import { useParams } from "react-router-dom";
 import type { SellFormProps } from "@typings/sells/SellComponentTypes";
 import SellDetailFormComponent from "./SellDetailForm";
-import SellDetailSkeleton from "./SellDetailSkeleton";
 import EmptySellDetail from "./EmptySellDetail";
 import { getSellEditInitialValues, getSellEditFormSchema } from "../../schema/SellFormSchema";
 import { FormNavigationContext } from "../../../shared/context/FormNavigationContext";
 import ActualStepComponent from "../../../shared/components/FormCard/ActualStep";
 import { useSellDetail, useSellEdit } from "../../../../hooks/sells/useSellsForm";
-import LoadingSpinnerComponent from "../../../shared/components/LoadingSpinner";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 import NotEntityLoaded from "../../../shared/components/NoContent/NotEntityLoaded";
 import SellEdited from "../../pages/SellEdit/components/SellEdited";
 
@@ -24,6 +24,7 @@ const DETAIL_COMPONENTS = [SellDetailFormComponent];
 const SellEditForm = (): React.ReactNode => {
     const { t } = useTranslation();
     const {
+        sellId,
         editingSell,
         isLoadingSell,
         isAdmin,
@@ -39,9 +40,10 @@ const SellEditForm = (): React.ReactNode => {
         handleSeeDetail,
         handleBackToSells,
     } = useSellEdit();
+    const isPageLoading = useInitialPageLoading(isLoadingSell, sellId);
 
     if (!isAdmin) return <NotEntityLoaded fallbackText={t("permissions.adminOnly")} />;
-    if (isLoadingSell) return <LoadingSpinnerComponent />;
+    if (isPageLoading) return <LoadingScreen label="Cargando venta..." fullViewport={false} />;
     if (!editingSell) return <NotEntityLoaded error={submitError} fallbackText={t("sells.edit.loadError")} />;
     if (updatedSellId) return (
         <SellEdited handleSeeDetail={handleSeeDetail} handleBackToSells={handleBackToSells} />
@@ -86,8 +88,9 @@ const SellEditForm = (): React.ReactNode => {
 const SellDetailForm = (): React.ReactNode => {
     const { sell_id: sellId } = useParams<{ sell_id: string }>();
     const { viewingSell, isLoadingSell, error, handleSubmit } = useSellDetail(sellId);
+    const isPageLoading = useInitialPageLoading(isLoadingSell, sellId);
 
-    if (isLoadingSell) return <SellDetailSkeleton />;
+    if (isPageLoading) return <LoadingScreen label="Cargando venta..." fullViewport={false} />;
     if (!viewingSell) return <EmptySellDetail />;
 
     return (

@@ -3,6 +3,9 @@ import { useTranslation } from "react-i18next";
 import AppLayout from "../../shared/layout/AppLayout";
 import BackButton from "../../shared/components/Buttons/BackButton";
 import { useMembershipPlansPage } from "../../../hooks/membership/useMembershipPlansPage";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import { combineLoadingFlags } from "../../shared/helpers/combineLoadingFlags";
+import LoadingScreen from "../../shared/components/LoadingScreen/LoadingScreen";
 import MembershipCurrentPlanSummary from "../components/MembershipCurrentPlanSummary";
 import MembershipPlanCard from "../components/MembershipPlanCard";
 import MembershipPlanCardSkeleton from "../components/MembershipPlanCardSkeleton";
@@ -10,6 +13,9 @@ import MembershipPlanCardSkeleton from "../components/MembershipPlanCardSkeleton
 const MembershipPlansPage = (): React.ReactNode => {
     const { t } = useTranslation();
     const { status, statusLoading, statusError, plans, plansLoading, plansError, selectPlan, isPlanCurrent } = useMembershipPlansPage();
+    const isPageLoading = useInitialPageLoading(combineLoadingFlags(statusLoading, plansLoading));
+
+    if (isPageLoading) return <LoadingScreen label="Cargando planes..." />;
 
     return (
         <AppLayout fullWidth>

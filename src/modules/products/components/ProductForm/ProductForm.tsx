@@ -17,8 +17,9 @@ import {
     getProductFormSchema,
 } from "../../schema/ProductFormSchema";
 import ProductFormFirstStep from "./ProductFormFirstStep";
-import ProductSkeleton from "./ProductSkeleton";
 import EmptyProduct from "./EmptyProduct";
+import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 const STEP_COMPONENTS = [ProductFormFirstStep];
 
@@ -93,6 +94,7 @@ const ProductCreateForm = (): React.ReactNode => {
 const ProductEditForm = (): React.ReactNode => {
     const { t } = useTranslation();
     const {
+        productId,
         updatedProduct,
         editingProduct,
         handleEdit,
@@ -107,8 +109,9 @@ const ProductEditForm = (): React.ReactNode => {
         handleSeeDetail,
         handleBackToProducts,
     } = useProductEdit();
+    const isPageLoading = useInitialPageLoading(isLoadingProduct, productId);
 
-    if (isLoadingProduct) return <ProductSkeleton />;
+    if (isPageLoading) return <LoadingScreen label="Cargando producto..." fullViewport={false} />;
     if (!editingProduct) return <EmptyProduct />;
     if (updatedProduct) return (
         <ProductEdited updatedProduct={updatedProduct} handleSeeDetail={handleSeeDetail}  handleBackToProducts={handleBackToProducts} />)
@@ -157,8 +160,9 @@ const ProductDetailForm = (): React.ReactNode => {
         isLoading: isLoadingEntity,
         error: loadError,
     } = useProductData(productId);
+    const isPageLoading = useInitialPageLoading(isLoadingEntity, productId);
 
-    if (isLoadingEntity) return <ProductSkeleton />;
+    if (isPageLoading) return <LoadingScreen label="Cargando producto..." fullViewport={false} />;
     if (!viewingEntity) return <EmptyProduct />;
 
     return (

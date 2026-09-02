@@ -80,6 +80,7 @@ export interface UseProviderCreateReturn {
 }
 
 export interface UseProviderEditReturn {
+    providerId:         string | undefined;
     editingProvider:    Provider | null;
     isLoadingProvider:  boolean;
     isSubmitting:       boolean;
