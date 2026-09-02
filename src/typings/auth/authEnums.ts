@@ -30,3 +30,8 @@ export enum AuthBrandVideoPhaseEnum {
   Fading = 'fading',
   Done = 'done',
 }
+
+export enum AuthPageModeEnum {
+  Login = 'login',
+  Register = 'register',
+}

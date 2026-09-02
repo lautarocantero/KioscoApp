@@ -1,5 +1,4 @@
 import { Navigate, Route } from "react-router-dom"
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import VerificationPage from "./pages/VerificationPage/VerificationPage";
 import CheckEmailPage from "./pages/CheckEmailPage/CheckEmailPage";
@@ -12,7 +11,11 @@ const AuthRoutes = ():React.ReactNode => {
     return (
         <>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            {/* Login y registro son un único componente/ruta (LoginPage, alternado
+                por ?mode=register) para que AuthLayout no se remonte al cambiar de
+                formulario. "/register" se conserva como alias por los links externos
+                que ya apuntan ahí (landing, useJoinKioscoAccess, etc). */}
+            <Route path="/register" element={<Navigate to="/login?mode=register" replace />} />
             <Route path="/check-email" element={<CheckEmailPage />} />
             <Route path="/verify-email" element={<VerificationPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />

@@ -4,7 +4,7 @@
 
 import type { FormikProps } from "formik";
 import type { checkingCredentials, login, logout } from "../../store/auth/authSlice";
-import type { AuthBrandVideoPhaseEnum, ResetPasswordStatusEnum, VerifyEmailStatusEnum } from "./authEnums";
+import type { AuthBrandVideoPhaseEnum, AuthPageModeEnum, ResetPasswordStatusEnum, VerifyEmailStatusEnum } from "./authEnums";
 
 // El rol ya no vive en Auth: es por-kiosco (ver @typings/kioscoMembership en
 // el back, y KioscoWithStats.role en el front). Auth solo guarda identidad.
@@ -213,6 +213,10 @@ export interface UseAuthBrandVideoReturn {
     phase: AuthBrandVideoPhaseEnum;
     handleVideoEnded: () => void;
     handleVideoContextMenu: (event: React.MouseEvent<HTMLVideoElement>) => void;
+}
+
+export interface UseAuthPageModeReturn {
+    mode: AuthPageModeEnum;
 }
 
 /*══════════════════════════════════════════════════════════════════════╗

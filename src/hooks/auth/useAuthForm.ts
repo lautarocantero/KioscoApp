@@ -68,7 +68,12 @@ export function useLoginForm(): UseLoginFormReturn {
         validationSchema: loginFormSchema,
     });
 
-    const handleGoToRegister = () => navigate("/register");
+    // "/login?mode=register", no "/register": ambos formularios viven en la
+    // misma página/ruta (/login) para que AuthLayout no se remonte al
+    // alternar entre login y registro (ver useAuthPageMode). Navegar a
+    // "/register" haría un viaje de ida y vuelta por el redirect de
+    // AuthRoutes, remontando el panel de marca y reiniciando el video.
+    const handleGoToRegister = () => navigate("/login?mode=register");
     const handleGoToForgotPassword = () => navigate("/forgot-password");
 
     return {

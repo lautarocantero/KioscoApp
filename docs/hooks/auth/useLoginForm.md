@@ -57,6 +57,7 @@ function LoginForm() {
 ## ✨ Beneficios
 
 - 🔐 **Dispatch centralizado**: el componente nunca llama a `startLoginWithEmailPassword` directamente.
-- 🧹 **Limpia el error de auth al montar**, para no arrastrar mensajes de un intento anterior (por ejemplo, al volver de `/register`).
+- 🧹 **Limpia el error de auth al montar**, para no arrastrar mensajes de un intento anterior (por ejemplo, al volver de crear cuenta).
 - 🚦 **`isSubmitting` explícito** para deshabilitar el botón mientras el login está en curso.
-- 🧭 **Navegación desacoplada de la UI**: redirige a `/home` tras un login exitoso sin que `LoginForm` conozca `useNavigate`.
+- 🧭 **Navegación desacoplada de la UI**: redirige a `/shop` tras un login exitoso sin que `LoginForm` conozca `useNavigate`.
+- ⚠️ **`handleGoToRegister` navega a `/login?mode=register`, no a `/register`**: login y registro son la misma página/ruta (`LoginPage`, ver [`useAuthPageMode`](./useAuthPageMode.md)), así que cambiar de modo solo actualiza el query param en vez de montar una ruta nueva — esto evita que [`AuthBrandPanel`](../../components/AuthBrandPanel.md) (y su video de intro) se remonte al alternar entre login y registro.
