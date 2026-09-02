@@ -1,15 +1,20 @@
 import { Box, Typography, type Theme } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import type { AuthBrandPanelProps } from "@typings/auth/authComponentTypes";
-import { useAuthBrandVideo } from "@hooks/auth/useAuthBrandVideo";
+import { AuthBrandVideoPhaseEnum } from "@typings/auth/authEnums";
+import { FADE_TRANSITION_MS, useAuthBrandVideo } from "@hooks/auth/useAuthBrandVideo";
 import { getNoisyBackgroundSx } from "../../../shared/components/NoisyBackground/NoisyBackground";
 import { getAuthBrandLogoUrl } from "../../helpers/getAuthBrandLogoUrl";
 import AuthBrandVideo from "./AuthBrandVideo";
 
+const LOGO_FADE_TRANSITION = `opacity ${FADE_TRANSITION_MS}ms ease`;
+
 const AuthBrandPanel = ({ tagline }: AuthBrandPanelProps): React.ReactNode => {
   const theme = useTheme();
   const logoUrl = getAuthBrandLogoUrl(theme.palette.mode);
-  const { hasEnded, handleVideoEnded, handleVideoContextMenu } = useAuthBrandVideo();
+  const { phase, handleVideoEnded, handleVideoContextMenu } = useAuthBrandVideo();
+  const isVideoVisible = phase !== AuthBrandVideoPhaseEnum.Done;
+  const isLogoVisible = phase === AuthBrandVideoPhaseEnum.Fading || phase === AuthBrandVideoPhaseEnum.Done;
 
   return (
     <Box
@@ -27,7 +32,13 @@ const AuthBrandPanel = ({ tagline }: AuthBrandPanelProps): React.ReactNode => {
         userSelect: "none",
       })}
     >
-      {!hasEnded && <AuthBrandVideo onEnded={handleVideoEnded} onContextMenu={handleVideoContextMenu} />}
+      {isVideoVisible && (
+        <AuthBrandVideo
+          isFading={phase === AuthBrandVideoPhaseEnum.Fading}
+          onEnded={handleVideoEnded}
+          onContextMenu={handleVideoContextMenu}
+        />
+      )}
 
       <Box
         sx={{
@@ -70,6 +81,8 @@ const AuthBrandPanel = ({ tagline }: AuthBrandPanelProps): React.ReactNode => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          opacity: isLogoVisible ? 1 : 0,
+          transition: LOGO_FADE_TRANSITION,
         }}
       >
         <Box

@@ -8,7 +8,7 @@ beforeEach(cleanup);
 
 describe("AuthBrandVideo", () => {
   it("se reproduce automáticamente, sin sonido y sin controles", () => {
-    render(<AuthBrandVideo onEnded={vi.fn()} onContextMenu={vi.fn()} />);
+    render(<AuthBrandVideo isFading={false} onEnded={vi.fn()} onContextMenu={vi.fn()} />);
 
     const element = document.querySelector("video") as HTMLVideoElement;
 
@@ -22,7 +22,7 @@ describe("AuthBrandVideo", () => {
 
   it("no se puede pausar con click ni con el menú contextual", () => {
     const handleContextMenu = vi.fn();
-    render(<AuthBrandVideo onEnded={vi.fn()} onContextMenu={handleContextMenu} />);
+    render(<AuthBrandVideo isFading={false} onEnded={vi.fn()} onContextMenu={handleContextMenu} />);
 
     const element = document.querySelector("video") as HTMLVideoElement;
     expect(element).toHaveStyle({ pointerEvents: "none" });
@@ -30,11 +30,25 @@ describe("AuthBrandVideo", () => {
 
   it("avisa cuando el video termina de reproducirse", () => {
     const handleEnded = vi.fn();
-    render(<AuthBrandVideo onEnded={handleEnded} onContextMenu={vi.fn()} />);
+    render(<AuthBrandVideo isFading={false} onEnded={handleEnded} onContextMenu={vi.fn()} />);
 
     const element = document.querySelector("video") as HTMLVideoElement;
     element.dispatchEvent(new Event("ended"));
 
     expect(handleEnded).toHaveBeenCalled();
+  });
+
+  it("queda en opacidad 0 mientras hace el fade final", () => {
+    render(<AuthBrandVideo isFading={true} onEnded={vi.fn()} onContextMenu={vi.fn()} />);
+
+    const element = document.querySelector("video") as HTMLVideoElement;
+    expect(element).toHaveStyle({ opacity: "0" });
+  });
+
+  it("queda en opacidad 1 mientras se reproduce o se sostiene el último frame", () => {
+    render(<AuthBrandVideo isFading={false} onEnded={vi.fn()} onContextMenu={vi.fn()} />);
+
+    const element = document.querySelector("video") as HTMLVideoElement;
+    expect(element).toHaveStyle({ opacity: "1" });
   });
 });

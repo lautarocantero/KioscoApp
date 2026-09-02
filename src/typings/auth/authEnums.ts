@@ -23,3 +23,10 @@ export enum ResetPasswordStatusEnum {
   Success = 'success',
   Error = 'error',
 }
+
+export enum AuthBrandVideoPhaseEnum {
+  Playing = 'playing',
+  Holding = 'holding',
+  Fading = 'fading',
+  Done = 'done',
+}

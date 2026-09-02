@@ -1,8 +1,11 @@
 import { Box } from "@mui/material";
 import type { AuthBrandVideoProps } from "@typings/auth/authComponentTypes";
+import { FADE_TRANSITION_MS } from "@hooks/auth/useAuthBrandVideo";
 import { getAuthBrandVideoUrl } from "../../helpers/getAuthBrandVideoUrl";
 
-const AuthBrandVideo = ({ onEnded, onContextMenu }: AuthBrandVideoProps): React.ReactNode => {
+const FADE_TRANSITION = `${FADE_TRANSITION_MS}ms ease`;
+
+const AuthBrandVideo = ({ isFading, onEnded, onContextMenu }: AuthBrandVideoProps): React.ReactNode => {
   return (
     <Box
       component="video"
@@ -24,6 +27,8 @@ const AuthBrandVideo = ({ onEnded, onContextMenu }: AuthBrandVideoProps): React.
         objectFit: "cover",
         pointerEvents: "none",
         userSelect: "none",
+        opacity: isFading ? 0 : 1,
+        transition: `opacity ${FADE_TRANSITION}`,
       }}
     />
   );

@@ -21,6 +21,7 @@ export interface AuthPageHeadingProps {
 }
 
 export interface AuthBrandVideoProps {
+  isFading: boolean;
   onEnded: () => void;
   onContextMenu: (event: React.MouseEvent<HTMLVideoElement>) => void;
 }
