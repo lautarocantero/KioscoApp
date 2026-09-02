@@ -1,24 +1,21 @@
 import { Box, Stack, Typography, type Theme } from "@mui/material";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
-import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useKioscoSelector } from "../../../hooks/kiosco/useKioscoSelector";
 import type { RootState } from "../../../store/auth/authSlice";
-import KioscoCard from "../components/KioscoCard/KioscoCard";
-import KioscoCardSkeleton from "../components/KioscoCard/KioscoCardSkeleton";
-import KioscoSelectorActionRow from "../components/KioscoSelectorActionRow/KioscoSelectorActionRow";
-import CardCarousel from "../../shared/components/Cards/CardCarousel";
-import { KIOSCO_CARD_WIDTH, KIOSCO_CAROUSEL_GAP } from "../../../config/constants";
+import KioscoGrid from "../components/KioscoGrid/KioscoGrid";
+import KioscoEmptyState from "../components/KioscoEmptyState/KioscoEmptyState";
+import KioscoSelectorHeaderBar from "../components/KioscoSelectorHeaderBar/KioscoSelectorHeaderBar";
+import SearchBar from "../../shared/components/SearchBar/SearchBar";
 
 const KioscoSelectorPage = (): React.ReactNode => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { name } = useSelector((state: RootState) => state.auth);
-    const { kioscos, loading, entering, handleEnterKiosco } = useKioscoSelector();
+    const { kioscos, filteredKioscos, loading, entering, handleEnterKiosco, query, onQueryChange, clearQuery, isEmpty, noResults } =
+        useKioscoSelector();
 
     return (
         <Box
@@ -32,7 +29,9 @@ const KioscoSelectorPage = (): React.ReactNode => {
                 p: { xs: 2, sm: 4 },
             })}
         >
-            <Box sx={{ width: "100%", maxWidth: "1100px" }}>
+            <Box sx={{ width: "100%", maxWidth: "1160px", display: "flex", flexDirection: "column" }}>
+                <KioscoSelectorHeaderBar />
+
                 <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 3 }}>
                     <Box
                         sx={(theme: Theme) => ({
@@ -64,59 +63,34 @@ const KioscoSelectorPage = (): React.ReactNode => {
                     {t("kiosco.selector.subtitle")}
                 </Typography>
 
-                {loading && kioscos.length === 0 ? (
-                    <Box sx={{ mb: 4 }}>
-                        <CardCarousel
-                            defaultCardWidth={KIOSCO_CARD_WIDTH}
-                            gap={KIOSCO_CAROUSEL_GAP}
-                            maxViewportWidth="100%"
-                            showArrows={false}
-                            showDots={false}
-                            items={[0, 1, 2].map((index) => ({ id: `skeleton-${index}`, content: <KioscoCardSkeleton /> }))}
+                {!isEmpty && (
+                    <Box sx={{ mb: 3 }}>
+                        <SearchBar
+                            value={query}
+                            onChange={onQueryChange}
+                            onClear={clearQuery}
+                            placeholder={t("kiosco.selector.searchPlaceholder")}
+                            showShortcutHint={false}
+                            fullWidth
                         />
                     </Box>
-                ) : (
-                    kioscos.length > 0 && (
-                        <Box sx={{ mb: 4 }}>
-                            <CardCarousel
-                                defaultCardWidth={KIOSCO_CARD_WIDTH}
-                                gap={KIOSCO_CAROUSEL_GAP}
-                                maxViewportWidth="100%"
-                                nextArrowPosition="viewportEdge"
-                                items={kioscos.map((kiosco, index) => ({
-                                    id: kiosco._id,
-                                    content: (
-                                        <KioscoCard
-                                            kiosco={kiosco}
-                                            colorIndex={index}
-                                            entering={entering === kiosco._id}
-                                            onEnter={() => handleEnterKiosco(kiosco)}
-                                        />
-                                    ),
-                                }))}
-                            />
-                        </Box>
-                    )
                 )}
 
-                <Stack spacing={2}>
-                    <KioscoSelectorActionRow
-                        icon={<AddCircleOutlineOutlinedIcon />}
-                        title={t("kiosco.selector.createRow.title")}
-                        subtitle={t("kiosco.selector.createRow.subtitle")}
-                        accent="lightMain"
-                        endIcon={<ChevronRightOutlinedIcon />}
-                        onClick={() => navigate("/create-kiosco")}
-                    />
-                    <KioscoSelectorActionRow
-                        icon={<PersonAddAltOutlinedIcon />}
-                        title={t("kiosco.selector.joinRow.title")}
-                        subtitle={t("kiosco.selector.joinRow.subtitle")}
-                        accent="lightSecondary"
-                        endIcon={<ChevronRightOutlinedIcon />}
-                        onClick={() => navigate("/join-kiosco")}
-                    />
-                </Stack>
+                <Box sx={{ mb: 4 }}>
+                    {isEmpty ? (
+                        <KioscoEmptyState />
+                    ) : (
+                        <KioscoGrid
+                            kioscos={filteredKioscos}
+                            loading={loading}
+                            noResults={noResults}
+                            entering={entering}
+                            onEnter={handleEnterKiosco}
+                            onCreate={() => navigate("/create-kiosco")}
+                            onJoin={() => navigate("/join-kiosco")}
+                        />
+                    )}
+                </Box>
             </Box>
         </Box>
     );

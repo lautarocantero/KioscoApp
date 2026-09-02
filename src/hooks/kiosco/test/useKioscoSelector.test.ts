@@ -83,6 +83,79 @@ describe("useKioscoSelector", () => {
         expect(result.current.entering).toBeNull();
     });
 
+    it("filteredKioscos es igual a kioscos cuando no hay query", () => {
+        const { result } = renderHook(() => useKioscoSelector());
+        expect(result.current.filteredKioscos).toEqual(result.current.kioscos);
+        expect(result.current.hasQuery).toBe(false);
+    });
+
+    it("onQueryChange filtra por nombre o dirección", () => {
+        mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
+            selectorFn({
+                kiosco: {
+                    myKioscos: [
+                        buildKiosco({ _id: "k1", name: "Kiosco Norte", address: "Rivadavia 100" }),
+                        buildKiosco({ _id: "k2", name: "Kiosco Sur", address: "Sáenz 200" }),
+                    ],
+                    loading: false,
+                    errorMessage: null,
+                },
+            })
+        );
+        const { result } = renderHook(() => useKioscoSelector());
+
+        act(() => {
+            result.current.onQueryChange("sur");
+        });
+
+        expect(result.current.hasQuery).toBe(true);
+        expect(result.current.filteredKioscos).toHaveLength(1);
+        expect(result.current.filteredKioscos[0]._id).toBe("k2");
+        expect(result.current.noResults).toBe(false);
+    });
+
+    it("noResults es true cuando hay query pero ningún kiosco matchea", () => {
+        const { result } = renderHook(() => useKioscoSelector());
+
+        act(() => {
+            result.current.onQueryChange("no existe");
+        });
+
+        expect(result.current.filteredKioscos).toHaveLength(0);
+        expect(result.current.noResults).toBe(true);
+    });
+
+    it("clearQuery resetea la query", () => {
+        const { result } = renderHook(() => useKioscoSelector());
+
+        act(() => {
+            result.current.onQueryChange("algo");
+        });
+        expect(result.current.hasQuery).toBe(true);
+
+        act(() => {
+            result.current.clearQuery();
+        });
+        expect(result.current.query).toBe("");
+        expect(result.current.hasQuery).toBe(false);
+    });
+
+    it("isEmpty es true cuando no está cargando y no hay kioscos", () => {
+        mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
+            selectorFn({ kiosco: { myKioscos: [], loading: false, errorMessage: null } })
+        );
+        const { result } = renderHook(() => useKioscoSelector());
+        expect(result.current.isEmpty).toBe(true);
+    });
+
+    it("isEmpty es false mientras está cargando, aunque no haya kioscos todavía", () => {
+        mockedUseSelector.mockImplementation((selectorFn: (state: unknown) => unknown) =>
+            selectorFn({ kiosco: { myKioscos: [], loading: true, errorMessage: null } })
+        );
+        const { result } = renderHook(() => useKioscoSelector());
+        expect(result.current.isEmpty).toBe(false);
+    });
+
     it("clearError despacha clearKioscoError", () => {
         const { result } = renderHook(() => useKioscoSelector());
         result.current.clearError();

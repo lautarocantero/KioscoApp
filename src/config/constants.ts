@@ -100,7 +100,7 @@ export const MIN_MOBILE_CARD_WIDTH = 260;
 export const FILTER_MIN_WIDTH = 220;
 
 export const KIOSCO_CARD_WIDTH = 340;
-export const KIOSCO_CAROUSEL_GAP = 24;
+export const KIOSCO_GRID_GAP = 24;
 
 export const CLOSED_DIALOG: DeleteDialogState = { open: false, id: "", name: "" };
 

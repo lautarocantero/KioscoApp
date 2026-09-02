@@ -21,3 +21,18 @@ export interface KioscoSelectorActionRowProps {
     accent: "lightMain" | "lightSecondary";
     onClick: () => void;
 }
+
+export interface AddKioscoCardProps {
+    onCreate: () => void;
+    onJoin: () => void;
+}
+
+export interface KioscoGridProps {
+    kioscos: KioscoWithStats[];
+    loading: boolean;
+    noResults: boolean;
+    entering: string | null;
+    onEnter: (kiosco: KioscoWithStats) => void;
+    onCreate: () => void;
+    onJoin: () => void;
+}
