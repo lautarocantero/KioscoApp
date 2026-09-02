@@ -583,7 +583,7 @@ const es = {
   },
   cart: {
     header: {
-      title: "Carrito",
+      title: "Bolsita",
       itemsBadge: "{{count}} ítems",
       emptyBadge: "vacío",
       clearButton: "Vaciar",
@@ -741,7 +741,7 @@ const es = {
     },
     empty: {
       imageAlt: "Carrito vacío",
-      title: "¡Agrega productos al carrito!",
+      title: "Agrega productos al carrito",
       descriptionLine1: "Parece que aún no agregaste ningún producto.",
       descriptionLine2: "Utiliza el escáner y agrega directamente, o",
       descriptionLine3: "explora nuestro catálogo y encuentra lo que necesitas.",
