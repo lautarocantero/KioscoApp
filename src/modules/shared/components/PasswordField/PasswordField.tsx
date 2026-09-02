@@ -15,6 +15,7 @@ const PasswordField = ({
     error,
     helperText,
     ariaLabel,
+    label,
 }: PasswordFieldProps) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -24,6 +25,7 @@ const PasswordField = ({
             type={showPassword ? "text" : "password"}
             placeholder={placeholder}
             name={name}
+            label={label}
             value={value}
             onChange={({ target }) => onChange(target.value)}
             error={error}
@@ -31,6 +33,7 @@ const PasswordField = ({
             variant="outlined"
             sx={sharedSx}
             slotProps={{
+                inputLabel: label ? { shrink: true, sx: { fontWeight: 600 } } : undefined,
                 input: {
                     startAdornment: (
                         <InputAdornment position="start">
@@ -44,7 +47,7 @@ const PasswordField = ({
                     ),
                     endAdornment: (
                         <InputAdornment position="end">
-                            <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
+                            <IconButton type="button" onClick={() => setShowPassword((prev) => !prev)} edge="end">
                                 {showPassword ? (
                                     <VisibilityOff
                                         sx={{

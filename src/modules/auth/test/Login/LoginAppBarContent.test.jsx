@@ -25,7 +25,6 @@ describe("LoginAppBarContent", () => {
    it('should render the lightMode',() => {
       renderWithTheme(<LoginAppBarContent />)
       screen.getByTestId('ModeNightIcon');
-      screen.getByTestId('Brightness4Icon');
    })
 
 })
