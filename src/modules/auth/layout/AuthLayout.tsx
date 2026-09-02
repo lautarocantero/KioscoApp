@@ -1,89 +1,68 @@
 import { Box, Typography, type Theme } from "@mui/material";
-import { Grid } from "@mui/material";
-import type { PropsWithChildren } from "react";
-import React, { useContext } from "react";
-import { ThemeContext } from "../../../theme/ThemeContext";
+import React from "react";
+import type { AuthLayoutProps } from "@typings/auth/authComponentTypes";
 import LoginAppBar from "./LoginAppBar/LoginAppBar";
-import { getPublicAssetUrl } from "../../shared/helpers/getPublicAssetUrl";
+import AuthBrandPanel from "./AuthBrandPanel/AuthBrandPanel";
 
-const AuthLayout = ({ children }: PropsWithChildren): React.ReactNode => {
-  const { appTheme }: { appTheme: boolean } = useContext(ThemeContext);
+const DEFAULT_TAGLINE = "Gestión de stock y ventas para tu kiosco";
 
-  const backgroundUrl: string = `url(${getPublicAssetUrl(
-    `images/backgroundImages/${!appTheme ? "black" : "white"}BackgroundImage.jpg`
-  )})`;
-
+const AuthLayout = ({ children, tagline = DEFAULT_TAGLINE }: AuthLayoutProps): React.ReactNode => {
   if (!children || React.Children.count(children) === 0)
     return <Typography>No children Loaded...</Typography>;
 
   return (
     <Box
-      component={"div"}
+      component="div"
       sx={{
         height: "100vh",
         width: "100vw",
-        backgroundImage: backgroundUrl,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
         overflow: "hidden",
       }}
     >
-      <Grid
-        container
-        display={"flex"}
-        flexDirection={"row"}
-        flexWrap={"nowrap"}
-        justifyContent={"space-between"}
-        sx={{ height: "100vh", width: "100vw" }}
-        spacing={0}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "nowrap",
+          height: "100vh",
+          width: "100vw",
+        }}
       >
-        <Grid
-          component={"div"}
-          sx={{
-            display: { xs: "none", md: "block" },
-            width: { md: "50%" },
-            flexGrow: 0,
-            flexShrink: 0,
-          }}
-        />
-        <Grid
-          component={"div"}
-          display={"flex"}
-          alignItems={"center"}
-          sx={{
-            width: { xs: "100%", md: "50%" },
-            flexGrow: 0,
-            flexShrink: 0,
+        <AuthBrandPanel tagline={tagline} />
+
+        <Box
+          component="div"
+          sx={(theme: Theme) => ({
+            display: "flex",
+            flexDirection: "column",
+            width: { xs: "100%", md: "40%" },
+            flex: { md: "0 0 40%" },
             height: "100%",
-            overflow: "hidden",
+            overflowY: "auto",
+            overflowX: "hidden",
             boxSizing: "border-box",
-          }}
+            backgroundColor: theme.custom?.background,
+          })}
         >
           <LoginAppBar />
-          <Grid
-            container
+          <Box
             component="main"
-            sx={(theme: Theme) => ({
-              display: { xs: "flex" },
-              flexDirection: { xs: "column" },
-              alignItems: { xs: "center", md: "center" },
-              width: { xs: "90%", sm: "90%", md: "80%" },
-              maxWidth: "100%",
-              justifyContent: "center",
-              margin: "auto",
-              padding: "3em 0",
-              borderRadius: { xs: "1em" },
-              overflowX: "hidden",
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.5em",
+              width: { xs: "90%", sm: "85%", md: "80%" },
+              maxWidth: "480px",
+              margin: "0 auto",
+              padding: "1em 0 3em",
               boxSizing: "border-box",
-              backgroundColor: {
-                xs: theme.custom?.background,
-              },
-            })}
+            }}
           >
             {children}
-          </Grid>
-        </Grid>
-      </Grid>
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };

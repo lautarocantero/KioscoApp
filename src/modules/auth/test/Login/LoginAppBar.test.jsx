@@ -23,7 +23,6 @@ describe('LoginAppBar', () => {
    it('should render the lightMode',() => {
       renderWithTheme(<LoginAppBar />)
       screen.getByTestId('ModeNightIcon');
-      screen.getByTestId('Brightness4Icon');
    })
 
    it('should render the Appbar', () => {

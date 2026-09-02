@@ -1,5 +1,5 @@
 import { Email } from "@mui/icons-material";
-import { Grid, InputAdornment, TextField, type Theme } from "@mui/material";
+import { Box, InputAdornment, TextField, type Theme } from "@mui/material";
 import type { LoginFormInputsInterface } from "../../../../../../typings/auth/authComponentTypes";
 import { sharedSx } from "../../../../../shared/components/sharedSx/sharedSx";
 import PasswordField from "../../../../../shared/components/PasswordField/PasswordField";
@@ -10,20 +10,22 @@ const LoginFormInputs = ({
   errors,
 }: LoginFormInputsInterface): React.ReactNode => {
   return (
-    <Grid
-      container
-      display={"flex"}
-      direction={"column"}
-      spacing={{ xs: 2, md: 2 }}
-      alignItems={"center"}
-      width={{ xs: "100%", sm: "70%", md: "90%", lg: "25em" }}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: { xs: 2, md: 2 },
+        alignItems: "center",
+        width: { xs: "100%", sm: "70%", md: "90%", lg: "25em" },
+      }}
     >
-      <Grid component={"div"} width={"100%"}>
+      <Box sx={{ width: "100%" }}>
         <TextField
           fullWidth
           name="email"
           onChange={({ target }) => setFieldValue("email", target.value)}
-          placeholder="E-mail"
+          label="E-mail"
+          placeholder="stocko@gmail.com"
           type="email"
           value={values?.email}
           error={!!errors.email}
@@ -38,6 +40,10 @@ const LoginFormInputs = ({
                 </InputAdornment>
               ),
             },
+            inputLabel: {
+              shrink: true,
+              sx: { fontWeight: 600 },
+            },
             htmlInput: {
               "aria-label": "E-mail",
             },
@@ -46,20 +52,21 @@ const LoginFormInputs = ({
             },
           }}
         />
-      </Grid>
+      </Box>
 
-      <Grid component={"div"} width={"100%"}>
+      <Box sx={{ width: "100%" }}>
         <PasswordField
           name="password"
-          placeholder="Contraseña"
+          label="Contraseña"
+          placeholder="Tu contraseña"
           value={values?.password}
           onChange={(value) => setFieldValue("password", value)}
           error={!!errors.password}
           helperText={errors?.password?.toString()}
           ariaLabel="Contraseña"
         />
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 };
 

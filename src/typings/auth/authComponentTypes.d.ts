@@ -1,6 +1,24 @@
 import type { FormikErrors } from "formik";
+import type { PropsWithChildren } from "react";
 import type { AuthLoginFormValues, AuthRegisterFormValues } from "./authTypes";
 import type { ResetPasswordStatusEnum } from "./authEnums";
+
+/*══════════════════════════════════════════════════════════════════════╗
+║ ██ LAYOUT   🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱   ║
+╚══════════════════════════════════════════════════════════════════════╝*/
+
+export interface AuthLayoutProps extends PropsWithChildren {
+  tagline?: string;
+}
+
+export interface AuthBrandPanelProps {
+  tagline: string;
+}
+
+export interface AuthPageHeadingProps {
+  eyebrow: string;
+  title: string;
+}
 
 /*══════════════════════════════════════════════════════════════════════╗
 ║ ██ BUTTONS   🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨   ║
@@ -31,6 +49,7 @@ export interface PasswordFieldProps {
     error?: boolean;
     helperText?: string;
     ariaLabel: string;
+    label?: string;
 }
 
 export interface LoginFormInputsInterface {

@@ -1,4 +1,4 @@
-import { Divider, Grid, Link, Typography, type Theme } from "@mui/material";
+import { Box, Divider, Link, Typography, type Theme } from "@mui/material";
 import type { RegisterFormButtonsInterface } from "../../../../../typings/auth/authComponentTypes";
 import PrimaryButton from "../../../../shared/components/Buttons/PrimaryButtonComponent";
 import { GoogleAuthButton } from "../../../../shared/components/Buttons/GoogleButton";
@@ -13,7 +13,7 @@ const RegisterFormButtons = ({
 
 
     return (
-        <Grid
+        <Box
             sx={{
                 mt: "1.5em",
                 width: "100%",
@@ -33,7 +33,7 @@ const RegisterFormButtons = ({
                 disabled={isSubmitting || disabled}
             />
 
-            <Grid sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%", my: 0.5 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%", my: 0.5 }}>
                 <Divider sx={{ flex: 1, borderColor: (theme: Theme) => theme?.custom?.darkGray }} />
                 <Typography
                     sx={{
@@ -45,11 +45,19 @@ const RegisterFormButtons = ({
                     o regístrate con
                 </Typography>
                 <Divider sx={{ flex: 1, borderColor: (theme: Theme) => theme?.custom?.darkGray }} />
-            </Grid>
+            </Box>
 
             <GoogleAuthButton label="Iniciar sesión con Google" />
 
-            <Grid sx={{ textAlign: "center", mt: 1 }}>
+            <Box
+                sx={(theme: Theme) => ({
+                    width: "100%",
+                    textAlign: "center",
+                    mt: 2,
+                    pt: 2,
+                    borderTop: `1px solid ${theme?.custom?.darkGray}`,
+                })}
+            >
                 <Typography
                     component="span"
                     sx={{
@@ -61,6 +69,7 @@ const RegisterFormButtons = ({
                 </Typography>
                 <Link
                     component="button"
+                    type="button"
                     onClick={onGoToLogin}
                     sx={{
                         color: (theme: Theme) => theme?.palette?.primary?.main,
@@ -71,8 +80,8 @@ const RegisterFormButtons = ({
                 >
                     Inicia Sesión
                 </Link>
-            </Grid>
-        </Grid>
+            </Box>
+        </Box>
     );
 };
 

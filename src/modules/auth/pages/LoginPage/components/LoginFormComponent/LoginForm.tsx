@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, Grid, Link, type Theme } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Link, type Theme } from "@mui/material";
 import { Link as LinkReactRouter } from "react-router-dom";
 import "animate.css";
 import LoginFormInputs from "./LoginFormInputs";
@@ -29,11 +29,16 @@ const LoginForm = (): ReactNode => {
         >
             <LoginFormInputs values={values} setFieldValue={setFieldValue} errors={errors} />
 
-            <Grid
-                container
-                justifyContent="space-between"
-                alignItems="center"
-                sx={{ width: "90%", mt: "0.8em" }}
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    justifyContent: { xs: "flex-start", sm: "space-between" },
+                    alignItems: { xs: "flex-start", sm: "center" },
+                    gap: { xs: 1, sm: 0 },
+                    width: "90%",
+                    mt: "0.8em",
+                }}
             >
                 <FormControlLabel
                     control={
@@ -66,7 +71,7 @@ const LoginForm = (): ReactNode => {
                 >
                     ¿Olvidaste tu contraseña?
                 </Link>
-            </Grid>
+            </Box>
 
             <ApiErrorsHandler error={errorMessage} />
             <LoginFormButtons errors={errors} isSubmitting={isSubmitting} onGoToRegister={handleGoToRegister} />

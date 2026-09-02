@@ -1,15 +1,16 @@
 import { Suspense, type ReactNode } from "react";
 import AuthLayout from "../../layout/AuthLayout";
-import AuthTitle from "../LoginPage/components/LoginFormComponent/AuthTitle";
+import AuthPageHeading from "../../layout/AuthPageHeading/AuthPageHeading";
 import RegisterForm from "./components/RegisterForm";
 import LoginLoader from "../LoginPage/components/LoginFormComponent/LoginLoader";
 
+const REGISTER_TAGLINE = "Creá tu cuenta y empezá a vender en minutos";
 
 const RegisterPage = (): ReactNode  => {
   return (
-    <AuthLayout>
+    <AuthLayout tagline={REGISTER_TAGLINE}>
       <Suspense fallback={<LoginLoader />}>
-        <AuthTitle />
+        <AuthPageHeading eyebrow="Registro" title="Crear una cuenta" />
         <RegisterForm />
       </Suspense>
     </AuthLayout>

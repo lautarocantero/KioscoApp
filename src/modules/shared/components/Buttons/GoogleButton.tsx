@@ -12,11 +12,17 @@ export const GoogleAuthButton = ({ label = "Google" }: GoogleAuthButtonProps) =>
         <>
             <Button
                 fullWidth
+                type="button"
                 onClick={() => handleGoogleSignIn()}
                 disabled={isLoading}
                 sx={{
-                    backgroundColor: (theme: Theme) => theme?.custom?.lightBackground,
-                    borderRadius: "0.8em",
+                    backgroundColor: (theme: Theme) => theme?.custom?.background,
+                    border: (theme: Theme) => `1px solid ${theme?.custom?.darkGray}`,
+                    "&:hover": {
+                        borderColor: (theme: Theme) => theme?.palette?.primary?.main,
+                        backgroundColor: (theme: Theme) => theme?.custom?.lightGray,
+                    },
+                    borderRadius: "0.4em",
                     color: (theme: Theme) => theme?.custom?.fontColor,
                     fontSize: (theme: Theme) => theme?.typography?.body2?.fontSize,
                     textTransform: "none",

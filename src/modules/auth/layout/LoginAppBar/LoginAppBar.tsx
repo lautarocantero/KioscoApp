@@ -24,11 +24,11 @@ import LoginAppBarContent from "./LoginAppBarContent";
 const LoginAppBar = (): React.ReactNode => {
   return (
     <AppBar
-      position="fixed"
+      position="static"
       component={"nav"}
       color="transparent"
       elevation={0}
-      sx={{ width: "50%" }}
+      sx={{ width: "100%" }}
       data-testid="login-appbar"
     >
       <Toolbar>
