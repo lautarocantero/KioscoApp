@@ -1,12 +1,15 @@
 import { Box, Typography, type Theme } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import type { AuthBrandPanelProps } from "@typings/auth/authComponentTypes";
+import { useAuthBrandVideo } from "@hooks/auth/useAuthBrandVideo";
 import { getNoisyBackgroundSx } from "../../../shared/components/NoisyBackground/NoisyBackground";
 import { getAuthBrandLogoUrl } from "../../helpers/getAuthBrandLogoUrl";
+import AuthBrandVideo from "./AuthBrandVideo";
 
 const AuthBrandPanel = ({ tagline }: AuthBrandPanelProps): React.ReactNode => {
   const theme = useTheme();
   const logoUrl = getAuthBrandLogoUrl(theme.palette.mode);
+  const { hasEnded, handleVideoEnded, handleVideoContextMenu } = useAuthBrandVideo();
 
   return (
     <Box
@@ -21,8 +24,11 @@ const AuthBrandPanel = ({ tagline }: AuthBrandPanelProps): React.ReactNode => {
         padding: { md: "2.5em" },
         ...getNoisyBackgroundSx({ theme, backgroundColor: theme.palette.primary.dark, noiseOpacity: 0.08 }),
         overflow: "hidden",
+        userSelect: "none",
       })}
     >
+      {!hasEnded && <AuthBrandVideo onEnded={handleVideoEnded} onContextMenu={handleVideoContextMenu} />}
+
       <Box
         sx={{
           position: "relative",

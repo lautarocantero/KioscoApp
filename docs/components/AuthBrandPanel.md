@@ -1,6 +1,6 @@
 # 🧩 `AuthBrandPanel`
 
-> Panel izquierdo (60%) del layout de autenticación: fondo violeta oscuro con textura noisy, bloque de marca (nombre + tagline) arriba a la izquierda en tono sobre tono, y logo grande centrado en el espacio restante. Oculto en mobile (`xs`), visible desde `md`.
+> Panel izquierdo (60%) del layout de autenticación: fondo violeta oscuro con textura noisy, video de intro de fondo, bloque de marca (nombre + tagline) arriba a la izquierda en tono sobre tono, y logo grande centrado en el espacio restante. Oculto en mobile (`xs`), visible desde `md`.
 
 ## 📦 Props
 
@@ -22,3 +22,5 @@
 - El logo cambia de archivo según `theme.palette.mode` vía [`getAuthBrandLogoUrl`](../helpers/getAuthBrandLogoUrl.md) (hay dos PNG, uno por tema, con el círculo de fondo en un tono distinto para no perderse contra el violeta del panel). Usa `alt=""` porque es decorativo: el nombre "Stocko" ya está presente como texto accesible al lado.
 - Usado por [`AuthLayout`](../../src/modules/auth/layout/AuthLayout.tsx), que le pasa el `tagline` recibido (o uno por defecto).
 - Se implementa con `Box` (no `Grid`): ver la nota en [`AuthLayout`](./AuthLayout.md) sobre por qué se evita `Grid` para contenedores de layout en este módulo.
+- Mientras no haya terminado (`!hasEnded`, ver [`useAuthBrandVideo`](../hooks/auth/useAuthBrandVideo.md)), renderiza [`AuthBrandVideo`](./AuthBrandVideo.md) ocupando todo el panel por debajo del bloque de marca y el logo (ambos con `zIndex: 1`, el video con `zIndex: 0`), así el nombre y la tagline se ven todo el tiempo por encima del video. Al terminar, el video se deja de renderizar y vuelve a quedar visible el fondo noisy que ya estaba debajo — es decir, "lo que hay actualmente" no cambia, el video es una capa temporal encima.
+- Todo el panel tiene `userSelect: "none"`: ni el texto ni ninguna otra parte del panel se puede seleccionar (es contenido puramente decorativo).

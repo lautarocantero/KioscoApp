@@ -209,6 +209,12 @@ export interface UseLogoutReturn {
     handleLogout: () => Promise<void>;
 }
 
+export interface UseAuthBrandVideoReturn {
+    hasEnded: boolean;
+    handleVideoEnded: () => void;
+    handleVideoContextMenu: (event: React.MouseEvent<HTMLVideoElement>) => void;
+}
+
 /*══════════════════════════════════════════════════════════════════════╗
 ║ ██ ERRORS   🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨    ║
 ╚══════════════════════════════════════════════════════════════════════╝*/

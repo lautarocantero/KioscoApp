@@ -20,6 +20,11 @@ export interface AuthPageHeadingProps {
   title: string;
 }
 
+export interface AuthBrandVideoProps {
+  onEnded: () => void;
+  onContextMenu: (event: React.MouseEvent<HTMLVideoElement>) => void;
+}
+
 /*══════════════════════════════════════════════════════════════════════╗
 ║ ██ BUTTONS   🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨🟦 🟩 🟥 🟨   ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
