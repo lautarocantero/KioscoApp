@@ -1365,6 +1365,8 @@ const en = {
       accessCount: "You have access to {{count}} stores.",
       title: "Choose which store you want to enter",
       subtitle: "Select a business to keep working.",
+      searchPlaceholder: "Search by name or address…",
+      noResults: "No store matches your search.",
       card: {
         sellers: "Sellers",
         salesToday: "Sales today",
@@ -1375,6 +1377,9 @@ const en = {
         enter: "Enter store",
         entering: "Entering...",
       },
+      addCard: {
+        title: "Add a store",
+      },
       createRow: {
         title: "Create a new store",
         subtitle: "Starting from scratch? Create your own business.",
@@ -1382,6 +1387,19 @@ const en = {
       joinRow: {
         title: "Join an existing store",
         subtitle: "Already got an invite? Enter the code and join the team.",
+      },
+      empty: {
+        title: "You have no stores yet",
+        body: "Create your first point of sale to start selling.",
+        createCta: "Create store",
+        joinLink: "I have an invite code",
+      },
+      header: {
+        logout: "Log out",
+        logoutConfirmTitle: "Log out",
+        logoutConfirmDescription: "Are you sure you want to log out?",
+        logoutConfirmCta: "Yes, log out",
+        cancel: "Cancel",
       },
     },
   },

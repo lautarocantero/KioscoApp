@@ -2,7 +2,7 @@
 
 ## ¿Para qué sirve?
 
-Fila de acción reusable para las dos opciones al pie de `/select-kiosco`: "Crear un nuevo kiosco" y "Unirme a kiosco existente". Puramente presentacional.
+Fila de acción reusable para las dos opciones de sumar un kiosco: "Crear un nuevo kiosco" y "Unirme a kiosco existente". Puramente presentacional. Vive dentro de [AddKioscoCard](AddKioscoCard.md), la primera tarjeta de la grilla de `/select-kiosco` (antes vivía como dos filas sueltas al pie de la página).
 
 ## Props (`KioscoSelectorActionRowProps`)
 

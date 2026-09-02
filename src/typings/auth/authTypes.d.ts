@@ -205,8 +205,12 @@ export interface UseResetPasswordFormReturn {
     handleGoToForgotPassword: () => void;
 }
 
+export interface UseLogoutReturn {
+    handleLogout: () => Promise<void>;
+}
+
 /*══════════════════════════════════════════════════════════════════════╗
-║ ██ ERRORS   🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨    ║ 
+║ ██ ERRORS   🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨    ║
 ╚══════════════════════════════════════════════════════════════════════╝*/
 
 export type AuthErrorMessageMap = Record<string, string>;

@@ -1366,6 +1366,8 @@ const es = {
       accessCount: "Tenés acceso a {{count}} kioscos.",
       title: "Elegí a qué kiosco querés ingresar",
       subtitle: "Seleccioná un negocio para continuar trabajando.",
+      searchPlaceholder: "Buscar por nombre o dirección…",
+      noResults: "Ningún kiosco coincide con tu búsqueda.",
       card: {
         sellers: "Vendedores",
         salesToday: "Ventas hoy",
@@ -1376,6 +1378,9 @@ const es = {
         enter: "Ingresar al kiosco",
         entering: "Ingresando...",
       },
+      addCard: {
+        title: "Sumar un kiosco",
+      },
       createRow: {
         title: "Crear un nuevo kiosco",
         subtitle: "Si querés empezar desde cero, creá tu propio negocio.",
@@ -1383,6 +1388,19 @@ const es = {
       joinRow: {
         title: "Unirme a un kiosco existente",
         subtitle: "Si ya recibiste una invitación, ingresá el código y unite al equipo.",
+      },
+      empty: {
+        title: "Todavía no tenés kioscos",
+        body: "Creá tu primer punto de venta para empezar a vender.",
+        createCta: "Crear kiosco",
+        joinLink: "Tengo un código de invitación",
+      },
+      header: {
+        logout: "Cerrar sesión",
+        logoutConfirmTitle: "Cerrar sesión",
+        logoutConfirmDescription: "¿Seguro que querés cerrar sesión?",
+        logoutConfirmCta: "Sí, cerrar sesión",
+        cancel: "Cancelar",
       },
     },
   },

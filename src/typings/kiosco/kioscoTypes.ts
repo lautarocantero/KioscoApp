@@ -74,11 +74,18 @@ export type JoinKioscoFormValues = JoinKioscoBody;
 
 export interface UseKioscoSelectorReturn {
     kioscos: KioscoWithStats[];
+    filteredKioscos: KioscoWithStats[];
     loading: boolean;
     error: string | null;
     clearError: () => void;
     handleEnterKiosco: (kiosco: KioscoWithStats) => Promise<void>;
     entering: string | null;
+    query: string;
+    onQueryChange: (value: string) => void;
+    clearQuery: () => void;
+    hasQuery: boolean;
+    isEmpty: boolean;
+    noResults: boolean;
 }
 
 export interface UseActiveKioscoReturn {

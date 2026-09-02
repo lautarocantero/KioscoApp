@@ -5,12 +5,14 @@ import type { KioscoWithStats, UseKioscoSelectorReturn } from "@typings/kiosco/k
 import type { AppDispatch, RootState } from "../../store/auth/authSlice";
 import { fetchMyKioscosThunk, selectKioscoThunk } from "../../store/kiosco/kioscoThunks";
 import { clearKioscoError } from "../../store/kiosco/kioscoSlice";
+import { filterKioscosByQuery } from "../../modules/kiosco/helpers/filterKioscosByQuery";
 
 export const useKioscoSelector = (): UseKioscoSelectorReturn => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { myKioscos, loading, errorMessage } = useSelector((state: RootState) => state.kiosco);
     const [entering, setEntering] = useState<string | null>(null);
+    const [query, setQuery] = useState("");
 
     useEffect(() => {
         dispatch(fetchMyKioscosThunk());
@@ -26,13 +28,23 @@ export const useKioscoSelector = (): UseKioscoSelectorReturn => {
         navigate("/shop");
     };
 
+    const filteredKioscos = filterKioscosByQuery(myKioscos, query);
+    const hasQuery = query.trim().length > 0;
+
     return {
         kioscos: myKioscos,
+        filteredKioscos,
         loading,
         error: errorMessage,
         clearError,
         handleEnterKiosco,
         entering,
+        query,
+        onQueryChange: setQuery,
+        clearQuery: () => setQuery(""),
+        hasQuery,
+        isEmpty: !loading && myKioscos.length === 0,
+        noResults: hasQuery && filteredKioscos.length === 0,
     };
 };
 
