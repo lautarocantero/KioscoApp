@@ -1,6 +1,6 @@
 import { API_URL } from "../../../config/api";
 import { createHttpClient } from "../../shared/api/httpClient";
-import { KioscoPlanEnum } from "@typings/membership/membershipEnums";
+import { KioscoPlanEnum, MembershipPaymentMethodEnum } from "@typings/membership/membershipEnums";
 import type {
     CreateMembershipCheckoutResult,
     MembershipPlanDefinition,
@@ -32,7 +32,11 @@ export const getMembershipStatusRequest = async (): Promise<MembershipStatus> =>
 ║ 📤 POST                                                                   ║
 ╚══════════════════════════════════════════════════════════════════════════╝*/
 
-export const createMembershipCheckoutRequest = async (plan: KioscoPlanEnum): Promise<CreateMembershipCheckoutResult> => {
-    const response = await baseUrl.post("/checkout", { plan });
+export const createMembershipCheckoutRequest = async (
+    plan: KioscoPlanEnum,
+    paymentMethod: MembershipPaymentMethodEnum,
+    cardTokenId?: string,
+): Promise<CreateMembershipCheckoutResult> => {
+    const response = await baseUrl.post("/checkout", { plan, payment_method: paymentMethod, card_token_id: cardTokenId });
     return CreateMembershipCheckoutResultSchema.parse(response.data);
 };

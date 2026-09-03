@@ -1,4 +1,4 @@
-import type { KioscoPlanEnum, KioscoPlanStatusEnum } from "./membershipEnums";
+import type { KioscoPlanEnum, KioscoPlanStatusEnum, MembershipPaymentMethodEnum } from "./membershipEnums";
 
 //─────────────────────────── 💳 Plan (API) 💳 ───────────────────────────//
 
@@ -31,8 +31,17 @@ export type MembershipStatus = {
 //─────────────────────────── 📤 Checkout 📤 ───────────────────────────//
 
 export type CreateMembershipCheckoutResult = {
-    init_point: string;
+    // Ausente cuando el checkout se autoriza directamente con card_token_id
+    // (Card Payment Brick) — no hay checkout hospedado al que redirigir.
+    init_point?: string;
     preapproval_id: string;
+};
+
+// Único dato que tomamos del payload que devuelve el Card Payment Brick al
+// hacer submit — el resto (installments, payment_method_id, issuer_id) es
+// propio de pagos únicos y no aplica a una suscripción mensual recurrente.
+export type CardPaymentSubmitData = {
+    token: string;
 };
 
 //─────────────────────────── 🪝 Hooks 🪝 ───────────────────────────//
@@ -53,7 +62,8 @@ export interface UseMembershipStatusReturn {
 export interface UseMembershipCheckoutReturn {
     isSubmitting: boolean;
     error: string | null;
-    startCheckout: (plan: KioscoPlanEnum) => Promise<void>;
+    startCheckoutRedirect: (plan: KioscoPlanEnum) => Promise<void>;
+    startCheckoutWithCard: (plan: KioscoPlanEnum, cardData: CardPaymentSubmitData) => Promise<void>;
 }
 
 export interface UseMembershipCheckoutPlanReturn {
@@ -92,7 +102,21 @@ export interface UseMembershipCheckoutPageReturn {
     error: string | null;
     isSubmitting: boolean;
     checkoutError: string | null;
+    paymentMethod: MembershipPaymentMethodEnum;
+    selectPaymentMethod: (method: MembershipPaymentMethodEnum) => void;
+    payerEmail: string;
     pay: () => void;
+    payWithCardToken: (cardData: CardPaymentSubmitData) => Promise<void>;
+    handleCardBrickError: (error: { type?: string }) => void;
+}
+
+// Inicialización del SDK de Mercado Pago (Card Payment Brick) — expone si ya
+// está lista para usarse, para no romper la página si VITE_MP_PUBLIC_KEY no
+// está configurada todavía (mismo espíritu que "sin MP_ACCESS_TOKEN el
+// backend sigue funcionando").
+export interface UseMercadoPagoSdkReturn {
+    ready: boolean;
+    error: string | null;
 }
 
 // Página /membership/checkout/result: status + vista derivada (nombre del

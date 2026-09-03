@@ -156,6 +156,8 @@ const es = {
       mercadoPagoDescription: "Pagá con tarjeta, dinero en cuenta o efectivo a través de Mercado Pago.",
       otherMethodsComingSoon: "Próximamente",
       creditCard: "Tarjeta de crédito/débito",
+      cardUnavailable: "El pago con tarjeta no está disponible en este momento.",
+      cardBrickError: "No pudimos cargar el formulario de tarjeta. Intentá nuevamente.",
       bankTransfer: "Transferencia bancaria",
       payButton: "Pagar con Mercado Pago",
       invalidPlan: "El plan solicitado no existe.",

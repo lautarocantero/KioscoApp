@@ -156,6 +156,8 @@ const en = {
       mercadoPagoDescription: "Pay by card, account balance or cash through Mercado Pago.",
       otherMethodsComingSoon: "Coming soon",
       creditCard: "Credit/debit card",
+      cardUnavailable: "Card payment is not available right now.",
+      cardBrickError: "We couldn't load the card form. Please try again.",
       bankTransfer: "Bank transfer",
       payButton: "Pay with Mercado Pago",
       invalidPlan: "The requested plan does not exist.",
