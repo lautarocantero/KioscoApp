@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useShopGreeting } from "../../../../hooks/shop/useShopGreeting";
 import { useActiveKiosco } from "../../../../hooks/kiosco/useActiveKiosco";
 import { useIsActiveKioscoAdmin } from "../../../../hooks/kiosco/useIsActiveKioscoAdmin";
 import { useShopDailySummary } from "../../../../hooks/shop/useShopDailySummary";
@@ -30,7 +29,6 @@ const SECTIONS_GRID_SX = {
 } as const;
 
 const ShopPage = (): React.ReactNode => {
-    const { greeting } = useShopGreeting();
     const { activeKiosco } = useActiveKiosco();
     const isAdmin = useIsActiveKioscoAdmin();
     const navigate = useNavigate();
@@ -48,7 +46,6 @@ const ShopPage = (): React.ReactNode => {
     return (
         <AppLayout fullWidth noCenter>
             <ShopHeader
-                greeting={greeting}
                 kioscoName={kioscoName}
                 onChangeKiosco={() => navigate("/select-kiosco")}
             />
@@ -65,7 +62,6 @@ const ShopPage = (): React.ReactNode => {
                 />
                 <ShopMascotPanel
                     kioscoName={kioscoName}
-                    greeting={greeting}
                     isAdmin={isAdmin}
                     kpis={dailySummary.kpis}
                     hasSellsToday={dailySummary.hasSellsToday}

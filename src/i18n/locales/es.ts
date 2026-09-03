@@ -308,13 +308,12 @@ const es = {
     mascot: {
       imageAlt: "Stocko",
       owner: {
-        headline: "{{greeting}} Vamos {{amount}} en {{tickets}} tickets hoy.",
-        headlineEmpty: "{{greeting}} Todavía no hay ventas hoy.",
+        headline: "Vamos {{amount}} en {{tickets}} tickets hoy.",
       },
       seller: {
-        headline: "{{greeting}} Hoy en {{kioscoName}} van {{amount}} en {{tickets}} tickets.",
-        headlineEmpty: "{{greeting}} Todavía no hay ventas hoy.",
+        headline: "Hoy en {{kioscoName}} van {{amount}} en {{tickets}} tickets.",
       },
+      headlineEmpty: "Todavía no hay ventas hoy.",
       subline: {
         attention: "Quedan {{stock}} productos con stock crítico y {{debtCount}} fiados por cobrar ({{debtAmount}}).",
         ok: "Sin pendientes urgentes por ahora.",

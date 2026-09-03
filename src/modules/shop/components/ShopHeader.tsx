@@ -3,17 +3,11 @@ import { useTranslation } from "react-i18next";
 import type { ShopHeaderProps } from "@typings/shop/shopComponentTypes";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
 
-const ShopHeader = ({ greeting, kioscoName, onChangeKiosco }: ShopHeaderProps): React.ReactNode => {
+const ShopHeader = ({ kioscoName, onChangeKiosco }: ShopHeaderProps): React.ReactNode => {
     const { t } = useTranslation();
 
     return (
         <Box component="header" sx={{ width: "100%" }}>
-            <Typography
-                variant="body2"
-                sx={(theme: Theme) => ({ color: theme.custom.fontColor, mb: 0.5 })}
-            >
-                {greeting}
-            </Typography>
             <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap">
                 <Typography variant="h4" component="h1" sx={{ fontWeight: 600 }}>
                     {kioscoName}

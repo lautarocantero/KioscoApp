@@ -6,7 +6,6 @@ import { renderWithTheme } from "../../../shared/test/utils/setupTests";
 
 const buildProps = (overrides: Partial<ShopMascotPanelProps> = {}): ShopMascotPanelProps => ({
     kioscoName: "Kiosco Belgrano",
-    greeting: "¡Hola, Lautaro! 👋",
     isAdmin: true,
     kpis: {
         sales: { value: 184500, previousValue: 164800, variationPct: 12, trend: "up" },
@@ -53,6 +52,11 @@ describe("ShopMascotPanel", () => {
             />
         );
         expect(screen.getByText(/Quedan 4 productos con stock crítico/)).toBeInTheDocument();
+    });
+
+    it("sin ventas hoy: el headline es el texto fijo, sin saludo con nombre", () => {
+        renderWithTheme(<ShopMascotPanel {...buildProps({ hasSellsToday: false })} />);
+        expect(screen.getByText("Todavía no hay ventas hoy.")).toBeInTheDocument();
     });
 
     it("con ventas hoy: usa la imagen de Stocko contento", () => {

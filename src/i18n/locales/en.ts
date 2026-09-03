@@ -308,13 +308,12 @@ const en = {
     mascot: {
       imageAlt: "Stocko",
       owner: {
-        headline: "{{greeting}} You're at {{amount}} across {{tickets}} tickets today.",
-        headlineEmpty: "{{greeting}} No sales yet today.",
+        headline: "You're at {{amount}} across {{tickets}} tickets today.",
       },
       seller: {
-        headline: "{{greeting}} {{kioscoName}} is at {{amount}} across {{tickets}} tickets today.",
-        headlineEmpty: "{{greeting}} No sales yet today.",
+        headline: "{{kioscoName}} is at {{amount}} across {{tickets}} tickets today.",
       },
+      headlineEmpty: "No sales yet today.",
       subline: {
         attention: "{{stock}} products are critically low on stock and {{debtCount}} accounts have unpaid balances ({{debtAmount}}).",
         ok: "No urgent pending items right now.",

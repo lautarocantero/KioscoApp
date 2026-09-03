@@ -6,7 +6,6 @@ import type {
 } from "./shopTypes";
 
 export interface ShopHeaderProps {
-  greeting: string;
   kioscoName: string;
   onChangeKiosco: () => void;
 }
@@ -20,7 +19,6 @@ export type ShopDailyHeroCardProps = Pick<UseShopDailySummaryReturn, "kpis" | "p
 
 export interface ShopMascotPanelProps {
   kioscoName: string;
-  greeting: string;
   isAdmin: boolean;
   kpis: UseShopDailySummaryReturn["kpis"];
   hasSellsToday: boolean;

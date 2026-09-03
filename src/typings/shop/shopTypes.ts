@@ -2,11 +2,6 @@ import type { SellerStatus } from "@typings/seller/sellerEnums";
 import type { SellsPartialsAlertSummary, SellsPeakHourFact, SellsPeriodKpis } from "@typings/sells/types";
 import type { StockSeverity } from "./shopEnums";
 
-export interface UseShopGreetingReturn {
-  greeting: string;
-  isLoading: boolean;
-}
-
 export interface DailySalesPoint {
   date: string;
   label: string;

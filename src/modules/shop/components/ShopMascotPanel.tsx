@@ -12,7 +12,6 @@ const MASCOT_IMAGE_SAD_URL = getPublicAssetUrl("images/logo/Stocko-mascotCircle-
 
 const ShopMascotPanel = ({
     kioscoName,
-    greeting,
     isAdmin,
     kpis,
     hasSellsToday,
@@ -28,12 +27,11 @@ const ShopMascotPanel = ({
     const roleKey = isAdmin ? "owner" : "seller";
     const headline = hasSellsToday
         ? t(`shop.mascot.${roleKey}.headline`, {
-              greeting,
               amount: formatCurrency(kpis.sales.value),
               tickets: kpis.ticketsCount.value,
               kioscoName,
           })
-        : t(`shop.mascot.${roleKey}.headlineEmpty`, { greeting });
+        : t("shop.mascot.headlineEmpty");
 
     const subline = hasAttention
         ? t("shop.mascot.subline.attention", {

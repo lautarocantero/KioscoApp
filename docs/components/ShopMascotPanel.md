@@ -1,12 +1,12 @@
 # 🧩 `ShopMascotPanel`
 
-> Panel de la mascota Stocko en `/shop`: saluda con los números reales del día y da acceso directo a "Nueva venta", "Ingresar stock" y (solo admin) "Ver estadísticas".
+> Panel de la mascota Stocko en `/shop`: muestra los números reales del día y da acceso directo a "Nueva venta", "Ingresar stock" y (solo admin) "Ver estadísticas".
 
 ## 📦 Props
 
-Ver `ShopMascotPanelProps` en `src/typings/shop/shopComponentTypes.ts`: `kioscoName`, `greeting`, `isAdmin`, `kpis`, `hasSellsToday`, `criticalStockCount`, `partialsAlert`, `onNewSale`, `onEnterStock`, `onViewStatistics`.
+Ver `ShopMascotPanelProps` en `src/typings/shop/shopComponentTypes.ts`: `kioscoName`, `isAdmin`, `kpis`, `hasSellsToday`, `criticalStockCount`, `partialsAlert`, `onNewSale`, `onEnterStock`, `onViewStatistics`.
 
-El headline/bajada se arman con `t()` interpolando estos valores ya resueltos (i18n `shop.mascot.*`) — no hay ninguna oración armada a mano en el componente, así queda traducible.
+El headline/bajada se arman con `t()` interpolando estos valores ya resueltos (i18n `shop.mascot.*`) — no hay ninguna oración armada a mano en el componente, así queda traducible. Sin saludo con nombre: el headline es solo el resumen de ventas (o el texto fijo `shop.mascot.headlineEmpty` si todavía no hay ventas hoy).
 
 ## 💡 Ejemplo
 
@@ -14,7 +14,6 @@ El headline/bajada se arman con `t()` interpolando estos valores ya resueltos (i
 // modules/shop/pages/Shop/ShopPage.tsx
 <ShopMascotPanel
   kioscoName={kioscoName}
-  greeting={greeting}
   isAdmin={isAdmin}
   kpis={dailySummary.kpis}
   hasSellsToday={dailySummary.hasSellsToday}
