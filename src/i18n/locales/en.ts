@@ -279,32 +279,79 @@ const en = {
     online: "Online",
     offline: "Offline",
   },
-  shopSalesRange: {
-    seven_days: "Last 7 days",
-    fortnight: "Last fortnight",
-    month: "Last month",
-  },
   shop: {
     header: {
       title: "Store",
-      subtitle: "This is the general overview of your business.",
+      subtitle: "This is your business' summary for today.",
       changeKiosco: "Switch Store",
     },
-    statsRow: {
-      ariaLabel: "Overview by section",
-    },
-    inventory: {
-      title: "Inventory",
-      subtitle: "Stock summary",
-      viewCatalog: "View catalog →",
-      tiles: {
-        total: "Total products",
-        withStock: "In stock",
-        lowStock: "Low stock",
-        withoutStock: "Out of stock",
+    hero: {
+      title: "Today's sales",
+      vsYesterday: "vs yesterday ({{amount}})",
+      tickets: {
+        label: "Tickets",
       },
-      loadReceipt: "Upload receipt",
-      downloadRestockReport: "Download restock report",
+      averageTicket: {
+        label: "Average ticket",
+      },
+      toCollect: {
+        label: "Outstanding credit",
+        note_one: "{{count}} open account",
+        note_other: "{{count}} open accounts",
+      },
+      empty: "No sales recorded today yet.",
+    },
+    hourlyChart: {
+      title: "Sales by hour",
+      peak: "Peak {{start}}–{{end}} h · 1 in every {{ratio}} tickets",
+    },
+    mascot: {
+      imageAlt: "Stocko",
+      owner: {
+        headline: "{{greeting}} You're at {{amount}} across {{tickets}} tickets today.",
+        headlineEmpty: "{{greeting}} No sales yet today.",
+      },
+      seller: {
+        headline: "{{greeting}} {{kioscoName}} is at {{amount}} across {{tickets}} tickets today.",
+        headlineEmpty: "{{greeting}} No sales yet today.",
+      },
+      subline: {
+        attention: "{{stock}} products are critically low on stock and {{debtCount}} accounts have unpaid balances ({{debtAmount}}).",
+        ok: "No urgent pending items right now.",
+      },
+      actions: {
+        newSale: "New sale",
+        enterStock: "Add stock",
+        viewStatistics: "View statistics",
+      },
+    },
+    topProductsToday: {
+      title: "Best sellers today",
+      empty: "No sales recorded today yet.",
+      quantity_one: "{{count}} u",
+      quantity_other: "{{count}} u",
+    },
+    attention: {
+      title: "Needs your attention",
+      count_one: "{{count}} alert",
+      count_other: "{{count}} alerts",
+      empty: "No urgent pending items right now. 🎉",
+      stock: {
+        label: "Critical stock",
+        detail: "{{critical}} out of stock · {{low}} below minimum",
+      },
+      debt: {
+        label: "Outstanding credit",
+        detail_one: "{{count}} open account",
+        detail_other: "{{count}} open accounts",
+      },
+      restockButton: "Restock & order",
+    },
+    activeSellers: {
+      title: "At the counter now",
+      empty: "No one is currently connected.",
+      orders_one: "{{count}} order",
+      orders_other: "{{count}} orders",
     },
     restockReportPdf: {
       title: "Restock Report",
@@ -320,32 +367,6 @@ const en = {
         provider2: "Provider 2",
       },
       fileNamePrefix: "restock_report",
-    },
-    lowStockList: {
-      title: "Low stock products",
-      empty: "No product is below its minimum stock. 🎉",
-      severity: {
-        critical: "Critical",
-        low: "Low",
-      },
-      showingCount: "Showing the {{shown}} most critical of {{total}} low stock products.",
-    },
-    salesChart: {
-      title: "Sales",
-      rangeAriaLabel: "Sales date range",
-    },
-    topSellers: {
-      title: "Top sellers",
-      viewAll: "View all →",
-      empty: "No sales recorded this month yet.",
-      orders_one: "{{count}} order",
-      orders_other: "{{count}} orders",
-    },
-    topProviders: {
-      title: "Top providers",
-      viewAll: "View all ({{count}}) →",
-      empty: "You haven't added any providers yet.",
-      noContact: "No contact",
     },
   },
   sells: {

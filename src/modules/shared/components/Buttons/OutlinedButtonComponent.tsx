@@ -16,7 +16,7 @@ const OutlinedButtonComponent = ({
     <Button
       sx={{
         backgroundColor: "transparent",
-        color: (theme: Theme) => theme?.custom?.white,
+        color: (theme: Theme) => theme?.custom?.fontColor,
         borderColor: (theme: Theme) => theme?.custom?.darkGray,
         borderWidth: "1.5px",
         borderStyle: "solid",

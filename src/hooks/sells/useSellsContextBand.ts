@@ -27,7 +27,7 @@ const SPARKLINE_DAYS = 14;
 // período que un segundo después se deshabilitan.
 //
 // Cambiar el período es exclusivo de admin (mismo criterio que
-// dashboard.changeRange y ShopSalesChart.canChangeRange): setPeriod queda
+// dashboard.changeRange en rolesPermissionsMatrix): setPeriod queda
 // como no-op para no-admins como segunda barrera, además del control
 // deshabilitado en la UI.
 export const useSellsContextBand = (sells: SellTicketType[], isAdmin: boolean): UseSellsContextBandReturn => {

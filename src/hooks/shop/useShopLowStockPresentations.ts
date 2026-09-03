@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { UseShopLowStockPresentationsReturn } from "@typings/shop/shopTypes";
+import { StockSeverity } from "@typings/shop/shopEnums";
 import type { AppDispatch, RootState } from "../../store/presentation/presentationSlice";
 import { fetchAllPresentationsThunk } from "../../store/presentation/presentationThunks";
 import { getLowStockPresentations } from "../../modules/shop/helpers/getLowStockPresentations";
@@ -30,6 +31,17 @@ export const useShopLowStockPresentations = (): UseShopLowStockPresentationsRetu
 
     const allLowStock = useMemo(() => getLowStockPresentations(allPresentations), [allPresentations]);
     const lowStock = useMemo(() => allLowStock.slice(0, VISIBLE_LOW_STOCK_LIMIT), [allLowStock]);
+    const criticalCount = useMemo(
+        () => allLowStock.filter((presentation) => presentation.severity === StockSeverity.Critico).length,
+        [allLowStock]
+    );
 
-    return { lowStock, total: allLowStock.length, isLoading, error };
+    return {
+        lowStock,
+        total: allLowStock.length,
+        criticalCount,
+        lowCount: allLowStock.length - criticalCount,
+        isLoading,
+        error,
+    };
 };

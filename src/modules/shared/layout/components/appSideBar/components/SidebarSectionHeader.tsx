@@ -3,8 +3,8 @@ import type { SidebarSectionHeaderProps } from "@typings/ui/sidebar.types";
 import { useLinkCard } from "../../../../components/OptionsItems/hooks/useLinkCard";
 
 // Título + subtítulo de la sección activa del panel. Reusa useLinkCard
-// (mismo hook que LinkCard/ShopStatsRow) para resolver el subtítulo con
-// dato real cuando el link trae useData — evita reimplementar ese fetch.
+// (mismo hook que LinkCard) para resolver el subtítulo con dato real
+// cuando el link trae useData — evita reimplementar ese fetch.
 //
 // Importante: se debe montar con key={link.url} desde el padre. useLinkCard
 // llama a un hook distinto según link.useData, así que si esta instancia

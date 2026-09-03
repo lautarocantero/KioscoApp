@@ -60,6 +60,17 @@ describe("useShopLowStockPresentations", () => {
         expect(result.current.total).toBe(45);
     });
 
+    it("cuenta crítico/bajo sobre TODAS las presentaciones, no solo las 20 visibles", () => {
+        const critical = Array.from({ length: 25 }, (_, i) => presentation(`c${i}`, 0, 10));
+        const low = Array.from({ length: 5 }, (_, i) => presentation(`l${i}`, 3, 10));
+        mockState({ allPresentations: [...critical, ...low] });
+
+        const { result } = renderHook(() => useShopLowStockPresentations());
+
+        expect(result.current.criticalCount).toBe(25);
+        expect(result.current.lowCount).toBe(5);
+    });
+
     it("dispara el fetch al montar si todavía no hay presentaciones en el store", () => {
         renderHook(() => useShopLowStockPresentations());
         expect(dispatch).toHaveBeenCalledWith(expect.any(Function));

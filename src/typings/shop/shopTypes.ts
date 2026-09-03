@@ -1,6 +1,6 @@
-import type { Provider } from "@typings/provider/providerTypes";
 import type { SellerStatus } from "@typings/seller/sellerEnums";
-import type { ShopSalesRange, StockSeverity } from "./shopEnums";
+import type { SellsPartialsAlertSummary, SellsPeakHourFact, SellsPeriodKpis } from "@typings/sells/types";
+import type { StockSeverity } from "./shopEnums";
 
 export interface UseShopGreetingReturn {
   greeting: string;
@@ -11,41 +11,6 @@ export interface DailySalesPoint {
   date: string;
   label: string;
   total: number;
-}
-
-export interface TopSellerSummary {
-  sellerId: string;
-  sellerName: string;
-  totalAmount: number;
-  ordersCount: number;
-  status: SellerStatus;
-}
-
-export interface UseShopSalesSummaryReturn {
-  dailySales: DailySalesPoint[];
-  periodTotal: number;
-  range: ShopSalesRange;
-  setRange: (range: ShopSalesRange) => void;
-  canChangeRange: boolean;
-  topSellers: TopSellerSummary[];
-  isLoading: boolean;
-  error: string | null;
-}
-
-export interface UseShopFeaturedProvidersReturn {
-  featured: Provider[];
-  total: number;
-  isLoading: boolean;
-  error: string | null;
-}
-
-export interface UseShopInventorySummaryReturn {
-  total: number | null;
-  withStock: number | null;
-  lowStock: number | null;
-  withoutStock: number | null;
-  isLoading: boolean;
-  error: string | null;
 }
 
 export interface LowStockPresentationSummary {
@@ -60,6 +25,50 @@ export interface LowStockPresentationSummary {
 export interface UseShopLowStockPresentationsReturn {
   lowStock: LowStockPresentationSummary[];
   total: number;
+  // Conteo real por severidad sobre TODAS las presentaciones bajo mínimo,
+  // no solo las `VISIBLE_LOW_STOCK_LIMIT` que trae `lowStock` — así el
+  // panel de atención de /shop no subestima "sin stock" cuando hay más de
+  // 20 presentaciones críticas.
+  criticalCount: number;
+  lowCount: number;
+  isLoading: boolean;
+  error: string | null;
+}
+
+export interface HourlySalesPoint {
+  hour: number;
+  label: string;
+  total: number;
+}
+
+export interface TopProductSummary {
+  productId: string;
+  name: string;
+  quantity: number;
+  amount: number;
+}
+
+export interface ActiveSellerSummary {
+  sellerId: string;
+  sellerName: string;
+  status: SellerStatus;
+  totalAmount: number;
+  ordersCount: number;
+}
+
+// Resumen del día para /shop: KPIs de hoy vs ayer (mismo cálculo real que
+// la banda de contexto de /sells, ver useSellsContextBand), fiados sin
+// saldar, hora pico, ventas por hora, más vendidos y vendedores activos —
+// todo derivado client-side de `useSellsListData`/`useSellersListData`,
+// sin fetch propio.
+export interface UseShopDailySummaryReturn {
+  kpis: SellsPeriodKpis;
+  partialsAlert: SellsPartialsAlertSummary;
+  peakHour: SellsPeakHourFact;
+  hourly: HourlySalesPoint[];
+  topProducts: TopProductSummary[];
+  activeSellers: ActiveSellerSummary[];
+  hasSellsToday: boolean;
   isLoading: boolean;
   error: string | null;
 }
