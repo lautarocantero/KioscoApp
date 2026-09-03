@@ -10,4 +10,11 @@ describe("CartBagHandles", () => {
     expect(svg).toHaveAttribute("aria-hidden", "true");
     expect(container.querySelectorAll("path")).toHaveLength(2);
   });
+
+  it("aplica el transform de apretón que recibe por props", () => {
+    const { container } = renderWithTheme(<CartBagHandles style={{ transform: "scaleY(0.9) scaleX(0.97)" }} />);
+
+    const svg = container.querySelector("svg");
+    expect(svg).toHaveStyle({ transform: "scaleY(0.9) scaleX(0.97)" });
+  });
 });

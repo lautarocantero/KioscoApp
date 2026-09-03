@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import { Box, type Theme } from "@mui/material";
-import { Fragment, useContext, type ReactNode } from "react";
+import { Fragment, useCallback, useContext, type ReactNode } from "react";
 import { useCart } from "@hooks/cart/useCart";
 import { useCartFormik } from "@hooks/cart/useCartFormik";
 import { useMascotEyeTracking } from "@hooks/cart/useMascotEyeTracking";
@@ -12,8 +12,12 @@ import CartHeaderComponent from "../CartHeader/CartHeaderComponent";
 import CartItemsList from "./CartItemsList";
 import CartSummaryCardComponent from "./CartSumaryCardComponent";
 import CartBagHandles from "./CartBagHandles";
+import CartHandGrab from "./CartHandGrab";
 import CartMascotFace from "./CartMascotFace";
 import SaleConfirmedModal from "../SaleConfirmed/SaleConfirmedModal";
+import SaleConfirmedFlashOverlay from "../SaleConfirmed/SaleConfirmedFlashOverlay";
+
+const noop = (): void => {};
 
 const CartComponent = (): ReactNode => {
     const { showSnackBar } = useContext(SnackBarContext)!;
@@ -49,7 +53,11 @@ const CartComponent = (): ReactNode => {
     const { initialValues, validationSchema } = useCartFormik(total);
     const isEmpty = (cart?.length ?? 0) === 0;
     const { containerRef, eyeOffset } = useMascotEyeTracking();
-    const { bagStyle, triggerClear } = useCartClearAnimation(handleClearCart);
+    const { bagStyle, handStyle, handlesStyle, runBagAnimation } = useCartClearAnimation();
+
+    const triggerClear = useCallback((): void => {
+        runBagAnimation(handleClearCart);
+    }, [runBagAnimation, handleClearCart]);
 
     return (
         <Fragment>
@@ -66,7 +74,8 @@ const CartComponent = (): ReactNode => {
                     transition: `transform ${bagStyle.transitionDuration} cubic-bezier(.4,0,.2,1), opacity ${bagStyle.transitionDuration} ease`,
                 }}
             >
-                <CartBagHandles />
+                <CartHandGrab style={handStyle} />
+                <CartBagHandles style={handlesStyle} />
 
                 <Box
                     component="aside"
@@ -118,7 +127,13 @@ const CartComponent = (): ReactNode => {
                         <Formik
                             initialValues={initialValues}
                             validationSchema={validationSchema}
-                            onSubmit={generateTicket}
+                            onSubmit={(formValues) => {
+                                // Recién se llama tras pasar la validación: la bolsa "sale de
+                                // cuadro" en paralelo al alta real de la venta (el vaciado
+                                // efectivo del carrito ya lo hace generateTicket vía Redux).
+                                runBagAnimation(noop);
+                                return generateTicket(formValues);
+                            }}
                             validateOnBlur={false}
                             validateOnChange={false}
                             enableReinitialize
@@ -141,6 +156,8 @@ const CartComponent = (): ReactNode => {
                     )}
                 </Box>
             </Box>
+
+            <SaleConfirmedFlashOverlay open={isSaleConfirmedModalOpen} />
 
             <SaleConfirmedModal
                 open={isSaleConfirmedModalOpen}

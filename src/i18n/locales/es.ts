@@ -772,23 +772,28 @@ const es = {
       imageAlt: "Venta confirmada",
       modal: {
         title: "¡Venta registrada!",
-        subtitle: "Ticket guardado y stock actualizado",
         closeAriaLabel: "Cerrar",
       },
+      brand: {
+        alt: "Mascota de Stocko con el pulgar arriba",
+        tagline: "Tu stock, siempre al día.",
+      },
       summary: {
-        total: "Total",
+        ticketNumber: "N° de ticket:",
+        date: "Fecha:",
+        seller: "Vendedor:",
+      },
+      total: {
+        label: "Total cobrado",
         change: "Vuelto",
-        ticketNumber: "N° de ticket",
-        date: "Fecha",
-        seller: "Vendedor",
       },
       actions: {
-        printTicket: "Imprimir ticket",
-        viewDetail: "Ver detalle de ticket",
+        printTicket: "Imprimir",
+        viewDetail: "Ver detalle",
       },
       autoClose: {
-        countdown: "Se cierra solo en {{seconds}}s",
-        paused: "Pausado — el mouse está sobre el modal",
+        countdown: "Se cierra en {{seconds}} s",
+        paused: "En pausa",
       },
     },
     snackbar: {

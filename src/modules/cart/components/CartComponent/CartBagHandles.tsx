@@ -1,8 +1,10 @@
 import { useTheme, type Theme } from "@mui/material";
 import { type ReactNode } from "react";
+import type { CartBagHandlesProps } from "@typings/cart/cartComponentTypes";
 
-// Las dos asas de la bolsa del carrito, ancladas arriba del card.
-const CartBagHandles = (): ReactNode => {
+// Las dos asas de la bolsa del carrito, ancladas arriba del card. `style`
+// permite el "apretón" (scale) cuando la mano las agarra, vía useCartClearAnimation.
+const CartBagHandles = ({ style }: CartBagHandlesProps): ReactNode => {
     const theme: Theme = useTheme();
 
     return (
@@ -10,7 +12,18 @@ const CartBagHandles = (): ReactNode => {
             viewBox="0 0 380 78"
             aria-hidden="true"
             focusable="false"
-            style={{ position: "absolute", top: "-62px", left: 0, width: "100%", height: "78px", display: "block", overflow: "visible" }}
+            style={{
+                position: "absolute",
+                top: "-62px",
+                left: 0,
+                width: "100%",
+                height: "78px",
+                display: "block",
+                overflow: "visible",
+                transformOrigin: "50% 100%",
+                transition: "transform 0.3s ease",
+                ...style,
+            }}
         >
             <path
                 d="M120 76 C120 18 148 6 190 6 C232 6 260 18 260 76"

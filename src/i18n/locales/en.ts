@@ -772,23 +772,28 @@ const en = {
       imageAlt: "Sale confirmed",
       modal: {
         title: "Sale registered!",
-        subtitle: "Ticket saved and stock updated",
         closeAriaLabel: "Close",
       },
+      brand: {
+        alt: "Stocko's mascot giving a thumbs up",
+        tagline: "Your stock, always up to date.",
+      },
       summary: {
-        total: "Total",
+        ticketNumber: "Ticket #:",
+        date: "Date:",
+        seller: "Seller:",
+      },
+      total: {
+        label: "Total collected",
         change: "Change",
-        ticketNumber: "Ticket #",
-        date: "Date",
-        seller: "Seller",
       },
       actions: {
-        printTicket: "Print ticket",
-        viewDetail: "View ticket detail",
+        printTicket: "Print",
+        viewDetail: "View detail",
       },
       autoClose: {
-        countdown: "Closes automatically in {{seconds}}s",
-        paused: "Paused — mouse is over the modal",
+        countdown: "Closes in {{seconds}} s",
+        paused: "Paused",
       },
     },
     snackbar: {

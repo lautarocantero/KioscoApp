@@ -1,6 +1,6 @@
 import type { CartFormValues, ProductTicketWithStockType, TicketSummaryType } from "@typings/sells/sellTypes";
 import type { Presentation } from "@typings/presentation/presentationTypes";
-import type { CartAmount, SortOption, ViewMode } from "./cartEnums";
+import type { CartAmount, CartBagAnimationPhase, SortOption, ViewMode } from "./cartEnums";
 import type { Product, ProductWithPresentations } from "@typings/product/productTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
@@ -292,6 +292,9 @@ export interface UseMascotEyeTrackingReturn {
 }
 
 export interface UseCartClearAnimationReturn {
+    phase: CartBagAnimationPhase;
     bagStyle: Pick<CSSProperties, 'transform' | 'opacity' | 'transitionDuration'>;
-    triggerClear: () => void;
+    handStyle: Pick<CSSProperties, 'transform' | 'opacity'>;
+    handlesStyle: Pick<CSSProperties, 'transform'>;
+    runBagAnimation: (onCleared: () => void) => void;
 }

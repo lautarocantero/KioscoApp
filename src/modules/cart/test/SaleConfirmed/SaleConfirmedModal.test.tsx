@@ -45,6 +45,8 @@ describe("SaleConfirmedModal", () => {
     expect(screen.getByText(/1\.000,00/)).toBeInTheDocument();
     expect(screen.getByText(/200,00/)).toBeInTheDocument();
     expect(screen.getByText("Lautaro")).toBeInTheDocument();
+    expect(screen.getByText("STOK")).toBeInTheDocument();
+    expect(screen.getAllByText("sell-1")).not.toHaveLength(0);
   });
 
   it("dispara onClose al hacer click en el botón de cerrar", async () => {
@@ -59,15 +61,15 @@ describe("SaleConfirmedModal", () => {
     const props = buildProps();
     renderWithTheme(<SaleConfirmedModal {...props} />);
 
-    await userEvent.click(screen.getByText("Imprimir ticket"));
+    await userEvent.click(screen.getByText("Imprimir"));
     expect(props.onPrintTicket).toHaveBeenCalled();
 
-    await userEvent.click(screen.getByText("Ver detalle de ticket"));
+    await userEvent.click(screen.getByText("Ver detalle"));
     expect(props.goToTicketDetail).toHaveBeenCalled();
   });
 
   it("muestra el aviso de pausa cuando isPaused es true", () => {
     renderWithTheme(<SaleConfirmedModal {...buildProps({ isPaused: true })} />);
-    expect(screen.getByText(/pausado/i)).toBeInTheDocument();
+    expect(screen.getByText(/en pausa/i)).toBeInTheDocument();
   });
 });

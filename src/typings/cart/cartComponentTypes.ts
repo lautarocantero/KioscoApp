@@ -4,7 +4,7 @@ import type { CartChipOption, EyeOffset, PresentationRow, UseCartBarResult, UseP
 import type { GridColDef } from "@mui/x-data-grid";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { DialogVariantDataType, ProductTicketType, ProductTicketWithStockType, TicketSummaryType, UseProductsExhibitorResult } from "@typings/sells/sellTypes";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 export interface PresentationSearchBarProps {
     search: UsePresentationSearchReturn;
@@ -305,3 +305,25 @@ export interface CartMascotFaceProps {
     eyeOffset: EyeOffset;
     opacity: number;
 }
+
+export interface CartBagHandlesProps {
+    style?: Pick<CSSProperties, 'transform'>;
+}
+
+export interface CartHandGrabProps {
+    style: Pick<CSSProperties, 'transform' | 'opacity'>;
+}
+
+export interface SaleConfirmedFlashOverlayProps {
+    open: boolean;
+}
+
+export interface SaleConfirmedTicketEdgeProps {
+    flipped?: boolean;
+}
+
+export interface SaleConfirmedBarcodeProps {
+    code: string;
+}
+
+export type SaleConfirmedModalTotalProps = Pick<SaleConfirmedSummaryFields, 'formattedTotal' | 'formattedChange'>;
