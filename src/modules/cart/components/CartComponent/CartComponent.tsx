@@ -1,13 +1,18 @@
 import { Formik } from "formik";
 import { Box, type Theme } from "@mui/material";
-import { useContext, type ReactNode } from "react";
+import { Fragment, useContext, type ReactNode } from "react";
 import { useCart } from "@hooks/cart/useCart";
 import { useCartFormik } from "@hooks/cart/useCartFormik";
+import { useMascotEyeTracking } from "@hooks/cart/useMascotEyeTracking";
+import { useCartClearAnimation } from "@hooks/cart/useCartClearAnimation";
 import { SnackBarContext } from "../../../shared/components/SnackBar/SnackBarContext";
 import { PRODUCTS_EXHIBITOR_ANCHOR_ID } from "../../../../config/constants";
+import { getMascotFaceOpacity } from "../../helpers/getMascotFaceOpacity";
 import CartHeaderComponent from "../CartHeader/CartHeaderComponent";
 import CartItemsList from "./CartItemsList";
 import CartSummaryCardComponent from "./CartSumaryCardComponent";
+import CartBagHandles from "./CartBagHandles";
+import CartMascotFace from "./CartMascotFace";
 import SaleConfirmedModal from "../SaleConfirmed/SaleConfirmedModal";
 
 const CartComponent = (): ReactNode => {
@@ -42,74 +47,100 @@ const CartComponent = (): ReactNode => {
     } = useCart(showSnackBar);
 
     const { initialValues, validationSchema } = useCartFormik(total);
+    const isEmpty = (cart?.length ?? 0) === 0;
+    const { containerRef, eyeOffset } = useMascotEyeTracking();
+    const { bagStyle, triggerClear } = useCartClearAnimation(handleClearCart);
 
     return (
-        <Box
-            component="aside"
-            id={PRODUCTS_EXHIBITOR_ANCHOR_ID}
-            sx={(theme: Theme) => ({
-                display: "flex",
-                flexDirection: "column",
-                minHeight: 0,
-                minWidth: 0,
-                backgroundColor: theme.custom?.background,
-                border: `1px solid ${theme.custom?.darkGray}`,
-                borderRadius: "14px",
-                overflow: "hidden",
-                position: { md: "sticky" },
-                top: { md: "1em" },
-                maxHeight: { md: "calc(100vh - 2em)" },
-                width: "100%",
-            })}
-        >
-            <Box sx={{ flex: "0 0 auto", padding: "0.75em 0.9em" }}>
-                <CartHeaderComponent
-                    itemsCount={cart?.length ?? 0}
-                    onClearCart={handleClearCart}
-                />
-            </Box>
-
+        <Fragment>
             <Box
-                sx={(theme: Theme) => ({
-                    flex: "1 1 auto",
-                    minHeight: "6em",
-                    maxHeight: "40vh",
-                    overflowY: "auto",
-                    padding: "0 0.5em",
-                    borderTop: `1px solid ${theme.custom?.darkGray}`,
-                })}
+                ref={containerRef}
+                sx={{
+                    position: { xs: "relative", md: "sticky" },
+                    top: { md: "1em" },
+                    maxHeight: { md: "calc(100vh - 2em)" },
+                    width: "100%",
+                    mt: "4.25em",
+                    transform: bagStyle.transform,
+                    opacity: bagStyle.opacity,
+                    transition: `transform ${bagStyle.transitionDuration} cubic-bezier(.4,0,.2,1), opacity ${bagStyle.transitionDuration} ease`,
+                }}
             >
-                <CartItemsList
-                    cart={cart}
-                    onIncrease={handleIncreaseProduct}
-                    onDecrease={handleDecreaseProduct}
-                    onItemDiscountChange={handleItemDiscountChange}
-                />
-            </Box>
+                <CartBagHandles />
 
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={generateTicket}
-                validateOnBlur={false}
-                validateOnChange={false}
-                enableReinitialize
-            >
-                {({ handleSubmit: formikSubmit }) => (
-                    <CartSummaryCardComponent
-                        onGenerateTicket={formikSubmit}
-                        productsTotalPrice={productsTotalPrice}
-                        discountAmount={discountAmount}
-                        globalDiscount={globalDiscount}
-                        onGlobalDiscountChange={handleGlobalDiscountChange}
-                        note={note}
-                        onNoteChange={handleNoteChange}
-                        ivaPercentage={ivaPercentage}
-                        ivaAmount={ivaAmount}
-                        total={total}
-                    />
-                )}
-            </Formik>
+                <Box
+                    component="aside"
+                    id={PRODUCTS_EXHIBITOR_ANCHOR_ID}
+                    sx={(theme: Theme) => ({
+                        position: "relative",
+                        display: "flex",
+                        flexDirection: "column",
+                        minHeight: 0,
+                        minWidth: 0,
+                        backgroundColor: theme.custom?.background,
+                        border: `1px solid ${theme.custom?.darkGray}`,
+                        borderRadius: "14px",
+                        overflow: "hidden",
+                    })}
+                >
+                    <CartMascotFace eyeOffset={eyeOffset} opacity={getMascotFaceOpacity(isEmpty)} />
+
+                    <Box sx={{ position: "relative", flex: "0 0 auto", padding: "0.75em 0.9em" }}>
+                        <CartHeaderComponent
+                            itemsCount={cart?.length ?? 0}
+                            onClearCart={triggerClear}
+                        />
+                    </Box>
+
+                    <Box
+                        sx={(theme: Theme) => ({
+                            position: "relative",
+                            flex: "1 1 auto",
+                            // Vacío: alto generoso para que el texto, la mascota (a tamaño
+                            // completo, pintada por el padre) y el cierre de la bolsa queden
+                            // cómodamente esparcidos en vez de amontonados.
+                            minHeight: isEmpty ? "30em" : "6em",
+                            maxHeight: isEmpty ? "none" : "40vh",
+                            overflowY: isEmpty ? "visible" : "auto",
+                            padding: "0 0.5em",
+                            borderTop: `1px solid ${theme.custom?.darkGray}`,
+                        })}
+                    >
+                        <CartItemsList
+                            cart={cart}
+                            onIncrease={handleIncreaseProduct}
+                            onDecrease={handleDecreaseProduct}
+                            onItemDiscountChange={handleItemDiscountChange}
+                        />
+                    </Box>
+
+                    {!isEmpty && (
+                        <Formik
+                            initialValues={initialValues}
+                            validationSchema={validationSchema}
+                            onSubmit={generateTicket}
+                            validateOnBlur={false}
+                            validateOnChange={false}
+                            enableReinitialize
+                        >
+                            {({ handleSubmit: formikSubmit }) => (
+                                <CartSummaryCardComponent
+                                    onGenerateTicket={formikSubmit}
+                                    productsTotalPrice={productsTotalPrice}
+                                    discountAmount={discountAmount}
+                                    globalDiscount={globalDiscount}
+                                    onGlobalDiscountChange={handleGlobalDiscountChange}
+                                    note={note}
+                                    onNoteChange={handleNoteChange}
+                                    ivaPercentage={ivaPercentage}
+                                    ivaAmount={ivaAmount}
+                                    total={total}
+                                />
+                            )}
+                        </Formik>
+                    )}
+                </Box>
+            </Box>
 
             <SaleConfirmedModal
                 open={isSaleConfirmedModalOpen}
@@ -123,7 +154,7 @@ const CartComponent = (): ReactNode => {
                 onPrintTicket={printTicket}
                 goToTicketDetail={goToTicketDetail}
             />
-        </Box>
+        </Fragment>
     )
 };
 

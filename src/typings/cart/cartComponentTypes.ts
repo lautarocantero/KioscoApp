@@ -1,6 +1,6 @@
 import type { Product, ProductEntity } from "@typings/product/productTypes";
 import type { ViewMode } from "./cartEnums";
-import type { CartChipOption, PresentationRow, UseCartBarResult, UsePresentationSearchReturn, UseSellPageHeaderResult } from "./cartTypes";
+import type { CartChipOption, EyeOffset, PresentationRow, UseCartBarResult, UsePresentationSearchReturn, UseSellPageHeaderResult } from "./cartTypes";
 import type { GridColDef } from "@mui/x-data-grid";
 import type { Presentation } from "@typings/presentation/presentationTypes";
 import type { DialogVariantDataType, ProductTicketType, ProductTicketWithStockType, TicketSummaryType, UseProductsExhibitorResult } from "@typings/sells/sellTypes";
@@ -299,4 +299,9 @@ export interface ManualDownloadNoticeProps {
 
 export interface ProductItemBadgeProps {
   label: string;
+}
+
+export interface CartMascotFaceProps {
+    eyeOffset: EyeOffset;
+    opacity: number;
 }

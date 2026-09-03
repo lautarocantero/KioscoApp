@@ -57,6 +57,13 @@ declare module '@mui/material/styles' {
         shadowRing: string;
         shadowGlow: string;
       };
+
+      //────────────── cart bag (mascota del carrito) ──────────────────//
+      cartBag: {
+        handlePrimary: string;
+        handleSecondary: string;
+        face: string;
+      };
     };
   }
 
@@ -115,6 +122,13 @@ declare module '@mui/material/styles' {
         textColor?: string;
         shadowRing?: string;
         shadowGlow?: string;
+      };
+
+      //────────────── cart bag (mascota del carrito) ──────────────────//
+      cartBag?: {
+        handlePrimary?: string;
+        handleSecondary?: string;
+        face?: string;
       };
     };
 
@@ -215,6 +229,13 @@ export const darkTheme = createTheme({
       shadowGlow:    'rgba(232, 137, 12, 0.45)',
     },
 
+    //────────────── cart bag (mascota del carrito) ──────────────────//
+    cartBag: {
+      handlePrimary:   '#3b3550',
+      handleSecondary: '#4b4467',
+      face:            '#EFECF7',
+    },
+
   },
   typography,
 });
@@ -285,6 +306,13 @@ export const lightTheme = createTheme({
       textColor:     '#3A2205',
       shadowRing:    'rgba(255, 216, 116, 0.35)',
       shadowGlow:    'rgba(232, 137, 12, 0.45)',
+    },
+
+    //────────────── cart bag (mascota del carrito) ──────────────────//
+    cartBag: {
+      handlePrimary:   '#E7E3F7',
+      handleSecondary: '#F1EEFB',
+      face:            '#1F2124',
     },
 
   },

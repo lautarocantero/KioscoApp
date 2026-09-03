@@ -583,7 +583,7 @@ const en = {
   },
   cart: {
     header: {
-      title: "Cart",
+      title: "Little Bag",
       itemsBadge: "{{count}} items",
       emptyBadge: "empty",
       clearButton: "Clear",
@@ -741,7 +741,7 @@ const en = {
     },
     empty: {
       imageAlt: "Empty cart",
-      title: "Add products to your cart!",
+      title: "Add products to your cart",
       descriptionLine1: "Looks like you haven't added any products yet.",
       descriptionLine2: "Use the scanner to add directly, or",
       descriptionLine3: "browse our catalog and find what you need.",

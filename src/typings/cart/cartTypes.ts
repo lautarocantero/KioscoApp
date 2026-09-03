@@ -4,7 +4,7 @@ import type { CartAmount, SortOption, ViewMode } from "./cartEnums";
 import type { Product, ProductWithPresentations } from "@typings/product/productTypes";
 import type { AlertColor } from "@typings/ui/ui";
 import type { PresentationCategory } from "@typings/presentation/presentationEnum";
-import type { RefObject, MouseEvent, KeyboardEvent } from "react";
+import type { CSSProperties, RefObject, MouseEvent, KeyboardEvent } from "react";
 import type { AppDispatch } from "../../store/cart/cartSlice";
 import type { cartFormSchema } from "../../modules/cart/schema/CartFormSchema";
 import type { PaymentMethod, SellStatusEnum } from "@typings/sells/sellsEnum";
@@ -279,4 +279,19 @@ export interface useCartPaymentStatusFormReturn {
         <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
     };
     options: CartChipOption[];
+}
+
+export interface EyeOffset {
+    x: number;
+    y: number;
+}
+
+export interface UseMascotEyeTrackingReturn {
+    containerRef: RefObject<HTMLDivElement | null>;
+    eyeOffset: EyeOffset;
+}
+
+export interface UseCartClearAnimationReturn {
+    bagStyle: Pick<CSSProperties, 'transform' | 'opacity' | 'transitionDuration'>;
+    triggerClear: () => void;
 }
