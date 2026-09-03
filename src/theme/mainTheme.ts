@@ -64,6 +64,20 @@ declare module '@mui/material/styles' {
         handleSecondary: string;
         face: string;
       };
+
+      //────────────── sale ticket (modal de venta confirmada) ──────────────────//
+      saleTicket: {
+        paper: string;
+        text: string;
+        textMuted: string;
+        divider: string;
+        progressTrack: string;
+        totalBg: string;
+        totalBorder: string;
+        totalLabel: string;
+        checkColor: string;
+        changeColor: string;
+      };
     };
   }
 
@@ -129,6 +143,20 @@ declare module '@mui/material/styles' {
         handlePrimary?: string;
         handleSecondary?: string;
         face?: string;
+      };
+
+      //────────────── sale ticket (modal de venta confirmada) ──────────────────//
+      saleTicket?: {
+        paper?: string;
+        text?: string;
+        textMuted?: string;
+        divider?: string;
+        progressTrack?: string;
+        totalBg?: string;
+        totalBorder?: string;
+        totalLabel?: string;
+        checkColor?: string;
+        changeColor?: string;
       };
     };
 
@@ -236,6 +264,22 @@ export const darkTheme = createTheme({
       face:            '#EFECF7',
     },
 
+    //────────────── sale ticket (modal de venta confirmada) ──────────────────//
+    // Papel de recibo: se mantiene claro a propósito en ambos temas (metáfora
+    // de ticket físico impreso), no sigue fontColor/background del modo oscuro.
+    saleTicket: {
+      paper:       '#FFFFFF',
+      text:        '#1F2937',
+      textMuted:   '#6B7280',
+      divider:     'rgba(31,41,55,0.28)',
+      progressTrack: 'rgba(31,41,55,0.08)',
+      totalBg:     'rgba(34,197,94,0.1)',
+      totalBorder: 'rgba(34,197,94,0.3)',
+      totalLabel:  '#15803D',
+      checkColor:  '#22C55E',
+      changeColor: '#22C55E',
+    },
+
   },
   typography,
 });
@@ -313,6 +357,20 @@ export const lightTheme = createTheme({
       handlePrimary:   '#E7E3F7',
       handleSecondary: '#F1EEFB',
       face:            '#1F2124',
+    },
+
+    //────────────── sale ticket (modal de venta confirmada) ──────────────────//
+    saleTicket: {
+      paper:       '#FFFFFF',
+      text:        '#1F2937',
+      textMuted:   '#6B7280',
+      divider:     'rgba(31,41,55,0.28)',
+      progressTrack: 'rgba(31,41,55,0.08)',
+      totalBg:     'rgba(34,197,94,0.1)',
+      totalBorder: 'rgba(34,197,94,0.3)',
+      totalLabel:  '#15803D',
+      checkColor:  '#22C55E',
+      changeColor: '#22C55E',
     },
 
   },
