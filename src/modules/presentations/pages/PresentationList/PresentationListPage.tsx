@@ -8,6 +8,9 @@ import DataTable from "../../../shared/components/DataTable/DataTable";
 import TableIconHeader from "../../../shared/components/DataTable/TableIconHeader";
 import RestockDialog from "./components/RestockDialog";
 import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import { useAutoStartTutorial } from "@hooks/tutorial/useAutoStartTutorial";
+import { TutorialIdEnum } from "@typings/tutorial/enums";
+import { presentationsTutorialSteps } from "../../tutorial/presentationsTutorialSteps";
 import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 
@@ -35,6 +38,7 @@ const PresentationListPage = (): React.ReactNode => {
         handleRestockConfirm,
     } = usePresentations();
     const isPageLoading = useInitialPageLoading(loading, productId);
+    useAutoStartTutorial(TutorialIdEnum.Presentations, presentationsTutorialSteps, !isPageLoading);
 
     if (isPageLoading) return <LoadingScreen label="Cargando presentaciones..." />;
 
@@ -62,6 +66,7 @@ const PresentationListPage = (): React.ReactNode => {
                 newItem={{
                     label: t("presentations.table.newItem"),
                     href: `/products/${productId}/presentation-create`,
+                    targetId: "presentation-create",
                 }}
                 deleteDialog={{
                     open: deleteDialog.open,

@@ -1680,6 +1680,142 @@ const en = {
       },
     },
   },
+  tutorial: {
+    skipButton: "Skip tutorial",
+    stepCounter: "Step {{current}} of {{total}}",
+    nextLabel: "Next",
+    finishLabel: "Done, let's go",
+    prevLabel: "Back",
+    helpButtonLabel: "Help: view this screen's tutorial",
+    selectKiosco: {
+      steps: {
+        welcome: {
+          title: "Welcome to Stocko!",
+          body: "Before you start, let me show you in two steps how to add your first kiosco. You can skip the tutorial anytime.",
+        },
+        create: {
+          title: "Create your own kiosco",
+          body: "Starting from scratch? Come in here: give it a name and address, and it's ready for you to load products and start selling. You'll be the owner.",
+        },
+        join: {
+          title: "Already got invited to one?",
+          body: "If someone else already set up the kiosco, ask them for the invite code and enter it from this link. You'll join their team directly.",
+        },
+      },
+    },
+    shop: {
+      steps: {
+        welcome: {
+          title: "This is your daily panel",
+          body: "Here you'll see at a glance how the day is going, plus quick access to the most common actions. Let me show you the key parts.",
+        },
+        dailySummary: {
+          title: "Daily summary",
+          body: "Total sold, tickets, average ticket, and unpaid debts. Further down you'll also see the peak sales hour.",
+        },
+        newSale: {
+          title: "Register a sale",
+          body: "The fastest shortcut to start selling: it takes you straight to the product search.",
+        },
+        enterStock: {
+          title: "Load stock",
+          body: "Takes you to your products, where you can create or edit presentations and add stock to them.",
+        },
+        viewStatistics: {
+          title: "View statistics",
+          body: "Admins only: more detailed reports and metrics for your kiosco.",
+        },
+        attention: {
+          title: "What needs your attention",
+          body: "This is where low-stock products and unpaid debts show up, so nothing slips through.",
+        },
+      },
+    },
+    products: {
+      steps: {
+        welcome: {
+          title: "Your products",
+          body: "This is where you load your kiosco's products. Note: a product alone isn't sellable yet — the next step is giving it a presentation (price, stock and SKU).",
+        },
+        create: {
+          title: "Create your first product",
+          body: "Name, brand, description and, optionally, an image. Then you add a presentation to put it up for sale.",
+        },
+      },
+    },
+    presentations: {
+      steps: {
+        welcome: {
+          title: "Presentations",
+          body: "This is where the price, stock and SKU of each sellable variant of this product live (e.g. \"1kg bag\"). Without at least one presentation, the product won't show up in the sales catalog.",
+        },
+        create: {
+          title: "Create your first presentation",
+          body: "It's a multi-step wizard: sale type, format, stock, price and, optionally, providers.",
+        },
+      },
+    },
+    newSell: {
+      steps: {
+        welcome: {
+          title: "Here's how a sale works",
+          body: "Let me show you the basic steps: search for the product, build the cart, and charge. You can skip the tutorial anytime.",
+        },
+        search: {
+          title: "Search for the product",
+          body: "Type the name, SKU or barcode and click (or press Enter) on the result to add it to the cart.",
+        },
+        scan: {
+          title: "Or scan the barcode",
+          body: "Activate the barcode scanner with this button or the F2 key.",
+        },
+        cart: {
+          title: "Your cart",
+          body: "Adjust quantities and discounts, choose the payment method and, if needed, register a partial payment (on credit).",
+        },
+        ticket: {
+          title: "Close the sale",
+          body: "Generate the ticket with this button or the F9 key. You'll see a receipt-style summary of the sale.",
+        },
+      },
+    },
+    providers: {
+      steps: {
+        welcome: {
+          title: "Your providers",
+          body: "Save your providers' details here — you'll need them later when loading purchase receipts.",
+        },
+        create: {
+          title: "Add your first provider",
+          body: "Name, rating, and contact phone and email.",
+        },
+      },
+    },
+    sellers: {
+      steps: {
+        welcome: {
+          title: "Your sales team",
+          body: "This is where you manage who can sell in your kiosco.",
+        },
+        invite: {
+          title: "Invite your first seller",
+          body: "It generates a code and a link to share — no email is sent. Whoever uses it joins as a seller, and you can change their role afterwards.",
+        },
+      },
+    },
+    receipts: {
+      steps: {
+        welcome: {
+          title: "Restock with a receipt",
+          body: "Upload an Excel file of your purchase from a provider and we'll update the stock automatically. It's not for photographing a receipt or issuing sales receipts.",
+        },
+        upload: {
+          title: "Upload your file",
+          body: "Drag the Excel file here or click \"Select file\". You can download the example template below first.",
+        },
+      },
+    },
+  },
 };
 
 export default en;

@@ -7,6 +7,9 @@ import { useSellers } from "../../../../hooks/sellers/useSellers";
 import type { Seller } from "@typings/seller/sellerTypes";
 import InviteSellerModal from "../../components/InviteSellerModal/InviteSellerModal";
 import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import { useAutoStartTutorial } from "@hooks/tutorial/useAutoStartTutorial";
+import { TutorialIdEnum } from "@typings/tutorial/enums";
+import { useSellersTutorialSteps } from "../../tutorial/sellersTutorialSteps";
 import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 const SellersListPage = (): ReactNode => {
@@ -27,6 +30,8 @@ const SellersListPage = (): ReactNode => {
         closeInviteModal,
     } = useSellers();
     const isPageLoading = useInitialPageLoading(loading);
+    const sellersTutorialSteps = useSellersTutorialSteps();
+    useAutoStartTutorial(TutorialIdEnum.Sellers, sellersTutorialSteps, !isPageLoading);
 
     if (isPageLoading) return <LoadingScreen label="Cargando vendedores..." />;
 
@@ -47,7 +52,11 @@ const SellersListPage = (): ReactNode => {
                 emptyMessage="No hay vendedores registrados"
                 height={"35em"}
                 search={{ value: searchTerm, onChange: setSearchTerm, placeholder: "Nombre del vendedor..." }}
-                newItem={isAdmin ? { label: "Agregar vendedor", onClick: openInviteModal } : undefined}
+                newItem={
+                    isAdmin
+                        ? { label: "Agregar vendedor", onClick: openInviteModal, targetId: "sellers-invite" }
+                        : undefined
+                }
                 deleteDialog={{
                     open: deleteDialog.open,
                     title: "Confirmar eliminación",

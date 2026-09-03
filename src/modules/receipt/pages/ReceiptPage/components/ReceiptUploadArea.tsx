@@ -40,6 +40,7 @@ const ReceiptUploadArea = ({
                 }}
             >
                 <Box
+                    data-tutorial-target="receipt-upload"
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}

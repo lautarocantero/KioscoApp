@@ -41,6 +41,10 @@ export const ACTIVE_KIOSCO_STORAGE_KEY = "activeKioscoId";
 
 export const PENDING_INVITE_CODE_STORAGE_KEY = "pendingInviteCode";
 
+// Prefijo de las keys "tutorial ya visto" (una key por tutorial, ej.
+// "tutorialSeen:shop"), mismo patrón que ACTIVE_KIOSCO_STORAGE_KEY.
+export const TUTORIAL_SEEN_STORAGE_KEY_PREFIX = "tutorialSeen:";
+
 export const DEFAULT_CURRENCY = Currency.Ars;
 
 // Registro técnico por moneda: código ISO real (para Intl.NumberFormat) y locale

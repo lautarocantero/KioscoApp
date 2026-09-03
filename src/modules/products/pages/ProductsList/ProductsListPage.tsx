@@ -11,6 +11,9 @@ import AppLayout from "../../../shared/layout/AppLayout";
 import { useProducts } from "../../../../hooks/products/useProducts";
 import { useShopRestockReport } from "../../../../hooks/shop/useShopRestockReport";
 import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import { useAutoStartTutorial } from "@hooks/tutorial/useAutoStartTutorial";
+import { TutorialIdEnum } from "@typings/tutorial/enums";
+import { productsTutorialSteps } from "../../tutorial/productsTutorialSteps";
 import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 const ProductsListPage = (): ReactNode => {
@@ -29,6 +32,7 @@ const ProductsListPage = (): ReactNode => {
     } = useProducts();
     const restockReport = useShopRestockReport();
     const isPageLoading = useInitialPageLoading(loading);
+    useAutoStartTutorial(TutorialIdEnum.Products, productsTutorialSteps, !isPageLoading);
 
     if (isPageLoading) return <LoadingScreen label="Cargando productos..." />;
 
@@ -56,6 +60,7 @@ const ProductsListPage = (): ReactNode => {
                 newItem={{
                     label: t("products.table.newItem"),
                     href: "/product-create",
+                    targetId: "products-create",
                 }}
                 extraActions={
                     <Button

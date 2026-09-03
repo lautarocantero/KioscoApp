@@ -23,6 +23,8 @@ Pantalla `/select-kiosco`: el usuario logueado elige a qué kiosco entrar. Redis
 
 Toda la orquestación vive en `useKioscoSelector` (`src/hooks/kiosco/useKioscoSelector.ts`): fetch de kioscos, filtrado por búsqueda, flujo de "entrar a un kiosco".
 
+También llama `useAutoStartTutorial(TutorialIdEnum.SelectKiosco, selectKioscoTutorialSteps, ready)`, con `ready = !isPageLoading && isEmpty` — el tutorial de "crear o unirme a un kiosco" solo tiene sentido (y solo tiene sus targets en el DOM) cuando se muestra `KioscoEmptyState`. Ver [tutorialesOnboardingImplementacion.md](../features/tutorialesOnboardingImplementacion.md).
+
 ## Piezas
 
 - [AddKioscoCard](AddKioscoCard.md)

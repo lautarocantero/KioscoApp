@@ -25,6 +25,7 @@ const KioscoEmptyState = (): React.ReactNode => {
                         component="span"
                         role="button"
                         tabIndex={0}
+                        data-tutorial-target="kiosco-join"
                         onClick={() => navigate("/join-kiosco")}
                         onKeyDown={(e) => {
                             if (e.key === "Enter" || e.key === " ") navigate("/join-kiosco");
@@ -43,6 +44,7 @@ const KioscoEmptyState = (): React.ReactNode => {
             button={{
                 buttonText: t("kiosco.selector.empty.createCta"),
                 onButtonClick: () => navigate("/create-kiosco"),
+                targetId: "kiosco-create",
             }}
         />
     );

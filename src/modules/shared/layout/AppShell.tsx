@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import AppSidebar from "./components/appSideBar/Appsidebar";
 import SimpleSnackbar from "../components/SnackBar/SnackBarComponent";
 import NotificationsBell from "../components/NotificationsBell/NotificationsBell";
+import TutorialHelpButton from "../components/Tutorial/TutorialHelpButton";
 
 const AppShell = () => (
   <Box
@@ -17,7 +18,8 @@ const AppShell = () => (
       flexDirection: "row",
     })}
   >
-    <Box sx={{ position: "absolute", top: 16, right: 28, zIndex: 10 }}>
+    <Box sx={{ position: "absolute", top: 16, right: 28, zIndex: 10, display: "flex", alignItems: "center", gap: 1 }}>
+      <TutorialHelpButton />
       <NotificationsBell />
     </Box>
 

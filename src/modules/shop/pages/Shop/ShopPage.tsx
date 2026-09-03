@@ -7,14 +7,18 @@ import { useShopLowStockPresentations } from "../../../../hooks/shop/useShopLowS
 import { useShopRestockReport } from "../../../../hooks/shop/useShopRestockReport";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import { useAutoStartTutorial } from "@hooks/tutorial/useAutoStartTutorial";
+import { TutorialIdEnum } from "@typings/tutorial/enums";
 import { combineLoadingFlags } from "../../../shared/helpers/combineLoadingFlags";
 import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
+import TutorialTarget from "../../../shared/components/Tutorial/TutorialTarget";
 import ShopHeader from "../../components/ShopHeader";
 import ShopDailyHeroCard from "../../components/ShopDailyHeroCard";
 import ShopMascotPanel from "../../components/ShopMascotPanel";
 import ShopTopProductsToday from "../../components/ShopTopProductsToday";
 import ShopAttentionPanel from "../../components/ShopAttentionPanel";
 import ShopActiveSellers from "../../components/ShopActiveSellers";
+import { useShopTutorialSteps } from "../../tutorial/shopTutorialSteps";
 
 const HERO_GRID_SX = {
     display: "grid",
@@ -38,6 +42,8 @@ const ShopPage = (): React.ReactNode => {
     const isPageLoading = useInitialPageLoading(
         combineLoadingFlags(dailySummary.isLoading, lowStockPresentations.isLoading)
     );
+    const shopTutorialSteps = useShopTutorialSteps();
+    useAutoStartTutorial(TutorialIdEnum.Shop, shopTutorialSteps, !isPageLoading);
 
     if (isPageLoading) return <LoadingScreen label="Cargando tienda..." />;
 
@@ -51,15 +57,17 @@ const ShopPage = (): React.ReactNode => {
             />
 
             <Box sx={HERO_GRID_SX}>
-                <ShopDailyHeroCard
-                    kpis={dailySummary.kpis}
-                    partialsAlert={dailySummary.partialsAlert}
-                    hourly={dailySummary.hourly}
-                    peakHour={dailySummary.peakHour}
-                    hasSellsToday={dailySummary.hasSellsToday}
-                    isLoading={dailySummary.isLoading}
-                    error={dailySummary.error}
-                />
+                <TutorialTarget targetId="shop-hero">
+                    <ShopDailyHeroCard
+                        kpis={dailySummary.kpis}
+                        partialsAlert={dailySummary.partialsAlert}
+                        hourly={dailySummary.hourly}
+                        peakHour={dailySummary.peakHour}
+                        hasSellsToday={dailySummary.hasSellsToday}
+                        isLoading={dailySummary.isLoading}
+                        error={dailySummary.error}
+                    />
+                </TutorialTarget>
                 <ShopMascotPanel
                     kioscoName={kioscoName}
                     isAdmin={isAdmin}
@@ -79,15 +87,17 @@ const ShopPage = (): React.ReactNode => {
                     isLoading={dailySummary.isLoading}
                     error={dailySummary.error}
                 />
-                <ShopAttentionPanel
-                    criticalStockCount={lowStockPresentations.criticalCount}
-                    lowStockCount={lowStockPresentations.lowCount}
-                    partialsAlert={dailySummary.partialsAlert}
-                    isLoading={lowStockPresentations.isLoading || dailySummary.isLoading}
-                    error={lowStockPresentations.error ?? dailySummary.error}
-                    isRestockDownloadDisabled={restockReport.isDownloadDisabled}
-                    onRestockDownload={restockReport.handleDownload}
-                />
+                <TutorialTarget targetId="shop-attention">
+                    <ShopAttentionPanel
+                        criticalStockCount={lowStockPresentations.criticalCount}
+                        lowStockCount={lowStockPresentations.lowCount}
+                        partialsAlert={dailySummary.partialsAlert}
+                        isLoading={lowStockPresentations.isLoading || dailySummary.isLoading}
+                        error={lowStockPresentations.error ?? dailySummary.error}
+                        isRestockDownloadDisabled={restockReport.isDownloadDisabled}
+                        onRestockDownload={restockReport.handleDownload}
+                    />
+                </TutorialTarget>
                 <ShopActiveSellers
                     activeSellers={dailySummary.activeSellers}
                     isLoading={dailySummary.isLoading}

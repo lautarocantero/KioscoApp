@@ -5,6 +5,7 @@ import NewSellPage from "../../pages/NewSell/NewSellPage";
 import { useSellShortcuts } from "@hooks/cart/useSellShortcuts";
 
 vi.mock("@hooks/cart/useSellShortcuts");
+vi.mock("@hooks/tutorial/useAutoStartTutorial");
 vi.mock("../../components/CatalogHeader/CatalogHeader", () => ({
   default: () => <div data-testid="catalog-header" />,
 }));

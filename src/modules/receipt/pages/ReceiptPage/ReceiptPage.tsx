@@ -1,6 +1,9 @@
 import { Box } from "@mui/material";
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useReceiptUpload } from "@hooks/receipt/useReceiptUpload";
+import { useAutoStartTutorial } from "@hooks/tutorial/useAutoStartTutorial";
+import { TutorialIdEnum } from "@typings/tutorial/enums";
+import { receiptTutorialSteps } from "../../tutorial/receiptTutorialSteps";
 import ReceiptConfirmModal from "./components/ReceiptConfirmModal";
 import ReceiptPageTitle from "./components/ReceiptTitle";
 import ReceiptContent from "./components/ReceiptContent";
@@ -20,6 +23,9 @@ const ReceiptPage = (): ReactNode => {
     handleConfirmImport,
     handleCancelPreview,
   } = useReceiptUpload();
+  // Sin loader propio: la página monta siempre, isUploading/isConfirming
+  // solo gatean el disabled del área de carga.
+  useAutoStartTutorial(TutorialIdEnum.Receipts, receiptTutorialSteps, true);
 
   return (
     <AppLayout fullWidth>

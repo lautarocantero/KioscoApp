@@ -9,7 +9,10 @@ import { useSidebarLogoutConfirm } from "../../../shared/layout/components/appSi
 import ConfirmDialog from "../../../shared/components/ConfirmDialog/ConfirmDialog";
 import LightMode from "../../../shared/components/LightMode/LightMode";
 import LanguageToggle from "../../../shared/components/LanguageToggle/LanguageToggle";
+import TutorialHelpButton from "../../../shared/components/Tutorial/TutorialHelpButton";
 import { getPublicAssetUrl } from "../../../shared/helpers/getPublicAssetUrl";
+import { TutorialIdEnum } from "@typings/tutorial/enums";
+import { selectKioscoTutorialSteps } from "../../tutorial/selectKioscoTutorialSteps";
 
 // Barra superior de /select-kiosco: marca + usuario + idioma + tema +
 // logout, mismos elementos que el header del landing pero arriba de todo
@@ -66,6 +69,7 @@ const KioscoSelectorHeaderBar = (): React.ReactNode => {
                     </Box>
                 </Stack>
 
+                <TutorialHelpButton tutorialId={TutorialIdEnum.SelectKiosco} steps={selectKioscoTutorialSteps} />
                 <LanguageToggle />
                 <LightMode />
 

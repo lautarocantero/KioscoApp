@@ -20,6 +20,7 @@ export interface EmptyStateCardProps {
     button?: {
         buttonText: string;
         onButtonClick: () => void;
+        targetId?: string;
     };
     height?: string;
     centered?: boolean;

@@ -68,4 +68,20 @@ describe("ShopMascotPanel", () => {
         renderWithTheme(<ShopMascotPanel {...buildProps({ hasSellsToday: false })} />);
         expect(screen.getByRole("img").getAttribute("src")).toContain("Stocko-mascotCircle-sad");
     });
+
+    it("admin: marca los 3 targets de tutorial (nueva venta, ingresar stock, ver estadísticas)", () => {
+        const { container } = renderWithTheme(<ShopMascotPanel {...buildProps({ isAdmin: true })} />);
+
+        expect(container.querySelector('[data-tutorial-target="shop-new-sale"]')).toBeInTheDocument();
+        expect(container.querySelector('[data-tutorial-target="shop-enter-stock"]')).toBeInTheDocument();
+        expect(container.querySelector('[data-tutorial-target="shop-view-statistics"]')).toBeInTheDocument();
+    });
+
+    it("vendedor: no marca el target de 'ver estadísticas' (el botón no existe en el DOM)", () => {
+        const { container } = renderWithTheme(<ShopMascotPanel {...buildProps({ isAdmin: false })} />);
+
+        expect(container.querySelector('[data-tutorial-target="shop-new-sale"]')).toBeInTheDocument();
+        expect(container.querySelector('[data-tutorial-target="shop-enter-stock"]')).toBeInTheDocument();
+        expect(container.querySelector('[data-tutorial-target="shop-view-statistics"]')).not.toBeInTheDocument();
+    });
 });

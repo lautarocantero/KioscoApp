@@ -43,4 +43,11 @@ describe("KioscoEmptyState", () => {
 
         expect(navigate).toHaveBeenCalledWith("/join-kiosco");
     });
+
+    it("marca los targets del tutorial de selección de kiosco (crear y unirme)", () => {
+        const { container } = renderComponent();
+
+        expect(container.querySelector('[data-tutorial-target="kiosco-create"]')).toBeInTheDocument();
+        expect(container.querySelector('[data-tutorial-target="kiosco-join"]')).toBeInTheDocument();
+    });
 });

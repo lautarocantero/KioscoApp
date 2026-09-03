@@ -6,6 +6,9 @@ import TableIconHeader from "../../../shared/components/DataTable/TableIconHeade
 import AppLayout from "../../../shared/layout/AppLayout";
 import { useProviders } from "../../../../hooks/providers/useProviders";
 import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import { useAutoStartTutorial } from "@hooks/tutorial/useAutoStartTutorial";
+import { TutorialIdEnum } from "@typings/tutorial/enums";
+import { providersTutorialSteps } from "../../tutorial/providersTutorialSteps";
 import LoadingScreen from "../../../shared/components/LoadingScreen/LoadingScreen";
 
 const ProvidersListPage = (): ReactNode => {
@@ -22,6 +25,7 @@ const ProvidersListPage = (): ReactNode => {
         columns,
     } = useProviders();
     const isPageLoading = useInitialPageLoading(loading);
+    useAutoStartTutorial(TutorialIdEnum.Providers, providersTutorialSteps, !isPageLoading);
 
     if (isPageLoading) return <LoadingScreen label="Cargando proveedores..." />;
 
@@ -49,6 +53,7 @@ const ProvidersListPage = (): ReactNode => {
                 newItem={{
                     label: "Nuevo proveedor",
                     href: "/provider-create",
+                    targetId: "providers-create",
                 }}
                 deleteDialog={{
                     open: deleteDialog.open,
