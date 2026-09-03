@@ -1,5 +1,4 @@
 import { Box, Stack, Typography, type Theme } from "@mui/material";
-import SwapHorizOutlinedIcon from "@mui/icons-material/SwapHorizOutlined";
 import { useTranslation } from "react-i18next";
 import type { ShopHeaderProps } from "@typings/shop/shopComponentTypes";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
@@ -25,7 +24,6 @@ const ShopHeader = ({ greeting, kioscoName, onChangeKiosco }: ShopHeaderProps): 
                     buttonWidth="auto"
                     marginTop="0"
                     padding={0.75}
-                    icon={<SwapHorizOutlinedIcon fontSize="small" sx={{ mr: 1 }} />}
                 />
             </Stack>
             <Typography
