@@ -1,4 +1,4 @@
-import type { KioscoPlanEnum, KioscoPlanStatusEnum, MembershipPaymentMethodEnum } from "./membershipEnums";
+import type { KioscoPlanEnum, KioscoPlanStatusEnum, MembershipBillingPeriodEnum, MembershipPaymentMethodEnum } from "./membershipEnums";
 
 //─────────────────────────── 💳 Plan (API) 💳 ───────────────────────────//
 
@@ -18,6 +18,17 @@ export type MembershipPlanDefinition = {
 export type MembershipPlanWithFeatures = MembershipPlanDefinition & {
     featureKeys: string[];
     isPopular: boolean;
+};
+
+// Salida de computeMembershipPlanPricing: precio a mostrar según el período
+// elegido en el toggle. totalForTerm/savingsForTerm son null en Monthly (no
+// hay "término" que mostrar) — ver nota de MembershipBillingPeriodEnum:
+// esto es una previsualización local, el back sigue cobrando mensual.
+export type MembershipPlanPricing = {
+    period: MembershipBillingPeriodEnum;
+    monthlyEquivalent: number;
+    totalForTerm: number | null;
+    savingsForTerm: number | null;
 };
 
 //─────────────────────────── 📥 Estado 📥 ───────────────────────────//
@@ -50,6 +61,11 @@ export interface UseMembershipPlansReturn {
     plans: MembershipPlanWithFeatures[];
     loading: boolean;
     error: string | null;
+}
+
+export interface UseMembershipBillingPeriodReturn {
+    billingPeriod: MembershipBillingPeriodEnum;
+    setBillingPeriod: (period: MembershipBillingPeriodEnum) => void;
 }
 
 export interface UseMembershipStatusReturn {
@@ -92,6 +108,13 @@ export interface UseMembershipPlansPageReturn {
     plansError: string | null;
     selectPlan: (plan: KioscoPlanEnum) => void;
     isPlanCurrent: (plan: KioscoPlanEnum) => boolean;
+    // Plan completo (con precio) del tier activo de la cuenta, para el hero
+    // de "Tu plan actual" — se busca en `plans` por status.plan, no pide
+    // nada nuevo al backend.
+    currentPlanDefinition: MembershipPlanDefinition | null;
+    billingPeriod: MembershipBillingPeriodEnum;
+    setBillingPeriod: (period: MembershipBillingPeriodEnum) => void;
+    getPlanPricing: (plan: MembershipPlanDefinition) => MembershipPlanPricing;
 }
 
 // Página /membership/checkout/:plan.

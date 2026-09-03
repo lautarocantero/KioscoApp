@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
-import { KioscoPlanEnum, KioscoPlanStatusEnum } from "@typings/membership/membershipEnums";
+import { KioscoPlanEnum, KioscoPlanStatusEnum, MembershipBillingPeriodEnum } from "@typings/membership/membershipEnums";
 import type { MembershipPlanWithFeatures } from "@typings/membership/membershipTypes";
 import { useMembershipPlansPage } from "../useMembershipPlansPage";
 import { useMembershipStatus } from "../useMembershipStatus";
@@ -82,5 +82,44 @@ describe("useMembershipPlansPage", () => {
 
         expect(result.current.statusLoading).toBe(true);
         expect(result.current.plans).toHaveLength(2);
+    });
+
+    it("currentPlanDefinition busca en plans el tier que indica status.plan", () => {
+        mockedUseNavigate.mockReturnValue(vi.fn());
+        mockedUseMembershipStatus.mockReturnValue({
+            status: { plan: KioscoPlanEnum.Deluxe, plan_status: KioscoPlanStatusEnum.Active, next_payment_date: null },
+            loading: false,
+            error: null,
+            refetch: vi.fn(),
+        });
+
+        const { result } = renderHook(() => useMembershipPlansPage());
+
+        expect(result.current.currentPlanDefinition?.id).toBe(KioscoPlanEnum.Deluxe);
+    });
+
+    it("currentPlanDefinition es null sin status", () => {
+        mockedUseNavigate.mockReturnValue(vi.fn());
+        mockedUseMembershipStatus.mockReturnValue({ status: null, loading: false, error: null, refetch: vi.fn() });
+
+        const { result } = renderHook(() => useMembershipPlansPage());
+
+        expect(result.current.currentPlanDefinition).toBeNull();
+    });
+
+    it("billingPeriod arranca en Monthly y getPlanPricing recalcula al cambiarlo a Semiannual", () => {
+        mockedUseNavigate.mockReturnValue(vi.fn());
+        mockedUseMembershipStatus.mockReturnValue({ status: null, loading: false, error: null, refetch: vi.fn() });
+
+        const { result } = renderHook(() => useMembershipPlansPage());
+        const plan = buildPlan(KioscoPlanEnum.Standard);
+
+        expect(result.current.billingPeriod).toBe(MembershipBillingPeriodEnum.Monthly);
+        expect(result.current.getPlanPricing(plan).monthlyEquivalent).toBe(9999);
+
+        act(() => result.current.setBillingPeriod(MembershipBillingPeriodEnum.Semiannual));
+
+        expect(result.current.billingPeriod).toBe(MembershipBillingPeriodEnum.Semiannual);
+        expect(result.current.getPlanPricing(plan).monthlyEquivalent).toBeLessThan(9999);
     });
 });

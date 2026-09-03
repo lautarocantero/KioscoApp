@@ -20,3 +20,13 @@ export enum MembershipPaymentMethodEnum {
     Redirect = "redirect",
     Card = "card",
 }
+
+// A diferencia de los enums de arriba, este NO es espejo del back: el
+// backend no tiene concepto de período de facturación (GET
+// /membership/plans siempre devuelve precio mensual). Es el estado del
+// toggle "Mensual / 6 meses" en /membership/plans — solo cambia qué precio
+// se previsualiza en las cards, no lo que se cobra en el checkout.
+export enum MembershipBillingPeriodEnum {
+    Monthly = "monthly",
+    Semiannual = "semiannual",
+}

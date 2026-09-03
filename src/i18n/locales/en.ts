@@ -117,6 +117,12 @@ const en = {
         pending_payment: "Payment pending",
         cancelled: "Cancelled",
       },
+      hero: {
+        description: "Your subscription renews automatically every month.",
+        monthlyAmountLabel: "Monthly amount",
+        paymentMethodLabel: "Payment method",
+        paymentMethodValue: "Mercado Pago",
+      },
     },
     plans: {
       heading: "Choose your plan",
@@ -125,9 +131,22 @@ const en = {
       perMonth: "/mo",
       currentPlanButton: "Current plan",
       selectButton: "Choose {{planName}}",
+      termBadge: "{{total}} every 6 months · you save {{savings}}",
+      footerNote: "Secure payment with Mercado Pago · change your plan anytime",
       names: {
         standard: "Stocko Standard",
         deluxe: "Stocko Deluxe",
+      },
+      subtitles: {
+        standard: "For a kiosco just starting out",
+        deluxe: "For multiple kioscos and a team",
+      },
+      billingPeriod: {
+        groupLabel: "Billing period",
+        monthly: "Monthly",
+        semiannual: "6 months",
+        discountBadge: "−15%",
+        helperText: "With a 6-month term you pay 15% less per month and the price stays fixed for the whole term.",
       },
     },
     features: {

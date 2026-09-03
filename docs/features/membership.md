@@ -170,6 +170,34 @@ igual que `AccountPasswordSection` solo muestra un campo + botón "Editar"
   `token` del submit del Brick; `installments`/`payment_method_id` que
   también trae ese payload no aplican a una suscripción mensual.
 
+## Rediseño de `/membership/plans` (hero + toggle semestral)
+
+`MembershipPlansPage` tiene un hero (`MembershipCurrentPlanHero`, con la
+mascota de Stocko y fondo con textura ruidosa vía `getNoisyBackgroundSx`,
+la misma que usa `NoisyCard`) en vez de la caja de texto plano anterior, y
+un toggle "Mensual / 6 meses" (`BillingPeriodToggle`) arriba de las cards
+de tier.
+
+⚠️ **El período semestral es solo una previsualización de precio en el
+frontend** — `GET /membership/plans` sigue devolviendo un único precio
+mensual, no hay campo de período de facturación en el back todavía. Elegir
+"6 meses" en el toggle solo recalcula localmente el precio que se muestra
+en las cards (`computeMembershipPlanPricing`, -15% definido en
+`MEMBERSHIP_SEMIANNUAL_DISCOUNT_RATE`); al hacer click en "Elegir <tier>"
+el checkout (`POST /membership/checkout`) sigue cobrando el precio mensual
+real sin importar qué período esté seleccionado. Si en el futuro se agrega
+soporte real de facturación semestral en el backend, hay que propagar el
+período elegido hasta `useMembershipCheckout`/`createMembershipCheckoutRequest`
+— hoy no se propaga a propósito.
+
+Piezas nuevas: `MembershipBillingPeriodEnum` (typings/membership/membershipEnums.ts,
+no es espejo del back), `useMembershipBillingPeriod.ts` (estado del
+toggle), `computeMembershipPlanPricing.ts` (helper puro del cálculo),
+`MembershipCurrentPlanHero.tsx` y `BillingPeriodToggle.tsx`. El "Importe
+mensual" del hero se deriva cruzando `status.plan` con `plans` en
+`useMembershipPlansPage` (`currentPlanDefinition`); el "Medio de pago" se
+muestra fijo como "Mercado Pago" porque es el único procesador integrado.
+
 ## Pendientes / fuera de alcance
 
 - **Enforcement real de los límites de cada tier** (bloquear un 3er
@@ -182,6 +210,10 @@ igual que `AccountPasswordSection` solo muestra un campo + botón "Editar"
   `MP_WEBHOOK_SECRET` en el backend, `VITE_MP_PUBLIC_KEY` en el frontend)
   quedan pendientes de configurar — sin ellas ningún checkout (redirect o
   tarjeta) se puede probar end-to-end.
+- **Facturación semestral real**: el toggle "6 meses" de `/membership/plans`
+  es solo preview de precio en el frontend (ver sección de arriba) — falta
+  backend que soporte períodos de facturación para que el checkout cobre
+  realmente cada 6 meses.
 
 ## Archivos tocados (referencia rápida)
 
@@ -211,3 +243,14 @@ Frontend: `@mercadopago/sdk-react` (nueva dependencia), `src/config/mercadoPago.
 Backend: `src/typings/membership/{enums,index.d.ts}`,
 `src/services/mercadoPagoService.ts`, `src/models/membershipModel.ts`,
 `src/controllers/membership.controller.ts`, `docs/Membership.md`.
+
+### Rediseño de planes: hero + toggle semestral (`feature/update-plans-design`)
+
+Frontend (sin cambios de backend): `src/typings/membership/{membershipEnums,
+membershipTypes,membershipComponentTypes}.ts`, `src/config/membershipPlans.ts`,
+`src/modules/membership/helpers/computeMembershipPlanPricing.ts`,
+`src/hooks/membership/{useMembershipBillingPeriod,useMembershipPlansPage}.ts`,
+`src/modules/membership/components/{MembershipCurrentPlanHero,BillingPeriodToggle,
+MembershipPlanCard,MembershipPlanCardSkeleton}.tsx` (se borra
+`MembershipCurrentPlanSummary.tsx`, reemplazado por el hero),
+`src/modules/membership/pages/MembershipPlansPage.tsx`, `src/i18n/locales/{es,en}.ts`.

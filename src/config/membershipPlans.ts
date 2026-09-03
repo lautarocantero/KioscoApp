@@ -31,3 +31,10 @@ export const MEMBERSHIP_PLAN_ORDER: KioscoPlanEnum[] = [
     KioscoPlanEnum.Standard,
     KioscoPlanEnum.Deluxe,
 ];
+
+// Descuento del toggle "6 meses" en /membership/plans. Es solo una
+// previsualización de precio en el frontend (computeMembershipPlanPricing):
+// el back no tiene concepto de período de facturación todavía, así que el
+// checkout real sigue cobrando el precio mensual sin importar el período
+// elegido acá. Ver MembershipBillingPeriodEnum.
+export const MEMBERSHIP_SEMIANNUAL_DISCOUNT_RATE = 0.15;

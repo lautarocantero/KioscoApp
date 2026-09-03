@@ -117,6 +117,12 @@ const es = {
         pending_payment: "Pago pendiente",
         cancelled: "Cancelado",
       },
+      hero: {
+        description: "Tu suscripción se renueva sola todos los meses.",
+        monthlyAmountLabel: "Importe mensual",
+        paymentMethodLabel: "Medio de pago",
+        paymentMethodValue: "Mercado Pago",
+      },
     },
     plans: {
       heading: "Elegí tu plan",
@@ -125,9 +131,22 @@ const es = {
       perMonth: "/mes",
       currentPlanButton: "Plan actual",
       selectButton: "Elegir {{planName}}",
+      termBadge: "{{total}} cada 6 meses · ahorrás {{savings}}",
+      footerNote: "Pago seguro con Mercado Pago · podés cambiar de plan cuando quieras",
       names: {
         standard: "Stocko Standard",
         deluxe: "Stocko Deluxe",
+      },
+      subtitles: {
+        standard: "Para un kiosco que arranca",
+        deluxe: "Para varios kioscos y equipo",
+      },
+      billingPeriod: {
+        groupLabel: "Período de facturación",
+        monthly: "Mensual",
+        semiannual: "6 meses",
+        discountBadge: "−15%",
+        helperText: "Con contrato de 6 meses pagás 15% menos por mes y el precio queda fijo todo el semestre.",
       },
     },
     features: {
