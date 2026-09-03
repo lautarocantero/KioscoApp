@@ -37,6 +37,7 @@ const DataTableToolbar = ({ search, filters, newItem, extraActions }: DataTableT
                                 <Button
                                     onClick={newItem.onClick}
                                     href={newItem.href}
+                                    data-tutorial-target={newItem.targetId}
                                     disableElevation
                                     startIcon={<AddIcon sx={{ fontSize: "1.1rem" }} />}
                                     sx={(theme) => getTableActionButtonSx(theme, "secondary")}

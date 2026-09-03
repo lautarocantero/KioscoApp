@@ -12,6 +12,7 @@ export interface DataTableNewItemConfig {
     label?: string;
     href?: string;
     onClick?: () => void;
+    targetId?: string;
 }
 
 export interface DataTableDeleteDialogConfig {

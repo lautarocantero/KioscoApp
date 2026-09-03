@@ -22,6 +22,10 @@ vi.mock("../../../shared/components/LightMode/LightMode", () => ({
     default: () => null,
 }));
 
+vi.mock("../../../shared/components/Tutorial/TutorialHelpButton", () => ({
+    default: () => null,
+}));
+
 const mockedUseSelector = vi.mocked(useSelector);
 const mockedUseLogout = vi.mocked(useLogout);
 

@@ -90,7 +90,7 @@ const EmptyStateCard = ({
                             </Typography>
                         </Box>
                         {button && (
-                            <Box sx={{ userSelect: "auto" }}>
+                            <Box sx={{ userSelect: "auto" }} data-tutorial-target={button.targetId}>
                                 <PrimaryButtonComponent
                                     buttonText={button.buttonText}
                                     buttonOnClick={button.onButtonClick}

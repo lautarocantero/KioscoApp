@@ -6,6 +6,7 @@ import { getPublicAssetUrl } from "../../shared/helpers/getPublicAssetUrl";
 import NoisyCard from "../../shared/components/Cards/NoisyCard";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
 import OutlinedButtonComponent from "../../shared/components/Buttons/OutlinedButtonComponent";
+import TutorialTarget from "../../shared/components/Tutorial/TutorialTarget";
 
 const MASCOT_IMAGE_HAPPY_URL = getPublicAssetUrl("images/logo/Stocko-mascotCircle-happy.png");
 const MASCOT_IMAGE_SAD_URL = getPublicAssetUrl("images/logo/Stocko-mascotCircle-sad.png");
@@ -56,24 +57,30 @@ const ShopMascotPanel = ({
             </Typography>
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1, width: "100%", mt: 2 }}>
-                <PrimaryButtonComponent
-                    buttonText={t("shop.mascot.actions.newSale")}
-                    buttonOnClick={onNewSale}
-                    marginTop="0"
-                    buttonWidth="100%"
-                />
-                <Box sx={{ display: "flex", gap: 1 }}>
-                    <OutlinedButtonComponent
-                        buttonText={t("shop.mascot.actions.enterStock")}
-                        buttonOnClick={onEnterStock}
+                <TutorialTarget targetId="shop-new-sale">
+                    <PrimaryButtonComponent
+                        buttonText={t("shop.mascot.actions.newSale")}
+                        buttonOnClick={onNewSale}
+                        marginTop="0"
                         buttonWidth="100%"
                     />
-                    {isAdmin && (
+                </TutorialTarget>
+                <Box sx={{ display: "flex", gap: 1 }}>
+                    <TutorialTarget targetId="shop-enter-stock">
                         <OutlinedButtonComponent
-                            buttonText={t("shop.mascot.actions.viewStatistics")}
-                            buttonOnClick={onViewStatistics}
+                            buttonText={t("shop.mascot.actions.enterStock")}
+                            buttonOnClick={onEnterStock}
                             buttonWidth="100%"
                         />
+                    </TutorialTarget>
+                    {isAdmin && (
+                        <TutorialTarget targetId="shop-view-statistics">
+                            <OutlinedButtonComponent
+                                buttonText={t("shop.mascot.actions.viewStatistics")}
+                                buttonOnClick={onViewStatistics}
+                                buttonWidth="100%"
+                            />
+                        </TutorialTarget>
                     )}
                 </Box>
             </Box>

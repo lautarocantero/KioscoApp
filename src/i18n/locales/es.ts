@@ -1681,6 +1681,142 @@ const es = {
       },
     },
   },
+  tutorial: {
+    skipButton: "Saltar tutorial",
+    stepCounter: "Paso {{current}} de {{total}}",
+    nextLabel: "Siguiente",
+    finishLabel: "Listo, arranco",
+    prevLabel: "Anterior",
+    helpButtonLabel: "Ayuda: ver tutorial de esta pantalla",
+    selectKiosco: {
+      steps: {
+        welcome: {
+          title: "¡Bienvenido a Stocko!",
+          body: "Antes de arrancar te muestro, en dos pasos, cómo sumar tu primer kiosco. Podés saltear el tutorial cuando quieras.",
+        },
+        create: {
+          title: "Creá tu propio kiosco",
+          body: "Si empezás de cero, entrá acá: le ponés nombre y dirección, y queda listo para cargar productos y vender. Vos quedás como dueño.",
+        },
+        join: {
+          title: "¿Ya te invitaron a uno?",
+          body: "Si alguien más ya tiene el kiosco armado, pedile el código de invitación e ingresalo desde este link. Entrás directo a su equipo.",
+        },
+      },
+    },
+    shop: {
+      steps: {
+        welcome: {
+          title: "Este es tu panel del día",
+          body: "Acá vas a ver de un vistazo cómo viene el día y vas a tener acceso rápido a las acciones más comunes. Te muestro las partes clave.",
+        },
+        dailySummary: {
+          title: "Resumen del día",
+          body: "Total vendido, tickets, ticket promedio y fiados sin cobrar. Más abajo vas a ver también la hora pico de ventas.",
+        },
+        newSale: {
+          title: "Registrar una venta",
+          body: "El atajo más rápido para empezar a vender: te lleva directo al buscador de productos.",
+        },
+        enterStock: {
+          title: "Cargar stock",
+          body: "Te lleva a tus productos, donde podés crear o editar presentaciones y sumarles stock.",
+        },
+        viewStatistics: {
+          title: "Ver estadísticas",
+          body: "Solo visible para administradores: reportes y métricas más detalladas de tu kiosco.",
+        },
+        attention: {
+          title: "Lo que necesita tu atención",
+          body: "Acá aparecen los productos con poco stock y los fiados pendientes de cobrar, para que no se te escapen.",
+        },
+      },
+    },
+    products: {
+      steps: {
+        welcome: {
+          title: "Tus productos",
+          body: "Acá cargás los productos de tu kiosco. Ojo: por sí solo un producto no es vendible todavía — el siguiente paso es crearle una presentación (precio, stock y SKU).",
+        },
+        create: {
+          title: "Creá tu primer producto",
+          body: "Nombre, marca, descripción y, opcional, una imagen. Después le sumás la presentación para ponerlo a la venta.",
+        },
+      },
+    },
+    presentations: {
+      steps: {
+        welcome: {
+          title: "Presentaciones",
+          body: "Acá vive el precio, el stock y el SKU de cada variante vendible de este producto (ej. \"bolsa 1kg\"). Sin al menos una presentación, el producto no aparece en el catálogo de ventas.",
+        },
+        create: {
+          title: "Creá tu primera presentación",
+          body: "Es un asistente de varios pasos: tipo de venta, formato, stock, precio y, opcional, proveedores.",
+        },
+      },
+    },
+    newSell: {
+      steps: {
+        welcome: {
+          title: "Así se hace una venta",
+          body: "Te muestro los pasos básicos: buscar el producto, armar el carrito y cobrar. Podés saltear el tutorial cuando quieras.",
+        },
+        search: {
+          title: "Buscá el producto",
+          body: "Escribí nombre, SKU o código de barras y hacé click (o Enter) sobre el resultado para agregarlo al carrito.",
+        },
+        scan: {
+          title: "O escaneá el código",
+          body: "Activá el lector de código de barras con este botón o con la tecla F2.",
+        },
+        cart: {
+          title: "Tu carrito",
+          body: "Ajustá cantidades y descuentos, elegí la forma de pago y, si hace falta, registrá un abono parcial (fiado).",
+        },
+        ticket: {
+          title: "Cerrá la venta",
+          body: "Generá el ticket con este botón o con la tecla F9. Vas a ver un resumen tipo comprobante de la venta.",
+        },
+      },
+    },
+    providers: {
+      steps: {
+        welcome: {
+          title: "Tus proveedores",
+          body: "Guardá acá los datos de tus proveedores — te van a servir después al cargar boletas de compra.",
+        },
+        create: {
+          title: "Cargá tu primer proveedor",
+          body: "Nombre, valoración, teléfono y email de contacto.",
+        },
+      },
+    },
+    sellers: {
+      steps: {
+        welcome: {
+          title: "Tu equipo de vendedores",
+          body: "Acá administrás quién puede vender en tu kiosco.",
+        },
+        invite: {
+          title: "Invitá a tu primer vendedor",
+          body: "Se genera un código y un link para compartir — no se manda ningún email. Quien lo use se suma como vendedor, y le podés cambiar el rol después.",
+        },
+      },
+    },
+    receipts: {
+      steps: {
+        welcome: {
+          title: "Reponer stock con una boleta",
+          body: "Subís un Excel de tu compra a un proveedor y actualizamos el stock automáticamente. No es para fotografiar un ticket ni para emitir boletas de venta.",
+        },
+        upload: {
+          title: "Subí tu archivo",
+          body: "Arrastrá el Excel acá o hacé click en \"Seleccionar archivo\". Antes podés descargar la plantilla de ejemplo más abajo.",
+        },
+      },
+    },
+  },
 };
 
 export default es;

@@ -5,6 +5,9 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useKioscoSelector } from "../../../hooks/kiosco/useKioscoSelector";
 import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
+import { useAutoStartTutorial } from "@hooks/tutorial/useAutoStartTutorial";
+import { TutorialIdEnum } from "@typings/tutorial/enums";
+import { selectKioscoTutorialSteps } from "../tutorial/selectKioscoTutorialSteps";
 import LoadingScreen from "../../shared/components/LoadingScreen/LoadingScreen";
 import type { RootState } from "../../../store/auth/authSlice";
 import KioscoGrid from "../components/KioscoGrid/KioscoGrid";
@@ -19,6 +22,11 @@ const KioscoSelectorPage = (): React.ReactNode => {
     const { kioscos, filteredKioscos, loading, entering, handleEnterKiosco, query, onQueryChange, clearQuery, isEmpty, noResults } =
         useKioscoSelector();
     const isPageLoading = useInitialPageLoading(loading);
+    // Los targets "crear"/"unirme" del tutorial solo existen en el DOM
+    // cuando se muestra el estado vacío (KioscoEmptyState) — con kioscos ya
+    // creados se renderiza KioscoGrid en su lugar, así que el tutorial no
+    // aplica.
+    useAutoStartTutorial(TutorialIdEnum.SelectKiosco, selectKioscoTutorialSteps, !isPageLoading && isEmpty);
 
     // El header (logout, idioma, tema) queda SIEMPRE montado, incluso
     // mientras carga: esta es la única pantalla sin AppShell/sidebar, así

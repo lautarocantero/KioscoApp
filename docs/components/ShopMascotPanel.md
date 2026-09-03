@@ -29,6 +29,7 @@ El headline/bajada se arman con `t()` interpolando estos valores ya resueltos (i
 
 - Imagen condicionada a `hasSellsToday`: `Stocko-mascotCircle-happy.png` si ya hay ventas hoy, `Stocko-mascotCircle-sad.png` si todavía no hay ninguna. Ambos assets ya estaban en el repo (`public/images/logo/`) — no se agregó ningún asset nuevo.
 - "Ver estadísticas" no se muestra a vendedores (`isAdmin`), mismo criterio que el resto de `/shop` (`useIsActiveKioscoAdmin`).
+- Los 3 botones de acción están envueltos en [`TutorialTarget`](TutorialTarget.md) (`shop-new-sale`, `shop-enter-stock`, `shop-view-statistics`) — son los targets del [tutorial de `/shop`](../features/tutorialesOnboardingImplementacion.md). El wrapper no afecta el layout (`display:"contents"`).
 
 ## Tests
 
