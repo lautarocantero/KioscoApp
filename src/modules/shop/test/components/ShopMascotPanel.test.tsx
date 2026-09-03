@@ -54,4 +54,14 @@ describe("ShopMascotPanel", () => {
         );
         expect(screen.getByText(/Quedan 4 productos con stock crítico/)).toBeInTheDocument();
     });
+
+    it("con ventas hoy: usa la imagen de Stocko contento", () => {
+        renderWithTheme(<ShopMascotPanel {...buildProps({ hasSellsToday: true })} />);
+        expect(screen.getByRole("img").getAttribute("src")).toContain("Stocko-mascotCircle-happy");
+    });
+
+    it("sin ventas hoy: usa la imagen de Stocko triste", () => {
+        renderWithTheme(<ShopMascotPanel {...buildProps({ hasSellsToday: false })} />);
+        expect(screen.getByRole("img").getAttribute("src")).toContain("Stocko-mascotCircle-sad");
+    });
 });

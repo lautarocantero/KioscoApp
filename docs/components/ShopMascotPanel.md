@@ -28,7 +28,7 @@ El headline/bajada se arman con `t()` interpolando estos valores ya resueltos (i
 
 ## ✨ Notas
 
-- La imagen (`public/images/logo/stocko-mascot.png`) ya estaba en el repo (sumada en el rediseño del carrito) — no se agregó ningún asset nuevo.
+- Imagen condicionada a `hasSellsToday`: `Stocko-mascotCircle-happy.png` si ya hay ventas hoy, `Stocko-mascotCircle-sad.png` si todavía no hay ninguna. Ambos assets ya estaban en el repo (`public/images/logo/`) — no se agregó ningún asset nuevo.
 - "Ver estadísticas" no se muestra a vendedores (`isAdmin`), mismo criterio que el resto de `/shop` (`useIsActiveKioscoAdmin`).
 
 ## Tests

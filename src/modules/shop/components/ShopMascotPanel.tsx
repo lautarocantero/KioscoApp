@@ -7,7 +7,8 @@ import NoisyCard from "../../shared/components/Cards/NoisyCard";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
 import OutlinedButtonComponent from "../../shared/components/Buttons/OutlinedButtonComponent";
 
-const MASCOT_IMAGE_URL = getPublicAssetUrl("images/logo/stocko-mascot.png");
+const MASCOT_IMAGE_HAPPY_URL = getPublicAssetUrl("images/logo/Stocko-mascotCircle-happy.png");
+const MASCOT_IMAGE_SAD_URL = getPublicAssetUrl("images/logo/Stocko-mascotCircle-sad.png");
 
 const ShopMascotPanel = ({
     kioscoName,
@@ -46,7 +47,7 @@ const ShopMascotPanel = ({
         <NoisyCard sx={{ p: 3, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 1 }}>
             <Box
                 component="img"
-                src={MASCOT_IMAGE_URL}
+                src={hasSellsToday ? MASCOT_IMAGE_HAPPY_URL : MASCOT_IMAGE_SAD_URL}
                 alt={t("shop.mascot.imageAlt")}
                 sx={{ width: 132, height: 132, objectFit: "contain" }}
             />
