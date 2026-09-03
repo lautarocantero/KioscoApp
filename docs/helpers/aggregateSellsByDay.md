@@ -19,7 +19,7 @@ aggregateSellsByDay(sells: SellTicketType[], days: number): DailySalesPoint[]
 
 ## Dónde se usa
 
-`useShopSalesSummary` (`hooks/shop/useShopSalesSummary.ts`), que le pasa `state.sell.sells` (poblado por `useSellsListData`).
+`useSellsContextBand` (`hooks/sells/useSellsContextBand.ts`) para el sparkline de 14 días de `/sells`, con `state.sell.sells` (poblado por `useSellsListData`).
 
 ## Tests
 

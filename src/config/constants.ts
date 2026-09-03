@@ -1,7 +1,6 @@
 import type { PresentationStatus } from "@typings/presentation/presentationEnum";
 import { PresentationStatusColors } from "@typings/presentation/presentationEnum";
 import { Currency, SellStatusEnum } from "@typings/sells/sellsEnum";
-import { ShopSalesRange } from "@typings/shop/shopEnums";
 import type { DeleteDialogState, RestockDialogState, SettleDebtDialogState } from "@typings/ui/dialog.types";
 import { getPublicAssetUrl } from "../modules/shared/helpers/getPublicAssetUrl";
 
@@ -192,14 +191,6 @@ export const SALE_CONFIRMED_MODAL_AUTO_CLOSE_MS = 4000;
 export const SELL_SEARCH_INPUT_ID = "sell-search-input";
 export const SELL_BARCODE_TOGGLE_ID = "sell-barcode-toggle";
 export const CART_GENERATE_TICKET_BUTTON_ID = "cart-generate-ticket-button";
-
-// Cantidad de días agregados por rango del gráfico de ventas de /shop.
-// No es un label (no hay texto), por eso vive acá y no en las traducciones.
-export const SHOP_SALES_RANGE_DAYS: Record<ShopSalesRange, number> = {
-    [ShopSalesRange.SevenDays]: 7,
-    [ShopSalesRange.Fortnight]: 15,
-    [ShopSalesRange.Month]: 30,
-};
 
 // /*══════════════════════════════════════════════════════════════════════╗
 // ║ ⚙️ AJUSTES  ⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️                     ║

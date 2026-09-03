@@ -279,32 +279,79 @@ const es = {
     online: "En línea",
     offline: "Desconectado",
   },
-  shopSalesRange: {
-    seven_days: "Últimos 7 días",
-    fortnight: "Última quincena",
-    month: "Último mes",
-  },
   shop: {
     header: {
       title: "Tienda",
-      subtitle: "Este es el resumen general de tu negocio.",
+      subtitle: "Este es el resumen del día de tu negocio.",
       changeKiosco: "Cambiar de Tienda",
     },
-    statsRow: {
-      ariaLabel: "Resumen por sección",
-    },
-    inventory: {
-      title: "Inventario",
-      subtitle: "Resumen de stock",
-      viewCatalog: "Ver catálogo →",
-      tiles: {
-        total: "Total productos",
-        withStock: "Con stock",
-        lowStock: "Stock bajo",
-        withoutStock: "Sin stock",
+    hero: {
+      title: "Ventas de hoy",
+      vsYesterday: "vs ayer ({{amount}})",
+      tickets: {
+        label: "Tickets",
       },
-      loadReceipt: "Cargar boleta",
-      downloadRestockReport: "Descargar boleta reposición",
+      averageTicket: {
+        label: "Ticket promedio",
+      },
+      toCollect: {
+        label: "Fiados sin cobrar",
+        note_one: "{{count}} cuenta abierta",
+        note_other: "{{count}} cuentas abiertas",
+      },
+      empty: "Todavía no hay ventas registradas hoy.",
+    },
+    hourlyChart: {
+      title: "Ventas por hora",
+      peak: "Pico {{start}}–{{end}} h · 1 de cada {{ratio}} tickets",
+    },
+    mascot: {
+      imageAlt: "Stocko",
+      owner: {
+        headline: "{{greeting}} Vamos {{amount}} en {{tickets}} tickets hoy.",
+        headlineEmpty: "{{greeting}} Todavía no hay ventas hoy.",
+      },
+      seller: {
+        headline: "{{greeting}} Hoy en {{kioscoName}} van {{amount}} en {{tickets}} tickets.",
+        headlineEmpty: "{{greeting}} Todavía no hay ventas hoy.",
+      },
+      subline: {
+        attention: "Quedan {{stock}} productos con stock crítico y {{debtCount}} fiados por cobrar ({{debtAmount}}).",
+        ok: "Sin pendientes urgentes por ahora.",
+      },
+      actions: {
+        newSale: "Nueva venta",
+        enterStock: "Ingresar stock",
+        viewStatistics: "Ver estadísticas",
+      },
+    },
+    topProductsToday: {
+      title: "Más vendidos hoy",
+      empty: "Todavía no hay ventas hoy.",
+      quantity_one: "{{count}} u",
+      quantity_other: "{{count}} u",
+    },
+    attention: {
+      title: "Necesita tu atención",
+      count_one: "{{count}} aviso",
+      count_other: "{{count}} avisos",
+      empty: "Sin pendientes urgentes por ahora. 🎉",
+      stock: {
+        label: "Stock crítico",
+        detail: "{{critical}} sin stock · {{low}} bajo el mínimo",
+      },
+      debt: {
+        label: "Fiados sin cobrar",
+        detail_one: "{{count}} cuenta abierta",
+        detail_other: "{{count}} cuentas abiertas",
+      },
+      restockButton: "Reponer y pedir",
+    },
+    activeSellers: {
+      title: "En el mostrador ahora",
+      empty: "Nadie está conectado en este momento.",
+      orders_one: "{{count}} pedido",
+      orders_other: "{{count}} pedidos",
     },
     restockReportPdf: {
       title: "Boleta de Reposición",
@@ -320,32 +367,6 @@ const es = {
         provider2: "Proveedor 2",
       },
       fileNamePrefix: "boleta_reposicion",
-    },
-    lowStockList: {
-      title: "Productos con stock bajo",
-      empty: "Ningún producto está por debajo de su stock mínimo. 🎉",
-      severity: {
-        critical: "Crítico",
-        low: "Bajo",
-      },
-      showingCount: "Mostrando los {{shown}} más críticos de {{total}} productos con stock bajo.",
-    },
-    salesChart: {
-      title: "Ventas",
-      rangeAriaLabel: "Rango de fechas de ventas",
-    },
-    topSellers: {
-      title: "Vendedores destacados",
-      viewAll: "Ver todos →",
-      empty: "Todavía no hay ventas registradas este mes.",
-      orders_one: "{{count}} pedido",
-      orders_other: "{{count}} pedidos",
-    },
-    topProviders: {
-      title: "Proveedores destacados",
-      viewAll: "Ver todos ({{count}}) →",
-      empty: "Todavía no cargaste proveedores.",
-      noContact: "Sin contacto",
     },
   },
   sells: {

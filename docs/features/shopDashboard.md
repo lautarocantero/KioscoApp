@@ -1,16 +1,22 @@
 # Dashboard de `/shop` — Documentación
 
-> **Actualización (multi-kiosco):** el título ya no dice "Tienda" fijo —
-> muestra el nombre del kiosco activo (`useActiveKiosco`), con un botón
-> "Cambiar de Tienda" al lado que vuelve a `/select-kiosco`. Todos los
-> datos de esta página (ventas, productos, vendedores, proveedores) ya
-> estaban scoped al backend real; con multi-kiosco además quedan
-> aislados por kiosco activo (header `x-kiosco-id`, transparente para
-> estos hooks). Ver [docs/features/multiKiosco.md](multiKiosco.md).
+> **Rediseño (resumen del día):** `/shop` dejó de ser un dashboard de
+> métricas generales (ventas del período elegible, inventario completo,
+> vendedores del mes, proveedores destacados) para convertirse en un
+> **resumen de HOY**: cuánto se vendió hoy vs ayer, qué necesita atención
+> ahora mismo, quién está vendiendo en este momento — con la mascota
+> Stocko como "voz" del resumen. Ver el diseño de referencia en el historial
+> de la rama `feature/update-shop-design`.
+>
+> **Multi-kiosco:** el título sigue mostrando el nombre del kiosco activo
+> (`useActiveKiosco`), con un botón "Cambiar de Tienda" al lado que vuelve
+> a `/select-kiosco`. Todos los datos quedan aislados por kiosco activo
+> (header `x-kiosco-id`, transparente para estos hooks). Ver
+> [docs/features/multiKiosco.md](multiKiosco.md).
 
 ## 1. Resumen
 
-`/shop` es el punto de entrada de la app (reemplazó a `/home`). Es un dashboard con datos reales del negocio, no un menú de links. Cada número que se muestra sale de un endpoint/estado real del store — no hay ningún dato mockeado o inventado.
+`/shop` es el punto de entrada de la app (reemplazó a `/home`). Cada número que se muestra sale de un endpoint/estado real del store o de una agregación pura sobre esos datos — no hay ningún dato mockeado o inventado.
 
 Archivo principal: `src/modules/shop/pages/Shop/ShopPage.tsx`.
 
@@ -18,58 +24,51 @@ Archivo principal: `src/modules/shop/pages/Shop/ShopPage.tsx`.
 
 ```
 ShopPage
-├── ShopHeader           (saludo real + subtítulo)
-├── ShopStatsRow         (4 LinkCard: Ventas, Productos, Vendedores, Proveedores)
-├── Grid
-│   ├── ShopSalesChart       (gráfico de ventas, rango elegible: 7/15/30 días)
-│   └── ShopInventoryPanel   (total / con stock / stock bajo / sin stock + botones "Cargar boleta" y "Descargar boleta reposición")
-│       └── ShopLowStockList (lista con scroll: presentaciones por debajo del mínimo)
-└── Grid
-    ├── ShopTopSellers   (ranking de vendedores por ventas del mes)
-    └── ShopTopProviders (proveedores: nombre, valoración, contacto)
+├── ShopHeader              (saludo real + nombre del kiosco activo + "Cambiar de Tienda")
+├── Grid [1fr, 360px]
+│   ├── ShopDailyHeroCard   (ventas de hoy vs ayer, tickets, ticket promedio, fiados, gráfico por hora)
+│   └── ShopMascotPanel     (Stocko: headline/bajada con los números del día + accesos directos)
+└── Grid [1.3fr, 1fr, 1fr]
+    ├── ShopTopProductsToday (más vendidos HOY, con cantidad y monto)
+    ├── ShopAttentionPanel   (stock crítico/bajo + fiados sin cobrar + "Reponer y pedir")
+    └── ShopActiveSellers    (vendedores online ahora + lo que vendieron hoy)
 ```
 
-- `ShopStatsRow` reusa `useShopStatLinks` + el componente `LinkCard` que ya existía (mismo look que el resto de la app).
-- `ShopSalesChart` y `ShopTopSellers` comparten `useShopSalesSummary`, que agrega el listado completo de ventas (`useSellsListData`) client-side — no hay endpoint de reportes agregados en el backend (ver [docs/hooks/shop/useShopSalesSummary.md](../hooks/shop/useShopSalesSummary.md)).
-- `ShopInventoryPanel` usa `useShopInventorySummary` (ver [docs/hooks/shop/useShopInventorySummary.md](../hooks/shop/useShopInventorySummary.md)) y compone `ShopLowStockList`, alimentada por `useShopLowStockPresentations` (ver [docs/hooks/shop/useShopLowStockPresentations.md](../hooks/shop/useShopLowStockPresentations.md)).
-- `ShopTopProviders` usa `useShopFeaturedProviders`.
+- `ShopDailyHeroCard`, `ShopMascotPanel`, `ShopTopProductsToday` y `ShopActiveSellers` comparten [`useShopDailySummary`](../hooks/shop/useShopDailySummary.md), que reusa `useSellsListData`/`useSellersListData` (misma fuente que el resto de la app) y las piezas puras de la banda de contexto de `/sells` (`buildSellsPeriodRange`, `aggregateSellsPeriodKpis`, `aggregateSellsPeakHour`, `aggregateSellsPartialsAlert`) fijadas en "hoy".
+- `ShopAttentionPanel` usa [`useShopLowStockPresentations`](../hooks/shop/useShopLowStockPresentations.md) (para el conteo real crítico/bajo) y [`useShopRestockReport`](../hooks/shop/useShopRestockReport.md) (para el botón "Reponer y pedir", boleta en PDF).
 
 ## 3. Qué datos son reales (y de dónde salen)
 
 | Bloque | Dato | Fuente |
 |---|---|---|
-| Ventas (tile) | ventas de hoy + monto | `GET /sell/get-today-sells-count` (`useSellStats`) |
-| Productos (tile) | total + stock bajo | `GET /product/get-product-stats` (`useProductStats`) |
-| Vendedores (tile) | total + online | `GET /seller/get-sellers` (`useSellersListData`) |
-| Proveedores (tile) | total | `GET /provider/get-providers-stats` (`useProvidersLinkData`) |
-| Gráfico de ventas | ventas por día, rango elegible (7/15/30 días) | `GET /sell/get-sells` agregado client-side (`aggregateSellsByDay`) |
-| Inventario | total, con stock, stock bajo, sin stock | `GET /product/get-product-stats` + `GET /product/get-products-with-stock`, combinados en `useShopInventorySummary` |
-| Productos con stock bajo (lista) | nombre, stock actual, stock mínimo, severidad, top 20 más críticos de N reales | `GET /get-product-presentations` (antes sin usar, ver `useShopLowStockPresentations`) |
-| Boleta de reposición (PDF) | producto, presentación, stock actual/mínimo, reposición mínima, proveedor 1/2 (vacíos), **todas** las presentaciones bajo el mínimo | `GET /get-product-presentations` + `GET /get-products` cruzados (ver `useShopRestockReport`) |
-| Vendedores destacados | ventas del mes + pedidos + online/offline | mismo `GET /sell/get-sells` cruzado con `GET /seller/get-sellers` (`aggregateTopSellers`) |
-| Proveedores destacados | nombre, valoración (1-5), contacto | `GET /provider/get-providers` (`useProvidersListData`) |
+| Ventas de hoy, tickets, ticket promedio, variación vs ayer | `GET /sell/get-sells` agregado client-side, hoy vs ayer (`aggregateSellsPeriodKpis` + `buildSellsPeriodRange(Today)`) | `useShopDailySummary` |
+| Ventas por hora (hoy) | `GET /sell/get-sells` filtrado a hoy, agrupado por hora (`aggregateSellsByHour`) | `useShopDailySummary` |
+| Más vendidos hoy | `GET /sell/get-sells` filtrado a hoy, agrupado por producto (`aggregateTopProductsToday`) | `useShopDailySummary` |
+| En el mostrador ahora | `GET /seller/get-sellers` (online/offline real) cruzado con las ventas de hoy de cada uno (`aggregateActiveSellersToday`) | `useShopDailySummary` |
+| Fiados sin cobrar | Ventas parciales sin saldar, todo el historial (`aggregateSellsPartialsAlert`, mismo helper que `/sells`) | `useShopDailySummary` |
+| Stock crítico / bajo | `GET /get-product-presentations` (`useShopLowStockPresentations`, conteo real por severidad sobre TODAS las presentaciones, no solo las 20 visibles) | `useShopLowStockPresentations` |
+| Boleta de reposición (PDF) | producto, presentación, stock actual/mínimo, reposición mínima, proveedor 1/2 (vacíos), **todas** las presentaciones bajo el mínimo | `useShopRestockReport` |
 
 ## 4. Qué se omitió deliberadamente (y por qué)
 
-El diseño de referencia original tenía más métricas de las que el backend expone hoy. En vez de inventarlas, se omitieron:
+El diseño de referencia tenía más métricas de las que el backend expone hoy. En vez de inventarlas, se omitieron:
 
-- **"Ingresos netos"**: el backend solo da el monto bruto de una venta (`total_amount`), no hay costos/márgenes para calcular neto.
-- **"Estado" de proveedor** (Activo/Principal/En evaluación) y **cantidad de productos por proveedor**: `Provider` no tiene esos campos, y no existe relación `provider_id` en `Product`/`Presentation`.
-- **"Clientes" y "conversión" por vendedor**: no existe el concepto de cliente/customer en ningún tipo del repo.
-- **Banner de "Reportes inteligentes"**: `ShopStadisticsPage` (`src/modules/stadistics/ShopStadisticsPage.tsx`) es un stub vacío sin ruta activa — no se linkeó porque no lleva a ningún lado funcional todavía.
+- **"Meta del día"** (barra de progreso hacia un objetivo de ventas): no existe ningún concepto de meta/objetivo en el backend.
+- **"Efectivo en caja"** (saldo de caja): no existe el concepto de sesión/apertura de caja — solo el método de pago por venta (`PaymentMethod.Cash`), que no es lo mismo que un saldo real de caja.
+- **"Vencimientos"** en el panel de atención: `ProductTicketType.expiration_date` existe por línea de venta, pero no hay ningún endpoint/agregación que calcule qué productos vencen pronto sobre el catálogo.
+- **Horario de turno** ("Turno desde 12:00") en "En el mostrador ahora": solo existe el estado online/offline (`SellerStatus`), no el concepto de turno/sesión de trabajo con horario de inicio.
+- **"Pedidos por llegar"**: no existe ningún concepto de pedido a proveedor con fecha de entrega en el backend.
 
-La tabla de stock bajo con stock actual/mínimo por producto **sí se terminó armando** (ver `useShopLowStockPresentations`) conectando `GET /get-product-presentations`, un endpoint que existía en el backend pero no tenía ningún thunk/hook que lo consumiera.
-
-Si en algún momento el backend agrega los datos que faltan arriba, estos son los puntos exactos a extender (`ProductStats`, `Provider`, `Seller`, o un endpoint nuevo de reportes agregados en vez de agregar `sells` client-side).
+Si el backend agrega estos datos en el futuro, estos son los puntos exactos a extender: un endpoint/campo de metas por kiosco, un modelo de sesión de caja, una agregación de vencimientos sobre `Presentation`/`Product`, y un modelo de turno de vendedor.
 
 ### Nota sobre `palette.warning` vs `palette.error`
 
-En el theme actual (`src/theme/mainTheme.ts`), `palette.warning.main` y `palette.error.main` tienen el mismo valor hex tanto en light como en dark theme — son indistinguibles visualmente. Para diferenciar la severidad "Bajo" de "Crítico" en `ShopLowStockList`/`ShopInventoryPanel` se usa `theme.custom.accents.gold` (ya documentado en el theme para "badges destacados") en vez de `palette.warning`. Si en algún momento se define un `warning.main` realmente distinto de `error.main`, valdría la pena volver a usar el semántico `palette.warning`.
+En el theme actual (`src/theme/mainTheme.ts`), `palette.warning.main` y `palette.error.main` tienen el mismo valor hex tanto en light como en dark theme — son indistinguibles visualmente. Para diferenciar severidades se usa `theme.custom.accents.gold` (fiados, "necesita atención") o `theme.custom.errorDark`/`errorLight` (stock crítico) en vez del semántico `palette.warning`. Si en algún momento se define un `warning.main` realmente distinto de `error.main`, valdría la pena volver a usar el semántico `palette.warning`.
 
-### Nota sobre el estado online/offline en "Vendedores destacados"
+### Nota sobre el estado online/offline en "En el mostrador ahora"
 
-`aggregateTopSellers` cruza el `seller_id` de cada venta contra la lista actual de `sellers` para saber si está online. En cuentas de test que se recrearon (nuevo `_id`, mismo nombre), ese cruce por id falla y el vendedor actual aparecía siempre "Desconectado" aunque estuviera logueado. Se agregó un fallback: si no hay match por `seller_id`, se intenta por `seller_name`. Es una heurística razonable para un comercio chico (nombres efectivamente únicos en la práctica), pero no es 100% robusta — si el backend algún día permite reasignar `_id` sin que cambie el nombre en un caso ambiguo (dos vendedores con el mismo nombre), el fallback podría matchear al vendedor equivocado. El match por `id` siempre tiene prioridad.
+`aggregateActiveSellersToday` cruza `seller_id` de cada venta de hoy contra la lista actual de `sellers`. Si una cuenta se recreó (nuevo `_id`, mismo nombre), esa venta específica queda sin cruzar con nadie — no rompe el listado (el vendedor igual aparece si está online, solo su total de hoy podría no reflejar esa venta puntual), pero es una limitación conocida heredada del mismo patrón que ya tenía el viejo `aggregateTopSellers`.
 
 ## 5. Limitación de performance conocida
 
-`useShopSalesSummary` dispara `getSellsThunk()` (todas las ventas, sin paginar ni filtrar por fecha en el backend) para poder agregar por día/vendedor. Es dato real, pero no escala si el volumen de ventas crece mucho — en ese caso conviene un endpoint de backend con rango de fechas en vez de esta agregación en frontend.
+`useShopDailySummary` (como antes `useShopSalesSummary`) dispara `getSellsThunk()` (todas las ventas, sin paginar ni filtrar por fecha en el backend) para poder agregar por hora/producto/vendedor. Es dato real, pero no escala si el volumen de ventas crece mucho — en ese caso conviene un endpoint de backend con rango de fechas en vez de esta agregación en frontend.

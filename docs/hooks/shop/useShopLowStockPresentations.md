@@ -17,6 +17,8 @@ Este hook:
 useShopLowStockPresentations(): {
   lowStock: LowStockPresentationSummary[]; // máximo 20, más críticos primero
   total: number;                           // cantidad real total por debajo del mínimo
+  criticalCount: number;                   // sin stock (0 o negativo), sobre TODAS, no solo las 20 visibles
+  lowCount: number;                        // con algo de stock pero bajo el mínimo, ídem
   isLoading: boolean;
   error: string | null;
 }
@@ -25,8 +27,13 @@ useShopLowStockPresentations(): {
 ## 💡 Ejemplo
 
 ```tsx
-const { lowStock, total, isLoading, error } = useShopLowStockPresentations();
-<ShopLowStockList lowStock={lowStock} total={total} isLoading={isLoading} error={error} />
+// modules/shop/pages/Shop/ShopPage.tsx
+const lowStockPresentations = useShopLowStockPresentations();
+<ShopAttentionPanel
+  criticalStockCount={lowStockPresentations.criticalCount}
+  lowStockCount={lowStockPresentations.lowCount}
+  ...
+/>
 ```
 
 ## ✨ Beneficios

@@ -1,11 +1,8 @@
-import type { OptionLink } from "@typings/ui/layout.types";
+import type { SellsPartialsAlertSummary } from "@typings/sells/types";
 import type {
-  LowStockPresentationSummary,
-  UseShopFeaturedProvidersReturn,
-  UseShopInventorySummaryReturn,
-  UseShopLowStockPresentationsReturn,
-  UseShopRestockReportReturn,
-  UseShopSalesSummaryReturn,
+  ActiveSellerSummary,
+  TopProductSummary,
+  UseShopDailySummaryReturn,
 } from "./shopTypes";
 
 export interface ShopHeaderProps {
@@ -19,22 +16,39 @@ export interface ShopInitialAvatarProps {
   color: string;
 }
 
-export interface ShopStatsRowProps {
-  links: OptionLink[];
+export type ShopDailyHeroCardProps = Pick<UseShopDailySummaryReturn, "kpis" | "partialsAlert" | "hourly" | "peakHour" | "hasSellsToday" | "isLoading" | "error">;
+
+export interface ShopMascotPanelProps {
+  kioscoName: string;
+  greeting: string;
+  isAdmin: boolean;
+  kpis: UseShopDailySummaryReturn["kpis"];
+  hasSellsToday: boolean;
+  criticalStockCount: number;
+  partialsAlert: SellsPartialsAlertSummary;
+  onNewSale: () => void;
+  onEnterStock: () => void;
+  onViewStatistics: () => void;
 }
 
-export type ShopSalesChartProps = Pick<UseShopSalesSummaryReturn, "dailySales" | "periodTotal" | "range" | "setRange" | "canChangeRange" | "isLoading" | "error">;
-
-export type ShopTopSellersProps = Pick<UseShopSalesSummaryReturn, "topSellers" | "isLoading" | "error">;
-
-export type ShopTopProvidersProps = UseShopFeaturedProvidersReturn;
-
-export interface ShopInventoryPanelProps extends UseShopInventorySummaryReturn {
-  lowStockItems: LowStockPresentationSummary[];
-  lowStockItemsTotal: number;
-  isLoadingLowStockItems: boolean;
-  lowStockItemsError: string | null;
-  restockReport: Pick<UseShopRestockReportReturn, "isDownloadDisabled" | "handleDownload">;
+export interface ShopTopProductsTodayProps {
+  topProducts: TopProductSummary[];
+  isLoading: boolean;
+  error: string | null;
 }
 
-export type ShopLowStockListProps = UseShopLowStockPresentationsReturn;
+export interface ShopAttentionPanelProps {
+  criticalStockCount: number;
+  lowStockCount: number;
+  partialsAlert: SellsPartialsAlertSummary;
+  isLoading: boolean;
+  error: string | null;
+  isRestockDownloadDisabled: boolean;
+  onRestockDownload: () => void;
+}
+
+export interface ShopActiveSellersProps {
+  activeSellers: ActiveSellerSummary[];
+  isLoading: boolean;
+  error: string | null;
+}
