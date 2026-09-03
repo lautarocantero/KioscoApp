@@ -11,3 +11,12 @@ export enum KioscoPlanStatusEnum {
     PendingPayment = "pending_payment",
     Cancelled = "cancelled",
 }
+
+// Cómo se autoriza la preapproval de Mercado Pago: redirigiendo al checkout
+// hospedado (init_point) o con un card_token_id tokenizado en el cliente
+// (Card Payment Brick) para autorizarla sin salir de la app. Espejo exacto
+// del enum del backend.
+export enum MembershipPaymentMethodEnum {
+    Redirect = "redirect",
+    Card = "card",
+}

@@ -8,15 +8,32 @@ import AppLayout from "../../shared/layout/AppLayout";
 import BackButton from "../../shared/components/Buttons/BackButton";
 import PrimaryButtonComponent from "../../shared/components/Buttons/PrimaryButtonComponent";
 import { useMembershipCheckoutPage } from "../../../hooks/membership/useMembershipCheckoutPage";
+import { useMercadoPagoSdk } from "../../../hooks/membership/useMercadoPagoSdk";
 import { useInitialPageLoading } from "@hooks/ui/useInitialPageLoading";
 import LoadingScreen from "../../shared/components/LoadingScreen/LoadingScreen";
 import { formatMembershipPrice } from "../helpers/formatMembershipPrice";
 import PaymentMethodRow from "../components/PaymentMethodRow";
+import CardPaymentBrick from "../components/CardPaymentBrick";
+import { MembershipPaymentMethodEnum } from "@typings/membership/membershipEnums";
 
 const MembershipCheckoutPage = (): React.ReactNode => {
     const { t } = useTranslation();
     const { plan: planParam } = useParams<{ plan: string }>();
-    const { plan, planDefinition, loading, error, isSubmitting, checkoutError, pay } = useMembershipCheckoutPage(planParam);
+    const {
+        plan,
+        planDefinition,
+        loading,
+        error,
+        isSubmitting,
+        checkoutError,
+        paymentMethod,
+        selectPaymentMethod,
+        payerEmail,
+        pay,
+        payWithCardToken,
+        handleCardBrickError,
+    } = useMembershipCheckoutPage(planParam);
+    const mercadoPagoSdk = useMercadoPagoSdk();
     const isPageLoading = useInitialPageLoading(loading, planParam);
 
     if (isPageLoading) return <LoadingScreen label="Cargando plan..." />;
@@ -91,24 +108,26 @@ const MembershipCheckoutPage = (): React.ReactNode => {
                                 {t("membership.checkout.paymentMethod")}
                             </Typography>
 
-                            <Stack spacing={1.5}>
+                            <Stack role="radiogroup" aria-label={t("membership.checkout.paymentMethod")} spacing={1.5}>
                                 <PaymentMethodRow
                                     icon={<PaymentOutlinedIcon fontSize="small" />}
                                     label={t("membership.checkout.mercadoPago")}
                                     description={t("membership.checkout.mercadoPagoDescription")}
-                                    selected
+                                    selected={paymentMethod === MembershipPaymentMethodEnum.Redirect}
+                                    onSelect={() => selectPaymentMethod(MembershipPaymentMethodEnum.Redirect)}
                                 />
                                 <PaymentMethodRow
                                     icon={<CreditCardOutlinedIcon fontSize="small" />}
                                     label={t("membership.checkout.creditCard")}
-                                    badge={t("membership.checkout.otherMethodsComingSoon")}
-                                    disabled
+                                    selected={paymentMethod === MembershipPaymentMethodEnum.Card}
+                                    onSelect={() => selectPaymentMethod(MembershipPaymentMethodEnum.Card)}
                                 />
                                 <PaymentMethodRow
                                     icon={<AccountBalanceOutlinedIcon fontSize="small" />}
                                     label={t("membership.checkout.bankTransfer")}
                                     badge={t("membership.checkout.otherMethodsComingSoon")}
                                     disabled
+                                    onSelect={() => {}}
                                 />
                             </Stack>
                         </Box>
@@ -119,13 +138,31 @@ const MembershipCheckoutPage = (): React.ReactNode => {
                             </Typography>
                         )}
 
-                        <PrimaryButtonComponent
-                            buttonText={t("membership.checkout.payButton")}
-                            buttonOnClick={pay}
-                            buttonWidth="100%"
-                            disabled={isSubmitting}
-                            dataTestId="membership-checkout-pay-button"
-                        />
+                        {paymentMethod === MembershipPaymentMethodEnum.Redirect && (
+                            <PrimaryButtonComponent
+                                buttonText={t("membership.checkout.payButton")}
+                                buttonOnClick={pay}
+                                buttonWidth="100%"
+                                disabled={isSubmitting}
+                                dataTestId="membership-checkout-pay-button"
+                            />
+                        )}
+
+                        {paymentMethod === MembershipPaymentMethodEnum.Card && (
+                            mercadoPagoSdk.error ? (
+                                <Typography role="alert" sx={(theme: Theme) => ({ color: theme.custom.errorDark })}>
+                                    {mercadoPagoSdk.error}
+                                </Typography>
+                            ) : (
+                                <CardPaymentBrick
+                                    amount={planDefinition.price}
+                                    payerEmail={payerEmail}
+                                    ready={mercadoPagoSdk.ready}
+                                    onSubmit={payWithCardToken}
+                                    onError={handleCardBrickError}
+                                />
+                            )
+                        )}
                     </Stack>
                 )}
             </Box>

@@ -27,11 +27,10 @@ funcionales, pero **no hay enforcement** de los límites de cada tier
 
 ## Tiers
 
-| Tier | Precio mock | Destacado |
-|------|-------------|-----------|
-| Stocko | $9.999/mes | — |
-| Super Stocko | $15.000/mes | ✅ "Más elegido" |
-| Maxi Stocko | $20.000/mes | — |
+| Tier | Precio | Destacado |
+|------|--------|-----------|
+| Stocko Standard | $49.900/mes | — |
+| Stocko Deluxe | $64.900/mes | ✅ "Más elegido" |
 
 El precio/moneda vive en el backend (`src/config/membershipPlans.ts`, única
 fuente de verdad del monto que se cobra). Las ventajas mostradas en cada
@@ -53,21 +52,31 @@ retroactivo exigido a los kioscos que ya existían antes de este feature.
 2. Click en "Cambiar plan" navega a `/membership/plans` (página completa,
    no modal — el modal de Ajustes se cierra solo al navegar, ver
    [Decisiones de diseño](#decisiones-de-diseño)). Ahí sí se ve el resumen
-   del plan actual + las 3 cards de tier ("Elegí tu plan").
+   del plan actual + las 2 cards de tier ("Elegí tu plan").
 3. Click en "Elegir <tier>" navega a `/membership/checkout/:plan`.
-4. En el checkout: resumen del plan/precio + selector de método de pago
-   (Mercado Pago habilitado; tarjeta/transferencia mostrados como
-   "Próximamente", deshabilitados — es el único método real hoy).
-5. "Pagar con Mercado Pago" llama `POST /membership/checkout`, que crea una
-   `preapproval` (suscripción recurrente mensual) en Mercado Pago y
-   devuelve `init_point`. El frontend redirige ahí (`window.location.href`,
-   sale de la SPA).
-6. El usuario completa el pago en el checkout hospedado por Mercado Pago,
-   que lo redirige de vuelta a `/membership/checkout/result`.
+4. En el checkout: resumen del plan/precio + selector de método de pago —
+   **Mercado Pago** (redirect) o **Tarjeta de crédito** (sin salir de la
+   app); transferencia sigue mostrada como "Próximamente", deshabilitada.
+5. **Mercado Pago**: "Pagar con Mercado Pago" llama `POST /membership/checkout
+   { plan, payment_method: 'redirect' }`, que crea una `preapproval`
+   (suscripción recurrente mensual) en Mercado Pago y devuelve `init_point`.
+   El frontend redirige ahí (`window.location.href`, sale de la SPA). El
+   usuario completa el pago en el checkout hospedado, que lo redirige de
+   vuelta a `/membership/checkout/result`.
+6. **Tarjeta de crédito**: al elegir esta opción se monta el **Card Payment
+   Brick** de Mercado Pago (`@mercadopago/sdk-react`) — la tarjeta se
+   tokeniza en los campos iframe del propio Brick, el número/CVV nunca
+   pasan por nuestro frontend ni backend. Al hacer submit, el frontend llama
+   `POST /membership/checkout { plan, payment_method: 'card', card_token_id
+   }` (el token del Brick) y navega directo a `/membership/checkout/result`
+   — sin redirect.
 7. Mercado Pago notifica `POST /membership/webhook` (async, puede tardar) —
    el backend relee la preapproval y recién ahí actualiza
    `Kiosco.plan`/`plan_status`. La página de resultado permite refrescar el
-   estado manualmente mientras tanto.
+   estado manualmente mientras tanto. Esto es igual para ambos métodos de
+   pago: ni siquiera con tarjeta (donde Mercado Pago suele autorizar al
+   toque) el frontend asume que el pago quedó aprobado por su cuenta — el
+   webhook firmado sigue siendo la única fuente de verdad.
 
 ## Backend
 
@@ -100,19 +109,25 @@ src/config/membershipPlans.ts   → claves de traducción de features por tier, 
 
 src/modules/membership/
   api/membershipApi.ts          → GET /plans, GET /status, POST /checkout (respuestas validadas con Zod)
-  schema/membershipApiSchema.ts → esquemas Zod de esas respuestas
+  schema/membershipApiSchema.ts → esquemas Zod de esas respuestas + del payload del Card Payment Brick
   helpers/                      → funciones puras (merge plan+features, parseo de :plan, formateo de precio)
   components/
     MembershipPlanCard.tsx, MembershipPlanCardSkeleton.tsx, MembershipCurrentPlanSummary.tsx
-    PaymentMethodRow.tsx
+    PaymentMethodRow.tsx     → fila seleccionable del selector de método de pago
+    CardPaymentBrick.tsx     → wrapper presentacional del Card Payment Brick (@mercadopago/sdk-react)
   pages/
-    MembershipPlansPage.tsx        → /membership/plans ("Elegí tu plan" + las 3 cards)
+    MembershipPlansPage.tsx        → /membership/plans ("Elegí tu plan" + las 2 cards)
     MembershipCheckoutPage.tsx     → /membership/checkout/:plan
     MembershipCheckoutResultPage.tsx → /membership/checkout/result
   routes/MembershipRoutes.tsx
 
 src/hooks/membership/
-  useMembershipPlans.ts, useMembershipStatus.ts, useMembershipCheckout.ts, useMembershipCheckoutPlan.ts
+  useMembershipPlans.ts, useMembershipStatus.ts, useMembershipCheckoutPlan.ts
+  useMembershipCheckout.ts     → startCheckoutRedirect / startCheckoutWithCard
+  useMembershipCheckoutPage.ts → orquesta selección de método de pago + ambos flujos de pago
+  useMercadoPagoSdk.ts         → inicializa el SDK de MP (initMercadoPago) una sola vez
+
+src/config/mercadoPago.ts → VITE_MP_PUBLIC_KEY (public key, segura de exponer client-side)
 
 src/modules/shared/components/SettingsModal/sections/
   MembershipSection.tsx  → solo la fila plan actual + botón "Cambiar plan" (navega a /membership/plans)
@@ -145,6 +160,15 @@ igual que `AccountPasswordSection` solo muestra un campo + botón "Editar"
   precios son "/mes" — la API de suscripciones de Mercado Pago (cobro
   recurrente automático) es la que corresponde, no un pago único que
   habría que volver a cobrar manualmente cada mes.
+- **Tarjeta de crédito = Card Payment Brick de Mercado Pago, no un
+  procesador nuevo**: en vez de sumar Stripe o similar, se reutiliza toda
+  la infraestructura de MP que ya existía (cuenta, webhook, servicio,
+  validación de firma). La `preapproval` soporta autorizarse directo con
+  `card_token_id` (sin redirect) — el Card Payment Brick tokeniza la
+  tarjeta en campos iframe propios de MP, así que el PAN/CVV nunca tocan
+  nuestro frontend ni backend (alcance PCI-DSS SAQ A). Solo se usa el
+  `token` del submit del Brick; `installments`/`payment_method_id` que
+  también trae ese payload no aplican a una suscripción mensual.
 
 ## Pendientes / fuera de alcance
 
@@ -155,8 +179,9 @@ igual que `AccountPasswordSection` solo muestra un campo + botón "Editar"
   plan; cancelar una suscripción activa solo se refleja si Mercado Pago
   la cancela y notifica el webhook).
 - Credenciales reales de Mercado Pago (`MP_ACCESS_TOKEN`,
-  `MP_WEBHOOK_SECRET`) quedan pendientes de configurar — sin ellas el
-  checkout no se puede probar end-to-end.
+  `MP_WEBHOOK_SECRET` en el backend, `VITE_MP_PUBLIC_KEY` en el frontend)
+  quedan pendientes de configurar — sin ellas ningún checkout (redirect o
+  tarjeta) se puede probar end-to-end.
 
 ## Archivos tocados (referencia rápida)
 
@@ -171,3 +196,18 @@ Backend: `src/typings/membership/*`, `src/typings/kiosco/index.d.ts`,
 `src/models/membershipModel.ts`, `src/services/mercadoPagoService.ts`,
 `src/controllers/membership.controller.ts`,
 `src/routes/membership.routes.ts`, `src/index.ts`, `src/config.ts`.
+
+### Pago con tarjeta de crédito (`feature/implement-card-payment`)
+
+Frontend: `@mercadopago/sdk-react` (nueva dependencia), `src/config/mercadoPago.ts`,
+`src/typings/membership/{membershipEnums,membershipTypes,membershipComponentTypes}.ts`,
+`src/modules/membership/schema/membershipApiSchema.ts`,
+`src/modules/membership/api/membershipApi.ts`,
+`src/modules/membership/components/{PaymentMethodRow,CardPaymentBrick}.tsx`,
+`src/hooks/membership/{useMembershipCheckout,useMembershipCheckoutPage,useMercadoPagoSdk}.ts`,
+`src/modules/membership/pages/MembershipCheckoutPage.tsx`,
+`src/i18n/locales/{es,en}.ts`.
+
+Backend: `src/typings/membership/{enums,index.d.ts}`,
+`src/services/mercadoPagoService.ts`, `src/models/membershipModel.ts`,
+`src/controllers/membership.controller.ts`, `docs/Membership.md`.
