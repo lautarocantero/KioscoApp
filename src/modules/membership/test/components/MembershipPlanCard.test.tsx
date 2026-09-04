@@ -38,7 +38,7 @@ describe("MembershipPlanCard", () => {
 
         expect(screen.getByText("Stocko Deluxe")).toBeInTheDocument();
         expect(screen.getByText("Más elegido")).toBeInTheDocument();
-        expect(screen.getByText("Vendedores ilimitados")).toBeInTheDocument();
+        expect(screen.getByText("Miembros ilimitados")).toBeInTheDocument();
     });
 
     it("no muestra el badge cuando el plan no es popular", () => {

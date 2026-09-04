@@ -230,11 +230,11 @@ export function useForgotPasswordForm(): UseForgotPasswordFormReturn {
         const result = await dispatch(startRequestPasswordReset(values));
 
         if (result.success && result.token) {
-            // 🚧 BYPASS TEMPORAL (sin Resend pago): en vez de mostrar la
+            // 🚧 BYPASS TEMPORAL (pendiente de Resend): en vez de mostrar la
             // pantalla de "revisá tu email" (isSent), navegamos directo a
             // reset-password con el token que devolvió el backend.
-            // Cuando se reactive Resend: volver a un isSent(true) acá y
-            // restaurar la pantalla de confirmación en ForgotPasswordForm.
+            // Cuando se resuelva el envío de mail: volver a un isSent(true) acá
+            // y restaurar la pantalla de confirmación en ForgotPasswordForm.
             navigate(`/reset-password?token=${result.token}`);
         } else if (result.success && !result.token) {
             // No debería pasar mientras dure el bypass, pero por las dudas

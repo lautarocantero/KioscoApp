@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { AuthGoogleApiPayload, AuthLoginApiPayload, AuthRegisterApiPayload, AuthRequestPasswordResetApiPayload, AuthRequestPasswordResetApiResponse, AuthResetPasswordApiPayload } from "../../../typings/auth/authTypes";
+import type { AuthEditPasswordApiPayload, AuthGoogleApiPayload, AuthLoginApiPayload, AuthRegisterApiPayload, AuthRequestPasswordResetApiPayload, AuthRequestPasswordResetApiResponse, AuthResetPasswordApiPayload } from "../../../typings/auth/authTypes";
 import { API_URL } from "../../../config/api";
 import { createHttpClient } from "../../shared/api/httpClient";
 
@@ -58,10 +58,11 @@ export const authVerifyEmailRequest = async (data: { token: string }) => {
 /*══════════════════════════════════════════════════════════════════════════╗
 ║ 🔁 authRequestPasswordResetRequest                                        ║
 ║                                                                          ║
-║ 🚧 BYPASS TEMPORAL (sin Resend pago): el backend devuelve el token       ║
-║ directo en la respuesta en vez de mandarlo por mail. Cuando se           ║
-║ reactive Resend, esta función vuelve a tipar la respuesta como un        ║
-║ mensaje genérico sin token.                                              ║
+║ 🚧 BYPASS TEMPORAL (pendiente de pagar/activar Resend): el backend       ║
+║ devuelve el token directo en la respuesta en vez de mandarlo por mail.   ║
+║ Riesgo alto conocido y aceptado — ver docs/usefull/securityAudit.md.     ║
+║ Cuando se resuelva el envío de mail, esta función vuelve a tipar la      ║
+║ respuesta como un mensaje genérico sin token.                            ║
 ║ POST /request-password-reset                                             ║
 ╚══════════════════════════════════════════════════════════════════════════╝*/
 export const authRequestPasswordResetRequest = async (
@@ -79,6 +80,18 @@ export const authRequestPasswordResetRequest = async (
 ╚══════════════════════════════════════════════════════════════════════════╝*/
 export const authResetPasswordRequest = async (data: AuthResetPasswordApiPayload) => {
   const response = await baseUrl.post("/reset-password", data);
+  return response.data;
+};
+
+/*══════════════════════════════════════════════════════════════════════════╗
+║ 🛠️ authEditPasswordRequest                                                ║
+║                                                                          ║
+║ Cambio de contraseña estando logueado (Settings). El back deriva el      ║
+║ _id de la sesión — nunca se manda un _id en el body.                     ║
+║ PUT /auth/edit-auth                                                      ║
+╚══════════════════════════════════════════════════════════════════════════╝*/
+export const authEditPasswordRequest = async (data: AuthEditPasswordApiPayload) => {
+  const response = await authenticatedUrl.put("/edit-auth", data);
   return response.data;
 };
 

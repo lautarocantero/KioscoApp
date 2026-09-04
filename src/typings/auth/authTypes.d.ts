@@ -95,9 +95,11 @@ export type AuthResetPasswordPayload = {
   repeatNewPassword: string;
 };
 
-// 🚧 BYPASS TEMPORAL (sin Resend pago): el backend devuelve el token
-// directo en la respuesta en vez de mandarlo por mail.
-// Revertir (volver a solo un mensaje genérico) cuando se reactive el envío.
+// 🚧 BYPASS TEMPORAL (pendiente de pagar/activar Resend): el backend devuelve
+// el token directo en la respuesta en vez de mandarlo por mail. Ver
+// docs/usefull/securityAudit.md — riesgo alto conocido y aceptado hasta que
+// se resuelva el envío de mail (ver EmailService.sendPasswordResetEmail, ya
+// implementado pero no conectado).
 export type AuthRequestPasswordResetApiResponse = {
   token: string;
 };
@@ -132,6 +134,12 @@ export type AuthGoogleRequestPayload = AuthGoogleApiPayload;
 export type AuthRequestPasswordResetApiPayload = AuthRequestPasswordResetPayload;
 
 export type AuthResetPasswordApiPayload = AuthResetPasswordPayload;
+
+// Cambio de contraseña estando logueado (PUT /auth/edit-auth). El _id nunca
+// viaja acá: el back lo deriva de la sesión.
+export type AuthEditPasswordApiPayload = {
+  password: string;
+};
 
 // La edición de rol ahora es por-kiosco: ver UpdateMemberRoleBody en
 // @typings/kiosco/kioscoTypes (PUT /kiosco/:kiosco_id/member/:user_id/role).

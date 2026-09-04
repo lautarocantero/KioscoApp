@@ -9,12 +9,12 @@ const ForgotPasswordForm = (): ReactNode => {
     const { handleSubmit, values, handleChange, errors } = formik;
 
     /*
-    🚧 BYPASS TEMPORAL (sin Resend pago): antes de este bypass, un submit
-    exitoso dejaba al usuario acá, esperando el mail. Ahora
+    🚧 BYPASS TEMPORAL (pendiente de pagar/activar Resend): antes de este
+    bypass, un submit exitoso dejaba al usuario acá, esperando el mail. Ahora
     useForgotPasswordForm navega directo a /reset-password?token=... apenas
     el backend responde, así que este bloque nunca se llega a renderizar.
 
-    Para restaurar cuando se reactive Resend:
+    Para restaurar cuando se resuelva el envío de mail:
     1. Volver a desestructurar `handleGoToLogin` del hook arriba.
     2. Volver a exponer `isSent` en useForgotPasswordForm y usarlo acá.
 

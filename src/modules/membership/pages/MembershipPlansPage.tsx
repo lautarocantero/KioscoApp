@@ -33,7 +33,11 @@ const MembershipPlansPage = (): React.ReactNode => {
 
     return (
         <AppLayout fullWidth>
-            <Box component="section" aria-labelledby="membership-plans-heading" sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 3 }}>
+            <Box
+                component="section"
+                aria-labelledby="membership-plans-heading"
+                sx={{ width: { xs: "100%", md: "60%" }, mx: "auto", display: "flex", flexDirection: "column", gap: 3 }}
+            >
                 {statusError && (
                     <Typography role="alert" sx={(theme: Theme) => ({ color: theme.custom.errorDark })}>
                         {statusError}

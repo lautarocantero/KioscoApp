@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik, type FormikHelpers, type FormikProps } from "formik";
 import { useTranslation } from "react-i18next";
 import type { AppDispatch, RootState } from "../../store/auth/authSlice";
-import { startRequestPasswordReset, startResetPassword } from "../../store/auth/authThunks";
+import { startEditPassword } from "../../store/auth/authThunks";
 import { authLoginRequest } from "../../modules/auth/api/authApi";
 import { extractAuthErrorMessage } from "../../store/shared/handlerStoreError";
 import {
@@ -15,17 +15,14 @@ import { SnackBarContext } from "../../modules/shared/components/SnackBar/SnackB
 import { AlertColor } from "@typings/ui/ui";
 
 /*══════════ 🪝 useAccountPasswordForm ══════════╗
-║ No existe (todavía) un endpoint de "cambiar       ║
-║ contraseña estando logueado". En vez de inventar   ║
-║ uno o dejar "contraseña actual" sin validar,        ║
-║ reutilizamos dos endpoints existentes:              ║
-║   1. POST /auth/login (authLoginRequest, directo,   ║
-║      sin pasar por el thunk: el thunk desloguea al  ║
-║      usuario si falla, algo que NO queremos acá) —   ║
-║      para verificar la contraseña actual.            ║
-║   2. El flujo de recuperación de contraseña          ║
-║      (startRequestPasswordReset + startResetPassword) ║
-║      para aplicar la nueva.                            ║
+║ Cambio de contraseña estando logueado:               ║
+║   1. POST /auth/login (authLoginRequest, directo,    ║
+║      sin pasar por el thunk: el thunk desloguea al   ║
+║      usuario si falla, algo que NO queremos acá) —    ║
+║      para verificar la contraseña actual.             ║
+║   2. PUT /auth/edit-auth (startEditPassword) para      ║
+║      aplicar la nueva. Self-service: el back deriva     ║
+║      el _id de la sesión, nunca viaja en el body.        ║
 ╚═════════════════════════════════════════════════════╝*/
 export const useAccountPasswordForm = (): UseAccountPasswordFormReturn => {
   const { t } = useTranslation();
@@ -61,21 +58,7 @@ export const useAccountPasswordForm = (): UseAccountPasswordFormReturn => {
       return;
     }
 
-    const tokenResult = await dispatch(startRequestPasswordReset({ email }));
-
-    if (!tokenResult.success || !tokenResult.token) {
-      setErrorMessage(tokenResult.errorMessage ?? "No se pudo iniciar el cambio de contraseña");
-      setIsSubmitting(false);
-      return;
-    }
-
-    const result = await dispatch(
-      startResetPassword({
-        token: tokenResult.token,
-        newPassword: values.newPassword,
-        repeatNewPassword: values.repeatNewPassword,
-      })
-    );
+    const result = await dispatch(startEditPassword({ password: values.newPassword }));
 
     if (!result.success) {
       setErrorMessage(result.errorMessage);

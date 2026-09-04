@@ -1,9 +1,9 @@
 import type { AnyAction, Dispatch, ThunkAction } from "@reduxjs/toolkit"
 import { clearAuthError, login, logout, type AppDispatch, type RootState } from "./authSlice";
-import { authCheckStatusRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authRequestPasswordResetRequest, authResetPasswordRequest } from "../../modules/auth/api/authApi";
+import { authCheckStatusRequest, authEditPasswordRequest, authGoogleRequest, authLoginRequest, authLogoutRequest, authRegisterRequest, authRequestPasswordResetRequest, authResetPasswordRequest } from "../../modules/auth/api/authApi";
 import type { AxiosResponse } from "axios";
 import type {
-  AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthGoogleRequestPayload,
+  AuthActionsType, AuthAsyncActionResult, AuthCheckAuthDataResponse, AuthEditPasswordApiPayload, AuthGoogleRequestPayload,
   AuthLoginRequestPayload, AuthPublic, AuthRegisterSanitizedPayload, AuthRequestPasswordResetPayload,
   AuthRequestPasswordResetResult,
   AuthResetPasswordPayload } from "../../typings/auth/authTypes";
@@ -173,15 +173,15 @@ export const startCheckAuth = (): ThunkAction<Promise<AxiosResponse<{ status: nu
 ║ 📥 Entrada: AuthRequestPasswordResetPayload {email} ║
 ║ ⚙️ Proceso: pide el reset. No toca el slice global.  ║
 ║                                                        ║
-║ 🚧 BYPASS TEMPORAL (sin Resend pago): el backend ya no ║
-║ manda el link por mail, lo devuelve directo acá. Por    ║
-║ eso el thunk ahora también devuelve el token, para que  ║
-║ el form navegue directo a /reset-password?token=...     ║
-║ Cuando se reactive Resend: volver a AuthAsyncActionResult║
-║ (sin token) y restaurar la pantalla de "revisá tu email" ║
-║ en ForgotPasswordForm.                                    ║
-║ 📤 Salida: AuthRequestPasswordResetResult                 ║
-╚═══════════════════════════════════════════════════════════╝*/
+║ 🚧 BYPASS TEMPORAL (pendiente de Resend): el backend   ║
+║ todavía no manda el link por mail, lo devuelve directo  ║
+║ acá. Por eso el thunk devuelve el token, para que el     ║
+║ form navegue directo a /reset-password?token=...         ║
+║ Cuando se resuelva el envío de mail: volver a             ║
+║ AuthAsyncActionResult (sin token) y restaurar la           ║
+║ pantalla de "revisá tu email" en ForgotPasswordForm.        ║
+║ 📤 Salida: AuthRequestPasswordResetResult                    ║
+╚═══════════════════════════════════════════════════════════════╝*/
 export const startRequestPasswordReset = (
   { email }: AuthRequestPasswordResetPayload
 ): ThunkAction<Promise<AuthRequestPasswordResetResult>, RootState, unknown, AuthActionsType> => {
@@ -213,6 +213,29 @@ export const startResetPassword = (
         return { success: true, errorMessage: null };
       } catch (error: unknown) {
         console.error('Reset password failed:', error);
+        return { success: false, errorMessage: extractAuthErrorMessage(error) };
+      }
+    };
+};
+
+/*══════════ 🎮 startEditPassword ══════════╗
+║ 📥 Entrada: AuthEditPasswordApiPayload {password}   ║
+║ ⚙️ Proceso: cambia la contraseña del usuario ya       ║
+║    logueado (PUT /auth/edit-auth, self-service — el   ║
+║    back deriva el _id de la sesión). No toca el slice ║
+║    global: no hay cambio de identidad de por medio.    ║
+║ 📤 Salida: AuthAsyncActionResult                        ║
+╚═════════════════════════════════════════════════════════╝*/
+export const startEditPassword = (
+  { password }: AuthEditPasswordApiPayload
+): ThunkAction<Promise<AuthAsyncActionResult>, RootState, unknown, AuthActionsType> => {
+
+    return async (): Promise<AuthAsyncActionResult> => {
+      try {
+        await authEditPasswordRequest({ password });
+        return { success: true, errorMessage: null };
+      } catch (error: unknown) {
+        console.error('Edit password failed:', error);
         return { success: false, errorMessage: extractAuthErrorMessage(error) };
       }
     };

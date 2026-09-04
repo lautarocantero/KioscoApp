@@ -34,11 +34,9 @@ describe("useAccountPasswordForm", () => {
     });
   };
 
-  it("verifica la contraseña actual (POST /auth/login), pide el token de reset y aplica la nueva contraseña", async () => {
+  it("verifica la contraseña actual (POST /auth/login) y aplica la nueva vía PUT /auth/edit-auth (self-service, sin token)", async () => {
     mockedAuthLoginRequest.mockResolvedValueOnce({ user: {} });
-    mockDispatch
-      .mockResolvedValueOnce({ success: true, errorMessage: null, token: "tok-123" })
-      .mockResolvedValueOnce({ success: true, errorMessage: null });
+    mockDispatch.mockResolvedValueOnce({ success: true, errorMessage: null });
 
     const { result } = renderHook(() => useAccountPasswordForm());
     await fillValidValues(result.current.formik);
@@ -52,13 +50,13 @@ describe("useAccountPasswordForm", () => {
       password: "oldpass1",
       rememberMe: true,
     });
-    expect(mockDispatch).toHaveBeenCalledTimes(2);
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(result.current.errorMessage).toBeNull();
     expect(result.current.isSubmitting).toBe(false);
     expect(result.current.isDialogOpen).toBe(false);
   });
 
-  it("expone un error y no llega a pedir el token si la contraseña actual es incorrecta", async () => {
+  it("expone un error y no llega a llamar a edit-auth si la contraseña actual es incorrecta", async () => {
     mockedAuthLoginRequest.mockRejectedValueOnce(new Error("Contraseña incorrecta"));
 
     const { result } = renderHook(() => useAccountPasswordForm());
@@ -74,9 +72,9 @@ describe("useAccountPasswordForm", () => {
     expect(result.current.isDialogOpen).toBe(true);
   });
 
-  it("expone un error si falla el pedido de token luego de verificar la contraseña actual", async () => {
+  it("expone el error del backend si falla el cambio de contraseña", async () => {
     mockedAuthLoginRequest.mockResolvedValueOnce({ user: {} });
-    mockDispatch.mockResolvedValueOnce({ success: false, errorMessage: "Error de red", token: null });
+    mockDispatch.mockResolvedValueOnce({ success: false, errorMessage: "Error de red" });
 
     const { result } = renderHook(() => useAccountPasswordForm());
     await fillValidValues(result.current.formik);
@@ -87,22 +85,6 @@ describe("useAccountPasswordForm", () => {
 
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(result.current.errorMessage).toBe("Error de red");
-  });
-
-  it("expone el error del backend si el reset con token falla", async () => {
-    mockedAuthLoginRequest.mockResolvedValueOnce({ user: {} });
-    mockDispatch
-      .mockResolvedValueOnce({ success: true, errorMessage: null, token: "tok-123" })
-      .mockResolvedValueOnce({ success: false, errorMessage: "El link para restablecer la contraseña expiró" });
-
-    const { result } = renderHook(() => useAccountPasswordForm());
-    await fillValidValues(result.current.formik);
-
-    await act(async () => {
-      await result.current.formik.handleSubmit();
-    });
-
-    expect(result.current.errorMessage).toBe("El link para restablecer la contraseña expiró");
   });
 
   it("openDialog/closeDialog controlan isDialogOpen", () => {

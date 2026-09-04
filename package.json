@@ -35,13 +35,13 @@
     "@react-oauth/google": "^0.13.5",
     "@reduxjs/toolkit": "^2.9.2",
     "@types/axios": "^0.14.4",
-    "@types/jspdf": "^2.0.0",
     "animate.css": "^4.1.1",
+    "axios": "^1.18.1",
     "dayjs": "^1.11.21",
     "formik": "^2.4.6",
     "i18next": "^26.3.6",
-    "jspdf": "2.5.1",
-    "jspdf-autotable": "3.5.25",
+    "jspdf": "4.2.1",
+    "jspdf-autotable": "5.0.8",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-i18next": "^17.0.11",
@@ -49,9 +49,11 @@
     "react-router-dom": "^7.9.4",
     "recharts": "^3.9.2",
     "redux-persist": "^6.0.0",
-    "use-mcp": "^0.0.21",
     "yup": "^1.7.1",
     "zod": "^4.2.1"
+  },
+  "resolutions": {
+    "dompurify": "^3.4.14"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
